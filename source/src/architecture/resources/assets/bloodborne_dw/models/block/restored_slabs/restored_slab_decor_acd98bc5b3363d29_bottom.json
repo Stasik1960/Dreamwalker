@@ -1,0 +1,260 @@
+{
+  "ambientocclusion": true,
+  "textures": {
+    "particle": "bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0045",
+    "face_down": "bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0045",
+    "face_up": "bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0045",
+    "face_north": "bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0045",
+    "face_south": "bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0045",
+    "face_west": "bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0045",
+    "face_east": "bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0045",
+    "decor_7": "bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0045",
+    "decor_8": "bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0081",
+    "decor_9": "bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0081",
+    "decor_10": "bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0081",
+    "decor_11": "bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0081",
+    "decor_12": "bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0081",
+    "decor_13": "bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0081",
+    "decor_14": "bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0081"
+  },
+  "elements": [
+    {
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        8,
+        16
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            2.0,
+            0.0,
+            4.0,
+            2.0
+          ],
+          "texture": "#face_down",
+          "cullface": "down"
+        },
+        "up": {
+          "uv": [
+            2.0,
+            0.0,
+            4.0,
+            2.0
+          ],
+          "texture": "#face_up"
+        },
+        "north": {
+          "uv": [
+            2.0,
+            0.0,
+            4.0,
+            2.0
+          ],
+          "texture": "#face_north",
+          "cullface": "north"
+        },
+        "south": {
+          "uv": [
+            2.0,
+            0.0,
+            4.0,
+            2.0
+          ],
+          "texture": "#face_south",
+          "cullface": "south"
+        },
+        "west": {
+          "uv": [
+            2.0,
+            0.0,
+            4.0,
+            2.0
+          ],
+          "texture": "#face_west",
+          "cullface": "west"
+        },
+        "east": {
+          "uv": [
+            2.0,
+            0.0,
+            4.0,
+            2.0
+          ],
+          "texture": "#face_east",
+          "cullface": "east"
+        }
+      }
+    },
+    {
+      "from": [
+        0,
+        8.015625,
+        0
+      ],
+      "to": [
+        16,
+        8.015625,
+        16
+      ],
+      "rotation": {
+        "angle": 0,
+        "axis": "y",
+        "origin": [
+          -16,
+          0,
+          14
+        ]
+      },
+      "faces": {
+        "up": {
+          "uv": [
+            2,
+            2,
+            4,
+            4
+          ],
+          "texture": "#decor_7"
+        }
+      }
+    },
+    {
+      "from": [
+        8.5,
+        8.55,
+        -5.5
+      ],
+      "to": [
+        23.5,
+        8.55,
+        7.5
+      ],
+      "rotation": {
+        "angle": -45,
+        "axis": "y",
+        "origin": [
+          8,
+          5.3,
+          8
+        ]
+      },
+      "faces": {
+        "up": {
+          "uv": [
+            12,
+            14.375,
+            13.875,
+            16
+          ],
+          "texture": "#decor_8"
+        }
+      }
+    },
+    {
+      "from": [
+        12,
+        8.55,
+        -2.5
+      ],
+      "to": [
+        20,
+        17.55,
+        4.5
+      ],
+      "rotation": {
+        "angle": -45,
+        "axis": "y",
+        "origin": [
+          8,
+          5.3,
+          8
+        ]
+      },
+      "faces": {
+        "north": {
+          "uv": [
+            12,
+            13.25,
+            13,
+            14.375
+          ],
+          "texture": "#decor_9"
+        },
+        "east": {
+          "uv": [
+            13.25,
+            13.25,
+            14.125,
+            14.375
+          ],
+          "texture": "#decor_10"
+        },
+        "south": {
+          "uv": [
+            12,
+            13.25,
+            13,
+            14.375
+          ],
+          "texture": "#decor_11"
+        },
+        "west": {
+          "uv": [
+            13.25,
+            13.25,
+            14.125,
+            14.375
+          ],
+          "texture": "#decor_12"
+        }
+      }
+    },
+    {
+      "from": [
+        11,
+        17.55,
+        -4
+      ],
+      "to": [
+        21,
+        17.55,
+        6
+      ],
+      "rotation": {
+        "angle": -45,
+        "axis": "y",
+        "origin": [
+          8,
+          5.3,
+          8
+        ]
+      },
+      "faces": {
+        "up": {
+          "uv": [
+            12.75,
+            12,
+            14,
+            13.25
+          ],
+          "texture": "#decor_13"
+        },
+        "down": {
+          "uv": [
+            12.75,
+            12,
+            14,
+            13.25
+          ],
+          "texture": "#decor_14"
+        }
+      }
+    }
+  ],
+  "parent": "minecraft:block/block"
+}

@@ -1,0 +1,287 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_red_candle_2",
+  "displayName": "Гладкая каменная планка",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/red_candle_2",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                4.46446288,
+                0.0,
+                4.46446897
+              ],
+              "to": [
+                11.53553069,
+                16.0,
+                11.53553678
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                4,
+                0,
+                7
+              ],
+              "to": [
+                12,
+                16,
+                9
+              ]
+            },
+            {
+              "from": [
+                5,
+                0,
+                6
+              ],
+              "to": [
+                11,
+                16,
+                7
+              ]
+            },
+            {
+              "from": [
+                5,
+                0,
+                9
+              ],
+              "to": [
+                11,
+                16,
+                10
+              ]
+            },
+            {
+              "from": [
+                6,
+                0,
+                5
+              ],
+              "to": [
+                10,
+                16,
+                6
+              ]
+            },
+            {
+              "from": [
+                6,
+                0,
+                10
+              ],
+              "to": [
+                10,
+                16,
+                11
+              ]
+            },
+            {
+              "from": [
+                7,
+                0,
+                4
+              ],
+              "to": [
+                9,
+                16,
+                5
+              ]
+            },
+            {
+              "from": [
+                7,
+                0,
+                11
+              ],
+              "to": [
+                9,
+                16,
+                12
+              ]
+            }
+          ],
+          "simpleCollisionByRotation": [
+            [
+              {
+                "from": [
+                  4.46446288,
+                  0.0,
+                  4.46446897
+                ],
+                "to": [
+                  11.53553069,
+                  16.0,
+                  11.53553678
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  5.49999569,
+                  0.0,
+                  5.49999976
+                ],
+                "to": [
+                  10.49999569,
+                  16.0,
+                  10.49999976
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  4.46446322,
+                  0.0,
+                  4.46446288
+                ],
+                "to": [
+                  11.53553103,
+                  16.0,
+                  11.53553069
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  5.50000024,
+                  0.0,
+                  5.49999569
+                ],
+                "to": [
+                  10.50000024,
+                  16.0,
+                  10.49999569
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  4.46446931,
+                  0.0,
+                  4.46446322
+                ],
+                "to": [
+                  11.53553712,
+                  16.0,
+                  11.53553103
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  5.50000431,
+                  0.0,
+                  5.50000024
+                ],
+                "to": [
+                  10.50000431,
+                  16.0,
+                  10.50000024
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  4.46446897,
+                  0.0,
+                  4.46446931
+                ],
+                "to": [
+                  11.53553678,
+                  16.0,
+                  11.53553712
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  5.49999976,
+                  0.0,
+                  5.50000431
+                ],
+                "to": [
+                  10.49999976,
+                  16.0,
+                  10.50000431
+                ]
+              }
+            ]
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          4,
+          0,
+          4
+        ],
+        "to": [
+          12,
+          16,
+          12
+        ]
+      },
+      "sourceVariant": "Свечи · вариант 3",
+      "sourcePlacementOffset": [
+        0,
+        -0.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/red_candle_2"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:red_candle[variant:candles=2,lit=false]"
+      ]
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "simple-imported-physical-v1: one ordinary bounded cuboid by default; reviewed doorway/arch, stair/landing and ladder exceptions use at most three useful boxes; passable source planes stay passable. Eight orientations use a few ordinary AABBs bounded by the actual transformed visual vertices, never strips or a second expanded rotated AABB. Six root-cell-face overflows strictly smaller than 0.5 blocks are cropped independently after instance yaw, vertical mount and SourceShift; long extents are retained. Selection and visuals unchanged. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped.",
+  "simplePhysicalCollision": true
+}

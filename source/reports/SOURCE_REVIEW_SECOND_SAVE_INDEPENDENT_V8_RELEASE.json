@@ -1,0 +1,435 @@
+{
+  "schema": "dreamwalker-source-review-reopen-independent-v1",
+  "status": "PASS_PERSISTED_OWNERSHIP_NATIVE_DATA_AND_NONRECURSIVE_RP_SOURCE_PAYLOAD",
+  "author": "build\\runtime-server-source-review-v8-release-author\\isolated-smoke-world",
+  "after": "build\\runtime-server-source-review-v8-release-reopen\\isolated-smoke-world",
+  "input_sha256": "029c0527a8a57019e5432230a54b6ba3af4bae8d344907c163b7dc0f51412a69",
+  "counts": {
+    "logical_cells_compared": 436158464,
+    "exact_typed_block_state_sections": 106484,
+    "author_chunks": 4434,
+    "saved_chunks": 4434,
+    "additional_chunks": 0,
+    "native_and_dw_BEs_compared": 544,
+    "source_roots_checked": 41,
+    "source_rp_envelopes_checked": 15,
+    "logical_state_changes": 0,
+    "unclassified_source_or_native_state_changes": 0,
+    "proven_generated_flat_layer_progress_cells": 0,
+    "typed_be_changes": 0,
+    "source_rp_entities_with_other_runtime_changes": 0
+  },
+  "failures": [],
+  "logical_state_changes": [],
+  "typed_be_changes": [],
+  "persistent_ownership_and_marker_checks": [
+    {
+      "path": "bloodborne_dw_composite_owners.dat",
+      "typed_equal": true,
+      "differences": [],
+      "compressed_bytes_equal": true
+    },
+    {
+      "path": "dreamwalker_review_source_migrations.dat",
+      "typed_equal": true,
+      "differences": [],
+      "compressed_bytes_equal": true
+    }
+  ],
+  "source_root_checks": [
+    {
+      "key": "architecture_tree_1",
+      "exact_frozen_state": true,
+      "state": "bloodborne_dw:prototype_tree[open=false,profile=base,rotation=0,variant=0]"
+    },
+    {
+      "key": "architecture_tree_2",
+      "exact_frozen_state": true,
+      "state": "bloodborne_dw:prototype_tree[open=false,profile=base,rotation=0,variant=0]"
+    },
+    {
+      "key": "door_north",
+      "exact_frozen_state": true,
+      "state": "bloodborne_dw:prototype_double_door[open=false,profile=base,rotation=0,variant=0]"
+    },
+    {
+      "key": "wood_window",
+      "exact_frozen_state": true,
+      "state": "bloodborne_dw:prototype_wood_window[open=false,profile=base,rotation=0,variant=0]"
+    },
+    {
+      "key": "thin_window",
+      "exact_frozen_state": true,
+      "state": "bloodborne_dw:prototype_thin_window[mount=vertical,open=false,profile=base,rotation=0,variant=0]"
+    },
+    {
+      "key": "wall",
+      "exact_frozen_state": true,
+      "state": "bloodborne_dw:prototype_wall[connections=manual,east=low,material=0,north=low,profile=base,rotation=0,south=low,up=true,waterlogged=false,west=none]"
+    },
+    {
+      "key": "roof",
+      "exact_frozen_state": true,
+      "state": "bloodborne_dw:prototype_roof[open=false,profile=base,rotation=0,variant=0]"
+    },
+    {
+      "key": "source_ladder_00",
+      "exact_frozen_state": true,
+      "state": "bloodborne_dw:prototype_ladder[diagonal=false,facing=east,profile=base,source_clone=true,variant=1,waterlogged=false]"
+    },
+    {
+      "key": "source_ladder_01",
+      "exact_frozen_state": true,
+      "state": "bloodborne_dw:prototype_ladder[diagonal=false,facing=east,profile=base,source_clone=true,variant=0,waterlogged=false]"
+    },
+    {
+      "key": "source_ladder_02",
+      "exact_frozen_state": true,
+      "state": "bloodborne_dw:prototype_ladder[diagonal=false,facing=east,profile=base,source_clone=true,variant=2,waterlogged=false]"
+    },
+    {
+      "key": "source_ladder_03",
+      "exact_frozen_state": true,
+      "state": "bloodborne_dw:prototype_ladder[diagonal=false,facing=east,profile=base,source_clone=true,variant=1,waterlogged=false]"
+    },
+    {
+      "key": "source_ladder_04",
+      "exact_frozen_state": true,
+      "state": "bloodborne_dw:prototype_ladder[diagonal=false,facing=east,profile=base,source_clone=true,variant=2,waterlogged=false]"
+    },
+    {
+      "key": "source_ladder_05",
+      "exact_frozen_state": true,
+      "state": "bloodborne_dw:prototype_ladder[diagonal=false,facing=east,profile=base,source_clone=true,variant=2,waterlogged=false]"
+    },
+    {
+      "key": "source_ladder_06",
+      "exact_frozen_state": true,
+      "state": "bloodborne_dw:prototype_ladder[diagonal=false,facing=south,profile=base,source_clone=true,variant=1,waterlogged=false]"
+    },
+    {
+      "key": "source_ladder_07",
+      "exact_frozen_state": true,
+      "state": "bloodborne_dw:prototype_ladder[diagonal=false,facing=south,profile=base,source_clone=true,variant=0,waterlogged=false]"
+    },
+    {
+      "key": "source_ladder_08",
+      "exact_frozen_state": true,
+      "state": "bloodborne_dw:prototype_ladder[diagonal=false,facing=south,profile=base,source_clone=true,variant=2,waterlogged=false]"
+    },
+    {
+      "key": "source_ladder_09",
+      "exact_frozen_state": true,
+      "state": "bloodborne_dw:prototype_ladder[diagonal=false,facing=south,profile=base,source_clone=true,variant=2,waterlogged=false]"
+    },
+    {
+      "key": "source_ladder_10",
+      "exact_frozen_state": true,
+      "state": "bloodborne_dw:prototype_ladder[diagonal=false,facing=south,profile=base,source_clone=true,variant=0,waterlogged=false]"
+    },
+    {
+      "key": "source_ladder_11",
+      "exact_frozen_state": true,
+      "state": "bloodborne_dw:prototype_ladder[diagonal=false,facing=south,profile=base,source_clone=true,variant=2,waterlogged=false]"
+    },
+    {
+      "key": "source_ladder_12",
+      "exact_frozen_state": true,
+      "state": "bloodborne_dw:prototype_ladder[diagonal=false,facing=south,profile=base,source_clone=true,variant=2,waterlogged=false]"
+    },
+    {
+      "key": "source_ladder_13",
+      "exact_frozen_state": true,
+      "state": "bloodborne_dw:prototype_ladder[diagonal=false,facing=south,profile=base,source_clone=true,variant=0,waterlogged=false]"
+    },
+    {
+      "key": "source_ladder_14",
+      "exact_frozen_state": true,
+      "state": "bloodborne_dw:prototype_ladder[diagonal=false,facing=south,profile=base,source_clone=true,variant=0,waterlogged=false]"
+    },
+    {
+      "key": "source_ladder_15",
+      "exact_frozen_state": true,
+      "state": "bloodborne_dw:prototype_ladder[diagonal=false,facing=south,profile=base,source_clone=true,variant=1,waterlogged=false]"
+    },
+    {
+      "key": "source_ladder_16",
+      "exact_frozen_state": true,
+      "state": "bloodborne_dw:prototype_ladder[diagonal=false,facing=south,profile=base,source_clone=true,variant=0,waterlogged=false]"
+    },
+    {
+      "key": "source_ladder_17",
+      "exact_frozen_state": true,
+      "state": "bloodborne_dw:prototype_ladder[diagonal=false,facing=south,profile=base,source_clone=true,variant=1,waterlogged=false]"
+    },
+    {
+      "key": "source_ladder_18",
+      "exact_frozen_state": true,
+      "state": "bloodborne_dw:prototype_ladder[diagonal=false,facing=south,profile=base,source_clone=true,variant=2,waterlogged=false]"
+    },
+    {
+      "key": "source_ladder_19",
+      "exact_frozen_state": true,
+      "state": "bloodborne_dw:prototype_ladder[diagonal=false,facing=south,profile=base,source_clone=true,variant=0,waterlogged=false]"
+    },
+    {
+      "key": "source_ladder_20",
+      "exact_frozen_state": true,
+      "state": "bloodborne_dw:prototype_ladder[diagonal=false,facing=south,profile=base,source_clone=true,variant=1,waterlogged=false]"
+    },
+    {
+      "key": "source_ladder_21",
+      "exact_frozen_state": true,
+      "state": "bloodborne_dw:prototype_ladder[diagonal=false,facing=south,profile=base,source_clone=true,variant=2,waterlogged=false]"
+    },
+    {
+      "key": "source_ladder_22",
+      "exact_frozen_state": true,
+      "state": "bloodborne_dw:prototype_ladder[diagonal=false,facing=south,profile=base,source_clone=true,variant=0,waterlogged=false]"
+    },
+    {
+      "key": "source_ladder_23",
+      "exact_frozen_state": true,
+      "state": "bloodborne_dw:prototype_ladder[diagonal=false,facing=south,profile=base,source_clone=true,variant=2,waterlogged=false]"
+    },
+    {
+      "key": "source_ladder_24",
+      "exact_frozen_state": true,
+      "state": "bloodborne_dw:prototype_ladder[diagonal=false,facing=south,profile=base,source_clone=true,variant=0,waterlogged=false]"
+    },
+    {
+      "key": "source_ladder_25",
+      "exact_frozen_state": true,
+      "state": "bloodborne_dw:prototype_ladder[diagonal=false,facing=south,profile=base,source_clone=true,variant=1,waterlogged=false]"
+    },
+    {
+      "key": "source_ladder_26",
+      "exact_frozen_state": true,
+      "state": "bloodborne_dw:prototype_ladder[diagonal=false,facing=south,profile=base,source_clone=true,variant=0,waterlogged=false]"
+    },
+    {
+      "key": "source_ladder_27",
+      "exact_frozen_state": true,
+      "state": "bloodborne_dw:prototype_ladder[diagonal=false,facing=south,profile=base,source_clone=true,variant=0,waterlogged=false]"
+    },
+    {
+      "key": "source_ladder_28",
+      "exact_frozen_state": true,
+      "state": "bloodborne_dw:prototype_ladder[diagonal=false,facing=south,profile=base,source_clone=true,variant=1,waterlogged=false]"
+    },
+    {
+      "key": "source_ladder_29",
+      "exact_frozen_state": true,
+      "state": "bloodborne_dw:prototype_ladder[diagonal=false,facing=south,profile=base,source_clone=true,variant=0,waterlogged=false]"
+    },
+    {
+      "key": "source_ladder_30",
+      "exact_frozen_state": true,
+      "state": "bloodborne_dw:prototype_ladder[diagonal=false,facing=south,profile=base,source_clone=true,variant=0,waterlogged=false]"
+    },
+    {
+      "key": "source_ladder_31",
+      "exact_frozen_state": true,
+      "state": "bloodborne_dw:prototype_ladder[diagonal=false,facing=south,profile=base,source_clone=true,variant=1,waterlogged=false]"
+    },
+    {
+      "key": "source_ladder_32",
+      "exact_frozen_state": true,
+      "state": "bloodborne_dw:prototype_ladder[diagonal=false,facing=south,profile=base,source_clone=true,variant=1,waterlogged=false]"
+    },
+    {
+      "key": "source_ladder_33",
+      "exact_frozen_state": true,
+      "state": "bloodborne_dw:prototype_ladder[diagonal=false,facing=south,profile=base,source_clone=true,variant=2,waterlogged=false]"
+    }
+  ],
+  "source_rp_identity_envelope_checks": [
+    {
+      "id": "bloodborne_rp:coffins_2",
+      "uuid_int_array": [
+        1942276885,
+        1274822963,
+        -1448926599,
+        -603481887
+      ],
+      "same_registry_id": true,
+      "exact_same_typed_original_envelope": true,
+      "no_recursive_envelope": true
+    },
+    {
+      "id": "bloodborne_rp:furniture_16",
+      "uuid_int_array": [
+        -555967944,
+        -1468379772,
+        -1429780656,
+        -65708135
+      ],
+      "same_registry_id": true,
+      "exact_same_typed_original_envelope": true,
+      "no_recursive_envelope": true
+    },
+    {
+      "id": "bloodborne_rp:horse_carcass",
+      "uuid_int_array": [
+        1640897933,
+        -261143646,
+        -1920236106,
+        1245454147
+      ],
+      "same_registry_id": true,
+      "exact_same_typed_original_envelope": true,
+      "no_recursive_envelope": true
+    },
+    {
+      "id": "bloodborne_rp:coffin_3",
+      "uuid_int_array": [
+        1059207339,
+        -804761764,
+        -1616932194,
+        819843728
+      ],
+      "same_registry_id": true,
+      "exact_same_typed_original_envelope": true,
+      "no_recursive_envelope": true
+    },
+    {
+      "id": "bloodborne_rp:carriage",
+      "uuid_int_array": [
+        665534967,
+        -1362868368,
+        -1841272100,
+        369693034
+      ],
+      "same_registry_id": true,
+      "exact_same_typed_original_envelope": true,
+      "no_recursive_envelope": true
+    },
+    {
+      "id": "bloodborne_rp:door_1",
+      "uuid_int_array": [
+        1242144272,
+        -1548597274,
+        -1729915138,
+        -1663291853
+      ],
+      "same_registry_id": true,
+      "exact_same_typed_original_envelope": true,
+      "no_recursive_envelope": true
+    },
+    {
+      "id": "bloodborne_rp:coffins_3",
+      "uuid_int_array": [
+        1384507617,
+        666386496,
+        -1481921949,
+        -1586077257
+      ],
+      "same_registry_id": true,
+      "exact_same_typed_original_envelope": true,
+      "no_recursive_envelope": true
+    },
+    {
+      "id": "bloodborne_rp:lever_1",
+      "uuid_int_array": [
+        960086497,
+        2013742423,
+        -2073202254,
+        -1731004185
+      ],
+      "same_registry_id": true,
+      "exact_same_typed_original_envelope": true,
+      "no_recursive_envelope": true
+    },
+    {
+      "id": "bloodborne_rp:small_gate",
+      "uuid_int_array": [
+        -1595497819,
+        -154844366,
+        -1545928524,
+        1572170844
+      ],
+      "same_registry_id": true,
+      "exact_same_typed_original_envelope": true,
+      "no_recursive_envelope": true
+    },
+    {
+      "id": "bloodborne_rp:npc_window",
+      "uuid_int_array": [
+        -796488397,
+        908086529,
+        -1771460495,
+        -610883735
+      ],
+      "same_registry_id": true,
+      "exact_same_typed_original_envelope": true,
+      "no_recursive_envelope": true
+    },
+    {
+      "id": "bloodborne_rp:hunterlamp",
+      "uuid_int_array": [
+        614039691,
+        1402487662,
+        -1386688151,
+        1241422566
+      ],
+      "same_registry_id": true,
+      "exact_same_typed_original_envelope": true,
+      "no_recursive_envelope": true
+    },
+    {
+      "id": "bloodborne_rp:coffin_2",
+      "uuid_int_array": [
+        1106980169,
+        -1637334164,
+        -1434590660,
+        397957157
+      ],
+      "same_registry_id": true,
+      "exact_same_typed_original_envelope": true,
+      "no_recursive_envelope": true
+    },
+    {
+      "id": "bloodborne_rp:coffin_1",
+      "uuid_int_array": [
+        1086075851,
+        1141264200,
+        -2046642188,
+        -1777960137
+      ],
+      "same_registry_id": true,
+      "exact_same_typed_original_envelope": true,
+      "no_recursive_envelope": true
+    },
+    {
+      "id": "bloodborne_rp:coffin_1",
+      "uuid_int_array": [
+        2029211872,
+        -164999172,
+        -1294612838,
+        -1803982507
+      ],
+      "same_registry_id": true,
+      "exact_same_typed_original_envelope": true,
+      "no_recursive_envelope": true
+    },
+    {
+      "id": "bloodborne_rp:coffins_3",
+      "uuid_int_array": [
+        -1252070501,
+        -1237693055,
+        -1757340974,
+        1017625221
+      ],
+      "same_registry_id": true,
+      "exact_same_typed_original_envelope": true,
+      "no_recursive_envelope": true
+    }
+  ],
+  "other_live_entity_runtime_differences": [],
+  "proven_generated_chunk_progress": [],
+  "unclassified_source_or_native_state_changes": [],
+  "limits": [
+    "Chunk metadata, lighting and ordinary entity runtime fields are separate from persisted ownership/source envelope identity",
+    "No client visual, UI, shader or full-city performance verdict is inferred from server reopen"
+  ]
+}

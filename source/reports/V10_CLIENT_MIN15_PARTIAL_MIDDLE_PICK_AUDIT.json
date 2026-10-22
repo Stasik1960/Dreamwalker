@@ -1,0 +1,691 @@
+{
+  "schema": "dw-v10-failed-client-partial-middle-proof-v1",
+  "status": "PASS_COMPLETED_MIDDLE_KEY_SUBSET_ONLY_WHOLE_CLIENT_FAILED_BEFORE_MENUS",
+  "artifactSha256": "884ba57ce8ba0a64e3fdc5dd8730c3945a44d1a35f462cea39245301b2e69e75",
+  "wrapper": {
+    "path": "reports/V10_CLIENT_MIN_ATTEMPT_15.json",
+    "sha256": "125384e6f1267dd4046e1c3a21e8034e7652ffb474b1a5b2ffc23f075141f762",
+    "bytes": 1513478
+  },
+  "raw": {
+    "path": "build/runtime-client-v10-client-min-attempt15/client-review-output.json",
+    "sha256": "4c7563ca6d17eed2e7008bdc757b33c892a1723d819079285926e9269994b134",
+    "bytes": 782752
+  },
+  "wholeClientStatus": "FAIL_CLIENT_REVIEW",
+  "rawClientStatus": "FAIL_ACTUAL_CLIENT_V10",
+  "normalExitCode": 0,
+  "normalShutdownSaveMessagesObserved": true,
+  "wholeQaSaveStageCompleted": false,
+  "completed": {
+    "canonicalMiddleKeys": 69,
+    "oldAliasMiddleKeys": 7,
+    "pickedItemOrdinaryReinstallation": 1,
+    "ordinaryRpCases": 73,
+    "ordinaryArchitectureCases": 18
+  },
+  "canonicalMiddleRows": [
+    {
+      "sourceUuid": "391c6bb5-6c64-4b86-b604-3740a521eea1",
+      "sourceRegistry": "bloodborne_rp:cage_obj_1",
+      "canonicalAsset": "cage_obj_1",
+      "pickedItem": "bloodborne_rp:cage_obj_1_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/cage_obj_1.geo.json"
+    },
+    {
+      "sourceUuid": "2b7d808d-931f-4ce4-aba0-de647f413664",
+      "sourceRegistry": "bloodborne_rp:cage_obj_2",
+      "canonicalAsset": "cage_obj_2",
+      "pickedItem": "bloodborne_rp:cage_obj_2_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/cage_obj_2.geo.json"
+    },
+    {
+      "sourceUuid": "dc381299-8257-4218-9504-575a2aa4e2f8",
+      "sourceRegistry": "bloodborne_rp:cage_obj_3",
+      "canonicalAsset": "cage_obj_3",
+      "pickedItem": "bloodborne_rp:cage_obj_3_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/cage_obj_3.geo.json"
+    },
+    {
+      "sourceUuid": "92b77097-3180-4bc2-9b6b-78ec1d3ed9ae",
+      "sourceRegistry": "bloodborne_rp:hearse",
+      "canonicalAsset": "hearse",
+      "pickedItem": "bloodborne_rp:hearse_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/hearse.geo.json"
+    },
+    {
+      "sourceUuid": "a31f3fe1-981b-4367-857a-cdcbc8f66180",
+      "sourceRegistry": "bloodborne_rp:carriage",
+      "canonicalAsset": "carriage",
+      "pickedItem": "bloodborne_rp:carriage_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/carriage.geo.json"
+    },
+    {
+      "sourceUuid": "b86b7e63-b172-489c-8b09-5f1a2b78f334",
+      "sourceRegistry": "bloodborne_rp:dog_cage",
+      "canonicalAsset": "dog_cage",
+      "pickedItem": "bloodborne_rp:dog_cage_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/dog_cage.geo.json"
+    },
+    {
+      "sourceUuid": "e5f89528-e0aa-4be9-86b2-2ffe51149e74",
+      "sourceRegistry": "bloodborne_rp:dog_cage1",
+      "canonicalAsset": "dog_cage1",
+      "pickedItem": "bloodborne_rp:dog_cage1_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/dog_cage1.geo.json"
+    },
+    {
+      "sourceUuid": "a7b175f1-18d0-41a9-a4c5-254cf810b1bb",
+      "sourceRegistry": "bloodborne_rp:dog_cage2",
+      "canonicalAsset": "dog_cage2",
+      "pickedItem": "bloodborne_rp:dog_cage2_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/dog_cage_floor.geo.json"
+    },
+    {
+      "sourceUuid": "1b5624e4-f68e-4e7a-8981-483bf6cd248d",
+      "sourceRegistry": "bloodborne_rp:dog_cage3",
+      "canonicalAsset": "dog_cage3",
+      "pickedItem": "bloodborne_rp:dog_cage3_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/dog_cage_floor_lone.geo.json"
+    },
+    {
+      "sourceUuid": "64988412-b456-4721-8b5b-89a73ace1c5f",
+      "sourceRegistry": "bloodborne_rp:cabriolet_open",
+      "canonicalAsset": "cabriolet_open",
+      "pickedItem": "bloodborne_rp:cabriolet_open_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/cabriolet_opened.geo.json"
+    },
+    {
+      "sourceUuid": "c28ad8a8-80df-45ce-8edc-c6e62d2ca4e4",
+      "sourceRegistry": "bloodborne_rp:cabriolet_closed",
+      "canonicalAsset": "cabriolet_closed",
+      "pickedItem": "bloodborne_rp:cabriolet_closed_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/cabriolet_closed.geo.json"
+    },
+    {
+      "sourceUuid": "b554ac4e-cd92-4665-976e-9bebd5b411f1",
+      "sourceRegistry": "bloodborne_rp:door_1",
+      "canonicalAsset": "door_1",
+      "pickedItem": "bloodborne_rp:door_1_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/door_1.geo.json"
+    },
+    {
+      "sourceUuid": "97a7de73-a812-43b0-8fce-112193437d46",
+      "sourceRegistry": "bloodborne_rp:door_2",
+      "canonicalAsset": "door_2",
+      "pickedItem": "bloodborne_rp:door_2_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/dubble_door.geo.json"
+    },
+    {
+      "sourceUuid": "c88bf462-9616-433d-b256-1de260c1cf8d",
+      "sourceRegistry": "bloodborne_rp:main_gate",
+      "canonicalAsset": "main_gate",
+      "pickedItem": "bloodborne_rp:main_gate_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/main_gate.geo.json"
+    },
+    {
+      "sourceUuid": "7e3690a8-12cc-47a0-b2a6-d8ed7dd2b0f4",
+      "sourceRegistry": "bloodborne_rp:odeon_tomb",
+      "canonicalAsset": "odeon_tomb",
+      "pickedItem": "bloodborne_rp:odeon_tomb_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/oden_tomb.geo.json"
+    },
+    {
+      "sourceUuid": "1fc0838f-cb8c-4363-be1b-b2845d1ba1ce",
+      "sourceRegistry": "bloodborne_rp:wood_gate",
+      "canonicalAsset": "wood_gate",
+      "pickedItem": "bloodborne_rp:wood_gate_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/wood_gate.geo.json"
+    },
+    {
+      "sourceUuid": "d2f3bf56-c697-4dee-aab2-e3a27f26c7ec",
+      "sourceRegistry": "bloodborne_rp:furniture_1",
+      "canonicalAsset": "furniture_1",
+      "pickedItem": "bloodborne_rp:furniture_1_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/furnature_1.geo.json"
+    },
+    {
+      "sourceUuid": "abbc9fec-8060-4e94-8e4d-c865a9e084c1",
+      "sourceRegistry": "bloodborne_rp:furniture_2",
+      "canonicalAsset": "furniture_2",
+      "pickedItem": "bloodborne_rp:furniture_2_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/furnature_2.geo.json"
+    },
+    {
+      "sourceUuid": "5e096f6b-54ae-45af-abea-4c639d50c71c",
+      "sourceRegistry": "bloodborne_rp:furniture_10",
+      "canonicalAsset": "furniture_10",
+      "pickedItem": "bloodborne_rp:furniture_10_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/furnature_10.geo.json"
+    },
+    {
+      "sourceUuid": "a3ed928a-82c0-46f4-b9c1-0822b67563e0",
+      "sourceRegistry": "bloodborne_rp:furniture_11",
+      "canonicalAsset": "furniture_11",
+      "pickedItem": "bloodborne_rp:furniture_11_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/furnature_11.geo.json"
+    },
+    {
+      "sourceUuid": "f84fa267-3e11-4ebb-8f46-a4e6e4e67ebf",
+      "sourceRegistry": "bloodborne_rp:furniture_12",
+      "canonicalAsset": "furniture_12",
+      "pickedItem": "bloodborne_rp:furniture_12_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/furnature_12.geo.json"
+    },
+    {
+      "sourceUuid": "818893bd-0bfd-4af1-bd01-6123610b7a48",
+      "sourceRegistry": "bloodborne_rp:furniture_13",
+      "canonicalAsset": "furniture_13",
+      "pickedItem": "bloodborne_rp:furniture_13_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/furnature_13.geo.json"
+    },
+    {
+      "sourceUuid": "03009736-14ec-45f6-bad1-f62ec16b8921",
+      "sourceRegistry": "bloodborne_rp:furniture_14",
+      "canonicalAsset": "furniture_14",
+      "pickedItem": "bloodborne_rp:furniture_14_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/furnature_14.geo.json"
+    },
+    {
+      "sourceUuid": "cacc406e-578b-49d2-b4c2-7a14c9a5ce0e",
+      "sourceRegistry": "bloodborne_rp:furniture_15",
+      "canonicalAsset": "furniture_15",
+      "pickedItem": "bloodborne_rp:furniture_15_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/furnature_15.geo.json"
+    },
+    {
+      "sourceUuid": "60da04a4-cf10-4ecf-89ed-26cc9d3dbac3",
+      "sourceRegistry": "bloodborne_rp:furniture_16",
+      "canonicalAsset": "furniture_16",
+      "pickedItem": "bloodborne_rp:furniture_16_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/furnature_16.geo.json"
+    },
+    {
+      "sourceUuid": "e85730b3-4413-43c4-bd5b-f37b08e1e66c",
+      "sourceRegistry": "bloodborne_rp:chandelier_small",
+      "canonicalAsset": "chandelier_small",
+      "pickedItem": "bloodborne_rp:chandelier_small_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/chandeliere_small.geo.json"
+    },
+    {
+      "sourceUuid": "335c7e82-7ba6-4a42-9c99-fdd1da044e47",
+      "sourceRegistry": "bloodborne_rp:chandelier_large",
+      "canonicalAsset": "chandelier_large",
+      "pickedItem": "bloodborne_rp:chandelier_large_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/chandeliere_large.geo.json"
+    },
+    {
+      "sourceUuid": "84a68378-0247-42a0-afc8-c372587244f3",
+      "sourceRegistry": "bloodborne_rp:cross_beast",
+      "canonicalAsset": "cross_beast",
+      "pickedItem": "bloodborne_rp:cross_beast_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/cross_beast.geo.json"
+    },
+    {
+      "sourceUuid": "3493ca9a-619b-4391-8e7a-de6d47ec42a6",
+      "sourceRegistry": "bloodborne_rp:statue_1",
+      "canonicalAsset": "statue_1",
+      "pickedItem": "bloodborne_rp:statue_1_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/statue_1.geo.json"
+    },
+    {
+      "sourceUuid": "98842351-ef6f-4f6e-b32e-09fc3dfba164",
+      "sourceRegistry": "bloodborne_rp:lever_1",
+      "canonicalAsset": "lever_1",
+      "pickedItem": "bloodborne_rp:lever_1_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/lever_1.geo.json"
+    },
+    {
+      "sourceUuid": "9eeb16cf-0c9b-4138-8846-e2b5a112b7fd",
+      "sourceRegistry": "bloodborne_rp:lever_2",
+      "canonicalAsset": "lever_2",
+      "pickedItem": "bloodborne_rp:lever_2_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/lever_2.geo.json"
+    },
+    {
+      "sourceUuid": "d7a334de-b82f-4bde-9169-e10126e60f0d",
+      "sourceRegistry": "bloodborne_rp:wheelchair",
+      "canonicalAsset": "wheelchair",
+      "pickedItem": "bloodborne_rp:wheelchair_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/wheelchair.geo.json"
+    },
+    {
+      "sourceUuid": "89ef9c47-c0eb-4ef6-bd31-9167d1cc2cdf",
+      "sourceRegistry": "bloodborne_rp:smallcross",
+      "canonicalAsset": "smallcross",
+      "pickedItem": "bloodborne_rp:smallcross_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/smallcross.geo.json"
+    },
+    {
+      "sourceUuid": "001e8857-d876-425c-bd3e-8a45a6bfeacb",
+      "sourceRegistry": "bloodborne_rp:curtainsmall",
+      "canonicalAsset": "curtainsmall",
+      "pickedItem": "bloodborne_rp:curtainsmall_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/curtain_small.geo.json"
+    },
+    {
+      "sourceUuid": "0028bcff-2552-4398-a494-e655b7689dc7",
+      "sourceRegistry": "bloodborne_rp:hunterlamp",
+      "canonicalAsset": "hunterlamp",
+      "pickedItem": "bloodborne_rp:hunterlamp_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/hunter_lamp.geo.json"
+    },
+    {
+      "sourceUuid": "b84ff60d-4101-4a24-859a-cc94c76a8a1c",
+      "sourceRegistry": "bloodborne_rp:lamp_npc",
+      "canonicalAsset": "lamp_npc",
+      "pickedItem": "bloodborne_rp:lamp_npc_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/lamp_npc.geo.json"
+    },
+    {
+      "sourceUuid": "1f422415-9f1c-4457-97c0-8329f5ac8745",
+      "sourceRegistry": "bloodborne_rp:furniture_pantry",
+      "canonicalAsset": "furniture_pantry",
+      "pickedItem": "bloodborne_rp:furniture_pantry_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/furniture_pantry.geo.json"
+    },
+    {
+      "sourceUuid": "462ec7e8-5a3e-4eb0-975f-d88a9805ec1d",
+      "sourceRegistry": "bloodborne_rp:furniture_cabinet_pantry",
+      "canonicalAsset": "furniture_cabinet_pantry",
+      "pickedItem": "bloodborne_rp:furniture_cabinet_pantry_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/furniture_cabinet_pantry.geo.json"
+    },
+    {
+      "sourceUuid": "3dd5fe97-c9be-4dd2-be10-57188bedbe25",
+      "sourceRegistry": "bloodborne_rp:gate_empty",
+      "canonicalAsset": "gate_empty",
+      "pickedItem": "bloodborne_rp:gate_empty_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/gate_empty.geo.json"
+    },
+    {
+      "sourceUuid": "997c3c54-28d3-4bda-afb7-063e825ffbea",
+      "sourceRegistry": "bloodborne_rp:small_gate",
+      "canonicalAsset": "small_gate",
+      "pickedItem": "bloodborne_rp:small_gate_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/small_gate.geo.json"
+    },
+    {
+      "sourceUuid": "5854b7ec-c5d1-446f-b2ff-736c04edea79",
+      "sourceRegistry": "bloodborne_rp:trapdoor",
+      "canonicalAsset": "trapdoor",
+      "pickedItem": "bloodborne_rp:trapdoor_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/trapdoor.geo.json"
+    },
+    {
+      "sourceUuid": "441d768b-c46d-46b4-b536-33f142b499e6",
+      "sourceRegistry": "bloodborne_rp:stairs",
+      "canonicalAsset": "stairs",
+      "pickedItem": "bloodborne_rp:stairs_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/stairs.geo.json"
+    },
+    {
+      "sourceUuid": "fcf02241-a894-4159-8355-19468844620e",
+      "sourceRegistry": "bloodborne_rp:long_table",
+      "canonicalAsset": "long_table",
+      "pickedItem": "bloodborne_rp:long_table_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/long_table.geo.json"
+    },
+    {
+      "sourceUuid": "0cc7827d-ebc3-4f5d-adac-dddcbb15be80",
+      "sourceRegistry": "bloodborne_rp:hook",
+      "canonicalAsset": "hook",
+      "pickedItem": "bloodborne_rp:hook_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/hook.geo.json"
+    },
+    {
+      "sourceUuid": "13f790bb-9c30-45f1-9475-953127132868",
+      "sourceRegistry": "bloodborne_rp:furniture_books",
+      "canonicalAsset": "furniture_books",
+      "pickedItem": "bloodborne_rp:furniture_books_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/furniture_books.geo.json"
+    },
+    {
+      "sourceUuid": "c6953e35-a00c-4183-8ea3-ef9403a8808a",
+      "sourceRegistry": "bloodborne_rp:door_empty",
+      "canonicalAsset": "door_empty",
+      "pickedItem": "bloodborne_rp:door_empty_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/door_empty.geo.json"
+    },
+    {
+      "sourceUuid": "c94055ac-efca-40e9-8f89-4d4788148a97",
+      "sourceRegistry": "bloodborne_rp:curtain_half",
+      "canonicalAsset": "curtain_half",
+      "pickedItem": "bloodborne_rp:curtain_half_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/curtain_half.geo.json"
+    },
+    {
+      "sourceUuid": "9efe1996-34e8-44ad-8fb2-d8adfdcdfecf",
+      "sourceRegistry": "bloodborne_rp:coffin_stand",
+      "canonicalAsset": "coffin_stand",
+      "pickedItem": "bloodborne_rp:coffin_stand_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/coffin_stand.geo.json"
+    },
+    {
+      "sourceUuid": "f11747e6-7fa4-499b-9b7e-4cba5cf419a2",
+      "sourceRegistry": "bloodborne_rp:chest",
+      "canonicalAsset": "chest",
+      "pickedItem": "bloodborne_rp:chest_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/chest.geo.json"
+    },
+    {
+      "sourceUuid": "6bc6a3c4-8460-494f-88fa-66ec7ddca075",
+      "sourceRegistry": "bloodborne_rp:boat",
+      "canonicalAsset": "boat",
+      "pickedItem": "bloodborne_rp:boat_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/boat.geo.json"
+    },
+    {
+      "sourceUuid": "ab397d42-7361-4fc9-8131-d1ad7c300b38",
+      "sourceRegistry": "bloodborne_rp:babycart",
+      "canonicalAsset": "babycart",
+      "pickedItem": "bloodborne_rp:babycart_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/babycart.geo.json"
+    },
+    {
+      "sourceUuid": "1b17c141-e1b6-41b9-856d-a5ebe7cee895",
+      "sourceRegistry": "bloodborne_rp:chair",
+      "canonicalAsset": "chair",
+      "pickedItem": "bloodborne_rp:chair_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/chair.geo.json"
+    },
+    {
+      "sourceUuid": "fb255c5b-0300-4fe7-b7c6-40e7cc424deb",
+      "sourceRegistry": "bloodborne_rp:coffin_1",
+      "canonicalAsset": "coffin_1",
+      "pickedItem": "bloodborne_rp:coffin_1_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/coffin_01.geo.json"
+    },
+    {
+      "sourceUuid": "e5475524-949f-4152-b3d7-6b30aa774d10",
+      "sourceRegistry": "bloodborne_rp:coffin_2",
+      "canonicalAsset": "coffin_2",
+      "pickedItem": "bloodborne_rp:coffin_2_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/gold_coffin.geo.json"
+    },
+    {
+      "sourceUuid": "f5fa7d7d-3fc7-4574-96f1-f3b7c73e5ff6",
+      "sourceRegistry": "bloodborne_rp:coffin_3",
+      "canonicalAsset": "coffin_3",
+      "pickedItem": "bloodborne_rp:coffin_3_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/coffin_02.geo.json"
+    },
+    {
+      "sourceUuid": "1874ee96-9ea2-494d-b02a-55e21836c981",
+      "sourceRegistry": "bloodborne_rp:coffins_1",
+      "canonicalAsset": "coffins_1",
+      "pickedItem": "bloodborne_rp:coffins_1_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/coffins_1.geo.json"
+    },
+    {
+      "sourceUuid": "cdc4da24-7d12-45d8-9fba-f274be9be9cc",
+      "sourceRegistry": "bloodborne_rp:coffins_2",
+      "canonicalAsset": "coffins_2",
+      "pickedItem": "bloodborne_rp:coffins_2_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/coffins_2.geo.json"
+    },
+    {
+      "sourceUuid": "dfca1438-ecaa-4636-8ed2-9ce573b5daa1",
+      "sourceRegistry": "bloodborne_rp:coffins_3",
+      "canonicalAsset": "coffins_3",
+      "pickedItem": "bloodborne_rp:coffins_3_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/coffins_3.geo.json"
+    },
+    {
+      "sourceUuid": "a8c4a837-4289-4c5b-a3f0-e33ce9ad018a",
+      "sourceRegistry": "bloodborne_rp:coffins_4",
+      "canonicalAsset": "coffins_4",
+      "pickedItem": "bloodborne_rp:coffins_4_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/coffins_4.geo.json"
+    },
+    {
+      "sourceUuid": "f7d4da78-c0e2-48de-88b1-cd13020224de",
+      "sourceRegistry": "bloodborne_rp:coffins_5",
+      "canonicalAsset": "coffins_5",
+      "pickedItem": "bloodborne_rp:coffins_5_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/coffins_5.geo.json"
+    },
+    {
+      "sourceUuid": "8f21a110-c147-4bd3-b894-6967ac1d22e3",
+      "sourceRegistry": "bloodborne_rp:horse_carcass",
+      "canonicalAsset": "horse_carcass",
+      "pickedItem": "bloodborne_rp:horse_carcass_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/hourse_carcase.geo.json"
+    },
+    {
+      "sourceUuid": "8ca69828-d914-4efe-8977-d35b3cbe1034",
+      "sourceRegistry": "bloodborne_rp:elevator",
+      "canonicalAsset": "elevator",
+      "pickedItem": "bloodborne_rp:elevator_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/elevator.geo.json"
+    },
+    {
+      "sourceUuid": "e9347c5f-a7ba-452c-a7c6-9513f49167d5",
+      "sourceRegistry": "bloodborne_rp:ladder",
+      "canonicalAsset": "ladder",
+      "pickedItem": "bloodborne_rp:ladder_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/ladder.geo.json"
+    },
+    {
+      "sourceUuid": "cf7867b6-615e-4f90-a0d4-676923a18eb3",
+      "sourceRegistry": "bloodborne_rp:npc_window",
+      "canonicalAsset": "npc_window",
+      "pickedItem": "bloodborne_rp:npc_window_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/npc_window.geo.json"
+    },
+    {
+      "sourceUuid": "9020803c-e4c4-4dfc-bb62-aa117e8dc187",
+      "sourceRegistry": "bloodborne_rp:curtains",
+      "canonicalAsset": "curtains",
+      "pickedItem": "bloodborne_rp:curtains_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/curtains.geo.json"
+    },
+    {
+      "sourceUuid": "a888a8fd-061e-4fa2-ae01-8f7ae776c82e",
+      "sourceRegistry": "bloodborne_rp:ropes",
+      "canonicalAsset": "ropes",
+      "pickedItem": "bloodborne_rp:ropes_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/ropes.geo.json"
+    },
+    {
+      "sourceUuid": "eea93bf6-a125-4cf9-89eb-63a0827b9db8",
+      "sourceRegistry": "bloodborne_rp:tree1",
+      "canonicalAsset": "tree1",
+      "pickedItem": "bloodborne_rp:tree1_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/tree_1.geo.json"
+    },
+    {
+      "sourceUuid": "c7b1cf64-aaca-41f5-a9d1-f712a688e0d0",
+      "sourceRegistry": "bloodborne_rp:tree2",
+      "canonicalAsset": "tree2",
+      "pickedItem": "bloodborne_rp:tree2_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/tree_2.geo.json"
+    },
+    {
+      "sourceUuid": "3d34dcf8-2051-410f-a6a5-09e98b71e31f",
+      "sourceRegistry": "bloodborne_rp:tree3",
+      "canonicalAsset": "tree3",
+      "pickedItem": "bloodborne_rp:tree3_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/tree_3.geo.json"
+    }
+  ],
+  "oldAliasMiddleRows": [
+    {
+      "sourceUuid": "7bc313ad-5c7f-474e-8c43-128f5e9cd204",
+      "sourceRegistry": "bloodborne_rp:furniture_3",
+      "canonicalAsset": "furniture_10",
+      "pickedItem": "bloodborne_rp:furniture_10_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/furnature_10.geo.json"
+    },
+    {
+      "sourceUuid": "fd3d4bf9-c0b5-4540-b2d1-4d1e532c14d3",
+      "sourceRegistry": "bloodborne_rp:furniture_4",
+      "canonicalAsset": "furniture_11",
+      "pickedItem": "bloodborne_rp:furniture_11_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/furnature_11.geo.json"
+    },
+    {
+      "sourceUuid": "a9c75751-3f3c-44de-b29d-e5ab48f1ded6",
+      "sourceRegistry": "bloodborne_rp:furniture_5",
+      "canonicalAsset": "furniture_12",
+      "pickedItem": "bloodborne_rp:furniture_12_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/furnature_12.geo.json"
+    },
+    {
+      "sourceUuid": "ce72f91b-f823-4428-8ae8-5ebf390e5abf",
+      "sourceRegistry": "bloodborne_rp:furniture_6",
+      "canonicalAsset": "furniture_13",
+      "pickedItem": "bloodborne_rp:furniture_13_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/furnature_13.geo.json"
+    },
+    {
+      "sourceUuid": "7710c3d4-dc23-48ef-9d85-328fba862ce0",
+      "sourceRegistry": "bloodborne_rp:furniture_7",
+      "canonicalAsset": "furniture_14",
+      "pickedItem": "bloodborne_rp:furniture_14_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/furnature_14.geo.json"
+    },
+    {
+      "sourceUuid": "801ee61a-d2d2-4486-adce-dcf869eeb85c",
+      "sourceRegistry": "bloodborne_rp:furniture_8",
+      "canonicalAsset": "furniture_1",
+      "pickedItem": "bloodborne_rp:furniture_1_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/furnature_1.geo.json"
+    },
+    {
+      "sourceUuid": "372e1851-489a-4c2d-abe5-d0433f082c54",
+      "sourceRegistry": "bloodborne_rp:furniture_9",
+      "canonicalAsset": "furniture_2",
+      "pickedItem": "bloodborne_rp:furniture_2_placer",
+      "status": "PASS_ACTUAL_MIDDLE_KEY_CANONICAL_ITEM_SETTINGS_SOURCE_UNCHANGED",
+      "canonicalClientModel": "geo/furnature_2.geo.json"
+    }
+  ],
+  "pickedItemReinstallation": {
+    "status": "PASS_ACTUAL_MIDDLE_PICK_CANONICAL_STACK_ORDINARY_REPLACE_NEW_UUID_SETTINGS_AND_CLEANUP",
+    "newUuid": "ec715a74-2e79-402f-b292-f8cb0c7377d8",
+    "actualServerThreadPlacement": {
+      "uuid": "ec715a74-2e79-402f-b292-f8cb0c7377d8",
+      "registry": "bloodborne_rp:furniture_10",
+      "open": false,
+      "locked": true,
+      "scale": 0.8,
+      "name": "{\"text\":\"QA old furniture_3\"}",
+      "offset": 0.0,
+      "linksEmpty": true
+    },
+    "cleanup": {
+      "present": false,
+      "uuid": "ec715a74-2e79-402f-b292-f8cb0c7377d8",
+      "nativeAfter": {
+        "-64, 100, 64": {
+          "state": "Block{minecraft:air}"
+        },
+        "-64, 99, 64": {
+          "state": "Block{minecraft:stone}"
+        }
+      },
+      "creativeDropCount": 0,
+      "readThread": "ACTUAL_SERVER_THREAD"
+    }
+  },
+  "failureBoundary": {
+    "phase": 7,
+    "failure": "Middle-pick hotbar/inventory/selected slot must restore before menus",
+    "serverReadback": {
+      "serverPositionRestored": true,
+      "serverYawPitchRestored": true,
+      "serverFlyingRestored": true,
+      "serverOriginalHandsRestored": true,
+      "serverInventoryRestored": true,
+      "readThread": "ACTUAL_SERVER_THREAD"
+    },
+    "interpretation": "The checked server inventory is restored. The joint server/client inventory assertion failed, locating the observed failure to client inventory/selected-slot restoration. Exact residual slot/sentinel cause is not present in this raw report; no production defect is inferred from this partial evidence."
+  },
+  "notCompleted": [
+    "original client inventory restoration before menus",
+    "237 GUI menu operations",
+    "actual client diagnostics OFF/ON/OFF and exports",
+    "final whole-QA save assertions",
+    "distinct persisted REENTER proof",
+    "full-client Starlight loading proof",
+    "14-instance old alias disk roundtrip"
+  ],
+  "manualReview": "NOT_RUN",
+  "wholeTask": "NOT_COMPLETE"
+}

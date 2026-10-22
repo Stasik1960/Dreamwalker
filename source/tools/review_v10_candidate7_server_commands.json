@@ -1,0 +1,140 @@
+{
+  "schema": "dw-v10-candidate7-server-commands-preparation-v1",
+  "status": "ACTUAL_CURRENT_MAIN7_AUTHOR_CREATIVE_REOPEN_FULL_STARTUP_PASS_DIAGNOSTICS_WAITING_SEPARATE_GO",
+  "previousCandidate6": "521337222c6f75b31a094c4944963c4103c514985d5696d55187f31dc4b17ca5",
+  "supersedingDefectProof": "reports/V10_RP_MOTION_ENVELOPE_FAILURE_MIN9.json",
+  "reproduction": "reports/V10_RP_MOTION_ENVELOPE_SOURCE_AUDIT_MAIN6.json",
+  "requiredBindings": [
+    "__FROZEN_MAIN7_JAR__",
+    "__FROZEN_QA_FOR_MAIN7__",
+    "__FROZEN_MAIN7_SHA256__"
+  ],
+  "authorValidationArgv": [
+    "C:/Users/vakir/miniconda3/python.exe",
+    "tools/run_review_v10_candidate_servers.py",
+    "--jar",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\frozen-artifacts\\v10-attempt-7\\dreamwalker-bb-fabric-1.20.1-0.1.0-prototype.5.jar",
+    "--qa-jar",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\frozen-artifacts\\v10-qa-14\\dreamwalker-first-set-review-qa-0.1.0-prototype.5.jar",
+    "--artifact-sha",
+    "2cf96fbe771bb44bba4e4e8f320ed65a8bc0a8ffe7a8149b07fbd9ec691592c1",
+    "--scene-template",
+    "tools/review_v10_scene_release2_input.json",
+    "--scene-input",
+    "tools/review_v10_scene_release3_input.json",
+    "--accepted-eula-file",
+    "C:/Users/vakir/.codex/worktrees/bloodborne-material-review/DW/bloodborne complete/build/production-smoke/final-city/eula.txt",
+    "--author-run-name",
+    "v10-author-min-attempt6",
+    "--author-report",
+    "reports/V10_SERVER_AUTHOR_MIN_ATTEMPT_6.json",
+    "--settings-report",
+    "reports/V10_SCENE_BEFORE_FIRST_ENTRY_SETTINGS_6.json",
+    "--reopen-run-name",
+    "v10-production-only-reopen-release4",
+    "--reopen-report",
+    "reports/V10_SERVER_PRODUCTION_ONLY_REOPEN_RELEASE4.json",
+    "--full-run-name",
+    "v10-full-server-release3",
+    "--full-report",
+    "reports/V10_SERVER_FULL_RELEASE3.json",
+    "--marker-dir",
+    "tools/review-v10-diagnostics-markers-release3",
+    "--diagnostics-suffix",
+    "release3",
+    "--plan-output",
+    "build/review-v10-candidate7-servers/plan.json",
+    "--phase",
+    "author-validation"
+  ],
+  "diagnosticsRequiresLaterRootGOArgv": [
+    "C:/Users/vakir/miniconda3/python.exe",
+    "tools/run_review_v10_candidate_servers.py",
+    "--jar",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\frozen-artifacts\\v10-attempt-7\\dreamwalker-bb-fabric-1.20.1-0.1.0-prototype.5.jar",
+    "--qa-jar",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\frozen-artifacts\\v10-qa-14\\dreamwalker-first-set-review-qa-0.1.0-prototype.5.jar",
+    "--artifact-sha",
+    "2cf96fbe771bb44bba4e4e8f320ed65a8bc0a8ffe7a8149b07fbd9ec691592c1",
+    "--scene-template",
+    "tools/review_v10_scene_release2_input.json",
+    "--scene-input",
+    "tools/review_v10_scene_release3_input.json",
+    "--accepted-eula-file",
+    "C:/Users/vakir/.codex/worktrees/bloodborne-material-review/DW/bloodborne complete/build/production-smoke/final-city/eula.txt",
+    "--author-run-name",
+    "v10-author-min-attempt6",
+    "--author-report",
+    "reports/V10_SERVER_AUTHOR_MIN_ATTEMPT_6.json",
+    "--settings-report",
+    "reports/V10_SCENE_BEFORE_FIRST_ENTRY_SETTINGS_6.json",
+    "--reopen-run-name",
+    "v10-production-only-reopen-release4",
+    "--reopen-report",
+    "reports/V10_SERVER_PRODUCTION_ONLY_REOPEN_RELEASE4.json",
+    "--full-run-name",
+    "v10-full-server-release3",
+    "--full-report",
+    "reports/V10_SERVER_FULL_RELEASE3.json",
+    "--marker-dir",
+    "tools/review-v10-diagnostics-markers-release3",
+    "--diagnostics-suffix",
+    "release3",
+    "--plan-output",
+    "build/review-v10-candidate7-servers/plan.json",
+    "--phase",
+    "diagnostics"
+  ],
+  "baselinePolicy": "Generate a fresh scene marker with exact newSHA; author6 fresh isolatedworld, typedCreativepatch actualsettings6, keepbaseline immutable; OFF/ON bothcloneexactbaseline6 and REENTER copies savedON. Production-onlyreopen4 and83startup3 exitbeforeanydiagnostic/clientcostwindow. No priorcandidate6reports substitute.",
+  "runPolicy": "Do not execute placeholders. Rootauthorizes exactfrozenbinding and author-validation; waitseparateRootGOfor diagnostics afterallMCclients/buildclosed. No originalworld writes.",
+  "syntaxCheck": "Pythonpy_compile and--help PASS; no Minecraft/Gradle invoked",
+  "manualReview": "NOT_RUN",
+  "artifactSha256": "2cf96fbe771bb44bba4e4e8f320ed65a8bc0a8ffe7a8149b07fbd9ec691592c1",
+  "qaSha256": "9724d041c0519d410072df1eacbbcf2b8fe746bfea044515cff6ac5ad0a843c5",
+  "nativeTests": 131,
+  "coreChecks": 20,
+  "nativeXml": "reports/FIRST_SET_GAMETEST_V10_ATTEMPT_7.xml",
+  "nativeLog": "reports/V10_NATIVE_ATTEMPT_07.log",
+  "bindings": {
+    "__FROZEN_MAIN7_JAR__": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\frozen-artifacts\\v10-attempt-7\\dreamwalker-bb-fabric-1.20.1-0.1.0-prototype.5.jar",
+    "__FROZEN_QA_FOR_MAIN7__": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\frozen-artifacts\\v10-qa-14\\dreamwalker-first-set-review-qa-0.1.0-prototype.5.jar",
+    "__FROZEN_MAIN7_SHA256__": "2cf96fbe771bb44bba4e4e8f320ed65a8bc0a8ffe7a8149b07fbd9ec691592c1"
+  },
+  "priorPreparationHistory": "reports\\input-history\\V10_CANDIDATE7_COMMANDS_PRE_BINDING.json",
+  "priorPreparationSha256": "716d28a721fcc53835af46bdeed5639ee962a228176ffb00dc6fbe4da673c78f",
+  "actualAuthorValidationPlan": {
+    "path": "build/review-v10-candidate7-servers/plan.json",
+    "sha256": "fd39225d0d5350defb3e507691f4a003672a222bd9f31aca28cb5a8bcc633406"
+  },
+  "actualReports": [
+    {
+      "path": "reports/V10_SERVER_AUTHOR_MIN_ATTEMPT_6.json",
+      "sha256": "4ef3b910bba76d47d1f7a9f331feaa65df99b44ce36c3730c3119856e8e29b39"
+    },
+    {
+      "path": "reports/V10_SCENE_BEFORE_FIRST_ENTRY_SETTINGS_6.json",
+      "sha256": "80382ef2719ab8bf662526909d32e7f4160289817b1d733b8538eb4eba65d113"
+    },
+    {
+      "path": "reports/V10_SERVER_PRODUCTION_ONLY_REOPEN_RELEASE4.json",
+      "sha256": "5744c6d797e7bc99e3f7631e11b4c32be1d8c8320bef376501754fe1fa96f73d"
+    },
+    {
+      "path": "reports/V10_SERVER_FULL_RELEASE3.json",
+      "sha256": "b253b472df4db17bf292a9b9115d248618478186105889355d89f248bb70796f"
+    },
+    {
+      "path": "reports/V10_PRISTINE_BASELINE_REOPEN_INDEPENDENT_RELEASE4.json",
+      "sha256": "e78da0abc42274fab1b66715f1f4655e39662a72511161c8520078c1c6a82ef5"
+    },
+    {
+      "path": "reports/V10_SERVER_FULL_RELEASE3_SCOPE.json",
+      "sha256": "c82fff7bd16b92136fc7b827130ce9d9842008bbf77a2cac170ec1d220f5d587"
+    }
+  ],
+  "freshDiagnosticsMarkers": {
+    "directory": "tools/review-v10-diagnostics-markers-release3",
+    "preparationSha256": "aea2a8ef154bdf86cf101fb9a0dae350ce016137494c62b305397879453ee120",
+    "runtimeStatus": "NOT_RUN_SEPARATE_ROOT_GO_REQUIRED"
+  }
+}

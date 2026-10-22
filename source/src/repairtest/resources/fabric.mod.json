@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "id": "bloodborne_dw_repairtest",
+  "version": "1.0.0",
+  "name": "Isolated catalogue repair GameTests",
+  "environment": "server",
+  "entrypoints": {"fabric-gametest": ["dev.dreamwalker.bloodbornedw.gametest.CatalogueRepairGameTests", "dev.dreamwalker.bloodbornedw.tool.BuilderRepairGameTests"]},
+  "depends": {"fabricloader": ">=0.16.10", "fabric-gametest-api-v1": "*", "bloodborne_dw": "*"}
+}

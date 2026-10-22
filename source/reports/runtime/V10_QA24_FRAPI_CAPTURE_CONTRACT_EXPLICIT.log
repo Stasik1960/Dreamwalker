@@ -1,0 +1,10 @@
+C:\Users\vakir\.codex\worktrees\3f07\DW\bloodborne complete\build\review-v10-probe-qa24-compile\Qa24OldAnchorCaptureContractExplicit.java:27: warning: [removal] bakedModelConsumer() in RenderContext has been deprecated and marked for removal
+  RenderContext fallback=fresh();rejected(()->fallback.bakedModelConsumer().accept(model(true)));check(count(fallback,"fallbackSubmissions")==1&&count(fallback,"actualQuads")==7);
+                                                      ^
+C:\Users\vakir\.codex\worktrees\3f07\DW\bloodborne complete\build\review-v10-probe-qa24-compile\Qa24OldAnchorCaptureContractExplicit.java:28: warning: [removal] fallbackConsumer() in RenderContext has been deprecated and marked for removal
+  RenderContext emptyFallback=fresh();emptyFallback.fallbackConsumer().accept(model(false));finish(emptyFallback);check(count(emptyFallback,"fallbackSubmissions")==1&&count(emptyFallback,"actualQuads")==0);passed++;
+                                                   ^
+Note: C:\Users\vakir\.codex\worktrees\3f07\DW\bloodborne complete\build\review-v10-probe-qa24-compile\Qa24OldAnchorCaptureContractExplicit.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+2 warnings
+PASS_QA24_CAPTURE_CONTRACT 8/8 (pure JVM, no Minecraft launch)

@@ -1,0 +1,18 @@
+gradle.projectsEvaluated {
+ def p=gradle.rootProject
+ p.sourceSets.gametest.java.setIncludes([
+  'dev/dreamwalker/bloodbornedw/gametest/CompositeMembershipReadGameTests.java',
+  'dev/dreamwalker/bloodbornedw/gametest/CompositeMembershipScanGameTests.java',
+  'dev/dreamwalker/bloodbornedw/gametest/CompositeShapeReuseGameTests.java',
+  'dev/dreamwalker/bloodbornedw/gametest/CompositeStreamingGameTests.java',
+  'dev/dreamwalker/bloodbornedw/gametest/CompositeNbtSnapshotGameTests.java'
+ ])
+ p.tasks.named('processGametestResources') {
+  doLast {
+   def manifest=new File(destinationDir,'fabric.mod.json')
+   def json=new groovy.json.JsonSlurper().parse(manifest)
+   json.entrypoints['fabric-gametest']=['dev.dreamwalker.bloodbornedw.gametest.CompositeMembershipScanGameTests']
+   manifest.text=groovy.json.JsonOutput.prettyPrint(groovy.json.JsonOutput.toJson(json))+'\n'
+  }
+ }
+}

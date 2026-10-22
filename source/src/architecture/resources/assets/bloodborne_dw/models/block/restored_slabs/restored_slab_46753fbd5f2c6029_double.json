@@ -1,0 +1,88 @@
+{
+  "ambientocclusion": true,
+  "textures": {
+    "particle": "bloodborne_dw:block/remaining/source/minecraft/block/mossy_cobblestone",
+    "face_down": "bloodborne_dw:block/remaining/source/minecraft/block/mossy_cobblestone",
+    "face_up": "bloodborne_dw:block/remaining/source/minecraft/block/mossy_cobblestone",
+    "face_north": "bloodborne_dw:block/remaining/source/minecraft/block/mossy_cobblestone",
+    "face_south": "bloodborne_dw:block/remaining/source/minecraft/block/mossy_cobblestone",
+    "face_west": "bloodborne_dw:block/remaining/source/minecraft/block/mossy_cobblestone",
+    "face_east": "bloodborne_dw:block/remaining/source/minecraft/block/mossy_cobblestone"
+  },
+  "elements": [
+    {
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#face_down",
+          "cullface": "down"
+        },
+        "up": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#face_up",
+          "cullface": "up"
+        },
+        "north": {
+          "uv": [
+            0,
+            8,
+            16,
+            16
+          ],
+          "texture": "#face_north",
+          "cullface": "north"
+        },
+        "south": {
+          "uv": [
+            0,
+            8,
+            16,
+            16
+          ],
+          "texture": "#face_south",
+          "cullface": "south"
+        },
+        "west": {
+          "uv": [
+            0,
+            8,
+            16,
+            16
+          ],
+          "texture": "#face_west",
+          "cullface": "west"
+        },
+        "east": {
+          "uv": [
+            0,
+            8,
+            16,
+            16
+          ],
+          "texture": "#face_east",
+          "cullface": "east"
+        }
+      }
+    }
+  ]
+}

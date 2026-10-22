@@ -1,0 +1,350 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_addon_grass_6",
+  "displayName": "Пучок осоки",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/addon/grass_6",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            }
+          ],
+          "collision": [],
+          "selection": [
+            {
+              "from": [
+                -6,
+                0,
+                6
+              ],
+              "to": [
+                -4,
+                12,
+                7
+              ]
+            },
+            {
+              "from": [
+                -5,
+                0,
+                5
+              ],
+              "to": [
+                -2,
+                12,
+                6
+              ]
+            },
+            {
+              "from": [
+                -3,
+                0,
+                0
+              ],
+              "to": [
+                -2,
+                12,
+                2
+              ]
+            },
+            {
+              "from": [
+                -3,
+                0,
+                2
+              ],
+              "to": [
+                -1,
+                12,
+                3
+              ]
+            },
+            {
+              "from": [
+                -3,
+                0,
+                4
+              ],
+              "to": [
+                1,
+                12,
+                5
+              ]
+            },
+            {
+              "from": [
+                -2,
+                0,
+                3
+              ],
+              "to": [
+                -1,
+                12,
+                4
+              ]
+            },
+            {
+              "from": [
+                -1,
+                0,
+                5
+              ],
+              "to": [
+                0,
+                12,
+                7
+              ]
+            },
+            {
+              "from": [
+                -1,
+                0,
+                7
+              ],
+              "to": [
+                1,
+                12,
+                8
+              ]
+            },
+            {
+              "from": [
+                0,
+                0,
+                3
+              ],
+              "to": [
+                3,
+                12,
+                4
+              ]
+            },
+            {
+              "from": [
+                0,
+                0,
+                8
+              ],
+              "to": [
+                1,
+                12,
+                9
+              ]
+            },
+            {
+              "from": [
+                2,
+                0,
+                2
+              ],
+              "to": [
+                4,
+                12,
+                3
+              ]
+            },
+            {
+              "from": [
+                4,
+                0,
+                8
+              ],
+              "to": [
+                7,
+                10,
+                9
+              ]
+            },
+            {
+              "from": [
+                6,
+                0,
+                7
+              ],
+              "to": [
+                10,
+                10,
+                8
+              ]
+            },
+            {
+              "from": [
+                7,
+                0,
+                2
+              ],
+              "to": [
+                8,
+                10,
+                4
+              ]
+            },
+            {
+              "from": [
+                7,
+                0,
+                4
+              ],
+              "to": [
+                9,
+                10,
+                5
+              ]
+            },
+            {
+              "from": [
+                8,
+                0,
+                5
+              ],
+              "to": [
+                9,
+                10,
+                6
+              ]
+            },
+            {
+              "from": [
+                8,
+                0,
+                6
+              ],
+              "to": [
+                10,
+                10,
+                8
+              ]
+            },
+            {
+              "from": [
+                8,
+                0,
+                6
+              ],
+              "to": [
+                12,
+                10,
+                7
+              ]
+            },
+            {
+              "from": [
+                9,
+                0,
+                8
+              ],
+              "to": [
+                10,
+                10,
+                9
+              ]
+            },
+            {
+              "from": [
+                9,
+                0,
+                9
+              ],
+              "to": [
+                11,
+                10,
+                10
+              ]
+            },
+            {
+              "from": [
+                10,
+                0,
+                10
+              ],
+              "to": [
+                11,
+                10,
+                12
+              ]
+            },
+            {
+              "from": [
+                11,
+                0,
+                5
+              ],
+              "to": [
+                14,
+                10,
+                6
+              ]
+            }
+          ],
+          "simpleCollisionByRotation": [
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            []
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -6,
+          0,
+          0
+        ],
+        "to": [
+          14,
+          12,
+          12
+        ]
+      },
+      "sourceVariant": "Пучок травы · вариант 7",
+      "sourcePlacementOffset": [
+        0,
+        -0.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/addon/grass_6"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:dead_fire_coral_fan[variant:]"
+      ]
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "simple-imported-physical-v1: one ordinary bounded cuboid by default; reviewed doorway/arch, stair/landing and ladder exceptions use at most three useful boxes; passable source planes stay passable. Eight orientations use a few ordinary AABBs bounded by the actual transformed visual vertices, never strips or a second expanded rotated AABB. Six root-cell-face overflows strictly smaller than 0.5 blocks are cropped independently after instance yaw, vertical mount and SourceShift; long extents are retained. Selection and visuals unchanged. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped.",
+  "simplePhysicalCollision": true
+}

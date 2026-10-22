@@ -1,0 +1,761 @@
+{
+  "schema": "dreamwalker-final-jar-server-v1",
+  "artifact": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\frozen-artifacts\\v10-attempt-6\\dreamwalker-bb-fabric-1.20.1-0.1.0-prototype.5.jar",
+  "artifact_sha256": "521337222c6f75b31a094c4944963c4103c514985d5696d55187f31dc4b17ca5",
+  "profile": "minimal",
+  "modset_profile_sha256": "fbde8d5d1f1a6f63ee66a73db2ed140787e1ce461b1ba4d444b4914f6cf78f9b",
+  "modset": [
+    {
+      "path": "mods/fabric-api-0.92.9+1.20.1.jar",
+      "sha256": "4056979ccaa1012354dfff14f39fdb085aefb3f1e0224ff45c3af41e4ffed5fd",
+      "id": "fabric-api",
+      "version": "0.92.9+1.20.1"
+    },
+    {
+      "path": "mods/geckolib-fabric-1.20.1-4.4.9.jar",
+      "sha256": "36d567615f7a81c265f96edd30e9534ed679d8da2a8774866f8ed09d9347e218",
+      "id": "geckolib",
+      "version": "4.4.9"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\frozen-artifacts\\v10-qa-11\\dreamwalker-first-set-review-qa-0.1.0-prototype.5.jar",
+      "sha256": "3e058a3f04f6d120ac1cd76e365421e98f1dba4e6904b13eb8b6a6e37ddcac9a",
+      "id": "bloodborne_dw_review",
+      "version": "1.0.0",
+      "extra_mod": true
+    }
+  ],
+  "minecraft": "1.20.1",
+  "loader": "0.19.5",
+  "java_version": "openjdk version \"17.0.15\" 2025-04-15 LTS\nOpenJDK Runtime Environment Microsoft-11369865 (build 17.0.15+6-LTS)\nOpenJDK 64-Bit Server VM Microsoft-11369865 (build 17.0.15+6-LTS, mixed mode)",
+  "vanilla_server_sha256": "3af73a9dc5a102e38147946360dd27d4d70bae7055bf91cf2151cd5d121b79e0",
+  "loader_metadata_source": "https://meta.fabricmc.net/v2/versions/loader/1.20.1/0.19.5/server/json",
+  "loader_metadata_sha256": "886afde0bd834d87a94a0595241ead469c387f1ae13861101cfb76b090b16961",
+  "libraries": [
+    {
+      "coordinate": "org.ow2.asm:asm:9.10.1",
+      "path": "libraries/org/ow2/asm/asm/9.10.1/asm-9.10.1.jar",
+      "sha256": "ed825d10ab1399c8c0cb669e688cf0c8c82629b4c8399b58352b68e92ca10fcb",
+      "source": "C:\\Users\\vakir\\Limacina\\project\\dw\\libraries\\org\\ow2\\asm\\asm\\9.10.1\\asm-9.10.1.jar"
+    },
+    {
+      "coordinate": "org.ow2.asm:asm-analysis:9.10.1",
+      "path": "libraries/org/ow2/asm/asm-analysis/9.10.1/asm-analysis-9.10.1.jar",
+      "sha256": "dede75a21306b65974ecd8f87114ff6970f09fb794157a4ca09ab25c888c2bfc",
+      "source": "C:\\Users\\vakir\\Limacina\\project\\dw\\libraries\\org\\ow2\\asm\\asm-analysis\\9.10.1\\asm-analysis-9.10.1.jar"
+    },
+    {
+      "coordinate": "org.ow2.asm:asm-commons:9.10.1",
+      "path": "libraries/org/ow2/asm/asm-commons/9.10.1/asm-commons-9.10.1.jar",
+      "sha256": "6d0abefb7cbf972ea16edb37ec14835372505063a45f976ab7ea889ed9497895",
+      "source": "C:\\Users\\vakir\\Limacina\\project\\dw\\libraries\\org\\ow2\\asm\\asm-commons\\9.10.1\\asm-commons-9.10.1.jar"
+    },
+    {
+      "coordinate": "org.ow2.asm:asm-tree:9.10.1",
+      "path": "libraries/org/ow2/asm/asm-tree/9.10.1/asm-tree-9.10.1.jar",
+      "sha256": "3dfb0d5b6a106cd40b5b250e39935fbf2f927f4477546a5369a3ac609cf0506b",
+      "source": "C:\\Users\\vakir\\Limacina\\project\\dw\\libraries\\org\\ow2\\asm\\asm-tree\\9.10.1\\asm-tree-9.10.1.jar"
+    },
+    {
+      "coordinate": "org.ow2.asm:asm-util:9.10.1",
+      "path": "libraries/org/ow2/asm/asm-util/9.10.1/asm-util-9.10.1.jar",
+      "sha256": "1bb99d091fba2597dc6d51193e9bbcf0d8447e7ed96bd8f0198b18152f09655c",
+      "source": "C:\\Users\\vakir\\Limacina\\project\\dw\\libraries\\org\\ow2\\asm\\asm-util\\9.10.1\\asm-util-9.10.1.jar"
+    },
+    {
+      "coordinate": "net.fabricmc:sponge-mixin:0.17.4+mixin.0.8.7",
+      "path": "libraries/net/fabricmc/sponge-mixin/0.17.4+mixin.0.8.7/sponge-mixin-0.17.4+mixin.0.8.7.jar",
+      "sha256": "1f0ae44db7295f8626f33b1dc0ad7f043d8954a8d6847247875fcc5dfcecc934",
+      "source": "C:\\Users\\vakir\\Limacina\\project\\dw\\libraries\\net\\fabricmc\\sponge-mixin\\0.17.4+mixin.0.8.7\\sponge-mixin-0.17.4+mixin.0.8.7.jar"
+    },
+    {
+      "coordinate": "net.fabricmc:intermediary:1.20.1",
+      "path": "libraries/net/fabricmc/intermediary/1.20.1/intermediary-1.20.1.jar",
+      "sha256": "caa3fd87dd353fc826a109a2d16f886d6519b47422e3a77cfa0ba8be5829a21e",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\net\\fabricmc\\intermediary\\1.20.1\\intermediary-1.20.1.jar"
+    },
+    {
+      "coordinate": "net.fabricmc:fabric-loader:0.19.5",
+      "path": "libraries/net/fabricmc/fabric-loader/0.19.5/fabric-loader-0.19.5.jar",
+      "sha256": "93044e4dd46de5d8136701292f05e868da096d2c9fddb4793e4fdbcc63efc695",
+      "source": "C:\\Users\\vakir\\Limacina\\project\\dw\\0.19.5.jar"
+    }
+  ],
+  "eula_evidence": {
+    "path": "C:\\Users\\vakir\\.codex\\worktrees\\bloodborne-material-review\\DW\\bloodborne complete\\build\\production-smoke\\final-city\\eula.txt",
+    "sha256": "e4db182aa77b5e31657f4b83f8973c79a8c65217a4383200f9f59f7c94752fad"
+  },
+  "run_directory": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v10-diag-reenter-release2",
+  "server_bind": "127.0.0.1:65300",
+  "server_properties": {
+    "server-ip": "127.0.0.1",
+    "server-port": "65300",
+    "online-mode": "false",
+    "spawn-protection": "0",
+    "level-name": "isolated-smoke-world",
+    "level-type": "minecraft:flat",
+    "generator-settings": "{\"biome\":\"minecraft:plains\",\"layers\":[{\"block\":\"minecraft:bedrock\",\"height\":1},{\"block\":\"minecraft:dirt\",\"height\":126},{\"block\":\"minecraft:grass_block\",\"height\":1}],\"lakes\":false,\"features\":false,\"structure_overrides\":[]}",
+    "generate-structures": "false",
+    "view-distance": "2",
+    "simulation-distance": "2",
+    "max-players": "2",
+    "enable-query": "false",
+    "enable-rcon": "false",
+    "gamemode": "creative"
+  },
+  "review_scene_input": null,
+  "bounded_source_input": null,
+  "ordinary_gameplay_input": null,
+  "diagnostics_input": {
+    "source": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\tools\\review-v10-diagnostics-markers-release2\\review_v10_diagnostics_reenter_input.json",
+    "sha256": "c957d0474c2e4672159ebccfc5b4582dbb7555a2766d034681a4728c1b330c7d",
+    "mode": "REENTER",
+    "seconds": 60
+  },
+  "derived_world_copy": {
+    "source": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v10-diag-enabled-release2\\isolated-smoke-world",
+    "files": [
+      {
+        "path": "data/bloodborne_dw_composite_owners.dat",
+        "bytes": 4828,
+        "sha256": "c24a9df0be0f1605b1199827b25b9cbf659cc8687f6fb2f88d77fbcdef704b24"
+      },
+      {
+        "path": "data/bloodborne_dw_qa_diagnostics.dat",
+        "bytes": 1200,
+        "sha256": "6412a6f0727aa875b56898f54b338621d2a53561328f925adeed7fa54833ae57"
+      },
+      {
+        "path": "data/bloodborne_rp_lamps.dat",
+        "bytes": 225,
+        "sha256": "5511f1c88c1e5762c499e988b898fd2db36a506089a85fc793232cae6b469f3c"
+      },
+      {
+        "path": "data/chunks.dat",
+        "bytes": 59,
+        "sha256": "4f9e967c9c3efa779b3e027e60db35020ef3a380e32be321623495da2f43d2dd"
+      },
+      {
+        "path": "data/raids.dat",
+        "bytes": 90,
+        "sha256": "7a7c0cf6de662bfb76d4c812dbd1cd0f4c4ee81a278f552e876a28b901c6e687"
+      },
+      {
+        "path": "data/scoreboard.dat",
+        "bytes": 200,
+        "sha256": "91c5eb4587e34221c8051ed9352059b0ac0304713a0565bf2d73d044a4b784e6"
+      },
+      {
+        "path": "DIM-1/data/raids.dat",
+        "bytes": 90,
+        "sha256": "7a7c0cf6de662bfb76d4c812dbd1cd0f4c4ee81a278f552e876a28b901c6e687"
+      },
+      {
+        "path": "DIM1/data/raids_end.dat",
+        "bytes": 90,
+        "sha256": "7a7c0cf6de662bfb76d4c812dbd1cd0f4c4ee81a278f552e876a28b901c6e687"
+      },
+      {
+        "path": "entities/r.-1.-1.mca",
+        "bytes": 20480,
+        "sha256": "7a2d667f2b5588aa82520b7237886d1bcb0bbfa0afcf3b3eba354096dc5bdeca"
+      },
+      {
+        "path": "entities/r.-1.0.mca",
+        "bytes": 16384,
+        "sha256": "4f07a540495d50d8b4e55adfbf721e7e850442d7955eac62471617e9bd75c2ee"
+      },
+      {
+        "path": "entities/r.0.-1.mca",
+        "bytes": 32768,
+        "sha256": "67e3e9d481c2143dd6a06faf71f81644aed0b384be05fdc659b03a67cba4fa12"
+      },
+      {
+        "path": "entities/r.0.0.mca",
+        "bytes": 24576,
+        "sha256": "efe0937a88f136a788402338def2486cacf7edc0d4653548316addc41d5c1134"
+      },
+      {
+        "path": "entities/r.1.0.mca",
+        "bytes": 12288,
+        "sha256": "6dec47fb8d2f1a8be680c630eca933dc0a43a6d89a1bb052058e836b87c2233b"
+      },
+      {
+        "path": "level.dat",
+        "bytes": 1494,
+        "sha256": "a58780daf704c995c64245701b047ce2fa82a32109c63ac7b6d2db6ae636c55f"
+      },
+      {
+        "path": "level.dat_old",
+        "bytes": 1496,
+        "sha256": "6592513b62e42963a56721101e91a852f60ac701de0fb18cf30e0cc8e698dea5"
+      },
+      {
+        "path": "poi/r.-1.-1.mca",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "poi/r.-1.0.mca",
+        "bytes": 12288,
+        "sha256": "dc15dfcc7375ef854ae48718982e1a25325aa2bfc15fb84dd47ae5097553fc2d"
+      },
+      {
+        "path": "poi/r.0.-1.mca",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "poi/r.0.0.mca",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "region/r.-1.-1.mca",
+        "bytes": 2174976,
+        "sha256": "c23a04db581e917ac1b24b68549a6f3d0dfe97f3d5cc29e46a5e639d4f9c7ee9"
+      },
+      {
+        "path": "region/r.-1.0.mca",
+        "bytes": 2084864,
+        "sha256": "12f17acfa970fb63d2ad2be319bf0d7337794641e30b2ee32dbc8f03f3e553be"
+      },
+      {
+        "path": "region/r.0.-1.mca",
+        "bytes": 2273280,
+        "sha256": "c833cc2aef5e0de8d38981e02e9aa52e8fa16c86ff8c506b6f1f070810a90198"
+      },
+      {
+        "path": "region/r.0.0.mca",
+        "bytes": 2179072,
+        "sha256": "2cc94a7204a3de174ba5b51fb25fb78063a8c978136d79bef8d80b7a28e3e1d6"
+      },
+      {
+        "path": "region/r.1.-1.mca",
+        "bytes": 1003520,
+        "sha256": "bb374113df5e323550e225517fc6b58629c4964741b7e2d4c6d443e0b235f107"
+      },
+      {
+        "path": "region/r.1.0.mca",
+        "bytes": 1998848,
+        "sha256": "38712dc5a4d0ce24c4096c5e4d73ed2eec9111fd5a93b254eb65e144b2bb320a"
+      }
+    ],
+    "omitted_files": [
+      "session.lock"
+    ],
+    "copy_byte_verification": "PASS",
+    "source_unchanged_after_run": true
+  },
+  "saved_world_gamemode": {
+    "source": "typed copied level.dat Data.GameType",
+    "id": 1,
+    "server_property": "creative",
+    "player_modes_forced": false
+  },
+  "command": [
+    "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\runtime\\java-runtime-gamma\\windows\\java-runtime-gamma\\bin\\java.exe",
+    "-Xmx3G",
+    "-cp",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v10-diag-reenter-release2\\libraries\\org\\ow2\\asm\\asm\\9.10.1\\asm-9.10.1.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v10-diag-reenter-release2\\libraries\\org\\ow2\\asm\\asm-analysis\\9.10.1\\asm-analysis-9.10.1.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v10-diag-reenter-release2\\libraries\\org\\ow2\\asm\\asm-commons\\9.10.1\\asm-commons-9.10.1.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v10-diag-reenter-release2\\libraries\\org\\ow2\\asm\\asm-tree\\9.10.1\\asm-tree-9.10.1.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v10-diag-reenter-release2\\libraries\\org\\ow2\\asm\\asm-util\\9.10.1\\asm-util-9.10.1.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v10-diag-reenter-release2\\libraries\\net\\fabricmc\\sponge-mixin\\0.17.4+mixin.0.8.7\\sponge-mixin-0.17.4+mixin.0.8.7.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v10-diag-reenter-release2\\libraries\\net\\fabricmc\\intermediary\\1.20.1\\intermediary-1.20.1.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v10-diag-reenter-release2\\libraries\\net\\fabricmc\\fabric-loader\\0.19.5\\fabric-loader-0.19.5.jar",
+    "net.fabricmc.loader.impl.launch.server.FabricServerLauncher",
+    "nogui"
+  ],
+  "status": "PASS",
+  "client_visuals": "NOT_RUN",
+  "gameplay": "NOT_RUN",
+  "original_world_loaded": false,
+  "note": "A new flat smoke world cannot prove city performance or entity gameplay.",
+  "startup_seconds": 23.11,
+  "commands": [
+    "list",
+    "help bbrp",
+    "help bb",
+    "help bloodborne"
+  ],
+  "diagnostics_output_ready_before_stop": true,
+  "exit_code": 0,
+  "console_sha256": "d9d1f5faf0ba48d3a73da62f1fde97e67beb14efc1b1eb6cec0d93d3d6f71268",
+  "elapsed_seconds": 35.532,
+  "world_startup": "PASS",
+  "evidence": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v10-diag-reenter-release2\\launch-console.log",
+  "rp_initialization_count": 1,
+  "errors": [],
+  "diagnostics_review": {
+    "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v10-diag-reenter-release2\\review-diagnostics-output.json",
+    "sha256": "63f2b03480c47795805a41af6775c6a01387ab7ac8c76a0dda7c558e3bfced78",
+    "result": {
+      "schema": "dreamwalker-server-diagnostics-review-v1",
+      "mode": "REENTER",
+      "defaultSeconds": 60,
+      "manualClientInteraction": "NOT_RUN_DEDICATED_QA; separate ordinary client proof required",
+      "actualPlayerJoin": "NOT_RUN_FAKE_ACTOR_IS_NOT_NETWORK_JOIN; separate actual client proof required",
+      "productionWorldCreation": "NONE_EXISTING_TARGETS_ONLY",
+      "checks": {
+        "persistedIdentityAndState": true,
+        "operatorPermission2": true,
+        "initiallyDisabled": true,
+        "defaultCommandStarted": true,
+        "readOnlyToolSnapshot": true,
+        "existingTargetsOpened": true,
+        "existingTargetsClosedToOriginal": true,
+        "actualSaveDuringWindow": true,
+        "balancedExistingTargetState": true,
+        "explicitStop": true,
+        "exportExists": true
+      },
+      "reenterPersistedIdentityEquality": true,
+      "operatorPermissionChecks": true,
+      "sessionId": "855e5c9d-92a4-4bbc-8d8b-2df5c8dc20f9",
+      "warmupTicks": 40,
+      "comparisonTickScope": "Whole MinecraftServer.tick HEAD to RETURN; subsequent ticks retained; transition/API startup/stop own overhead separately in core export",
+      "observedWallNs": 8016603100,
+      "observedBaselineTicks": {
+        "allCount": 168,
+        "allSumNs": 351915700,
+        "retained": 168,
+        "dropped": 0,
+        "scope": "QA observer identical in on/off modes; no GPU/block percent inference",
+        "rawNs": [
+          18785400,
+          10870000,
+          9783100,
+          11801600,
+          9791100,
+          9388700,
+          7715800,
+          7198900,
+          7502400,
+          9298200,
+          7979500,
+          7524600,
+          6643600,
+          7200800,
+          7250500,
+          7074800,
+          4760800,
+          4001500,
+          3642700,
+          2530700,
+          3086400,
+          6027300,
+          3193300,
+          3002300,
+          3056800,
+          2661700,
+          2261900,
+          2410900,
+          1865800,
+          1596900,
+          1526500,
+          1228700,
+          1424900,
+          1316800,
+          1582900,
+          1254200,
+          1407700,
+          1061700,
+          1241000,
+          1393100,
+          1377200,
+          1183800,
+          1363500,
+          1238900,
+          1301200,
+          1446600,
+          1553300,
+          1065400,
+          1586300,
+          1946900,
+          2101000,
+          1479100,
+          1442700,
+          1408000,
+          1188500,
+          1120000,
+          1095600,
+          1114000,
+          1130100,
+          1109500,
+          1438100,
+          1233800,
+          1215800,
+          1075800,
+          1560800,
+          1126500,
+          1091200,
+          1204700,
+          1174000,
+          1091900,
+          1073600,
+          1062400,
+          1214200,
+          1132100,
+          1143900,
+          1207200,
+          1038900,
+          1092400,
+          1168100,
+          1139700,
+          1094200,
+          1157200,
+          1157000,
+          1093200,
+          1099900,
+          924000,
+          1108700,
+          1185800,
+          1536900,
+          1359100,
+          1046400,
+          1071300,
+          934700,
+          1091600,
+          1081700,
+          964100,
+          1102600,
+          992400,
+          996400,
+          1000500,
+          1109100,
+          1190700,
+          1156500,
+          1053300,
+          1051900,
+          1011200,
+          1406800,
+          1218100,
+          1203600,
+          1087900,
+          1264400,
+          1451700,
+          1072800,
+          1424000,
+          1167300,
+          1199300,
+          1451800,
+          1362100,
+          1021600,
+          1012300,
+          1163100,
+          1004000,
+          1077800,
+          961300,
+          1129000,
+          960000,
+          982000,
+          1127000,
+          1172000,
+          986200,
+          960500,
+          1049100,
+          1145500,
+          1064300,
+          1003100,
+          1049100,
+          1119000,
+          1133200,
+          1009400,
+          982600,
+          990600,
+          1009900,
+          1160900,
+          1347400,
+          1065200,
+          1060600,
+          1085300,
+          1106600,
+          1114300,
+          1108500,
+          967800,
+          1056300,
+          1024300,
+          1471100,
+          1142200,
+          1055100,
+          1089000,
+          987900,
+          1026000,
+          1037600,
+          1121800,
+          1055300,
+          1063000,
+          1092300,
+          1314200,
+          1109400,
+          958500,
+          1220100
+        ]
+      },
+      "balancedTargetStateBefore": "09d94be8689da1c7981c5300a1e50c0be1fdb5a90cdeceb9087e038d3aebb69e",
+      "balancedTargetStateAfter": "09d94be8689da1c7981c5300a1e50c0be1fdb5a90cdeceb9087e038d3aebb69e",
+      "forcedFlagsRestored": true,
+      "actualSave": true,
+      "exportZipPath": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v10-diag-reenter-release2\\dreamwalker-diagnostics\\diagnostics-855e5c9d-92a4-4bbc-8d8b-2df5c8dc20f9-1791461484838.zip",
+      "exportZipSha256": "2acc2453028399e3b1c220de476aa04199fa16068b67d37e61a25bac4205c9b3",
+      "diagnosticStatus": {
+        "enabled": false,
+        "sessionId": "855e5c9d-92a4-4bbc-8d8b-2df5c8dc20f9",
+        "stopReason": "OPERATOR_STOP",
+        "events": {
+          "allCount": 8,
+          "dropped": 0,
+          "capacity": 2048,
+          "retained": 8
+        },
+        "snapshots": {
+          "allCount": 15,
+          "dropped": 0,
+          "capacity": 128,
+          "retained": 15
+        },
+        "errorKeys": 0,
+        "diagnosticIoQueueSize": 0,
+        "diagnosticIoActiveWorkers": 0,
+        "diagnosticIoQueueMaximum": 4,
+        "filter": {
+          "instanceId": "",
+          "typeId": "",
+          "dimension": "minecraft:overworld",
+          "center": [
+            0,
+            64,
+            -24
+          ],
+          "radius": 0.0,
+          "mode": "all"
+        },
+        "ticks": {
+          "allCount": 168,
+          "dropped": 0,
+          "capacity": 4096,
+          "retained": 168,
+          "unit": "ns",
+          "allSumNs": 351915700,
+          "status": "MEASURED",
+          "allMeanNs": 2094736.3095238095,
+          "allMaxNs": 18785400,
+          "allCountOver50ms": 0,
+          "quantileScope": "RETAINED_WINDOW_ONLY",
+          "p95Ns": 7715800,
+          "p99Ns": 11801600
+        },
+        "clientBatches": {
+          "allCount": 0,
+          "dropped": 0,
+          "capacity": 256,
+          "retained": 0
+        },
+        "remainingSeconds": 51.5294915
+      },
+      "targetStateRows": [
+        {
+          "name": "IndependentArchitectureDoorHeight0125",
+          "root": [
+            -60,
+            64,
+            40
+          ],
+          "state": "Block{bloodborne_dw:prototype_double_door}[open=false,profile=base,rotation=0,variant=0]",
+          "instanceId": "7400a07c-2735-4233-bf8c-22ba028ab040"
+        },
+        {
+          "name": "MenuLinkedArchitectureDoorSnapshot",
+          "root": [
+            -8,
+            64,
+            -16
+          ],
+          "state": "Block{bloodborne_dw:prototype_double_door}[open=false,profile=base,rotation=0,variant=0]",
+          "instanceId": "cfd181dd-a915-45d6-93f7-d5c51b3ba2f3"
+        },
+        {
+          "name": "AcceptedTreeHeight0125",
+          "root": [
+            36,
+            64,
+            40
+          ],
+          "state": "Block{bloodborne_dw:prototype_tree}[open=false,profile=base,rotation=0,variant=0]",
+          "instanceId": "8baef9eb-3e62-48d3-9f1d-d8827c4b1b3f"
+        },
+        {
+          "name": "Glazing01FloorHeightMinus0125",
+          "root": [
+            12,
+            64,
+            40
+          ],
+          "state": "Block{bloodborne_dw:prototype_thin_window}[mount=vertical,open=false,profile=base,rotation=0,variant=0]",
+          "instanceId": "954db611-5643-4126-a723-9faf61bc757f"
+        },
+        {
+          "name": "Glazing02FloorHeightMinus0125",
+          "root": [
+            -36,
+            64,
+            60
+          ],
+          "state": "Block{bloodborne_dw:prototype_glass_window_02}[mount=vertical,open=false,profile=base,rotation=0,variant=0]",
+          "instanceId": "543e273f-7904-4cf9-a0a5-88249786b499"
+        },
+        {
+          "name": "Glazing03Height2",
+          "root": [
+            60,
+            64,
+            80
+          ],
+          "state": "Block{bloodborne_dw:prototype_glass_window_03}[mount=vertical,open=false,profile=base,rotation=0,variant=0]",
+          "instanceId": "430f88b1-bde8-4b6a-907c-3d3b05b4d27f"
+        },
+        {
+          "name": "NativeLadderHeight2",
+          "root": [
+            60,
+            64,
+            40
+          ],
+          "state": "Block{bloodborne_dw:prototype_ladder}[diagonal=false,facing=north,freestanding=true,profile=base,source_clone=false,variant=0,waterlogged=false]",
+          "instanceId": "0dc15794-2f88-4df3-81f9-3673dc11e10d"
+        },
+        {
+          "name": "NativeWallHeight2",
+          "root": [
+            -36,
+            64,
+            40
+          ],
+          "state": "Block{bloodborne_dw:prototype_wall}[connections=auto,east=none,material=6,north=none,profile=base,rotation=4,south=none,up=true,waterlogged=false,west=none]",
+          "instanceId": "750d6567-1f6d-4b7a-8b9b-6bb7a67e7aef"
+        },
+        {
+          "name": "RoofHeight2",
+          "root": [
+            -12,
+            64,
+            40
+          ],
+          "state": "Block{bloodborne_dw:prototype_roof}[open=false,profile=base,rotation=0,variant=0]",
+          "instanceId": "32348edf-62a6-44dd-9c87-e31a554e3959"
+        },
+        {
+          "name": "IndependentRpDoorBalanced",
+          "root": [
+            8,
+            64,
+            16
+          ],
+          "instanceId": "9da66034-fbbd-409c-aebe-b47a9110ed9d",
+          "asset": "door_2",
+          "open": false,
+          "locked": false,
+          "dogsVisible": true,
+          "scale": 1.0,
+          "yaw": 90.0,
+          "x": 8.0,
+          "y": 64.0,
+          "z": 16.0,
+          "woodPulseActive": false
+        },
+        {
+          "name": "MenuLinkedRpDoorSnapshot",
+          "root": [
+            8,
+            64,
+            -16
+          ],
+          "instanceId": "975aa8de-997c-449e-b1a2-be0e41098d6d",
+          "asset": "door_1",
+          "open": false,
+          "locked": false,
+          "dogsVisible": true,
+          "scale": 1.0,
+          "yaw": 90.0,
+          "x": 8.0,
+          "y": 64.0,
+          "z": -16.0,
+          "woodPulseActive": false
+        },
+        {
+          "name": "RpLadderSnapshot",
+          "root": [
+            40,
+            64,
+            16
+          ],
+          "instanceId": "694bd6fa-6316-4c04-9ddd-bf959d4c4715",
+          "asset": "ladder",
+          "open": true,
+          "locked": false,
+          "dogsVisible": true,
+          "scale": 1.0,
+          "yaw": 90.0,
+          "x": 40.5,
+          "y": 93.5625,
+          "z": 18.046875,
+          "woodPulseActive": false
+        },
+        {
+          "name": "RpStairsSnapshot",
+          "root": [
+            64,
+            64,
+            16
+          ],
+          "instanceId": "7792d27a-24ef-410d-b6f1-d6ae54a235a7",
+          "asset": "stairs",
+          "open": false,
+          "locked": false,
+          "dogsVisible": true,
+          "scale": 1.0,
+          "yaw": 90.0,
+          "x": 64.5,
+          "y": 76.0,
+          "z": 29.8125,
+          "woodPulseActive": false
+        },
+        {
+          "name": "WoodGateSnapshot",
+          "root": [
+            24,
+            64,
+            -16
+          ],
+          "instanceId": "ff4f5cc3-0530-4a9e-b0ee-c32266f93188",
+          "asset": "wood_gate",
+          "open": false,
+          "locked": false,
+          "dogsVisible": true,
+          "scale": 1.0,
+          "yaw": 90.0,
+          "x": 24.5,
+          "y": 64.0,
+          "z": -15.5,
+          "woodPulseActive": false
+        },
+        {
+          "name": "LampASnapshot",
+          "root": [
+            60,
+            64,
+            -16
+          ],
+          "instanceId": "dc9c153d-4e92-45d8-9bde-d5f91f510ff8",
+          "asset": "hunterlamp",
+          "open": false,
+          "locked": false,
+          "dogsVisible": true,
+          "scale": 1.0,
+          "yaw": 90.0,
+          "x": 60.0,
+          "y": 64.0,
+          "z": -16.0,
+          "woodPulseActive": false
+        }
+      ],
+      "status": "PASS_SERVER_DIAGNOSTICS_REENTER",
+      "checksPassed": true
+    }
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "schema": "dreamwalker-review-v10-next-candidate-proof-plan-v1",
+  "status": "FROZEN_CANDIDATE7_NATIVE131_PASS_RUNTIME_PENDING_NOT_EXECUTED",
+  "execution_performed": false,
+  "production_sha256": "2cf96fbe771bb44bba4e4e8f320ed65a8bc0a8ffe7a8149b07fbd9ec691592c1",
+  "production_jar": "build/frozen-artifacts/v10-attempt-7/dreamwalker-bb-fabric-1.20.1-0.1.0-prototype.5.jar",
+  "native_tests": 131,
+  "native_xml": "reports/FIRST_SET_GAMETEST_V10_ATTEMPT_7.xml",
+  "freeze_report": "build/frozen-artifacts/v10-attempt-7/manifest.json",
+  "core_checks_expected": 20,
+  "superseded_candidate6_sha256": "521337222c6f75b31a094c4944963c4103c514985d5696d55187f31dc4b17ca5",
+  "reason": "Actual MIN9 REFUSED visual_bounds_outside_build_height for cage; candidate6 successes are retained historical. Narrow motion-envelope correction requires a fresh production freeze and all current runtime proofs.",
+  "required_artifact_binding": "Use exact candidate7 freeze/mainSourceInputs and artifact SHA only after actual native/build PASS. No candidate6 wrapper may be rebound to a new SHA.",
+  "planned": {
+    "author_report": "reports/V10_SERVER_AUTHOR_MIN_ATTEMPT_6.json",
+    "author_world": "build/runtime-server-v10-author-min-attempt6/isolated-smoke-world",
+    "first_entry_settings_report": "reports/V10_SCENE_BEFORE_FIRST_ENTRY_SETTINGS_6.json",
+    "production_only_reopen_report": "reports/V10_SERVER_PRODUCTION_ONLY_REOPEN_RELEASE4.json",
+    "production_only_reopen_world": "build/runtime-server-v10-prod-only-reopen-release4/isolated-smoke-world",
+    "typed_pristine_report": "reports/V10_PRODUCTION_ONLY_BASELINE_TYPED_RELEASE4.json",
+    "full_server_report": "reports/V10_SERVER_FULL_RELEASE3.json",
+    "diagnostics_server_reports": [
+      "reports/DIAGNOSTICS_SERVER_DISABLED_V10_RELEASE3.json",
+      "reports/DIAGNOSTICS_SERVER_ENABLED_V10_RELEASE3.json",
+      "reports/DIAGNOSTICS_SERVER_REENTER_V10_RELEASE3.json"
+    ],
+    "diagnostics_typed_report": "reports/DIAGNOSTICS_SERVER_TYPED_INDEPENDENT_V10_RELEASE3.json",
+    "diagnostics_combined_report": "reports/REVIEW_V10_DIAGNOSTICS_RELEASE3.json",
+    "clients": {
+      "AUTHOR": "reports/V10_CLIENT_MIN_ATTEMPT_12.json",
+      "REENTER": "reports/V10_CLIENT_REENTER_RELEASE3_ATTEMPT_1.json",
+      "FULL_KAPPA": "reports/V10_CLIENT_FULL_RELEASE3_ATTEMPT_1.json"
+    },
+    "scene_archive": "build/Review-v10-pristine-scene-release3.zip",
+    "scene_archive_report": "reports/REVIEW_V10_SCENE_ARCHIVE_RELEASE3.json",
+    "delivery_directory": "build/delivery/v10-release3"
+  },
+  "unchanged_gates": [
+    "18 actual ordinary architectural item/place/attack cases; current client render/height/UV/icons proof",
+    "Canonical69 actual RP item/place/native-STONE sameUUID/attack/native cleanup; RP-on-RP twoUUID proof",
+    "AUTHOR/REENTER actual GUI menus and typed persisted rules/policies/lamps; fresh-baseline delivery retains3 levers and4 lamps",
+    "Full selected-mod client, normal save/exit, actual strict42 Iris options and advancing active pipeline",
+    "Current dedicated diagnostics OFF/ON/REENTER and both actual clients; bounded primary logs/ZIP bytes",
+    "Current production-only reopened pristine baseline typed state, scene archive per-entry SHA/CRC",
+    "No missing local KIT guide links; source/production/QA separation; preserved full request texts"
+  ],
+  "limits": [
+    "No build/game/archive/package execution by this plan",
+    "No all69 gameplay PASS before current successful complete client wrappers",
+    "No full city conversion/final numeric IDs/manual visual acceptance claim"
+  ]
+}

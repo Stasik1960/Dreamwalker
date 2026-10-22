@@ -1,0 +1,263 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_spruce_pressure_plate_on",
+  "displayName": "Объёмная декоративная деталь",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/spruce_pressure_plate_on",
+              "offset": [
+                0,
+                16.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                0.0,
+                0.0,
+                2.0
+              ],
+              "to": [
+                16.0,
+                23.0,
+                14.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                0.0,
+                0.0,
+                2.0
+              ],
+              "to": [
+                16.0,
+                4.0,
+                14.0
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                4.0,
+                5.0
+              ],
+              "to": [
+                16.0,
+                6.0,
+                11.0
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                6.0,
+                7.0
+              ],
+              "to": [
+                16.0,
+                18.0,
+                9.0
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                18.0,
+                6.0
+              ],
+              "to": [
+                16.0,
+                20.0,
+                10.0
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                20.0,
+                5.0
+              ],
+              "to": [
+                16.0,
+                23.0,
+                11.0
+              ]
+            }
+          ],
+          "simpleCollisionByRotation": [
+            [
+              {
+                "from": [
+                  0.0,
+                  0.0,
+                  2.0
+                ],
+                "to": [
+                  16.0,
+                  23.0,
+                  14.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -1.89949494,
+                  0.0,
+                  -1.89949494
+                ],
+                "to": [
+                  17.89949494,
+                  23.0,
+                  17.89949494
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  2.0,
+                  0.0,
+                  0.0
+                ],
+                "to": [
+                  14.0,
+                  23.0,
+                  16.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -1.89949494,
+                  0.0,
+                  -1.89949494
+                ],
+                "to": [
+                  17.89949494,
+                  23.0,
+                  17.89949494
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  0.0,
+                  0.0,
+                  2.0
+                ],
+                "to": [
+                  16.0,
+                  23.0,
+                  14.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -1.89949494,
+                  0.0,
+                  -1.89949494
+                ],
+                "to": [
+                  17.89949494,
+                  23.0,
+                  17.89949494
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  2.0,
+                  0.0,
+                  0.0
+                ],
+                "to": [
+                  14.0,
+                  23.0,
+                  16.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -1.89949494,
+                  0.0,
+                  -1.89949494
+                ],
+                "to": [
+                  17.89949494,
+                  23.0,
+                  17.89949494
+                ]
+              }
+            ]
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          0.0,
+          0.0,
+          2.0
+        ],
+        "to": [
+          16.0,
+          23.0,
+          14.0
+        ]
+      },
+      "sourceVariant": "Объёмная декоративная деталь",
+      "sourcePlacementOffset": [
+        0,
+        16.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        16.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/spruce_pressure_plate_on"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:spruce_pressure_plate[variant:powered=true]"
+      ]
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "simple-imported-physical-v1: one ordinary bounded cuboid by default; reviewed doorway/arch, stair/landing and ladder exceptions use at most three useful boxes; passable source planes stay passable. Eight orientations use a few ordinary AABBs bounded by the actual transformed visual vertices, never strips or a second expanded rotated AABB. Six root-cell-face overflows strictly smaller than 0.5 blocks are cropped independently after instance yaw, vertical mount and SourceShift; long extents are retained. Selection and visuals unchanged. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped.",
+  "simplePhysicalCollision": true
+}

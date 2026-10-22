@@ -1,0 +1,122 @@
+{
+  "schema": "dreamwalker-rp-v9-native-outcomes-v1",
+  "status": "PASS_10_REQUESTED_RP_NATIVE_CHECKS",
+  "nativeXml": {
+    "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\reports\\FIRST_SET_GAMETEST_V9_ATTEMPT_6.xml",
+    "bytes": 15651,
+    "sha256": "faef87b415ef2ca4350fcedcadf6f03e91f8f7017a80a8c34ed631f2a5da7468"
+  },
+  "nativeLog": {
+    "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\reports\\REVIEW_V9_BUILD_AND_CORE_ATTEMPT_6.log",
+    "bytes": 2486426,
+    "sha256": "537d81ecae22742240a39a6f6ad875c4fa3f6f5b47056c30d128707246c17144"
+  },
+  "rpTestCount": 10,
+  "productionArtifact": {
+    "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\libs\\dreamwalker-bb-fabric-1.20.1-0.1.0-prototype.4.jar",
+    "bytes": 32676783,
+    "sha256": "3f4461775234a5f86db657cd0c5322ea97b91347dcabf195556e48b496494d63"
+  },
+  "rpFailures": 0,
+  "wholeNativeTestCount": 100,
+  "wholeNativeFailures": 0,
+  "cases": [
+    {
+      "name": "rpv9behaviourgametests.normalrpitemrejectspositivephysicaloverlapandbuilderrotationrollsback",
+      "timeSeconds": "0.058",
+      "status": "PASS",
+      "failure": []
+    },
+    {
+      "name": "rpv9behaviourgametests.actualwindowandgateblockbothsideswithoutdecorativeboundingboxwall",
+      "timeSeconds": "0.057",
+      "status": "PASS",
+      "failure": []
+    },
+    {
+      "name": "rpv9behaviourgametests.actualladderworkingzoneclimbsdescendsandmoveswithbottombone",
+      "timeSeconds": "0.063",
+      "status": "PASS",
+      "failure": []
+    },
+    {
+      "name": "rpv9behaviourgametests.exactfurniturealiasespreserveoldregistryuuidnamepayloadandlinks",
+      "timeSeconds": "0.062",
+      "status": "PASS",
+      "failure": []
+    },
+    {
+      "name": "rpv9behaviourgametests.realsmallchandelieritemmountsvisiblebaseandceilinghook",
+      "timeSeconds": "0.077",
+      "status": "PASS",
+      "failure": []
+    },
+    {
+      "name": "rpv9behaviourgametests.realstairsladderandwindowitemsusebaseswhilesavedsourceposisexact",
+      "timeSeconds": "0.122",
+      "status": "PASS",
+      "failure": []
+    },
+    {
+      "name": "rpv9behaviourgametests.authoredgateandladderkeyframesremainnumericexactandidleneutral",
+      "timeSeconds": "0.127",
+      "status": "PASS",
+      "failure": []
+    },
+    {
+      "name": "rpv9behaviourgametests.actualplayerwalkstwentysixsourcetreadsanddescends",
+      "timeSeconds": "0.149",
+      "status": "PASS",
+      "failure": []
+    },
+    {
+      "name": "rpv9behaviourgametests.dogsareindependentandtypedstatesurvivespickandsave",
+      "timeSeconds": "0.141",
+      "status": "PASS",
+      "failure": []
+    },
+    {
+      "name": "rpv9behaviourgametests.gateoneshotrejectsheldcadenceoffhandandreloadbackground",
+      "timeSeconds": "0.174",
+      "status": "PASS",
+      "failure": []
+    }
+  ],
+  "originalForgeGate": {
+    "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\reports\\SOURCE_WOODGATE_V9_COMPARISON.json",
+    "bytes": 7913,
+    "sha256": "22e7c26616edc585c30e459fd3c09580fe162e8cf86cdeabde225880d7f84f82"
+  },
+  "catalogueResourceAudit": {
+    "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\reports\\RP_V9_OBJECT_AUDIT.json",
+    "bytes": 536868,
+    "sha256": "876395ad07c1531f13dde61cebdb959c4f6a1c2b6951432802935bacaf404204"
+  },
+  "geometry": {
+    "stairsSourceTreads": 26,
+    "ladderWorkingPlanes": 2,
+    "ladderClimbingZones": 2,
+    "npcWindowWorkingPlanes": 1,
+    "woodGateWorkingPlanes": 1,
+    "smallChandelierPhysicalBoxes": 0,
+    "newDefaultLadderBaseAnchorPixels": [
+      0,
+      -473,
+      -24.75
+    ],
+    "newStairsBaseAnchorPixels": [
+      0,
+      -192,
+      -213
+    ],
+    "loadedSourceEntityPose": "not compensated; exact Pos roundtrip tested",
+    "customEntityLookup": "server/client loaded index, real bounds; no expanded chunk scan"
+  },
+  "placementScope": "actual ItemUsageContext floor/ceiling/base placement, one spawned object, active overlap refusal, checked rotation rollback and creative attack at real stair/ladder base beyond8m from origin",
+  "nativeScope": "Fabric development GameTest runtime; real items/entities/player move/travel. This is separate from an ordinary remapped JAR client/server launch.",
+  "manualGameplay": "NOT_RUN",
+  "manualVisualAcceptance": "PENDING_USER_REVIEW",
+  "fullRpCatalogueAccepted": false,
+  "originalInputsModified": false,
+  "rpModelTextureAnimationBytesChanged": false
+}

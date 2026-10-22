@@ -1,0 +1,66 @@
+{
+  "schema": "dreamwalker-review-v10-menus-implementation-v1",
+  "status": "READY_ISOLATED_JAVA17_ACTUAL_CLIENT_NOT_RUN",
+  "productionArtifactSha256": "afe24b08295fa64bf8f598a279622c7a9013b587f6ff3d67638dea9da111c32e",
+  "productionCodeChangedByQa": false,
+  "source": "src/review/java/dev/dreamwalker/bloodbornedw/review/ReviewV10MenusProbe.java",
+  "sourceSha256": "21103b58e4a97b941be6a2d6bc23706ae1548fc86c0d43a390f6bfcbdf49ccd2",
+  "isolatedCompile": {
+    "status": "PASS_ISOLATED_JAVA17_API",
+    "log": "build/review-v10-menus-api-check/compile.log",
+    "logSha256": "05c0b007e1c8c9828de79281e03e7023c961e348ecb876d6fb6c03fa5516c3c5"
+  },
+  "clientMarkerProperty": "dreamwalker.review.v10.input",
+  "clientMarkerSchema": "dw-review-v10-client-input-v1",
+  "authorOutput": "Path or embedded object with fixtures key/kind/uuid/root[3]",
+  "modes": [
+    "AUTHOR",
+    "REENTER"
+  ],
+  "requiresFixtures": [
+    "lamp_A",
+    "lamp_B",
+    "lamp_C",
+    "lamp_D",
+    "lever_1",
+    "lever_2",
+    "lever_3",
+    "architecture_door",
+    "rp_door",
+    "wood_gate"
+  ],
+  "fixturesSetup": "Already Creative and actual server OP4; harmless dw_v10_gui scoreboard objective with event_counter initial score. Author remote D registration is setup only; link/travel must be ordinary GUI. Remote D at800,64,64 with floor radius2.",
+  "proofMethods": [
+    "Actual Screen.mouseClicked / charTyped / keyPressed / mouseScrolled",
+    "Ordinary builder interactItem packet and mouse KeyBinding input through existing production mixin",
+    "Ordinary exact-ray entity interact / block interact / intentional Creative attack packets",
+    "Server APIs readback only; marker player positioning/inventory and actual save are explicitly setup/lifecycle"
+  ],
+  "authorPlanned": [
+    "Rename A/B/C/D and mount B+.125 same UUID",
+    "Explicit GUI A-B/A-C/A-D named line default bidirectional",
+    "Actual ordinary A-B-A widgets and visible live cooldown/nonpause",
+    "Esc no travel; directed A-B without reverse; rename; selected unlink keepsother routes",
+    "Actual GUI ALL3 mixed targets; original70tick lever activations; architecture/RP stable state, gate one pulse",
+    "Harmless ordered after-open/close scoreboard commands only on real transitions",
+    "Manual levers-only actual packet refusal; reset without pulse/duplicate commands",
+    "Intentional removal C and mandatorylever3; incomplete rule; actual save"
+  ],
+  "reenterPlanned": [
+    "Distinct saved-world line/name/direction/rule/commands/removal readback through actual GUI",
+    "Real D chunk+entity unloaded precondition then ordinary A-D widget travel",
+    "Actual arrival same saved UUID with temporary tickets/pending/context all0",
+    "Ordinary D-A widget return after live delay"
+  ],
+  "screenshotNames": [
+    "v10-tool-objects.png",
+    "v10-tool-lamps.png",
+    "v10-tool-rules-all.png",
+    "v10-lamp-destinations.png"
+  ],
+  "screenshotMethod": "Vanilla ScreenshotRecorder native framebuffer after5 rendered client ticks; exact run/screenshots paths and actual dimensions in report",
+  "guiScale": 1,
+  "requestedWindow": "Root launches1280x720; QA records actual window/framebuffer dimensions",
+  "actualClientStatus": "NOT_RUN",
+  "manualVisualAcceptance": "NOT_RUN"
+}

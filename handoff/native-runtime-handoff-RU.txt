@@ -1,0 +1,244 @@
+NATIVE_RUNTIME — ПЕРЕДАЧА ДЛЯ НОВОГО ПК/ЧАТА
+Состояние на 2026-10-22. Реализация остановлена по прямому указанию пользователя
+ради полного переносимого GitHub checkpoint. Это не READY и не завершение задачи.
+
+1. КОРНИ И НЕИЗМЕНЯЕМЫЕ ВХОДЫ
+
+ROOT = C:\Users\vakir\.codex\worktrees\3f07\DW-native-grid-city-20261022
+SOURCE = ROOT\source. Самые свежие runtime/QA исходники находятся здесь.
+Не брать старый Git HEAD вместо этих рабочих файлов и не делать reset.
+
+Актуальное пользовательское задание полностью перечитано:
+C:\Users\vakir\.codex\worktrees\3f07\DW\audits\Dreamwalker-BB\2026-10-21-native-grid-city\START-RU.txt
+Оно дополнено сохранением ВСЕХ ранее явно объединённых конструкций. Полная карта,
+совместимый JAR и исходники остаются целью; пилот не является конечным результатом.
+
+Неизменяемая исходная пара:
+C:\Users\vakir\.codex\worktrees\3f07\DW-city-mesh-20261018\deliverables\block-fixes-2-20261020\game\dreamwalker-bb-materials.1-streaming.7-blocks.2.jar
+SHA256 40cecfb7e5cf783a762e350fc1864518c39abff177f6f025cb94892a181fbf51
+Карта рядом: map\bloodborne-blocks-fixed-2.
+Исходники базы: DW-city-mesh-20261018\bloodborne complete, именно рабочие файлы.
+ordinary.partial НЕ использовать.
+
+Нужны ОБЕ сохранённые БД, а не только исходники Java:
+ROOT\research\native-grid-plan\plan.sqlite — один актуальный глобальный план;
+C:\Users\vakir\.codex\worktrees\3f07\DW-ordinary-city-pilot-20261020\research\city-pilot\full-city-copy.ordinary-migration\plan.sqlite
+— исходный immutable cache/owners (около 6.79 GB). Его old.chunk_cache позволяет
+не перечитывать мир. Полные source bindings лежат в плане/receipt/source-binding.json.
+На новом ПК абсолютные пути должны быть перенесены через проверенный процесс
+rebind из переносимого комплекта. Не подделывать SHA/mtime и не ослаблять guards.
+
+Хранилище LocalC, E migration PAUSED. Перед процессами прочитать storage-mode.json
+и C-return-result.txt, Guard.ps1 -Mode Check; процессы через -Mode Operation.
+Root единолично управляет сборками/Minecraft/записью карт и БД.
+
+2. ТЕКУЩАЯ ПАРА И ПОДТВЕРЖДЁННЫЕ РЕЗУЛЬТАТЫ
+
+Production:
+SOURCE\build\libs\dreamwalker-bb-fabric-1.20.1-0.1.0-v12.7.4-native-grid.1.jar
+SHA256 3477fa1f016126eb58ea294a37a0ba06ad711f7e137ae72b103919df45e35bd3
+Каталог SOURCE\src\architecture\resources\assets\bloodborne_dw\native_grid\catalog.json
+SHA256 638d84a879a7823fd4ed866b2109fbe864cda4690383745fbc5a53bc940fa550
+3179 shared cell types. Production после этого НЕ менялся.
+
+Пилоты: ROOT\research\pilot\baseline и ROOT\research\pilot\candidate.
+Оригинальная область 427 чанков плюс конечные 91 dependency = 518 чанков.
+Ремонт BOTH maps выполнен root, точные журналы research\pilot\dependency-repair.
+Native relight candidate РЕАЛЬНО PASS: 554/554, pending0, saveFlushed, normal exit.
+Receipt research\native-grid-plan\context-extended-relight-engine.json и accept-relight.
+Старые 8 saved rows были честно архивированы/инвалидированы, не adopted.
+
+Исходный baseline full-target 4G несколько раз реально OOM до действий. Это FAIL.
+research\function-qa\offline-source-reference.json SHA256
+074176148f8a18e421e5c651a4e8b8812ad21c0d33c2c7c975638dd9f11be756
+имеет статус OFFLINE_ASSET_REFERENCE_NOT_GAMEPLAY, а НЕ baseline gameplay PASS.
+Baseline-reference-plan SHA a80cd2f6c3ac7dc77b2d01f4b08cac92c2dcdc3c162e575f7313508eb2e5a472.
+
+Ordinary NativeGrid runtime уже реализован: part/bank128, общие подготовленные
+quads/shapes, нормальный chunk renderer/material layers, статические ячейки без BE/
+UUID/NBT/instance cache. Whole templates имеют конечные offsets; item whole model
+однократно нормализована в unit bbox. Для необходимых старых функциональных BEs
+есть ограниченный dry/luminance0 NativeGridBase:int bridge, не новый owner engine.
+Native state storage HEAD-before-Lithium оптимизация уже проверена root strict JAR
+diff и actual registry gate. Эти production части сейчас НЕ ПРАВИТЬ без новой причины.
+
+3. ТЕКУЩИЙ ОТКРЫТЫЙ QA ДЕФЕКТ — ТОЛЬКО ТЕСТОВОЕ ДОПУЩЕНИЕ
+
+Текущий QA source:
+SOURCE\src\nativegridqa\java\dev\dreamwalker\bloodbornedw\nativegridqa\NativeGridFunctionChecks.java
+SHA256 8bf5da029687d4d60e93e46e56d1479f936a090bbd566a064147f786c5117ec2
+Последний реально запущенный helper SHA256
+574670c88a74f4ebed280e7d41462f22ac84e208cb71ea1a9e5d089931acf815.
+
+Последний plan research\function-qa\candidate-actual-footprint-plan.json
+SHA256 87075dccc42d30ef6429e2bc9b9664b126bf6539a7a78b16d6e0a2119ba75354.
+Последний report research\function-qa\candidate-actual-footprint\functions.json
+SHA256 cbe2eaa4b26bf163b728ebc2e955afcc154a44c539f99a996df5c2a1af0876e7.
+Реальный полный профиль 4G, 170.437s, сохранение подтверждено, standRestored=true,
+normalServerThreadFinished=true. Общий статус FAIL; exitCode0 не превращает FAIL в PASS.
+
+УСПЕШНО в этом последнем запуске: обычная установка двери COMMITTED 12cells,
+прицельный ПКМ открытия, реальное изменение collision, ПКМ закрытия и возврат
+collision. Затем остановка на QA assertion:
+  Manual door must retain the bound source art and yaw
+То есть bridge/tree/statue actions ещё НЕ завершены. Это не обнаруженный дефект
+production: обычный old item законно нормализует скрытую source variant2 в рабочую0.
+
+Факты из installedWholeObjects/placements последнего report:
+  source root [990,-58,139], source_dark_arch_door, variant2, yaw2,
+  source SourceShift [0,-1,0].
+  picked item УЖЕ имеет BlockStateTag variant0/profile base/open false.
+  manual installed state = source_dark_arch_door variant0, yaw2, profile base,
+  payload = {DecorativePlacementOptics:1,ImportedTypeVersion:1}; SourceShift отсутствует.
+  actual closed/open union = x1024, y225..228, z110..112, 12 ячеек.
+
+Точное объяснение БЕЗ нового JVM:
+CompositeRootBlock.art сначала проверяет ImportedSourcePartsV127.part(state),
+затем art(ImportedSourcePartsV127.installation(state), markPayload(null)).
+SOURCE\src\architecture\resources\bloodborne_dw\imported-source-parts-v127.json
+SHA256 eec51fca5bcde0f9a2177a62a7e26922a6686ebe0cfe31637632c1bf4957bc86:
+source_dark_arch_door variants1/2 имеют defaultInstallationPose0.
+Root разрешил минимально убрать требование SAME VARIANT, сохранив SAME registry/yaw
+и связав нормализацию с этой точной политикой. ЭТО ИСПРАВЛЕНИЕ ЕЩЁ НЕ ПРИМЕНЕНО.
+
+Bridge fixture остаётся type1713, dry/lum0, exact collision=[] и outline=[].
+Его source proof research\bridge-door-background-source-proof.json SHA256
+baf66ac7f3e4a2b0012de6850748ea1abed5d9303e2fa4bf620e108a79e86d6a.
+Исходный контакт offset[0,-1,1] после source→manual shift delta [0,+1,0] даёт
+actual helper offset[0,0,1], world[1024,225,112]. Он входит в сохранённый union12.
+До нового JVM подтвердить его в ОБОИХ closed/open footprints по точному provider/
+данным, а затем оставить реальный runtime membership guard. Не выдумывать формы.
+Для source_dark_arch_door simplePhysicalCollision=true, functionalDoorPhysics=false;
+ImportedFullMapCollisionV127 содержит только variants1/2 (не0), поэтому normal0
+идёт через ImportedCollisionV126.objects[type][0].closedBase/openBase, shapes[yaw2],
+ImportedCollisionMath.transform(rotation0,mount0,shift0,crop=true), затем clip1e-8.
+Это конечное offline вычисление по существующим ресурсам, новый экспорт/MC не нужен.
+
+Текущее QA уже исправлено и не нужно ломать заново:
+- Перед каждым affected action обычный world.getChunk для 16 объявленных stand chunks,
+  без force/persistent tickets. Предыдущий loaded-neighbor FAIL был только истёкшим
+  UNKNOWN ticket после 40ticks settle; его точный LAST_RESULT сохранён отдельно.
+- Стенд min[1007,224,95], max[1040,256,128], root[1024,225,111]. Все ~38k ячеек
+  AIR/noBE/noOwner проверяются до whole fixture. SourceShift source НЕ используется
+  как гипотетическая маска. После normal item placement сохраняются actual state,
+  Base64/SNBT payload и actual closed+open union ДО guard; каждая ячейка должна быть
+  внутри этого стенда/declared chunks/loaded. Cleanup обычным удалением своего owner;
+  finally проверяет весь стенд AIR. Нового raw setBlock restore нет.
+- Fzzy Config Worker non-daemon threads оставались после normal server shutdown.
+  Один thread dump доказал Server thread ABSENT. QA-only exit hook ждёт SERVER_STOPPED
+  и завершения server.getThread(), затем завершает VM. Production модпак не меняли.
+- Door/background independent break: type1713 имеет исходный EMPTY outline, поэтому
+  отдельный break честно использует server interaction API, без ложного ray PASS.
+  Статический selectable-cell ray pick/place/break уже реально PASS ранее.
+
+Не повторять успешные группы. Исходный research\function-qa\candidate\functions.json
+SHA256 72d719a60fbeeab0be6bf717111df6b4dc1b55d56d442d08f9dd0145e981618c
+содержит 84 checks TOTAL = 83 PASS + 1 FAIL. 83 успешных protected/windows/light/
+migratedNativeGrid ladder/static-cell checks наследуются отдельно; старый FAIL
+не перезаписывается и не переименовывается. Последующие папки candidate-continuation
+(report3d7517...), candidate-door-loaded (report2ae09f...) и candidate-actual-footprint
+сохраняют цепь реальных отказов и исправлений QA.
+Следующий запуск — отдельные plan/output, только failed door bridge + unrun tree/statue,
+и финальные original read-only/stand invariants. Одна QA-only сборка root:
+  gradlew.bat remapNativeGridQaJar
+Затем существующий root driver через Guard:
+  python tools/native-grid/run_functions.py --plan <новый bound continuation plan>
+Production3477/catalog638 не перестраивать ради QA. Не использовать --authoring-reference.
+Не запускать пока не готов точный minimalfix и новый plan; текущий87075 повторять бессмысленно.
+
+Downstream source факты, проверенные перед остановкой:
+- SourceOriginalTreeBlock.art ЯВНО возвращает super.art(state.with(VARIANT,0),newNBT).
+  Источник tree variant6 законно ставится как whole0. QA уже берёт ACTUAL installed
+  footprint, не требует sourcevariant6/sourceoffsets. Не добавлять такой assertion.
+- Native statue должна сохранять точные template roles/состояния; здесь обычной
+  нормализации source variant нет, root/templates были проверены в source() чтением.
+  Native whole item7roles и ray/whole removal пока не пройдены actual action.
+- В attachBridge сейчас лишнее SAME VARIANT условие на строке около352. Остальные
+  checks сохраняют same registry/yaw, integral shift/mount translation, point in actual
+  both footprints, nonresident fresh CompositeCell BE, только fresh test-owned UUID,
+  exact NativeGridBase1713 и unchanged protected own payload. Не ослаблять эти guards.
+
+4. НОВОЕ ПРАВИЛО ПРЕЖНИХ ЦЕЛЬНЫХ СБОРОК — НЕ ЗАВЕРШЕНО
+
+preserved-assemblies.json НЕ существовал: поиск rg --files -uuu во всём3f07 не нашёл.
+Актуальный START требует создать его по явным существующим решениям, а не по одному
+имени source_assembly/наличию root/helpers/связности owner-графа.
+Root поручил мне manifest в research + read-only exact coverage. Мигратор/DB binding
+будет делать city_migration, actual DB mutations только root. Ни manifest, ни overrides
+пока НЕ СОЗДАНЫ. Не писать их от имени уже законченной проверки.
+
+Обязательный полностью прочитанный источник:
+SOURCE\src\architecture\resources\bloodborne_dw\imported-assembly-v126.json
+SHA256 34df630d42de1cb7cf0a96435c6ada42925d10bd9d23bbf14ff626e239f7d283.
+Он побайтно совпадает с рабочей исходной базой blocks.2. Его9 recipes, 7 hiddenPartRedirects
+и explicitDoorReplacement обязательны; protected originalV12 priority выше.
+
+Уже сохранён адресный read-only audit:
+research\function-qa\preserved-assembly-addressed-input-audit.json
+SHA256 a99dc37619f3ac09b788952e0b884cb83b8f074331fbeac536b9405808c56582
+и summary/inspect-preserved-assembly-inputs.py рядом. DB opened mode=ro, no maps/MC.
+Точный global route COMPLETE installation poses:
+  93066 pose1:19 static
+  90179 pose1:236 static
+  90923 pose2:618 preserve; pose1:30 preserve (функциональные двери)
+  90301 pose1:46 static
+  90143 pose1:16 static
+  90160 pose2:3 static
+  90031 pose1:0 matching source poses вglobal DB (НЕ доказательство отсутствия частей)
+  90797 pose2:28 static
+Итого348 COMPLETE объектов сейчас ошибочно eligible static для будущего полного города.
+В текущем пилоте для этих exact COMPLETE9poses: selected0, activatedNative0,
+fragment/substrate refs0, соответствующих wholetemplates0. Поэтому по ЭТОМУ набору
+не обнаружена адресная коррекция пилота; нельзя выдать это за полное assemblycoverage.
+
+Открытые точные шаги:
+a) Finite matching существующих recipe components: старые pose0/части ещё могут
+   составлять approved complete group и в пилоте. Использовать existing objects/poses,
+   exact relative roots rotated by yaw, componentYawDelta, SourceShift/MountY/profile/
+   OPEN согласно ImportedAssemblyV126.match. Не защищать семейства/все варианты.
+   Runtime.match требует настоящих CompositeBE residents; synthetic native units
+   отличать, не объявлять автоматически совпавшей группой без authority.
+b) Дополнить9 реестром прочих явно подтверждённых сборок из АКТУАЛЬНЫХ источников,
+   без общего исследования истории/субъективных новых объединений. Полезный конечный
+   источник imported-source-parts-v127.json:21registry groups/hidden compatibility
+   poses/defaultInstallationPose; отдельные spec variants могут описывать whole
+   primary из нескольких sourceApplications. Это кандидаты для точной проверки
+   принятого whole-решения, НЕ право автоматически объединить все21 семейство.
+   Само имя source_assembly не доказательство. Hidden redirects не воскрешать.
+c) Перед окончательной записью manifest доложить root scope/count/источники и pilot
+   fragmented IDs. Root просил это явно. У confirmed348 exactposes исправить route
+   перед full promotion: WholeObjectTemplate, либо точное локальное legacy retention
+   с причиной. Весь район/owner component не сохранять ради одного объекта.
+d) City делает единую machine binding/targeted correction готового плана, не новый
+   discovery/полную конвертацию с нуля. Защищённую v12 и успешные незатронутые QA не повторять.
+e) Один представитель preserved assemblies надо включить в уже существующий QA,
+   если нынешний door/tree/statue действительно соответствует списку — переиспользовать,
+   иначе добавить один пример, без новой серии серверов. Текущий dark_arch_door не
+   входит в исходные9, но является whole-policy кандидатом source-parts-v127; пока
+   окончательная registry-классификация этого факта НЕ завершена.
+
+5. ЧТО НЕ ПОВТОРЯТЬ / ПОЛЕЗНЫЕ ГОТОВЫЕ ДОКАЗАТЕЛЬСТВА
+
+Не повторять global world discovery, owner closure района, exports/shared catalog,
+registry floor/storage tests и пройденный native light только ради отчёта/упаковки.
+Без конкретного изменения физических/световых предикатов новый relight не нужен.
+Не делать новые общие ревью. Уже законченный ONE focused repair review:
+research\pilot\dependency-repair\independent-writer-review.json SHA5c5d19a4...
+и narrow dimension fix review research\native-grid-plan\context-extension\independent-dimension-fix-review.json SHA0e186bfd...
+Последний исправляет только ошибочное применение OVERWORLD repaired ledger hash к DIM-1;
+DIM-1 данные были побайтно source/manifest/stage1, никакой NBT normalization не вводили.
+
+Исходные427 native components: research\native-functional-bases\original427-native-dependency-inventory-v3.json
+SHA256 cad025355b2f8d182471e596b01732711214caaeb93a1abf69d1905bff9538f2:
+13731 matching roots/18565 finite offsets, zero missing после91aux/518total.
+Durable cache checkpoint рядом, не декодировать427 заново. 17tree footprint proofs
+уже выведены из exact immutable resources безMC. Не повторять эти поиски.
+
+Read-only full-city function input generator подготовлен, но НЕ запускался fullscope:
+SOURCE\tools\native-grid\qa\full_native_inputs.py. Для будущего FULL_CITY gate нужны
+fresh exactscope nativeBaseCandidates+blockEntityHostCandidates из immutable cache,
+а не переиспользование pilot194/232/260 decisions. Сначала устранить текущие pilot QA
+и assembly routing gaps, затем автоматически двигаться к полной карте по START.
+
+ФАЙЛЫ ПОСЛЕ ЭТОЙ ПЕРЕДАЧИ STABLE. Дальнейшие реализации/сборки/MC/DB остановлены
+только ради переносимого checkpoint по последнему пользовательскому указанию.

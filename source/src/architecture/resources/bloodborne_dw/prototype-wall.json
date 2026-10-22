@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "post": [
+    [
+      4,
+      0,
+      4,
+      12,
+      16,
+      12
+    ]
+  ],
+  "low": [
+    [
+      5,
+      0,
+      0,
+      11,
+      14,
+      8
+    ]
+  ],
+  "tall": [
+    [
+      5,
+      0,
+      0,
+      11,
+      16,
+      8
+    ]
+  ],
+  "tallWeights": [
+    20,
+    1,
+    1,
+    1,
+    5,
+    1,
+    1,
+    1
+  ],
+  "collisionPolicy": "Cached simple cardinal rectangles at native wall1.5 height; diagonal one coarse root-footprint AABB. Separate one-box authored-height outline; no neighbor reservation.",
+  "profiles": "BASE and ALT have identical geometry; ALT wrappers fall back to BASE unless explicitly replaced."
+}

@@ -1,0 +1,3086 @@
+{
+  "schema": "dw-review-v10-actual-client-v1",
+  "status": "FAIL_ACTUAL_CLIENT_V10",
+  "mode": "AUTHOR",
+  "revision": "V10",
+  "markerSha256": "1991c421cbe947e38734fb0fb9872fd0168b28a3f28bc8e4925a211750bf0ccc",
+  "manualVisualAcceptance": "NOT_RUN",
+  "screenshots": "See menusActual actual framebuffer paths; no manual visual acceptance",
+  "directObjectMutationUsedAsClientProof": false,
+  "actorSetupScope": "Integrated server inventory/camera and one explicit Survival platform-walk setup only; actual object actions use ordinary input, interaction packets and screen widgets",
+  "steps": [
+    {
+      "name": "prepare ordinary item npc_window",
+      "status": "PASS",
+      "ticks": 4
+    },
+    {
+      "name": "actual floor crosshair for npc_window",
+      "status": "PASS",
+      "ticks": 3
+    },
+    {
+      "name": "ordinary use key places npc_window",
+      "status": "PASS",
+      "ticks": 4
+    },
+    {
+      "name": "prepare actual part camera npc_window",
+      "status": "PASS",
+      "ticks": 3
+    },
+    {
+      "name": "actual selected UUID at source part npc_window",
+      "status": "PASS",
+      "ticks": 3
+    },
+    {
+      "name": "retain ordinary window for actual GUI and native overlap",
+      "status": "PASS",
+      "ticks": 3
+    },
+    {
+      "name": "capture original RP duplicate-placement identity",
+      "status": "PASS",
+      "ticks": 4
+    },
+    {
+      "name": "prepare second ordinary RP item through original real part",
+      "status": "PASS",
+      "ticks": 3
+    },
+    {
+      "name": "original RP crosshair and exact native floor for duplicate",
+      "status": "PASS",
+      "ticks": 3
+    }
+  ],
+  "ordinaryRpCases": [],
+  "ordinaryArchitectureCases": [],
+  "productionArtifactOrigins": [
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-v10-client-min-attempt6\\mods\\dreamwalker-bb-fabric-1.20.1-0.1.0-prototype.5.jar",
+      "sha256": "2ad51b2314cbf1c3748288fa13fac2a6c804e77149e4b46bb94c86df0ab49da8"
+    }
+  ],
+  "productionJarSha256": "2ad51b2314cbf1c3748288fa13fac2a6c804e77149e4b46bb94c86df0ab49da8",
+  "firstEntryCreative": true,
+  "firstEntryGameMode": "creative",
+  "firstEntryOperator4": true,
+  "menusActual": {
+    "schema": "dw-review-v10-actual-client-menus-v1",
+    "status": "PASS_ACTUAL_CLIENT_MENUS_PACKETS_RULES_COMMANDS",
+    "mode": "AUTHOR",
+    "artifactSha256": "2ad51b2314cbf1c3748288fa13fac2a6c804e77149e4b46bb94c86df0ab49da8",
+    "manualVisualAcceptance": "NOT_RUN",
+    "directMutationEndpointsUsedAsGuiProof": false,
+    "scope": "Automated actual Screen.mouseClicked/charTyped/keyPressed, mouse input and ordinary interactionManager packets; not human acceptance",
+    "steps": [
+      {
+        "name": "prepare fixture position lamp_A",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "aim at exact authored selection lamp_A",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "ordinary item packet opens BuilderScreen for lamp_A",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "actual tab click Фонари",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "type own lamp name QA A",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "save own lamp name QA A",
+        "status": "PASS",
+        "clientTicks": 5
+      },
+      {
+        "name": "server-returned own lamp name QA A",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "close renamed lamp tool",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "prepare fixture position lamp_B",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "aim at exact authored selection lamp_B",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "ordinary item packet opens BuilderScreen for lamp_B",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "actual tab click Фонари",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "type own lamp name QA B",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "save own lamp name QA B",
+        "status": "PASS",
+        "clientTicks": 5
+      },
+      {
+        "name": "server-returned own lamp name QA B",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "close renamed lamp tool",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "prepare fixture position lamp_C",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "aim at exact authored selection lamp_C",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "ordinary item packet opens BuilderScreen for lamp_C",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "actual tab click Фонари",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "type own lamp name QA C",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "save own lamp name QA C",
+        "status": "PASS",
+        "clientTicks": 5
+      },
+      {
+        "name": "server-returned own lamp name QA C",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "close renamed lamp tool",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "prepare fixture position lamp_B",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "aim at exact authored selection lamp_B",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "ordinary item packet opens BuilderScreen for lamp_B",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "actual tab click Объект",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "actual GUI types lamp B instance offset",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "actual GUI applies lamp B offset",
+        "status": "PASS",
+        "clientTicks": 5
+      },
+      {
+        "name": "network node follows same shifted lamp UUID",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "render current actual menu before screenshot v10-tool-objects.png",
+        "status": "PASS",
+        "clientTicks": 5
+      },
+      {
+        "name": "native framebuffer screenshot v10-tool-objects.png",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "close shifted lamp B form",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "prepare fixture position lamp_A",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "aim at exact authored selection lamp_A",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "ordinary item packet opens BuilderScreen for lamp_A",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "actual tab click Фонари",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "choose source action in actual menu",
+        "status": "PASS",
+        "clientTicks": 5
+      },
+      {
+        "name": "Esc closes tool without removing selected action",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "actual mouse press executes selected tool action on lamp_A",
+        "status": "PASS",
+        "clientTicks": 9
+      },
+      {
+        "name": "prepare fixture position lamp_B",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "aim at exact authored selection lamp_B",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "ordinary item packet opens BuilderScreen for lamp_B",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "actual tab click Фонари",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "type explicit line QA Main",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "save default bidirectional parameters",
+        "status": "PASS",
+        "clientTicks": 5
+      },
+      {
+        "name": "choose destination action",
+        "status": "PASS",
+        "clientTicks": 5
+      },
+      {
+        "name": "Esc closes tool before destination click",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "actual mouse press executes selected tool action on lamp_B",
+        "status": "PASS",
+        "clientTicks": 9
+      },
+      {
+        "name": "prepare fixture position lamp_C",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "aim at exact authored selection lamp_C",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "ordinary item packet opens BuilderScreen for lamp_C",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "actual tab click Фонари",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "type explicit line QA Main",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "save default bidirectional parameters",
+        "status": "PASS",
+        "clientTicks": 5
+      },
+      {
+        "name": "choose destination action",
+        "status": "PASS",
+        "clientTicks": 5
+      },
+      {
+        "name": "Esc closes tool before destination click",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "actual mouse press executes selected tool action on lamp_C",
+        "status": "PASS",
+        "clientTicks": 9
+      },
+      {
+        "name": "prepare fixture position lamp_D",
+        "status": "PASS",
+        "clientTicks": 10
+      },
+      {
+        "name": "aim at exact authored selection lamp_D",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "ordinary item packet opens BuilderScreen for lamp_D",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "actual tab click Фонари",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "type own lamp name QA D",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "save own lamp name QA D",
+        "status": "PASS",
+        "clientTicks": 5
+      },
+      {
+        "name": "server-returned own lamp name QA D",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "close renamed lamp tool",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "prepare fixture position lamp_D",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "aim at exact authored selection lamp_D",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "ordinary item packet opens BuilderScreen for lamp_D",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "actual tab click Фонари",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "type explicit line QA Main",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "save default bidirectional parameters",
+        "status": "PASS",
+        "clientTicks": 5
+      },
+      {
+        "name": "choose destination action",
+        "status": "PASS",
+        "clientTicks": 5
+      },
+      {
+        "name": "Esc closes tool before destination click",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "actual mouse press executes selected tool action on lamp_D",
+        "status": "PASS",
+        "clientTicks": 9
+      },
+      {
+        "name": "prepare fixture position lamp_A",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "aim at exact authored selection lamp_A",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "ordinary exact lamp click lamp_A",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "lamp screen is non-pausing lamp_A",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "A lists explicitly authored B and C once",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "render current actual menu before screenshot v10-lamp-destinations.png",
+        "status": "PASS",
+        "clientTicks": 5
+      },
+      {
+        "name": "native framebuffer screenshot v10-lamp-destinations.png",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "actual B destination widget sends travel",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "after first travel re-aim exact B",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "B ordinary menu opens during real cooldown",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "cooldown proceeds while menu does not pause",
+        "status": "PASS",
+        "clientTicks": 92
+      },
+      {
+        "name": "actual A destination widget returns B→A",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "prepare fixture position lamp_A",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "aim at exact authored selection lamp_A",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "ordinary exact lamp click lamp_A",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "lamp screen is non-pausing lamp_A",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "record position before Esc",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "lamp Esc sends cancellation, no teleport",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "Esc retained exact position",
+        "status": "PASS",
+        "clientTicks": 12
+      },
+      {
+        "name": "prepare fixture position lamp_A",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "aim at exact authored selection lamp_A",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "ordinary item packet opens BuilderScreen for lamp_A",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "actual tab click Фонари",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "render current actual menu before screenshot v10-tool-lamps.png",
+        "status": "PASS",
+        "clientTicks": 5
+      },
+      {
+        "name": "native framebuffer screenshot v10-tool-lamps.png",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "select Main line for direction edit",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "choose one-way parameter",
+        "status": "PASS",
+        "clientTicks": 5
+      },
+      {
+        "name": "actual chosen A→B connection direction widget",
+        "status": "PASS",
+        "clientTicks": 6
+      },
+      {
+        "name": "close one-way edit",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "prepare fixture position lamp_B",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "aim at exact authored selection lamp_B",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "ordinary exact lamp click lamp_B",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "lamp screen is non-pausing lamp_B",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "one-way A→B does not invent B→A",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "close empty B menu",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "prepare fixture position lamp_A",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "aim at exact authored selection lamp_A",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "ordinary item packet opens BuilderScreen for lamp_A",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "actual tab click Фонари",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "type own lamp name QA A renamed",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "save own lamp name QA A renamed",
+        "status": "PASS",
+        "clientTicks": 5
+      },
+      {
+        "name": "server-returned own lamp name QA A renamed",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "close renamed lamp tool",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "prepare fixture position lamp_C",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "aim at exact authored selection lamp_C",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "ordinary exact lamp click lamp_C",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "lamp screen is non-pausing lamp_C",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "C sees renamed destination only once",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "close renamed C menu",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "prepare fixture position lamp_A",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "aim at exact authored selection lamp_A",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "ordinary item packet opens BuilderScreen for lamp_A",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "actual tab click Фонари",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "unlink only explicit A→C chosen direction",
+        "status": "PASS",
+        "clientTicks": 6
+      },
+      {
+        "name": "close selected direction unlink",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "prepare fixture position lamp_A",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "aim at exact authored selection lamp_A",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "ordinary exact lamp click lamp_A",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "lamp screen is non-pausing lamp_A",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "other A→B route remains after selected unlink",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "close remaining route menu",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "prepare fixture position lever_1",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "aim at exact authored selection lever_1",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "ordinary item packet opens BuilderScreen for lever_1",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "actual tab click Рычаги",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "type ALL rule name",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "create rule through actual widget",
+        "status": "PASS",
+        "clientTicks": 5
+      },
+      {
+        "name": "actual server rule response",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "capture server rule UUID only for readback",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "select source tool action",
+        "status": "PASS",
+        "clientTicks": 5
+      },
+      {
+        "name": "close source selection form",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "actual mouse press executes selected tool action on lever_1",
+        "status": "PASS",
+        "clientTicks": 9
+      },
+      {
+        "name": "prepare fixture position lever_2",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "aim at exact authored selection lever_2",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "actual mouse press executes selected tool action on lever_2",
+        "status": "PASS",
+        "clientTicks": 9
+      },
+      {
+        "name": "prepare fixture position lever_3",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "aim at exact authored selection lever_3",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "actual mouse press executes selected tool action on lever_3",
+        "status": "PASS",
+        "clientTicks": 9
+      },
+      {
+        "name": "prepare fixture position architecture_door",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "aim at exact authored selection architecture_door",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "ordinary item packet opens BuilderScreen for architecture_door",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "actual tab click Рычаги",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "select target tool action",
+        "status": "PASS",
+        "clientTicks": 5
+      },
+      {
+        "name": "close target form",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "actual mouse press executes selected tool action on architecture_door",
+        "status": "PASS",
+        "clientTicks": 9
+      },
+      {
+        "name": "prepare fixture position rp_door",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "aim at exact authored selection rp_door",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "actual mouse press executes selected tool action on rp_door",
+        "status": "PASS",
+        "clientTicks": 9
+      },
+      {
+        "name": "prepare fixture position wood_gate",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "aim at exact authored selection wood_gate",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "actual mouse press executes selected tool action on wood_gate",
+        "status": "PASS",
+        "clientTicks": 9
+      },
+      {
+        "name": "prepare fixture position architecture_door",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "aim at exact authored selection architecture_door",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "ordinary item packet opens BuilderScreen for architecture_door",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "actual tab click Рычаги",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "choose ALL logical condition",
+        "status": "PASS",
+        "clientTicks": 5
+      },
+      {
+        "name": "apply ALL configuration without firing",
+        "status": "PASS",
+        "clientTicks": 5
+      },
+      {
+        "name": "ALL3 starts0/3 and configuration does not open",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "actual tab click Объект",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "choose levers-only manual policy",
+        "status": "PASS",
+        "clientTicks": 5
+      },
+      {
+        "name": "apply manual policy through widget",
+        "status": "PASS",
+        "clientTicks": 5
+      },
+      {
+        "name": "levers-only policy is returned by server",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "actual tab click События",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "type harmless after-open command",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "add ordered after-open command draft",
+        "status": "PASS",
+        "clientTicks": 5
+      },
+      {
+        "name": "save after-open command list",
+        "status": "PASS",
+        "clientTicks": 5
+      },
+      {
+        "name": "select after-close list",
+        "status": "PASS",
+        "clientTicks": 5
+      },
+      {
+        "name": "type harmless after-close command",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "add ordered after-close draft",
+        "status": "PASS",
+        "clientTicks": 5
+      },
+      {
+        "name": "save after-close command list",
+        "status": "PASS",
+        "clientTicks": 5
+      },
+      {
+        "name": "read initial harmless command counter",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "close event editor without transition",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "prepare fixture position architecture_door",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "aim at exact authored selection architecture_door",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "ordinary manual door packet is refused by levers-only policy",
+        "status": "PASS",
+        "clientTicks": 12
+      },
+      {
+        "name": "prepare fixture position lever_1",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "aim at exact authored selection lever_1",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "ordinary original delayed lever activation 1",
+        "status": "PASS",
+        "clientTicks": 8
+      },
+      {
+        "name": "original70tick logical activation 1",
+        "status": "PASS",
+        "clientTicks": 63
+      },
+      {
+        "name": "ALL not yet satisfied after 1",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "prepare fixture position lever_2",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "aim at exact authored selection lever_2",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "ordinary original delayed lever activation 2",
+        "status": "PASS",
+        "clientTicks": 8
+      },
+      {
+        "name": "original70tick logical activation 2",
+        "status": "PASS",
+        "clientTicks": 63
+      },
+      {
+        "name": "ALL not yet satisfied after 2",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "prepare fixture position lever_3",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "aim at exact authored selection lever_3",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "ordinary original delayed lever activation 3",
+        "status": "PASS",
+        "clientTicks": 8
+      },
+      {
+        "name": "original70tick logical activation 3",
+        "status": "PASS",
+        "clientTicks": 63
+      },
+      {
+        "name": "ALL3 actual opens stable targets and pulses mixed gate",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "gate returns to authored idle, event command does not repeat",
+        "status": "PASS",
+        "clientTicks": 45
+      },
+      {
+        "name": "prepare fixture position lever_1",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "aim at exact authored selection lever_1",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "same original lever second activation",
+        "status": "PASS",
+        "clientTicks": 8
+      },
+      {
+        "name": "one flag removed produces actual close, not toggle-open",
+        "status": "PASS",
+        "clientTicks": 64
+      },
+      {
+        "name": "prepare fixture position architecture_door",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "aim at exact authored selection architecture_door",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "ordinary item packet opens BuilderScreen for architecture_door",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "actual tab click Рычаги",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "GUI reports2/3 shared source flags",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "render current actual menu before screenshot v10-tool-rules-all.png",
+        "status": "PASS",
+        "clientTicks": 5
+      },
+      {
+        "name": "native framebuffer screenshot v10-tool-rules-all.png",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "request reset confirmation",
+        "status": "PASS",
+        "clientTicks": 5
+      },
+      {
+        "name": "explicit reset real confirmation",
+        "status": "PASS",
+        "clientTicks": 5
+      },
+      {
+        "name": "reset shows0/3 without ANY event or duplicate close command",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "close reset rule form",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "prepare fixture position lamp_C",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "aim at exact authored selection lamp_C",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "ordinary creative attack intentionally destroys lamp C",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "prepare fixture position lever_3",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "aim at exact authored selection lever_3",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "ordinary creative attack destroys mandatory source",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "prepare fixture position architecture_door",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "aim at exact authored selection architecture_door",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "ordinary item packet opens BuilderScreen for architecture_door",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "actual tab click Рычаги",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "select saved ALL rule through actual list",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "removed ALL source marks rule incomplete",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "finish tool with saved incomplete rule",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "actual integrated save after GUI edits",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "read-only structured saved instance/policy state persistedStateAfter",
+        "status": "PASS",
+        "clientTicks": 3
+      }
+    ],
+    "gestures": [
+      {
+        "kind": "ordinary_interact_item",
+        "detail": "lamp_A",
+        "clientTick": 7
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Фонари",
+        "clientTick": 10
+      },
+      {
+        "kind": "screen_keyboard_text",
+        "detail": "QA A",
+        "clientTick": 13
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Применить имя выбранного фонаря",
+        "clientTick": 16
+      },
+      {
+        "kind": "screen_esc",
+        "detail": "close renamed lamp tool",
+        "clientTick": 24
+      },
+      {
+        "kind": "ordinary_interact_item",
+        "detail": "lamp_B",
+        "clientTick": 33
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Фонари",
+        "clientTick": 36
+      },
+      {
+        "kind": "screen_keyboard_text",
+        "detail": "QA B",
+        "clientTick": 39
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Применить имя выбранного фонаря",
+        "clientTick": 42
+      },
+      {
+        "kind": "screen_esc",
+        "detail": "close renamed lamp tool",
+        "clientTick": 50
+      },
+      {
+        "kind": "ordinary_interact_item",
+        "detail": "lamp_C",
+        "clientTick": 59
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Фонари",
+        "clientTick": 62
+      },
+      {
+        "kind": "screen_keyboard_text",
+        "detail": "QA C",
+        "clientTick": 65
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Применить имя выбранного фонаря",
+        "clientTick": 68
+      },
+      {
+        "kind": "screen_esc",
+        "detail": "close renamed lamp tool",
+        "clientTick": 76
+      },
+      {
+        "kind": "ordinary_interact_item",
+        "detail": "lamp_B",
+        "clientTick": 85
+      },
+      {
+        "kind": "screen_tab_already_selected",
+        "detail": "Объект",
+        "clientTick": 88
+      },
+      {
+        "kind": "screen_keyboard_text",
+        "detail": "0.125",
+        "clientTick": 91
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Применить высоту",
+        "clientTick": 94
+      },
+      {
+        "kind": "screen_esc",
+        "detail": "close shifted lamp B form",
+        "clientTick": 110
+      },
+      {
+        "kind": "ordinary_interact_item",
+        "detail": "lamp_A",
+        "clientTick": 119
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Фонари",
+        "clientTick": 122
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "выбрать исходный фонарь",
+        "clientTick": 125
+      },
+      {
+        "kind": "screen_esc",
+        "detail": "Esc closes tool without removing selected action",
+        "clientTick": 130
+      },
+      {
+        "kind": "ordinary_mouse_attack_key",
+        "detail": "lamp_A",
+        "clientTick": 133
+      },
+      {
+        "kind": "READ_ONLY_ORDINARY_TOOL_CONSEQUENCE",
+        "fixture": "lamp_A",
+        "expectedUuid": "1eca3087-82a7-4e19-a25c-3f660064f568",
+        "expectedAction": "LAMP_SOURCE",
+        "actualServerHeldAction": "LAMP_SOURCE",
+        "actualSelectedLampUuid": "1eca3087-82a7-4e19-a25c-3f660064f568",
+        "consequenceVerified": true,
+        "scope": "Read-only consequence after actual mouse/ordinary production packet; no member/link/target mutation API"
+      },
+      {
+        "kind": "ordinary_interact_item",
+        "detail": "lamp_B",
+        "clientTick": 148
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Фонари",
+        "clientTick": 151
+      },
+      {
+        "kind": "screen_keyboard_text",
+        "detail": "QA Main",
+        "clientTick": 154
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Применить параметры назначения",
+        "clientTick": 157
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "добавить фонарь назначения",
+        "clientTick": 162
+      },
+      {
+        "kind": "screen_esc",
+        "detail": "Esc closes tool before destination click",
+        "clientTick": 167
+      },
+      {
+        "kind": "ordinary_mouse_attack_key",
+        "detail": "lamp_B",
+        "clientTick": 170
+      },
+      {
+        "kind": "READ_ONLY_ORDINARY_TOOL_CONSEQUENCE",
+        "fixture": "lamp_B",
+        "expectedUuid": "e73a52a4-4d93-4b76-aaff-f665521f34a6",
+        "expectedAction": "LAMP_TARGET",
+        "actualServerHeldAction": "LAMP_TARGET",
+        "actualSelectedLampUuid": "1eca3087-82a7-4e19-a25c-3f660064f568",
+        "line": "QA Main",
+        "actualConnectionDefaultBidirectional": true,
+        "consequenceVerified": true,
+        "scope": "Read-only consequence after actual mouse/ordinary production packet; no member/link/target mutation API"
+      },
+      {
+        "kind": "ordinary_interact_item",
+        "detail": "lamp_C",
+        "clientTick": 185
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Фонари",
+        "clientTick": 188
+      },
+      {
+        "kind": "screen_keyboard_text",
+        "detail": "QA Main",
+        "clientTick": 191
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Применить параметры назначения",
+        "clientTick": 194
+      },
+      {
+        "kind": "ALREADY_SELECTED_SERVER_ACTION",
+        "detail": "LAMP_TARGET",
+        "clientTick": 199
+      },
+      {
+        "kind": "screen_esc",
+        "detail": "Esc closes tool before destination click",
+        "clientTick": 204
+      },
+      {
+        "kind": "ordinary_mouse_attack_key",
+        "detail": "lamp_C",
+        "clientTick": 207
+      },
+      {
+        "kind": "READ_ONLY_ORDINARY_TOOL_CONSEQUENCE",
+        "fixture": "lamp_C",
+        "expectedUuid": "74184c40-95cf-4927-b587-f5d41c3ee4ff",
+        "expectedAction": "LAMP_TARGET",
+        "actualServerHeldAction": "LAMP_TARGET",
+        "actualSelectedLampUuid": "1eca3087-82a7-4e19-a25c-3f660064f568",
+        "line": "QA Main",
+        "actualConnectionDefaultBidirectional": true,
+        "consequenceVerified": true,
+        "scope": "Read-only consequence after actual mouse/ordinary production packet; no member/link/target mutation API"
+      },
+      {
+        "kind": "ordinary_interact_item",
+        "detail": "lamp_D",
+        "clientTick": 229
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Фонари",
+        "clientTick": 232
+      },
+      {
+        "kind": "screen_keyboard_text",
+        "detail": "QA D",
+        "clientTick": 235
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Применить имя выбранного фонаря",
+        "clientTick": 238
+      },
+      {
+        "kind": "screen_esc",
+        "detail": "close renamed lamp tool",
+        "clientTick": 246
+      },
+      {
+        "kind": "ordinary_interact_item",
+        "detail": "lamp_D",
+        "clientTick": 255
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Фонари",
+        "clientTick": 258
+      },
+      {
+        "kind": "screen_keyboard_text",
+        "detail": "QA Main",
+        "clientTick": 261
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Применить параметры назначения",
+        "clientTick": 264
+      },
+      {
+        "kind": "ALREADY_SELECTED_SERVER_ACTION",
+        "detail": "LAMP_TARGET",
+        "clientTick": 269
+      },
+      {
+        "kind": "screen_esc",
+        "detail": "Esc closes tool before destination click",
+        "clientTick": 274
+      },
+      {
+        "kind": "ordinary_mouse_attack_key",
+        "detail": "lamp_D",
+        "clientTick": 277
+      },
+      {
+        "kind": "READ_ONLY_ORDINARY_TOOL_CONSEQUENCE",
+        "fixture": "lamp_D",
+        "expectedUuid": "d0fe60fd-05bf-4670-b6b5-c5b496d26f6c",
+        "expectedAction": "LAMP_TARGET",
+        "actualServerHeldAction": "LAMP_TARGET",
+        "actualSelectedLampUuid": "1eca3087-82a7-4e19-a25c-3f660064f568",
+        "line": "QA Main",
+        "actualConnectionDefaultBidirectional": true,
+        "consequenceVerified": true,
+        "scope": "Read-only consequence after actual mouse/ordinary production packet; no member/link/target mutation API"
+      },
+      {
+        "kind": "ordinary_entity_interact_packet",
+        "detail": "lamp_A:SUCCESS",
+        "clientTick": 292
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "QA B",
+        "clientTick": 309
+      },
+      {
+        "kind": "ordinary_entity_interact_packet",
+        "detail": "lamp_B:SUCCESS",
+        "clientTick": 315
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "QA A",
+        "clientTick": 410
+      },
+      {
+        "kind": "ordinary_entity_interact_packet",
+        "detail": "lamp_A:SUCCESS",
+        "clientTick": 419
+      },
+      {
+        "kind": "screen_esc",
+        "detail": "lamp Esc sends cancellation, no teleport",
+        "clientTick": 428
+      },
+      {
+        "kind": "ordinary_interact_item",
+        "detail": "lamp_A",
+        "clientTick": 449
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Фонари",
+        "clientTick": 452
+      },
+      {
+        "kind": "screen_keyboard_text",
+        "detail": "QA Main",
+        "clientTick": 463
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Направление: В обе стороны",
+        "clientTick": 466
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Направление → QA B",
+        "clientTick": 471
+      },
+      {
+        "kind": "screen_esc",
+        "detail": "close one-way edit",
+        "clientTick": 477
+      },
+      {
+        "kind": "ordinary_entity_interact_packet",
+        "detail": "lamp_B:SUCCESS",
+        "clientTick": 486
+      },
+      {
+        "kind": "screen_esc",
+        "detail": "close empty B menu",
+        "clientTick": 495
+      },
+      {
+        "kind": "ordinary_interact_item",
+        "detail": "lamp_A",
+        "clientTick": 504
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Фонари",
+        "clientTick": 507
+      },
+      {
+        "kind": "screen_keyboard_text",
+        "detail": "QA A renamed",
+        "clientTick": 510
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Применить имя выбранного фонаря",
+        "clientTick": 513
+      },
+      {
+        "kind": "screen_esc",
+        "detail": "close renamed lamp tool",
+        "clientTick": 521
+      },
+      {
+        "kind": "ordinary_entity_interact_packet",
+        "detail": "lamp_C:SUCCESS",
+        "clientTick": 530
+      },
+      {
+        "kind": "screen_esc",
+        "detail": "close renamed C menu",
+        "clientTick": 539
+      },
+      {
+        "kind": "ordinary_interact_item",
+        "detail": "lamp_A",
+        "clientTick": 548
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Фонари",
+        "clientTick": 551
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Разорвать → QA C",
+        "clientTick": 554
+      },
+      {
+        "kind": "screen_esc",
+        "detail": "close selected direction unlink",
+        "clientTick": 560
+      },
+      {
+        "kind": "ordinary_entity_interact_packet",
+        "detail": "lamp_A:SUCCESS",
+        "clientTick": 569
+      },
+      {
+        "kind": "screen_esc",
+        "detail": "close remaining route menu",
+        "clientTick": 578
+      },
+      {
+        "kind": "ordinary_interact_item",
+        "detail": "lever_1",
+        "clientTick": 587
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Рычаги",
+        "clientTick": 590
+      },
+      {
+        "kind": "screen_keyboard_text",
+        "detail": "QA All",
+        "clientTick": 593
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Создать правило (Любой, открывать/закрывать)",
+        "clientTick": 596
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "выбрать источники",
+        "clientTick": 607
+      },
+      {
+        "kind": "screen_esc",
+        "detail": "close source selection form",
+        "clientTick": 612
+      },
+      {
+        "kind": "ordinary_mouse_attack_key",
+        "detail": "lever_1",
+        "clientTick": 615
+      },
+      {
+        "kind": "READ_ONLY_ORDINARY_TOOL_CONSEQUENCE",
+        "fixture": "lever_1",
+        "expectedUuid": "97f06848-17d8-4f57-939c-c53d45482fa1",
+        "expectedAction": "RULE_SOURCE",
+        "actualServerHeldAction": "RULE_SOURCE",
+        "ruleUuid": "ff22f93e-146f-4937-8b8e-77fd5fd43b61",
+        "actualMemberUuid": "97f06848-17d8-4f57-939c-c53d45482fa1",
+        "sourceCount": 1,
+        "targetCount": 0,
+        "consequenceVerified": true,
+        "scope": "Read-only consequence after actual mouse/ordinary production packet; no member/link/target mutation API"
+      },
+      {
+        "kind": "ordinary_mouse_attack_key",
+        "detail": "lever_2",
+        "clientTick": 630
+      },
+      {
+        "kind": "READ_ONLY_ORDINARY_TOOL_CONSEQUENCE",
+        "fixture": "lever_2",
+        "expectedUuid": "7f38fe6a-a0b0-49a5-b0ef-c3cac22f3175",
+        "expectedAction": "RULE_SOURCE",
+        "actualServerHeldAction": "RULE_SOURCE",
+        "ruleUuid": "ff22f93e-146f-4937-8b8e-77fd5fd43b61",
+        "actualMemberUuid": "7f38fe6a-a0b0-49a5-b0ef-c3cac22f3175",
+        "sourceCount": 2,
+        "targetCount": 0,
+        "consequenceVerified": true,
+        "scope": "Read-only consequence after actual mouse/ordinary production packet; no member/link/target mutation API"
+      },
+      {
+        "kind": "ordinary_mouse_attack_key",
+        "detail": "lever_3",
+        "clientTick": 645
+      },
+      {
+        "kind": "READ_ONLY_ORDINARY_TOOL_CONSEQUENCE",
+        "fixture": "lever_3",
+        "expectedUuid": "227bcde9-3889-4683-8b9a-728c8d0ee6fd",
+        "expectedAction": "RULE_SOURCE",
+        "actualServerHeldAction": "RULE_SOURCE",
+        "ruleUuid": "ff22f93e-146f-4937-8b8e-77fd5fd43b61",
+        "actualMemberUuid": "227bcde9-3889-4683-8b9a-728c8d0ee6fd",
+        "sourceCount": 3,
+        "targetCount": 0,
+        "consequenceVerified": true,
+        "scope": "Read-only consequence after actual mouse/ordinary production packet; no member/link/target mutation API"
+      },
+      {
+        "kind": "ordinary_interact_item",
+        "detail": "architecture_door",
+        "clientTick": 660
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Рычаги",
+        "clientTick": 663
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "добавить цели",
+        "clientTick": 666
+      },
+      {
+        "kind": "screen_esc",
+        "detail": "close target form",
+        "clientTick": 671
+      },
+      {
+        "kind": "ordinary_mouse_attack_key",
+        "detail": "architecture_door",
+        "clientTick": 674
+      },
+      {
+        "kind": "READ_ONLY_ORDINARY_TOOL_CONSEQUENCE",
+        "fixture": "architecture_door",
+        "expectedUuid": "e628f7b5-81c2-42b1-91f5-9a63331072fa",
+        "expectedAction": "RULE_TARGET",
+        "actualServerHeldAction": "RULE_TARGET",
+        "ruleUuid": "ff22f93e-146f-4937-8b8e-77fd5fd43b61",
+        "actualMemberUuid": "e628f7b5-81c2-42b1-91f5-9a63331072fa",
+        "sourceCount": 3,
+        "targetCount": 1,
+        "consequenceVerified": true,
+        "scope": "Read-only consequence after actual mouse/ordinary production packet; no member/link/target mutation API"
+      },
+      {
+        "kind": "ordinary_mouse_attack_key",
+        "detail": "rp_door",
+        "clientTick": 689
+      },
+      {
+        "kind": "READ_ONLY_ORDINARY_TOOL_CONSEQUENCE",
+        "fixture": "rp_door",
+        "expectedUuid": "addbe22d-0d23-4b8c-b465-5a94e6c9df3f",
+        "expectedAction": "RULE_TARGET",
+        "actualServerHeldAction": "RULE_TARGET",
+        "ruleUuid": "ff22f93e-146f-4937-8b8e-77fd5fd43b61",
+        "actualMemberUuid": "addbe22d-0d23-4b8c-b465-5a94e6c9df3f",
+        "sourceCount": 3,
+        "targetCount": 2,
+        "consequenceVerified": true,
+        "scope": "Read-only consequence after actual mouse/ordinary production packet; no member/link/target mutation API"
+      },
+      {
+        "kind": "ordinary_mouse_attack_key",
+        "detail": "wood_gate",
+        "clientTick": 704
+      },
+      {
+        "kind": "READ_ONLY_ORDINARY_TOOL_CONSEQUENCE",
+        "fixture": "wood_gate",
+        "expectedUuid": "1095784b-5e8c-49a2-916f-13a2a33ee83f",
+        "expectedAction": "RULE_TARGET",
+        "actualServerHeldAction": "RULE_TARGET",
+        "ruleUuid": "ff22f93e-146f-4937-8b8e-77fd5fd43b61",
+        "actualMemberUuid": "1095784b-5e8c-49a2-916f-13a2a33ee83f",
+        "sourceCount": 3,
+        "targetCount": 3,
+        "consequenceVerified": true,
+        "scope": "Read-only consequence after actual mouse/ordinary production packet; no member/link/target mutation API"
+      },
+      {
+        "kind": "ordinary_interact_item",
+        "detail": "architecture_door",
+        "clientTick": 719
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Рычаги",
+        "clientTick": 722
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Условие: Любой",
+        "clientTick": 725
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Применить правило",
+        "clientTick": 730
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Объект",
+        "clientTick": 738
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Управление: Рукой и рычагами",
+        "clientTick": 741
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Применить управление",
+        "clientTick": 746
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "События",
+        "clientTick": 754
+      },
+      {
+        "kind": "screen_keyboard_text",
+        "detail": "scoreboard players add event_counter dw_v10_gui 1",
+        "clientTick": 757
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Добавить команду",
+        "clientTick": 760
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Сохранить список команд",
+        "clientTick": 765
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "После открытия",
+        "clientTick": 770
+      },
+      {
+        "kind": "screen_keyboard_text",
+        "detail": "scoreboard players add event_counter dw_v10_gui 1",
+        "clientTick": 775
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Добавить команду",
+        "clientTick": 778
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Сохранить список команд",
+        "clientTick": 783
+      },
+      {
+        "kind": "screen_esc",
+        "detail": "close event editor without transition",
+        "clientTick": 791
+      },
+      {
+        "kind": "ordinary_block_interact_packet",
+        "detail": "SUCCESS",
+        "clientTick": 800
+      },
+      {
+        "kind": "ordinary_entity_interact_packet",
+        "detail": "lever_1:SUCCESS",
+        "clientTick": 818
+      },
+      {
+        "kind": "ordinary_entity_interact_packet",
+        "detail": "lever_2:SUCCESS",
+        "clientTick": 898
+      },
+      {
+        "kind": "ordinary_entity_interact_packet",
+        "detail": "lever_3:SUCCESS",
+        "clientTick": 978
+      },
+      {
+        "kind": "ordinary_entity_interact_packet",
+        "detail": "lever_1:SUCCESS",
+        "clientTick": 1103
+      },
+      {
+        "kind": "ordinary_interact_item",
+        "detail": "architecture_door",
+        "clientTick": 1181
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Рычаги",
+        "clientTick": 1184
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Сброс / удаление: показать подтверждение",
+        "clientTick": 1198
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Подтвердить сброс",
+        "clientTick": 1203
+      },
+      {
+        "kind": "screen_esc",
+        "detail": "close reset rule form",
+        "clientTick": 1211
+      },
+      {
+        "kind": "ordinary_creative_attack_entity_packet",
+        "detail": "lamp_C",
+        "clientTick": 1220
+      },
+      {
+        "kind": "ordinary_creative_attack_entity_packet",
+        "detail": "lever_3",
+        "clientTick": 1229
+      },
+      {
+        "kind": "ordinary_interact_item",
+        "detail": "architecture_door",
+        "clientTick": 1238
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Рычаги",
+        "clientTick": 1241
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "№1 · QA All · Все",
+        "clientTick": 1244
+      },
+      {
+        "kind": "screen_esc",
+        "detail": "finish tool with saved incomplete rule",
+        "clientTick": 1250
+      }
+    ],
+    "screenshots": [
+      {
+        "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-v10-client-min-attempt6\\screenshots\\v10-tool-objects.png",
+        "screenClass": "dev.dreamwalker.bloodbornedw.tool.BuilderScreen",
+        "width": 1280,
+        "height": 720,
+        "manualAcceptance": "NOT_RUN"
+      },
+      {
+        "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-v10-client-min-attempt6\\screenshots\\v10-lamp-destinations.png",
+        "screenClass": "dev.dreamwalker.bloodbornerp.client.lamp.LampClient$LampScreen",
+        "width": 1280,
+        "height": 720,
+        "manualAcceptance": "NOT_RUN"
+      },
+      {
+        "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-v10-client-min-attempt6\\screenshots\\v10-tool-lamps.png",
+        "screenClass": "dev.dreamwalker.bloodbornedw.tool.BuilderScreen",
+        "width": 1280,
+        "height": 720,
+        "manualAcceptance": "NOT_RUN"
+      },
+      {
+        "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-v10-client-min-attempt6\\screenshots\\v10-tool-rules-all.png",
+        "screenClass": "dev.dreamwalker.bloodbornedw.tool.BuilderScreen",
+        "width": 1280,
+        "height": 720,
+        "manualAcceptance": "NOT_RUN"
+      }
+    ],
+    "actualWindowWidth": 1280,
+    "actualWindowHeight": 720,
+    "menusGuiScale": 1,
+    "sourceWorld": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-v10-client-min-attempt6\\saves\\prototype-fixture\\.",
+    "intentionalRemovedFixtures": "lamp_C,lever_3",
+    "ordinaryClientReentryActual": "NOT_RUN_UNTIL_DISTINCT_REENTER_MARKER",
+    "savedRemoteDestinationReloadActual": "PENDING_DISTINCT_REENTER_GUI_RUN",
+    "lastFixtureReadiness": {
+      "fixture": "architecture_door",
+      "expectedUuid": "e628f7b5-81c2-42b1-91f5-9a63331072fa",
+      "clientChunkLoaded": true,
+      "exactClientIdentityLoaded": true,
+      "actualSelectionBindingAvailable": true,
+      "waitClientTicks": 3,
+      "scope": "Read-only actual client chunk/entity/owner/selection state after ordinary server teleport; no spawn, ticket or object mutation"
+    },
+    "lastActualToolActionReadback": {
+      "kind": "READ_ONLY_ORDINARY_TOOL_CONSEQUENCE",
+      "fixture": "wood_gate",
+      "expectedUuid": "1095784b-5e8c-49a2-916f-13a2a33ee83f",
+      "expectedAction": "RULE_TARGET",
+      "actualServerHeldAction": "RULE_TARGET",
+      "ruleUuid": "ff22f93e-146f-4937-8b8e-77fd5fd43b61",
+      "actualMemberUuid": "1095784b-5e8c-49a2-916f-13a2a33ee83f",
+      "sourceCount": 3,
+      "targetCount": 3,
+      "consequenceVerified": true,
+      "scope": "Read-only consequence after actual mouse/ordinary production packet; no member/link/target mutation API"
+    },
+    "persistedStateAfter": {
+      "schema": "dw-v10-menus-persisted-state-v1",
+      "state": {
+        "scope": "Bounded known fixture semantic persistent state; read-only, no object setters or full-world NBT. Transient loaded availability, player, cooldown and ticket state excluded.",
+        "rule": {
+          "uuid": "ff22f93e-146f-4937-8b8e-77fd5fd43b61",
+          "name": "QA All",
+          "order": 1,
+          "condition": "ALL",
+          "effect": "TOGGLE",
+          "incomplete": true,
+          "satisfied": false,
+          "sources": [
+            {
+              "kind": "RP",
+              "dimension": "minecraft:overworld",
+              "uuid": "97f06848-17d8-4f57-939c-c53d45482fa1",
+              "root": [
+                -32,
+                64,
+                -16
+              ],
+              "registry": "lever_1",
+              "savedActive": false
+            },
+            {
+              "kind": "RP",
+              "dimension": "minecraft:overworld",
+              "uuid": "7f38fe6a-a0b0-49a5-b0ef-c3cac22f3175",
+              "root": [
+                -24,
+                64,
+                -16
+              ],
+              "registry": "lever_2",
+              "savedActive": false
+            }
+          ],
+          "targets": [
+            {
+              "kind": "ARCHITECTURE",
+              "dimension": "minecraft:overworld",
+              "uuid": "e628f7b5-81c2-42b1-91f5-9a63331072fa",
+              "root": [
+                -8,
+                64,
+                -16
+              ],
+              "registry": "bloodborne_dw:prototype_double_door"
+            },
+            {
+              "kind": "RP",
+              "dimension": "minecraft:overworld",
+              "uuid": "addbe22d-0d23-4b8c-b465-5a94e6c9df3f",
+              "root": [
+                8,
+                64,
+                -16
+              ],
+              "registry": "door_1"
+            },
+            {
+              "kind": "RP",
+              "dimension": "minecraft:overworld",
+              "uuid": "1095784b-5e8c-49a2-916f-13a2a33ee83f",
+              "root": [
+                24,
+                64,
+                -16
+              ],
+              "registry": "wood_gate"
+            }
+          ]
+        },
+        "sourceFlags": {
+          "lever_1": {
+            "uuid": "97f06848-17d8-4f57-939c-c53d45482fa1",
+            "ruleMember": true,
+            "savedActive": false
+          },
+          "lever_2": {
+            "uuid": "7f38fe6a-a0b0-49a5-b0ef-c3cac22f3175",
+            "ruleMember": true,
+            "savedActive": false
+          },
+          "lever_3": {
+            "uuid": "227bcde9-3889-4683-8b9a-728c8d0ee6fd",
+            "ruleMember": false,
+            "savedActive": false
+          }
+        },
+        "targets": {
+          "architecture_door": {
+            "blockState": "Block{bloodborne_dw:prototype_double_door}[open\u003dfalse,profile\u003dbase,rotation\u003d0,variant\u003d0]",
+            "open": false,
+            "identity": {
+              "kind": "ARCHITECTURE",
+              "dimension": "minecraft:overworld",
+              "uuid": "e628f7b5-81c2-42b1-91f5-9a63331072fa",
+              "root": [
+                -8,
+                64,
+                -16
+              ],
+              "registry": "bloodborne_dw:prototype_double_door"
+            },
+            "leversOnly": true,
+            "afterOpen": [
+              "scoreboard players add event_counter dw_v10_gui 1"
+            ],
+            "afterClose": [
+              "scoreboard players add event_counter dw_v10_gui 1"
+            ],
+            "pendingEffect": false
+          },
+          "rp_door": {
+            "open": false,
+            "locked": false,
+            "verticalOffset": 0.0,
+            "pulseOnly": false,
+            "actualPulseIdle": true,
+            "identity": {
+              "kind": "RP",
+              "dimension": "minecraft:overworld",
+              "uuid": "addbe22d-0d23-4b8c-b465-5a94e6c9df3f",
+              "root": [
+                8,
+                64,
+                -16
+              ],
+              "registry": "door_1"
+            },
+            "leversOnly": false,
+            "afterOpen": [],
+            "afterClose": [],
+            "pendingEffect": false
+          },
+          "wood_gate": {
+            "open": false,
+            "locked": false,
+            "verticalOffset": 0.0,
+            "pulseOnly": true,
+            "actualPulseIdle": true,
+            "identity": {
+              "kind": "RP",
+              "dimension": "minecraft:overworld",
+              "uuid": "1095784b-5e8c-49a2-916f-13a2a33ee83f",
+              "root": [
+                24,
+                64,
+                -16
+              ],
+              "registry": "wood_gate"
+            },
+            "leversOnly": false,
+            "afterOpen": [],
+            "afterClose": [],
+            "pendingEffect": false
+          }
+        },
+        "lampGraph": {
+          "schema": 2,
+          "nodes": [
+            {
+              "nodeUuid": "37aa106c-6f5c-415b-9328-14cbd809eee2",
+              "entityUuid": "d0fe60fd-05bf-4670-b6b5-c5b496d26f6c",
+              "name": "QA D",
+              "dimension": "minecraft:overworld",
+              "root": [
+                800,
+                64,
+                64
+              ],
+              "position": [
+                800.0,
+                64.0,
+                64.0
+              ],
+              "routes": [
+                "5346ec7a-2c5b-497e-8a38-417253ac5726"
+              ]
+            },
+            {
+              "nodeUuid": "5346ec7a-2c5b-497e-8a38-417253ac5726",
+              "entityUuid": "1eca3087-82a7-4e19-a25c-3f660064f568",
+              "name": "QA A renamed",
+              "dimension": "minecraft:overworld",
+              "root": [
+                60,
+                64,
+                -16
+              ],
+              "position": [
+                60.0,
+                64.0,
+                -16.0
+              ],
+              "routes": [
+                "d81ec589-276a-4397-9ae2-7b4837320de3",
+                "37aa106c-6f5c-415b-9328-14cbd809eee2"
+              ]
+            },
+            {
+              "nodeUuid": "d81ec589-276a-4397-9ae2-7b4837320de3",
+              "entityUuid": "e73a52a4-4d93-4b76-aaff-f665521f34a6",
+              "name": "QA B",
+              "dimension": "minecraft:overworld",
+              "root": [
+                72,
+                64,
+                -16
+              ],
+              "position": [
+                72.0,
+                64.125,
+                -16.0
+              ],
+              "routes": []
+            }
+          ],
+          "lines": [
+            {
+              "lineUuid": "a1a4c7d8-a9a0-49ef-91e0-90137c3ee25f",
+              "name": "QA Main",
+              "connections": [
+                {
+                  "connectionUuid": "e70125d6-97f5-493c-b8ae-dc87ae3600ee",
+                  "a": "5346ec7a-2c5b-497e-8a38-417253ac5726",
+                  "b": "d81ec589-276a-4397-9ae2-7b4837320de3",
+                  "aToB": true,
+                  "bToA": false
+                },
+                {
+                  "connectionUuid": "ad4820ea-69e4-4ba1-bc22-96b675351c78",
+                  "a": "5346ec7a-2c5b-497e-8a38-417253ac5726",
+                  "b": "37aa106c-6f5c-415b-9328-14cbd809eee2",
+                  "aToB": true,
+                  "bToA": true
+                }
+              ]
+            }
+          ]
+        },
+        "removedFixtures": {
+          "lamp_C_uuid": "74184c40-95cf-4927-b587-f5d41c3ee4ff",
+          "lever_3_uuid": "227bcde9-3889-4683-8b9a-728c8d0ee6fd",
+          "lamp_C_still_registered": false,
+          "lever_3_still_rule_member": false
+        },
+        "harmlessCommandCounter": 2
+      },
+      "canonicalJson": "{\"harmlessCommandCounter\":2,\"lampGraph\":{\"lines\":[{\"connections\":[{\"a\":\"5346ec7a-2c5b-497e-8a38-417253ac5726\",\"aToB\":true,\"b\":\"d81ec589-276a-4397-9ae2-7b4837320de3\",\"bToA\":false,\"connectionUuid\":\"e70125d6-97f5-493c-b8ae-dc87ae3600ee\"},{\"a\":\"5346ec7a-2c5b-497e-8a38-417253ac5726\",\"aToB\":true,\"b\":\"37aa106c-6f5c-415b-9328-14cbd809eee2\",\"bToA\":true,\"connectionUuid\":\"ad4820ea-69e4-4ba1-bc22-96b675351c78\"}],\"lineUuid\":\"a1a4c7d8-a9a0-49ef-91e0-90137c3ee25f\",\"name\":\"QA Main\"}],\"nodes\":[{\"dimension\":\"minecraft:overworld\",\"entityUuid\":\"d0fe60fd-05bf-4670-b6b5-c5b496d26f6c\",\"name\":\"QA D\",\"nodeUuid\":\"37aa106c-6f5c-415b-9328-14cbd809eee2\",\"position\":[800.0,64.0,64.0],\"root\":[800,64,64],\"routes\":[\"5346ec7a-2c5b-497e-8a38-417253ac5726\"]},{\"dimension\":\"minecraft:overworld\",\"entityUuid\":\"1eca3087-82a7-4e19-a25c-3f660064f568\",\"name\":\"QA A renamed\",\"nodeUuid\":\"5346ec7a-2c5b-497e-8a38-417253ac5726\",\"position\":[60.0,64.0,-16.0],\"root\":[60,64,-16],\"routes\":[\"d81ec589-276a-4397-9ae2-7b4837320de3\",\"37aa106c-6f5c-415b-9328-14cbd809eee2\"]},{\"dimension\":\"minecraft:overworld\",\"entityUuid\":\"e73a52a4-4d93-4b76-aaff-f665521f34a6\",\"name\":\"QA B\",\"nodeUuid\":\"d81ec589-276a-4397-9ae2-7b4837320de3\",\"position\":[72.0,64.125,-16.0],\"root\":[72,64,-16],\"routes\":[]}],\"schema\":2},\"removedFixtures\":{\"lamp_C_still_registered\":false,\"lamp_C_uuid\":\"74184c40-95cf-4927-b587-f5d41c3ee4ff\",\"lever_3_still_rule_member\":false,\"lever_3_uuid\":\"227bcde9-3889-4683-8b9a-728c8d0ee6fd\"},\"rule\":{\"condition\":\"ALL\",\"effect\":\"TOGGLE\",\"incomplete\":true,\"name\":\"QA All\",\"order\":1,\"satisfied\":false,\"sources\":[{\"dimension\":\"minecraft:overworld\",\"kind\":\"RP\",\"registry\":\"lever_1\",\"root\":[-32,64,-16],\"savedActive\":false,\"uuid\":\"97f06848-17d8-4f57-939c-c53d45482fa1\"},{\"dimension\":\"minecraft:overworld\",\"kind\":\"RP\",\"registry\":\"lever_2\",\"root\":[-24,64,-16],\"savedActive\":false,\"uuid\":\"7f38fe6a-a0b0-49a5-b0ef-c3cac22f3175\"}],\"targets\":[{\"dimension\":\"minecraft:overworld\",\"kind\":\"ARCHITECTURE\",\"registry\":\"bloodborne_dw:prototype_double_door\",\"root\":[-8,64,-16],\"uuid\":\"e628f7b5-81c2-42b1-91f5-9a63331072fa\"},{\"dimension\":\"minecraft:overworld\",\"kind\":\"RP\",\"registry\":\"door_1\",\"root\":[8,64,-16],\"uuid\":\"addbe22d-0d23-4b8c-b465-5a94e6c9df3f\"},{\"dimension\":\"minecraft:overworld\",\"kind\":\"RP\",\"registry\":\"wood_gate\",\"root\":[24,64,-16],\"uuid\":\"1095784b-5e8c-49a2-916f-13a2a33ee83f\"}],\"uuid\":\"ff22f93e-146f-4937-8b8e-77fd5fd43b61\"},\"scope\":\"Bounded known fixture semantic persistent state; read-only, no object setters or full-world NBT. Transient loaded availability, player, cooldown and ticket state excluded.\",\"sourceFlags\":{\"lever_1\":{\"ruleMember\":true,\"savedActive\":false,\"uuid\":\"97f06848-17d8-4f57-939c-c53d45482fa1\"},\"lever_2\":{\"ruleMember\":true,\"savedActive\":false,\"uuid\":\"7f38fe6a-a0b0-49a5-b0ef-c3cac22f3175\"},\"lever_3\":{\"ruleMember\":false,\"savedActive\":false,\"uuid\":\"227bcde9-3889-4683-8b9a-728c8d0ee6fd\"}},\"targets\":{\"architecture_door\":{\"afterClose\":[\"scoreboard players add event_counter dw_v10_gui 1\"],\"afterOpen\":[\"scoreboard players add event_counter dw_v10_gui 1\"],\"blockState\":\"Block{bloodborne_dw:prototype_double_door}[open\\u003dfalse,profile\\u003dbase,rotation\\u003d0,variant\\u003d0]\",\"identity\":{\"dimension\":\"minecraft:overworld\",\"kind\":\"ARCHITECTURE\",\"registry\":\"bloodborne_dw:prototype_double_door\",\"root\":[-8,64,-16],\"uuid\":\"e628f7b5-81c2-42b1-91f5-9a63331072fa\"},\"leversOnly\":true,\"open\":false,\"pendingEffect\":false},\"rp_door\":{\"actualPulseIdle\":true,\"afterClose\":[],\"afterOpen\":[],\"identity\":{\"dimension\":\"minecraft:overworld\",\"kind\":\"RP\",\"registry\":\"door_1\",\"root\":[8,64,-16],\"uuid\":\"addbe22d-0d23-4b8c-b465-5a94e6c9df3f\"},\"leversOnly\":false,\"locked\":false,\"open\":false,\"pendingEffect\":false,\"pulseOnly\":false,\"verticalOffset\":0.0},\"wood_gate\":{\"actualPulseIdle\":true,\"afterClose\":[],\"afterOpen\":[],\"identity\":{\"dimension\":\"minecraft:overworld\",\"kind\":\"RP\",\"registry\":\"wood_gate\",\"root\":[24,64,-16],\"uuid\":\"1095784b-5e8c-49a2-916f-13a2a33ee83f\"},\"leversOnly\":false,\"locked\":false,\"open\":false,\"pendingEffect\":false,\"pulseOnly\":true,\"verticalOffset\":0.0}}}",
+      "sha256": "4afd5bdfed297faf8a85d40b13bb6ba5248bae173f565a1d87f4b805f46ecf66",
+      "canonicalEncoding": "UTF-8 compact Gson JSON, recursively lexicographically sorted object keys; array order preserved. No loaded/chunk/player/cooldown/ticket fields."
+    },
+    "completedSteps": 237
+  },
+  "architectureV10": {
+    "scope": "actual client baked resources and BlockEntityRenderer invocation; no world edits; no GPU/manual visual claim",
+    "builderIcons": [
+      {
+        "item": "bloodborne_dw:builder_tool",
+        "quadCount": 46,
+        "sprites": [
+          "bloodborne_dw:item/builder_tool"
+        ]
+      },
+      {
+        "item": "bloodborne_dw:composite_builder",
+        "quadCount": 42,
+        "sprites": [
+          "bloodborne_dw:item/composite_builder"
+        ]
+      }
+    ],
+    "frontBackUv": [
+      {
+        "type": "90010",
+        "model": "bloodborne_dw:base/v10_windows/window_02",
+        "face": "north",
+        "sprite": "bloodborne_dw:base/source/minecraft/block/addon/window_5",
+        "actualAtlasUvBounds": [
+          0.5010605,
+          0.08016205,
+          0.5438614,
+          0.12296295
+        ],
+        "actualUvAtLocalXyVertexBits": {
+          "-1084227584:-1085276160": [
+            0.5438614,
+            0.12296295
+          ],
+          "-1084227584:1073217536": [
+            0.5438614,
+            0.08016205
+          ],
+          "1072693248:-1085276160": [
+            0.5010605,
+            0.12296295
+          ],
+          "1072693248:1073217536": [
+            0.5010605,
+            0.08016205
+          ]
+        },
+        "vertexHash": -107166723,
+        "frontBackAtlasUvEqualAtSameLocalXy": true
+      },
+      {
+        "type": "90010",
+        "model": "bloodborne_dw:base/v10_windows/window_02",
+        "face": "south",
+        "sprite": "bloodborne_dw:base/source/minecraft/block/addon/window_5",
+        "actualAtlasUvBounds": [
+          0.5010605,
+          0.08016205,
+          0.5438614,
+          0.12296295
+        ],
+        "actualUvAtLocalXyVertexBits": {
+          "-1084227584:-1085276160": [
+            0.5438614,
+            0.12296295
+          ],
+          "-1084227584:1073217536": [
+            0.5438614,
+            0.08016205
+          ],
+          "1072693248:-1085276160": [
+            0.5010605,
+            0.12296295
+          ],
+          "1072693248:1073217536": [
+            0.5010605,
+            0.08016205
+          ]
+        },
+        "vertexHash": 554746877,
+        "frontBackAtlasUvEqualAtSameLocalXy": true
+      },
+      {
+        "type": "90020",
+        "model": "bloodborne_dw:base/v10_windows/window_03",
+        "face": "north",
+        "sprite": "bloodborne_dw:base/source/minecraft/block/addon/window_5",
+        "actualAtlasUvBounds": [
+          0.5010605,
+          0.08016205,
+          0.5438614,
+          0.12296295
+        ],
+        "actualUvAtLocalXyVertexBits": {
+          "-1084227584:-1085276160": [
+            0.5438614,
+            0.12296295
+          ],
+          "-1084227584:1073217536": [
+            0.5438614,
+            0.08016205
+          ],
+          "1072693248:-1085276160": [
+            0.5010605,
+            0.12296295
+          ],
+          "1072693248:1073217536": [
+            0.5010605,
+            0.08016205
+          ]
+        },
+        "vertexHash": 1080869885,
+        "frontBackAtlasUvEqualAtSameLocalXy": true
+      },
+      {
+        "type": "90020",
+        "model": "bloodborne_dw:base/v10_windows/window_03",
+        "face": "south",
+        "sprite": "bloodborne_dw:base/source/minecraft/block/addon/window_5",
+        "actualAtlasUvBounds": [
+          0.5010605,
+          0.08016205,
+          0.5438614,
+          0.12296295
+        ],
+        "actualUvAtLocalXyVertexBits": {
+          "-1084227584:-1085276160": [
+            0.5438614,
+            0.12296295
+          ],
+          "-1084227584:1073217536": [
+            0.5438614,
+            0.08016205
+          ],
+          "1072693248:-1085276160": [
+            0.5010605,
+            0.12296295
+          ],
+          "1072693248:1073217536": [
+            0.5010605,
+            0.08016205
+          ]
+        },
+        "vertexHash": -1413430275,
+        "frontBackAtlasUvEqualAtSameLocalXy": true
+      }
+    ],
+    "shiftedInstances": [
+      {
+        "root": [
+          -60,
+          64,
+          40
+        ],
+        "type": "90001",
+        "registry": "bloodborne_dw:prototype_double_door",
+        "uuid": "c43ab335-65cb-4438-a97d-018803034764",
+        "actualOffset": 0.125,
+        "rendererClass": "dev.dreamwalker.bloodbornedw.composite.CompositeClient$1",
+        "actualVertices": 32,
+        "actualLocalRendererBounds": [
+          -1.0,
+          0.125,
+          0.0625,
+          2.0,
+          4.125,
+          0.1875
+        ],
+        "staticEmitterCallsAtOldAnchor": 0,
+        "shiftedOwnerCells": 15,
+        "clientPick": "90001"
+      },
+      {
+        "root": [
+          -36,
+          64,
+          40
+        ],
+        "type": "90002",
+        "registry": "bloodborne_dw:prototype_wall",
+        "uuid": "e234a609-7129-4e35-ba68-8849a74f414b",
+        "actualOffset": 2.0,
+        "rendererClass": "dev.dreamwalker.bloodbornedw.composite.CompositeClient$1",
+        "actualVertices": 24,
+        "actualLocalRendererBounds": [
+          0.25,
+          2.0,
+          0.25,
+          0.75,
+          3.0,
+          0.75
+        ],
+        "staticEmitterCallsAtOldAnchor": 0,
+        "shiftedOwnerCells": 3,
+        "clientPick": "90002"
+      },
+      {
+        "root": [
+          -12,
+          64,
+          40
+        ],
+        "type": "90003",
+        "registry": "bloodborne_dw:prototype_roof",
+        "uuid": "e1b231a4-9a19-4e03-9cb5-1bbd87a12466",
+        "actualOffset": 2.0,
+        "rendererClass": "dev.dreamwalker.bloodbornedw.composite.CompositeClient$1",
+        "actualVertices": 60,
+        "actualLocalRendererBounds": [
+          -0.0625,
+          2.0,
+          -0.5,
+          1.0625,
+          3.9470338821411133,
+          1.4470338821411133
+        ],
+        "staticEmitterCallsAtOldAnchor": 0,
+        "shiftedOwnerCells": 19,
+        "clientPick": "90003"
+      },
+      {
+        "root": [
+          12,
+          64,
+          40
+        ],
+        "type": "90004",
+        "registry": "bloodborne_dw:prototype_thin_window",
+        "uuid": "3db8f63a-0d2a-42de-a498-00e96a3f84fb",
+        "actualOffset": -0.125,
+        "rendererClass": "dev.dreamwalker.bloodbornedw.composite.CompositeClient$1",
+        "actualVertices": 8,
+        "actualLocalRendererBounds": [
+          -0.875,
+          -0.125,
+          -0.15625,
+          1.875,
+          2.625,
+          -0.09375
+        ],
+        "staticEmitterCallsAtOldAnchor": 0,
+        "shiftedOwnerCells": 13,
+        "clientPick": "90004"
+      },
+      {
+        "root": [
+          36,
+          64,
+          40
+        ],
+        "type": "90005",
+        "registry": "bloodborne_dw:prototype_tree",
+        "uuid": "7f298267-b0ca-4ded-bfd4-f598af376b71",
+        "actualOffset": 0.125,
+        "rendererClass": "dev.dreamwalker.bloodbornedw.composite.CompositeClient$1",
+        "actualVertices": 448,
+        "actualLocalRendererBounds": [
+          -4.0,
+          0.125,
+          -4.0,
+          5.0,
+          18.125,
+          5.0
+        ],
+        "staticEmitterCallsAtOldAnchor": 0,
+        "shiftedOwnerCells": 251,
+        "clientPick": "90005"
+      },
+      {
+        "root": [
+          60,
+          64,
+          40
+        ],
+        "type": "90006",
+        "registry": "bloodborne_dw:prototype_ladder",
+        "uuid": "5e163cd2-7ce0-4de6-98e7-c73bf9e0580b",
+        "actualOffset": 2.0,
+        "rendererClass": "dev.dreamwalker.bloodbornedw.composite.CompositeClient$1",
+        "actualVertices": 104,
+        "actualLocalRendererBounds": [
+          -0.3125,
+          2.0,
+          0.8626344203948975,
+          1.2558413743972778,
+          3.144606828689575,
+          1.1751344203948975
+        ],
+        "staticEmitterCallsAtOldAnchor": 0,
+        "shiftedOwnerCells": 2,
+        "clientPick": "90006",
+        "shiftedClimbingOwnerResolved": true
+      },
+      {
+        "root": [
+          -60,
+          64,
+          60
+        ],
+        "type": "90007",
+        "registry": "bloodborne_dw:prototype_wood_window",
+        "uuid": "78c955d2-144e-49d1-af67-54ae63cbb7d5",
+        "actualOffset": 0.125,
+        "rendererClass": "dev.dreamwalker.bloodbornedw.composite.CompositeClient$1",
+        "actualVertices": 72,
+        "actualLocalRendererBounds": [
+          -1.09794282913208,
+          0.125,
+          -0.9288971424102783,
+          2.09794282913208,
+          1.125,
+          0.5625
+        ],
+        "staticEmitterCallsAtOldAnchor": 0,
+        "shiftedOwnerCells": 14,
+        "clientPick": "90007"
+      },
+      {
+        "root": [
+          -36,
+          64,
+          60
+        ],
+        "type": "90010",
+        "registry": "bloodborne_dw:prototype_glass_window_02",
+        "uuid": "f6087993-49d7-4927-ba8c-b0b212389dae",
+        "actualOffset": -0.125,
+        "rendererClass": "dev.dreamwalker.bloodbornedw.composite.CompositeClient$1",
+        "actualVertices": 8,
+        "actualLocalRendererBounds": [
+          -0.875,
+          -0.125,
+          -0.15625,
+          1.875,
+          2.625,
+          -0.09375
+        ],
+        "staticEmitterCallsAtOldAnchor": 0,
+        "shiftedOwnerCells": 13,
+        "clientPick": "90010"
+      },
+      {
+        "root": [
+          -12,
+          64,
+          60
+        ],
+        "type": "90011",
+        "registry": "bloodborne_dw:prototype_wall_skin_0",
+        "uuid": "0f0a8bc3-08b0-43e6-9c3e-584d62f4d137",
+        "actualOffset": 0.125,
+        "rendererClass": "dev.dreamwalker.bloodbornedw.composite.CompositeClient$1",
+        "actualVertices": 24,
+        "actualLocalRendererBounds": [
+          0.25,
+          0.125,
+          0.25,
+          0.75,
+          1.125,
+          0.75
+        ],
+        "staticEmitterCallsAtOldAnchor": 0,
+        "shiftedOwnerCells": 2,
+        "clientPick": "90011"
+      },
+      {
+        "root": [
+          12,
+          64,
+          60
+        ],
+        "type": "90012",
+        "registry": "bloodborne_dw:prototype_wall_skin_1",
+        "uuid": "750fe9c6-284d-42d0-805e-7ac8a8f5a76b",
+        "actualOffset": -0.125,
+        "rendererClass": "dev.dreamwalker.bloodbornedw.composite.CompositeClient$1",
+        "actualVertices": 24,
+        "actualLocalRendererBounds": [
+          0.25,
+          -0.125,
+          0.25,
+          0.75,
+          0.875,
+          0.75
+        ],
+        "staticEmitterCallsAtOldAnchor": 0,
+        "shiftedOwnerCells": 3,
+        "clientPick": "90012"
+      },
+      {
+        "root": [
+          36,
+          64,
+          60
+        ],
+        "type": "90013",
+        "registry": "bloodborne_dw:prototype_wall_skin_2",
+        "uuid": "47534550-4a8b-49cf-97d7-8236298625c5",
+        "actualOffset": 0.125,
+        "rendererClass": "dev.dreamwalker.bloodbornedw.composite.CompositeClient$1",
+        "actualVertices": 24,
+        "actualLocalRendererBounds": [
+          0.25,
+          0.125,
+          0.25,
+          0.75,
+          1.125,
+          0.75
+        ],
+        "staticEmitterCallsAtOldAnchor": 0,
+        "shiftedOwnerCells": 2,
+        "clientPick": "90013"
+      },
+      {
+        "root": [
+          60,
+          64,
+          60
+        ],
+        "type": "90014",
+        "registry": "bloodborne_dw:prototype_wall_skin_3",
+        "uuid": "a66e792e-1d0f-428f-9cf0-43155952406c",
+        "actualOffset": -0.125,
+        "rendererClass": "dev.dreamwalker.bloodbornedw.composite.CompositeClient$1",
+        "actualVertices": 24,
+        "actualLocalRendererBounds": [
+          0.25,
+          -0.125,
+          0.25,
+          0.75,
+          0.875,
+          0.75
+        ],
+        "staticEmitterCallsAtOldAnchor": 0,
+        "shiftedOwnerCells": 3,
+        "clientPick": "90014"
+      },
+      {
+        "root": [
+          -60,
+          64,
+          80
+        ],
+        "type": "90015",
+        "registry": "bloodborne_dw:prototype_wall_skin_4",
+        "uuid": "fb96feb1-9a9b-4029-b182-0f8031073f43",
+        "actualOffset": 0.125,
+        "rendererClass": "dev.dreamwalker.bloodbornedw.composite.CompositeClient$1",
+        "actualVertices": 24,
+        "actualLocalRendererBounds": [
+          0.25,
+          0.125,
+          0.25,
+          0.75,
+          1.125,
+          0.75
+        ],
+        "staticEmitterCallsAtOldAnchor": 0,
+        "shiftedOwnerCells": 2,
+        "clientPick": "90015"
+      },
+      {
+        "root": [
+          -36,
+          64,
+          80
+        ],
+        "type": "90016",
+        "registry": "bloodborne_dw:prototype_wall_skin_5",
+        "uuid": "19f1d464-9d1f-4648-8cfc-169092490613",
+        "actualOffset": -0.125,
+        "rendererClass": "dev.dreamwalker.bloodbornedw.composite.CompositeClient$1",
+        "actualVertices": 24,
+        "actualLocalRendererBounds": [
+          0.25,
+          -0.125,
+          0.25,
+          0.75,
+          0.875,
+          0.75
+        ],
+        "staticEmitterCallsAtOldAnchor": 0,
+        "shiftedOwnerCells": 3,
+        "clientPick": "90016"
+      },
+      {
+        "root": [
+          -12,
+          64,
+          80
+        ],
+        "type": "90017",
+        "registry": "bloodborne_dw:prototype_wall_skin_7",
+        "uuid": "ff0b8b00-2588-4848-bfa1-f859428a81f8",
+        "actualOffset": 0.125,
+        "rendererClass": "dev.dreamwalker.bloodbornedw.composite.CompositeClient$1",
+        "actualVertices": 24,
+        "actualLocalRendererBounds": [
+          0.25,
+          0.125,
+          0.25,
+          0.75,
+          1.125,
+          0.75
+        ],
+        "staticEmitterCallsAtOldAnchor": 0,
+        "shiftedOwnerCells": 2,
+        "clientPick": "90017"
+      },
+      {
+        "root": [
+          12,
+          64,
+          80
+        ],
+        "type": "90018",
+        "registry": "bloodborne_dw:prototype_ladder_art_1",
+        "uuid": "94a9e8b1-936b-4a63-9131-940cde2829a2",
+        "actualOffset": -0.125,
+        "rendererClass": "dev.dreamwalker.bloodbornedw.composite.CompositeClient$1",
+        "actualVertices": 104,
+        "actualLocalRendererBounds": [
+          -0.2226957082748413,
+          -0.125,
+          0.8626344203948975,
+          1.375,
+          1.0085582733154297,
+          1.1751344203948975
+        ],
+        "staticEmitterCallsAtOldAnchor": 0,
+        "shiftedOwnerCells": 2,
+        "clientPick": "90018",
+        "shiftedClimbingOwnerResolved": true
+      },
+      {
+        "root": [
+          36,
+          64,
+          80
+        ],
+        "type": "90019",
+        "registry": "bloodborne_dw:prototype_ladder_art_2",
+        "uuid": "ab87a2b4-cd1a-4891-9983-1c2cec15173f",
+        "actualOffset": 0.125,
+        "rendererClass": "dev.dreamwalker.bloodbornedw.composite.CompositeClient$1",
+        "actualVertices": 104,
+        "actualLocalRendererBounds": [
+          -0.20251119136810303,
+          0.125,
+          0.8626344203948975,
+          1.375,
+          1.2494224309921265,
+          1.1751344203948975
+        ],
+        "staticEmitterCallsAtOldAnchor": 0,
+        "shiftedOwnerCells": 2,
+        "clientPick": "90019",
+        "shiftedClimbingOwnerResolved": true
+      },
+      {
+        "root": [
+          60,
+          64,
+          80
+        ],
+        "type": "90020",
+        "registry": "bloodborne_dw:prototype_glass_window_03",
+        "uuid": "2d61cc5e-70fe-420d-b2da-72f162eee189",
+        "actualOffset": 2.0,
+        "rendererClass": "dev.dreamwalker.bloodbornedw.composite.CompositeClient$1",
+        "actualVertices": 8,
+        "actualLocalRendererBounds": [
+          -0.875,
+          2.0,
+          0.09375,
+          1.875,
+          4.75,
+          0.15625
+        ],
+        "staticEmitterCallsAtOldAnchor": 0,
+        "shiftedOwnerCells": 10,
+        "clientPick": "90020"
+      }
+    ],
+    "sampleCount": 18,
+    "status": "PASS_ACTUAL_LOADED_CLIENT_BAKES_UV_AND_REQUESTED_RENDERER_HEIGHT_SAMPLES",
+    "manualVisual": "NOT_RUN"
+  },
+  "expectedCanonicalRpCases": 69,
+  "caseScope": "Every canonical object placement item; independent extra opened door, collapsed ladder, upper-platform and remote lower-part cases. Mob/weapon attack semantics are outside this RP construction section.",
+  "ordinaryRpOverlap": {
+    "schema": "dw-actual-rp-on-rp-placement-v1",
+    "status": "FAIL_SECOND_ORDINARY_RP_PLACER_NOT_OBSERVED",
+    "originalAsset": "npc_window",
+    "secondAsset": "chair",
+    "originalUuid": "300871ab-240e-4e05-9595-9edba58d3e7d",
+    "originalStableBefore": {
+      "UUID": "[I;805859755,604917253,-1785356581,-1517470083]",
+      "Pos": "[-64.28125d,101.875d,64.50077857961777d]",
+      "Rotation": "[-180.0f,0.0f]",
+      "Open": "0b",
+      "VerticalOffset": "0.0d",
+      "Links": "[]",
+      "actualRegistry": "bloodborne_rp:npc_window",
+      "actualUuid": "300871ab-240e-4e05-9595-9edba58d3e7d",
+      "actualScale": 1.0,
+      "actualOpen": false,
+      "actualOffset": 0.0
+    },
+    "initialServerObservation": {
+      "originalStable": {
+        "UUID": "[I;805859755,604917253,-1785356581,-1517470083]",
+        "Pos": "[-64.28125d,101.875d,64.50077857961777d]",
+        "Rotation": "[-180.0f,0.0f]",
+        "Open": "0b",
+        "VerticalOffset": "0.0d",
+        "Links": "[]",
+        "actualRegistry": "bloodborne_rp:npc_window",
+        "actualUuid": "300871ab-240e-4e05-9595-9edba58d3e7d",
+        "actualScale": 1.0,
+        "actualOpen": false,
+        "actualOffset": 0.0
+      },
+      "initialLoadedUuidCount": 2,
+      "nativeSupportState": "Block{minecraft:stone}",
+      "readThread": "ACTUAL_SERVER_THREAD"
+    },
+    "selectedOriginalRpHit": {
+      "type": "ENTITY",
+      "hitPos": [
+        -63.5,
+        100.76282626391098,
+        62.83827858557824
+      ],
+      "entityUuid": "300871ab-240e-4e05-9595-9edba58d3e7d",
+      "entityRegistry": "bloodborne_rp:npc_window"
+    },
+    "blockOnlyNativeSupportHit": {
+      "type": "BLOCK",
+      "hitPos": [
+        -63.5,
+        100.0,
+        64.75163219614838
+      ],
+      "blockPos": [
+        -64,
+        99,
+        64
+      ],
+      "side": "up",
+      "insideBlock": false
+    },
+    "actualMainHand": "bloodborne_rp:chair_placer",
+    "inputPath": "ordinary use-key at real original RP EntityHitResult; no direct Item.useOnBlock/entity mutation",
+    "latestActualServerThreadObservation": {
+      "originalPresent": true,
+      "originalStable": {
+        "UUID": "[I;805859755,604917253,-1785356581,-1517470083]",
+        "Pos": "[-64.28125d,101.875d,64.50077857961777d]",
+        "Rotation": "[-180.0f,0.0f]",
+        "Open": "0b",
+        "VerticalOffset": "0.0d",
+        "Links": "[]",
+        "actualRegistry": "bloodborne_rp:npc_window",
+        "actualUuid": "300871ab-240e-4e05-9595-9edba58d3e7d",
+        "actualScale": 1.0,
+        "actualOpen": false,
+        "actualOffset": 0.0
+      },
+      "created": [],
+      "newServerCount": 0,
+      "nativeSupportState": "Block{minecraft:stone}",
+      "readThread": "ACTUAL_SERVER_THREAD"
+    },
+    "observedSecondServerCount": 0,
+    "observedSecondClientCount": 0,
+    "originalStableAfter": {
+      "UUID": "[I;805859755,604917253,-1785356581,-1517470083]",
+      "Pos": "[-64.28125d,101.875d,64.50077857961777d]",
+      "Rotation": "[-180.0f,0.0f]",
+      "Open": "0b",
+      "VerticalOffset": "0.0d",
+      "Links": "[]",
+      "actualRegistry": "bloodborne_rp:npc_window",
+      "actualUuid": "300871ab-240e-4e05-9595-9edba58d3e7d",
+      "actualScale": 1.0,
+      "actualOpen": false,
+      "actualOffset": 0.0
+    },
+    "failedStep": "second ordinary RP use-key creates new overlapping UUID"
+  },
+  "phase": 2,
+  "failedStep": "second ordinary RP use-key creates new overlapping UUID",
+  "clientTicks": 1707,
+  "screen": "NONE",
+  "actualCrosshair": {
+    "type": "ENTITY",
+    "hitPos": [
+      -63.5,
+      100.76282626391098,
+      62.83827858557824
+    ],
+    "entityUuid": "300871ab-240e-4e05-9595-9edba58d3e7d",
+    "entityRegistry": "bloodborne_rp:npc_window"
+  },
+  "actualMainHand": "bloodborne_rp:chair_placer",
+  "actualOffHand": "minecraft:air",
+  "lastActualServerThreadReadback": {
+    "originalPresent": true,
+    "originalStable": {
+      "UUID": "[I;805859755,604917253,-1785356581,-1517470083]",
+      "Pos": "[-64.28125d,101.875d,64.50077857961777d]",
+      "Rotation": "[-180.0f,0.0f]",
+      "Open": "0b",
+      "VerticalOffset": "0.0d",
+      "Links": "[]",
+      "actualRegistry": "bloodborne_rp:npc_window",
+      "actualUuid": "300871ab-240e-4e05-9595-9edba58d3e7d",
+      "actualScale": 1.0,
+      "actualOpen": false,
+      "actualOffset": 0.0
+    },
+    "created": [],
+    "newServerCount": 0,
+    "nativeSupportState": "Block{minecraft:stone}",
+    "readThread": "ACTUAL_SERVER_THREAD"
+  },
+  "clientPadObservation": {
+    "registry": "minecraft:air",
+    "state": "Block{minecraft:air}",
+    "nativeChunkAvailable": true,
+    "safeChunkAvailable": true,
+    "nativeBlockEntityClass": "NONE"
+  },
+  "failureClass": "java.lang.IllegalStateException",
+  "failure": "Actual input step timed out: second ordinary RP use-key creates new overlapping UUID hit\u003dnet.minecraft.class_3966@14025c04 hand\u003dbloodborne_rp:chair_placer position\u003d(-63.5, 100.0, 60.68827857961777)",
+  "failureFrames": [
+    "knot//dev.dreamwalker.bloodbornedw.review.ReviewV10ClientBootstrap.step(ReviewV10ClientBootstrap.java:202)",
+    "knot//dev.dreamwalker.bloodbornedw.review.ReviewV10ClientBootstrap.tick(ReviewV10ClientBootstrap.java:69)",
+    "knot//net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents.lambda$static$2(ClientTickEvents.java:43)",
+    "knot//net.minecraft.class_310.handler$zgb000$fabric-lifecycle-events-v1$onEndTick(class_310.java:5022)",
+    "knot//net.minecraft.class_310.method_1574(class_310.java:1957)",
+    "knot//net.minecraft.class_310.method_1523(class_310.java:1181)",
+    "knot//net.minecraft.class_310.method_1514(class_310.java:802)",
+    "knot//net.minecraft.client.main.Main.main(Main.java:250)",
+    "net.fabricmc.loader.impl.game.minecraft.MinecraftGameProvider.launch(MinecraftGameProvider.java:517)",
+    "net.fabricmc.loader.impl.launch.knot.Knot.launch(Knot.java:72)"
+  ]
+}

@@ -1,0 +1,350 @@
+
+> Configure project :
+Fabric Loom: 1.6.12
+
+> Task :compileJava UP-TO-DATE
+> Task :processResources UP-TO-DATE
+> Task :classes UP-TO-DATE
+
+> Task :compileGametestJava
+
+Note: C:\Users\vakir\.codex\worktrees\3f07\DW\bloodborne complete\src\gametest\java\dev\dreamwalker\bloodbornedw\gametest\PrototypeDoorGameTests.java uses or overrides a deprecated API.
+> Task :generateDLIConfig
+Note: Recompile with -Xlint:deprecation for details.
+> Task :generateLog4jConfig
+> Task :generateRemapClasspath UP-TO-DATE
+> Task :configureLaunch
+> Task :processGametestResources
+> Task :gametestClasses
+
+> Task :runGametest
+[13:31:42] [main/INFO] (FabricLoader/GameProvider) Loading Minecraft 1.20.1 with Fabric Loader 0.16.10
+[13:31:43] [main/INFO] (FabricLoader) Loading 48 mods:
+	- bloodborne_dw 0.1.0-prototype.2
+	- bloodborne_dw_gametest 1.0.0
+	- fabric-api 0.92.9+1.20.1
+	- fabric-api-base 0.4.32+1802ada577
+	- fabric-api-lookup-api-v1 1.6.37+1802ada577
+	- fabric-biome-api-v1 13.0.15+93aa238b77
+	- fabric-block-api-v1 1.0.12+1802ada577
+	- fabric-block-view-api-v2 1.0.3+924f046a77
+	- fabric-command-api-v1 1.2.35+f71b366f77
+	- fabric-command-api-v2 2.2.14+1802ada577
+	- fabric-commands-v0 0.2.52+df3654b377
+	- fabric-containers-v0 0.1.68+df3654b377
+	- fabric-content-registries-v0 4.0.13+1802ada577
+	- fabric-convention-tags-v1 1.5.6+1802ada577
+	- fabric-crash-report-info-v1 0.2.20+1802ada577
+	- fabric-data-attachment-api-v1 1.0.2+de0fd6d177
+	- fabric-data-generation-api-v1 12.3.9+1802ada577
+	- fabric-dimensions-v1 2.1.55+1802ada577
+	- fabric-entity-events-v1 1.6.1+1c78457f77
+	- fabric-events-interaction-v0 0.6.6+13a40c6677
+	- fabric-events-lifecycle-v0 0.2.64+df3654b377
+	- fabric-game-rule-api-v1 1.0.41+1802ada577
+	- fabric-gametest-api-v1 1.2.15+1802ada577
+	- fabric-item-api-v1 2.1.29+1802ada577
+	- fabric-item-group-api-v1 4.0.14+1802ada577
+	- fabric-lifecycle-events-v1 2.2.23+1802ada577
+	- fabric-loot-api-v2 1.2.3+1802ada577
+	- fabric-loot-tables-v1 1.1.47+9e7660c677
+	- fabric-message-api-v1 5.1.10+1802ada577
+	- fabric-mining-level-api-v1 2.1.52+1802ada577
+	- fabric-networking-api-v1 1.3.15+0caff8d077
+	- fabric-networking-v0 0.3.55+df3654b377
+	- fabric-object-builder-api-v1 11.1.5+e35120df77
+	- fabric-particles-v1 1.1.3+1802ada577
+	- fabric-recipe-api-v1 1.0.25+1802ada577
+	- fabric-registry-sync-v0 2.4.1+4c0a70e677
+	- fabric-rendering-data-attachment-v1 0.3.39+92a0d36777
+	- fabric-rendering-fluids-v1 3.0.29+1802ada577
+	- fabric-resource-conditions-api-v1 2.3.9+1802ada577
+	- fabric-resource-loader-v0 0.11.12+fb82e9d777
+	- fabric-screen-handler-api-v1 1.3.34+1802ada577
+	- fabric-transfer-api-v1 3.3.6+8dd72ea377
+	- fabric-transitive-access-wideners-v1 4.3.2+1802ada577
+	- fabricloader 0.16.10
+	- geckolib 4.4.9
+	- java 17
+	- minecraft 1.20.1
+	- mixinextras 0.4.1
+[13:31:43] [main/INFO] (FabricLoader/Mixin) SpongePowered MIXIN Subsystem Version=0.8.7 Source=file:/C:/Users/vakir/.gradle/caches/modules-2/files-2.1/net.fabricmc/sponge-mixin/0.15.4+mixin.0.8.7/6a12aacc794f1078458433116e9ed42c1cc98096/sponge-mixin-0.15.4+mixin.0.8.7.jar Service=Knot/Fabric Env=SERVER
+[13:31:43] [main/INFO] (FabricLoader/Mixin) Loaded Fabric development mappings for mixin remapper!
+[13:31:43] [main/INFO] (FabricLoader/Mixin) Compatibility level set to JAVA_17
+[13:31:44] [main/INFO] (FabricLoader/MixinExtras|Service) Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.4.1).
+[13:31:51] [main/INFO] (bloodborne_dw) Dreamwalker BB source-backed prototype checkpoint; final catalog IDs are not frozen
+[13:31:54] [main/INFO] (bloodborne_rp) Bloodborne RP initialized: standard Minecraft health; independent namespace
+[13:31:54] [main/INFO] (Minecraft) Environment: authHost='https://authserver.mojang.com', accountsHost='https://api.mojang.com', sessionHost='https://sessionserver.mojang.com', servicesHost='https://api.minecraftservices.com', name='PROD'
+[13:31:54] [main/INFO] (FabricGameTestHelper) Starting test server
+[13:31:55] [main/INFO] (Minecraft) Loaded 7 recipes
+[13:31:55] [main/INFO] (Minecraft) Loaded 1272 advancements
+[13:31:57] [main/INFO] (BiomeModificationImpl) Applied 0 biome modifications to 0 of 64 new biomes in 1.454 ms
+[13:31:57] [Server thread/INFO] (Minecraft) Preparing start region for dimension minecraft:overworld
+[13:31:57] [Server thread/INFO] (Minecraft) Preparing spawn area: 0%
+[13:31:58] [Worker-Main-9/INFO] (Minecraft) Preparing spawn area: 83%
+[13:31:58] [Worker-Main-13/INFO] (Minecraft) Preparing spawn area: 83%
+[13:31:59] [Server thread/INFO] (Minecraft) Time elapsed: 1134 ms
+[13:31:59] [Server thread/INFO] (Minecraft) Started game test server
+[13:31:59] [Server thread/INFO] (Minecraft) Running test batch 'prototype_wall:1' (7 tests)...
+[13:31:59] [Server thread/INFO] (Minecraft) 36 tests are now running!
+[13:32:00] [Server thread/INFO] (Minecraft) Running test batch 'prototype_door:1' (5 tests)...
+[13:32:00] [Server thread/ERROR] (FabricGameTestHelper) Exception occurred when invoking test method actualMovementAndOppositeSideClicksOpenARealPassage in (dev.dreamwalker.bloodbornedw.gametest.PrototypeDoorGameTests)
+java.lang.reflect.InvocationTargetException: null
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[?:?]
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
+	at java.lang.reflect.Method.invoke(Method.java:569) ~[?:?]
+	at net.fabricmc.fabric.impl.gametest.FabricGameTestHelper.invokeTestMethod(FabricGameTestHelper.java:117) ~[fabric-gametest-api-v1-1.2.15+1802ada577.jar:?]
+	at net.fabricmc.fabric.api.gametest.v1.FabricGameTest.invokeTestMethod(FabricGameTest.java:44) ~[fabric-gametest-api-v1-1.2.15+1802ada577.jar:?]
+	at net.fabricmc.fabric.impl.gametest.FabricGameTestHelper.lambda$getTestMethodInvoker$1(FabricGameTestHelper.java:108) ~[fabric-gametest-api-v1-1.2.15+1802ada577.jar:?]
+	at net.minecraft.test.TestFunction.start(TestFunction.java:45) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.test.GameTestState.start(GameTestState.java:126) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.test.GameTestState.tickTests(GameTestState.java:90) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.test.GameTestState.tick(GameTestState.java:73) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at java.util.concurrent.CopyOnWriteArrayList.forEach(CopyOnWriteArrayList.java:807) ~[?:?]
+	at net.minecraft.test.TestManager.tick(TestManager.java:20) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.server.MinecraftServer.handler$zci000$fabric-gametest-api-v1$tickWorlds(MinecraftServer.java:2825) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.server.MinecraftServer.tickWorlds(MinecraftServer.java:910) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.server.MinecraftServer.tick(MinecraftServer.java:824) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.test.TestServer.tick(TestServer.java:151) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:671) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.server.MinecraftServer.method_29739(MinecraftServer.java:265) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at java.lang.Thread.run(Thread.java:840) ~[?:?]
+Caused by: net.minecraft.test.GameTestException: actual player movement crosses the open aperture
+	at net.minecraft.test.TestContext.assertTrue(TestContext.java:762) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at dev.dreamwalker.bloodbornedw.gametest.PrototypeDoorGameTests.actualMovementAndOppositeSideClicksOpenARealPassage(PrototypeDoorGameTests.java:54) ~[gametest/:?]
+	... 20 more
+[13:32:00] [Server thread/ERROR] (FabricGameTestHelper) Exception occurred when invoking test method sharedBuilderTurns45AndSuitableSlabSupportDoesNotRequireFullCube in (dev.dreamwalker.bloodbornedw.gametest.PrototypeDoorGameTests)
+java.lang.reflect.InvocationTargetException: null
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[?:?]
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
+	at java.lang.reflect.Method.invoke(Method.java:569) ~[?:?]
+	at net.fabricmc.fabric.impl.gametest.FabricGameTestHelper.invokeTestMethod(FabricGameTestHelper.java:117) ~[fabric-gametest-api-v1-1.2.15+1802ada577.jar:?]
+	at net.fabricmc.fabric.api.gametest.v1.FabricGameTest.invokeTestMethod(FabricGameTest.java:44) ~[fabric-gametest-api-v1-1.2.15+1802ada577.jar:?]
+	at net.fabricmc.fabric.impl.gametest.FabricGameTestHelper.lambda$getTestMethodInvoker$1(FabricGameTestHelper.java:108) ~[fabric-gametest-api-v1-1.2.15+1802ada577.jar:?]
+	at net.minecraft.test.TestFunction.start(TestFunction.java:45) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.test.GameTestState.start(GameTestState.java:126) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.test.GameTestState.tickTests(GameTestState.java:90) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.test.GameTestState.tick(GameTestState.java:73) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at java.util.concurrent.CopyOnWriteArrayList.forEach(CopyOnWriteArrayList.java:807) ~[?:?]
+	at net.minecraft.test.TestManager.tick(TestManager.java:20) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.server.MinecraftServer.handler$zci000$fabric-gametest-api-v1$tickWorlds(MinecraftServer.java:2825) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.server.MinecraftServer.tickWorlds(MinecraftServer.java:910) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.server.MinecraftServer.tick(MinecraftServer.java:824) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.test.TestServer.tick(TestServer.java:151) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:671) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.server.MinecraftServer.method_29739(MinecraftServer.java:265) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at java.lang.Thread.run(Thread.java:840) ~[?:?]
+Caused by: net.minecraft.test.GameTestException: common tool rotates actual installed door45
+	at net.minecraft.test.TestContext.assertTrue(TestContext.java:762) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at dev.dreamwalker.bloodbornedw.gametest.PrototypeDoorGameTests.sharedBuilderTurns45AndSuitableSlabSupportDoesNotRequireFullCube(PrototypeDoorGameTests.java:109) ~[gametest/:?]
+	... 20 more
+[13:32:00] [Server thread/INFO] (Minecraft) Running test batch 'prototype_windows:1' (7 tests)...
+[13:32:00] [Server thread/ERROR] (FabricGameTestHelper) Exception occurred when invoking test method pickFromRemotePartAndNativeBreakYieldOneObjectAndNoHelpers in (dev.dreamwalker.bloodbornedw.gametest.PrototypeWindowGameTests)
+java.lang.reflect.InvocationTargetException: null
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[?:?]
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
+	at java.lang.reflect.Method.invoke(Method.java:569) ~[?:?]
+	at net.fabricmc.fabric.impl.gametest.FabricGameTestHelper.invokeTestMethod(FabricGameTestHelper.java:117) ~[fabric-gametest-api-v1-1.2.15+1802ada577.jar:?]
+	at net.fabricmc.fabric.api.gametest.v1.FabricGameTest.invokeTestMethod(FabricGameTest.java:44) ~[fabric-gametest-api-v1-1.2.15+1802ada577.jar:?]
+	at net.fabricmc.fabric.impl.gametest.FabricGameTestHelper.lambda$getTestMethodInvoker$1(FabricGameTestHelper.java:108) ~[fabric-gametest-api-v1-1.2.15+1802ada577.jar:?]
+	at net.minecraft.test.TestFunction.start(TestFunction.java:45) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.test.GameTestState.start(GameTestState.java:126) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.test.GameTestState.tickTests(GameTestState.java:90) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.test.GameTestState.tick(GameTestState.java:73) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at java.util.concurrent.CopyOnWriteArrayList.forEach(CopyOnWriteArrayList.java:807) ~[?:?]
+	at net.minecraft.test.TestManager.tick(TestManager.java:20) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.server.MinecraftServer.handler$zci000$fabric-gametest-api-v1$tickWorlds(MinecraftServer.java:2825) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.server.MinecraftServer.tickWorlds(MinecraftServer.java:910) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.server.MinecraftServer.tick(MinecraftServer.java:824) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.test.TestServer.tick(TestServer.java:151) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:671) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.server.MinecraftServer.method_29739(MinecraftServer.java:265) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at java.lang.Thread.run(Thread.java:840) ~[?:?]
+Caused by: net.minecraft.test.GameTestException: breaking a service part removes its root
+	at net.minecraft.test.TestContext.assertTrue(TestContext.java:762) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at dev.dreamwalker.bloodbornedw.gametest.PrototypeWindowGameTests.pickFromRemotePartAndNativeBreakYieldOneObjectAndNoHelpers(PrototypeWindowGameTests.java:130) ~[gametest/:?]
+	... 20 more
+[13:32:01] [Server thread/ERROR] (FabricGameTestHelper) Exception occurred when invoking test method actualBuilderSteps45AndProfileKeepsPhysicalSemantics in (dev.dreamwalker.bloodbornedw.gametest.PrototypeWindowGameTests)
+java.lang.reflect.InvocationTargetException: null
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[?:?]
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
+	at java.lang.reflect.Method.invoke(Method.java:569) ~[?:?]
+	at net.fabricmc.fabric.impl.gametest.FabricGameTestHelper.invokeTestMethod(FabricGameTestHelper.java:117) ~[fabric-gametest-api-v1-1.2.15+1802ada577.jar:?]
+	at net.fabricmc.fabric.api.gametest.v1.FabricGameTest.invokeTestMethod(FabricGameTest.java:44) ~[fabric-gametest-api-v1-1.2.15+1802ada577.jar:?]
+	at net.fabricmc.fabric.impl.gametest.FabricGameTestHelper.lambda$getTestMethodInvoker$1(FabricGameTestHelper.java:108) ~[fabric-gametest-api-v1-1.2.15+1802ada577.jar:?]
+	at net.minecraft.test.TestFunction.start(TestFunction.java:45) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.test.GameTestState.start(GameTestState.java:126) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.test.GameTestState.tickTests(GameTestState.java:90) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.test.GameTestState.tick(GameTestState.java:73) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at java.util.concurrent.CopyOnWriteArrayList.forEach(CopyOnWriteArrayList.java:807) ~[?:?]
+	at net.minecraft.test.TestManager.tick(TestManager.java:20) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.server.MinecraftServer.handler$zci000$fabric-gametest-api-v1$tickWorlds(MinecraftServer.java:2825) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.server.MinecraftServer.tickWorlds(MinecraftServer.java:910) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.server.MinecraftServer.tick(MinecraftServer.java:824) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.test.TestServer.tick(TestServer.java:151) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:671) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.server.MinecraftServer.method_29739(MinecraftServer.java:265) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at java.lang.Thread.run(Thread.java:840) ~[?:?]
+Caused by: net.minecraft.test.GameTestException: builder45 rotation succeeds
+	at net.minecraft.test.TestContext.assertTrue(TestContext.java:762) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at dev.dreamwalker.bloodbornedw.gametest.PrototypeWindowGameTests.actualBuilderSteps45AndProfileKeepsPhysicalSemantics(PrototypeWindowGameTests.java:176) ~[gametest/:?]
+	... 20 more
+[13:32:01] [Server thread/WARN] (Minecraft) Skipping BlockEntity with id 
+[13:32:01] [Server thread/ERROR] (FabricGameTestHelper) Exception occurred when invoking test method minecraftStateAndOwnerPayloadRoundtripThenPickedPlacementGetsNewUuid in (dev.dreamwalker.bloodbornedw.gametest.PrototypeWindowGameTests)
+java.lang.reflect.InvocationTargetException: null
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[?:?]
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
+	at java.lang.reflect.Method.invoke(Method.java:569) ~[?:?]
+	at net.fabricmc.fabric.impl.gametest.FabricGameTestHelper.invokeTestMethod(FabricGameTestHelper.java:117) ~[fabric-gametest-api-v1-1.2.15+1802ada577.jar:?]
+	at net.fabricmc.fabric.api.gametest.v1.FabricGameTest.invokeTestMethod(FabricGameTest.java:44) ~[fabric-gametest-api-v1-1.2.15+1802ada577.jar:?]
+	at net.fabricmc.fabric.impl.gametest.FabricGameTestHelper.lambda$getTestMethodInvoker$1(FabricGameTestHelper.java:108) ~[fabric-gametest-api-v1-1.2.15+1802ada577.jar:?]
+	at net.minecraft.test.TestFunction.start(TestFunction.java:45) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.test.GameTestState.start(GameTestState.java:126) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.test.GameTestState.tickTests(GameTestState.java:90) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.test.GameTestState.tick(GameTestState.java:73) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at java.util.concurrent.CopyOnWriteArrayList.forEach(CopyOnWriteArrayList.java:807) ~[?:?]
+	at net.minecraft.test.TestManager.tick(TestManager.java:20) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.server.MinecraftServer.handler$zci000$fabric-gametest-api-v1$tickWorlds(MinecraftServer.java:2825) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.server.MinecraftServer.tickWorlds(MinecraftServer.java:910) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.server.MinecraftServer.tick(MinecraftServer.java:824) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.test.TestServer.tick(TestServer.java:151) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:671) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.server.MinecraftServer.method_29739(MinecraftServer.java:265) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at java.lang.Thread.run(Thread.java:840) ~[?:?]
+Caused by: net.minecraft.test.GameTestException: registered BE NBT codec roundtrips owner and opaque payload
+	at net.minecraft.test.TestContext.assertTrue(TestContext.java:762) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at dev.dreamwalker.bloodbornedw.gametest.PrototypeWindowGameTests.minecraftStateAndOwnerPayloadRoundtripThenPickedPlacementGetsNewUuid(PrototypeWindowGameTests.java:222) ~[gametest/:?]
+	... 20 more
+[13:32:01] [Server thread/ERROR] (FabricGameTestHelper) Exception occurred when invoking test method bothSidesRaycastAndClickToggleOnlyWoodSidePanels in (dev.dreamwalker.bloodbornedw.gametest.PrototypeWindowGameTests)
+java.lang.reflect.InvocationTargetException: null
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[?:?]
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
+	at java.lang.reflect.Method.invoke(Method.java:569) ~[?:?]
+	at net.fabricmc.fabric.impl.gametest.FabricGameTestHelper.invokeTestMethod(FabricGameTestHelper.java:117) ~[fabric-gametest-api-v1-1.2.15+1802ada577.jar:?]
+	at net.fabricmc.fabric.api.gametest.v1.FabricGameTest.invokeTestMethod(FabricGameTest.java:44) ~[fabric-gametest-api-v1-1.2.15+1802ada577.jar:?]
+	at net.fabricmc.fabric.impl.gametest.FabricGameTestHelper.lambda$getTestMethodInvoker$1(FabricGameTestHelper.java:108) ~[fabric-gametest-api-v1-1.2.15+1802ada577.jar:?]
+	at net.minecraft.test.TestFunction.start(TestFunction.java:45) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.test.GameTestState.start(GameTestState.java:126) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.test.GameTestState.tickTests(GameTestState.java:90) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.test.GameTestState.tick(GameTestState.java:73) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at java.util.concurrent.CopyOnWriteArrayList.forEach(CopyOnWriteArrayList.java:807) ~[?:?]
+	at net.minecraft.test.TestManager.tick(TestManager.java:20) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.server.MinecraftServer.handler$zci000$fabric-gametest-api-v1$tickWorlds(MinecraftServer.java:2825) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.server.MinecraftServer.tickWorlds(MinecraftServer.java:910) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.server.MinecraftServer.tick(MinecraftServer.java:824) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.test.TestServer.tick(TestServer.java:151) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:671) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.server.MinecraftServer.method_29739(MinecraftServer.java:265) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at java.lang.Thread.run(Thread.java:840) ~[?:?]
+Caused by: net.minecraft.test.GameTestException: actual click toggles wood window from south
+	at net.minecraft.test.TestContext.assertTrue(TestContext.java:762) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at dev.dreamwalker.bloodbornedw.gametest.PrototypeWindowGameTests.bothSidesRaycastAndClickToggleOnlyWoodSidePanels(PrototypeWindowGameTests.java:104) ~[gametest/:?]
+	... 20 more
+[13:32:01] [Server thread/INFO] (Minecraft) Running test batch 'prototype_ladder:1' (11 tests)...
+[13:32:01] [Server thread/WARN] (Minecraft) Can't keep up! Is the server overloaded? Running 2256ms or 45 ticks behind
+[13:32:01] [Server thread/INFO] (Minecraft) Running test batch 'prototype_tree:1' (6 tests)...
+[13:32:03] [Server thread/WARN] (Minecraft) Skipping BlockEntity with id 
+[13:32:03] [Server thread/ERROR] (FabricGameTestHelper) Exception occurred when invoking test method eightRotationsKeepUuidAndBeLedgerPaletteRoundtrip in (dev.dreamwalker.bloodbornedw.gametest.PrototypeTreeGameTests)
+java.lang.reflect.InvocationTargetException: null
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[?:?]
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
+	at java.lang.reflect.Method.invoke(Method.java:569) ~[?:?]
+	at net.fabricmc.fabric.impl.gametest.FabricGameTestHelper.invokeTestMethod(FabricGameTestHelper.java:117) ~[fabric-gametest-api-v1-1.2.15+1802ada577.jar:?]
+	at net.fabricmc.fabric.api.gametest.v1.FabricGameTest.invokeTestMethod(FabricGameTest.java:44) ~[fabric-gametest-api-v1-1.2.15+1802ada577.jar:?]
+	at net.fabricmc.fabric.impl.gametest.FabricGameTestHelper.lambda$getTestMethodInvoker$1(FabricGameTestHelper.java:108) ~[fabric-gametest-api-v1-1.2.15+1802ada577.jar:?]
+	at net.minecraft.test.TestFunction.start(TestFunction.java:45) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.test.GameTestState.start(GameTestState.java:126) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.test.GameTestState.tickTests(GameTestState.java:90) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.test.GameTestState.tick(GameTestState.java:73) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at java.util.concurrent.CopyOnWriteArrayList.forEach(CopyOnWriteArrayList.java:807) ~[?:?]
+	at net.minecraft.test.TestManager.tick(TestManager.java:20) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.server.MinecraftServer.handler$zci000$fabric-gametest-api-v1$tickWorlds(MinecraftServer.java:2825) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.server.MinecraftServer.tickWorlds(MinecraftServer.java:910) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.server.MinecraftServer.tick(MinecraftServer.java:824) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.test.TestServer.tick(TestServer.java:151) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:671) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.server.MinecraftServer.method_29739(MinecraftServer.java:265) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at java.lang.Thread.run(Thread.java:840) ~[?:?]
+Caused by: net.minecraft.test.GameTestException: registered root BE codec roundtrips UUID and cached masks
+	at net.minecraft.test.TestContext.assertTrue(TestContext.java:762) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at dev.dreamwalker.bloodbornedw.gametest.PrototypeTreeGameTests.eightRotationsKeepUuidAndBeLedgerPaletteRoundtrip(PrototypeTreeGameTests.java:69) ~[gametest/:?]
+	... 20 more
+[13:32:03] [Server thread/ERROR] (FabricGameTestHelper) Exception occurred when invoking test method remoteCrownPickAndNativeBreakYieldExactlyOneTree in (dev.dreamwalker.bloodbornedw.gametest.PrototypeTreeGameTests)
+java.lang.reflect.InvocationTargetException: null
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[?:?]
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
+	at java.lang.reflect.Method.invoke(Method.java:569) ~[?:?]
+	at net.fabricmc.fabric.impl.gametest.FabricGameTestHelper.invokeTestMethod(FabricGameTestHelper.java:117) ~[fabric-gametest-api-v1-1.2.15+1802ada577.jar:?]
+	at net.fabricmc.fabric.api.gametest.v1.FabricGameTest.invokeTestMethod(FabricGameTest.java:44) ~[fabric-gametest-api-v1-1.2.15+1802ada577.jar:?]
+	at net.fabricmc.fabric.impl.gametest.FabricGameTestHelper.lambda$getTestMethodInvoker$1(FabricGameTestHelper.java:108) ~[fabric-gametest-api-v1-1.2.15+1802ada577.jar:?]
+	at net.minecraft.test.TestFunction.start(TestFunction.java:45) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.test.GameTestState.start(GameTestState.java:126) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.test.GameTestState.tickTests(GameTestState.java:90) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.test.GameTestState.tick(GameTestState.java:73) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at java.util.concurrent.CopyOnWriteArrayList.forEach(CopyOnWriteArrayList.java:807) ~[?:?]
+	at net.minecraft.test.TestManager.tick(TestManager.java:20) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.server.MinecraftServer.handler$zci000$fabric-gametest-api-v1$tickWorlds(MinecraftServer.java:2825) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.server.MinecraftServer.tickWorlds(MinecraftServer.java:910) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.server.MinecraftServer.tick(MinecraftServer.java:824) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.test.TestServer.tick(TestServer.java:151) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:671) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.server.MinecraftServer.method_29739(MinecraftServer.java:265) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at java.lang.Thread.run(Thread.java:840) ~[?:?]
+Caused by: net.minecraft.test.GameTestException: root removed together
+	at net.minecraft.test.TestContext.assertTrue(TestContext.java:762) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at dev.dreamwalker.bloodbornedw.gametest.PrototypeTreeGameTests.remoteCrownPickAndNativeBreakYieldExactlyOneTree(PrototypeTreeGameTests.java:48) ~[gametest/:?]
+	... 20 more
+[13:32:03] [Server thread/INFO] (Minecraft) [++++++++X+X++X+X+XX+++++++++++++++XX]
+[13:32:03] [Server thread/INFO] (Minecraft) ========= 36 GAME TESTS COMPLETE ======================
+[13:32:03] [Server thread/INFO] (Minecraft) 8 required tests failed :(
+[13:32:03] [Server thread/INFO] (Minecraft)    - prototypedoorgametests.actualmovementandoppositesideclicksopenarealpassage
+[13:32:03] [Server thread/INFO] (Minecraft)    - prototypedoorgametests.sharedbuilderturns45andsuitableslabsupportdoesnotrequirefullcube
+[13:32:03] [Server thread/INFO] (Minecraft)    - prototypewindowgametests.pickfromremotepartandnativebreakyieldoneobjectandnohelpers
+[13:32:03] [Server thread/INFO] (Minecraft)    - prototypewindowgametests.actualbuildersteps45andprofilekeepsphysicalsemantics
+[13:32:03] [Server thread/INFO] (Minecraft)    - prototypewindowgametests.minecraftstateandownerpayloadroundtripthenpickedplacementgetsnewuuid
+[13:32:03] [Server thread/INFO] (Minecraft)    - prototypewindowgametests.bothsidesraycastandclicktoggleonlywoodsidepanels
+[13:32:03] [Server thread/INFO] (Minecraft)    - prototypetreegametests.eightrotationskeepuuidandbeledgerpaletteroundtrip
+[13:32:03] [Server thread/INFO] (Minecraft)    - prototypetreegametests.remotecrownpickandnativebreakyieldexactlyonetree
+[13:32:03] [Server thread/INFO] (Minecraft) ====================================================
+[13:32:03] [Server thread/INFO] (Minecraft) Stopping server
+[13:32:03] [Server thread/INFO] (Minecraft) Saving players
+[13:32:03] [Server thread/INFO] (Minecraft) Saving worlds
+[13:32:04] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[Test Level]'/minecraft:overworld
+[13:32:04] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[Test Level]'/minecraft:the_end
+[13:32:04] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[Test Level]'/minecraft:the_nether
+[13:32:04] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage (world): All chunks are saved
+[13:32:04] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage (DIM1): All chunks are saved
+[13:32:04] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
+[13:32:04] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage: All dimensions are saved
+[13:32:04] [Server thread/INFO] (Minecraft) Game test server shutting down
+
+> Task :runGametest FAILED
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':runGametest'.
+> Process 'command 'C:\Users\vakir\AppData\Roaming\.minecraft\runtime\java-runtime-gamma\windows\java-runtime-gamma\bin\java.exe'' finished with non-zero exit value 8
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+> Get more help at https://help.gradle.org.
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.8/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD FAILED in 25s
+8 actionable tasks: 5 executed, 3 up-to-date

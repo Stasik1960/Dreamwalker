@@ -1,0 +1,76 @@
+{
+  "schema": "dw-v10-rp-attack-reach-source-ready-v1",
+  "status": "FROZEN_READY_FOR_PARENT_BUILD_AND_ACTUAL_RUNTIME",
+  "sources": [
+    {
+      "path": "src/architecture/java/dev/dreamwalker/bloodbornedw/architecture/RpCreativeAttackReach.java",
+      "sha256": "d329ee265ff040cb67e788e2f6a059bdf3b05b5207462a05bea5c9f565994847"
+    },
+    {
+      "path": "src/architecture/java/dev/dreamwalker/bloodbornedw/composite/mixin/RpReachAttributesCompatibilityMixin.java",
+      "sha256": "f213d1cbe0ae006cd177f45cd6d3349a6ecceb04c5781fde65fe59b6267c658a"
+    },
+    {
+      "path": "src/gametest/java/dev/dreamwalker/bloodbornedw/gametest/RpAttackReachCompatibilityGameTests.java",
+      "sha256": "f1baa789d5e7b31ce7df395016437efdfe05e2caa2869d0379a0067f32fa16b0"
+    },
+    {
+      "path": "src/architecture/resources/bloodborne_dw.composite.mixins.json",
+      "sha256": "6aa1ce370a499625fb3cf0bd9552cea68972195f3774c0ac32c31f1fd07ec3bf"
+    }
+  ],
+  "isolatedJava17": {
+    "schema": "dw-rp-attack-reach-isolated-compile-v1",
+    "status": "PASS_ISOLATED_JAVA17_API",
+    "sources": [
+      {
+        "path": "src/architecture/java/dev/dreamwalker/bloodbornedw/architecture/RpCreativeAttackReach.java",
+        "sha256": "d329ee265ff040cb67e788e2f6a059bdf3b05b5207462a05bea5c9f565994847"
+      },
+      {
+        "path": "src/architecture/java/dev/dreamwalker/bloodbornedw/composite/mixin/RpReachAttributesCompatibilityMixin.java",
+        "sha256": "f213d1cbe0ae006cd177f45cd6d3349a6ecceb04c5781fde65fe59b6267c658a"
+      },
+      {
+        "path": "src/gametest/java/dev/dreamwalker/bloodbornedw/gametest/RpAttackReachCompatibilityGameTests.java",
+        "sha256": "f1baa789d5e7b31ce7df395016437efdfe05e2caa2869d0379a0067f32fa16b0"
+      }
+    ],
+    "mixinConfiguration": {
+      "path": "src/architecture/resources/bloodborne_dw.composite.mixins.json",
+      "sha256": "6aa1ce370a499625fb3cf0bd9552cea68972195f3774c0ac32c31f1fd07ec3bf"
+    },
+    "compileLog": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\reports\\runtime\\V10_RP_ATTACK_REACH_ISOLATED_COMPILE.log",
+    "compileLogSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "exitCode": 0,
+    "productionClassesModified": false,
+    "gradleOrGameStarted": false,
+    "nativeCaseCount": 1,
+    "native": "NOT_RUN",
+    "optionalApiAbsentBoot": "NOT_RUN",
+    "fullProfileActualPacket": "NOT_RUN",
+    "remappedFinalJarDescriptorCheck": "REQUIRED_AFTER_PARENT_BUILD"
+  },
+  "externalShadow": {
+    "name": "getSquaredAttackRange",
+    "namedDescriptor": "(Lnet/minecraft/entity/LivingEntity;D)D",
+    "runtimeDescriptor": "(Lnet/minecraft/class_1309;D)D",
+    "remap": false,
+    "baseSquared": 64.0
+  },
+  "externalInject": {
+    "name": "isWithinAttackRange",
+    "remap": false,
+    "Pseudo": true,
+    "requireWhenPresent": 1
+  },
+  "policy": "exact eligible server Creative same-world/live RP source-part hit within6m, native occlusion/permissions/no tools; actual hit distance also respects installed library effective attack-range cap",
+  "mainRpGeometryArtRegistryQaChanged": false,
+  "existingDamageAndVanillaAttackCallbacksChanged": false,
+  "nativeEntryPoint": "dev.dreamwalker.bloodbornedw.gametest.RpAttackReachCompatibilityGameTests",
+  "addedNativeCases": 1,
+  "nativeRuntime": "NOT_RUN",
+  "optionalAbsentBoot": "NOT_RUN",
+  "providedFullProfileAttack": "NOT_RUN",
+  "finalJarDescriptor": "parent should run tools/verify_v10_rp_reach_adapter_jar.py with exact new frozen SHA"
+}

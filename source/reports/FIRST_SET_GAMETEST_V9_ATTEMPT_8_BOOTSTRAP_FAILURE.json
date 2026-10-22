@@ -1,0 +1,11 @@
+{
+  "schema": "dreamwalker-v9-native-attempt-v1",
+  "attempt": 8,
+  "status": "FAIL_BOOTSTRAP_TESTS_NOT_EXECUTED",
+  "reason": "ArchitectureBreakDiagnosticsMixin targeted inherited onStateReplaced on Block; actual declaration is AbstractBlock",
+  "console": "reports/REVIEW_V9_BUILD_AND_CORE_ATTEMPT_8.log",
+  "console_sha256": "b29339ff241a69bac40638db35898372340222537b266dff16a5787d16a1ff0d",
+  "stale_xml": "reports/FIRST_SET_GAMETEST_V9_ATTEMPT_8_STALE_PREVIOUS_NOT_RUN.xml",
+  "stale_xml_origin": "Byte-identical previous attempt7; not attempt8 test evidence",
+  "fix": "Mixin target changed to actual AbstractBlock declaration verified with Java17 javap"
+}

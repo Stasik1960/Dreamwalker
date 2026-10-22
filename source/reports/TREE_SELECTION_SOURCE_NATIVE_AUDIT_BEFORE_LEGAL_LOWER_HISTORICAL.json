@@ -1,0 +1,989 @@
+{
+  "schema": "dreamwalker-tree-selection-source-native-audit-v1",
+  "status": "PASS_ISOLATED_NATIVE_BOUNDS_AND_6624_SOURCE_TARGET_RAYS",
+  "evidence": {
+    "v7DescriptorSha256": "48bad7bc1289eb6e9291bf1b0dad7b68266d15499b8e285cad230691a75b4310",
+    "beforeTwoPlanesDescriptorSha256": "aaebc5e473044bf7152f8ecd411e93815e4e7218ed8130f5be7a3c0aa2a2aed8",
+    "afterFourPlanesDescriptorSha256": "82da565e07f6b37dbbe88e021803be064181bf24ff449e8e7feb0d1681d4b305",
+    "unchangedProductionDistributorSha256": "718e153d67a07db57b82ffd3167e147068de4e297c75eb7f5a67a634d0f258c3",
+    "unchangedProductionShapeBuilderSha256": "57f8d92012286d1e5349d8b63de8480cadd18af444be83843307facc4e7b238e",
+    "nativeLogSha256": "bfdcb3d2b932eb2b4895ff1cff2d46de3b653cac2ca554b891b1a60a4128c8cd",
+    "sourcePackSha256": "29b31e3744af5794ae95ebe4c5474e3b70dfb08c143355bce815c08ceef09a36"
+  },
+  "sourcePolicy": {
+    "lowerYUnits": [
+      0,
+      96
+    ],
+    "lowerCrossExtentUnits": [
+      -16,
+      32
+    ],
+    "upperYUnits": [
+      96,
+      288
+    ],
+    "upperCrossExtentUnits": [
+      -64,
+      80
+    ],
+    "rayThicknessUnits": 0.25,
+    "selectionVolumesBefore": 2,
+    "selectionVolumesAfter": 4
+  },
+  "allNonSelectionDescriptorFieldsUnchanged": true,
+  "physicalStemUnchanged": true,
+  "partsOffsetsModelsUVTexturesUnchanged": true,
+  "nonSelectionDescriptorFingerprint": "bfb0b9be3ee64eb75fdd41b223a982042e532924121770a4cb0fe0037b4707d3",
+  "sourcePartElementCornerChecks": 368,
+  "sourcePartBounds": [
+    {
+      "variant": 0,
+      "part": 0,
+      "model": "bloodborne_dw:tree_source/block/oak_log",
+      "modelSha256": "1bc0ce630b726c82bba2e96803e4292dc9769774a70925e50ab43b45757edcf7",
+      "bounds": {
+        "from": [
+          -64.0,
+          96,
+          7.999999999999996
+        ],
+        "to": [
+          -16.0,
+          144,
+          8.000000000000004
+        ]
+      },
+      "allTransformedElementCornersCovered": true
+    },
+    {
+      "variant": 0,
+      "part": 1,
+      "model": "bloodborne_dw:tree_source/block/spruce_log",
+      "modelSha256": "863943f2f2f6453b9c35ea951adf27bbe2bc6d848c8d5c742e0911bd9ed369c7",
+      "bounds": {
+        "from": [
+          -64.0,
+          144,
+          7.999999999999996
+        ],
+        "to": [
+          -16.0,
+          192,
+          8.000000000000004
+        ]
+      },
+      "allTransformedElementCornersCovered": true
+    },
+    {
+      "variant": 0,
+      "part": 2,
+      "model": "bloodborne_dw:tree_source/block/birch_log_1",
+      "modelSha256": "eb967ec75f4f6e8976e8092026aa539f201bd29f77534a39a85e4c9093e855c0",
+      "bounds": {
+        "from": [
+          -64.0,
+          192,
+          7.999999999999996
+        ],
+        "to": [
+          -16.0,
+          240,
+          8.000000000000004
+        ]
+      },
+      "allTransformedElementCornersCovered": true
+    },
+    {
+      "variant": 0,
+      "part": 3,
+      "model": "bloodborne_dw:tree_source/block/melon",
+      "modelSha256": "542a822c441e68d874650870533eff2356c365299fea86d430bdd7b47f9b3a73",
+      "bounds": {
+        "from": [
+          -16.0,
+          0,
+          -16.0
+        ],
+        "to": [
+          32.0,
+          48,
+          32.0
+        ]
+      },
+      "allTransformedElementCornersCovered": true
+    },
+    {
+      "variant": 0,
+      "part": 4,
+      "model": "bloodborne_dw:tree_source/block/melon",
+      "modelSha256": "542a822c441e68d874650870533eff2356c365299fea86d430bdd7b47f9b3a73",
+      "bounds": {
+        "from": [
+          -16.0,
+          48,
+          -16.0
+        ],
+        "to": [
+          32.0,
+          96,
+          32.0
+        ]
+      },
+      "allTransformedElementCornersCovered": true
+    },
+    {
+      "variant": 0,
+      "part": 5,
+      "model": "bloodborne_dw:tree_source/block/jungle_log",
+      "modelSha256": "ee10741abf0b08028c4fd82f208e30772daeb8f7799012edcd1ed00a36c83d25",
+      "bounds": {
+        "from": [
+          7.999999999999997,
+          96,
+          -64.0
+        ],
+        "to": [
+          8.000000000000004,
+          144,
+          -16.0
+        ]
+      },
+      "allTransformedElementCornersCovered": true
+    },
+    {
+      "variant": 0,
+      "part": 6,
+      "model": "bloodborne_dw:tree_source/block/orange_wool",
+      "modelSha256": "f98838aa0c91a4639744b47f9c687fc78b7e0f80a896e0f874e28944782b1948",
+      "bounds": {
+        "from": [
+          -16.0,
+          96,
+          -16.0
+        ],
+        "to": [
+          32.0,
+          144,
+          32.0
+        ]
+      },
+      "allTransformedElementCornersCovered": true
+    },
+    {
+      "variant": 0,
+      "part": 7,
+      "model": "bloodborne_dw:tree_source/block/oak_log",
+      "modelSha256": "1bc0ce630b726c82bba2e96803e4292dc9769774a70925e50ab43b45757edcf7",
+      "bounds": {
+        "from": [
+          7.999999999999997,
+          96,
+          32.0
+        ],
+        "to": [
+          8.000000000000004,
+          144,
+          80.0
+        ]
+      },
+      "allTransformedElementCornersCovered": true
+    },
+    {
+      "variant": 0,
+      "part": 8,
+      "model": "bloodborne_dw:tree_source/block/acacia_log",
+      "modelSha256": "dd0a69f988ccc0682c1f4de0b407a08829b382069ccf4e002f3ffe07969fd1c0",
+      "bounds": {
+        "from": [
+          7.999999999999997,
+          144,
+          -64.0
+        ],
+        "to": [
+          8.000000000000004,
+          192,
+          -16.0
+        ]
+      },
+      "allTransformedElementCornersCovered": true
+    },
+    {
+      "variant": 0,
+      "part": 9,
+      "model": "bloodborne_dw:tree_source/block/magenta_wool",
+      "modelSha256": "2e08841e3ac667d325963e57e155e81dce6da520931c5659ec3e0bf575519e77",
+      "bounds": {
+        "from": [
+          -16.0,
+          144,
+          -16.0
+        ],
+        "to": [
+          32.0,
+          192,
+          32.0
+        ]
+      },
+      "allTransformedElementCornersCovered": true
+    },
+    {
+      "variant": 0,
+      "part": 10,
+      "model": "bloodborne_dw:tree_source/block/spruce_log",
+      "modelSha256": "863943f2f2f6453b9c35ea951adf27bbe2bc6d848c8d5c742e0911bd9ed369c7",
+      "bounds": {
+        "from": [
+          7.999999999999997,
+          144,
+          32.0
+        ],
+        "to": [
+          8.000000000000004,
+          192,
+          80.0
+        ]
+      },
+      "allTransformedElementCornersCovered": true
+    },
+    {
+      "variant": 0,
+      "part": 11,
+      "model": "bloodborne_dw:tree_source/block/dark_oak_log",
+      "modelSha256": "c0bda10840acf40ae1f715d557ecaf3b09b4e482c0b9c419936507d06ae69519",
+      "bounds": {
+        "from": [
+          7.999999999999997,
+          192,
+          -64.0
+        ],
+        "to": [
+          8.000000000000004,
+          240,
+          -16.0
+        ]
+      },
+      "allTransformedElementCornersCovered": true
+    },
+    {
+      "variant": 0,
+      "part": 12,
+      "model": "bloodborne_dw:tree_source/block/light_blue_wool",
+      "modelSha256": "b534678c2cf8ecc5863e5a8fc8f158b5c5d482e5ace7848d01dfc93b37b6be28",
+      "bounds": {
+        "from": [
+          -16.0,
+          192,
+          -16.0
+        ],
+        "to": [
+          32.0,
+          240,
+          32.0
+        ]
+      },
+      "allTransformedElementCornersCovered": true
+    },
+    {
+      "variant": 0,
+      "part": 13,
+      "model": "bloodborne_dw:tree_source/block/birch_log",
+      "modelSha256": "5cda7fd1c343b56f867bf685eef0295d6692d3d381ac9fb66e8309e2368d2ffd",
+      "bounds": {
+        "from": [
+          7.999999999999997,
+          192,
+          32.0
+        ],
+        "to": [
+          8.000000000000004,
+          240,
+          80.0
+        ]
+      },
+      "allTransformedElementCornersCovered": true
+    },
+    {
+      "variant": 0,
+      "part": 14,
+      "model": "bloodborne_dw:tree_source/block/cyan_wool",
+      "modelSha256": "4c35295eda71e648581a4147a2d5fbd225c969b9eaea1903e5af5bc86f535a93",
+      "bounds": {
+        "from": [
+          -16.0,
+          240,
+          -16.0
+        ],
+        "to": [
+          32.0,
+          288,
+          32.0
+        ]
+      },
+      "allTransformedElementCornersCovered": true
+    },
+    {
+      "variant": 0,
+      "part": 15,
+      "model": "bloodborne_dw:tree_source/block/jungle_log",
+      "modelSha256": "ee10741abf0b08028c4fd82f208e30772daeb8f7799012edcd1ed00a36c83d25",
+      "bounds": {
+        "from": [
+          32.0,
+          96,
+          7.999999999999996
+        ],
+        "to": [
+          80.0,
+          144,
+          8.000000000000004
+        ]
+      },
+      "allTransformedElementCornersCovered": true
+    },
+    {
+      "variant": 0,
+      "part": 16,
+      "model": "bloodborne_dw:tree_source/block/acacia_log",
+      "modelSha256": "dd0a69f988ccc0682c1f4de0b407a08829b382069ccf4e002f3ffe07969fd1c0",
+      "bounds": {
+        "from": [
+          32.0,
+          144,
+          7.999999999999996
+        ],
+        "to": [
+          80.0,
+          192,
+          8.000000000000004
+        ]
+      },
+      "allTransformedElementCornersCovered": true
+    },
+    {
+      "variant": 0,
+      "part": 17,
+      "model": "bloodborne_dw:tree_source/block/dark_oak_log",
+      "modelSha256": "c0bda10840acf40ae1f715d557ecaf3b09b4e482c0b9c419936507d06ae69519",
+      "bounds": {
+        "from": [
+          32.0,
+          192,
+          7.999999999999996
+        ],
+        "to": [
+          80.0,
+          240,
+          8.000000000000004
+        ]
+      },
+      "allTransformedElementCornersCovered": true
+    },
+    {
+      "variant": 1,
+      "part": 0,
+      "model": "bloodborne_dw:tree_proposal/lower_source_base",
+      "modelSha256": "cdffbc4878db6c88462254244d008b0e326a606a343878986f67171c8777e608",
+      "bounds": {
+        "from": [
+          -16.0,
+          0,
+          -16.0
+        ],
+        "to": [
+          32.0,
+          96,
+          32.0
+        ]
+      },
+      "allTransformedElementCornersCovered": true
+    },
+    {
+      "variant": 1,
+      "part": 1,
+      "model": "bloodborne_dw:tree_source/block/oak_log",
+      "modelSha256": "1bc0ce630b726c82bba2e96803e4292dc9769774a70925e50ab43b45757edcf7",
+      "bounds": {
+        "from": [
+          -64.0,
+          96,
+          7.999999999999996
+        ],
+        "to": [
+          -16.0,
+          144,
+          8.000000000000004
+        ]
+      },
+      "allTransformedElementCornersCovered": true
+    },
+    {
+      "variant": 1,
+      "part": 2,
+      "model": "bloodborne_dw:tree_source/block/spruce_log",
+      "modelSha256": "863943f2f2f6453b9c35ea951adf27bbe2bc6d848c8d5c742e0911bd9ed369c7",
+      "bounds": {
+        "from": [
+          -64.0,
+          144,
+          7.999999999999996
+        ],
+        "to": [
+          -16.0,
+          192,
+          8.000000000000004
+        ]
+      },
+      "allTransformedElementCornersCovered": true
+    },
+    {
+      "variant": 1,
+      "part": 3,
+      "model": "bloodborne_dw:tree_source/block/birch_log_1",
+      "modelSha256": "eb967ec75f4f6e8976e8092026aa539f201bd29f77534a39a85e4c9093e855c0",
+      "bounds": {
+        "from": [
+          -64.0,
+          192,
+          7.999999999999996
+        ],
+        "to": [
+          -16.0,
+          240,
+          8.000000000000004
+        ]
+      },
+      "allTransformedElementCornersCovered": true
+    },
+    {
+      "variant": 1,
+      "part": 4,
+      "model": "bloodborne_dw:tree_source/block/jungle_log",
+      "modelSha256": "ee10741abf0b08028c4fd82f208e30772daeb8f7799012edcd1ed00a36c83d25",
+      "bounds": {
+        "from": [
+          7.999999999999997,
+          96,
+          -64.0
+        ],
+        "to": [
+          8.000000000000004,
+          144,
+          -16.0
+        ]
+      },
+      "allTransformedElementCornersCovered": true
+    },
+    {
+      "variant": 1,
+      "part": 5,
+      "model": "bloodborne_dw:tree_source/block/orange_wool",
+      "modelSha256": "f98838aa0c91a4639744b47f9c687fc78b7e0f80a896e0f874e28944782b1948",
+      "bounds": {
+        "from": [
+          -16.0,
+          96,
+          -16.0
+        ],
+        "to": [
+          32.0,
+          144,
+          32.0
+        ]
+      },
+      "allTransformedElementCornersCovered": true
+    },
+    {
+      "variant": 1,
+      "part": 6,
+      "model": "bloodborne_dw:tree_source/block/oak_log",
+      "modelSha256": "1bc0ce630b726c82bba2e96803e4292dc9769774a70925e50ab43b45757edcf7",
+      "bounds": {
+        "from": [
+          7.999999999999997,
+          96,
+          32.0
+        ],
+        "to": [
+          8.000000000000004,
+          144,
+          80.0
+        ]
+      },
+      "allTransformedElementCornersCovered": true
+    },
+    {
+      "variant": 1,
+      "part": 7,
+      "model": "bloodborne_dw:tree_source/block/acacia_log",
+      "modelSha256": "dd0a69f988ccc0682c1f4de0b407a08829b382069ccf4e002f3ffe07969fd1c0",
+      "bounds": {
+        "from": [
+          7.999999999999997,
+          144,
+          -64.0
+        ],
+        "to": [
+          8.000000000000004,
+          192,
+          -16.0
+        ]
+      },
+      "allTransformedElementCornersCovered": true
+    },
+    {
+      "variant": 1,
+      "part": 8,
+      "model": "bloodborne_dw:tree_source/block/magenta_wool",
+      "modelSha256": "2e08841e3ac667d325963e57e155e81dce6da520931c5659ec3e0bf575519e77",
+      "bounds": {
+        "from": [
+          -16.0,
+          144,
+          -16.0
+        ],
+        "to": [
+          32.0,
+          192,
+          32.0
+        ]
+      },
+      "allTransformedElementCornersCovered": true
+    },
+    {
+      "variant": 1,
+      "part": 9,
+      "model": "bloodborne_dw:tree_source/block/spruce_log",
+      "modelSha256": "863943f2f2f6453b9c35ea951adf27bbe2bc6d848c8d5c742e0911bd9ed369c7",
+      "bounds": {
+        "from": [
+          7.999999999999997,
+          144,
+          32.0
+        ],
+        "to": [
+          8.000000000000004,
+          192,
+          80.0
+        ]
+      },
+      "allTransformedElementCornersCovered": true
+    },
+    {
+      "variant": 1,
+      "part": 10,
+      "model": "bloodborne_dw:tree_source/block/dark_oak_log",
+      "modelSha256": "c0bda10840acf40ae1f715d557ecaf3b09b4e482c0b9c419936507d06ae69519",
+      "bounds": {
+        "from": [
+          7.999999999999997,
+          192,
+          -64.0
+        ],
+        "to": [
+          8.000000000000004,
+          240,
+          -16.0
+        ]
+      },
+      "allTransformedElementCornersCovered": true
+    },
+    {
+      "variant": 1,
+      "part": 11,
+      "model": "bloodborne_dw:tree_source/block/light_blue_wool",
+      "modelSha256": "b534678c2cf8ecc5863e5a8fc8f158b5c5d482e5ace7848d01dfc93b37b6be28",
+      "bounds": {
+        "from": [
+          -16.0,
+          192,
+          -16.0
+        ],
+        "to": [
+          32.0,
+          240,
+          32.0
+        ]
+      },
+      "allTransformedElementCornersCovered": true
+    },
+    {
+      "variant": 1,
+      "part": 12,
+      "model": "bloodborne_dw:tree_source/block/birch_log",
+      "modelSha256": "5cda7fd1c343b56f867bf685eef0295d6692d3d381ac9fb66e8309e2368d2ffd",
+      "bounds": {
+        "from": [
+          7.999999999999997,
+          192,
+          32.0
+        ],
+        "to": [
+          8.000000000000004,
+          240,
+          80.0
+        ]
+      },
+      "allTransformedElementCornersCovered": true
+    },
+    {
+      "variant": 1,
+      "part": 13,
+      "model": "bloodborne_dw:tree_source/block/cyan_wool",
+      "modelSha256": "4c35295eda71e648581a4147a2d5fbd225c969b9eaea1903e5af5bc86f535a93",
+      "bounds": {
+        "from": [
+          -16.0,
+          240,
+          -16.0
+        ],
+        "to": [
+          32.0,
+          288,
+          32.0
+        ]
+      },
+      "allTransformedElementCornersCovered": true
+    },
+    {
+      "variant": 1,
+      "part": 14,
+      "model": "bloodborne_dw:tree_source/block/jungle_log",
+      "modelSha256": "ee10741abf0b08028c4fd82f208e30772daeb8f7799012edcd1ed00a36c83d25",
+      "bounds": {
+        "from": [
+          32.0,
+          96,
+          7.999999999999996
+        ],
+        "to": [
+          80.0,
+          144,
+          8.000000000000004
+        ]
+      },
+      "allTransformedElementCornersCovered": true
+    },
+    {
+      "variant": 1,
+      "part": 15,
+      "model": "bloodborne_dw:tree_source/block/acacia_log",
+      "modelSha256": "dd0a69f988ccc0682c1f4de0b407a08829b382069ccf4e002f3ffe07969fd1c0",
+      "bounds": {
+        "from": [
+          32.0,
+          144,
+          7.999999999999996
+        ],
+        "to": [
+          80.0,
+          192,
+          8.000000000000004
+        ]
+      },
+      "allTransformedElementCornersCovered": true
+    },
+    {
+      "variant": 1,
+      "part": 16,
+      "model": "bloodborne_dw:tree_source/block/dark_oak_log",
+      "modelSha256": "c0bda10840acf40ae1f715d557ecaf3b09b4e482c0b9c419936507d06ae69519",
+      "bounds": {
+        "from": [
+          32.0,
+          192,
+          7.999999999999996
+        ],
+        "to": [
+          80.0,
+          240,
+          8.000000000000004
+        ]
+      },
+      "allTransformedElementCornersCovered": true
+    }
+  ],
+  "immutableAssetHashes": {
+    "src/architecture/resources/assets/bloodborne_dw/models/tree_source/block/acacia_log.json": "dd0a69f988ccc0682c1f4de0b407a08829b382069ccf4e002f3ffe07969fd1c0",
+    "src/architecture/resources/assets/bloodborne_dw/models/tree_source/block/birch_log.json": "5cda7fd1c343b56f867bf685eef0295d6692d3d381ac9fb66e8309e2368d2ffd",
+    "src/architecture/resources/assets/bloodborne_dw/models/tree_source/block/birch_log_1.json": "eb967ec75f4f6e8976e8092026aa539f201bd29f77534a39a85e4c9093e855c0",
+    "src/architecture/resources/assets/bloodborne_dw/models/tree_source/block/cyan_wool.json": "4c35295eda71e648581a4147a2d5fbd225c969b9eaea1903e5af5bc86f535a93",
+    "src/architecture/resources/assets/bloodborne_dw/models/tree_source/block/dark_oak_log.json": "c0bda10840acf40ae1f715d557ecaf3b09b4e482c0b9c419936507d06ae69519",
+    "src/architecture/resources/assets/bloodborne_dw/models/tree_source/block/jungle_log.json": "ee10741abf0b08028c4fd82f208e30772daeb8f7799012edcd1ed00a36c83d25",
+    "src/architecture/resources/assets/bloodborne_dw/models/tree_source/block/light_blue_wool.json": "b534678c2cf8ecc5863e5a8fc8f158b5c5d482e5ace7848d01dfc93b37b6be28",
+    "src/architecture/resources/assets/bloodborne_dw/models/tree_source/block/magenta_wool.json": "2e08841e3ac667d325963e57e155e81dce6da520931c5659ec3e0bf575519e77",
+    "src/architecture/resources/assets/bloodborne_dw/models/tree_source/block/melon.json": "542a822c441e68d874650870533eff2356c365299fea86d430bdd7b47f9b3a73",
+    "src/architecture/resources/assets/bloodborne_dw/models/tree_source/block/oak_log.json": "1bc0ce630b726c82bba2e96803e4292dc9769774a70925e50ab43b45757edcf7",
+    "src/architecture/resources/assets/bloodborne_dw/models/tree_source/block/orange_wool.json": "f98838aa0c91a4639744b47f9c687fc78b7e0f80a896e0f874e28944782b1948",
+    "src/architecture/resources/assets/bloodborne_dw/models/tree_source/block/spruce_log.json": "863943f2f2f6453b9c35ea951adf27bbe2bc6d848c8d5c742e0911bd9ed369c7",
+    "src/architecture/resources/assets/bloodborne_dw/models/tree_alt/block/acacia_log.json": "178f82204ea28b1b8549d18df5ead527563c50ef9fa7029a417f3e4d34bf9391",
+    "src/architecture/resources/assets/bloodborne_dw/models/tree_alt/block/birch_log.json": "fd01e70f4d6040aad1d87a21ea9901cbf6b6f2ef59e9075b3c19266b7917d771",
+    "src/architecture/resources/assets/bloodborne_dw/models/tree_alt/block/birch_log_1.json": "aacc29c69b962e319e06c8ffaefade315778bdd33672c369a5505164ae2179a4",
+    "src/architecture/resources/assets/bloodborne_dw/models/tree_alt/block/cyan_wool.json": "621183e3a091510917947558813a1d1294eb7d1f1735ac52acdc1905f55d19e4",
+    "src/architecture/resources/assets/bloodborne_dw/models/tree_alt/block/dark_oak_log.json": "14e0c9e0e142f6bfe88c0e6f0c861fc9213ec2350d028a3fa9dc9c32d63d2687",
+    "src/architecture/resources/assets/bloodborne_dw/models/tree_alt/block/jungle_log.json": "de8c0d7536f8cdb0ba542c7cf4007dc56a06c98d3d860bc9e0acbaf63547b4c0",
+    "src/architecture/resources/assets/bloodborne_dw/models/tree_alt/block/light_blue_wool.json": "2679bc5fb5eb95e25deee034b3365966d33124d7380b2dee89fbb4acc9485524",
+    "src/architecture/resources/assets/bloodborne_dw/models/tree_alt/block/magenta_wool.json": "11931017d36177b6564f2fcf84185784ec52f80db9f9ef67c7b6907a4d1819c9",
+    "src/architecture/resources/assets/bloodborne_dw/models/tree_alt/block/melon.json": "c935fb4e9f153deb8dd66413465d1efd525cf2e28289f1c733c550884ef17c56",
+    "src/architecture/resources/assets/bloodborne_dw/models/tree_alt/block/oak_log.json": "fba9f564e90493d2a73f7a556141ed99ceac05af251a0e653b2e53268b00a1f0",
+    "src/architecture/resources/assets/bloodborne_dw/models/tree_alt/block/orange_wool.json": "3e46a92bef1c568e8b7c3acebe4b6e1baadb684b01d2a6f67597ee3c5ce996d3",
+    "src/architecture/resources/assets/bloodborne_dw/models/tree_alt/block/spruce_log.json": "54dabbc611af4e2756b80c15339228d82068ac3ca8d0ace741de65d21994dbfc",
+    "src/architecture/resources/assets/bloodborne_dw/models/tree_proposal/lower_source_base.json": "cdffbc4878db6c88462254244d008b0e326a606a343878986f67171c8777e608",
+    "src/architecture/resources/assets/bloodborne_dw/models/tree_proposal/lower_source_base_alt.json": "d92070eeac9c400c940d87b816429af9ec429b89064608ba97d8f248c46dd75f",
+    "src/architecture/resources/assets/bloodborne_dw/textures/tree_source/block/addon/tree_1.png": "b2b9a60a2b23b44be888af24ddea1b0b615380a48dd3b7bce4362e3d4e04dc02",
+    "src/architecture/resources/assets/bloodborne_dw/textures/tree_source/block/addon/tree_2.png": "b43bba96dff54746a6e109bf10a81fd8ba72c49bbdc4138c0b60ec4b411d8121"
+  },
+  "actualNative": {
+    "status": "PASS_NATIVE_SOURCE_TARGET_RAYCASTS",
+    "rows": [
+      {
+        "yaw": 0,
+        "v7Original": {
+          "footprintCellsIncludingRoot": 198,
+          "helperCandidateCells": 197,
+          "nativeSelectionBoxesMaxPerCell": 3,
+          "distributedSelectionInputs": 216,
+          "selectionNonemptyCells": 198,
+          "nativeSelectionBoxesTotal": 234
+        },
+        "beforeTwoPlanes": {
+          "footprintCellsIncludingRoot": 306,
+          "helperCandidateCells": 305,
+          "nativeSelectionBoxesMaxPerCell": 3,
+          "distributedSelectionInputs": 324,
+          "selectionNonemptyCells": 306,
+          "nativeSelectionBoxesTotal": 342
+        },
+        "afterFourPlanes": {
+          "footprintCellsIncludingRoot": 234,
+          "helperCandidateCells": 233,
+          "nativeSelectionBoxesMaxPerCell": 3,
+          "distributedSelectionInputs": 252,
+          "selectionNonemptyCells": 234,
+          "nativeSelectionBoxesTotal": 270
+        },
+        "actualNativeRays": 828,
+        "nativeRayMisses": 0,
+        "failures": []
+      },
+      {
+        "yaw": 1,
+        "v7Original": {
+          "footprintCellsIncludingRoot": 378,
+          "helperCandidateCells": 377,
+          "nativeSelectionBoxesMaxPerCell": 27,
+          "distributedSelectionInputs": 2880,
+          "selectionNonemptyCells": 378,
+          "nativeSelectionBoxesTotal": 2718
+        },
+        "beforeTwoPlanes": {
+          "footprintCellsIncludingRoot": 594,
+          "helperCandidateCells": 593,
+          "nativeSelectionBoxesMaxPerCell": 4,
+          "distributedSelectionInputs": 1368,
+          "selectionNonemptyCells": 594,
+          "nativeSelectionBoxesTotal": 1242
+        },
+        "afterFourPlanes": {
+          "footprintCellsIncludingRoot": 450,
+          "helperCandidateCells": 449,
+          "nativeSelectionBoxesMaxPerCell": 4,
+          "distributedSelectionInputs": 1080,
+          "selectionNonemptyCells": 450,
+          "nativeSelectionBoxesTotal": 954
+        },
+        "actualNativeRays": 828,
+        "nativeRayMisses": 0,
+        "failures": []
+      },
+      {
+        "yaw": 2,
+        "v7Original": {
+          "footprintCellsIncludingRoot": 198,
+          "helperCandidateCells": 197,
+          "nativeSelectionBoxesMaxPerCell": 3,
+          "distributedSelectionInputs": 216,
+          "selectionNonemptyCells": 198,
+          "nativeSelectionBoxesTotal": 234
+        },
+        "beforeTwoPlanes": {
+          "footprintCellsIncludingRoot": 306,
+          "helperCandidateCells": 305,
+          "nativeSelectionBoxesMaxPerCell": 3,
+          "distributedSelectionInputs": 324,
+          "selectionNonemptyCells": 306,
+          "nativeSelectionBoxesTotal": 342
+        },
+        "afterFourPlanes": {
+          "footprintCellsIncludingRoot": 234,
+          "helperCandidateCells": 233,
+          "nativeSelectionBoxesMaxPerCell": 3,
+          "distributedSelectionInputs": 252,
+          "selectionNonemptyCells": 234,
+          "nativeSelectionBoxesTotal": 270
+        },
+        "actualNativeRays": 828,
+        "nativeRayMisses": 0,
+        "failures": []
+      },
+      {
+        "yaw": 3,
+        "v7Original": {
+          "footprintCellsIncludingRoot": 378,
+          "helperCandidateCells": 377,
+          "nativeSelectionBoxesMaxPerCell": 27,
+          "distributedSelectionInputs": 2880,
+          "selectionNonemptyCells": 378,
+          "nativeSelectionBoxesTotal": 2718
+        },
+        "beforeTwoPlanes": {
+          "footprintCellsIncludingRoot": 594,
+          "helperCandidateCells": 593,
+          "nativeSelectionBoxesMaxPerCell": 4,
+          "distributedSelectionInputs": 1368,
+          "selectionNonemptyCells": 594,
+          "nativeSelectionBoxesTotal": 1242
+        },
+        "afterFourPlanes": {
+          "footprintCellsIncludingRoot": 450,
+          "helperCandidateCells": 449,
+          "nativeSelectionBoxesMaxPerCell": 4,
+          "distributedSelectionInputs": 1080,
+          "selectionNonemptyCells": 450,
+          "nativeSelectionBoxesTotal": 954
+        },
+        "actualNativeRays": 828,
+        "nativeRayMisses": 0,
+        "failures": []
+      },
+      {
+        "yaw": 4,
+        "v7Original": {
+          "footprintCellsIncludingRoot": 198,
+          "helperCandidateCells": 197,
+          "nativeSelectionBoxesMaxPerCell": 3,
+          "distributedSelectionInputs": 216,
+          "selectionNonemptyCells": 198,
+          "nativeSelectionBoxesTotal": 234
+        },
+        "beforeTwoPlanes": {
+          "footprintCellsIncludingRoot": 306,
+          "helperCandidateCells": 305,
+          "nativeSelectionBoxesMaxPerCell": 3,
+          "distributedSelectionInputs": 324,
+          "selectionNonemptyCells": 306,
+          "nativeSelectionBoxesTotal": 342
+        },
+        "afterFourPlanes": {
+          "footprintCellsIncludingRoot": 234,
+          "helperCandidateCells": 233,
+          "nativeSelectionBoxesMaxPerCell": 3,
+          "distributedSelectionInputs": 252,
+          "selectionNonemptyCells": 234,
+          "nativeSelectionBoxesTotal": 270
+        },
+        "actualNativeRays": 828,
+        "nativeRayMisses": 0,
+        "failures": []
+      },
+      {
+        "yaw": 5,
+        "v7Original": {
+          "footprintCellsIncludingRoot": 378,
+          "helperCandidateCells": 377,
+          "nativeSelectionBoxesMaxPerCell": 27,
+          "distributedSelectionInputs": 2880,
+          "selectionNonemptyCells": 378,
+          "nativeSelectionBoxesTotal": 2718
+        },
+        "beforeTwoPlanes": {
+          "footprintCellsIncludingRoot": 594,
+          "helperCandidateCells": 593,
+          "nativeSelectionBoxesMaxPerCell": 4,
+          "distributedSelectionInputs": 1368,
+          "selectionNonemptyCells": 594,
+          "nativeSelectionBoxesTotal": 1242
+        },
+        "afterFourPlanes": {
+          "footprintCellsIncludingRoot": 450,
+          "helperCandidateCells": 449,
+          "nativeSelectionBoxesMaxPerCell": 4,
+          "distributedSelectionInputs": 1080,
+          "selectionNonemptyCells": 450,
+          "nativeSelectionBoxesTotal": 954
+        },
+        "actualNativeRays": 828,
+        "nativeRayMisses": 0,
+        "failures": []
+      },
+      {
+        "yaw": 6,
+        "v7Original": {
+          "footprintCellsIncludingRoot": 198,
+          "helperCandidateCells": 197,
+          "nativeSelectionBoxesMaxPerCell": 3,
+          "distributedSelectionInputs": 216,
+          "selectionNonemptyCells": 198,
+          "nativeSelectionBoxesTotal": 234
+        },
+        "beforeTwoPlanes": {
+          "footprintCellsIncludingRoot": 306,
+          "helperCandidateCells": 305,
+          "nativeSelectionBoxesMaxPerCell": 3,
+          "distributedSelectionInputs": 324,
+          "selectionNonemptyCells": 306,
+          "nativeSelectionBoxesTotal": 342
+        },
+        "afterFourPlanes": {
+          "footprintCellsIncludingRoot": 234,
+          "helperCandidateCells": 233,
+          "nativeSelectionBoxesMaxPerCell": 3,
+          "distributedSelectionInputs": 252,
+          "selectionNonemptyCells": 234,
+          "nativeSelectionBoxesTotal": 270
+        },
+        "actualNativeRays": 828,
+        "nativeRayMisses": 0,
+        "failures": []
+      },
+      {
+        "yaw": 7,
+        "v7Original": {
+          "footprintCellsIncludingRoot": 378,
+          "helperCandidateCells": 377,
+          "nativeSelectionBoxesMaxPerCell": 27,
+          "distributedSelectionInputs": 2880,
+          "selectionNonemptyCells": 378,
+          "nativeSelectionBoxesTotal": 2718
+        },
+        "beforeTwoPlanes": {
+          "footprintCellsIncludingRoot": 594,
+          "helperCandidateCells": 593,
+          "nativeSelectionBoxesMaxPerCell": 4,
+          "distributedSelectionInputs": 1368,
+          "selectionNonemptyCells": 594,
+          "nativeSelectionBoxesTotal": 1242
+        },
+        "afterFourPlanes": {
+          "footprintCellsIncludingRoot": 450,
+          "helperCandidateCells": 449,
+          "nativeSelectionBoxesMaxPerCell": 4,
+          "distributedSelectionInputs": 1080,
+          "selectionNonemptyCells": 450,
+          "nativeSelectionBoxesTotal": 954
+        },
+        "actualNativeRays": 828,
+        "nativeRayMisses": 0,
+        "failures": []
+      }
+    ],
+    "actualNativeRayMisses": 0,
+    "actualNativeRayHits": 6624
+  },
+  "limits": [
+    "Isolated named1.20.1 native distributor/cache/raycast; no client/server/world launch or user acceptance.",
+    "Target rays sample nine interior points per authored plane, both sides, all8 yaw; corner containment independently checks every transformed source element corner.",
+    "Selection coarse upper outline remains wider than individual canopy pixels; collision unchanged. Helper candidates are not actual installed ownership.",
+    "Attempt16 performance remains historical for the prior two-plane outline; root coordinated Attempt17 must regenerate all native metrics. No new CPU or FPS result is inferred."
+  ]
+}

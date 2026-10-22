@@ -1,0 +1,17 @@
+{
+  "schema": "dw-v10-geometry-only-source-delta-v1",
+  "status": "PASS_ONLY_REVIEWED_GEOMETRY_SOURCE_CHANGED_NATIVE_AND_NEW_ARTIFACT_RUNTIME_PENDING",
+  "baselineArtifactSha256": "521337222c6f75b31a094c4944963c4103c514985d5696d55187f31dc4b17ca5",
+  "mainInputCount": 1106,
+  "changed": [
+    {
+      "path": "src/rp/java/dev/dreamwalker/bloodbornerp/object/RpObjectGeometry.java",
+      "before": "9f8caeeaacc22dc07dd8c007a34589be1f5fcf9e6d76aaab070abce57e41332b",
+      "after": "6a57ff39cf9c2c0fbb0fd394d9fe6185d780578670ee37652c23904b26977132"
+    }
+  ],
+  "allOtherProductionJavaAndResourcesUnchanged": true,
+  "historicalCandidate6BytesUnchanged": true,
+  "actualFailureEvidence": "reports/V10_RP_MOTION_ENVELOPE_FAILURE_MIN9.json",
+  "noNewArtifactRuntimeClaim": true
+}

@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_addon_shattered_glass_3",
+  "displayName": "Осколки стекла · вариант 4",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/addon/shattered_glass_3",
+              "offset": [
+                0,
+                -1.0,
+                0
+              ]
+            }
+          ],
+          "collision": [],
+          "selection": [
+            {
+              "from": [
+                -7.0,
+                -0.0625,
+                -9.0
+              ],
+              "to": [
+                23.0,
+                0.0625,
+                25.0
+              ]
+            }
+          ],
+          "simpleCollisionByRotation": [
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            []
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -7.0,
+          -0.0625,
+          -9.0
+        ],
+        "to": [
+          23.0,
+          0.0625,
+          25.0
+        ]
+      },
+      "sourceVariant": "Осколки стекла · вариант 4",
+      "sourcePlacementOffset": [
+        0,
+        -1.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -1.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/addon/shattered_glass_3"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:warped_pressure_plate[variant:powered=true]"
+      ]
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "simple-imported-physical-v1: one ordinary bounded cuboid by default; reviewed doorway/arch, stair/landing and ladder exceptions use at most three useful boxes; passable source planes stay passable. Eight orientations use a few ordinary AABBs bounded by the actual transformed visual vertices, never strips or a second expanded rotated AABB. Six root-cell-face overflows strictly smaller than 0.5 blocks are cropped independently after instance yaw, vertical mount and SourceShift; long extents are retained. Selection and visuals unchanged. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped.",
+  "simplePhysicalCollision": true
+}

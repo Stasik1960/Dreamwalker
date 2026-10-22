@@ -1,0 +1,25 @@
+{
+  "schema": "dw-v10-qa24-frapi-probe-frozen-readiness-v1",
+  "status": "READY_FROZEN_JAVA17_AND_EIGHT_NEGATIVE_POSITIVE_CAPTURE_CONTROLS_PASS_REQUIRES_ACTUAL_FULL_RETRY",
+  "productionArtifactSha256": "884ba57ce8ba0a64e3fdc5dd8730c3945a44d1a35f462cea39245301b2e69e75",
+  "probeSourceSha256": "c3bf7908aea55bf02c7344169c0f2b6e23a4a0ea6050399af18b66dd99e7e237",
+  "bootstrapSourceSha256": "ada53f35e5654f1efc8ff85b41537cab9dcfef5ba646035dcccffeab126d0cbd",
+  "changedQaSourceFiles": [
+    "src/review/java/dev/dreamwalker/bloodbornedw/review/ReviewV10ArchitectureProbe.java"
+  ],
+  "productionAndClientBootstrapUnchanged": true,
+  "fullRetryStatus": "PENDING_ACTUAL_NEW_QA24_FULL4_ATTEMPT2",
+  "previousMinimalAndReenterProofs": "Retain own QA23 hashes/statuses; not relabeled QA24",
+  "priorFull1": "WHOLE_FAIL_PHASE0_WRAPPER_PUSH_TRANSFORM_REJECTED_NORMAL_EXIT_AND_SAVE_MAIN8_NO_DEADLOCK",
+  "captureControls": 8,
+  "sourceCompileAndApiEvidence": {
+    "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\reports\\V10_QA24_FRAPI_PROBE_SOURCE_PREPARATION.json",
+    "sha256": "4de0235d6b6de5b2d2af0ae8e7283073f207cb2b4cf47be6e3f6e0c726f66d18"
+  },
+  "contractEvidence": {
+    "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\reports\\V10_QA24_FRAPI_CAPTURE_CONTRACT_EXPLICIT.json",
+    "sha256": "226ce967fd22d0442a5c7e7904f5366b2f604ec20dffc5f23d5f4a4b85eb330e"
+  },
+  "scope": "Correct FRAPI bookkeeping is observed; actual emitted quad/mesh/fallback geometry remains counted and rejected. Existing renderer Y-only, UV/source-quad count, collision/pick/climb/owner assertions retained.",
+  "actualVisualAcceptance": "NOT_RUN"
+}

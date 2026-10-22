@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "bloodborne_rp",
+  "version": "${version}",
+  "name": "Bloodborne RP Adventures",
+  "description": "Independent roleplay adventure mechanics, monsters, trick weapons and lamps for Fabric 1.20.1. Standard Minecraft health.",
+  "authors": [
+    "Dreamwalker project"
+  ],
+  "license": "All-Rights-Reserved",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "dev.dreamwalker.bloodbornerp.BloodborneRp"
+    ],
+    "client": [
+      "dev.dreamwalker.bloodbornerp.client.BloodborneRpClient"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.16.10",
+    "minecraft": "1.20.1",
+    "java": ">=17",
+    "fabric-api": ">=0.92.9+1.20.1",
+    "geckolib": ">=4.4.9 <5"
+  },
+  "suggests": {
+    "bloodborne_blocks": "*"
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "schema": "dw-v10-full-stage0-failure-audit-v1",
+  "status": "OBSERVED_CURRENT_FULL_SCENE_JOIN_AND_INITIAL_IRIS_PIPELINE_QA_STAGE0_FAILURE_WHOLE_CLIENT_FAIL",
+  "artifactSha256": "884ba57ce8ba0a64e3fdc5dd8730c3945a44d1a35f462cea39245301b2e69e75",
+  "wrapper": {
+    "path": "reports/V10_CLIENT_FULL_RELEASE4_ATTEMPT_1.json",
+    "sha256": "39eea59dfbb282117f5ac8ba8f88b8b94ecd2d285792e2ac110455b80eb5e50d",
+    "bytes": 670704
+  },
+  "raw": {
+    "path": "build/runtime-client-v10-client-full-release4-attempt1/client-review-output.json",
+    "sha256": "34d2e5d42db9e5d68dee588965bc8d0028c533e3b877e3f96cd5e2218704c329",
+    "bytes": 4743
+  },
+  "wholeClientStatus": "FAIL_CLIENT_REVIEW",
+  "rawClientStatus": "FAIL_ACTUAL_CLIENT_V10",
+  "normalExitCode": 0,
+  "elapsedSeconds": 154.141,
+  "normalMinecraftShutdownSaveMessagesObserved": true,
+  "wholeQaFinalSaveAssertions": "NOT_RUN",
+  "firstActualJoinedPlayerSnapshot": {
+    "serverGameMode": "creative",
+    "serverCreativeAbility": true,
+    "serverOperator4": true,
+    "savedWorldGameMode": "creative",
+    "serverPlayerUuid": "d7a56ee7-ead5-3229-91dd-a174ac33b9d7",
+    "capturedBeforeAnyPrepare": true,
+    "readThread": "ACTUAL_SERVER_THREAD",
+    "clientGameMode": "creative",
+    "clientCreativeAbility": true,
+    "scope": "Actual first-entry readback before ANY QA prepare, inventory or mode setup"
+  },
+  "initialIrisObserved": {
+    "currentPackName": "Kappa_v5.2.zip",
+    "packPresent": true,
+    "shadersEnabled": true,
+    "fallback": false,
+    "pipelineClass": "net.irisshaders.iris.pipeline.IrisRenderingPipeline",
+    "frameCounter": 7,
+    "shaderMapPresent": true,
+    "shouldOverrideShadersAtTick": false,
+    "skipAllRendering": false,
+    "methodScope": "live Iris public reflection at client tick; render-phase override flag is informational; no screenshot/GPU timing claim"
+  },
+  "strictFinalShaderGetter42CounterProof": "NOT_RUN; initial active pipeline snapshot does not replace final expected-option and advanced-frame verification",
+  "failureBoundary": {
+    "phase": 0,
+    "failure": "Old static root attempted to emit while BER offset active",
+    "frames": [
+      "knot//dev.dreamwalker.bloodbornedw.review.ReviewV10ArchitectureProbe.lambda$verify$2(ReviewV10ArchitectureProbe.java:80)",
+      "knot/jdk.proxy2/jdk.proxy2.$Proxy321.pushTransform(Unknown Source)",
+      "knot//me.pepperbell.continuity.client.model.EmissiveBakedModel.emitBlockQuads(EmissiveBakedModel.java:71)",
+      "knot//dev.dreamwalker.bloodbornedw.review.ReviewV10ArchitectureProbe.verify(ReviewV10ArchitectureProbe.java:80)",
+      "knot//dev.dreamwalker.bloodbornedw.review.ReviewV10ClientBootstrap.tick(ReviewV10ClientBootstrap.java:81)",
+      "knot//net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents.lambda$static$2(ClientTickEvents.java:43)",
+      "knot//net.minecraft.class_310.handler$cii000$fabric-lifecycle-events-v1$onEndTick(class_310.java:16543)",
+      "knot//net.minecraft.class_310.method_1574(class_310.java:1957)",
+      "knot//net.minecraft.class_310.method_1523(class_310.java:1181)",
+      "knot//net.minecraft.class_310.method_1514(class_310.java:802)"
+    ],
+    "scope": "QA render-context proxy rejects Continuity pushTransform bookkeeping before geometry result is written. This early exception does not prove that the underlying offset model emitted a quad."
+  },
+  "ordinaryRpCompleted": 0,
+  "ordinaryArchitectureCompleted": 0,
+  "notCompleted": [
+    "architecture baked-geometry result",
+    "69+7 actual middle-key cases",
+    "ordinary picked-item reinstallation",
+    "237 actual GUI operations",
+    "client diagnostics OFF/ON/OFF/export",
+    "final whole-QA save",
+    "manual visual acceptance"
+  ],
+  "loadingObservationScope": "This exact current main8 FULL run reached a real joined integrated-server player and normal shutdown. This is narrower than whole ordinary client PASS and does not replace future FULL2 proof.",
+  "wholeTask": "NOT_COMPLETE"
+}

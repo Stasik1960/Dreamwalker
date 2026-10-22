@@ -1,0 +1,582 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:prototype_double_door",
+  "displayName": "Двойная резная дверь — функциональный прототип",
+  "openable": true,
+  "support": {
+    "offset": [
+      0,
+      -1,
+      0
+    ],
+    "required": true
+  },
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:base/prototype_door/left_frame",
+              "altModel": "bloodborne_dw:alt/prototype_door/left_frame",
+              "offset": [
+                0,
+                16,
+                -16
+              ],
+              "yaw": 180,
+              "pivot": [
+                8,
+                8,
+                8
+              ]
+            },
+            {
+              "model": "bloodborne_dw:base/prototype_door/right_frame",
+              "altModel": "bloodborne_dw:alt/prototype_door/right_frame",
+              "offset": [
+                0,
+                16,
+                -16
+              ],
+              "yaw": 180,
+              "pivot": [
+                8,
+                8,
+                8
+              ]
+            },
+            {
+              "model": "bloodborne_dw:base/prototype_door/bottom_frame",
+              "altModel": "bloodborne_dw:alt/prototype_door/bottom_frame",
+              "offset": [
+                0,
+                16,
+                -16
+              ],
+              "yaw": 180,
+              "pivot": [
+                8,
+                8,
+                8
+              ]
+            },
+            {
+              "model": "bloodborne_dw:base/prototype_door/top_frame",
+              "altModel": "bloodborne_dw:alt/prototype_door/top_frame",
+              "offset": [
+                0,
+                16,
+                -16
+              ],
+              "yaw": 180,
+              "pivot": [
+                8,
+                8,
+                8
+              ]
+            },
+            {
+              "model": "bloodborne_dw:base/prototype_door/left_leaf",
+              "altModel": "bloodborne_dw:alt/prototype_door/left_leaf",
+              "offset": [
+                0,
+                16,
+                -16
+              ],
+              "yaw": 180,
+              "pivot": [
+                8,
+                8,
+                8
+              ]
+            },
+            {
+              "model": "bloodborne_dw:base/prototype_door/right_leaf",
+              "altModel": "bloodborne_dw:alt/prototype_door/right_leaf",
+              "offset": [
+                0,
+                16,
+                -16
+              ],
+              "yaw": 180,
+              "pivot": [
+                8,
+                8,
+                8
+              ]
+            },
+            {
+              "model": "bloodborne_dw:base/prototype_door/source_header",
+              "altModel": "bloodborne_dw:alt/prototype_door/source_header",
+              "offset": [
+                0,
+                48,
+                -16
+              ],
+              "yaw": 180,
+              "pivot": [
+                8,
+                8,
+                8
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                31,
+                0,
+                1
+              ],
+              "to": [
+                32,
+                48,
+                3
+              ]
+            },
+            {
+              "from": [
+                -16,
+                0,
+                1
+              ],
+              "to": [
+                -15,
+                48,
+                3
+              ]
+            },
+            {
+              "from": [
+                -14,
+                46,
+                1
+              ],
+              "to": [
+                30,
+                48,
+                3
+              ]
+            },
+            {
+              "from": [
+                8,
+                2,
+                1
+              ],
+              "to": [
+                30,
+                46,
+                3
+              ]
+            },
+            {
+              "from": [
+                -14,
+                2,
+                1
+              ],
+              "to": [
+                8,
+                46,
+                3
+              ]
+            },
+            {
+              "from": [
+                -16,
+                48,
+                1
+              ],
+              "to": [
+                32,
+                64,
+                3
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                30,
+                0,
+                1
+              ],
+              "to": [
+                32,
+                48,
+                3
+              ]
+            },
+            {
+              "from": [
+                -16,
+                0,
+                1
+              ],
+              "to": [
+                -14,
+                48,
+                3
+              ]
+            },
+            {
+              "from": [
+                -14,
+                0,
+                1
+              ],
+              "to": [
+                30,
+                2,
+                3
+              ]
+            },
+            {
+              "from": [
+                -14,
+                46,
+                1
+              ],
+              "to": [
+                30,
+                48,
+                3
+              ]
+            },
+            {
+              "from": [
+                8,
+                2,
+                1
+              ],
+              "to": [
+                30,
+                46,
+                3
+              ]
+            },
+            {
+              "from": [
+                -14,
+                2,
+                1
+              ],
+              "to": [
+                8,
+                46,
+                3
+              ]
+            },
+            {
+              "from": [
+                -16,
+                48,
+                1
+              ],
+              "to": [
+                32,
+                64,
+                3
+              ]
+            }
+          ]
+        },
+        "open": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:base/prototype_door/left_frame",
+              "altModel": "bloodborne_dw:alt/prototype_door/left_frame",
+              "offset": [
+                0,
+                16,
+                -16
+              ],
+              "yaw": 180,
+              "pivot": [
+                8,
+                8,
+                8
+              ]
+            },
+            {
+              "model": "bloodborne_dw:base/prototype_door/right_frame",
+              "altModel": "bloodborne_dw:alt/prototype_door/right_frame",
+              "offset": [
+                0,
+                16,
+                -16
+              ],
+              "yaw": 180,
+              "pivot": [
+                8,
+                8,
+                8
+              ]
+            },
+            {
+              "model": "bloodborne_dw:base/prototype_door/bottom_frame",
+              "altModel": "bloodborne_dw:alt/prototype_door/bottom_frame",
+              "offset": [
+                0,
+                16,
+                -16
+              ],
+              "yaw": 180,
+              "pivot": [
+                8,
+                8,
+                8
+              ]
+            },
+            {
+              "model": "bloodborne_dw:base/prototype_door/top_frame",
+              "altModel": "bloodborne_dw:alt/prototype_door/top_frame",
+              "offset": [
+                0,
+                16,
+                -16
+              ],
+              "yaw": 180,
+              "pivot": [
+                8,
+                8,
+                8
+              ]
+            },
+            {
+              "model": "bloodborne_dw:base/prototype_door/left_leaf",
+              "altModel": "bloodborne_dw:alt/prototype_door/left_leaf",
+              "offset": [
+                0,
+                16,
+                -16
+              ],
+              "yaw": 180,
+              "pivot": [
+                8,
+                8,
+                8
+              ],
+              "extraYaw": 90,
+              "extraPivot": [
+                -16,
+                0,
+                -1
+              ]
+            },
+            {
+              "model": "bloodborne_dw:base/prototype_door/right_leaf",
+              "altModel": "bloodborne_dw:alt/prototype_door/right_leaf",
+              "offset": [
+                0,
+                16,
+                -16
+              ],
+              "yaw": 180,
+              "pivot": [
+                8,
+                8,
+                8
+              ],
+              "extraYaw": -90,
+              "extraPivot": [
+                32,
+                0,
+                -1
+              ]
+            },
+            {
+              "model": "bloodborne_dw:base/prototype_door/source_header",
+              "altModel": "bloodborne_dw:alt/prototype_door/source_header",
+              "offset": [
+                0,
+                48,
+                -16
+              ],
+              "yaw": 180,
+              "pivot": [
+                8,
+                8,
+                8
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                31,
+                0,
+                1
+              ],
+              "to": [
+                32,
+                48,
+                3
+              ]
+            },
+            {
+              "from": [
+                -16,
+                0,
+                1
+              ],
+              "to": [
+                -15,
+                48,
+                3
+              ]
+            },
+            {
+              "from": [
+                -14,
+                46,
+                1
+              ],
+              "to": [
+                30,
+                48,
+                3
+              ]
+            },
+            {
+              "from": [
+                32.0,
+                2,
+                3.0
+              ],
+              "to": [
+                34.0,
+                46,
+                25.0
+              ]
+            },
+            {
+              "from": [
+                -18.0,
+                2,
+                3.0
+              ],
+              "to": [
+                -16.0,
+                46,
+                25.0
+              ]
+            },
+            {
+              "from": [
+                -16,
+                48,
+                1
+              ],
+              "to": [
+                32,
+                64,
+                3
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                30,
+                0,
+                1
+              ],
+              "to": [
+                32,
+                48,
+                3
+              ]
+            },
+            {
+              "from": [
+                -16,
+                0,
+                1
+              ],
+              "to": [
+                -14,
+                48,
+                3
+              ]
+            },
+            {
+              "from": [
+                -14,
+                0,
+                1
+              ],
+              "to": [
+                30,
+                2,
+                3
+              ]
+            },
+            {
+              "from": [
+                -14,
+                46,
+                1
+              ],
+              "to": [
+                30,
+                48,
+                3
+              ]
+            },
+            {
+              "from": [
+                32.0,
+                2,
+                3.0
+              ],
+              "to": [
+                34.0,
+                46,
+                25.0
+              ]
+            },
+            {
+              "from": [
+                -18.0,
+                2,
+                3.0
+              ],
+              "to": [
+                -16.0,
+                46,
+                25.0
+              ]
+            },
+            {
+              "from": [
+                -16,
+                48,
+                1
+              ],
+              "to": [
+                32,
+                64,
+                3
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "proposal": "Original 2-unit border remains visible/selectable. Only its outer1-unit jambs and upper trim are hard; bottom trim is selection-only, retaining the source floor-level passage. Interior leaves use outer hinges x=-16/+32,z=-1 and open opposite90degrees, preserving the source side passage when open.",
+  "sourceClosedExact": true,
+  "numericId": null,
+  "physicalPlacementRules": "Collision is independent from root-only reservation. Adjacent contact/decorative overlap allowed; foreign states never cleared."
+}

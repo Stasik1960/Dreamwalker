@@ -1,0 +1,11 @@
+gradle.projectsEvaluated {
+ def p=gradle.rootProject
+ p.sourceSets.create('verifyqa') {
+  compileClasspath += p.sourceSets.main.output + p.sourceSets.main.compileClasspath
+  runtimeClasspath += p.sourceSets.main.output + p.sourceSets.main.runtimeClasspath
+ }
+ p.configurations.verifyqaImplementation.extendsFrom(p.configurations.implementation)
+ p.tasks.register('verifyQaJar',Jar) { dependsOn p.tasks.named('verifyqaClasses');from p.sourceSets.verifyqa.output;archiveBaseName='dreamwalker-streaming7-checks';archiveClassifier='dev' }
+ def type=p.tasks.getByName('remapJar').class.classLoader.loadClass('net.fabricmc.loom.task.RemapJarTask')
+ p.tasks.register('remapVerifyQaJar',type) { dependsOn p.tasks.named('verifyQaJar');inputFile.set(p.tasks.named('verifyQaJar',Jar).flatMap{it.archiveFile});classpath.from(p.sourceSets.main.output,p.sourceSets.main.compileClasspath);archiveBaseName='dreamwalker-streaming7-checks';archiveClassifier='';addNestedDependencies=false }
+}

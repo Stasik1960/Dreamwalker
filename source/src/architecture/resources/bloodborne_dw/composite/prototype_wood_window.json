@@ -1,0 +1,590 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:prototype_wood_window",
+  "openable": true,
+  "displayName": "Деревянное окно · боковые панели · прототип",
+  "support": {
+    "offset": [
+      0,
+      -1,
+      0
+    ],
+    "required": true
+  },
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:base/prototype_windows/wood/frame",
+              "altModel": "bloodborne_dw:alt/prototype_windows/wood/frame",
+              "offset": [
+                0,
+                0,
+                0
+              ],
+              "yaw": 180,
+              "pivot": [
+                8,
+                8,
+                8
+              ],
+              "extraPivot": [
+                -1,
+                0,
+                7
+              ],
+              "extraYaw": 0
+            },
+            {
+              "model": "bloodborne_dw:base/prototype_windows/wood/left",
+              "altModel": "bloodborne_dw:alt/prototype_windows/wood/left",
+              "offset": [
+                0,
+                0,
+                0
+              ],
+              "yaw": 180,
+              "pivot": [
+                8,
+                8,
+                8
+              ],
+              "extraPivot": [
+                -8,
+                0,
+                7
+              ],
+              "extraYaw": 0
+            },
+            {
+              "model": "bloodborne_dw:base/prototype_windows/wood/right",
+              "altModel": "bloodborne_dw:alt/prototype_windows/wood/right",
+              "offset": [
+                0,
+                0,
+                0
+              ],
+              "yaw": 180,
+              "pivot": [
+                8,
+                8,
+                8
+              ],
+              "extraPivot": [
+                24,
+                0,
+                7
+              ],
+              "extraYaw": 0
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                -8.0,
+                0,
+                7.0
+              ],
+              "to": [
+                24.0,
+                16,
+                9.0
+              ]
+            },
+            {
+              "from": [
+                22.152240935,
+                0,
+                3.77374814056302
+              ],
+              "to": [
+                24.0,
+                16,
+                9.0
+              ]
+            },
+            {
+              "from": [
+                24.0,
+                0,
+                -14.8623551775
+              ],
+              "to": [
+                32.0,
+                16,
+                9.0
+              ]
+            },
+            {
+              "from": [
+                32.0,
+                0,
+                -14.74609650831397
+              ],
+              "to": [
+                33.5670858091,
+                16,
+                -10.313708499054671
+              ]
+            },
+            {
+              "from": [
+                -17.5670858091,
+                0,
+                -14.74609650831397
+              ],
+              "to": [
+                -16.0,
+                16,
+                -10.31370849905467
+              ]
+            },
+            {
+              "from": [
+                -16.0,
+                0,
+                -14.8623551775
+              ],
+              "to": [
+                -7.999999999999999,
+                16,
+                9.0
+              ]
+            },
+            {
+              "from": [
+                -8.0,
+                0,
+                3.7737481405630255
+              ],
+              "to": [
+                -6.152240935,
+                16,
+                9.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -8.0,
+                0,
+                7.0
+              ],
+              "to": [
+                24.0,
+                16,
+                9.0
+              ]
+            },
+            {
+              "from": [
+                22.152240935,
+                0,
+                3.77374814056302
+              ],
+              "to": [
+                24.0,
+                16,
+                9.0
+              ]
+            },
+            {
+              "from": [
+                24.0,
+                0,
+                -14.8623551775
+              ],
+              "to": [
+                32.0,
+                16,
+                9.0
+              ]
+            },
+            {
+              "from": [
+                32.0,
+                0,
+                -14.74609650831397
+              ],
+              "to": [
+                33.5670858091,
+                16,
+                -10.313708499054671
+              ]
+            },
+            {
+              "from": [
+                -17.5670858091,
+                0,
+                -14.74609650831397
+              ],
+              "to": [
+                -16.0,
+                16,
+                -10.31370849905467
+              ]
+            },
+            {
+              "from": [
+                -16.0,
+                0,
+                -14.8623551775
+              ],
+              "to": [
+                -7.999999999999999,
+                16,
+                9.0
+              ]
+            },
+            {
+              "from": [
+                -8.0,
+                0,
+                3.7737481405630255
+              ],
+              "to": [
+                -6.152240935,
+                16,
+                9.0
+              ]
+            }
+          ]
+        },
+        "open": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:base/prototype_windows/wood/frame",
+              "altModel": "bloodborne_dw:alt/prototype_windows/wood/frame",
+              "offset": [
+                0,
+                0,
+                0
+              ],
+              "yaw": 180,
+              "pivot": [
+                8,
+                8,
+                8
+              ],
+              "extraPivot": [
+                -1,
+                0,
+                7
+              ],
+              "extraYaw": 0
+            },
+            {
+              "model": "bloodborne_dw:base/prototype_windows/wood/left",
+              "altModel": "bloodborne_dw:alt/prototype_windows/wood/left",
+              "offset": [
+                0,
+                0,
+                0
+              ],
+              "yaw": 180,
+              "pivot": [
+                8,
+                8,
+                8
+              ],
+              "extraPivot": [
+                -8,
+                0,
+                7
+              ],
+              "extraYaw": -45
+            },
+            {
+              "model": "bloodborne_dw:base/prototype_windows/wood/right",
+              "altModel": "bloodborne_dw:alt/prototype_windows/wood/right",
+              "offset": [
+                0,
+                0,
+                0
+              ],
+              "yaw": 180,
+              "pivot": [
+                8,
+                8,
+                8
+              ],
+              "extraPivot": [
+                24,
+                0,
+                7
+              ],
+              "extraYaw": 45
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                -8.0,
+                0,
+                7.0
+              ],
+              "to": [
+                24.0,
+                16,
+                9.0
+              ]
+            },
+            {
+              "from": [
+                23.2346331353,
+                0,
+                6.835215599450062
+              ],
+              "to": [
+                24.0,
+                16,
+                9.0
+              ]
+            },
+            {
+              "from": [
+                24.0,
+                0,
+                3.5215071004629492
+              ],
+              "to": [
+                32.0,
+                16,
+                9.0
+              ]
+            },
+            {
+              "from": [
+                32.0,
+                0,
+                0.20779860147583573
+              ],
+              "to": [
+                40.0,
+                16,
+                5.686291500992597
+              ]
+            },
+            {
+              "from": [
+                40.0,
+                0,
+                -2.4148448741
+              ],
+              "to": [
+                47.0969883128,
+                16,
+                2.3725830019851957
+              ]
+            },
+            {
+              "from": [
+                -31.0969883128,
+                0,
+                -2.4148448741
+              ],
+              "to": [
+                -24.0,
+                16,
+                2.3725830019851966
+              ]
+            },
+            {
+              "from": [
+                -24.0,
+                0,
+                0.20779860147583618
+              ],
+              "to": [
+                -16.0,
+                16,
+                5.686291500992598
+              ]
+            },
+            {
+              "from": [
+                -16.0,
+                0,
+                3.521507100462949
+              ],
+              "to": [
+                -8.0,
+                16,
+                9.0
+              ]
+            },
+            {
+              "from": [
+                -8.0,
+                0,
+                6.835215599450063
+              ],
+              "to": [
+                -7.2346331353,
+                16,
+                9.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -8.0,
+                0,
+                7.0
+              ],
+              "to": [
+                24.0,
+                16,
+                9.0
+              ]
+            },
+            {
+              "from": [
+                23.2346331353,
+                0,
+                6.835215599450062
+              ],
+              "to": [
+                24.0,
+                16,
+                9.0
+              ]
+            },
+            {
+              "from": [
+                24.0,
+                0,
+                3.5215071004629492
+              ],
+              "to": [
+                32.0,
+                16,
+                9.0
+              ]
+            },
+            {
+              "from": [
+                32.0,
+                0,
+                0.20779860147583573
+              ],
+              "to": [
+                40.0,
+                16,
+                5.686291500992597
+              ]
+            },
+            {
+              "from": [
+                40.0,
+                0,
+                -2.4148448741
+              ],
+              "to": [
+                47.0969883128,
+                16,
+                2.3725830019851957
+              ]
+            },
+            {
+              "from": [
+                -31.0969883128,
+                0,
+                -2.4148448741
+              ],
+              "to": [
+                -24.0,
+                16,
+                2.3725830019851966
+              ]
+            },
+            {
+              "from": [
+                -24.0,
+                0,
+                0.20779860147583618
+              ],
+              "to": [
+                -16.0,
+                16,
+                5.686291500992598
+              ]
+            },
+            {
+              "from": [
+                -16.0,
+                0,
+                3.521507100462949
+              ],
+              "to": [
+                -8.0,
+                16,
+                9.0
+              ]
+            },
+            {
+              "from": [
+                -8.0,
+                0,
+                6.835215599450063
+              ],
+              "to": [
+                -7.2346331353,
+                16,
+                9.0
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "proposal": {
+    "status": "ACCEPTED_BY_USER_2026_10_07_VISUAL_AND_TESTED_BEHAVIOR",
+    "sourcePose": "closed",
+    "authoredSideYaw": [
+      -22.5,
+      22.5
+    ],
+    "proposedOpenSideYaw": [
+      -67.5,
+      67.5
+    ],
+    "centralPanelMoves": false,
+    "centralPanelTraversable": false,
+    "note": "Original center UV contains 512/512 opaque texels. Side-only movement does not open a central passage."
+  },
+  "source": {
+    "model": "minecraft:block/wood_window",
+    "carrier": "minecraft:jungle_stairs",
+    "selector": "half=bottom,shape=straight",
+    "sample": [
+      -32,
+      37,
+      -1120
+    ],
+    "yawByFacing": {
+      "north": 180,
+      "east": 270,
+      "south": 0,
+      "west": 90
+    },
+    "numericIdsFrozen": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "placementPolicy": "SOFT_OVERLAP",
+  "globalOrientations": 8,
+  "orientationStepDegrees": 45,
+  "collisionPolicy": "Opaque center exact thin prism; side panels conservative 1-model-unit strips. Physical collision and selection do not reserve placement volume."
+}

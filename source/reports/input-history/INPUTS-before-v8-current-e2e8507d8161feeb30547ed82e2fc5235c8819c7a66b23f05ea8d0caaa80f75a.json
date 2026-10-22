@@ -1,0 +1,205 @@
+{
+  "schema": "dreamwalker-inputs-v1",
+  "recorded_date": "2026-10-07",
+  "timezone": "Europe/Sofia",
+  "artifact_name": "dreamwalker-bb-fabric-1.20.1",
+  "mod_id": "bloodborne_dw",
+  "rp_namespace": "bloodborne_rp",
+  "inputs": [
+    {
+      "role": "assignment",
+      "name": "new_prompt_revised.txt",
+      "path": "C:/Users/vakir/Downloads/new_prompt_revised.txt",
+      "size": 69294,
+      "sha256": "c52b4eefe15a91a14ad2a576dfa20296c221fa746932eb8a4f936e1e70b3e0e4"
+    },
+    {
+      "role": "world",
+      "name": "bbmc_v16_map (1).zip",
+      "path": "C:/Users/vakir/Downloads/bbmc_v16_map (1).zip",
+      "size": 52529086,
+      "sha256": "39e83f2941b768fd2ae9f84d8f57dc76aec78bd926dc5e38eab3059251d2bb08"
+    },
+    {
+      "role": "resource_pack",
+      "name": "bbmc_v15_resource (1).zip",
+      "path": "C:/Users/vakir/Downloads/bbmc_v15_resource (1).zip",
+      "size": 28042700,
+      "sha256": "29b31e3744af5794ae95ebe4c5474e3b70dfb08c143355bce815c08ceef09a36"
+    },
+    {
+      "role": "rp_runtime",
+      "name": "bloodborne-rp-1.0.0-rp.2-full-local.jar",
+      "path": "C:/Users/vakir/Limacina/project/dw/mods/bloodborne-rp-1.0.0-rp.2-full-local.jar",
+      "size": 32102701,
+      "sha256": "045fcded008e092f3d8502a1f72d71e51e665292e5215ca396e04db1c1c7ba04"
+    },
+    {
+      "role": "rp_source",
+      "name": "bloodborne-rp-1.0.0-rp.2-full-source.zip",
+      "path": "C:/Users/vakir/Downloads/Bloodborne-RP-Fixes-1.20.1-20261006/sources/bloodborne-rp-1.0.0-rp.2-full-source.zip",
+      "size": 32169596,
+      "sha256": "25a778ceda1b042b811a180d7285564653b5c52c755ad0151cb813311ad5b801"
+    },
+    {
+      "role": "shader_settings",
+      "name": "Kappa_BB.zip (1).txt",
+      "path": "C:/Users/vakir/Downloads/Kappa_BB.zip (1).txt",
+      "size": 993,
+      "sha256": "32e38781a3ddd9340ff499edeea2833eb90ac5a6ae4ba670c890f6ac23c5fe0f"
+    },
+    {
+      "role": "shader",
+      "name": "Kappa_v5.2.zip",
+      "path": "C:/Users/vakir/Downloads/Kappa_v5.2.zip",
+      "size": 3868665,
+      "sha256": "382fadd7d389260522099b25f9dc693bbc81b89220ec5b55459cce74e6c264d0"
+    },
+    {
+      "role": "modpack",
+      "name": "mods.zip",
+      "path": "C:/Users/vakir/Limacina/project/dw/mods.zip",
+      "size": 386097552,
+      "sha256": "c2945c5fa2098bdafa7ab4146c87073c6240a41b628a4ad4d1a4792eef6d18b8"
+    }
+  ],
+  "repository": {
+    "url": "https://github.com/Stasik1960/Dreamwalker",
+    "working_head": "6bca311b87856ee251cc1d88f94ba6071ae231cf",
+    "branch": "codex/dreamwalker-bb-fabric-1.20.1",
+    "remote_heads": "ca01e3d94630691acf43d8132606bc5f55c628e0\trefs/heads/bloodborne\n12e35e0d282837510d79f3b8b33c3ebc088cf380\trefs/heads/main",
+    "specified_main": "12e35e0d282837510d79f3b8b33c3ebc088cf380",
+    "specified_bloodborne": "ca01e3d94630691acf43d8132606bc5f55c628e0",
+    "source_basis_head": "6bca311b87856ee251cc1d88f94ba6071ae231cf"
+  },
+  "world": {
+    "filename_version": "v16",
+    "source_minecraft": {
+      "Snapshot": 0,
+      "Series": "main",
+      "Id": 2975,
+      "Name": "1.18.2"
+    },
+    "dimensions": [
+      "minecraft:overworld"
+    ],
+    "data_version": 2975,
+    "audit_sha256": "8a37aecefb7a9cc6c2cf360164c02bee904a681446d29a7bbbaa56cf3054f009"
+  },
+  "resource_pack": {
+    "filename_version": "v15",
+    "pack_mcmeta": {
+      "pack": {
+        "pack_format": 9,
+        "description": "[Bloodborne x Minecraft - bb 15]"
+      }
+    }
+  },
+  "target": {
+    "minecraft": "1.20.1",
+    "java": 17,
+    "loom": "1.6.12",
+    "yarn": "1.20.1+build.10:v2",
+    "loader": "0.19.5 (supplied installed loader; compile API baseline0.16.10)",
+    "fabric_api": "0.92.9+1.20.1",
+    "geckolib": "4.4.9",
+    "build_status": "PROTOTYPE_2_REMAPPED_FIRST_SET_CHECKPOINT_VERIFIED_FULL_TASK_NOT_READY",
+    "loader_compile": "0.16.10",
+    "loader_runtime": "0.19.5",
+    "gradle": "8.8",
+    "prototype_2_artifact_sha256": "1c9e2788c79223072e89150c2fdbef159e6e226bb76a823cd1296ba9e43027f9",
+    "first_set_evidence_revision": "v7",
+    "user_visual_game_acceptance": "PENDING"
+  },
+  "reuse": [
+    {
+      "source": "Bloodborne-Blocks/tools/world_io.py",
+      "repository_sha": "6bca311b87856ee251cc1d88f94ba6071ae231cf",
+      "sha256": "a36eebe338d6f61c334a02ed33fd806eea520e2b7cf8e1aec21116e95be8387f",
+      "purpose": "typed NBT/Anvil decoding only; no historical mappings"
+    }
+  ],
+  "priority_clarification": {
+    "date": "2026-10-07",
+    "source": "User conversation",
+    "task_prefix_original_preserved": true,
+    "physics_policy": "docs/PHYSICS_POLICY.md"
+  },
+  "additional_reference_inputs": [
+    {
+      "role": "source_forge_bloodborne",
+      "name": "Bloodborne_X_Minecraft_mod_6.0.jar",
+      "path": "C:/Users/vakir/Downloads/Bloodborne_X_Minecraft_mod_6.0.jar",
+      "size": 32533316,
+      "sha256": "399541635dfc559580193ca38da074f7158e064647d612fdb6d92236565266d2",
+      "purpose": "Isolated original-source Forge client physics QA; excluded from the Fabric product JAR",
+      "implementation_version": "1.0",
+      "mods_toml_sha256": "58935eef1fe39af475f14819dd16c5aeb7e16c84f0736d189cc5178ba632e2ed",
+      "filename_version": "6.0",
+      "mod_id": "bloodborne"
+    },
+    {
+      "role": "source_forge_geckolib",
+      "name": "geckolib-forge-1.18-3.0.57.jar",
+      "path": "C:/Users/vakir/Downloads/geckolib-forge-1.18-3.0.57.jar",
+      "size": 2927832,
+      "sha256": "b6d0954f7b777b43e72f202116c8ccbb1e37757a1142759303ab636a9077b8ba",
+      "purpose": "Isolated original-source Forge client physics QA; excluded from the Fabric product JAR",
+      "implementation_version": "3.0.57",
+      "mods_toml_sha256": "43d5bc98cefa6e559c705d0339f099fa0981942d6d788c22960962d59aae0937",
+      "filename_version": "3.0.57",
+      "mod_id": "geckolib3"
+    },
+    {
+      "role": "source_minecraft_metadata",
+      "name": "version.json",
+      "path": "C:/Users/vakir/.codex/worktrees/3f07/DW/bloodborne complete/inputs/extracted/vanilla-1.18.2/version.json",
+      "size": 30469,
+      "sha256": "3df8f7b5e0ae5ccfd73adc9e00daf407a7274b138daab5793e58d14f2ab74144",
+      "purpose": "Isolated original-source Forge client physics QA; excluded from the Fabric product JAR",
+      "minecraft_version": "1.18.2"
+    },
+    {
+      "role": "source_minecraft_client",
+      "name": "client.jar",
+      "path": "C:/Users/vakir/.codex/worktrees/3f07/DW/bloodborne complete/inputs/extracted/vanilla-1.18.2/client.jar",
+      "size": 20259661,
+      "sha256": "1d09e3639644b6b2254499469d0765cc005a286d19f3fa595b0ed8fb07971ec7",
+      "purpose": "Isolated original-source Forge client physics QA; excluded from the Fabric product JAR",
+      "official_url": "https://piston-data.mojang.com/v1/objects/2e9a3e3107cca00d6bc9c97bf7d149cae163ef21/client.jar",
+      "official_sha1": "2e9a3e3107cca00d6bc9c97bf7d149cae163ef21"
+    },
+    {
+      "role": "source_minecraft_client_mappings",
+      "name": "client-mappings.txt",
+      "path": "C:/Users/vakir/.codex/worktrees/3f07/DW/bloodborne complete/inputs/extracted/vanilla-1.18.2/client-mappings.txt",
+      "size": 6716693,
+      "sha256": "a2aa6ee1030bfef79e9b2e08e79de1637fdd7ecb5bf8891cf2e9a4b186042543",
+      "purpose": "Isolated original-source Forge client physics QA; excluded from the Fabric product JAR",
+      "official_url": "https://piston-data.mojang.com/v1/objects/a661c6a55a0600bd391bdbbd6827654c05b2109c/client.txt",
+      "official_sha1": "a661c6a55a0600bd391bdbbd6827654c05b2109c"
+    },
+    {
+      "role": "source_forge_client_profile",
+      "name": "1.18.2-forge-40.2.0.json",
+      "path": "C:/Users/vakir/.codex/worktrees/3f07/DW/bloodborne complete/build/source-client-forge-1.18.2/versions/1.18.2-forge-40.2.0/1.18.2-forge-40.2.0.json",
+      "size": 14241,
+      "sha256": "b9d56943b8870477a3120e73dbb1f704127af762916e6130f47fd6f6ca38b2a7",
+      "purpose": "Isolated original-source Forge client physics QA; excluded from the Fabric product JAR",
+      "profile_id": "1.18.2-forge-40.2.0",
+      "minecraft_inherits": "1.18.2"
+    }
+  ],
+  "additional_reference_integrity_recheck": {
+    "status": "PASS",
+    "reference_input_count": 6,
+    "source_minecraft": "1.18.2",
+    "source_forge": "40.2.0",
+    "date": "2026-10-07"
+  },
+  "integrity_recheck": {
+    "status": "PASS",
+    "input_count": 8,
+    "date": "2026-10-07"
+  }
+}

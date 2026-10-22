@@ -1,0 +1,3 @@
+$ErrorActionPreference='Stop';$PSNativeCommandUseErrorActionPreference=$false
+& 'C:\Users\vakir\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe' 'tools\city-streaming-20261018\export_dh_scene.py' *> 'build\dh-city-pilot\export-console.log'
+@{exitCode=$LASTEXITCODE;end=[DateTime]::UtcNow.ToString('o')}|ConvertTo-Json|Set-Content -LiteralPath 'build\dh-city-pilot\export-receipt.json'

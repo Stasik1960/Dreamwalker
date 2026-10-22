@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "status": "PARTIAL_REAL_CLIENT_OBSERVATIONS_NOT_FULL_ACCEPTANCE",
+  "method": "Actual Minecraft client, native mouse/key input, visually inspected frames; not setter/API acceptance",
+  "environment": "Minecraft 1.20.1, Fabric Loader 0.16.10, Fabric API 0.92.9+1.20.1, GeckoLib 4.4.9, Java 17.0.20.1, no external resource pack or shader",
+  "latestProductionJarSha256": "5066ed3b334b4103120932f9be8810d2548230ddbd94984e62780311fbb1793a",
+  "latestProfile": "build/runtime-client-selection-fix-visible-1920",
+  "latestLaunchReport": "build/reports/selection-fix-visible-1920-launch.json",
+  "window": {"minecraftDisplayPixels": [1920, 1080], "guiScale": 3, "windowsDpi": 1.5},
+  "observations": [
+    {"scenario": "RP_SELECTION", "id": "91007", "uuid": "c22c0cc8-964e-4e84-aff3-7b5447a9a71b", "action": "Native first short left click facing cage at its loaded source parts", "serverFeedback": "Экземпляр закреплён. Следующий ЛКМ выполняет действие.", "result": "Selected cage at root14,64,14; first click did not rotate/edit it; RMB preserved selection"},
+    {"scenario": "GUI_DRAFT_ESC", "action": "Toggle dogs draft, Escape, Stay, Discard form", "result": "Dirty footer; Save/Do not save/Stay dialog; Stay retained hidden draft; Discard restored visible and clean footer without committing"},
+    {"scenario": "DOGS_VISIBLE_CHANGE", "id": "91007", "uuid": "c22c0cc8-964e-4e84-aff3-7b5447a9a71b", "action": "Toggle dogs hidden in object form and click Save; remove tool from main hand", "serverFeedback": "Настройка экземпляра применена.", "result": "Dog body/legs visibly disappear; cage bars/floor remain; footer reports saved only after ACK", "beforeScreenshot": "screenshots/2026-10-10_00.49.37.png", "afterScreenshot": "screenshots/2026-10-10_00.50.16.png", "view": {"position": [14.0, 65.0, 10.0], "yaw": 15, "pitch": 0}},
+    {"scenario": "GUI_1920_SCALE3", "result": "Six tabs in one row, readable object form, persistent bottom save/discard bar and pagination; dogs field reachable with wheel, draft retained"}
+  ],
+  "earlierClientProof": {
+    "productionJarSha256": "539af3a4a803ec77a59267dae81fd054dbccc2d4f815faa308e1887fd83d164b",
+    "profile": "build/runtime-client-input-fix-visible-1280",
+    "display": [1280, 720],
+    "guiScale": 3,
+    "observations": ["Short native RMB opens new menu; six tabs arranged in two rows and bottom actions accessible", "Actual first entry Creative, XYZ0.5,64,-5.5 and main-hand90009 confirmed with F3", "First LKM selects90001, mode button alone does not mutate; next LKM rotates pinned door while aimed at floor", "Actual Control_L+z produces undo ACK and history0; X clears working selection, reports saved links retained", "Native chat command typing does not fire tool keys"],
+    "screenshots": ["2026-10-10_00.35.52.png", "2026-10-10_00.36.31.png", "2026-10-10_00.38.03.png"],
+    "scope": "These observations predate the authoritative builder ray fix; unchanged menu/input/undo portions only, not proof of final whole-JAR acceptance"
+  },
+  "baseline": {
+    "productionJarSha256": "cabd5b35777a4c69f6f95e4b0363ca5d33daadaddba08dbcd379fe03a1a753ee",
+    "profile": "build/runtime-client-base-v10-visible-prepared",
+    "display": [1280, 720],
+    "guiScale": 3,
+    "result": "Original v10 native RMB menu has clipped/overlapping controls at default Auto scale3",
+    "screenshot": "2026-10-10_00.17.21.png"
+  },
+  "remaining": ["User manual Ctrl/Alt+wheel and Shift+LKM not yet reported", "All three cage IDs and same-type independence/restart", "GUI1920 increased scale4", "Ordinary linked doors and actual lamp round trips", "Dedicated server with real client", "Final saved-world archive and publication"],
+  "computerUse": "Stopped and controlling JavaScript session reset at user request; user will separately authorize later visible tests"
+}

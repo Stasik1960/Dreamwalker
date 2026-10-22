@@ -1,0 +1,189 @@
+{
+  "ambientocclusion": true,
+  "textures": {
+    "particle": "bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0045",
+    "face_down": "bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0045",
+    "face_up": "bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0045",
+    "face_north": "bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0045",
+    "face_south": "bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0045",
+    "face_west": "bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0045",
+    "face_east": "bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0045",
+    "decor_7": "bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0066",
+    "decor_8": "bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0066",
+    "decor_9": "bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0066"
+  },
+  "elements": [
+    {
+      "from": [
+        0,
+        8,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            2.0,
+            0.0,
+            4.0,
+            2.0
+          ],
+          "texture": "#face_down"
+        },
+        "up": {
+          "uv": [
+            2.0,
+            0.0,
+            4.0,
+            2.0
+          ],
+          "texture": "#face_up",
+          "cullface": "up"
+        },
+        "north": {
+          "uv": [
+            2.0,
+            0.0,
+            4.0,
+            2.0
+          ],
+          "texture": "#face_north",
+          "cullface": "north"
+        },
+        "south": {
+          "uv": [
+            2.0,
+            0.0,
+            4.0,
+            2.0
+          ],
+          "texture": "#face_south",
+          "cullface": "south"
+        },
+        "west": {
+          "uv": [
+            2.0,
+            0.0,
+            4.0,
+            2.0
+          ],
+          "texture": "#face_west",
+          "cullface": "west"
+        },
+        "east": {
+          "uv": [
+            2.0,
+            0.0,
+            4.0,
+            2.0
+          ],
+          "texture": "#face_east",
+          "cullface": "east"
+        }
+      }
+    },
+    {
+      "from": [
+        0,
+        16.015625,
+        0
+      ],
+      "to": [
+        16,
+        16.015625,
+        16
+      ],
+      "rotation": {
+        "angle": 0,
+        "axis": "y",
+        "origin": [
+          8,
+          12,
+          8
+        ]
+      },
+      "faces": {
+        "up": {
+          "uv": [
+            2,
+            2,
+            4,
+            4
+          ],
+          "rotation": 90,
+          "texture": "#decor_7"
+        }
+      }
+    },
+    {
+      "from": [
+        -13,
+        17,
+        -16
+      ],
+      "to": [
+        3,
+        17,
+        1
+      ],
+      "rotation": {
+        "angle": 0,
+        "axis": "y",
+        "origin": [
+          8,
+          12,
+          8
+        ]
+      },
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            6.125,
+            2.125,
+            8.125
+          ],
+          "rotation": 90,
+          "texture": "#decor_8"
+        }
+      }
+    },
+    {
+      "from": [
+        6,
+        17,
+        4
+      ],
+      "to": [
+        22,
+        17,
+        32
+      ],
+      "rotation": {
+        "angle": 0,
+        "axis": "y",
+        "origin": [
+          8,
+          12,
+          8
+        ]
+      },
+      "faces": {
+        "up": {
+          "uv": [
+            2.125,
+            6.125,
+            5.625,
+            8.125
+          ],
+          "rotation": 90,
+          "texture": "#decor_9"
+        }
+      }
+    }
+  ]
+}

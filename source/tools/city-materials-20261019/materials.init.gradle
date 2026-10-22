@@ -1,0 +1,9 @@
+allprojects {
+ afterEvaluate {
+  tasks.register('sourceFlatLightCheck', JavaExec) {
+   dependsOn tasks.named('testClasses')
+   classpath = sourceSets.test.runtimeClasspath
+   mainClass = 'dev.dreamwalker.bloodbornedw.composite.SourceFlatLightChecks'
+  }
+ }
+}

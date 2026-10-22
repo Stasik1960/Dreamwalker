@@ -1,0 +1,101 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_spruce_trapdoor_top_1",
+  "displayName": "Дверная секция · верхняя, вариант 2",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/spruce_trapdoor_top_1",
+              "offset": [
+                0,
+                16.0,
+                0
+              ]
+            }
+          ],
+          "collision": [],
+          "selection": [
+            {
+              "from": [
+                -15.5,
+                0.0,
+                13.9375
+              ],
+              "to": [
+                17.5,
+                35.0,
+                14.0625
+              ]
+            }
+          ],
+          "simpleCollisionByRotation": [
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            []
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -15.5,
+          0.0,
+          13.9375
+        ],
+        "to": [
+          17.5,
+          35.0,
+          14.0625
+        ]
+      },
+      "sourceVariant": "Дверная секция · верхняя, вариант 2",
+      "sourcePlacementOffset": [
+        0,
+        16.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        16.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/spruce_trapdoor_top_1"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:spruce_trapdoor[variant:facing=east,half=top,open=true]",
+        "minecraft:spruce_trapdoor[variant:facing=north,half=top,open=true]",
+        "minecraft:spruce_trapdoor[variant:facing=south,half=top,open=true]",
+        "minecraft:spruce_trapdoor[variant:facing=west,half=top,open=true]"
+      ]
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "simple-imported-physical-v1: one ordinary bounded cuboid by default; reviewed doorway/arch, stair/landing and ladder exceptions use at most three useful boxes; passable source planes stay passable. Eight orientations use a few ordinary AABBs bounded by the actual transformed visual vertices, never strips or a second expanded rotated AABB. Six root-cell-face overflows strictly smaller than 0.5 blocks are cropped independently after instance yaw, vertical mount and SourceShift; long extents are retained. Selection and visuals unchanged. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped.",
+  "simplePhysicalCollision": true
+}

@@ -1,0 +1,434 @@
+{
+  "schemaVersion": 1,
+  "version": 1,
+  "baselineCommit": "c52a06c9fa20007a1c06c8fc654b3c1b86f72791",
+  "policy": "Append complete poses; keep unmatched saved fragments exact and hidden. Merge only complete geometry-matched groups in one atomic world and reference transaction.",
+  "recipes": [
+    {
+      "key": "3152:3153:0,2,0",
+      "primaryId": "93066",
+      "primaryRegistryId": "bloodborne_dw:source_stairs_waxed_oxidized_cut_copper_stairs_inner_left_top2",
+      "installationPose": 1,
+      "displayName": "Каменное окно с орнаментом",
+      "components": [
+        {
+          "mainId": "93066",
+          "registryId": "bloodborne_dw:source_stairs_waxed_oxidized_cut_copper_stairs_inner_left_top2",
+          "relativePosition": [
+            0,
+            0,
+            0
+          ],
+          "sourceShift": [
+            -0.0,
+            -0.25,
+            -0.0
+          ],
+          "pose": 0,
+          "componentYawDelta": 0
+        },
+        {
+          "mainId": "93069",
+          "registryId": "bloodborne_dw:source_stairs_waxed_oxidized_cut_copper_stairs_inner_right_top2",
+          "relativePosition": [
+            0,
+            2,
+            0
+          ],
+          "sourceShift": [
+            -0.0,
+            -1.0,
+            -0.0
+          ],
+          "pose": 0,
+          "componentYawDelta": 0
+        }
+      ],
+      "closedSourceVertexUvRgbaProof": "PASS_8_YAW",
+      "oldVariantIndicesPreserved": true
+    },
+    {
+      "key": "2672:2673:0,1,0",
+      "primaryId": "90179",
+      "primaryRegistryId": "bloodborne_dw:source_addon_pilaster_1",
+      "installationPose": 1,
+      "displayName": "Цельная каменная пилястра",
+      "components": [
+        {
+          "mainId": "90179",
+          "registryId": "bloodborne_dw:source_addon_pilaster_1",
+          "relativePosition": [
+            0,
+            0,
+            0
+          ],
+          "sourceShift": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "pose": 0,
+          "componentYawDelta": 0
+        },
+        {
+          "mainId": "90178",
+          "registryId": "bloodborne_dw:source_addon_pilaster_0",
+          "relativePosition": [
+            0,
+            1,
+            0
+          ],
+          "sourceShift": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "pose": 0,
+          "componentYawDelta": 0
+        }
+      ],
+      "closedSourceVertexUvRgbaProof": "PASS_8_YAW",
+      "oldVariantIndicesPreserved": true
+    },
+    {
+      "key": "CITY-90458-90923-DEPTH-MINUS1",
+      "primaryId": "90923",
+      "primaryRegistryId": "bloodborne_dw:source_smooth_quartz_top",
+      "installationPose": 2,
+      "displayName": "Деревянная дверь с высокой каменной аркой · верх отнесён назад",
+      "components": [
+        {
+          "mainId": "90458",
+          "registryId": "bloodborne_dw:source_crimson_top",
+          "pose": 0,
+          "relativePosition": [
+            0,
+            0,
+            0
+          ],
+          "sourceShift": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "componentYawDelta": 0
+        },
+        {
+          "mainId": "90923",
+          "registryId": "bloodborne_dw:source_smooth_quartz_top",
+          "pose": 0,
+          "relativePosition": [
+            0,
+            2,
+            -1
+          ],
+          "sourceShift": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "componentYawDelta": 0
+        }
+      ],
+      "closedSourceVertexUvRgbaProof": "PASS_ALL12_ACTUAL_SOURCE_PAIRS_FOUR_CARDINAL_YAWS",
+      "oldVariantIndicesPreserved": true,
+      "sameFunctionalType": "90923 existing primary; exact source-city pose2 is the default; preview pose1 remains compatible; no new numeric ID"
+    },
+    {
+      "key": "929:1092:0,2,0",
+      "primaryId": "90923",
+      "primaryRegistryId": "bloodborne_dw:source_smooth_quartz_top",
+      "installationPose": 1,
+      "displayName": "Деревянная дверь с высокой каменной аркой",
+      "components": [
+        {
+          "mainId": "90458",
+          "registryId": "bloodborne_dw:source_crimson_top",
+          "relativePosition": [
+            0,
+            0,
+            0
+          ],
+          "sourceShift": [
+            -0.0,
+            -1.0,
+            -0.0
+          ],
+          "pose": 0,
+          "componentYawDelta": 0
+        },
+        {
+          "mainId": "90923",
+          "registryId": "bloodborne_dw:source_smooth_quartz_top",
+          "relativePosition": [
+            0,
+            2,
+            0
+          ],
+          "sourceShift": [
+            -0.0,
+            -1.0,
+            -0.0
+          ],
+          "pose": 0,
+          "componentYawDelta": 0
+        }
+      ],
+      "closedSourceVertexUvRgbaProof": "PASS_8_YAW",
+      "oldVariantIndicesPreserved": true
+    },
+    {
+      "key": "1435:2430:0,2,0",
+      "primaryId": "90301",
+      "primaryRegistryId": "bloodborne_dw:source_blackstone_stairs_top",
+      "installationPose": 1,
+      "displayName": "Цельное арочное окно",
+      "components": [
+        {
+          "mainId": "90301",
+          "registryId": "bloodborne_dw:source_blackstone_stairs_top",
+          "relativePosition": [
+            0,
+            0,
+            0
+          ],
+          "sourceShift": [
+            -0.0,
+            -0.702665043125,
+            -0.0
+          ],
+          "pose": 0,
+          "componentYawDelta": 0
+        },
+        {
+          "mainId": "90251",
+          "registryId": "bloodborne_dw:source_addon_wall_deco_7",
+          "relativePosition": [
+            0,
+            2,
+            0
+          ],
+          "sourceShift": [
+            -0.0,
+            -1.0,
+            -0.0
+          ],
+          "pose": 0,
+          "componentYawDelta": 0
+        }
+      ],
+      "closedSourceVertexUvRgbaProof": "PASS_8_YAW",
+      "oldVariantIndicesPreserved": true
+    },
+    {
+      "key": "2681:2231:0,3,0",
+      "primaryId": "90143",
+      "primaryRegistryId": "bloodborne_dw:source_addon_gate2_1",
+      "installationPose": 1,
+      "displayName": "Высокая металлическая декоративная панель",
+      "components": [
+        {
+          "mainId": "90143",
+          "registryId": "bloodborne_dw:source_addon_gate2_1",
+          "relativePosition": [
+            0,
+            0,
+            0
+          ],
+          "sourceShift": [
+            -0.0,
+            -1.0,
+            -0.0
+          ],
+          "pose": 0,
+          "componentYawDelta": 0
+        },
+        {
+          "mainId": "90142",
+          "registryId": "bloodborne_dw:source_addon_gate2_0",
+          "relativePosition": [
+            0,
+            3,
+            0
+          ],
+          "sourceShift": [
+            -0.0,
+            -1.0,
+            -0.0
+          ],
+          "pose": 0,
+          "componentYawDelta": 0
+        }
+      ],
+      "closedSourceVertexUvRgbaProof": "PASS_8_YAW",
+      "oldVariantIndicesPreserved": true
+    },
+    {
+      "key": "3589:2048:0,3,0",
+      "primaryId": "90160",
+      "primaryRegistryId": "bloodborne_dw:source_addon_log_vertical_0",
+      "installationPose": 2,
+      "displayName": "Высокое деревянное украшение",
+      "components": [
+        {
+          "mainId": "90160",
+          "registryId": "bloodborne_dw:source_addon_log_vertical_0",
+          "relativePosition": [
+            0,
+            0,
+            0
+          ],
+          "sourceShift": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "pose": 1,
+          "componentYawDelta": 0
+        },
+        {
+          "mainId": "90160",
+          "registryId": "bloodborne_dw:source_addon_log_vertical_0",
+          "relativePosition": [
+            0,
+            3,
+            0
+          ],
+          "sourceShift": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "pose": 0,
+          "componentYawDelta": 0
+        }
+      ],
+      "closedSourceVertexUvRgbaProof": "PASS_8_YAW",
+      "oldVariantIndicesPreserved": true
+    },
+    {
+      "key": "2951:2953:0,2,0",
+      "primaryId": "90031",
+      "primaryRegistryId": "bloodborne_dw:source_acacia_pressure_plate",
+      "installationPose": 1,
+      "displayName": "Двустворчатая деревянная дверь в каменной арке",
+      "components": [
+        {
+          "mainId": "90031",
+          "registryId": "bloodborne_dw:source_acacia_pressure_plate",
+          "relativePosition": [
+            0,
+            0,
+            0
+          ],
+          "sourceShift": [
+            -0.0,
+            -1.0,
+            -0.0
+          ],
+          "pose": 0,
+          "componentYawDelta": 0
+        },
+        {
+          "mainId": "90623",
+          "registryId": "bloodborne_dw:source_jungle_pressure_plate",
+          "relativePosition": [
+            0,
+            2,
+            0
+          ],
+          "sourceShift": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "pose": 0,
+          "componentYawDelta": 0
+        }
+      ],
+      "closedSourceVertexUvRgbaProof": "PASS_8_YAW",
+      "oldVariantIndicesPreserved": true
+    },
+    {
+      "key": "EXACT-THREE-PART-WINDOW-01",
+      "primaryId": "90797",
+      "primaryRegistryId": "bloodborne_dw:source_pressure_plate_window_bottom_4",
+      "installationPose": 2,
+      "displayName": "Большое витражное окно с завершением",
+      "components": [
+        {
+          "mainId": "90797",
+          "registryId": "bloodborne_dw:source_pressure_plate_window_bottom_4",
+          "relativePosition": [
+            0,
+            0,
+            0
+          ],
+          "sourceShift": [
+            0.0,
+            -0.5625,
+            0.0
+          ],
+          "pose": 1,
+          "componentYawDelta": 0
+        },
+        {
+          "mainId": "90797",
+          "registryId": "bloodborne_dw:source_pressure_plate_window_bottom_4",
+          "relativePosition": [
+            0,
+            2,
+            0
+          ],
+          "sourceShift": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "pose": 0,
+          "componentYawDelta": 4
+        },
+        {
+          "mainId": "90799",
+          "registryId": "bloodborne_dw:source_pressure_plate_window_top_2",
+          "relativePosition": [
+            0,
+            5,
+            0
+          ],
+          "sourceShift": [
+            -0.0,
+            -1.0,
+            -0.0
+          ],
+          "pose": 0,
+          "componentYawDelta": 0
+        }
+      ],
+      "closedSourceVertexUvRgbaProof": "PASS_8_YAW",
+      "oldVariantIndicesPreserved": true
+    }
+  ],
+  "hiddenPartRedirects": {
+    "bloodborne_dw:source_stairs_waxed_oxidized_cut_copper_stairs_inner_right_top2": "bloodborne_dw:source_stairs_waxed_oxidized_cut_copper_stairs_inner_left_top2",
+    "bloodborne_dw:source_addon_pilaster_0": "bloodborne_dw:source_addon_pilaster_1",
+    "bloodborne_dw:source_addon_wall_deco_7": "bloodborne_dw:source_blackstone_stairs_top",
+    "bloodborne_dw:source_addon_gate2_0": "bloodborne_dw:source_addon_gate2_1",
+    "bloodborne_dw:source_jungle_pressure_plate": "bloodborne_dw:source_acacia_pressure_plate",
+    "bloodborne_dw:source_pressure_plate_window_top_2": "bloodborne_dw:source_pressure_plate_window_bottom_4",
+    "bloodborne_dw:source_dark_oak_trapdoor_top": "bloodborne_dw:prototype_double_door"
+  },
+  "explicitDoorReplacement": {
+    "oldId": "90479",
+    "oldRegistryId": "bloodborne_dw:source_dark_oak_trapdoor_top",
+    "targetId": "90001",
+    "targetRegistryId": "bloodborne_dw:prototype_double_door",
+    "sourceShiftAddition": [
+      0,
+      0,
+      0.375
+    ]
+  },
+  "originalV12": "UNCHANGED; existing90001 mechanism/model/spec are not edited",
+  "authorCollisionExport": "NOT_SUPPLIED_NOT_APPLIED"
+}

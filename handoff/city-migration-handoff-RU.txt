@@ -1,0 +1,291 @@
+CITY MIGRATION: ПЕРЕНОС НА НОВЫЙ ПК / НОВЫЙ ЧАТ
+==============================================
+
+Статус на остановке для GitHub upload (2026-10-22)
+------------------------------------------------
+Пользователь сменил ближайший приоритет на upload ALL в существующий публичный
+Stasik1960/Dreamwalker. Реализация остановлена. Root выполняет упаковку/upload.
+City agent не запускал сборки/Minecraft и не пишет карты. Этот файл — новый
+handoff; source/tools/native-grid-city/FULL-CITY-HANDOFF-RU.txt содержит более
+старую инструкцию, которую надо читать с поправками этого документа.
+
+ROOT = C:\Users\vakir\.codex\worktrees\3f07\DW-native-grid-city-20261022
+SRC  = ROOT\source; R = ROOT\research; PLAN = R\native-grid-plan.
+Единственный global disk plan: PLAN\plan.sqlite. Новый full plan не создавать.
+Исходный город и старый discovery plan остаются неизменяемыми.
+E: migration PAUSED; storage-mode=LocalC, работа разрешена только на C:.
+
+Фактический последний migration cursor:
+- Root phase2 offline apply PASS, process20261022T050145-migrate,1596.75s.
+- selected107610 / placements214921; catalogue3179cells/25banks.
+- Root genuine native LIGHT target4G PASS554/554,pending0,saveFlushed,normalexit;
+  launch315.532s, accept-relightPASS053502. Старые8 saved rows НЕ переиспользованы.
+- Candidate world: R\pilot\candidate; NATIVE-GRID-MIGRATION status
+  READY_FOR_GAMEPLAY_QA, не конечная пользовательская выдача.
+- Root выполнял actual-footprint functional QA; завершённая приёмка всех функций
+  и единственная сопоставимая client/separate-server pair нам не сообщены.
+  FULL promotion НЕ ВЫПОЛНЕН. Baseline40ce historical4G OOM остаётся FAIL.
+- Root checkpoint PASS R\checkpoints\20261022T062013Z.
+  Его нужно сохранить вместе с последующими transfer/handoff материалами.
+
+Текущая production/catalogue пара
+--------------------------------
+SRC\build\libs\dreamwalker-bb-fabric-1.20.1-0.1.0-v12.7.4-native-grid.1.jar
+SHA3477fa1f016126eb58ea294a37a0ba06ad711f7e137ae72b103919df45e35bd3.
+SRC\src\architecture\resources\assets\bloodborne_dw\native_grid\catalog.json
+SHA638d84a879a7823fd4ed866b2109fbe864cda4690383745fbc5a53bc940fa550.
+meshes.bin SHAbf3745f38ab455b0630682e4286ae7327e54a8ee77067da169d144d077d37447.
+R\type-mapping.jsonl SHA3ed78e5e6a6b7f1c1f010b89bed041919b447905e1da2bd6701f5c640962a90c.
+R\fragments.sqlite SHA96b0ac0fb72481b6c59c83167e5649a494da3a6ccafedccf3907b219bc424bca.
+R\catalog-state.sqlite — тот же append-only compiler DB; не создавать новый.
+R\whole-objects.jsonl —72 existing statue templates,
+SHAc1823f609bb59f5647213bee7c6b1c46a4d7636c6ae3535ebd0b6f260c848055.
+
+История исправлений, которую нельзя потерять
+-----------------------------------------
+1. PLAN\stage-history\stage-001: исходный маленький applied pilot, prior tables,
+   production JAR/catalog/journals/native8 evidence. Не выдавать его FAIL за PASS.
+2. PLAN\context-extension: тот же DB/context extension, exact old/new bindings,
+   fragment lineage, source-generation snapshots, finite function proof260,
+   final native coverage248. Нет повторной discovery/конвертации source vanilla.
+3. R\pilot\dependency-repair: ОДИН preserving cropped harness repair BOTH maps.
+   Final inventory91aux+427original=518terrain;498 source owner shards;
+  211 atomic files,58 exact source-state/BE restorations+47known lost refs.
+   No graph closure over newly copied owners. Actual commit/admission PASS.
+   receipt SHA80f48d616a078441aa86dda193e8c98a04c02e14f6c63fb82696c8fa37cbe564.
+   READY.json SHA94fb622247da470fe7643c3837fc9eb1f134c37c01c7f769dc317b839a64191d.
+   Old8 cursor/evidence archived there; all8 invalidated after changed dependencies.
+4. Full427 strict bind completed1468.047s but failed ONLY a dimension hash typo:
+   overworld repaired GLOBAL hash was wrongly applied to DIM-1 basename.
+   Nether bytes source==manifest==stage1==actual, no data delta.
+   Narrow one-line fix context349793... -> f04362..., no map repair/reapply.
+   Metadata recovery PASS050112/4.516s:501ledgers,7regions, actual completed427
+   proof+unchanged admitted region bytes, no second427 decode and no fake digest.
+   PLAN\context-extension\completed-bind-recovery and dimension-ledger-difference
+   preserve proof. Native independent-dimension-fix-review SHA0e186bfd7d3d040dac466f70cf3402874342eddb27fa7118f8f61bb6cfb0c3d8.
+5. Current honest fresh LIGHT namespace (all554 done):
+   PLAN\context-extended-relight-engine.json and .json.done.tsv.
+   relight-binding.json queueSHAfb4ba6bf8c71711755758ec47412b81b2aea472a511145ba1292c8e25361ceb3,
+   savedPrefixReused=false. Archive queue,binding,engine,cursor,launch evidence,
+   console and accepted production before FULL; never overwrite historical FAILs.
+
+Последние migration-owned source hashes
+--------------------------------------
+tools/native-grid-city/migrate.py
+0e2534920f65b132fec6eb69fb8186c8a026c1405cde54affbd7f63ef7ed322e
+tools/native-grid-city/context_stage.py (после dimension-only fix)
+f04362e1021287ac16f613d85ff85033d92f5b315c4bb71112df45b3f09b6d45
+tools/native-grid-city/pilot_dependencies.py
+d951896092a0f6861a20d907f13b32da913faeecd57439f5a939760766e34c78
+tools/native-grid-city/probe_dependency_shards.py
+e601bd176a3d839912e27840ddf7fae20b62d849765e9ebe1309cdae52ce8432
+tools/native-grid-city/recover_completed_context_binding.py
+cfe83d9f7e7ff4710b18e83d390e0ee7d6e87051ae0673020089a2ca908e126c
+Тесты: migration36PASS,repair9PASS,dimension-recovery2PASS; не повторять без
+новой конкретной правки. Source-generation и старые hashes остаются историческими.
+
+КРИТИЧНЫЕ ВНЕШНИЕ ФАЙЛЫ ВНЕ ROOT — НУЖНО УПАКОВАТЬ
+=================================================
+
+A. Старый неизменяемый discovery SQLite и его bindings
+----------------------------------------------------
+OLDROOT = C:\Users\vakir\.codex\worktrees\3f07\DW-ordinary-city-pilot-20261020
+OLDPLAN = OLDROOT\research\city-pilot\full-city-copy.ordinary-migration
+
+Обязательные точные paths:
+OLDPLAN\plan.sqlite —6,793,261,056bytes. ВСЁ содержимое old.chunk_cache уже ВНУТРИ
+этого SQLite; отдельной directory worldcache для нового scan не требуется.
+OLDPLAN\copy.json —immutable source file manifest,
+SHAf922f5804c89bcba1ac8f7a22e82fd3c7deb8e844bc5e924778312b2b5ce7fcc.
+OLDPLAN\planner-binding.json —SHA9795c6e0b168d4a5b0af1dd0b939b7bde3c362b12fc8c458bdef454bd5116f3b.
+OLDPLAN\read-only-plan.json —обязательный existing marker, проверяет source_binding.
+
+На последнем read-only stat: plan.sqlite-wal=0bytes; plan.sqlite-shm=32768bytes.
+SHM —rebuildable SQLite index, не источник данных. При упаковке убедиться что
+нет writers; если WAL окажется nonempty, нельзя выкинуть его или копировать
+SQLite несогласованно. Лучше сохранить все небольшие sidecar/provenance файлы
+этой папки; DB+WAL собирать согласованно. Ordinary.partial world НЕ использовать.
+
+Дополнительные прямые runtime/tool reads:
+OLDROOT\tools\ordinary-stage1\source-capabilities.json
+SHA4631f03fe354733a230dab9d5bbffc339a3cbf3fefb9362544199569685dc461
+(context default normalization + full_native_inputs; exact256StaticArchitecture
+class/default/stateCount proof). Без него comparison/full census не работают.
+OLDROOT\tools\ordinary-stage1\native-supports-canonical.json
+(migrate.native_states/export-poses directread; требуется для authoring continuation).
+
+planner-binding references these exact old provenance files; сохранить их либо
+их уже существующий planner-snapshot, не заново генерировать:
+OLDROOT\tools\ordinary-stage1\migrate.py
+OLDROOT\tools\ordinary-stage1\stage_common.py
+OLDROOT\tools\world_io.py
+OLDROOT\tools\ordinary-stage1\pose-rules.json
+OLDROOT\tools\ordinary-stage1\family-policy.json
+OLDROOT\tools\ordinary-stage1\native-operation-requirements.json
+OLDROOT\src\architecture\resources\bloodborne_dw\restored-material-slabs.json
+OLDROOT\src\architecture\resources\bloodborne_dw\static-architecture-v1274.json
+planner snapshot ID02c1b811f4a3aa121e149b456858dd9ba657258e759e7e90fabcf327e6ae6e5a.
+Новый migrator НЕ запускает старый migrator; эти файлы сохраняют точную provenance.
+
+B. Неизменяемая исходная пара
+----------------------------
+BASE = C:\Users\vakir\.codex\worktrees\3f07\DW-city-mesh-20261018
+BASE\deliverables\block-fixes-2-20261020\map\bloodborne-blocks-fixed-2\ [ВЕСЬ МИР]
+Manifest3887files,total437197194bytes. Сохранить все region/entities/poi,data,
+owner shards,level/player files; не восстанавливать source из изменённого pilot.
+BASE\deliverables\block-fixes-2-20261020\game\dreamwalker-bb-materials.1-streaming.7-blocks.2.jar
+SHA40cecfb7e5cf783a762e350fc1864518c39abff177f6f025cb94892a181fbf51.
+Source40ce нужен для exact baseline model/function/class evidence, не blocks.1.
+
+C. Внешние profile launcher inputs (для настоящего запуска на новом ПК)
+----------------------------------------------------------------------
+BASE\bloodborne complete\build\runtime-server-rp-streaming7\native.args
+BASE\research\graphical-streaming-20261019\after\prepared.json (поле clientArgs).
+run_profiles.py/run_relight.py прямо читают эти paths. Они содержат абсолютные
+classpath/library/native/assets paths: root transfer должен сохранить именно
+их referenced artifacts либо на новом ПК воспроизводимо provision pinned MC1.20.1,
+Fabric+Java17, затем явно rebind launcher paths. Не нужен весь старый research.
+Текущие pinned mod JARs/profiles/locks уже в R\profiles; runtime helpers в SRC\build\libs.
+Java17 executable сейчас C:\Users\vakir\AppData\Roaming\.minecraft\runtime\java-runtime-gamma\windows\java-runtime-gamma\bin\java.exe.
+Python сейчас C:\Users\vakir\miniconda3\python.exe (stdlib SQLite/NBT/PNG tooling).
+Executable paths на новом ПК требуют проверки, не слепого использования.
+
+D. User instruction / историческая защита
+---------------------------------------
+PRESERVED = C:\Users\vakir\.codex\worktrees\3f07\DW
+PRESERVED\audits\Dreamwalker-BB\2026-10-21-native-grid-city\START-RU.txt
+—ОБЯЗАТЕЛЬНО самая новая версия: правило ALLpreviouslyexplicit whole assemblies.
+PRESERVED\releases\Dreamwalker-BB\v12\gallery-manifest.json (или точные Git HEAD
+bytes этого path) —источник protected-v12-ids, SHA
+c74e8323d6b7106e78b2ae6853750a80497e91af83256bf2460ed6406c605710.
+Если bytes доступны только как Git object, экспортировать exact git-show bytes,
+не подменять нынешним похожим manifest.
+Новый runtime/source parts/current assembly recipes уже в SRC\src и ROOT
+assets, вместе с tools/native-grid/protected-v12-ids.json,statue-ids.json,
+classification.json. Эти файлы НЕ внешние, но обязательно входят в uploadROOT.
+Полный финальный preserved-assemblies.json ещё не сформирован; не выдумывать его.
+
+PATH BINDING НА НОВОМ ПК
+======================
+PLAN.meta.oldPlan и PLAN.meta.binding.source/oldPlan/copyManifest содержат
+абсолютные paths выше; CLI --source-plan по умолчанию тот же OLDPLAN. Cache
+region_path относителен source, но source/copyManifest строковые bindings точны.
+Binding фиксирует oldDatabaseBytes6793261056 и oldDatabaseMtimeNs1792532766177907600.
+checked() допускает только C: и запрещает reparse points. Поддерживаемый самый
+простой restore —та же C:\Users\vakir\.codex\worktrees\3f07 sibling layout.
+Сохранить mtime и bytes либо выполнить отдельный проверяемый path-only rebind с
+архивом/proof всех старых source hashes. Не редактировать SQLite/JSON массовой
+заменой строк и не запускать prepare заново для обхода старого binding.
+Guard/control environment требуется:
+C:\Users\vakir\CodexControl\storage-mode.json,C-return-result.txt,Guard.ps1,Job.cs.
+Это LocalC/pausedE; новую E migration не возобновлять.
+
+НЕЗАКОНЧЕННЫЕ GATES / БЛИЖАЙШЕЕ ПРОДОЛЖЕНИЕ
+=========================================
+1. Root завершает actual functional QA/сопоставимую pair; failed baselineOOM
+   не переименовывать в PASS. Pilot gate пока не создан/не принят в нашем cursor.
+2. Native проверяет ALLexplicit previous assemblies. Preliminary exact9 audit:
+  348 real installed poses presentlySTATIC:
+  93066/p1=19,90179/p1=236,90301/p1=46,90143/p1=16,90160/p2=3,90797/p2=28;
+  90923/p2=618+p1=30 alreadyPRESERVE;90031/p1=0.
+  Все эти preliminary9 poses НЕ selected/activated/fragment-ref в appliedpilot.
+  Но pose0 recipe components и otherexplicitregistries ещё проверялись.
+  R\function-qa\preserved-assembly-addressed-input-audit.json —текущий evidence.
+  Нельзя завершить manifest по одному слову assembly или старым9recipes.
+3. Минимальный FUTUREoverride (НЕ реализован/не запущен): после finalmanifest
+   pose-specific objects updates static realowner->whole +wholeTemplates либо
+   retain ONLYthatobject withreason; v12/openable/functions priority. Native/compact
+   isolated не переделывать, но finite ownfootprint защищать от genericactivation.
+   Не запускать общий classify заново: он может затронуть уже resolvedprivate_payload.
+   Если финальный audit найдёт fragmentedpilotassembly, нужен один bounded delta
+   stage с архивом currentplacements/journals/catalog и exact affectedfootprint;
+   subtract onlyits UUID fragments, append newtypes, wholetemplate если compatible;
+   иначе restoreONLYits sourceowner/root/helpers с eligible NativeGridBase background.
+   Не restore целый sourcechunk/shard, не resurrect otherconvertedUUIDs, no area closure.
+   До exact findings никакой speculative writer не добавлен.
+4. Exporter завершил два authoring-only fixes: catalogue prefix snapshot explicit
+   accepted638d baseline и FULLbridge normalizer flags. Final fixturePASS062314/
+  0.657s: all64contextrows byte-equivalent; unknown/nonbridgehost reject;
+   legacy4306prefixverifyPASS; actualFULLinput не читался. Prefix source231fb81f...,
+   normalizer a00128c3...; полные hashes/API в
+   R\transfer\export-cells-handoff-RU.txt
+   SHA203a73ad5f673efe34e9abaec43229e51f41b008c9a641d10498edf69754f786.
+   Упаковывать CURRENTsource: checkpoint062013 предшествует этим finalfiles.
+   Oldpilotcatalog/prefix не менять.
+   FULLnormalizer раньше после deletingcontextExtension не получал carrierPredicates.
+   Новая API --full-function-gate требует fresh FULLsourcebinding/inputEvidence/count/
+   sourceJar и EACHactualhost decision bridge_host_only; unknown/retain_local hostFAIL.
+   Materialize ONLYactual observedopaque/sided; allotheroptics exact. Не defaults.
+
+FUTURE FULL КОМАНДЫ (НЕ ВЫПОЛНЯТЬ ДО GATES)
+=========================================
+Все из SRC через Guard -Mode Operation. Global --plan ставится ДО subcommand.
+Один PLAN/oldcache, без новой discovery и без повторной ordinary conversion.
+$Gate —absolute existing ACTUALpassed densepilot JSON,statusPASS/denseBrickPilottrue/
+catalogSha256 acceptedpilot. Не создавать PASS из ожиданий.
+
+Сначала архивировать accepted554 light files, production/catalog/meshes/mapping,
+затем prefix snapshot в R\catalog-prefix-638d84 с explicit baseline triple:
+--baseline-catalog-sha256 638d84a879a7823fd4ed866b2109fbe864cda4690383745fbc5a53bc940fa550
+--baseline-meshes-sha256 bf3745f38ab455b0630682e4286ae7327e54a8ee77067da169d144d077d37447
+--baseline-mapping-sha256 3ed78e5e6a6b7f1c1f010b89bed041919b447905e1da2bd6701f5c640962a90c
+Это exporter catalog_prefix.py snapshot/verify API после его узкого fixture;
+старые pinned4306/fca0 defaults НЕ подходят новомуaccepted638prefix.
+
+python tools/native-grid-city/migrate.py --plan ../research/native-grid-plan promote-city --pilot-gate <ACTUAL_GATE>
+Promotion preserves pilot-state.json,pilot_*tables,pilot-journals,stage-history,
+context-extension,repair evidence; clears active scope/target/runtime/apply/catalog
+и девять pilot-onlycontext keys INCLUDING contextDependencyRepair/contextNativeLightRestart.
+FullNativeFunctionGateRequired=true; fullwriter не delegates cropped427 writer.
+
+После окончательного assemblyoverride:
+python tools/native-grid/qa/full_native_inputs.py --plan ../research/native-grid-plan --out ../research/native-grid-plan/full-native-inputs.json
+Exporter пишет fresh full-native-functions.json: scopeFULL_CITY/statusPASS/exact
+sourceBinding/source40ceJar+SHA/inputEvidence hash/candidateObjects coverage,
+decision static_base|bridge_host_only|retain_local для BOTH nativeBaseCandidates
+и blockEntityHostCandidates. Oldpilot260 не является FULLgate.
+python tools/native-grid-city/migrate.py --plan ../research/native-grid-plan import-full-native-functions --report ../research/native-grid-plan/full-native-functions.json
+python tools/native-grid-city/migrate.py --plan ../research/native-grid-plan compose
+
+Без bounds =>FULL. Exact needed outputs:compositions.jsonl,native-states-needed.json.
+Missingassets/functions после nativeactivation закрывать finiteactuallist; no defaults.
+При append:strict lineage allpreviousrows unchanged; import-fragments latestsqlite.
+python tools/native-grid-city/audit_context_states.py --plan ../research/native-grid-plan --append-lineage <STRICT_FULL_APPEND_LINEAGE>
+ВыходFULL:PLAN\full-native-input-coverage.json; withoutappend флагопустить.
+Перед apply нужен actualPASS и пустые missinglists.
+
+Exporter normalizer: tools/native-grid/compiler/catalog_normalize_carriers.py
+--compositions PLAN/compositions.jsonl --raw-sha256 <ACTUAL_RAW_SHA>
+--fragments R/fragments.sqlite --plan PLAN --audit <ALL_ACTUAL_HOST_AUDITS>
+--full-function-gate PLAN/full-native-functions.json
+--out PLAN/full/compositions.normalized.jsonl --receipt PLAN/full/normalizer-receipt.json
+Каждыйactualbridgehost должен иметь finitebridge_host_only+observednativeflags;
+existing R\bridge-carrier-audit-context\bridge-carrier-gate.json покрывает только свои states.
+Затем catalog_preflight.py =>PASS, pinned111b compiler в ТОМ ЖЕ R/catalog-state.sqlite:
+python tools/native-grid/compiler/catalog.py --fragments ../research/fragments.sqlite --compositions ../research/native-grid-plan/full/compositions.normalized.jsonl --whole-objects ../research/whole-objects.jsonl --database ../research/catalog-state.sqlite --resources src/architecture/resources/assets/bloodborne_dw/native_grid --out ../research/type-mapping.jsonl
+Prefixverify allpriorindexedrows/meshpayload/mapping exact.
+python tools/native-grid-city/migrate.py --plan ../research/native-grid-plan import-types --mapping ../research/type-mapping.jsonl --catalog src/architecture/resources/assets/bloodborne_dw/native_grid/catalog.json
+python tools/native-grid-city/migrate.py --plan ../research/native-grid-plan audit-cleanup-bes
+Rootbuildproduction+actualnativeaudit ALL PLAN/bridge-host-states.json pairs, then
+python tools/native-grid-city/migrate.py --plan ../research/native-grid-plan accept-bridge-carriers --receipt <ACTUAL_FULL_BRIDGE_AUDIT>
+
+ОДНА full copy immutable source, не pilotcandidate:
+python tools/native-grid-city/migrate.py --plan ../research/native-grid-plan clone --target ../research/city/bloodborne-native-grid-city
+python tools/native-grid-city/migrate.py --plan ../research/native-grid-plan apply --target ../research/city/bloodborne-native-grid-city --runtime-jar build/libs/dreamwalker-bb-fabric-1.20.1-0.1.0-v12.7.4-native-grid.1.jar --pilot-gate <ACTUAL_GATE>
+Resume повторяет sameapply/sametarget/runtime,journals. No fullmap reset.
+
+Full fresh engine namespace реально выдаётся producer в relight-binding.json:
+PLAN/full-city-relight-engine.json +.json.done.tsv, оба отсутствуют доfirst FULLrun.
+Ни8,ни554 pilotrows не копируются. Runner передаёт exactbinding в JVM property.
+python tools/native-grid/run_relight.py --plan ../research/native-grid-plan --batch 2
+python tools/native-grid-city/migrate.py --plan ../research/native-grid-plan accept-relight --receipt ../research/native-grid-plan/full-city-relight-engine.json
+Настоящий4Gserver/saveFlushed/normalexit/pending0, затем fullclientroute/save/reopen.
+Полная карта/production/source/installreport и измеренныйвыигрыш ещё не выданы.
+
+FILES STABLE / STOP
+==================
+City agent сохранил только этот transfer handoff. Новых implementation/DB/map
+изменений по последнему transfer request нет. Никаких собственных child processes
+не оставлено. Старый FULL-CITY-HANDOFF-RU.txt не обновлён: большой patch был
+отклонён ДО записи (delete/add samepath), поэтому не считать его актуальнее этого.
+Дальше root упаковка/upload; City STOP до нового прямого задания.

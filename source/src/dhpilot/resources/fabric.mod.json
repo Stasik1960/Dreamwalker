@@ -1,0 +1,10 @@
+{
+ "schemaVersion":1,
+ "id":"dreamwalker_dh_city_pilot",
+ "version":"${version}",
+ "name":"Dreamwalker city Distant Horizons pilot",
+ "description":"Opt-in offline city proxy for one frozen district. Requires its explicit world-bound scene manifest.",
+ "environment":"client",
+ "entrypoints":{"client":["dev.dreamwalker.bloodbornedw.dh.CityDhPilot"]},
+ "depends":{"fabricloader":">=0.16.10","minecraft":"1.20.1","java":">=17","fabric-api":"*","bloodborne_dw":"*","distanthorizons":"=3.3.3"}
+}

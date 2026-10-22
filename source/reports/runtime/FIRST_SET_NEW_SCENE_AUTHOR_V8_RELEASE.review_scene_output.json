@@ -1,0 +1,2191 @@
+{
+  "schema": "dreamwalker-isolated-review-scene-v1",
+  "production_qa_included": false,
+  "visual_acceptance": "NOT_RUN",
+  "objects": [
+    {
+      "kind": "prototype_double_door",
+      "root": [
+        -12,
+        64,
+        8
+      ],
+      "yaw": 0,
+      "variant": 0,
+      "profile": "base",
+      "temporaryId": "90001",
+      "open": false,
+      "registryId": "bloodborne_dw:prototype_double_door",
+      "placementPath": "CompositeRuntime.place",
+      "transaction": "COMMITTED",
+      "ownerUuid": "4bbffbd9-c0a0-4289-899e-9a56b89705b1",
+      "mountY": 0.0,
+      "helperCount": 11,
+      "ownedCells": 12,
+      "foreignOverlayCells": 0,
+      "visualPartCount": 4,
+      "actualState": "Block{bloodborne_dw:prototype_double_door}[open\u003dfalse,profile\u003dbase,rotation\u003d0,variant\u003d0]"
+    },
+    {
+      "kind": "prototype_double_door",
+      "root": [
+        -6,
+        64,
+        8
+      ],
+      "yaw": 0,
+      "variant": 0,
+      "profile": "alt",
+      "temporaryId": "90001",
+      "open": false,
+      "registryId": "bloodborne_dw:prototype_double_door",
+      "placementPath": "CompositeRuntime.place",
+      "transaction": "COMMITTED",
+      "ownerUuid": "ef426156-f06e-4433-af56-40402fc6da14",
+      "mountY": 0.0,
+      "helperCount": 11,
+      "ownedCells": 12,
+      "foreignOverlayCells": 0,
+      "visualPartCount": 4,
+      "actualState": "Block{bloodborne_dw:prototype_double_door}[open\u003dfalse,profile\u003dalt,rotation\u003d0,variant\u003d0]"
+    },
+    {
+      "kind": "prototype_double_door",
+      "root": [
+        0,
+        64,
+        8
+      ],
+      "yaw": 0,
+      "variant": 0,
+      "profile": "base",
+      "temporaryId": "90001",
+      "open": true,
+      "registryId": "bloodborne_dw:prototype_double_door",
+      "placementPath": "CompositeRuntime.place",
+      "transaction": "COMMITTED",
+      "ownerUuid": "d8d3c5c4-6418-4b97-b705-bb0d4b4039c5",
+      "mountY": 0.0,
+      "helperCount": 12,
+      "ownedCells": 13,
+      "foreignOverlayCells": 0,
+      "visualPartCount": 4,
+      "actualState": "Block{bloodborne_dw:prototype_double_door}[open\u003dtrue,profile\u003dbase,rotation\u003d0,variant\u003d0]"
+    },
+    {
+      "kind": "prototype_wood_window",
+      "root": [
+        8,
+        64,
+        8
+      ],
+      "yaw": 0,
+      "variant": 0,
+      "profile": "base",
+      "temporaryId": "90007",
+      "open": false,
+      "registryId": "bloodborne_dw:prototype_wood_window",
+      "placementPath": "CompositeRuntime.place",
+      "transaction": "COMMITTED",
+      "ownerUuid": "9df65df8-1de5-416b-bef7-47802bde4d2d",
+      "mountY": 0.0,
+      "helperCount": 6,
+      "ownedCells": 7,
+      "foreignOverlayCells": 0,
+      "visualPartCount": 3,
+      "actualState": "Block{bloodborne_dw:prototype_wood_window}[open\u003dfalse,profile\u003dbase,rotation\u003d0,variant\u003d0]"
+    },
+    {
+      "kind": "prototype_wood_window",
+      "root": [
+        14,
+        64,
+        8
+      ],
+      "yaw": 0,
+      "variant": 0,
+      "profile": "alt",
+      "temporaryId": "90007",
+      "open": true,
+      "registryId": "bloodborne_dw:prototype_wood_window",
+      "placementPath": "CompositeRuntime.place",
+      "transaction": "COMMITTED",
+      "ownerUuid": "c1ca486a-9f8a-4829-a648-8b9547e7e400",
+      "mountY": 0.0,
+      "helperCount": 6,
+      "ownedCells": 7,
+      "foreignOverlayCells": 0,
+      "visualPartCount": 3,
+      "actualState": "Block{bloodborne_dw:prototype_wood_window}[open\u003dtrue,profile\u003dalt,rotation\u003d0,variant\u003d0]"
+    },
+    {
+      "kind": "prototype_thin_window",
+      "root": [
+        22,
+        64,
+        8
+      ],
+      "yaw": 0,
+      "variant": 0,
+      "profile": "base",
+      "temporaryId": "90004",
+      "mount": "vertical",
+      "mountFace": "north",
+      "glazingMounted": true,
+      "registryId": "bloodborne_dw:prototype_thin_window",
+      "placementPath": "CompositeRuntime.place",
+      "transaction": "COMMITTED",
+      "ownerUuid": "86aa48ec-025a-4506-b42f-56c252cdd9fb",
+      "mountY": 0.8125,
+      "helperCount": 8,
+      "ownedCells": 9,
+      "foreignOverlayCells": 0,
+      "visualPartCount": 1,
+      "actualState": "Block{bloodborne_dw:prototype_thin_window}[mount\u003dvertical,open\u003dfalse,profile\u003dbase,rotation\u003d0,variant\u003d0]"
+    },
+    {
+      "kind": "prototype_thin_window",
+      "root": [
+        22,
+        64,
+        18
+      ],
+      "yaw": 0,
+      "variant": 0,
+      "profile": "base",
+      "temporaryId": "90004",
+      "mount": "floor",
+      "mountFace": "up",
+      "glazingMounted": true,
+      "registryId": "bloodborne_dw:prototype_thin_window",
+      "placementPath": "CompositeRuntime.place",
+      "transaction": "COMMITTED",
+      "ownerUuid": "f2c39bdf-4e9f-45bc-8d5b-ac25f1ab9a74",
+      "mountY": -1.09375,
+      "helperCount": 8,
+      "ownedCells": 9,
+      "foreignOverlayCells": 0,
+      "visualPartCount": 1,
+      "actualState": "Block{bloodborne_dw:prototype_thin_window}[mount\u003dfloor,open\u003dfalse,profile\u003dbase,rotation\u003d0,variant\u003d0]"
+    },
+    {
+      "kind": "prototype_thin_window",
+      "root": [
+        22,
+        66,
+        25
+      ],
+      "yaw": 0,
+      "variant": 0,
+      "profile": "base",
+      "temporaryId": "90004",
+      "mount": "ceiling",
+      "mountFace": "down",
+      "glazingMounted": true,
+      "registryId": "bloodborne_dw:prototype_thin_window",
+      "placementPath": "CompositeRuntime.place",
+      "transaction": "COMMITTED",
+      "ownerUuid": "51cdd28a-5c78-494f-86d0-c8f6420d5527",
+      "mountY": 1.09375,
+      "helperCount": 8,
+      "ownedCells": 9,
+      "foreignOverlayCells": 0,
+      "visualPartCount": 1,
+      "actualState": "Block{bloodborne_dw:prototype_thin_window}[mount\u003dceiling,open\u003dfalse,profile\u003dbase,rotation\u003d0,variant\u003d0]"
+    },
+    {
+      "kind": "prototype_thin_window",
+      "root": [
+        28,
+        64,
+        8
+      ],
+      "yaw": 0,
+      "variant": 1,
+      "profile": "base",
+      "temporaryId": "90004",
+      "mount": "vertical",
+      "mountFace": "north",
+      "glazingMounted": true,
+      "registryId": "bloodborne_dw:prototype_thin_window",
+      "placementPath": "CompositeRuntime.place",
+      "transaction": "COMMITTED",
+      "ownerUuid": "0ebf20db-652f-4ef4-a383-ef7793d2c89c",
+      "mountY": 0.8125,
+      "helperCount": 8,
+      "ownedCells": 9,
+      "foreignOverlayCells": 0,
+      "visualPartCount": 1,
+      "actualState": "Block{bloodborne_dw:prototype_thin_window}[mount\u003dvertical,open\u003dfalse,profile\u003dbase,rotation\u003d0,variant\u003d1]"
+    },
+    {
+      "kind": "prototype_thin_window",
+      "root": [
+        28,
+        64,
+        18
+      ],
+      "yaw": 0,
+      "variant": 1,
+      "profile": "base",
+      "temporaryId": "90004",
+      "mount": "floor",
+      "mountFace": "up",
+      "glazingMounted": true,
+      "registryId": "bloodborne_dw:prototype_thin_window",
+      "placementPath": "CompositeRuntime.place",
+      "transaction": "COMMITTED",
+      "ownerUuid": "da41fbde-8c31-4241-8284-6fbaddaf7d92",
+      "mountY": -1.09375,
+      "helperCount": 8,
+      "ownedCells": 9,
+      "foreignOverlayCells": 0,
+      "visualPartCount": 1,
+      "actualState": "Block{bloodborne_dw:prototype_thin_window}[mount\u003dfloor,open\u003dfalse,profile\u003dbase,rotation\u003d0,variant\u003d1]"
+    },
+    {
+      "kind": "prototype_thin_window",
+      "root": [
+        28,
+        66,
+        25
+      ],
+      "yaw": 0,
+      "variant": 1,
+      "profile": "base",
+      "temporaryId": "90004",
+      "mount": "ceiling",
+      "mountFace": "down",
+      "glazingMounted": true,
+      "registryId": "bloodborne_dw:prototype_thin_window",
+      "placementPath": "CompositeRuntime.place",
+      "transaction": "COMMITTED",
+      "ownerUuid": "c1367214-11e1-4286-af53-f70266c58151",
+      "mountY": 1.09375,
+      "helperCount": 8,
+      "ownedCells": 9,
+      "foreignOverlayCells": 0,
+      "visualPartCount": 1,
+      "actualState": "Block{bloodborne_dw:prototype_thin_window}[mount\u003dceiling,open\u003dfalse,profile\u003dbase,rotation\u003d0,variant\u003d1]"
+    },
+    {
+      "kind": "prototype_thin_window",
+      "root": [
+        34,
+        64,
+        8
+      ],
+      "yaw": 0,
+      "variant": 2,
+      "profile": "base",
+      "temporaryId": "90004",
+      "mount": "vertical",
+      "mountFace": "north",
+      "glazingMounted": true,
+      "registryId": "bloodborne_dw:prototype_thin_window",
+      "placementPath": "CompositeRuntime.place",
+      "transaction": "COMMITTED",
+      "ownerUuid": "7673ac72-138a-4f92-904d-3c193e4257e6",
+      "mountY": 0.8125,
+      "helperCount": 11,
+      "ownedCells": 12,
+      "foreignOverlayCells": 0,
+      "visualPartCount": 1,
+      "actualState": "Block{bloodborne_dw:prototype_thin_window}[mount\u003dvertical,open\u003dfalse,profile\u003dbase,rotation\u003d0,variant\u003d2]"
+    },
+    {
+      "kind": "prototype_thin_window",
+      "root": [
+        34,
+        64,
+        18
+      ],
+      "yaw": 0,
+      "variant": 2,
+      "profile": "base",
+      "temporaryId": "90004",
+      "mount": "floor",
+      "mountFace": "up",
+      "glazingMounted": true,
+      "registryId": "bloodborne_dw:prototype_thin_window",
+      "placementPath": "CompositeRuntime.place",
+      "transaction": "COMMITTED",
+      "ownerUuid": "3fa2f1c2-e216-4902-b5ff-9c48664ed518",
+      "mountY": -0.84375,
+      "helperCount": 8,
+      "ownedCells": 9,
+      "foreignOverlayCells": 0,
+      "visualPartCount": 1,
+      "actualState": "Block{bloodborne_dw:prototype_thin_window}[mount\u003dfloor,open\u003dfalse,profile\u003dbase,rotation\u003d0,variant\u003d2]"
+    },
+    {
+      "kind": "prototype_thin_window",
+      "root": [
+        34,
+        66,
+        25
+      ],
+      "yaw": 0,
+      "variant": 2,
+      "profile": "base",
+      "temporaryId": "90004",
+      "mount": "ceiling",
+      "mountFace": "down",
+      "glazingMounted": true,
+      "registryId": "bloodborne_dw:prototype_thin_window",
+      "placementPath": "CompositeRuntime.place",
+      "transaction": "COMMITTED",
+      "ownerUuid": "a3ca35ef-6726-467a-87f8-a00ebf964aae",
+      "mountY": 0.84375,
+      "helperCount": 8,
+      "ownedCells": 9,
+      "foreignOverlayCells": 0,
+      "visualPartCount": 1,
+      "actualState": "Block{bloodborne_dw:prototype_thin_window}[mount\u003dceiling,open\u003dfalse,profile\u003dbase,rotation\u003d0,variant\u003d2]"
+    },
+    {
+      "kind": "prototype_thin_window",
+      "root": [
+        40,
+        64,
+        18
+      ],
+      "yaw": 0,
+      "variant": 0,
+      "profile": "base",
+      "temporaryId": "90004",
+      "mount": "vertical",
+      "mountFace": "up",
+      "glazingMounted": true,
+      "placementSneaking": true,
+      "registryId": "bloodborne_dw:prototype_thin_window",
+      "placementPath": "CompositeRuntime.place",
+      "transaction": "COMMITTED",
+      "ownerUuid": "8fe909bb-8e69-4a7b-b655-0ba84cd497ab",
+      "mountY": 0.8125,
+      "helperCount": 9,
+      "ownedCells": 10,
+      "foreignOverlayCells": 0,
+      "visualPartCount": 1,
+      "actualState": "Block{bloodborne_dw:prototype_thin_window}[mount\u003dvertical,open\u003dfalse,profile\u003dbase,rotation\u003d0,variant\u003d0]"
+    },
+    {
+      "kind": "prototype_thin_window",
+      "root": [
+        46,
+        65,
+        18
+      ],
+      "yaw": 0,
+      "variant": 1,
+      "profile": "base",
+      "temporaryId": "90004",
+      "mount": "vertical",
+      "mountFace": "up",
+      "glazingMounted": true,
+      "placementSneaking": true,
+      "registryId": "bloodborne_dw:prototype_thin_window",
+      "placementPath": "CompositeRuntime.place",
+      "transaction": "COMMITTED",
+      "ownerUuid": "810a301c-3c00-42ff-8db4-ce5d81bbf513",
+      "mountY": 0.3125,
+      "helperCount": 12,
+      "ownedCells": 13,
+      "foreignOverlayCells": 0,
+      "visualPartCount": 1,
+      "actualState": "Block{bloodborne_dw:prototype_thin_window}[mount\u003dvertical,open\u003dfalse,profile\u003dbase,rotation\u003d0,variant\u003d1]"
+    },
+    {
+      "kind": "prototype_thin_window",
+      "root": [
+        52,
+        65,
+        18
+      ],
+      "yaw": 0,
+      "variant": 2,
+      "profile": "base",
+      "temporaryId": "90004",
+      "mount": "vertical",
+      "mountFace": "up",
+      "glazingMounted": true,
+      "placementSneaking": true,
+      "registryId": "bloodborne_dw:prototype_thin_window",
+      "placementPath": "CompositeRuntime.place",
+      "transaction": "COMMITTED",
+      "ownerUuid": "5601c782-a95b-4273-b3d8-0cc662a43713",
+      "mountY": 0.8125,
+      "helperCount": 14,
+      "ownedCells": 15,
+      "foreignOverlayCells": 0,
+      "visualPartCount": 1,
+      "actualState": "Block{bloodborne_dw:prototype_thin_window}[mount\u003dvertical,open\u003dfalse,profile\u003dbase,rotation\u003d0,variant\u003d2]"
+    },
+    {
+      "kind": "prototype_roof",
+      "root": [
+        -16,
+        66,
+        30
+      ],
+      "yaw": 0,
+      "variant": 0,
+      "profile": "base",
+      "temporaryId": "90003",
+      "registryId": "bloodborne_dw:prototype_roof",
+      "placementPath": "CompositeRuntime.place",
+      "transaction": "COMMITTED",
+      "ownerUuid": "047aaddf-d6c9-45fc-8de5-841ab08d931b",
+      "mountY": 0.0,
+      "helperCount": 17,
+      "ownedCells": 18,
+      "foreignOverlayCells": 0,
+      "visualPartCount": 1,
+      "actualState": "Block{bloodborne_dw:prototype_roof}[open\u003dfalse,profile\u003dbase,rotation\u003d0,variant\u003d0]"
+    },
+    {
+      "kind": "prototype_roof",
+      "root": [
+        -15,
+        66,
+        30
+      ],
+      "yaw": 0,
+      "variant": 0,
+      "profile": "base",
+      "temporaryId": "90003",
+      "registryId": "bloodborne_dw:prototype_roof",
+      "placementPath": "CompositeRuntime.place",
+      "transaction": "COMMITTED",
+      "ownerUuid": "a1c1c9c2-df21-46be-a796-31796e7ca487",
+      "mountY": 0.0,
+      "helperCount": 16,
+      "ownedCells": 18,
+      "foreignOverlayCells": 0,
+      "visualPartCount": 1,
+      "actualState": "Block{bloodborne_dw:prototype_roof}[open\u003dfalse,profile\u003dbase,rotation\u003d0,variant\u003d0]"
+    },
+    {
+      "kind": "prototype_roof",
+      "root": [
+        -14,
+        66,
+        30
+      ],
+      "yaw": 0,
+      "variant": 0,
+      "profile": "base",
+      "temporaryId": "90003",
+      "registryId": "bloodborne_dw:prototype_roof",
+      "placementPath": "CompositeRuntime.place",
+      "transaction": "COMMITTED",
+      "ownerUuid": "a3d78121-a1f6-4bea-bd83-12030a221cb9",
+      "mountY": 0.0,
+      "helperCount": 16,
+      "ownedCells": 18,
+      "foreignOverlayCells": 0,
+      "visualPartCount": 1,
+      "actualState": "Block{bloodborne_dw:prototype_roof}[open\u003dfalse,profile\u003dbase,rotation\u003d0,variant\u003d0]"
+    },
+    {
+      "kind": "prototype_roof",
+      "root": [
+        -13,
+        66,
+        30
+      ],
+      "yaw": 0,
+      "variant": 0,
+      "profile": "base",
+      "temporaryId": "90003",
+      "registryId": "bloodborne_dw:prototype_roof",
+      "placementPath": "CompositeRuntime.place",
+      "transaction": "COMMITTED",
+      "ownerUuid": "0cb4b5e7-4010-4ce5-abf4-ee0e7fa91c1e",
+      "mountY": 0.0,
+      "helperCount": 16,
+      "ownedCells": 18,
+      "foreignOverlayCells": 0,
+      "visualPartCount": 1,
+      "actualState": "Block{bloodborne_dw:prototype_roof}[open\u003dfalse,profile\u003dbase,rotation\u003d0,variant\u003d0]"
+    },
+    {
+      "kind": "prototype_roof",
+      "root": [
+        -12,
+        66,
+        30
+      ],
+      "yaw": 0,
+      "variant": 0,
+      "profile": "base",
+      "temporaryId": "90003",
+      "registryId": "bloodborne_dw:prototype_roof",
+      "placementPath": "CompositeRuntime.place",
+      "transaction": "COMMITTED",
+      "ownerUuid": "13e01a82-9766-4b00-a55b-9ea7c69aa712",
+      "mountY": 0.0,
+      "helperCount": 16,
+      "ownedCells": 18,
+      "foreignOverlayCells": 0,
+      "visualPartCount": 1,
+      "actualState": "Block{bloodborne_dw:prototype_roof}[open\u003dfalse,profile\u003dbase,rotation\u003d0,variant\u003d0]"
+    },
+    {
+      "kind": "prototype_roof",
+      "root": [
+        -16,
+        66,
+        33
+      ],
+      "yaw": 4,
+      "variant": 0,
+      "profile": "base",
+      "temporaryId": "90003",
+      "registryId": "bloodborne_dw:prototype_roof",
+      "placementPath": "CompositeRuntime.place",
+      "transaction": "COMMITTED",
+      "ownerUuid": "029df384-38a9-41d4-875e-d7c700e199a7",
+      "mountY": 0.0,
+      "helperCount": 17,
+      "ownedCells": 18,
+      "foreignOverlayCells": 0,
+      "visualPartCount": 1,
+      "actualState": "Block{bloodborne_dw:prototype_roof}[open\u003dfalse,profile\u003dbase,rotation\u003d4,variant\u003d0]"
+    },
+    {
+      "kind": "prototype_roof",
+      "root": [
+        -15,
+        66,
+        33
+      ],
+      "yaw": 4,
+      "variant": 0,
+      "profile": "base",
+      "temporaryId": "90003",
+      "registryId": "bloodborne_dw:prototype_roof",
+      "placementPath": "CompositeRuntime.place",
+      "transaction": "COMMITTED",
+      "ownerUuid": "aba81285-5cc3-48fb-b33e-e9920928e2a1",
+      "mountY": 0.0,
+      "helperCount": 16,
+      "ownedCells": 18,
+      "foreignOverlayCells": 0,
+      "visualPartCount": 1,
+      "actualState": "Block{bloodborne_dw:prototype_roof}[open\u003dfalse,profile\u003dbase,rotation\u003d4,variant\u003d0]"
+    },
+    {
+      "kind": "prototype_roof",
+      "root": [
+        -14,
+        66,
+        33
+      ],
+      "yaw": 4,
+      "variant": 0,
+      "profile": "base",
+      "temporaryId": "90003",
+      "registryId": "bloodborne_dw:prototype_roof",
+      "placementPath": "CompositeRuntime.place",
+      "transaction": "COMMITTED",
+      "ownerUuid": "fc22183b-ac61-4757-a5d2-9827bfe81320",
+      "mountY": 0.0,
+      "helperCount": 16,
+      "ownedCells": 18,
+      "foreignOverlayCells": 0,
+      "visualPartCount": 1,
+      "actualState": "Block{bloodborne_dw:prototype_roof}[open\u003dfalse,profile\u003dbase,rotation\u003d4,variant\u003d0]"
+    },
+    {
+      "kind": "prototype_roof",
+      "root": [
+        -13,
+        66,
+        33
+      ],
+      "yaw": 4,
+      "variant": 0,
+      "profile": "base",
+      "temporaryId": "90003",
+      "registryId": "bloodborne_dw:prototype_roof",
+      "placementPath": "CompositeRuntime.place",
+      "transaction": "COMMITTED",
+      "ownerUuid": "84c1a984-24ae-4360-89bd-00ef42239865",
+      "mountY": 0.0,
+      "helperCount": 16,
+      "ownedCells": 18,
+      "foreignOverlayCells": 0,
+      "visualPartCount": 1,
+      "actualState": "Block{bloodborne_dw:prototype_roof}[open\u003dfalse,profile\u003dbase,rotation\u003d4,variant\u003d0]"
+    },
+    {
+      "kind": "prototype_roof",
+      "root": [
+        -12,
+        66,
+        33
+      ],
+      "yaw": 4,
+      "variant": 0,
+      "profile": "base",
+      "temporaryId": "90003",
+      "registryId": "bloodborne_dw:prototype_roof",
+      "placementPath": "CompositeRuntime.place",
+      "transaction": "COMMITTED",
+      "ownerUuid": "8d9476cc-1f9a-4dee-9935-271bdb57b142",
+      "mountY": 0.0,
+      "helperCount": 16,
+      "ownedCells": 18,
+      "foreignOverlayCells": 0,
+      "visualPartCount": 1,
+      "actualState": "Block{bloodborne_dw:prototype_roof}[open\u003dfalse,profile\u003dbase,rotation\u003d4,variant\u003d0]"
+    },
+    {
+      "kind": "prototype_tree",
+      "root": [
+        24,
+        64,
+        38
+      ],
+      "yaw": 0,
+      "variant": 0,
+      "profile": "base",
+      "temporaryId": "90005",
+      "registryId": "bloodborne_dw:prototype_tree",
+      "placementPath": "CompositeRuntime.place",
+      "transaction": "COMMITTED",
+      "ownerUuid": "d9135bb0-7e3b-48d1-b433-697b681cf034",
+      "mountY": 0.0,
+      "helperCount": 232,
+      "ownedCells": 234,
+      "foreignOverlayCells": 1,
+      "visualPartCount": 18,
+      "actualState": "Block{bloodborne_dw:prototype_tree}[open\u003dfalse,profile\u003dbase,rotation\u003d0,variant\u003d0]"
+    },
+    {
+      "kind": "prototype_tree",
+      "root": [
+        36,
+        64,
+        38
+      ],
+      "yaw": 0,
+      "variant": 1,
+      "profile": "alt",
+      "temporaryId": "90005",
+      "registryId": "bloodborne_dw:prototype_tree",
+      "placementPath": "CompositeRuntime.place",
+      "transaction": "COMMITTED",
+      "ownerUuid": "9af53bd6-effb-4a50-96ed-d4efbb0276c7",
+      "mountY": 0.0,
+      "helperCount": 233,
+      "ownedCells": 234,
+      "foreignOverlayCells": 0,
+      "visualPartCount": 18,
+      "actualState": "Block{bloodborne_dw:prototype_tree}[open\u003dfalse,profile\u003dalt,rotation\u003d0,variant\u003d1]"
+    },
+    {
+      "kind": "prototype_wall",
+      "root": [
+        -38,
+        64,
+        16
+      ],
+      "yaw": 0,
+      "variant": 0,
+      "profile": "base",
+      "temporaryId": "90002",
+      "art": {
+        "material": "6",
+        "connections": "auto"
+      },
+      "registryId": "bloodborne_dw:prototype_wall",
+      "itemOrigin": "creative main item with explicit art tag",
+      "placementPath": "ordinary Item.useOnBlock",
+      "itemAction": "CONSUME",
+      "remainingItemCount": 0,
+      "helperCount": 0,
+      "actualState": "Block{bloodborne_dw:prototype_wall}[connections\u003dauto,east\u003dnone,material\u003d6,north\u003dnone,profile\u003dbase,rotation\u003d0,south\u003dnone,up\u003dtrue,waterlogged\u003dfalse,west\u003dnone]"
+    },
+    {
+      "kind": "prototype_wall",
+      "root": [
+        -32,
+        64,
+        16
+      ],
+      "yaw": 0,
+      "variant": 0,
+      "profile": "base",
+      "temporaryId": "90002",
+      "art": {
+        "material": "6",
+        "connections": "auto"
+      },
+      "registryId": "bloodborne_dw:prototype_wall",
+      "itemOrigin": "creative main item with explicit art tag",
+      "placementPath": "ordinary Item.useOnBlock",
+      "itemAction": "CONSUME",
+      "remainingItemCount": 0,
+      "helperCount": 0,
+      "actualState": "Block{bloodborne_dw:prototype_wall}[connections\u003dauto,east\u003dnone,material\u003d6,north\u003dnone,profile\u003dbase,rotation\u003d0,south\u003dnone,up\u003dtrue,waterlogged\u003dfalse,west\u003dnone]"
+    },
+    {
+      "kind": "prototype_wall",
+      "root": [
+        -31,
+        64,
+        16
+      ],
+      "yaw": 0,
+      "variant": 0,
+      "profile": "base",
+      "temporaryId": "90002",
+      "art": {
+        "material": "6",
+        "connections": "auto"
+      },
+      "registryId": "bloodborne_dw:prototype_wall",
+      "itemOrigin": "creative main item with explicit art tag",
+      "placementPath": "ordinary Item.useOnBlock",
+      "itemAction": "CONSUME",
+      "remainingItemCount": 0,
+      "helperCount": 0,
+      "actualState": "Block{bloodborne_dw:prototype_wall}[connections\u003dauto,east\u003dnone,material\u003d6,north\u003dnone,profile\u003dbase,rotation\u003d0,south\u003dnone,up\u003dtrue,waterlogged\u003dfalse,west\u003dlow]"
+    },
+    {
+      "kind": "prototype_wall",
+      "root": [
+        -30,
+        64,
+        16
+      ],
+      "yaw": 0,
+      "variant": 0,
+      "profile": "base",
+      "temporaryId": "90002",
+      "art": {
+        "material": "6",
+        "connections": "auto"
+      },
+      "registryId": "bloodborne_dw:prototype_wall",
+      "itemOrigin": "creative main item with explicit art tag",
+      "placementPath": "ordinary Item.useOnBlock",
+      "itemAction": "CONSUME",
+      "remainingItemCount": 0,
+      "helperCount": 0,
+      "actualState": "Block{bloodborne_dw:prototype_wall}[connections\u003dauto,east\u003dnone,material\u003d6,north\u003dnone,profile\u003dbase,rotation\u003d0,south\u003dnone,up\u003dtrue,waterlogged\u003dfalse,west\u003dlow]"
+    },
+    {
+      "kind": "prototype_wall",
+      "root": [
+        -29,
+        64,
+        16
+      ],
+      "yaw": 0,
+      "variant": 0,
+      "profile": "base",
+      "temporaryId": "90002",
+      "art": {
+        "material": "6",
+        "connections": "auto"
+      },
+      "registryId": "bloodborne_dw:prototype_wall",
+      "itemOrigin": "creative main item with explicit art tag",
+      "placementPath": "ordinary Item.useOnBlock",
+      "itemAction": "CONSUME",
+      "remainingItemCount": 0,
+      "helperCount": 0,
+      "actualState": "Block{bloodborne_dw:prototype_wall}[connections\u003dauto,east\u003dnone,material\u003d6,north\u003dnone,profile\u003dbase,rotation\u003d0,south\u003dnone,up\u003dtrue,waterlogged\u003dfalse,west\u003dlow]"
+    },
+    {
+      "kind": "prototype_wall",
+      "root": [
+        -28,
+        64,
+        16
+      ],
+      "yaw": 0,
+      "variant": 0,
+      "profile": "base",
+      "temporaryId": "90002",
+      "art": {
+        "material": "6",
+        "connections": "auto"
+      },
+      "registryId": "bloodborne_dw:prototype_wall",
+      "itemOrigin": "creative main item with explicit art tag",
+      "placementPath": "ordinary Item.useOnBlock",
+      "itemAction": "CONSUME",
+      "remainingItemCount": 0,
+      "helperCount": 0,
+      "actualState": "Block{bloodborne_dw:prototype_wall}[connections\u003dauto,east\u003dnone,material\u003d6,north\u003dnone,profile\u003dbase,rotation\u003d0,south\u003dnone,up\u003dtrue,waterlogged\u003dfalse,west\u003dlow]"
+    },
+    {
+      "kind": "prototype_wall",
+      "root": [
+        -24,
+        64,
+        16
+      ],
+      "yaw": 0,
+      "variant": 0,
+      "profile": "base",
+      "temporaryId": "90002",
+      "art": {
+        "material": "6",
+        "connections": "auto"
+      },
+      "registryId": "bloodborne_dw:prototype_wall",
+      "itemOrigin": "creative main item with explicit art tag",
+      "placementPath": "ordinary Item.useOnBlock",
+      "itemAction": "CONSUME",
+      "remainingItemCount": 0,
+      "helperCount": 0,
+      "actualState": "Block{bloodborne_dw:prototype_wall}[connections\u003dauto,east\u003dnone,material\u003d6,north\u003dnone,profile\u003dbase,rotation\u003d0,south\u003dnone,up\u003dtrue,waterlogged\u003dfalse,west\u003dnone]"
+    },
+    {
+      "kind": "prototype_wall",
+      "root": [
+        -23,
+        64,
+        16
+      ],
+      "yaw": 0,
+      "variant": 0,
+      "profile": "base",
+      "temporaryId": "90002",
+      "art": {
+        "material": "6",
+        "connections": "auto"
+      },
+      "registryId": "bloodborne_dw:prototype_wall",
+      "itemOrigin": "creative main item with explicit art tag",
+      "placementPath": "ordinary Item.useOnBlock",
+      "itemAction": "CONSUME",
+      "remainingItemCount": 0,
+      "helperCount": 0,
+      "actualState": "Block{bloodborne_dw:prototype_wall}[connections\u003dauto,east\u003dnone,material\u003d6,north\u003dnone,profile\u003dbase,rotation\u003d0,south\u003dnone,up\u003dtrue,waterlogged\u003dfalse,west\u003dlow]"
+    },
+    {
+      "kind": "prototype_wall",
+      "root": [
+        -22,
+        64,
+        16
+      ],
+      "yaw": 0,
+      "variant": 0,
+      "profile": "base",
+      "temporaryId": "90002",
+      "art": {
+        "material": "6",
+        "connections": "auto"
+      },
+      "registryId": "bloodborne_dw:prototype_wall",
+      "itemOrigin": "creative main item with explicit art tag",
+      "placementPath": "ordinary Item.useOnBlock",
+      "itemAction": "CONSUME",
+      "remainingItemCount": 0,
+      "helperCount": 0,
+      "actualState": "Block{bloodborne_dw:prototype_wall}[connections\u003dauto,east\u003dnone,material\u003d6,north\u003dnone,profile\u003dbase,rotation\u003d0,south\u003dnone,up\u003dtrue,waterlogged\u003dfalse,west\u003dlow]"
+    },
+    {
+      "kind": "prototype_wall",
+      "root": [
+        -22,
+        64,
+        17
+      ],
+      "yaw": 0,
+      "variant": 0,
+      "profile": "base",
+      "temporaryId": "90002",
+      "art": {
+        "material": "6",
+        "connections": "auto"
+      },
+      "registryId": "bloodborne_dw:prototype_wall",
+      "itemOrigin": "creative main item with explicit art tag",
+      "placementPath": "ordinary Item.useOnBlock",
+      "itemAction": "CONSUME",
+      "remainingItemCount": 0,
+      "helperCount": 0,
+      "actualState": "Block{bloodborne_dw:prototype_wall}[connections\u003dauto,east\u003dnone,material\u003d6,north\u003dlow,profile\u003dbase,rotation\u003d0,south\u003dnone,up\u003dtrue,waterlogged\u003dfalse,west\u003dnone]"
+    },
+    {
+      "kind": "prototype_wall",
+      "root": [
+        -22,
+        64,
+        18
+      ],
+      "yaw": 0,
+      "variant": 0,
+      "profile": "base",
+      "temporaryId": "90002",
+      "art": {
+        "material": "6",
+        "connections": "auto"
+      },
+      "registryId": "bloodborne_dw:prototype_wall",
+      "itemOrigin": "creative main item with explicit art tag",
+      "placementPath": "ordinary Item.useOnBlock",
+      "itemAction": "CONSUME",
+      "remainingItemCount": 0,
+      "helperCount": 0,
+      "actualState": "Block{bloodborne_dw:prototype_wall}[connections\u003dauto,east\u003dnone,material\u003d6,north\u003dlow,profile\u003dbase,rotation\u003d0,south\u003dnone,up\u003dtrue,waterlogged\u003dfalse,west\u003dnone]"
+    },
+    {
+      "kind": "prototype_wall",
+      "root": [
+        -16,
+        64,
+        16
+      ],
+      "yaw": 0,
+      "variant": 0,
+      "profile": "base",
+      "temporaryId": "90002",
+      "art": {
+        "material": "6",
+        "connections": "auto"
+      },
+      "registryId": "bloodborne_dw:prototype_wall",
+      "itemOrigin": "creative main item with explicit art tag",
+      "placementPath": "ordinary Item.useOnBlock",
+      "itemAction": "CONSUME",
+      "remainingItemCount": 0,
+      "helperCount": 0,
+      "actualState": "Block{bloodborne_dw:prototype_wall}[connections\u003dauto,east\u003dnone,material\u003d6,north\u003dnone,profile\u003dbase,rotation\u003d0,south\u003dnone,up\u003dtrue,waterlogged\u003dfalse,west\u003dnone]"
+    },
+    {
+      "kind": "prototype_wall",
+      "root": [
+        -17,
+        64,
+        16
+      ],
+      "yaw": 0,
+      "variant": 0,
+      "profile": "base",
+      "temporaryId": "90002",
+      "art": {
+        "material": "6",
+        "connections": "auto"
+      },
+      "registryId": "bloodborne_dw:prototype_wall",
+      "itemOrigin": "creative main item with explicit art tag",
+      "placementPath": "ordinary Item.useOnBlock",
+      "itemAction": "CONSUME",
+      "remainingItemCount": 0,
+      "helperCount": 0,
+      "actualState": "Block{bloodborne_dw:prototype_wall}[connections\u003dauto,east\u003dlow,material\u003d6,north\u003dnone,profile\u003dbase,rotation\u003d0,south\u003dnone,up\u003dtrue,waterlogged\u003dfalse,west\u003dnone]"
+    },
+    {
+      "kind": "prototype_wall",
+      "root": [
+        -15,
+        64,
+        16
+      ],
+      "yaw": 0,
+      "variant": 0,
+      "profile": "base",
+      "temporaryId": "90002",
+      "art": {
+        "material": "6",
+        "connections": "auto"
+      },
+      "registryId": "bloodborne_dw:prototype_wall",
+      "itemOrigin": "creative main item with explicit art tag",
+      "placementPath": "ordinary Item.useOnBlock",
+      "itemAction": "CONSUME",
+      "remainingItemCount": 0,
+      "helperCount": 0,
+      "actualState": "Block{bloodborne_dw:prototype_wall}[connections\u003dauto,east\u003dnone,material\u003d6,north\u003dnone,profile\u003dbase,rotation\u003d0,south\u003dnone,up\u003dtrue,waterlogged\u003dfalse,west\u003dlow]"
+    },
+    {
+      "kind": "prototype_wall",
+      "root": [
+        -16,
+        64,
+        17
+      ],
+      "yaw": 0,
+      "variant": 0,
+      "profile": "base",
+      "temporaryId": "90002",
+      "art": {
+        "material": "6",
+        "connections": "auto"
+      },
+      "registryId": "bloodborne_dw:prototype_wall",
+      "itemOrigin": "creative main item with explicit art tag",
+      "placementPath": "ordinary Item.useOnBlock",
+      "itemAction": "CONSUME",
+      "remainingItemCount": 0,
+      "helperCount": 0,
+      "actualState": "Block{bloodborne_dw:prototype_wall}[connections\u003dauto,east\u003dnone,material\u003d6,north\u003dlow,profile\u003dbase,rotation\u003d0,south\u003dnone,up\u003dtrue,waterlogged\u003dfalse,west\u003dnone]"
+    },
+    {
+      "kind": "prototype_wall",
+      "root": [
+        -16,
+        64,
+        18
+      ],
+      "yaw": 0,
+      "variant": 0,
+      "profile": "base",
+      "temporaryId": "90002",
+      "art": {
+        "material": "6",
+        "connections": "auto"
+      },
+      "registryId": "bloodborne_dw:prototype_wall",
+      "itemOrigin": "creative main item with explicit art tag",
+      "placementPath": "ordinary Item.useOnBlock",
+      "itemAction": "CONSUME",
+      "remainingItemCount": 0,
+      "helperCount": 0,
+      "actualState": "Block{bloodborne_dw:prototype_wall}[connections\u003dauto,east\u003dnone,material\u003d6,north\u003dlow,profile\u003dbase,rotation\u003d0,south\u003dnone,up\u003dtrue,waterlogged\u003dfalse,west\u003dnone]"
+    },
+    {
+      "kind": "prototype_wall",
+      "root": [
+        -10,
+        64,
+        18
+      ],
+      "yaw": 0,
+      "variant": 0,
+      "profile": "base",
+      "temporaryId": "90002",
+      "art": {
+        "material": "6",
+        "connections": "auto"
+      },
+      "registryId": "bloodborne_dw:prototype_wall",
+      "itemOrigin": "creative main item with explicit art tag",
+      "placementPath": "ordinary Item.useOnBlock",
+      "itemAction": "CONSUME",
+      "remainingItemCount": 0,
+      "helperCount": 0,
+      "actualState": "Block{bloodborne_dw:prototype_wall}[connections\u003dauto,east\u003dnone,material\u003d6,north\u003dnone,profile\u003dbase,rotation\u003d0,south\u003dnone,up\u003dtrue,waterlogged\u003dfalse,west\u003dnone]"
+    },
+    {
+      "kind": "prototype_wall",
+      "root": [
+        -10,
+        64,
+        17
+      ],
+      "yaw": 0,
+      "variant": 0,
+      "profile": "base",
+      "temporaryId": "90002",
+      "art": {
+        "material": "6",
+        "connections": "auto"
+      },
+      "registryId": "bloodborne_dw:prototype_wall",
+      "itemOrigin": "creative main item with explicit art tag",
+      "placementPath": "ordinary Item.useOnBlock",
+      "itemAction": "CONSUME",
+      "remainingItemCount": 0,
+      "helperCount": 0,
+      "actualState": "Block{bloodborne_dw:prototype_wall}[connections\u003dauto,east\u003dnone,material\u003d6,north\u003dnone,profile\u003dbase,rotation\u003d0,south\u003dlow,up\u003dtrue,waterlogged\u003dfalse,west\u003dnone]"
+    },
+    {
+      "kind": "prototype_wall",
+      "root": [
+        -10,
+        64,
+        19
+      ],
+      "yaw": 0,
+      "variant": 0,
+      "profile": "base",
+      "temporaryId": "90002",
+      "art": {
+        "material": "6",
+        "connections": "auto"
+      },
+      "registryId": "bloodborne_dw:prototype_wall",
+      "itemOrigin": "creative main item with explicit art tag",
+      "placementPath": "ordinary Item.useOnBlock",
+      "itemAction": "CONSUME",
+      "remainingItemCount": 0,
+      "helperCount": 0,
+      "actualState": "Block{bloodborne_dw:prototype_wall}[connections\u003dauto,east\u003dnone,material\u003d6,north\u003dlow,profile\u003dbase,rotation\u003d0,south\u003dnone,up\u003dtrue,waterlogged\u003dfalse,west\u003dnone]"
+    },
+    {
+      "kind": "prototype_wall",
+      "root": [
+        -11,
+        64,
+        18
+      ],
+      "yaw": 0,
+      "variant": 0,
+      "profile": "base",
+      "temporaryId": "90002",
+      "art": {
+        "material": "6",
+        "connections": "auto"
+      },
+      "registryId": "bloodborne_dw:prototype_wall",
+      "itemOrigin": "creative main item with explicit art tag",
+      "placementPath": "ordinary Item.useOnBlock",
+      "itemAction": "CONSUME",
+      "remainingItemCount": 0,
+      "helperCount": 0,
+      "actualState": "Block{bloodborne_dw:prototype_wall}[connections\u003dauto,east\u003dlow,material\u003d6,north\u003dnone,profile\u003dbase,rotation\u003d0,south\u003dnone,up\u003dtrue,waterlogged\u003dfalse,west\u003dnone]"
+    },
+    {
+      "kind": "prototype_wall",
+      "root": [
+        -9,
+        64,
+        18
+      ],
+      "yaw": 0,
+      "variant": 0,
+      "profile": "base",
+      "temporaryId": "90002",
+      "art": {
+        "material": "6",
+        "connections": "auto"
+      },
+      "registryId": "bloodborne_dw:prototype_wall",
+      "itemOrigin": "creative main item with explicit art tag",
+      "placementPath": "ordinary Item.useOnBlock",
+      "itemAction": "CONSUME",
+      "remainingItemCount": 0,
+      "helperCount": 0,
+      "actualState": "Block{bloodborne_dw:prototype_wall}[connections\u003dauto,east\u003dnone,material\u003d6,north\u003dnone,profile\u003dbase,rotation\u003d0,south\u003dnone,up\u003dtrue,waterlogged\u003dfalse,west\u003dlow]"
+    },
+    {
+      "kind": "prototype_wall",
+      "root": [
+        -38,
+        64,
+        23
+      ],
+      "yaw": 0,
+      "variant": 0,
+      "profile": "base",
+      "temporaryId": "90002",
+      "art": {
+        "material": "6",
+        "connections": "auto"
+      },
+      "registryId": "bloodborne_dw:prototype_wall",
+      "itemOrigin": "creative main item with explicit art tag",
+      "placementPath": "ordinary Item.useOnBlock",
+      "itemAction": "CONSUME",
+      "remainingItemCount": 0,
+      "helperCount": 0,
+      "actualState": "Block{bloodborne_dw:prototype_wall}[connections\u003dauto,east\u003dlow,material\u003d6,north\u003dnone,profile\u003dbase,rotation\u003d0,south\u003dnone,up\u003dtrue,waterlogged\u003dfalse,west\u003dnone]"
+    },
+    {
+      "kind": "prototype_wall",
+      "root": [
+        -30,
+        64,
+        23
+      ],
+      "yaw": 0,
+      "variant": 0,
+      "profile": "base",
+      "temporaryId": "90002",
+      "art": {
+        "material": "6",
+        "connections": "auto"
+      },
+      "registryId": "bloodborne_dw:prototype_wall",
+      "itemOrigin": "creative main item with explicit art tag",
+      "placementPath": "ordinary Item.useOnBlock",
+      "itemAction": "CONSUME",
+      "remainingItemCount": 0,
+      "helperCount": 0,
+      "actualState": "Block{bloodborne_dw:prototype_wall}[connections\u003dauto,east\u003dnone,material\u003d6,north\u003dnone,profile\u003dbase,rotation\u003d0,south\u003dnone,up\u003dtrue,waterlogged\u003dfalse,west\u003dnone]"
+    },
+    {
+      "kind": "prototype_wall",
+      "root": [
+        -31,
+        64,
+        23
+      ],
+      "yaw": 0,
+      "variant": 0,
+      "profile": "base",
+      "temporaryId": "90002",
+      "art": {
+        "material": "6",
+        "connections": "auto"
+      },
+      "registryId": "bloodborne_dw:prototype_wall",
+      "itemOrigin": "creative main item with explicit art tag",
+      "placementPath": "ordinary Item.useOnBlock",
+      "itemAction": "CONSUME",
+      "remainingItemCount": 0,
+      "helperCount": 0,
+      "actualState": "Block{bloodborne_dw:prototype_wall}[connections\u003dauto,east\u003dlow,material\u003d6,north\u003dnone,profile\u003dbase,rotation\u003d0,south\u003dnone,up\u003dtrue,waterlogged\u003dfalse,west\u003dnone]"
+    },
+    {
+      "kind": "prototype_wall",
+      "root": [
+        -29,
+        64,
+        23
+      ],
+      "yaw": 0,
+      "variant": 0,
+      "profile": "base",
+      "temporaryId": "90002",
+      "art": {
+        "material": "6",
+        "connections": "auto"
+      },
+      "registryId": "bloodborne_dw:prototype_wall",
+      "itemOrigin": "creative main item with explicit art tag",
+      "placementPath": "ordinary Item.useOnBlock",
+      "itemAction": "CONSUME",
+      "remainingItemCount": 0,
+      "helperCount": 0,
+      "actualState": "Block{bloodborne_dw:prototype_wall}[connections\u003dauto,east\u003dnone,material\u003d6,north\u003dnone,profile\u003dbase,rotation\u003d0,south\u003dnone,up\u003dtrue,waterlogged\u003dfalse,west\u003dlow]"
+    },
+    {
+      "kind": "prototype_wall",
+      "root": [
+        -30,
+        64,
+        22
+      ],
+      "yaw": 0,
+      "variant": 0,
+      "profile": "base",
+      "temporaryId": "90002",
+      "art": {
+        "material": "6",
+        "connections": "auto"
+      },
+      "registryId": "bloodborne_dw:prototype_wall",
+      "itemOrigin": "creative main item with explicit art tag",
+      "placementPath": "ordinary Item.useOnBlock",
+      "itemAction": "CONSUME",
+      "remainingItemCount": 0,
+      "helperCount": 0,
+      "actualState": "Block{bloodborne_dw:prototype_wall}[connections\u003dauto,east\u003dnone,material\u003d6,north\u003dnone,profile\u003dbase,rotation\u003d0,south\u003dtall,up\u003dtrue,waterlogged\u003dfalse,west\u003dnone]"
+    },
+    {
+      "kind": "prototype_wall",
+      "root": [
+        -30,
+        64,
+        24
+      ],
+      "yaw": 0,
+      "variant": 0,
+      "profile": "base",
+      "temporaryId": "90002",
+      "art": {
+        "material": "6",
+        "connections": "auto"
+      },
+      "registryId": "bloodborne_dw:prototype_wall",
+      "itemOrigin": "creative main item with explicit art tag",
+      "placementPath": "ordinary Item.useOnBlock",
+      "itemAction": "CONSUME",
+      "remainingItemCount": 0,
+      "helperCount": 0,
+      "actualState": "Block{bloodborne_dw:prototype_wall}[connections\u003dauto,east\u003dnone,material\u003d6,north\u003dlow,profile\u003dbase,rotation\u003d0,south\u003dnone,up\u003dtrue,waterlogged\u003dfalse,west\u003dnone]"
+    },
+    {
+      "kind": "prototype_wall",
+      "root": [
+        -18,
+        64,
+        23
+      ],
+      "yaw": 0,
+      "variant": 0,
+      "profile": "base",
+      "temporaryId": "90002",
+      "art": {
+        "material": "6",
+        "connections": "auto"
+      },
+      "registryId": "bloodborne_dw:prototype_wall",
+      "itemOrigin": "creative main item with explicit art tag",
+      "placementPath": "ordinary Item.useOnBlock",
+      "itemAction": "CONSUME",
+      "remainingItemCount": 0,
+      "helperCount": 0,
+      "actualState": "Block{bloodborne_dw:prototype_wall}[connections\u003dauto,east\u003dlow,material\u003d6,north\u003dnone,profile\u003dbase,rotation\u003d0,south\u003dnone,up\u003dtrue,waterlogged\u003dfalse,west\u003dnone]"
+    },
+    {
+      "kind": "prototype_wall",
+      "root": [
+        -9,
+        64,
+        25
+      ],
+      "yaw": 0,
+      "variant": 0,
+      "profile": "base",
+      "temporaryId": "90002",
+      "art": {
+        "material": "6",
+        "connections": "auto"
+      },
+      "registryId": "bloodborne_dw:prototype_wall",
+      "itemOrigin": "creative main item with explicit art tag",
+      "placementPath": "ordinary Item.useOnBlock",
+      "itemAction": "CONSUME",
+      "remainingItemCount": 0,
+      "helperCount": 0,
+      "actualState": "Block{bloodborne_dw:prototype_wall}[connections\u003dauto,east\u003dnone,material\u003d6,north\u003dnone,profile\u003dbase,rotation\u003d0,south\u003dnone,up\u003dtrue,waterlogged\u003dfalse,west\u003dnone]"
+    },
+    {
+      "kind": "prototype_wall",
+      "root": [
+        -8,
+        64,
+        25
+      ],
+      "yaw": 0,
+      "variant": 0,
+      "profile": "base",
+      "temporaryId": "90002",
+      "art": {
+        "material": "6",
+        "connections": "auto"
+      },
+      "registryId": "bloodborne_dw:prototype_wall",
+      "itemOrigin": "creative main item with explicit art tag",
+      "placementPath": "ordinary Item.useOnBlock",
+      "itemAction": "CONSUME",
+      "remainingItemCount": 0,
+      "helperCount": 0,
+      "actualState": "Block{bloodborne_dw:prototype_wall}[connections\u003dauto,east\u003dnone,material\u003d6,north\u003dnone,profile\u003dbase,rotation\u003d0,south\u003dnone,up\u003dtrue,waterlogged\u003dfalse,west\u003dlow]"
+    },
+    {
+      "kind": "prototype_wall",
+      "root": [
+        -7,
+        64,
+        25
+      ],
+      "yaw": 0,
+      "variant": 0,
+      "profile": "base",
+      "temporaryId": "90002",
+      "art": {
+        "material": "6",
+        "connections": "auto"
+      },
+      "registryId": "bloodborne_dw:prototype_wall",
+      "itemOrigin": "creative main item with explicit art tag",
+      "placementPath": "ordinary Item.useOnBlock",
+      "itemAction": "CONSUME",
+      "remainingItemCount": 0,
+      "helperCount": 0,
+      "actualState": "Block{bloodborne_dw:prototype_wall}[connections\u003dauto,east\u003dnone,material\u003d6,north\u003dnone,profile\u003dbase,rotation\u003d0,south\u003dnone,up\u003dtrue,waterlogged\u003dfalse,west\u003dlow]"
+    },
+    {
+      "kind": "prototype_wall",
+      "root": [
+        -8,
+        65,
+        25
+      ],
+      "yaw": 0,
+      "variant": 0,
+      "profile": "base",
+      "temporaryId": "90002",
+      "art": {
+        "material": "6",
+        "connections": "auto"
+      },
+      "registryId": "bloodborne_dw:prototype_wall",
+      "itemOrigin": "creative main item with explicit art tag",
+      "placementPath": "ordinary Item.useOnBlock",
+      "itemAction": "CONSUME",
+      "remainingItemCount": 0,
+      "helperCount": 0,
+      "actualState": "Block{bloodborne_dw:prototype_wall}[connections\u003dauto,east\u003dnone,material\u003d6,north\u003dnone,profile\u003dbase,rotation\u003d0,south\u003dnone,up\u003dtrue,waterlogged\u003dfalse,west\u003dnone]"
+    },
+    {
+      "kind": "prototype_wall",
+      "root": [
+        -38,
+        64,
+        29
+      ],
+      "yaw": 0,
+      "variant": 0,
+      "profile": "base",
+      "temporaryId": "90002",
+      "art": {
+        "material": "0",
+        "connections": "auto"
+      },
+      "registryId": "bloodborne_dw:prototype_wall",
+      "itemOrigin": "creative main item with explicit art tag",
+      "placementPath": "ordinary Item.useOnBlock",
+      "itemAction": "CONSUME",
+      "remainingItemCount": 0,
+      "helperCount": 0,
+      "actualState": "Block{bloodborne_dw:prototype_wall}[connections\u003dauto,east\u003dnone,material\u003d0,north\u003dnone,profile\u003dbase,rotation\u003d0,south\u003dnone,up\u003dtrue,waterlogged\u003dfalse,west\u003dnone]"
+    },
+    {
+      "kind": "prototype_wall",
+      "root": [
+        -34,
+        64,
+        29
+      ],
+      "yaw": 0,
+      "variant": 0,
+      "profile": "base",
+      "temporaryId": "90002",
+      "art": {
+        "material": "2",
+        "connections": "auto"
+      },
+      "registryId": "bloodborne_dw:prototype_wall",
+      "itemOrigin": "creative main item with explicit art tag",
+      "placementPath": "ordinary Item.useOnBlock",
+      "itemAction": "CONSUME",
+      "remainingItemCount": 0,
+      "helperCount": 0,
+      "actualState": "Block{bloodborne_dw:prototype_wall}[connections\u003dauto,east\u003dnone,material\u003d2,north\u003dnone,profile\u003dbase,rotation\u003d0,south\u003dnone,up\u003dtrue,waterlogged\u003dfalse,west\u003dnone]"
+    },
+    {
+      "kind": "prototype_wall",
+      "root": [
+        -30,
+        64,
+        29
+      ],
+      "yaw": 0,
+      "variant": 0,
+      "profile": "base",
+      "temporaryId": "90002",
+      "art": {
+        "material": "7",
+        "connections": "auto"
+      },
+      "registryId": "bloodborne_dw:prototype_wall",
+      "itemOrigin": "creative main item with explicit art tag",
+      "placementPath": "ordinary Item.useOnBlock",
+      "itemAction": "CONSUME",
+      "remainingItemCount": 0,
+      "helperCount": 0,
+      "actualState": "Block{bloodborne_dw:prototype_wall}[connections\u003dauto,east\u003dnone,material\u003d7,north\u003dnone,profile\u003dbase,rotation\u003d0,south\u003dnone,up\u003dtrue,waterlogged\u003dfalse,west\u003dnone]"
+    },
+    {
+      "kind": "prototype_ladder",
+      "root": [
+        -36,
+        64,
+        52
+      ],
+      "yaw": 0,
+      "variant": 0,
+      "profile": "base",
+      "temporaryId": "90006",
+      "placementPathHint": "ordinary Item.useOnBlock",
+      "registryId": "bloodborne_dw:prototype_ladder",
+      "itemOrigin": "creative main item with explicit art tag",
+      "placementPath": "ordinary Item.useOnBlock",
+      "itemAction": "CONSUME",
+      "remainingItemCount": 0,
+      "helperCount": 0,
+      "actualState": "Block{bloodborne_dw:prototype_ladder}[diagonal\u003dfalse,facing\u003dnorth,profile\u003dbase,source_clone\u003dfalse,variant\u003d0,waterlogged\u003dfalse]"
+    },
+    {
+      "kind": "prototype_ladder",
+      "root": [
+        -36,
+        65,
+        52
+      ],
+      "yaw": 0,
+      "variant": 1,
+      "profile": "base",
+      "temporaryId": "90006",
+      "placementPathHint": "ordinary Item.useOnBlock",
+      "registryId": "bloodborne_dw:prototype_ladder",
+      "itemOrigin": "creative main item with explicit art tag",
+      "placementPath": "ordinary Item.useOnBlock",
+      "itemAction": "CONSUME",
+      "remainingItemCount": 0,
+      "helperCount": 0,
+      "actualState": "Block{bloodborne_dw:prototype_ladder}[diagonal\u003dfalse,facing\u003dnorth,profile\u003dbase,source_clone\u003dfalse,variant\u003d1,waterlogged\u003dfalse]"
+    },
+    {
+      "kind": "prototype_ladder",
+      "root": [
+        -36,
+        66,
+        52
+      ],
+      "yaw": 0,
+      "variant": 2,
+      "profile": "base",
+      "temporaryId": "90006",
+      "placementPathHint": "ordinary Item.useOnBlock",
+      "registryId": "bloodborne_dw:prototype_ladder",
+      "itemOrigin": "creative main item with explicit art tag",
+      "placementPath": "ordinary Item.useOnBlock",
+      "itemAction": "CONSUME",
+      "remainingItemCount": 0,
+      "helperCount": 0,
+      "actualState": "Block{bloodborne_dw:prototype_ladder}[diagonal\u003dfalse,facing\u003dnorth,profile\u003dbase,source_clone\u003dfalse,variant\u003d2,waterlogged\u003dfalse]"
+    },
+    {
+      "kind": "prototype_ladder",
+      "root": [
+        -28,
+        64,
+        52
+      ],
+      "yaw": 1,
+      "variant": 0,
+      "profile": "alt",
+      "temporaryId": "90006",
+      "placementPathHint": "ordinary Item.useOnBlock",
+      "registryId": "bloodborne_dw:prototype_ladder",
+      "itemOrigin": "creative main item with explicit art tag",
+      "placementPath": "ordinary Item.useOnBlock",
+      "itemAction": "CONSUME",
+      "remainingItemCount": 0,
+      "helperCount": 0,
+      "actualState": "Block{bloodborne_dw:prototype_ladder}[diagonal\u003dtrue,facing\u003dnorth,profile\u003dalt,source_clone\u003dfalse,variant\u003d0,waterlogged\u003dfalse]"
+    },
+    {
+      "kind": "prototype_ladder",
+      "root": [
+        -28,
+        65,
+        52
+      ],
+      "yaw": 1,
+      "variant": 1,
+      "profile": "alt",
+      "temporaryId": "90006",
+      "placementPathHint": "ordinary Item.useOnBlock",
+      "registryId": "bloodborne_dw:prototype_ladder",
+      "itemOrigin": "creative main item with explicit art tag",
+      "placementPath": "ordinary Item.useOnBlock",
+      "itemAction": "CONSUME",
+      "remainingItemCount": 0,
+      "helperCount": 0,
+      "actualState": "Block{bloodborne_dw:prototype_ladder}[diagonal\u003dtrue,facing\u003dnorth,profile\u003dalt,source_clone\u003dfalse,variant\u003d1,waterlogged\u003dfalse]"
+    },
+    {
+      "kind": "prototype_ladder",
+      "root": [
+        -28,
+        66,
+        52
+      ],
+      "yaw": 1,
+      "variant": 2,
+      "profile": "alt",
+      "temporaryId": "90006",
+      "placementPathHint": "ordinary Item.useOnBlock",
+      "registryId": "bloodborne_dw:prototype_ladder",
+      "itemOrigin": "creative main item with explicit art tag",
+      "placementPath": "ordinary Item.useOnBlock",
+      "itemAction": "CONSUME",
+      "remainingItemCount": 0,
+      "helperCount": 0,
+      "actualState": "Block{bloodborne_dw:prototype_ladder}[diagonal\u003dtrue,facing\u003dnorth,profile\u003dalt,source_clone\u003dfalse,variant\u003d2,waterlogged\u003dfalse]"
+    },
+    {
+      "kind": "prototype_ladder",
+      "root": [
+        -20,
+        64,
+        52
+      ],
+      "yaw": 2,
+      "variant": 0,
+      "profile": "base",
+      "temporaryId": "90006",
+      "placementPathHint": "ordinary Item.useOnBlock",
+      "registryId": "bloodborne_dw:prototype_ladder",
+      "itemOrigin": "creative main item with explicit art tag",
+      "placementPath": "ordinary Item.useOnBlock",
+      "itemAction": "CONSUME",
+      "remainingItemCount": 0,
+      "helperCount": 0,
+      "actualState": "Block{bloodborne_dw:prototype_ladder}[diagonal\u003dfalse,facing\u003deast,profile\u003dbase,source_clone\u003dfalse,variant\u003d0,waterlogged\u003dfalse]"
+    },
+    {
+      "kind": "prototype_ladder",
+      "root": [
+        -20,
+        65,
+        52
+      ],
+      "yaw": 2,
+      "variant": 1,
+      "profile": "base",
+      "temporaryId": "90006",
+      "placementPathHint": "ordinary Item.useOnBlock",
+      "registryId": "bloodborne_dw:prototype_ladder",
+      "itemOrigin": "creative main item with explicit art tag",
+      "placementPath": "ordinary Item.useOnBlock",
+      "itemAction": "CONSUME",
+      "remainingItemCount": 0,
+      "helperCount": 0,
+      "actualState": "Block{bloodborne_dw:prototype_ladder}[diagonal\u003dfalse,facing\u003deast,profile\u003dbase,source_clone\u003dfalse,variant\u003d1,waterlogged\u003dfalse]"
+    },
+    {
+      "kind": "prototype_ladder",
+      "root": [
+        -20,
+        66,
+        52
+      ],
+      "yaw": 2,
+      "variant": 2,
+      "profile": "base",
+      "temporaryId": "90006",
+      "placementPathHint": "ordinary Item.useOnBlock",
+      "registryId": "bloodborne_dw:prototype_ladder",
+      "itemOrigin": "creative main item with explicit art tag",
+      "placementPath": "ordinary Item.useOnBlock",
+      "itemAction": "CONSUME",
+      "remainingItemCount": 0,
+      "helperCount": 0,
+      "actualState": "Block{bloodborne_dw:prototype_ladder}[diagonal\u003dfalse,facing\u003deast,profile\u003dbase,source_clone\u003dfalse,variant\u003d2,waterlogged\u003dfalse]"
+    },
+    {
+      "kind": "prototype_ladder",
+      "root": [
+        -12,
+        64,
+        52
+      ],
+      "yaw": 3,
+      "variant": 0,
+      "profile": "alt",
+      "temporaryId": "90006",
+      "placementPathHint": "ordinary Item.useOnBlock",
+      "registryId": "bloodborne_dw:prototype_ladder",
+      "itemOrigin": "creative main item with explicit art tag",
+      "placementPath": "ordinary Item.useOnBlock",
+      "itemAction": "CONSUME",
+      "remainingItemCount": 0,
+      "helperCount": 0,
+      "actualState": "Block{bloodborne_dw:prototype_ladder}[diagonal\u003dtrue,facing\u003deast,profile\u003dalt,source_clone\u003dfalse,variant\u003d0,waterlogged\u003dfalse]"
+    },
+    {
+      "kind": "prototype_ladder",
+      "root": [
+        -12,
+        65,
+        52
+      ],
+      "yaw": 3,
+      "variant": 1,
+      "profile": "alt",
+      "temporaryId": "90006",
+      "placementPathHint": "ordinary Item.useOnBlock",
+      "registryId": "bloodborne_dw:prototype_ladder",
+      "itemOrigin": "creative main item with explicit art tag",
+      "placementPath": "ordinary Item.useOnBlock",
+      "itemAction": "CONSUME",
+      "remainingItemCount": 0,
+      "helperCount": 0,
+      "actualState": "Block{bloodborne_dw:prototype_ladder}[diagonal\u003dtrue,facing\u003deast,profile\u003dalt,source_clone\u003dfalse,variant\u003d1,waterlogged\u003dfalse]"
+    },
+    {
+      "kind": "prototype_ladder",
+      "root": [
+        -12,
+        66,
+        52
+      ],
+      "yaw": 3,
+      "variant": 2,
+      "profile": "alt",
+      "temporaryId": "90006",
+      "placementPathHint": "ordinary Item.useOnBlock",
+      "registryId": "bloodborne_dw:prototype_ladder",
+      "itemOrigin": "creative main item with explicit art tag",
+      "placementPath": "ordinary Item.useOnBlock",
+      "itemAction": "CONSUME",
+      "remainingItemCount": 0,
+      "helperCount": 0,
+      "actualState": "Block{bloodborne_dw:prototype_ladder}[diagonal\u003dtrue,facing\u003deast,profile\u003dalt,source_clone\u003dfalse,variant\u003d2,waterlogged\u003dfalse]"
+    },
+    {
+      "kind": "prototype_ladder",
+      "root": [
+        -4,
+        64,
+        52
+      ],
+      "yaw": 4,
+      "variant": 0,
+      "profile": "base",
+      "temporaryId": "90006",
+      "placementPathHint": "ordinary Item.useOnBlock",
+      "registryId": "bloodborne_dw:prototype_ladder",
+      "itemOrigin": "creative main item with explicit art tag",
+      "placementPath": "ordinary Item.useOnBlock",
+      "itemAction": "CONSUME",
+      "remainingItemCount": 0,
+      "helperCount": 0,
+      "actualState": "Block{bloodborne_dw:prototype_ladder}[diagonal\u003dfalse,facing\u003dsouth,profile\u003dbase,source_clone\u003dfalse,variant\u003d0,waterlogged\u003dfalse]"
+    },
+    {
+      "kind": "prototype_ladder",
+      "root": [
+        -4,
+        65,
+        52
+      ],
+      "yaw": 4,
+      "variant": 1,
+      "profile": "base",
+      "temporaryId": "90006",
+      "placementPathHint": "ordinary Item.useOnBlock",
+      "registryId": "bloodborne_dw:prototype_ladder",
+      "itemOrigin": "creative main item with explicit art tag",
+      "placementPath": "ordinary Item.useOnBlock",
+      "itemAction": "CONSUME",
+      "remainingItemCount": 0,
+      "helperCount": 0,
+      "actualState": "Block{bloodborne_dw:prototype_ladder}[diagonal\u003dfalse,facing\u003dsouth,profile\u003dbase,source_clone\u003dfalse,variant\u003d1,waterlogged\u003dfalse]"
+    },
+    {
+      "kind": "prototype_ladder",
+      "root": [
+        -4,
+        66,
+        52
+      ],
+      "yaw": 4,
+      "variant": 2,
+      "profile": "base",
+      "temporaryId": "90006",
+      "placementPathHint": "ordinary Item.useOnBlock",
+      "registryId": "bloodborne_dw:prototype_ladder",
+      "itemOrigin": "creative main item with explicit art tag",
+      "placementPath": "ordinary Item.useOnBlock",
+      "itemAction": "CONSUME",
+      "remainingItemCount": 0,
+      "helperCount": 0,
+      "actualState": "Block{bloodborne_dw:prototype_ladder}[diagonal\u003dfalse,facing\u003dsouth,profile\u003dbase,source_clone\u003dfalse,variant\u003d2,waterlogged\u003dfalse]"
+    },
+    {
+      "kind": "prototype_ladder",
+      "root": [
+        4,
+        64,
+        52
+      ],
+      "yaw": 5,
+      "variant": 0,
+      "profile": "alt",
+      "temporaryId": "90006",
+      "placementPathHint": "ordinary Item.useOnBlock",
+      "registryId": "bloodborne_dw:prototype_ladder",
+      "itemOrigin": "creative main item with explicit art tag",
+      "placementPath": "ordinary Item.useOnBlock",
+      "itemAction": "CONSUME",
+      "remainingItemCount": 0,
+      "helperCount": 0,
+      "actualState": "Block{bloodborne_dw:prototype_ladder}[diagonal\u003dtrue,facing\u003dsouth,profile\u003dalt,source_clone\u003dfalse,variant\u003d0,waterlogged\u003dfalse]"
+    },
+    {
+      "kind": "prototype_ladder",
+      "root": [
+        4,
+        65,
+        52
+      ],
+      "yaw": 5,
+      "variant": 1,
+      "profile": "alt",
+      "temporaryId": "90006",
+      "placementPathHint": "ordinary Item.useOnBlock",
+      "registryId": "bloodborne_dw:prototype_ladder",
+      "itemOrigin": "creative main item with explicit art tag",
+      "placementPath": "ordinary Item.useOnBlock",
+      "itemAction": "CONSUME",
+      "remainingItemCount": 0,
+      "helperCount": 0,
+      "actualState": "Block{bloodborne_dw:prototype_ladder}[diagonal\u003dtrue,facing\u003dsouth,profile\u003dalt,source_clone\u003dfalse,variant\u003d1,waterlogged\u003dfalse]"
+    },
+    {
+      "kind": "prototype_ladder",
+      "root": [
+        4,
+        66,
+        52
+      ],
+      "yaw": 5,
+      "variant": 2,
+      "profile": "alt",
+      "temporaryId": "90006",
+      "placementPathHint": "ordinary Item.useOnBlock",
+      "registryId": "bloodborne_dw:prototype_ladder",
+      "itemOrigin": "creative main item with explicit art tag",
+      "placementPath": "ordinary Item.useOnBlock",
+      "itemAction": "CONSUME",
+      "remainingItemCount": 0,
+      "helperCount": 0,
+      "actualState": "Block{bloodborne_dw:prototype_ladder}[diagonal\u003dtrue,facing\u003dsouth,profile\u003dalt,source_clone\u003dfalse,variant\u003d2,waterlogged\u003dfalse]"
+    },
+    {
+      "kind": "prototype_ladder",
+      "root": [
+        12,
+        64,
+        52
+      ],
+      "yaw": 6,
+      "variant": 0,
+      "profile": "base",
+      "temporaryId": "90006",
+      "placementPathHint": "ordinary Item.useOnBlock",
+      "registryId": "bloodborne_dw:prototype_ladder",
+      "itemOrigin": "creative main item with explicit art tag",
+      "placementPath": "ordinary Item.useOnBlock",
+      "itemAction": "CONSUME",
+      "remainingItemCount": 0,
+      "helperCount": 0,
+      "actualState": "Block{bloodborne_dw:prototype_ladder}[diagonal\u003dfalse,facing\u003dwest,profile\u003dbase,source_clone\u003dfalse,variant\u003d0,waterlogged\u003dfalse]"
+    },
+    {
+      "kind": "prototype_ladder",
+      "root": [
+        12,
+        65,
+        52
+      ],
+      "yaw": 6,
+      "variant": 1,
+      "profile": "base",
+      "temporaryId": "90006",
+      "placementPathHint": "ordinary Item.useOnBlock",
+      "registryId": "bloodborne_dw:prototype_ladder",
+      "itemOrigin": "creative main item with explicit art tag",
+      "placementPath": "ordinary Item.useOnBlock",
+      "itemAction": "CONSUME",
+      "remainingItemCount": 0,
+      "helperCount": 0,
+      "actualState": "Block{bloodborne_dw:prototype_ladder}[diagonal\u003dfalse,facing\u003dwest,profile\u003dbase,source_clone\u003dfalse,variant\u003d1,waterlogged\u003dfalse]"
+    },
+    {
+      "kind": "prototype_ladder",
+      "root": [
+        12,
+        66,
+        52
+      ],
+      "yaw": 6,
+      "variant": 2,
+      "profile": "base",
+      "temporaryId": "90006",
+      "placementPathHint": "ordinary Item.useOnBlock",
+      "registryId": "bloodborne_dw:prototype_ladder",
+      "itemOrigin": "creative main item with explicit art tag",
+      "placementPath": "ordinary Item.useOnBlock",
+      "itemAction": "CONSUME",
+      "remainingItemCount": 0,
+      "helperCount": 0,
+      "actualState": "Block{bloodborne_dw:prototype_ladder}[diagonal\u003dfalse,facing\u003dwest,profile\u003dbase,source_clone\u003dfalse,variant\u003d2,waterlogged\u003dfalse]"
+    },
+    {
+      "kind": "prototype_ladder",
+      "root": [
+        20,
+        64,
+        52
+      ],
+      "yaw": 7,
+      "variant": 0,
+      "profile": "alt",
+      "temporaryId": "90006",
+      "placementPathHint": "ordinary Item.useOnBlock",
+      "registryId": "bloodborne_dw:prototype_ladder",
+      "itemOrigin": "creative main item with explicit art tag",
+      "placementPath": "ordinary Item.useOnBlock",
+      "itemAction": "CONSUME",
+      "remainingItemCount": 0,
+      "helperCount": 0,
+      "actualState": "Block{bloodborne_dw:prototype_ladder}[diagonal\u003dtrue,facing\u003dwest,profile\u003dalt,source_clone\u003dfalse,variant\u003d0,waterlogged\u003dfalse]"
+    },
+    {
+      "kind": "prototype_ladder",
+      "root": [
+        20,
+        65,
+        52
+      ],
+      "yaw": 7,
+      "variant": 1,
+      "profile": "alt",
+      "temporaryId": "90006",
+      "placementPathHint": "ordinary Item.useOnBlock",
+      "registryId": "bloodborne_dw:prototype_ladder",
+      "itemOrigin": "creative main item with explicit art tag",
+      "placementPath": "ordinary Item.useOnBlock",
+      "itemAction": "CONSUME",
+      "remainingItemCount": 0,
+      "helperCount": 0,
+      "actualState": "Block{bloodborne_dw:prototype_ladder}[diagonal\u003dtrue,facing\u003dwest,profile\u003dalt,source_clone\u003dfalse,variant\u003d1,waterlogged\u003dfalse]"
+    },
+    {
+      "kind": "prototype_ladder",
+      "root": [
+        20,
+        66,
+        52
+      ],
+      "yaw": 7,
+      "variant": 2,
+      "profile": "alt",
+      "temporaryId": "90006",
+      "placementPathHint": "ordinary Item.useOnBlock",
+      "registryId": "bloodborne_dw:prototype_ladder",
+      "itemOrigin": "creative main item with explicit art tag",
+      "placementPath": "ordinary Item.useOnBlock",
+      "itemAction": "CONSUME",
+      "remainingItemCount": 0,
+      "helperCount": 0,
+      "actualState": "Block{bloodborne_dw:prototype_ladder}[diagonal\u003dtrue,facing\u003dwest,profile\u003dalt,source_clone\u003dfalse,variant\u003d2,waterlogged\u003dfalse]"
+    },
+    {
+      "kind": "prototype_ladder",
+      "root": [
+        8,
+        64,
+        48
+      ],
+      "yaw": 0,
+      "variant": 0,
+      "profile": "base",
+      "temporaryId": "90006",
+      "placementPathHint": "ordinary Item.useOnBlock",
+      "itemOrigin": "creative main item with explicit art tag",
+      "playerYawOverride": -135,
+      "registryId": "bloodborne_dw:prototype_ladder",
+      "placementPath": "ordinary Item.useOnBlock",
+      "itemAction": "CONSUME",
+      "remainingItemCount": 0,
+      "helperCount": 0,
+      "actualState": "Block{bloodborne_dw:prototype_ladder}[diagonal\u003dfalse,facing\u003dnorth,profile\u003dbase,source_clone\u003dfalse,variant\u003d0,waterlogged\u003dfalse]"
+    },
+    {
+      "kind": "prototype_ladder",
+      "root": [
+        12,
+        64,
+        48
+      ],
+      "yaw": 0,
+      "variant": 0,
+      "profile": "base",
+      "temporaryId": "90006",
+      "placementPathHint": "ordinary Item.useOnBlock",
+      "itemOrigin": "actual Block.getPickStack",
+      "playerYawOverride": -135,
+      "pickFrom": [
+        8,
+        64,
+        48
+      ],
+      "registryId": "bloodborne_dw:prototype_ladder",
+      "placementPath": "ordinary Item.useOnBlock",
+      "itemAction": "CONSUME",
+      "remainingItemCount": 0,
+      "helperCount": 0,
+      "actualState": "Block{bloodborne_dw:prototype_ladder}[diagonal\u003dfalse,facing\u003dnorth,profile\u003dbase,source_clone\u003dfalse,variant\u003d0,waterlogged\u003dfalse]"
+    },
+    {
+      "kind": "prototype_ladder",
+      "root": [
+        16,
+        64,
+        48
+      ],
+      "yaw": 0,
+      "variant": 0,
+      "profile": "base",
+      "temporaryId": "90006",
+      "placementPathHint": "ordinary Item.useOnBlock",
+      "itemOrigin": "creative main item with explicit art tag",
+      "playerYawOverride": -135,
+      "registryId": "bloodborne_dw:prototype_ladder",
+      "placementPath": "ordinary Item.useOnBlock",
+      "itemAction": "CONSUME",
+      "remainingItemCount": 0,
+      "helperCount": 0,
+      "actualState": "Block{bloodborne_dw:prototype_ladder}[diagonal\u003dfalse,facing\u003dnorth,profile\u003dbase,source_clone\u003dfalse,variant\u003d0,waterlogged\u003dfalse]"
+    }
+  ],
+  "sceneId": "first-set-review-v8",
+  "levelName": "isolated-smoke-world",
+  "nbtSerializationProbe": {
+    "schema": "dreamwalker-actual-mod-runtime-nbt-order-v1",
+    "lithiumLoaded": false,
+    "lithiumVersion": "NOT_LOADED",
+    "worldMutated": false,
+    "rawEqualityRequired": false,
+    "cases": [
+      {
+        "name": "floor_removed_SourceShift",
+        "sourceShiftRemoved": true,
+        "compoundSemanticEqual": true,
+        "rawBytesEqual": true,
+        "canonicalBytesEqual": true,
+        "canonicalRoundTripTypedEqual": true,
+        "beforeKeysClass": "java.util.HashMap$KeySet",
+        "copyKeysClass": "java.util.HashMap$KeySet",
+        "beforeKeyIterationOrder": [
+          "GlazingMounted",
+          "MountY",
+          "MountFace"
+        ],
+        "copyKeyIterationOrder": [
+          "GlazingMounted",
+          "MountY",
+          "MountFace"
+        ],
+        "rawBeforeSha256": "2f0c3cc9920be5efb182787c211fca687530a2f9d5c197e38cf6907e78fe2d22",
+        "rawCopySha256": "2f0c3cc9920be5efb182787c211fca687530a2f9d5c197e38cf6907e78fe2d22",
+        "canonicalBeforeSha256": "fd480d00d4409af60dc8d494146bfe76d5a944ca2eda8aa778a497acfb609494",
+        "canonicalCopySha256": "fd480d00d4409af60dc8d494146bfe76d5a944ca2eda8aa778a497acfb609494",
+        "rawBeforeBytes": 55,
+        "rawCopyBytes": 55,
+        "canonicalBytes": 55,
+        "beforeTypedNbt": "{GlazingMounted:1b,MountFace:\"up\",MountY:0.0d}",
+        "roundTripTypedNbt": "{GlazingMounted:1b,MountFace:\"up\",MountY:0.0d}"
+      },
+      {
+        "name": "vertical_four_keys",
+        "sourceShiftRemoved": false,
+        "compoundSemanticEqual": true,
+        "rawBytesEqual": true,
+        "canonicalBytesEqual": true,
+        "canonicalRoundTripTypedEqual": true,
+        "beforeKeysClass": "java.util.HashMap$KeySet",
+        "copyKeysClass": "java.util.HashMap$KeySet",
+        "beforeKeyIterationOrder": [
+          "GlazingMounted",
+          "MountY",
+          "SourceShift",
+          "MountFace"
+        ],
+        "copyKeyIterationOrder": [
+          "GlazingMounted",
+          "MountY",
+          "SourceShift",
+          "MountFace"
+        ],
+        "rawBeforeSha256": "7f9c2c0a435debbfe70b0678cfbb3f2c431a67c8a729e1897406056aa5f8cac0",
+        "rawCopySha256": "7f9c2c0a435debbfe70b0678cfbb3f2c431a67c8a729e1897406056aa5f8cac0",
+        "canonicalBeforeSha256": "85a795ded525d954a2948a62d3f4b8c2080321c7bdb79631d8a522032a99ef2f",
+        "canonicalCopySha256": "85a795ded525d954a2948a62d3f4b8c2080321c7bdb79631d8a522032a99ef2f",
+        "rawBeforeBytes": 101,
+        "rawCopyBytes": 101,
+        "canonicalBytes": 101,
+        "beforeTypedNbt": "{GlazingMounted:1b,MountFace:\"north\",MountY:0.8125d,SourceShift:[0.0d,0.0d,0.5d]}",
+        "roundTripTypedNbt": "{GlazingMounted:1b,MountFace:\"north\",MountY:0.8125d,SourceShift:[0.0d,0.0d,0.5d]}"
+      },
+      {
+        "name": "nested_typed_arrays_ordered_list",
+        "sourceShiftRemoved": false,
+        "compoundSemanticEqual": true,
+        "rawBytesEqual": true,
+        "canonicalBytesEqual": true,
+        "canonicalRoundTripTypedEqual": true,
+        "beforeKeysClass": "java.util.HashMap$KeySet",
+        "copyKeysClass": "java.util.HashMap$KeySet",
+        "beforeKeyIterationOrder": [
+          "nested",
+          "orderedList"
+        ],
+        "copyKeyIterationOrder": [
+          "nested",
+          "orderedList"
+        ],
+        "rawBeforeSha256": "c2e7810b462399943751da03e16dd7dd153202de3db8845b11d878f12201a5e5",
+        "rawCopySha256": "c2e7810b462399943751da03e16dd7dd153202de3db8845b11d878f12201a5e5",
+        "canonicalBeforeSha256": "77309b0bb0483b1836fe0a8eddd5bf20dd8e705bae999f2c7cd2e6ed77a2933e",
+        "canonicalCopySha256": "77309b0bb0483b1836fe0a8eddd5bf20dd8e705bae999f2c7cd2e6ed77a2933e",
+        "rawBeforeBytes": 197,
+        "rawCopyBytes": 197,
+        "canonicalBytes": 197,
+        "beforeTypedNbt": "{nested:{byteArray:[B;3B,1B,-7B],byteOne:1b,doubleValue:0.25d,floatValue:0.25f,intArray:[I;3,1,-7],intOne:1,longArray:[L;3L,1L,-7L]},orderedList:[\"second\",\"first\"]}",
+        "roundTripTypedNbt": "{nested:{byteArray:[B;3B,1B,-7B],byteOne:1b,doubleValue:0.25d,floatValue:0.25f,intArray:[I;3,1,-7],intOne:1,longArray:[L;3L,1L,-7L]},orderedList:[\"second\",\"first\"]}"
+      }
+    ],
+    "observationScope": "Actual loaded runtime NbtCompound/NbtIo/copy +production CompositeData canonical bytes; no standalone simulation or world/block write."
+  },
+  "preservedNativeFixtures": [
+    {
+      "pos": "25, 64, 38",
+      "stateUnchanged": true,
+      "sameNativeBeInstance": true,
+      "allNativeNbtEqual": true,
+      "beforeAndAfterNbt": "{Items:[{Count:7b,Slot:0b,id:\"minecraft:diamond\"}]}"
+    }
+  ],
+  "commands": [
+    {
+      "command": "gamerule doMobSpawning false",
+      "result": 0
+    },
+    {
+      "command": "gamerule doDaylightCycle false",
+      "result": 0
+    },
+    {
+      "command": "gamerule spawnRadius 0",
+      "result": 0
+    },
+    {
+      "command": "time set day",
+      "result": 1000
+    },
+    {
+      "command": "weather clear",
+      "result": -1
+    },
+    {
+      "command": "defaultgamemode creative",
+      "result": 0
+    },
+    {
+      "command": "setworldspawn 0 64 0",
+      "result": 1
+    },
+    {
+      "command": "summon bloodborne_rp:tree1 46 64 38",
+      "result": 1
+    },
+    {
+      "command": "summon bloodborne_rp:hunterlamp 3 64 3",
+      "result": 1
+    }
+  ],
+  "status": "PASS_SCENE_AUTHORED_REQUIRES_PRODUCTION_REOPEN",
+  "objectCount": 91,
+  "reviewAcceptance": "PENDING_USER_REVIEW"
+}

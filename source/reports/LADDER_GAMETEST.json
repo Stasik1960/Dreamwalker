@@ -1,0 +1,153 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "generatedAtUtc": "2026-10-07T09:24:38.8961711Z",
+  "command": "./gradlew.bat --offline ladderGameTest --console=plain",
+  "environment": {
+    "minecraft": "1.20.1",
+    "fabricLoader": "0.16.10",
+    "fabricApi": "0.92.9+1.20.1",
+    "geckoLib": "4.4.9",
+    "javaMajor": 17,
+    "javaHome": "C:/Users/vakir/AppData/Roaming/.minecraft/runtime/java-runtime-gamma/windows/java-runtime-gamma",
+    "launch": "Fabric Loom development dedicated GameTest server",
+    "sourceMod": "bloodborne_dw 0.1.0-prototype.1",
+    "testMod": "bloodborne_dw_gametest 1.0.0"
+  },
+  "total": 10,
+  "failed": 0,
+  "testCases": [
+    {
+      "name": "prototypeladdergametests.newlyselectedrandomartfreezesafterplacementandinvalidnbtisnormalized",
+      "seconds": 0.257,
+      "result": "PASS"
+    },
+    {
+      "name": "prototypeladdergametests.all48stateskeepindependentsemanticsthroughneighborupdates",
+      "seconds": 0.31,
+      "result": "PASS"
+    },
+    {
+      "name": "prototypeladdergametests.unsupportedandoccupiedplacementleaveitemsandforeignblocksuntouched",
+      "seconds": 0.297,
+      "result": "PASS"
+    },
+    {
+      "name": "prototypeladdergametests.builderrejectswrongbackingthenrotateswithoutchangingart",
+      "seconds": 0.285,
+      "result": "PASS"
+    },
+    {
+      "name": "prototypeladdergametests.pickandlootpreserveartforeverystatewithoutcopyingfacingorwater",
+      "seconds": 0.289,
+      "result": "PASS"
+    },
+    {
+      "name": "prototypeladdergametests.builderprofiletogglepreserveseveryphysicalandsemanticproperty",
+      "seconds": 0.274,
+      "result": "PASS"
+    },
+    {
+      "name": "prototypeladdergametests.actualblockitemplacesall48supportedcombinations",
+      "seconds": 0.287,
+      "result": "PASS"
+    },
+    {
+      "name": "prototypeladdergametests.all48statesroundtripthroughminecraftpalettenbt",
+      "seconds": 0.276,
+      "result": "PASS"
+    },
+    {
+      "name": "prototypeladdergametests.climbabletagandthincollisionworkforallorientations",
+      "seconds": 0.26,
+      "result": "PASS"
+    },
+    {
+      "name": "prototypeladdergametests.removingbackingdropsexactlyoneartpreservingladder",
+      "seconds": 0.315,
+      "result": "PASS"
+    }
+  ],
+  "coverage": {
+    "schemaStates": 48,
+    "directNeighborStateProbes": 1152,
+    "realNeighborPlacementsAndRemovals": 960,
+    "actualBlockItemPlacements": 48,
+    "rejectedUnsupportedAndOccupiedPlacements": 2,
+    "rejectedBuilderRotation": 1,
+    "supportedBuilderQuarterRotations": 4,
+    "pickStacks": 48,
+    "lootDrops": 48,
+    "actualBackingRemovalDrops": 24,
+    "climbAndCollisionStates": 48,
+    "actualBuilderProfileToggles": 48,
+    "minecraftPaletteNbtRoundTrips": 48,
+    "randomOrMalformedArtPlacements": 8
+  },
+  "limitations": [
+    "Dedicated-server technical checks; Creative UI and rendered meshes were not inspected.",
+    "NBT blockstate encode/decode is covered; an external process world-save/restart cycle is not established by this suite.",
+    "Only the isolated independent ladder is covered. No source-city conversion or composite ladder membership is accepted.",
+    "Development classpath includes the combined RP sources and GeckoLib. This is not a packaged JAR or the full user modset test."
+  ],
+  "firstRun": {
+    "result": "9 passed, 1 failed",
+    "reason": "Test cleanup used removeBlock, which retains fluid after waterlogged placement; next dry fixture still contained water.",
+    "correction": "Fixture cleanup explicitly writes AIR; no main/runtime source change.",
+    "evidence": [
+      "reports/LADDER_GAMETEST_FIRST.xml",
+      "reports/LADDER_GAMETEST_FIRST_CONSOLE.log"
+    ]
+  },
+  "eula": {
+    "source": "C:/Users/vakir/.codex/worktrees/bloodborne-material-review/DW/bloodborne complete/build/production-smoke/final-city/eula.txt",
+    "sha256": "e4db182aa77b5e31657f4b83f8973c79a8c65217a4383200f9f59f7c94752fad",
+    "action": "Copied existing accepted EULA file into isolated build/gametest; original unchanged."
+  },
+  "evidenceHashes": [
+    {
+      "path": "src/gametest/java/dev/dreamwalker/bloodbornedw/gametest/PrototypeLadderGameTests.java",
+      "sha256": "50b9438f6a7a85c3a0ba8d89feae2285c255c8305aabdb917b2f0437ba9653b9"
+    },
+    {
+      "path": "src/gametest/resources/fabric.mod.json",
+      "sha256": "ffd1976e4197f1986f191e855f5b7b30d9e9bc6d1c6573e9ff3539f04fde7ff6"
+    },
+    {
+      "path": "src/architecture/java/dev/dreamwalker/bloodbornedw/architecture/PrototypeLadderBlock.java",
+      "sha256": "3af5149a614fc82cddf493bf3d493d2ff1149f916574603c2e141b548eca0653"
+    },
+    {
+      "path": "src/architecture/java/dev/dreamwalker/bloodbornedw/architecture/PrototypeLadderItem.java",
+      "sha256": "ab549ab3517ccd817561fe36792cd1eb507c616dee3c26ed9802a929497c25fd"
+    },
+    {
+      "path": "src/architecture/java/dev/dreamwalker/bloodbornedw/architecture/PrototypeArchitecture.java",
+      "sha256": "04504726e6d45899b5e0b84bc1930eb5654d4659d57f3fb2ab173f3a12539210"
+    },
+    {
+      "path": "src/architecture/resources/bloodborne_dw/prototype-ladder.json",
+      "sha256": "3f37fbe443fdc538670c0af060e18c83fde7c483b827d4c3c3433ccb5ff5a61e"
+    },
+    {
+      "path": "src/architecture/resources/data/minecraft/tags/blocks/climbable.json",
+      "sha256": "e2a29fb361d6b7bb5050321dbe1f4fb8d4cefc474f8a31ec5114b70a2577afc7"
+    },
+    {
+      "path": "src/architecture/resources/data/bloodborne_dw/loot_tables/blocks/prototype_ladder.json",
+      "sha256": "d72e9247f980f8a9c4b1ba6665d57bfbf5f80a2565ddf2a2d9dc8d8b961109c0"
+    },
+    {
+      "path": "reports/LADDER_GAMETEST.xml",
+      "sha256": "cacfdda81a0679092d82e3b0837fd1c16b1a4742697861ecd09f12114f0b48ac"
+    },
+    {
+      "path": "reports/LADDER_GAMETEST_SERVER.log",
+      "sha256": "8fe5d049bbb49808aa7eb65468b5110c0800c8428f1f05b31b4acddc0aefe4e3"
+    },
+    {
+      "path": "reports/LADDER_GAMETEST_CONSOLE.log",
+      "sha256": "4d28874b585584b2bdd1b19a8c0bd4c54a371db9b36e2a21679c8ea02c2f26b3"
+    }
+  ]
+}

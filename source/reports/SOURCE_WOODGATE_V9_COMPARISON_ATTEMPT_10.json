@@ -1,0 +1,821 @@
+{
+  "schema": "dreamwalker-source-woodgate-v9-comparison-v1",
+  "status": "MEASURED_SOURCE_PASSABLE_LOCAL_FIX_NATIVE_AND_ORDINARY_PASS",
+  "nativeLocalFixEvidence": {
+    "status": "PASS_NATIVE_LOCAL_PHYSICS_AND_ONE_SHOT",
+    "xml": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\reports\\FIRST_SET_GAMETEST_V9_ATTEMPT_10.xml",
+    "xmlSha256": "23b650bb21cec134b63e7df6366b53a0a2684901f0d9cc84f8d85ba28df79c50",
+    "rawLog": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\reports\\REVIEW_V9_BUILD_AND_CORE_ATTEMPT_10.log",
+    "rawLogSha256": "279357bd661e454f23856cc69cfff11a007276f51162102ff71ab299448385ab",
+    "passedCases": [
+      "rpv9behaviourgametests.actualwindowandgateblockbothsideswithoutdecorativeboundingboxwall",
+      "rpv9behaviourgametests.authoredgateandladderkeyframesremainnumericexactandidleneutral",
+      "rpv9behaviourgametests.gateoneshotrejectsheldcadenceoffhandandreloadbackground"
+    ],
+    "scope": "Native Fabric development GameTests; real engine movement and one-shot state. Ordinary remapped-JAR minimal/full runtime, current client and manual gameplay are separate.",
+    "productionArtifact": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\frozen-artifacts\\v9-attempt-10\\dreamwalker-bb-fabric-1.20.1-0.1.0-prototype.4.jar",
+      "bytes": 32807233,
+      "sha256": "a84d202c4f404ba48b6219e864f915f9160b0e0153b1b5a708d731f9ffd6d1a0"
+    },
+    "nativeAttempt": 10,
+    "wholeNativeTestCount": 104,
+    "wholeNativeFailures": 0,
+    "coreChecks": 20,
+    "ordinaryCurrentArtifact": "PASS_MINIMAL_FULL_AUTHOR_RESTART_PRODUCTION_REOPEN"
+  },
+  "referenceWrapper": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\reports\\SOURCE_REFERENCE_WOODGATE_ACTUAL2_V9.json",
+  "referenceWrapperSha256": "504520c389f7d0485e990e223dd33c77dcf6f8202217ede125212f1956c4c3f4",
+  "physicsReport": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\reports\\SOURCE_PHYSICS_WOODGATE_V9.json",
+  "physicsReportSha256": "ade9f290a1e270659fa7372cebad0088bed962f3a4597209d48fb465c044557c",
+  "actualOriginalGate": {
+    "uuid": "0fdfd7c9-1ff6-42e3-bf51-5d7b9d869201",
+    "actualClass": "com.potomy.bloodborne.common.entity.decorations.WoodenGateEntity",
+    "canBeCollidedWith": false,
+    "actualScale": 1.05,
+    "originalPos": [
+      139.0,
+      48.0,
+      -1028.5
+    ],
+    "originalYaw": 0.0,
+    "originalRegisteredBox": [
+      133.75,
+      48.0,
+      -1033.75,
+      144.25,
+      61.5,
+      -1023.25
+    ],
+    "actualMovements": [
+      {
+        "pose": "ORIGINAL_POSITION",
+        "baseY": 48.0,
+        "yaw": 0.0,
+        "direction": -1,
+        "start": [
+          149.0,
+          49.05,
+          -1028.5
+        ],
+        "requestedDelta": [
+          -20.0,
+          0.0,
+          0.0
+        ],
+        "withGate": [
+          -20.0,
+          0.0,
+          0.0
+        ],
+        "nativeControlWithoutGate": [
+          -20.0,
+          0.0,
+          0.0
+        ],
+        "sameDisplacementWithAndWithoutGate": true,
+        "crossedGatePlane": true
+      },
+      {
+        "pose": "ORIGINAL_POSITION",
+        "baseY": 48.0,
+        "yaw": 0.0,
+        "direction": 1,
+        "start": [
+          129.0,
+          49.05,
+          -1028.5
+        ],
+        "requestedDelta": [
+          20.0,
+          0.0,
+          0.0
+        ],
+        "withGate": [
+          20.0,
+          0.0,
+          0.0
+        ],
+        "nativeControlWithoutGate": [
+          20.0,
+          0.0,
+          0.0
+        ],
+        "sameDisplacementWithAndWithoutGate": true,
+        "crossedGatePlane": true
+      },
+      {
+        "pose": "ORIGINAL_POSITION",
+        "baseY": 48.0,
+        "yaw": 90.0,
+        "direction": -1,
+        "start": [
+          139.0,
+          49.05,
+          -1018.5
+        ],
+        "requestedDelta": [
+          0.0,
+          0.0,
+          -20.0
+        ],
+        "withGate": [
+          0.0,
+          0.0,
+          -1.199999988079071
+        ],
+        "nativeControlWithoutGate": [
+          0.0,
+          0.0,
+          -1.199999988079071
+        ],
+        "sameDisplacementWithAndWithoutGate": true,
+        "crossedGatePlane": false
+      },
+      {
+        "pose": "ORIGINAL_POSITION",
+        "baseY": 48.0,
+        "yaw": 90.0,
+        "direction": 1,
+        "start": [
+          139.0,
+          49.05,
+          -1038.5
+        ],
+        "requestedDelta": [
+          0.0,
+          0.0,
+          20.0
+        ],
+        "withGate": [
+          0.0,
+          0.0,
+          1.199999988079071
+        ],
+        "nativeControlWithoutGate": [
+          0.0,
+          0.0,
+          1.199999988079071
+        ],
+        "sameDisplacementWithAndWithoutGate": true,
+        "crossedGatePlane": false
+      },
+      {
+        "pose": "ISOLATED_AIR_VERTICAL_TRANSLATION_SAME_ENTITY",
+        "baseY": 200.0,
+        "yaw": 0.0,
+        "direction": -1,
+        "start": [
+          149.0,
+          201.05,
+          -1028.5
+        ],
+        "requestedDelta": [
+          -20.0,
+          0.0,
+          0.0
+        ],
+        "withGate": [
+          -20.0,
+          0.0,
+          0.0
+        ],
+        "nativeControlWithoutGate": [
+          -20.0,
+          0.0,
+          0.0
+        ],
+        "sameDisplacementWithAndWithoutGate": true,
+        "crossedGatePlane": true
+      },
+      {
+        "pose": "ISOLATED_AIR_VERTICAL_TRANSLATION_SAME_ENTITY",
+        "baseY": 200.0,
+        "yaw": 0.0,
+        "direction": 1,
+        "start": [
+          129.0,
+          201.05,
+          -1028.5
+        ],
+        "requestedDelta": [
+          20.0,
+          0.0,
+          0.0
+        ],
+        "withGate": [
+          20.0,
+          0.0,
+          0.0
+        ],
+        "nativeControlWithoutGate": [
+          20.0,
+          0.0,
+          0.0
+        ],
+        "sameDisplacementWithAndWithoutGate": true,
+        "crossedGatePlane": true
+      },
+      {
+        "pose": "ISOLATED_AIR_VERTICAL_TRANSLATION_SAME_ENTITY",
+        "baseY": 200.0,
+        "yaw": 90.0,
+        "direction": -1,
+        "start": [
+          139.0,
+          201.05,
+          -1018.5
+        ],
+        "requestedDelta": [
+          0.0,
+          0.0,
+          -20.0
+        ],
+        "withGate": [
+          0.0,
+          0.0,
+          -20.0
+        ],
+        "nativeControlWithoutGate": [
+          0.0,
+          0.0,
+          -20.0
+        ],
+        "sameDisplacementWithAndWithoutGate": true,
+        "crossedGatePlane": true
+      },
+      {
+        "pose": "ISOLATED_AIR_VERTICAL_TRANSLATION_SAME_ENTITY",
+        "baseY": 200.0,
+        "yaw": 90.0,
+        "direction": 1,
+        "start": [
+          139.0,
+          201.05,
+          -1038.5
+        ],
+        "requestedDelta": [
+          0.0,
+          0.0,
+          20.0
+        ],
+        "withGate": [
+          0.0,
+          0.0,
+          20.0
+        ],
+        "nativeControlWithoutGate": [
+          0.0,
+          0.0,
+          20.0
+        ],
+        "sameDisplacementWithAndWithoutGate": true,
+        "crossedGatePlane": true
+      }
+    ],
+    "originalPositionYawRestored": true,
+    "sourceModPatched": false,
+    "selectionBoxIsNotPhysicsProof": true
+  },
+  "actualMovementCount": 8,
+  "gateAndNativeControlEqual": true,
+  "fullPlaneCrossings": 6,
+  "nativeTerrainLimitedOriginalRotatedControls": 2,
+  "proposedPhysicalFix": {
+    "sourceModelPixels": {
+      "from": [
+        -119,
+        16,
+        -8
+      ],
+      "to": [
+        119,
+        171,
+        8
+      ]
+    },
+    "worldTransform": "source renderer yaw-90, scale, position; quarter-block strips only for diagonal yaw",
+    "deliberateApproximation": "one closed leaf plane bridges visible center gap; static throughout idle pulse; no decorative full AABB"
+  },
+  "collisionDeferred": false,
+  "sourceModelTexturesAnimationBytesChanged": false,
+  "oneShot": "original idle1.6seconds sampled once from server-tracked32ticks; eight source bone channels; load/background idle",
+  "firstNativeStartupFailurePreserved": "reports/SOURCE_REFERENCE_WOODGATE_ACTUAL_V9.json",
+  "manualGameplay": "NOT_RUN",
+  "compatibilityAcceptance": "PENDING_USER_REVIEW",
+  "ordinaryLocalFixEvidence": {
+    "status": "PASS_ACTUAL_ORDINARY_NATIVE_PLAYER_MOVEMENT_AND_ONE_SHOT_PERSISTENCE",
+    "proof": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\reports\\RP_V9_ORDINARY_RUNTIME_RELEASE5.json",
+      "bytes": 66061,
+      "sha256": "613447d7c904d20c89b0f537ed956e782e6271cc536cb182d0f44af52043e892"
+    },
+    "gateMovementProbes": [
+      {
+        "profile": "MINIMAL",
+        "phase": "AUTHOR",
+        "probes": [
+          {
+            "probe": "WoodGate-side--1",
+            "start": [
+              67.5,
+              65.2,
+              80.5
+            ],
+            "requested": [
+              6.0,
+              0.0,
+              0.0
+            ],
+            "actual": [
+              2.199999988079071,
+              0.0,
+              0.0
+            ],
+            "end": [
+              69.69999998807907,
+              65.2,
+              80.5
+            ],
+            "playerFlags": {
+              "noClip": false,
+              "spectator": false,
+              "creative": false,
+              "flying": false,
+              "allowFlying": false,
+              "stepHeight": 1.0,
+              "onGround": false
+            },
+            "sweptQuery": "AABB[67.19999988807908, 65.19999990000001, 80.19999988807908] -> [73.80000011192092, 67.00000005231628, 80.80000011192092]",
+            "directWorldEntityCollisionShapes": 1,
+            "directWorldEntityCollisionBoxes": 1,
+            "rpIndexCandidates": [
+              {
+                "uuid": "691ead13-f071-42da-95e7-6679dc112272",
+                "asset": "wood_gate",
+                "activePhysicalBoxes": 1
+              }
+            ]
+          },
+          {
+            "probe": "WoodGate-side-1",
+            "start": [
+              73.5,
+              65.2,
+              80.5
+            ],
+            "requested": [
+              -6.0,
+              -0.0,
+              -0.0
+            ],
+            "actual": [
+              -2.199999988079071,
+              0.0,
+              0.0
+            ],
+            "end": [
+              71.30000001192093,
+              65.2,
+              80.5
+            ],
+            "playerFlags": {
+              "noClip": false,
+              "spectator": false,
+              "creative": false,
+              "flying": false,
+              "allowFlying": false,
+              "stepHeight": 1.0,
+              "onGround": false
+            },
+            "sweptQuery": "AABB[67.19999988807908, 65.19999990000001, 80.19999988807908] -> [73.80000011192092, 67.00000005231628, 80.80000011192092]",
+            "directWorldEntityCollisionShapes": 1,
+            "directWorldEntityCollisionBoxes": 1,
+            "rpIndexCandidates": [
+              {
+                "uuid": "691ead13-f071-42da-95e7-6679dc112272",
+                "asset": "wood_gate",
+                "activePhysicalBoxes": 1
+              }
+            ]
+          },
+          {
+            "probe": "WoodGate-outside-working-edge",
+            "start": [
+              67.5,
+              65.2,
+              89.9375
+            ],
+            "requested": [
+              6.0,
+              0.0,
+              0.0
+            ],
+            "actual": [
+              6.0,
+              0.0,
+              0.0
+            ],
+            "end": [
+              73.5,
+              65.2,
+              89.9375
+            ],
+            "playerFlags": {
+              "noClip": false,
+              "spectator": false,
+              "creative": false,
+              "flying": false,
+              "allowFlying": false,
+              "stepHeight": 1.0,
+              "onGround": false
+            },
+            "sweptQuery": "AABB[67.19999988807908, 65.19999990000001, 89.63749988807908] -> [73.80000011192092, 67.00000005231628, 90.23750011192092]",
+            "directWorldEntityCollisionShapes": 0,
+            "directWorldEntityCollisionBoxes": 0,
+            "rpIndexCandidates": []
+          }
+        ]
+      },
+      {
+        "profile": "MINIMAL",
+        "phase": "GAMEPLAY_REOPEN",
+        "probes": [
+          {
+            "probe": "WoodGate-side--1",
+            "start": [
+              67.5,
+              65.2,
+              80.5
+            ],
+            "requested": [
+              6.0,
+              0.0,
+              0.0
+            ],
+            "actual": [
+              2.199999988079071,
+              0.0,
+              0.0
+            ],
+            "end": [
+              69.69999998807907,
+              65.2,
+              80.5
+            ],
+            "playerFlags": {
+              "noClip": false,
+              "spectator": false,
+              "creative": false,
+              "flying": false,
+              "allowFlying": false,
+              "stepHeight": 1.0,
+              "onGround": false
+            },
+            "sweptQuery": "AABB[67.19999988807908, 65.19999990000001, 80.19999988807908] -> [73.80000011192092, 67.00000005231628, 80.80000011192092]",
+            "directWorldEntityCollisionShapes": 1,
+            "directWorldEntityCollisionBoxes": 1,
+            "rpIndexCandidates": [
+              {
+                "uuid": "691ead13-f071-42da-95e7-6679dc112272",
+                "asset": "wood_gate",
+                "activePhysicalBoxes": 1
+              }
+            ]
+          },
+          {
+            "probe": "WoodGate-side-1",
+            "start": [
+              73.5,
+              65.2,
+              80.5
+            ],
+            "requested": [
+              -6.0,
+              -0.0,
+              -0.0
+            ],
+            "actual": [
+              -2.199999988079071,
+              0.0,
+              0.0
+            ],
+            "end": [
+              71.30000001192093,
+              65.2,
+              80.5
+            ],
+            "playerFlags": {
+              "noClip": false,
+              "spectator": false,
+              "creative": false,
+              "flying": false,
+              "allowFlying": false,
+              "stepHeight": 1.0,
+              "onGround": false
+            },
+            "sweptQuery": "AABB[67.19999988807908, 65.19999990000001, 80.19999988807908] -> [73.80000011192092, 67.00000005231628, 80.80000011192092]",
+            "directWorldEntityCollisionShapes": 1,
+            "directWorldEntityCollisionBoxes": 1,
+            "rpIndexCandidates": [
+              {
+                "uuid": "691ead13-f071-42da-95e7-6679dc112272",
+                "asset": "wood_gate",
+                "activePhysicalBoxes": 1
+              }
+            ]
+          },
+          {
+            "probe": "WoodGate-outside-working-edge",
+            "start": [
+              67.5,
+              65.2,
+              89.9375
+            ],
+            "requested": [
+              6.0,
+              0.0,
+              0.0
+            ],
+            "actual": [
+              6.0,
+              0.0,
+              0.0
+            ],
+            "end": [
+              73.5,
+              65.2,
+              89.9375
+            ],
+            "playerFlags": {
+              "noClip": false,
+              "spectator": false,
+              "creative": false,
+              "flying": false,
+              "allowFlying": false,
+              "stepHeight": 1.0,
+              "onGround": false
+            },
+            "sweptQuery": "AABB[67.19999988807908, 65.19999990000001, 89.63749988807908] -> [73.80000011192092, 67.00000005231628, 90.23750011192092]",
+            "directWorldEntityCollisionShapes": 0,
+            "directWorldEntityCollisionBoxes": 0,
+            "rpIndexCandidates": []
+          }
+        ]
+      },
+      {
+        "profile": "FULL",
+        "phase": "AUTHOR",
+        "probes": [
+          {
+            "probe": "WoodGate-side--1",
+            "start": [
+              67.5,
+              65.2,
+              80.5
+            ],
+            "requested": [
+              6.0,
+              0.0,
+              0.0
+            ],
+            "actual": [
+              2.199999988079071,
+              0.0,
+              0.0
+            ],
+            "end": [
+              69.69999998807907,
+              65.2,
+              80.5
+            ],
+            "playerFlags": {
+              "noClip": false,
+              "spectator": false,
+              "creative": false,
+              "flying": false,
+              "allowFlying": false,
+              "stepHeight": 1.0,
+              "onGround": false
+            },
+            "sweptQuery": "AABB[67.19999988807908, 65.19999990000001, 80.19999988807908] -> [73.80000011192092, 67.00000005231628, 80.80000011192092]",
+            "directWorldEntityCollisionShapes": 1,
+            "directWorldEntityCollisionBoxes": 1,
+            "rpIndexCandidates": [
+              {
+                "uuid": "bf02bff1-b8f3-4855-b3cf-2475516aa4b8",
+                "asset": "wood_gate",
+                "activePhysicalBoxes": 1
+              }
+            ]
+          },
+          {
+            "probe": "WoodGate-side-1",
+            "start": [
+              73.5,
+              65.2,
+              80.5
+            ],
+            "requested": [
+              -6.0,
+              -0.0,
+              -0.0
+            ],
+            "actual": [
+              -2.199999988079071,
+              0.0,
+              0.0
+            ],
+            "end": [
+              71.30000001192093,
+              65.2,
+              80.5
+            ],
+            "playerFlags": {
+              "noClip": false,
+              "spectator": false,
+              "creative": false,
+              "flying": false,
+              "allowFlying": false,
+              "stepHeight": 1.0,
+              "onGround": false
+            },
+            "sweptQuery": "AABB[67.19999988807908, 65.19999990000001, 80.19999988807908] -> [73.80000011192092, 67.00000005231628, 80.80000011192092]",
+            "directWorldEntityCollisionShapes": 1,
+            "directWorldEntityCollisionBoxes": 1,
+            "rpIndexCandidates": [
+              {
+                "uuid": "bf02bff1-b8f3-4855-b3cf-2475516aa4b8",
+                "asset": "wood_gate",
+                "activePhysicalBoxes": 1
+              }
+            ]
+          },
+          {
+            "probe": "WoodGate-outside-working-edge",
+            "start": [
+              67.5,
+              65.2,
+              89.9375
+            ],
+            "requested": [
+              6.0,
+              0.0,
+              0.0
+            ],
+            "actual": [
+              6.0,
+              0.0,
+              0.0
+            ],
+            "end": [
+              73.5,
+              65.2,
+              89.9375
+            ],
+            "playerFlags": {
+              "noClip": false,
+              "spectator": false,
+              "creative": false,
+              "flying": false,
+              "allowFlying": false,
+              "stepHeight": 1.0,
+              "onGround": false
+            },
+            "sweptQuery": "AABB[67.19999988807908, 65.19999990000001, 89.63749988807908] -> [73.80000011192092, 67.00000005231628, 90.23750011192092]",
+            "directWorldEntityCollisionShapes": 0,
+            "directWorldEntityCollisionBoxes": 0,
+            "rpIndexCandidates": []
+          }
+        ]
+      },
+      {
+        "profile": "FULL",
+        "phase": "GAMEPLAY_REOPEN",
+        "probes": [
+          {
+            "probe": "WoodGate-side--1",
+            "start": [
+              67.5,
+              65.2,
+              80.5
+            ],
+            "requested": [
+              6.0,
+              0.0,
+              0.0
+            ],
+            "actual": [
+              2.199999988079071,
+              0.0,
+              0.0
+            ],
+            "end": [
+              69.69999998807907,
+              65.2,
+              80.5
+            ],
+            "playerFlags": {
+              "noClip": false,
+              "spectator": false,
+              "creative": false,
+              "flying": false,
+              "allowFlying": false,
+              "stepHeight": 1.0,
+              "onGround": false
+            },
+            "sweptQuery": "AABB[67.19999988807908, 65.19999990000001, 80.19999988807908] -> [73.80000011192092, 67.00000005231628, 80.80000011192092]",
+            "directWorldEntityCollisionShapes": 1,
+            "directWorldEntityCollisionBoxes": 1,
+            "rpIndexCandidates": [
+              {
+                "uuid": "bf02bff1-b8f3-4855-b3cf-2475516aa4b8",
+                "asset": "wood_gate",
+                "activePhysicalBoxes": 1
+              }
+            ]
+          },
+          {
+            "probe": "WoodGate-side-1",
+            "start": [
+              73.5,
+              65.2,
+              80.5
+            ],
+            "requested": [
+              -6.0,
+              -0.0,
+              -0.0
+            ],
+            "actual": [
+              -2.199999988079071,
+              0.0,
+              0.0
+            ],
+            "end": [
+              71.30000001192093,
+              65.2,
+              80.5
+            ],
+            "playerFlags": {
+              "noClip": false,
+              "spectator": false,
+              "creative": false,
+              "flying": false,
+              "allowFlying": false,
+              "stepHeight": 1.0,
+              "onGround": false
+            },
+            "sweptQuery": "AABB[67.19999988807908, 65.19999990000001, 80.19999988807908] -> [73.80000011192092, 67.00000005231628, 80.80000011192092]",
+            "directWorldEntityCollisionShapes": 1,
+            "directWorldEntityCollisionBoxes": 1,
+            "rpIndexCandidates": [
+              {
+                "uuid": "bf02bff1-b8f3-4855-b3cf-2475516aa4b8",
+                "asset": "wood_gate",
+                "activePhysicalBoxes": 1
+              }
+            ]
+          },
+          {
+            "probe": "WoodGate-outside-working-edge",
+            "start": [
+              67.5,
+              65.2,
+              89.9375
+            ],
+            "requested": [
+              6.0,
+              0.0,
+              0.0
+            ],
+            "actual": [
+              6.0,
+              0.0,
+              0.0
+            ],
+            "end": [
+              73.5,
+              65.2,
+              89.9375
+            ],
+            "playerFlags": {
+              "noClip": false,
+              "spectator": false,
+              "creative": false,
+              "flying": false,
+              "allowFlying": false,
+              "stepHeight": 1.0,
+              "onGround": false
+            },
+            "sweptQuery": "AABB[67.19999988807908, 65.19999990000001, 89.63749988807908] -> [73.80000011192092, 67.00000005231628, 90.23750011192092]",
+            "directWorldEntityCollisionShapes": 0,
+            "directWorldEntityCollisionBoxes": 0,
+            "rpIndexCandidates": []
+          }
+        ]
+      }
+    ],
+    "scope": "Both thin-plane sides blocked; outside working plane passable; idle one-shot behavior and reload no saved request. This proposed source-physics change is not human acceptance."
+  }
+}

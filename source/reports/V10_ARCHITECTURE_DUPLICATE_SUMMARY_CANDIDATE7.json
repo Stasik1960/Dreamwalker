@@ -1,0 +1,268 @@
+{
+  "schema": "dreamwalker-v10-architecture-duplicate-audit-summary-v1",
+  "status": "READ_ONLY_COMPLETE_NO_NEW_ARCHITECTURE_OR_CROSS_MODULE_MERGES_CONFIRMED",
+  "production": {
+    "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\frozen-artifacts\\v10-attempt-7\\dreamwalker-bb-fabric-1.20.1-0.1.0-prototype.5.jar",
+    "sha256": "2cf96fbe771bb44bba4e4e8f320ed65a8bc0a8ffe7a8149b07fbd9ec691592c1",
+    "bytes": 32980636,
+    "version": "0.1.0-prototype.5"
+  },
+  "summary": {
+    "tableEntries": 118,
+    "architectureTypes": 18,
+    "architecturePairs": 153,
+    "pairDecisions": {
+      "DIFFERENT_FULL_TYPE": 152,
+      "EXPLICIT_USER_KEEP_DISTINCT": 1
+    },
+    "confirmedNewArchitectureGroups": 0,
+    "wallMaterials": 8,
+    "ladderArts": 3,
+    "glassTypes": 3,
+    "retiredTableIdsReserved": 7,
+    "rosterKinds": {
+      "architecture": 18,
+      "technical_tool": 2,
+      "rp_object": 76,
+      "rp_mob": 18,
+      "rp_item": 4
+    }
+  },
+  "crossPairs": {
+    "architecture": 18,
+    "canonicalRp": 69,
+    "crossPairs": 1242,
+    "newConfirmedCrossGroups": 0,
+    "canonicalTotal": 87,
+    "canonicalAllPairs": 3741,
+    "inFamilyPartition": {
+      "architecturePairs": 153,
+      "rpPairs": 2346,
+      "crossPairs": 1242
+    },
+    "rpInFamilyStatus": "Separate rp_integration report; do not infer completion from cross audit"
+  },
+  "architecture": [
+    {
+      "temporaryId": "90001",
+      "registryId": "bloodborne_dw:prototype_double_door",
+      "registeredStateCount": 512,
+      "offered": true,
+      "decision": "KEEP_DISTINCT_FULL_TYPE",
+      "stateCompatibilityProperty": null
+    },
+    {
+      "temporaryId": "90002",
+      "registryId": "bloodborne_dw:prototype_wall",
+      "registeredStateCount": 82944,
+      "offered": true,
+      "decision": "KEEP_DISTINCT_FULL_TYPE",
+      "stateCompatibilityProperty": "material0..7"
+    },
+    {
+      "temporaryId": "90003",
+      "registryId": "bloodborne_dw:prototype_roof",
+      "registeredStateCount": 512,
+      "offered": true,
+      "decision": "KEEP_DISTINCT_FULL_TYPE",
+      "stateCompatibilityProperty": null
+    },
+    {
+      "temporaryId": "90004",
+      "registryId": "bloodborne_dw:prototype_thin_window",
+      "registeredStateCount": 1536,
+      "offered": true,
+      "decision": "KEEP_DISTINCT_FULL_TYPE",
+      "stateCompatibilityProperty": "variant1..2"
+    },
+    {
+      "temporaryId": "90005",
+      "registryId": "bloodborne_dw:prototype_tree",
+      "registeredStateCount": 512,
+      "offered": true,
+      "decision": "KEEP_DISTINCT_FULL_TYPE",
+      "stateCompatibilityProperty": null
+    },
+    {
+      "temporaryId": "90006",
+      "registryId": "bloodborne_dw:prototype_ladder",
+      "registeredStateCount": 384,
+      "offered": true,
+      "decision": "KEEP_DISTINCT_FULL_TYPE",
+      "stateCompatibilityProperty": "variant1..2"
+    },
+    {
+      "temporaryId": "90007",
+      "registryId": "bloodborne_dw:prototype_wood_window",
+      "registeredStateCount": 512,
+      "offered": true,
+      "decision": "KEEP_DISTINCT_FULL_TYPE",
+      "stateCompatibilityProperty": null
+    },
+    {
+      "temporaryId": "90010",
+      "registryId": "bloodborne_dw:prototype_glass_window_02",
+      "registeredStateCount": 1536,
+      "offered": true,
+      "decision": "KEEP_DISTINCT_FULL_TYPE",
+      "stateCompatibilityProperty": null
+    },
+    {
+      "temporaryId": "90011",
+      "registryId": "bloodborne_dw:prototype_wall_skin_0",
+      "registeredStateCount": 10368,
+      "offered": true,
+      "decision": "KEEP_DISTINCT_FULL_TYPE",
+      "stateCompatibilityProperty": null
+    },
+    {
+      "temporaryId": "90012",
+      "registryId": "bloodborne_dw:prototype_wall_skin_1",
+      "registeredStateCount": 10368,
+      "offered": true,
+      "decision": "KEEP_DISTINCT_FULL_TYPE",
+      "stateCompatibilityProperty": null
+    },
+    {
+      "temporaryId": "90013",
+      "registryId": "bloodborne_dw:prototype_wall_skin_2",
+      "registeredStateCount": 10368,
+      "offered": true,
+      "decision": "KEEP_DISTINCT_FULL_TYPE",
+      "stateCompatibilityProperty": null
+    },
+    {
+      "temporaryId": "90014",
+      "registryId": "bloodborne_dw:prototype_wall_skin_3",
+      "registeredStateCount": 10368,
+      "offered": true,
+      "decision": "KEEP_DISTINCT_FULL_TYPE",
+      "stateCompatibilityProperty": null
+    },
+    {
+      "temporaryId": "90015",
+      "registryId": "bloodborne_dw:prototype_wall_skin_4",
+      "registeredStateCount": 10368,
+      "offered": true,
+      "decision": "KEEP_DISTINCT_FULL_TYPE",
+      "stateCompatibilityProperty": null
+    },
+    {
+      "temporaryId": "90016",
+      "registryId": "bloodborne_dw:prototype_wall_skin_5",
+      "registeredStateCount": 10368,
+      "offered": true,
+      "decision": "KEEP_DISTINCT_FULL_TYPE",
+      "stateCompatibilityProperty": null
+    },
+    {
+      "temporaryId": "90017",
+      "registryId": "bloodborne_dw:prototype_wall_skin_7",
+      "registeredStateCount": 10368,
+      "offered": true,
+      "decision": "KEEP_DISTINCT_FULL_TYPE",
+      "stateCompatibilityProperty": null
+    },
+    {
+      "temporaryId": "90018",
+      "registryId": "bloodborne_dw:prototype_ladder_art_1",
+      "registeredStateCount": 384,
+      "offered": true,
+      "decision": "KEEP_DISTINCT_FULL_TYPE",
+      "stateCompatibilityProperty": null
+    },
+    {
+      "temporaryId": "90019",
+      "registryId": "bloodborne_dw:prototype_ladder_art_2",
+      "registeredStateCount": 384,
+      "offered": true,
+      "decision": "KEEP_DISTINCT_FULL_TYPE",
+      "stateCompatibilityProperty": null
+    },
+    {
+      "temporaryId": "90020",
+      "registryId": "bloodborne_dw:prototype_glass_window_03",
+      "registeredStateCount": 1536,
+      "offered": true,
+      "decision": "EXPLICIT_KEEP_DISTINCT",
+      "stateCompatibilityProperty": null
+    }
+  ],
+  "confirmedNewGroups": [],
+  "removedIdToKeptId": [],
+  "exception": {
+    "ids": [
+      "90010",
+      "90020"
+    ],
+    "request": "reports/user-review-v9/request.txt:62",
+    "quote": "Возвращение этого прямо запрошенного типа является исключением из удаления художественных дублей; не удаляй его снова из-за сходства с window02."
+  },
+  "oldRetiredRpIds": [
+    {
+      "retiredTemporaryId": "91048",
+      "oldRegistry": "bloodborne_rp:furniture_3",
+      "canonicalRegistry": "bloodborne_rp:furniture_10",
+      "neverReuse": true
+    },
+    {
+      "retiredTemporaryId": "91049",
+      "oldRegistry": "bloodborne_rp:furniture_4",
+      "canonicalRegistry": "bloodborne_rp:furniture_11",
+      "neverReuse": true
+    },
+    {
+      "retiredTemporaryId": "91050",
+      "oldRegistry": "bloodborne_rp:furniture_5",
+      "canonicalRegistry": "bloodborne_rp:furniture_12",
+      "neverReuse": true
+    },
+    {
+      "retiredTemporaryId": "91051",
+      "oldRegistry": "bloodborne_rp:furniture_6",
+      "canonicalRegistry": "bloodborne_rp:furniture_13",
+      "neverReuse": true
+    },
+    {
+      "retiredTemporaryId": "91052",
+      "oldRegistry": "bloodborne_rp:furniture_7",
+      "canonicalRegistry": "bloodborne_rp:furniture_14",
+      "neverReuse": true
+    },
+    {
+      "retiredTemporaryId": "91053",
+      "oldRegistry": "bloodborne_rp:furniture_8",
+      "canonicalRegistry": "bloodborne_rp:furniture_1",
+      "neverReuse": true
+    },
+    {
+      "retiredTemporaryId": "91054",
+      "oldRegistry": "bloodborne_rp:furniture_9",
+      "canonicalRegistry": "bloodborne_rp:furniture_2",
+      "neverReuse": true
+    }
+  ],
+  "witnesses": {
+    "walls": "28/28 materialpairs differ at used RGBAtexel; common16/81 noTallforms not wholetypes",
+    "ladders": "same PNG but three different sourcegeometry/UV/rotation decorations",
+    "glass": "01 distinctUV;02/03 userexplicitindependentexception, rawZ difference4/16 canbecompensatedbysomeinitialseats",
+    "cross1242": "ordinary permitted architecture Survivalbreak+oneitem versus RP Creative-only PLAYER_ATTACK discard0drops"
+  },
+  "RPInFamilyAudit": "Owned by rp_integration; separate full76 semantic report required before all-construction-catalogue claim",
+  "sourceAndProofLimits": [
+    "Static actualfrozenJAR+runtimeJava source audit; no new game/GUI/render acceptance or conversion",
+    "No Java/resources/world modifications; sameplacedUUID/payload/names/links/routes/hooks unchanged",
+    "118table rows is append-onlyTEMP, finalnumericregistry catalogue/city conversion pending",
+    "18+69=87 canonical construction types; mobs/items/tools in118table roster only, not 3741constructionpair claims"
+  ],
+  "rawEvidence": [
+    {
+      "path": "reports/V10_ARCHITECTURE_DUPLICATE_AUDIT_CANDIDATE7.json",
+      "sha256": "bf07cbb67a59689743a7abce726091f3943c5d8df75221fcdbf53865c0708e4c"
+    },
+    {
+      "path": "reports/V10_CROSS_MODULE_DUPLICATE_AUDIT_CANDIDATE7.json",
+      "sha256": "c3b97b165ff19b22df65b5b9210c582c77e1037394380d114a1f3efa3af9a00a"
+    }
+  ]
+}

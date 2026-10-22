@@ -1,0 +1,296 @@
+{
+  "schemaVersion": 1,
+  "kind": "FIRST_SET_FUNCTIONAL_PROPOSAL",
+  "id": "bloodborne_dw:prototype_double_door",
+  "numeric_id": null,
+  "source_models": [
+    "minecraft:block/aca_door_1",
+    "minecraft:block/aca_door_2"
+  ],
+  "source_samples": [
+    {
+      "lower": [
+        -93,
+        59,
+        -212
+      ],
+      "upper": [
+        -93,
+        61,
+        -212
+      ],
+      "facing": "north",
+      "source_yaw": 180
+    },
+    {
+      "lower": [
+        -58,
+        76,
+        -113
+      ],
+      "upper": [
+        -58,
+        78,
+        -113
+      ],
+      "facing": "east",
+      "source_yaw": 270
+    }
+  ],
+  "source_to_new_local_translation_units": [
+    0,
+    16,
+    -16
+  ],
+  "parts": [
+    {
+      "name": "left_panel",
+      "model": "bloodborne_dw:base/prototype_door/left_panel",
+      "alt_model": "bloodborne_dw:alt/prototype_door/left_panel",
+      "source_rectangle": [
+        -16,
+        -16,
+        0,
+        32
+      ],
+      "translation_model_units": [
+        0,
+        16,
+        -16
+      ],
+      "pivot_source_units": null,
+      "moving": false,
+      "open_additional_yaw": 0,
+      "source_element": {
+        "from": [
+          -16,
+          -16,
+          -3
+        ],
+        "to": [
+          0,
+          32,
+          -1
+        ],
+        "rotation": {
+          "angle": 0,
+          "axis": "y",
+          "origin": [
+            -1,
+            0,
+            -1
+          ]
+        },
+        "faces": {
+          "north": {
+            "uv": [
+              4.0,
+              10.0,
+              6.0,
+              16.0
+            ],
+            "texture": "#0"
+          },
+          "south": {
+            "uv": [
+              0.0,
+              10.0,
+              2.0,
+              16.0
+            ],
+            "texture": "#0"
+          }
+        }
+      }
+    },
+    {
+      "name": "right_panel",
+      "model": "bloodborne_dw:base/prototype_door/right_panel",
+      "alt_model": "bloodborne_dw:alt/prototype_door/right_panel",
+      "source_rectangle": [
+        16,
+        -16,
+        32,
+        32
+      ],
+      "translation_model_units": [
+        0,
+        16,
+        -16
+      ],
+      "pivot_source_units": null,
+      "moving": false,
+      "open_additional_yaw": 0,
+      "source_element": {
+        "from": [
+          16,
+          -16,
+          -3
+        ],
+        "to": [
+          32,
+          32,
+          -1
+        ],
+        "rotation": {
+          "angle": 0,
+          "axis": "y",
+          "origin": [
+            -1,
+            0,
+            -1
+          ]
+        },
+        "faces": {
+          "north": {
+            "uv": [
+              0.0,
+              10.0,
+              2.0,
+              16.0
+            ],
+            "texture": "#0"
+          },
+          "south": {
+            "uv": [
+              4.0,
+              10.0,
+              6.0,
+              16.0
+            ],
+            "texture": "#0"
+          }
+        }
+      }
+    },
+    {
+      "name": "central_leaf",
+      "model": "bloodborne_dw:base/prototype_door/central_leaf",
+      "alt_model": "bloodborne_dw:alt/prototype_door/central_leaf",
+      "source_rectangle": [
+        0,
+        -16,
+        16,
+        32
+      ],
+      "translation_model_units": [
+        0,
+        16,
+        -16
+      ],
+      "pivot_source_units": [
+        0,
+        0,
+        -1
+      ],
+      "moving": true,
+      "open_additional_yaw": 90,
+      "source_element": {
+        "from": [
+          0,
+          -16,
+          -3
+        ],
+        "to": [
+          16,
+          32,
+          -1
+        ],
+        "rotation": {
+          "angle": 0,
+          "axis": "y",
+          "origin": [
+            -1,
+            0,
+            -1
+          ]
+        },
+        "faces": {
+          "north": {
+            "uv": [
+              2.0,
+              10.0,
+              4.0,
+              16.0
+            ],
+            "texture": "#0"
+          },
+          "south": {
+            "uv": [
+              2.0,
+              10.0,
+              4.0,
+              16.0
+            ],
+            "texture": "#0"
+          }
+        }
+      }
+    },
+    {
+      "name": "source_header",
+      "model": "bloodborne_dw:base/prototype_door/source_header",
+      "alt_model": "bloodborne_dw:alt/prototype_door/source_header",
+      "moving": false,
+      "translation_model_units": [
+        0,
+        48,
+        -16
+      ],
+      "open_additional_yaw": 0,
+      "source_element": {
+        "from": [
+          -16,
+          0,
+          -3
+        ],
+        "to": [
+          32,
+          16,
+          -1
+        ],
+        "rotation": {
+          "angle": 0,
+          "axis": "y",
+          "origin": [
+            -1,
+            0,
+            -1
+          ]
+        },
+        "faces": {
+          "north": {
+            "uv": [
+              0,
+              0,
+              12,
+              4
+            ],
+            "texture": "#1"
+          },
+          "south": {
+            "uv": [
+              0,
+              0,
+              12,
+              4
+            ],
+            "texture": "#1"
+          }
+        }
+      }
+    }
+  ],
+  "facing_source_yaw": {
+    "south": 0,
+    "west": 90,
+    "north": 180,
+    "east": 270
+  },
+  "closed_geometry": "Exact partition of original panel; original header translated from source +2Y",
+  "proposal": "One central leaf x0..16,y-16..32, hinge at source x0,z-1, opens +90 degrees. Full left/right panels and source header stay static. Closed art and both-face UV exactly preserved. Source has no animation or asymmetric hinge mesh: hinge side and swing are explicitly a proposed functional interpretation at the source central-panel boundary, subject to human review. Central passage remains floor-level. Static side decoration remains selection-only apart from two thin outside jambs, preserving the previously measured source side passage under the approved cheap/partial-penetration policy.",
+  "source_open_pose_exists": false,
+  "user_acceptance": "PENDING",
+  "closed_mask": "Derive sparse rasterization from exact closed/open part bounds; never reserve filled AABB",
+  "original_neighbors_consumed": false
+}

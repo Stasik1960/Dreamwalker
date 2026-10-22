@@ -1,0 +1,19 @@
+{
+  "status": "PASS",
+  "exitCode": 0,
+  "args": [
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-city-mesh-20261018\\bloodborne complete\\gradlew.bat",
+    "--offline",
+    "--no-daemon",
+    "--max-workers=2",
+    "-Dorg.gradle.jvmargs=-Xmx1G",
+    "-Pworldedit_api_jar=C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\v127-dependencies\\worldedit-mod-7.2.15.jar",
+    "remapStreamingQaJar",
+    "-I",
+    "tools/streaming-6-20261019/qa.init.gradle",
+    "-x",
+    "compileJava",
+    "-x",
+    "processResources"
+  ]
+}

@@ -1,0 +1,322 @@
+{
+  "schema": "dreamwalker-v9-superseded-candidate11-telemetry-exclusions-v1",
+  "status": "HISTORICAL_FUNCTIONAL_SUCCESSES_RETAINED_TELEMETRY_PERFORMANCE_NOT_RELEASE_PROOF",
+  "supersededArtifactSha256": "8dd5d1976f7348a9c08899acd723ba62358cc9611d4694bec3fc2b4914e3c1c0",
+  "reason": "Confirmed production client batching defect: full-mod runtimeMetadata repeatedly exceeds wire budget; whole-packet Gson trim loop discards every FULL9/FULL10 timing section. Candidate12 fix requires a new SHA and actual reruns. This is data loss with recorded overhead, not a functional world-load/save or shader failure.",
+  "functionalProofsRetained": {
+    "nativeAndCore": {
+      "status": "PASS_NATIVE105_CORE20_BUILD",
+      "nativeXml": "reports/FIRST_SET_GAMETEST_V9_ATTEMPT_11.xml",
+      "buildLog": "reports/REVIEW_V9_BUILD_AND_CORE_ATTEMPT_11.log"
+    },
+    "qa13Separation": {
+      "status": "PASS",
+      "report": "reports/REVIEW_PACKAGE_VERIFICATION_V9_QA13_CANDIDATE11.json"
+    },
+    "rpBytes": {
+      "status": "PASS_STATIC_SOURCE_AND_PACKAGE710_CATALOG306_CLIPS293",
+      "report": "reports/RP_PACKAGE_VERIFICATION_V9_RELEASE8.json"
+    },
+    "typeArt": {
+      "status": "PASS_READ_ONLY_APPEND_ONLY_TYPES_AND_EXACT_IMPORTED_ART",
+      "report": "reports/V9_TYPE_ART_AUDIT.json"
+    },
+    "sourceFinal3Preload": {
+      "status": "PASS_PRELOAD_PRESERVATION_RUNTIME_NOT_RUN",
+      "report": "reports/SOURCE_REVIEW_PRELOAD_INDEPENDENT_V9_FINAL3.json"
+    },
+    "ordinaryRelease8": {
+      "status": "PASS_ALL_SIX_CURRENT_SHA_SERVER_PHASES_AND_FOUR_INDEPENDENT_SAVED_WORLD_VALIDATORS",
+      "serverReports": {
+        "minimal_author": "reports/FIRST_SET_MINIMAL_AUTHOR_V9_RELEASE8.json",
+        "minimal_gameplay_reopen": "reports/FIRST_SET_MINIMAL_GAMEPLAY_REOPEN_V9_RELEASE8.json",
+        "minimal_production_reopen": "reports/FIRST_SET_MINIMAL_PRODUCTION_REOPEN_V9_RELEASE8.json",
+        "full_author": "reports/FIRST_SET_FULL_AUTHOR_V9_RELEASE8.json",
+        "full_gameplay_reopen": "reports/FIRST_SET_FULL_GAMEPLAY_REOPEN_V9_RELEASE8.json",
+        "full_production_reopen": "reports/FIRST_SET_FULL_PRODUCTION_REOPEN_V9_RELEASE8.json"
+      },
+      "independentReports": {
+        "minimal_scene": {
+          "report": "reports/REVIEW_V9_SCENE_INDEPENDENT_MINIMAL_RELEASE8.json",
+          "status": "PASS_SAVED_OWNERS_NATIVE_FIXTURES_AND_PRODUCTION_REOPEN"
+        },
+        "minimal_gameplay": {
+          "report": "reports/REVIEW_V9_GAMEPLAY_INDEPENDENT_MINIMAL_RELEASE8.json",
+          "status": "PASS_REAL_GAMEPLAY_RESTART_IDENTITIES_LINKS_AND_LAMP_NETWORK"
+        },
+        "full_scene": {
+          "report": "reports/REVIEW_V9_SCENE_INDEPENDENT_FULL_RELEASE8.json",
+          "status": "PASS_SAVED_OWNERS_NATIVE_FIXTURES_AND_PRODUCTION_REOPEN"
+        },
+        "full_gameplay": {
+          "report": "reports/REVIEW_V9_GAMEPLAY_INDEPENDENT_FULL_RELEASE8.json",
+          "status": "PASS_REAL_GAMEPLAY_RESTART_IDENTITIES_LINKS_AND_LAMP_NETWORK"
+        }
+      }
+    },
+    "ordinarySceneArchiveRelease8": {
+      "status": "PACKAGED_VERIFIED_SCENE_PENDING_USER_REVIEW",
+      "report": "reports/REVIEW_V9_SCENE_ARCHIVE_RELEASE8.json",
+      "path": "build/prototype/First-set-review-v9-release8-scene.zip",
+      "sha256": "e63a2aaa8539793527fd6bbfb08afb46b23dea942e10a082dea419bd7ae5edb9",
+      "files": 22,
+      "uncompressedBytes": 8465025,
+      "roots": 102
+    },
+    "sourceRelease8": {
+      "status": "PASS_FINAL3_AUTHOR_PRODUCTION_REOPEN_REPLAY_FOUR_INDEPENDENT_VALIDATORS_AND_EXACT_ARCHIVE",
+      "serverReports": {
+        "AUTHOR": "reports/SERVER_SOURCE_REVIEW_AUTHOR_V9_RELEASE8.json",
+        "REOPEN": "reports/SERVER_SOURCE_REVIEW_REOPEN_V9_RELEASE8.json",
+        "REPLAY": "reports/SERVER_SOURCE_REVIEW_REPLAY_V9_RELEASE8.json"
+      },
+      "independentReports": {
+        "SOURCE_REVIEW_PRELOAD_INDEPENDENT_V9_FINAL3": {
+          "report": "reports/SOURCE_REVIEW_PRELOAD_INDEPENDENT_V9_FINAL3.json",
+          "status": "PASS_PRELOAD_PRESERVATION"
+        },
+        "SOURCE_REVIEW_POSTSAVE_INDEPENDENT_V9_RELEASE8": {
+          "report": "reports/SOURCE_REVIEW_POSTSAVE_INDEPENDENT_V9_RELEASE8.json",
+          "status": "PASS_ARCHITECTURE_AND_FOREIGN_DATA_WITH_EXPLICIT_RUNTIME_DIFFS"
+        },
+        "SOURCE_REVIEW_POSTSAVE_REOPEN_INDEPENDENT_V9_RELEASE8": {
+          "report": "reports/SOURCE_REVIEW_POSTSAVE_REOPEN_INDEPENDENT_V9_RELEASE8.json",
+          "status": "PASS_ARCHITECTURE_AND_FOREIGN_DATA_WITH_EXPLICIT_RUNTIME_DIFFS"
+        },
+        "SOURCE_REVIEW_PERSISTED_REPLAY_INDEPENDENT_V9_RELEASE8": {
+          "report": "reports/SOURCE_REVIEW_PERSISTED_REPLAY_INDEPENDENT_V9_RELEASE8.json",
+          "status": "PASS_PERSISTED_OWNERSHIP_NATIVE_DATA_AND_NONRECURSIVE_RP_SOURCE_PAYLOAD"
+        }
+      },
+      "archiveReport": "reports/FIRST_SET_SOURCE_REVIEW_SCENE_V9_RELEASE8.json",
+      "archive": "build/prototype/First-set-migrated-source-fixture-v9-release8.zip",
+      "archiveSha256": "b407ee44b8a4868d6b6fad486a0d37dedcab919fde00bc630868dfc6ada5ff36",
+      "archiveCounts": {
+        "objects": 41,
+        "source_member_cells": 110,
+        "source_world_files": 38,
+        "archived_files": 37,
+        "archive_entries_including_root_directory": 38,
+        "uncompressed_bytes": 18785979,
+        "original_terrain_chunks": 71,
+        "extra_generated_chunks_preserved": 4363
+      },
+      "sourceOpen": "door_north COMMITTED and passage observed; wood_window EXPECTED_REFUSED_NEW_NATIVE_SOLID_VOLUME_ALL_TYPED_STATE_UNCHANGED; not all source OPEN"
+    },
+    "diagnosticsServerRelease8": {
+      "status": "PASS_CLEAN_CURRENT_SHA_OFF_ON_REENTER_DEFAULT60_AUTOSTOP_SAVE_EXPORT_BASELINE_UNCHANGED",
+      "reports": {
+        "OFF": {
+          "report": "reports/DIAGNOSTICS_SERVER_OFF_V9_RELEASE8.json",
+          "status": "PASS",
+          "exitCode": 0
+        },
+        "ON": {
+          "report": "reports/DIAGNOSTICS_SERVER_ON_V9_RELEASE8.json",
+          "status": "PASS",
+          "exitCode": 0
+        },
+        "REENTER": {
+          "report": "reports/DIAGNOSTICS_SERVER_REENTER_V9_RELEASE8.json",
+          "status": "PASS",
+          "exitCode": 0
+        }
+      },
+      "scope": "actual three dedicated-server phases only; client frames/model acknowledgements and combined independent diagnostic gate still pending"
+    },
+    "clientsMinimalRelease9": {
+      "status": "PASS_CURRENT_MINIMAL_AND_ACTUAL_RECORDING_SAVED_REENTER_NORMAL_EXIT",
+      "reports": {
+        "minimal": {
+          "report": "reports/CLIENT_MINIMAL_V9_RELEASE9.json",
+          "status": "PASS_CLIENT_WORLD_LOAD_SAVE_NORMAL_EXIT",
+          "exitCode": 0
+        },
+        "recordingReenter": {
+          "report": "reports/CLIENT_MINIMAL_REENTER_V9_RELEASE9.json",
+          "status": "PASS_CLIENT_WORLD_LOAD_SAVE_NORMAL_EXIT",
+          "exitCode": 0
+        }
+      }
+    },
+    "diagnosticsIndependentRelease8": {
+      "status": "PASS_CURRENT_ARTIFACT_DIAGNOSTICS_ACTUAL_RUNTIME_OFF_ON_REENTER_EXPORTS",
+      "report": "reports/REVIEW_V9_DIAGNOSTICS_INDEPENDENT_RELEASE8.json",
+      "scope": {
+        "all_mod_network_bytes": "NOT_MEASURED",
+        "gpu_duration": "NOT_MEASURED",
+        "ordinary_item_model_chain": "ACTUAL90010_ARCHITECTURE_ITEM_SERVER_ACK_RENDER_ACK",
+        "performance_attribution": "NO_EXACT_CAUSAL_OVERHEAD_OR_OBJECT_FPS_PERCENTAGE",
+        "rp_new_placement_model_chain": "NOT_PROBED_BY_THIS_QA_STAGE; loaded RP resource events do not imply observed placement item"
+      },
+      "summaryGate": "PASS_READABLE_RUSSIAN_SERVER_ZIP_SUMMARY",
+      "knownParticleWarning": {
+        "report": "reports/REVIEW_V9_TREE_PARTICLE_FALLBACK_OBSERVATION.json",
+        "classification": "PARTICLE_METADATA_FALLBACK_WITH_VALID_RENDER_FACES_NOT_ALL_TEXTURES_NO_FALLBACK"
+      }
+    },
+    "fullClientKappaRelease9": {
+      "status": "PASS_CLIENT_WORLD_LOAD_SAVE_NORMAL_EXIT",
+      "report": "reports/CLIENT_FULL_KAPPA_V9_RELEASE9.json",
+      "reportSha256": "38c85fe90dd7d78580519683b08c471e15ee4401eee0cdd66a95598927d8efd1",
+      "actualExitCode": 0,
+      "heapArgument": "-Xmx6G",
+      "selectedSuppliedJarCount": 109,
+      "physicalJarCount": 111,
+      "extraJarPopulation": "production + isolated QA companion; loaded nested mod IDs are another population",
+      "observedIris": {
+        "captureTimeUtc": "2026-10-07T23:36:16.645114900Z",
+        "source": "Optional public Iris APIs reflected once at first session batch; no Iris dependency or GPU timing",
+        "irisVersion": "1.7.6+mc1.20.1",
+        "enabled": true,
+        "packName": "Kappa_v5.2.zip",
+        "fallback": false,
+        "pipelineClass": "net.irisshaders.iris.pipeline.IrisRenderingPipeline",
+        "status": "OBSERVED_IRIS_PUBLIC_API"
+      },
+      "strictShaderOptionGetterProof": "NOT_RUN_NO_expectedShaderPack_MARKER_IRIS_RUNTIME_RESULT",
+      "wholeProfileAt4Gb": "NOT_ESTABLISHED_HISTORICAL_CANDIDATE10_FAILURE_RETAINED"
+    }
+  },
+  "fullClientRuns": [
+    {
+      "wrapper": "reports/CLIENT_FULL_KAPPA_V9_RELEASE9.json",
+      "wrapperSha256": "38c85fe90dd7d78580519683b08c471e15ee4401eee0cdd66a95598927d8efd1",
+      "actualStatus": "PASS_CLIENT_WORLD_LOAD_SAVE_NORMAL_EXIT",
+      "actualExitCode": 0,
+      "heapArgument": "-Xmx6G",
+      "physicalJarCount": 111,
+      "selectedSuppliedJarCount": 109,
+      "strictShader": null,
+      "telemetry": {
+        "batches": 18,
+        "emptyTimingBatches": 18,
+        "wholePacketReserializationCounter": 792,
+        "counterPopulation": "cumulative last-batch counter, not sum across batches",
+        "lastBatchFlushOverheadNsCumulative": 568339000,
+        "afterEarlyOnSnapshotFlushNs": 423449900,
+        "finalLocalSnapshotFlushApproxMsReportedByRoot": 576.7
+      },
+      "rawMatchedWindowsSummary": [
+        {
+          "label": "OFF_BEFORE",
+          "measurements": 162,
+          "presentationMeanNs": 30412827.777777776,
+          "renderThreadCpuMeanNs": 29513888.888888888,
+          "presentationP95Ns": 45719700,
+          "presentationP99Ns": 64143300,
+          "scope": "Actual presentation intervals under matched camera/settings; observer constant across off/on, not exact causal cost or GPU timing"
+        },
+        {
+          "label": "ON_IDENTICAL_CLEANED_SCENE",
+          "measurements": 38,
+          "presentationMeanNs": 122890247.36842105,
+          "renderThreadCpuMeanNs": 121299342.10526316,
+          "presentationP95Ns": 170860300,
+          "presentationP99Ns": 181416900,
+          "scope": "Actual presentation intervals under matched camera/settings; observer constant across off/on, not exact causal cost or GPU timing"
+        },
+        {
+          "label": "OFF_AFTER",
+          "measurements": 157,
+          "presentationMeanNs": 31625300.636942673,
+          "renderThreadCpuMeanNs": 30851910.82802548,
+          "presentationP95Ns": 41892800,
+          "presentationP99Ns": 51587100,
+          "scope": "Actual presentation intervals under matched camera/settings; observer constant across off/on, not exact causal cost or GPU timing"
+        }
+      ],
+      "rawArraysRetainedInWrapper": true,
+      "newArtifactReleaseProof": false
+    },
+    {
+      "wrapper": "reports/CLIENT_FULL_KAPPA_V9_RELEASE10.json",
+      "wrapperSha256": "0cd3632062b1d56f4c3885ec8667a68644aac75fdedb32225a6d75cef388dcfd",
+      "actualStatus": "PASS_CLIENT_WORLD_LOAD_SAVE_NORMAL_EXIT",
+      "actualExitCode": 0,
+      "heapArgument": "-Xmx6G",
+      "physicalJarCount": 111,
+      "selectedSuppliedJarCount": 109,
+      "strictShader": {
+        "status": "PASS_ACTIVE_IRIS_RENDERING_PIPELINE",
+        "initialFrameCounter": 0,
+        "finalFrameCounter": 662,
+        "frameCounterAdvanced": true,
+        "effectiveOptionCount": 42,
+        "allEffectiveOptionsMatch": true
+      },
+      "telemetry": {
+        "batches": 18,
+        "emptyTimingBatches": 18,
+        "wholePacketReserializationCounter": 918,
+        "counterPopulation": "cumulative last-batch counter, not sum across batches",
+        "lastBatchFlushOverheadNsCumulative": 582869100,
+        "afterEarlyOnSnapshotFlushNs": 434133000,
+        "finalLocalSnapshotFlushApproxMsReportedByRoot": 583.0
+      },
+      "rawMatchedWindowsSummary": [
+        {
+          "label": "OFF_BEFORE",
+          "measurements": 168,
+          "presentationMeanNs": 29413836.30952381,
+          "renderThreadCpuMeanNs": 27994791.666666668,
+          "presentationP95Ns": 48491700,
+          "presentationP99Ns": 82838300,
+          "scope": "Actual presentation intervals under matched camera/settings; observer constant across off/on, not exact causal cost or GPU timing"
+        },
+        {
+          "label": "ON_IDENTICAL_CLEANED_SCENE",
+          "measurements": 50,
+          "presentationMeanNs": 98140504.0,
+          "renderThreadCpuMeanNs": 96875000.0,
+          "presentationP95Ns": 137106400,
+          "presentationP99Ns": 155251400,
+          "scope": "Actual presentation intervals under matched camera/settings; observer constant across off/on, not exact causal cost or GPU timing"
+        },
+        {
+          "label": "OFF_AFTER",
+          "measurements": 138,
+          "presentationMeanNs": 35697320.28985507,
+          "renderThreadCpuMeanNs": 34080615.942028984,
+          "presentationP95Ns": 54488900,
+          "presentationP99Ns": 74320400,
+          "scope": "Actual presentation intervals under matched camera/settings; observer constant across off/on, not exact causal cost or GPU timing"
+        }
+      ],
+      "rawArraysRetainedInWrapper": true,
+      "newArtifactReleaseProof": false
+    }
+  ],
+  "strictFull10ShaderFunctionalResult": "PASS_ACTIVE_IRIS_RENDERING_PIPELINE; counter0->662;42effective getters match; normal save/exit0",
+  "newCandidate12ActualResults": "PENDING_NOT_BOUND",
+  "requiredSuccessorTargets": {
+    "ordinaryServerSuffix": "release9",
+    "sourcePlan": "FINAL4",
+    "sourceServerSuffix": "release9",
+    "sourceCountsUnchanged": [
+      41,
+      110,
+      275,
+      7,
+      6
+    ],
+    "diagnosticsServerSuffix": "release9",
+    "minimalClient": "release10",
+    "recordingClientReenter": "release10",
+    "strictFullKappaClient": "release11",
+    "heapGb": 6,
+    "fullClientDiagnosticSeconds": 60,
+    "minimalClientDiagnosticSeconds": 20,
+    "comparisonWindowTicks": 100
+  },
+  "limits": [
+    "No raw test/result was rewritten or recast as functional FAIL",
+    "Whole-packet trim counters are cumulative, never summed across batches",
+    "Last-batch cumulative flush time is before subsequent/final flush; approximate final-local values are explicitly attributed to root observation",
+    "Frame intervals include Vsync/scheduling/GPU wait; matched windows are not exact causal object-FPS attribution",
+    "Successful6GB runs do not erase candidate10 4GB failure or prove4GB compatibility",
+    "Native/core/source/ordinary minimal functional successes remain tied to old SHA and cannot substitute for current successor proof",
+    "Manual visual review and full catalogue/city/gallery/final IDs remain incomplete"
+  ],
+  "sourceWorldOrOriginalInputsMutated": false
+}

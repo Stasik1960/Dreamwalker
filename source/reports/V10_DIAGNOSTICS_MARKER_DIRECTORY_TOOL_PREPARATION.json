@@ -1,0 +1,38 @@
+{
+  "schema": "dw-v10-optional-marker-directory-tool-preparation-v1",
+  "status": "READY_TOOLS_ONLY_NO_FUTURE_MARKERS_CREATED_NO_RUNTIME",
+  "files": [
+    {
+      "path": "tools/run_review_v10_diagnostics_servers.py",
+      "sha256": "9e0b3ed8c0091b9ac69927bc55bbe7ad84d6995b7f37d1442b2627f9d0a21ed0"
+    },
+    {
+      "path": "tools/prepare_review_v10_diagnostics_markers.py",
+      "sha256": "17f521c068b7f4f978fcafa1b91e3e9c19845ba67bc7aa925bff1196e8b0c20c"
+    }
+  ],
+  "defaultMarkerDirectory": "tools",
+  "preflight": "All3markers before any child; exactschema1/revisionV10/SHA/mode/default60/levelname/identical15targets; eachsource<=65536bytes/projectlocal/samefilenames; phase refuses changedbytes",
+  "newPreparer": "Requires fresh outputdirectory and actual current successful normallystopped authorwrapper/raw SHA; maps exactfixture kind/root/registry and sample UUID/registry/root/finite offset. Existing markers/templates/worlds nevermodified.",
+  "verification": {
+    "syntaxAndHelp": "PASS",
+    "pureChecks": 9,
+    "scope": "Currentactualauthor mapping,authoritative staged root/offset mapping,wrong SHA/missingfixture/samplebinding rejection,runnerwrongartifact refusal, historicalmarkerbytesunchanged; no server launch/outputmarker creation"
+  },
+  "futurePreparationArgv": [
+    "python",
+    "tools/prepare_review_v10_diagnostics_markers.py",
+    "--artifact-sha",
+    "ACTUAL_NEW_FROZEN_SHA",
+    "--author-report",
+    "ACTUAL_SUCCESSFUL_NEW_AUTHOR_WRAPPER",
+    "--output-dir",
+    "tools/review-v10-diagnostics-markers-release2"
+  ],
+  "futureRunnerAdditionalArgs": [
+    "--marker-dir",
+    "tools/review-v10-diagnostics-markers-release2"
+  ],
+  "currentHistoricalRuntimeProof": "release1 candidate5 marker sourcepaths/hashes retained unchanged",
+  "productionJavaOrQaChanged": false
+}

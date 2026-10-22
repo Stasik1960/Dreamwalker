@@ -1,0 +1,1661 @@
+{
+  "schema": "dreamwalker-rp-migration-v1",
+  "registries": {
+    "namespace": "bloodborne_rp",
+    "mobs": [
+      "blood_starved_beast",
+      "brick_troll",
+      "carrion_crow",
+      "cleric_beast",
+      "executioner",
+      "giant_rat",
+      "huntsman_a",
+      "huntsman_b",
+      "huntsman_c",
+      "huntsman_d",
+      "huntsman_wheelchair",
+      "large_huntsman",
+      "maneater_boar",
+      "rabid_dog",
+      "rotted_corpse",
+      "scourge_beast",
+      "small_rat",
+      "vicar_amelia"
+    ],
+    "objects": [
+      "babycart",
+      "boat",
+      "cabriolet_closed",
+      "cabriolet_open",
+      "cage_obj_1",
+      "cage_obj_2",
+      "cage_obj_3",
+      "carriage",
+      "chair",
+      "chandelier_large",
+      "chandelier_small",
+      "chest",
+      "coffin_1",
+      "coffin_2",
+      "coffin_3",
+      "coffin_stand",
+      "coffins_1",
+      "coffins_2",
+      "coffins_3",
+      "coffins_4",
+      "coffins_5",
+      "cross_beast",
+      "curtain_half",
+      "curtains",
+      "curtainsmall",
+      "dog_cage",
+      "dog_cage1",
+      "dog_cage2",
+      "dog_cage3",
+      "door_1",
+      "door_2",
+      "door_empty",
+      "elevator",
+      "furniture_1",
+      "furniture_10",
+      "furniture_11",
+      "furniture_12",
+      "furniture_13",
+      "furniture_14",
+      "furniture_15",
+      "furniture_16",
+      "furniture_2",
+      "furniture_3",
+      "furniture_4",
+      "furniture_5",
+      "furniture_6",
+      "furniture_7",
+      "furniture_8",
+      "furniture_9",
+      "furniture_books",
+      "furniture_cabinet_pantry",
+      "furniture_pantry",
+      "gate_empty",
+      "hearse",
+      "hook",
+      "horse_carcass",
+      "hunterlamp",
+      "ladder",
+      "lamp_npc",
+      "lever_1",
+      "lever_2",
+      "long_table",
+      "main_gate",
+      "npc_window",
+      "odeon_tomb",
+      "ropes",
+      "small_gate",
+      "smallcross",
+      "stairs",
+      "statue_1",
+      "trapdoor",
+      "tree1",
+      "tree2",
+      "tree3",
+      "wheelchair",
+      "wood_gate"
+    ],
+    "entity_ids": [
+      "bloodborne_rp:babycart",
+      "bloodborne_rp:blood_starved_beast",
+      "bloodborne_rp:boat",
+      "bloodborne_rp:brick_troll",
+      "bloodborne_rp:cabriolet_closed",
+      "bloodborne_rp:cabriolet_open",
+      "bloodborne_rp:cage_obj_1",
+      "bloodborne_rp:cage_obj_2",
+      "bloodborne_rp:cage_obj_3",
+      "bloodborne_rp:carriage",
+      "bloodborne_rp:carrion_crow",
+      "bloodborne_rp:chair",
+      "bloodborne_rp:chandelier_large",
+      "bloodborne_rp:chandelier_small",
+      "bloodborne_rp:chest",
+      "bloodborne_rp:cleric_beast",
+      "bloodborne_rp:coffin_1",
+      "bloodborne_rp:coffin_2",
+      "bloodborne_rp:coffin_3",
+      "bloodborne_rp:coffin_stand",
+      "bloodborne_rp:coffins_1",
+      "bloodborne_rp:coffins_2",
+      "bloodborne_rp:coffins_3",
+      "bloodborne_rp:coffins_4",
+      "bloodborne_rp:coffins_5",
+      "bloodborne_rp:cross_beast",
+      "bloodborne_rp:curtain_half",
+      "bloodborne_rp:curtains",
+      "bloodborne_rp:curtainsmall",
+      "bloodborne_rp:dog_cage",
+      "bloodborne_rp:dog_cage1",
+      "bloodborne_rp:dog_cage2",
+      "bloodborne_rp:dog_cage3",
+      "bloodborne_rp:door_1",
+      "bloodborne_rp:door_2",
+      "bloodborne_rp:door_empty",
+      "bloodborne_rp:elevator",
+      "bloodborne_rp:executioner",
+      "bloodborne_rp:furniture_1",
+      "bloodborne_rp:furniture_10",
+      "bloodborne_rp:furniture_11",
+      "bloodborne_rp:furniture_12",
+      "bloodborne_rp:furniture_13",
+      "bloodborne_rp:furniture_14",
+      "bloodborne_rp:furniture_15",
+      "bloodborne_rp:furniture_16",
+      "bloodborne_rp:furniture_2",
+      "bloodborne_rp:furniture_3",
+      "bloodborne_rp:furniture_4",
+      "bloodborne_rp:furniture_5",
+      "bloodborne_rp:furniture_6",
+      "bloodborne_rp:furniture_7",
+      "bloodborne_rp:furniture_8",
+      "bloodborne_rp:furniture_9",
+      "bloodborne_rp:furniture_books",
+      "bloodborne_rp:furniture_cabinet_pantry",
+      "bloodborne_rp:furniture_pantry",
+      "bloodborne_rp:gate_empty",
+      "bloodborne_rp:giant_rat",
+      "bloodborne_rp:hearse",
+      "bloodborne_rp:hook",
+      "bloodborne_rp:horse_carcass",
+      "bloodborne_rp:hunterlamp",
+      "bloodborne_rp:huntsman_a",
+      "bloodborne_rp:huntsman_b",
+      "bloodborne_rp:huntsman_c",
+      "bloodborne_rp:huntsman_d",
+      "bloodborne_rp:huntsman_wheelchair",
+      "bloodborne_rp:ladder",
+      "bloodborne_rp:lamp_npc",
+      "bloodborne_rp:large_huntsman",
+      "bloodborne_rp:lever_1",
+      "bloodborne_rp:lever_2",
+      "bloodborne_rp:long_table",
+      "bloodborne_rp:main_gate",
+      "bloodborne_rp:maneater_boar",
+      "bloodborne_rp:npc_window",
+      "bloodborne_rp:odeon_tomb",
+      "bloodborne_rp:rabid_dog",
+      "bloodborne_rp:ropes",
+      "bloodborne_rp:rotted_corpse",
+      "bloodborne_rp:scourge_beast",
+      "bloodborne_rp:small_gate",
+      "bloodborne_rp:small_rat",
+      "bloodborne_rp:smallcross",
+      "bloodborne_rp:stairs",
+      "bloodborne_rp:statue_1",
+      "bloodborne_rp:trapdoor",
+      "bloodborne_rp:tree1",
+      "bloodborne_rp:tree2",
+      "bloodborne_rp:tree3",
+      "bloodborne_rp:vicar_amelia",
+      "bloodborne_rp:wheelchair",
+      "bloodborne_rp:wood_gate"
+    ],
+    "item_ids": [
+      "bloodborne_rp:babycart_placer",
+      "bloodborne_rp:blood_starved_beast_spawn_egg",
+      "bloodborne_rp:blood_vial",
+      "bloodborne_rp:boat_placer",
+      "bloodborne_rp:boom_hammer",
+      "bloodborne_rp:brick_troll_spawn_egg",
+      "bloodborne_rp:cabriolet_closed_placer",
+      "bloodborne_rp:cabriolet_open_placer",
+      "bloodborne_rp:cage_obj_1_placer",
+      "bloodborne_rp:cage_obj_2_placer",
+      "bloodborne_rp:cage_obj_3_placer",
+      "bloodborne_rp:carriage_placer",
+      "bloodborne_rp:carrion_crow_spawn_egg",
+      "bloodborne_rp:chair_placer",
+      "bloodborne_rp:chandelier_large_placer",
+      "bloodborne_rp:chandelier_small_placer",
+      "bloodborne_rp:chest_placer",
+      "bloodborne_rp:cleric_beast_spawn_egg",
+      "bloodborne_rp:coffin_1_placer",
+      "bloodborne_rp:coffin_2_placer",
+      "bloodborne_rp:coffin_3_placer",
+      "bloodborne_rp:coffin_stand_placer",
+      "bloodborne_rp:coffins_1_placer",
+      "bloodborne_rp:coffins_2_placer",
+      "bloodborne_rp:coffins_3_placer",
+      "bloodborne_rp:coffins_4_placer",
+      "bloodborne_rp:coffins_5_placer",
+      "bloodborne_rp:cross_beast_placer",
+      "bloodborne_rp:curtain_half_placer",
+      "bloodborne_rp:curtains_placer",
+      "bloodborne_rp:curtainsmall_placer",
+      "bloodborne_rp:dog_cage1_placer",
+      "bloodborne_rp:dog_cage2_placer",
+      "bloodborne_rp:dog_cage3_placer",
+      "bloodborne_rp:dog_cage_placer",
+      "bloodborne_rp:door_1_placer",
+      "bloodborne_rp:door_2_placer",
+      "bloodborne_rp:door_empty_placer",
+      "bloodborne_rp:elevator_placer",
+      "bloodborne_rp:executioner_spawn_egg",
+      "bloodborne_rp:furniture_10_placer",
+      "bloodborne_rp:furniture_11_placer",
+      "bloodborne_rp:furniture_12_placer",
+      "bloodborne_rp:furniture_13_placer",
+      "bloodborne_rp:furniture_14_placer",
+      "bloodborne_rp:furniture_15_placer",
+      "bloodborne_rp:furniture_16_placer",
+      "bloodborne_rp:furniture_1_placer",
+      "bloodborne_rp:furniture_2_placer",
+      "bloodborne_rp:furniture_3_placer",
+      "bloodborne_rp:furniture_4_placer",
+      "bloodborne_rp:furniture_5_placer",
+      "bloodborne_rp:furniture_6_placer",
+      "bloodborne_rp:furniture_7_placer",
+      "bloodborne_rp:furniture_8_placer",
+      "bloodborne_rp:furniture_9_placer",
+      "bloodborne_rp:furniture_books_placer",
+      "bloodborne_rp:furniture_cabinet_pantry_placer",
+      "bloodborne_rp:furniture_pantry_placer",
+      "bloodborne_rp:gate_empty_placer",
+      "bloodborne_rp:giant_rat_spawn_egg",
+      "bloodborne_rp:hearse_placer",
+      "bloodborne_rp:hook_placer",
+      "bloodborne_rp:horse_carcass_placer",
+      "bloodborne_rp:hunterlamp_placer",
+      "bloodborne_rp:huntsman_a_spawn_egg",
+      "bloodborne_rp:huntsman_b_spawn_egg",
+      "bloodborne_rp:huntsman_c_spawn_egg",
+      "bloodborne_rp:huntsman_d_spawn_egg",
+      "bloodborne_rp:huntsman_wheelchair_spawn_egg",
+      "bloodborne_rp:ladder_placer",
+      "bloodborne_rp:lamp_npc_placer",
+      "bloodborne_rp:large_huntsman_spawn_egg",
+      "bloodborne_rp:lever_1_placer",
+      "bloodborne_rp:lever_2_placer",
+      "bloodborne_rp:long_table_placer",
+      "bloodborne_rp:main_gate_placer",
+      "bloodborne_rp:maneater_boar_spawn_egg",
+      "bloodborne_rp:npc_window_placer",
+      "bloodborne_rp:odeon_tomb_placer",
+      "bloodborne_rp:rabid_dog_spawn_egg",
+      "bloodborne_rp:ropes_placer",
+      "bloodborne_rp:rotted_corpse_spawn_egg",
+      "bloodborne_rp:saw_cleaver",
+      "bloodborne_rp:saw_spear",
+      "bloodborne_rp:scourge_beast_spawn_egg",
+      "bloodborne_rp:small_gate_placer",
+      "bloodborne_rp:small_rat_spawn_egg",
+      "bloodborne_rp:smallcross_placer",
+      "bloodborne_rp:stairs_placer",
+      "bloodborne_rp:statue_1_placer",
+      "bloodborne_rp:trapdoor_placer",
+      "bloodborne_rp:tree1_placer",
+      "bloodborne_rp:tree2_placer",
+      "bloodborne_rp:tree3_placer",
+      "bloodborne_rp:vicar_amelia_spawn_egg",
+      "bloodborne_rp:wheelchair_placer",
+      "bloodborne_rp:wood_gate_placer"
+    ],
+    "entity_map": {
+      "bloodborne:babycart": "bloodborne_rp:babycart",
+      "bloodborne:blood_starved_beast": "bloodborne_rp:blood_starved_beast",
+      "bloodborne:boat": "bloodborne_rp:boat",
+      "bloodborne:brick_troll": "bloodborne_rp:brick_troll",
+      "bloodborne:cabriolet_closed": "bloodborne_rp:cabriolet_closed",
+      "bloodborne:cabriolet_open": "bloodborne_rp:cabriolet_open",
+      "bloodborne:cage_obj_1": "bloodborne_rp:cage_obj_1",
+      "bloodborne:cage_obj_2": "bloodborne_rp:cage_obj_2",
+      "bloodborne:cage_obj_3": "bloodborne_rp:cage_obj_3",
+      "bloodborne:carriage": "bloodborne_rp:carriage",
+      "bloodborne:carrion_crow": "bloodborne_rp:carrion_crow",
+      "bloodborne:chair": "bloodborne_rp:chair",
+      "bloodborne:chandelier_large": "bloodborne_rp:chandelier_large",
+      "bloodborne:chandelier_small": "bloodborne_rp:chandelier_small",
+      "bloodborne:chest": "bloodborne_rp:chest",
+      "bloodborne:cleric_beast": "bloodborne_rp:cleric_beast",
+      "bloodborne:coffin_1": "bloodborne_rp:coffin_1",
+      "bloodborne:coffin_2": "bloodborne_rp:coffin_2",
+      "bloodborne:coffin_3": "bloodborne_rp:coffin_3",
+      "bloodborne:coffin_stand": "bloodborne_rp:coffin_stand",
+      "bloodborne:coffins_1": "bloodborne_rp:coffins_1",
+      "bloodborne:coffins_2": "bloodborne_rp:coffins_2",
+      "bloodborne:coffins_3": "bloodborne_rp:coffins_3",
+      "bloodborne:coffins_4": "bloodborne_rp:coffins_4",
+      "bloodborne:coffins_5": "bloodborne_rp:coffins_5",
+      "bloodborne:cross_beast": "bloodborne_rp:cross_beast",
+      "bloodborne:curtain_half": "bloodborne_rp:curtain_half",
+      "bloodborne:curtains": "bloodborne_rp:curtains",
+      "bloodborne:curtainsmall": "bloodborne_rp:curtainsmall",
+      "bloodborne:dog_cage": "bloodborne_rp:dog_cage",
+      "bloodborne:dog_cage1": "bloodborne_rp:dog_cage1",
+      "bloodborne:dog_cage2": "bloodborne_rp:dog_cage2",
+      "bloodborne:dog_cage3": "bloodborne_rp:dog_cage3",
+      "bloodborne:door_1": "bloodborne_rp:door_1",
+      "bloodborne:door_2": "bloodborne_rp:door_2",
+      "bloodborne:door_empty": "bloodborne_rp:door_empty",
+      "bloodborne:elevator": "bloodborne_rp:elevator",
+      "bloodborne:executioner": "bloodborne_rp:executioner",
+      "bloodborne:furniture_1": "bloodborne_rp:furniture_1",
+      "bloodborne:furniture_10": "bloodborne_rp:furniture_10",
+      "bloodborne:furniture_11": "bloodborne_rp:furniture_11",
+      "bloodborne:furniture_12": "bloodborne_rp:furniture_12",
+      "bloodborne:furniture_13": "bloodborne_rp:furniture_13",
+      "bloodborne:furniture_14": "bloodborne_rp:furniture_14",
+      "bloodborne:furniture_15": "bloodborne_rp:furniture_15",
+      "bloodborne:furniture_16": "bloodborne_rp:furniture_16",
+      "bloodborne:furniture_2": "bloodborne_rp:furniture_2",
+      "bloodborne:furniture_3": "bloodborne_rp:furniture_3",
+      "bloodborne:furniture_4": "bloodborne_rp:furniture_4",
+      "bloodborne:furniture_5": "bloodborne_rp:furniture_5",
+      "bloodborne:furniture_6": "bloodborne_rp:furniture_6",
+      "bloodborne:furniture_7": "bloodborne_rp:furniture_7",
+      "bloodborne:furniture_8": "bloodborne_rp:furniture_8",
+      "bloodborne:furniture_9": "bloodborne_rp:furniture_9",
+      "bloodborne:furniture_books": "bloodborne_rp:furniture_books",
+      "bloodborne:furniture_cabinet_pantry": "bloodborne_rp:furniture_cabinet_pantry",
+      "bloodborne:furniture_pantry": "bloodborne_rp:furniture_pantry",
+      "bloodborne:gate_empty": "bloodborne_rp:gate_empty",
+      "bloodborne:giant_rat": "bloodborne_rp:giant_rat",
+      "bloodborne:hearse": "bloodborne_rp:hearse",
+      "bloodborne:hook": "bloodborne_rp:hook",
+      "bloodborne:horse_carcass": "bloodborne_rp:horse_carcass",
+      "bloodborne:hunterlamp": "bloodborne_rp:hunterlamp",
+      "bloodborne:huntsman_a": "bloodborne_rp:huntsman_a",
+      "bloodborne:huntsman_b": "bloodborne_rp:huntsman_b",
+      "bloodborne:huntsman_c": "bloodborne_rp:huntsman_c",
+      "bloodborne:huntsman_d": "bloodborne_rp:huntsman_d",
+      "bloodborne:huntsman_wheelchair": "bloodborne_rp:huntsman_wheelchair",
+      "bloodborne:ladder": "bloodborne_rp:ladder",
+      "bloodborne:lamp_npc": "bloodborne_rp:lamp_npc",
+      "bloodborne:large_huntsman": "bloodborne_rp:large_huntsman",
+      "bloodborne:lever_1": "bloodborne_rp:lever_1",
+      "bloodborne:lever_2": "bloodborne_rp:lever_2",
+      "bloodborne:long_table": "bloodborne_rp:long_table",
+      "bloodborne:main_gate": "bloodborne_rp:main_gate",
+      "bloodborne:maneater_boar": "bloodborne_rp:maneater_boar",
+      "bloodborne:npc_window": "bloodborne_rp:npc_window",
+      "bloodborne:odeon_tomb": "bloodborne_rp:odeon_tomb",
+      "bloodborne:rabid_dog": "bloodborne_rp:rabid_dog",
+      "bloodborne:ropes": "bloodborne_rp:ropes",
+      "bloodborne:rotted_corpse": "bloodborne_rp:rotted_corpse",
+      "bloodborne:scourge_beast": "bloodborne_rp:scourge_beast",
+      "bloodborne:small_gate": "bloodborne_rp:small_gate",
+      "bloodborne:small_rat": "bloodborne_rp:small_rat",
+      "bloodborne:smallcross": "bloodborne_rp:smallcross",
+      "bloodborne:stairs": "bloodborne_rp:stairs",
+      "bloodborne:statue_1": "bloodborne_rp:statue_1",
+      "bloodborne:trapdoor": "bloodborne_rp:trapdoor",
+      "bloodborne:tree1": "bloodborne_rp:tree1",
+      "bloodborne:tree2": "bloodborne_rp:tree2",
+      "bloodborne:tree3": "bloodborne_rp:tree3",
+      "bloodborne:vicar_amelia": "bloodborne_rp:vicar_amelia",
+      "bloodborne:wheelchair": "bloodborne_rp:wheelchair",
+      "bloodborne:wood_gate": "bloodborne_rp:wood_gate"
+    },
+    "item_map": {
+      "bloodborne:babycart_placer": {
+        "target": "bloodborne_rp:babycart_placer"
+      },
+      "bloodborne:blood_starved_beast_spawn_egg": {
+        "target": "bloodborne_rp:blood_starved_beast_spawn_egg"
+      },
+      "bloodborne:blood_vial": {
+        "target": "bloodborne_rp:blood_vial"
+      },
+      "bloodborne:boat_placer": {
+        "target": "bloodborne_rp:boat_placer"
+      },
+      "bloodborne:boom_hammer": {
+        "target": "bloodborne_rp:boom_hammer"
+      },
+      "bloodborne:brick_troll_spawn_egg": {
+        "target": "bloodborne_rp:brick_troll_spawn_egg"
+      },
+      "bloodborne:cabriolet_closed_placer": {
+        "target": "bloodborne_rp:cabriolet_closed_placer"
+      },
+      "bloodborne:cabriolet_open_placer": {
+        "target": "bloodborne_rp:cabriolet_open_placer"
+      },
+      "bloodborne:cage_obj_1_placer": {
+        "target": "bloodborne_rp:cage_obj_1_placer"
+      },
+      "bloodborne:cage_obj_2_placer": {
+        "target": "bloodborne_rp:cage_obj_2_placer"
+      },
+      "bloodborne:cage_obj_3_placer": {
+        "target": "bloodborne_rp:cage_obj_3_placer"
+      },
+      "bloodborne:carriage_placer": {
+        "target": "bloodborne_rp:carriage_placer"
+      },
+      "bloodborne:carrion_crow_spawn_egg": {
+        "target": "bloodborne_rp:carrion_crow_spawn_egg"
+      },
+      "bloodborne:chair_placer": {
+        "target": "bloodborne_rp:chair_placer"
+      },
+      "bloodborne:chandelier_large_placer": {
+        "target": "bloodborne_rp:chandelier_large_placer"
+      },
+      "bloodborne:chandelier_small_placer": {
+        "target": "bloodborne_rp:chandelier_small_placer"
+      },
+      "bloodborne:chest_placer": {
+        "target": "bloodborne_rp:chest_placer"
+      },
+      "bloodborne:cleric_beast_spawn_egg": {
+        "target": "bloodborne_rp:cleric_beast_spawn_egg"
+      },
+      "bloodborne:coffin_1_placer": {
+        "target": "bloodborne_rp:coffin_1_placer"
+      },
+      "bloodborne:coffin_2_placer": {
+        "target": "bloodborne_rp:coffin_2_placer"
+      },
+      "bloodborne:coffin_3_placer": {
+        "target": "bloodborne_rp:coffin_3_placer"
+      },
+      "bloodborne:coffin_stand_placer": {
+        "target": "bloodborne_rp:coffin_stand_placer"
+      },
+      "bloodborne:coffins_1_placer": {
+        "target": "bloodborne_rp:coffins_1_placer"
+      },
+      "bloodborne:coffins_2_placer": {
+        "target": "bloodborne_rp:coffins_2_placer"
+      },
+      "bloodborne:coffins_3_placer": {
+        "target": "bloodborne_rp:coffins_3_placer"
+      },
+      "bloodborne:coffins_4_placer": {
+        "target": "bloodborne_rp:coffins_4_placer"
+      },
+      "bloodborne:coffins_5_placer": {
+        "target": "bloodborne_rp:coffins_5_placer"
+      },
+      "bloodborne:cross_beast_placer": {
+        "target": "bloodborne_rp:cross_beast_placer"
+      },
+      "bloodborne:curtain_half_placer": {
+        "target": "bloodborne_rp:curtain_half_placer"
+      },
+      "bloodborne:curtains_placer": {
+        "target": "bloodborne_rp:curtains_placer"
+      },
+      "bloodborne:curtainsmall_placer": {
+        "target": "bloodborne_rp:curtainsmall_placer"
+      },
+      "bloodborne:dog_cage1_placer": {
+        "target": "bloodborne_rp:dog_cage1_placer"
+      },
+      "bloodborne:dog_cage2_placer": {
+        "target": "bloodborne_rp:dog_cage2_placer"
+      },
+      "bloodborne:dog_cage3_placer": {
+        "target": "bloodborne_rp:dog_cage3_placer"
+      },
+      "bloodborne:dog_cage_placer": {
+        "target": "bloodborne_rp:dog_cage_placer"
+      },
+      "bloodborne:door_1_placer": {
+        "target": "bloodborne_rp:door_1_placer"
+      },
+      "bloodborne:door_2_placer": {
+        "target": "bloodborne_rp:door_2_placer"
+      },
+      "bloodborne:door_empty_placer": {
+        "target": "bloodborne_rp:door_empty_placer"
+      },
+      "bloodborne:elevator_placer": {
+        "target": "bloodborne_rp:elevator_placer"
+      },
+      "bloodborne:executioner_spawn_egg": {
+        "target": "bloodborne_rp:executioner_spawn_egg"
+      },
+      "bloodborne:furniture_10_placer": {
+        "target": "bloodborne_rp:furniture_10_placer"
+      },
+      "bloodborne:furniture_11_placer": {
+        "target": "bloodborne_rp:furniture_11_placer"
+      },
+      "bloodborne:furniture_12_placer": {
+        "target": "bloodborne_rp:furniture_12_placer"
+      },
+      "bloodborne:furniture_13_placer": {
+        "target": "bloodborne_rp:furniture_13_placer"
+      },
+      "bloodborne:furniture_14_placer": {
+        "target": "bloodborne_rp:furniture_14_placer"
+      },
+      "bloodborne:furniture_15_placer": {
+        "target": "bloodborne_rp:furniture_15_placer"
+      },
+      "bloodborne:furniture_16_placer": {
+        "target": "bloodborne_rp:furniture_16_placer"
+      },
+      "bloodborne:furniture_1_placer": {
+        "target": "bloodborne_rp:furniture_1_placer"
+      },
+      "bloodborne:furniture_2_placer": {
+        "target": "bloodborne_rp:furniture_2_placer"
+      },
+      "bloodborne:furniture_3_placer": {
+        "target": "bloodborne_rp:furniture_3_placer"
+      },
+      "bloodborne:furniture_4_placer": {
+        "target": "bloodborne_rp:furniture_4_placer"
+      },
+      "bloodborne:furniture_5_placer": {
+        "target": "bloodborne_rp:furniture_5_placer"
+      },
+      "bloodborne:furniture_6_placer": {
+        "target": "bloodborne_rp:furniture_6_placer"
+      },
+      "bloodborne:furniture_7_placer": {
+        "target": "bloodborne_rp:furniture_7_placer"
+      },
+      "bloodborne:furniture_8_placer": {
+        "target": "bloodborne_rp:furniture_8_placer"
+      },
+      "bloodborne:furniture_9_placer": {
+        "target": "bloodborne_rp:furniture_9_placer"
+      },
+      "bloodborne:furniture_books_placer": {
+        "target": "bloodborne_rp:furniture_books_placer"
+      },
+      "bloodborne:furniture_cabinet_pantry_placer": {
+        "target": "bloodborne_rp:furniture_cabinet_pantry_placer"
+      },
+      "bloodborne:furniture_pantry_placer": {
+        "target": "bloodborne_rp:furniture_pantry_placer"
+      },
+      "bloodborne:gate_empty_placer": {
+        "target": "bloodborne_rp:gate_empty_placer"
+      },
+      "bloodborne:giant_rat_spawn_egg": {
+        "target": "bloodborne_rp:giant_rat_spawn_egg"
+      },
+      "bloodborne:hearse_placer": {
+        "target": "bloodborne_rp:hearse_placer"
+      },
+      "bloodborne:hook_placer": {
+        "target": "bloodborne_rp:hook_placer"
+      },
+      "bloodborne:horse_carcass_placer": {
+        "target": "bloodborne_rp:horse_carcass_placer"
+      },
+      "bloodborne:hunterlamp_placer": {
+        "target": "bloodborne_rp:hunterlamp_placer"
+      },
+      "bloodborne:huntsman_a_spawn_egg": {
+        "target": "bloodborne_rp:huntsman_a_spawn_egg"
+      },
+      "bloodborne:huntsman_b_spawn_egg": {
+        "target": "bloodborne_rp:huntsman_b_spawn_egg"
+      },
+      "bloodborne:huntsman_c_spawn_egg": {
+        "target": "bloodborne_rp:huntsman_c_spawn_egg"
+      },
+      "bloodborne:huntsman_d_spawn_egg": {
+        "target": "bloodborne_rp:huntsman_d_spawn_egg"
+      },
+      "bloodborne:huntsman_wheelchair_spawn_egg": {
+        "target": "bloodborne_rp:huntsman_wheelchair_spawn_egg"
+      },
+      "bloodborne:ladder_placer": {
+        "target": "bloodborne_rp:ladder_placer"
+      },
+      "bloodborne:lamp_npc_placer": {
+        "target": "bloodborne_rp:lamp_npc_placer"
+      },
+      "bloodborne:large_huntsman_spawn_egg": {
+        "target": "bloodborne_rp:large_huntsman_spawn_egg"
+      },
+      "bloodborne:lever_1_placer": {
+        "target": "bloodborne_rp:lever_1_placer"
+      },
+      "bloodborne:lever_2_placer": {
+        "target": "bloodborne_rp:lever_2_placer"
+      },
+      "bloodborne:long_table_placer": {
+        "target": "bloodborne_rp:long_table_placer"
+      },
+      "bloodborne:main_gate_placer": {
+        "target": "bloodborne_rp:main_gate_placer"
+      },
+      "bloodborne:maneater_boar_spawn_egg": {
+        "target": "bloodborne_rp:maneater_boar_spawn_egg"
+      },
+      "bloodborne:npc_window_placer": {
+        "target": "bloodborne_rp:npc_window_placer"
+      },
+      "bloodborne:odeon_tomb_placer": {
+        "target": "bloodborne_rp:odeon_tomb_placer"
+      },
+      "bloodborne:rabid_dog_spawn_egg": {
+        "target": "bloodborne_rp:rabid_dog_spawn_egg"
+      },
+      "bloodborne:ropes_placer": {
+        "target": "bloodborne_rp:ropes_placer"
+      },
+      "bloodborne:rotted_corpse_spawn_egg": {
+        "target": "bloodborne_rp:rotted_corpse_spawn_egg"
+      },
+      "bloodborne:saw_cleaver": {
+        "target": "bloodborne_rp:saw_cleaver"
+      },
+      "bloodborne:saw_spear": {
+        "target": "bloodborne_rp:saw_spear"
+      },
+      "bloodborne:scourge_beast_spawn_egg": {
+        "target": "bloodborne_rp:scourge_beast_spawn_egg"
+      },
+      "bloodborne:small_gate_placer": {
+        "target": "bloodborne_rp:small_gate_placer"
+      },
+      "bloodborne:small_rat_spawn_egg": {
+        "target": "bloodborne_rp:small_rat_spawn_egg"
+      },
+      "bloodborne:smallcross_placer": {
+        "target": "bloodborne_rp:smallcross_placer"
+      },
+      "bloodborne:stairs_placer": {
+        "target": "bloodborne_rp:stairs_placer"
+      },
+      "bloodborne:statue_1_placer": {
+        "target": "bloodborne_rp:statue_1_placer"
+      },
+      "bloodborne:trapdoor_placer": {
+        "target": "bloodborne_rp:trapdoor_placer"
+      },
+      "bloodborne:tree1_placer": {
+        "target": "bloodborne_rp:tree1_placer"
+      },
+      "bloodborne:tree2_placer": {
+        "target": "bloodborne_rp:tree2_placer"
+      },
+      "bloodborne:tree3_placer": {
+        "target": "bloodborne_rp:tree3_placer"
+      },
+      "bloodborne:vicar_amelia_spawn_egg": {
+        "target": "bloodborne_rp:vicar_amelia_spawn_egg"
+      },
+      "bloodborne:wheelchair_placer": {
+        "target": "bloodborne_rp:wheelchair_placer"
+      },
+      "bloodborne:wood_gate_placer": {
+        "target": "bloodborne_rp:wood_gate_placer"
+      },
+      "bloodborne:babycart": {
+        "target": "bloodborne_rp:babycart_placer"
+      },
+      "bloodborne:boat": {
+        "target": "bloodborne_rp:boat_placer"
+      },
+      "bloodborne:cabriolet_closed": {
+        "target": "bloodborne_rp:cabriolet_closed_placer"
+      },
+      "bloodborne:cabriolet_open": {
+        "target": "bloodborne_rp:cabriolet_open_placer"
+      },
+      "bloodborne:cage_obj_1": {
+        "target": "bloodborne_rp:cage_obj_1_placer"
+      },
+      "bloodborne:cage_obj_2": {
+        "target": "bloodborne_rp:cage_obj_2_placer"
+      },
+      "bloodborne:cage_obj_3": {
+        "target": "bloodborne_rp:cage_obj_3_placer"
+      },
+      "bloodborne:carriage": {
+        "target": "bloodborne_rp:carriage_placer"
+      },
+      "bloodborne:chair": {
+        "target": "bloodborne_rp:chair_placer"
+      },
+      "bloodborne:chandelier_large": {
+        "target": "bloodborne_rp:chandelier_large_placer"
+      },
+      "bloodborne:chandelier_small": {
+        "target": "bloodborne_rp:chandelier_small_placer"
+      },
+      "bloodborne:chest": {
+        "target": "bloodborne_rp:chest_placer"
+      },
+      "bloodborne:coffin_1": {
+        "target": "bloodborne_rp:coffin_1_placer"
+      },
+      "bloodborne:coffin_2": {
+        "target": "bloodborne_rp:coffin_2_placer"
+      },
+      "bloodborne:coffin_3": {
+        "target": "bloodborne_rp:coffin_3_placer"
+      },
+      "bloodborne:coffin_stand": {
+        "target": "bloodborne_rp:coffin_stand_placer"
+      },
+      "bloodborne:coffins_1": {
+        "target": "bloodborne_rp:coffins_1_placer"
+      },
+      "bloodborne:coffins_2": {
+        "target": "bloodborne_rp:coffins_2_placer"
+      },
+      "bloodborne:coffins_3": {
+        "target": "bloodborne_rp:coffins_3_placer"
+      },
+      "bloodborne:coffins_4": {
+        "target": "bloodborne_rp:coffins_4_placer"
+      },
+      "bloodborne:coffins_5": {
+        "target": "bloodborne_rp:coffins_5_placer"
+      },
+      "bloodborne:cross_beast": {
+        "target": "bloodborne_rp:cross_beast_placer"
+      },
+      "bloodborne:curtain_half": {
+        "target": "bloodborne_rp:curtain_half_placer"
+      },
+      "bloodborne:curtains": {
+        "target": "bloodborne_rp:curtains_placer"
+      },
+      "bloodborne:curtainsmall": {
+        "target": "bloodborne_rp:curtainsmall_placer"
+      },
+      "bloodborne:dog_cage": {
+        "target": "bloodborne_rp:dog_cage_placer"
+      },
+      "bloodborne:dog_cage1": {
+        "target": "bloodborne_rp:dog_cage1_placer"
+      },
+      "bloodborne:dog_cage2": {
+        "target": "bloodborne_rp:dog_cage2_placer"
+      },
+      "bloodborne:dog_cage3": {
+        "target": "bloodborne_rp:dog_cage3_placer"
+      },
+      "bloodborne:door_1": {
+        "target": "bloodborne_rp:door_1_placer"
+      },
+      "bloodborne:door_2": {
+        "target": "bloodborne_rp:door_2_placer"
+      },
+      "bloodborne:door_empty": {
+        "target": "bloodborne_rp:door_empty_placer"
+      },
+      "bloodborne:elevator": {
+        "target": "bloodborne_rp:elevator_placer"
+      },
+      "bloodborne:furniture_1": {
+        "target": "bloodborne_rp:furniture_1_placer"
+      },
+      "bloodborne:furniture_10": {
+        "target": "bloodborne_rp:furniture_10_placer"
+      },
+      "bloodborne:furniture_11": {
+        "target": "bloodborne_rp:furniture_11_placer"
+      },
+      "bloodborne:furniture_12": {
+        "target": "bloodborne_rp:furniture_12_placer"
+      },
+      "bloodborne:furniture_13": {
+        "target": "bloodborne_rp:furniture_13_placer"
+      },
+      "bloodborne:furniture_14": {
+        "target": "bloodborne_rp:furniture_14_placer"
+      },
+      "bloodborne:furniture_15": {
+        "target": "bloodborne_rp:furniture_15_placer"
+      },
+      "bloodborne:furniture_16": {
+        "target": "bloodborne_rp:furniture_16_placer"
+      },
+      "bloodborne:furniture_2": {
+        "target": "bloodborne_rp:furniture_2_placer"
+      },
+      "bloodborne:furniture_3": {
+        "target": "bloodborne_rp:furniture_3_placer"
+      },
+      "bloodborne:furniture_4": {
+        "target": "bloodborne_rp:furniture_4_placer"
+      },
+      "bloodborne:furniture_5": {
+        "target": "bloodborne_rp:furniture_5_placer"
+      },
+      "bloodborne:furniture_6": {
+        "target": "bloodborne_rp:furniture_6_placer"
+      },
+      "bloodborne:furniture_7": {
+        "target": "bloodborne_rp:furniture_7_placer"
+      },
+      "bloodborne:furniture_8": {
+        "target": "bloodborne_rp:furniture_8_placer"
+      },
+      "bloodborne:furniture_9": {
+        "target": "bloodborne_rp:furniture_9_placer"
+      },
+      "bloodborne:furniture_books": {
+        "target": "bloodborne_rp:furniture_books_placer"
+      },
+      "bloodborne:furniture_cabinet_pantry": {
+        "target": "bloodborne_rp:furniture_cabinet_pantry_placer"
+      },
+      "bloodborne:furniture_pantry": {
+        "target": "bloodborne_rp:furniture_pantry_placer"
+      },
+      "bloodborne:gate_empty": {
+        "target": "bloodborne_rp:gate_empty_placer"
+      },
+      "bloodborne:hearse": {
+        "target": "bloodborne_rp:hearse_placer"
+      },
+      "bloodborne:hook": {
+        "target": "bloodborne_rp:hook_placer"
+      },
+      "bloodborne:horse_carcass": {
+        "target": "bloodborne_rp:horse_carcass_placer"
+      },
+      "bloodborne:hunterlamp": {
+        "target": "bloodborne_rp:hunterlamp_placer"
+      },
+      "bloodborne:ladder": {
+        "target": "bloodborne_rp:ladder_placer"
+      },
+      "bloodborne:lamp_npc": {
+        "target": "bloodborne_rp:lamp_npc_placer"
+      },
+      "bloodborne:lever_1": {
+        "target": "bloodborne_rp:lever_1_placer"
+      },
+      "bloodborne:lever_2": {
+        "target": "bloodborne_rp:lever_2_placer"
+      },
+      "bloodborne:long_table": {
+        "target": "bloodborne_rp:long_table_placer"
+      },
+      "bloodborne:main_gate": {
+        "target": "bloodborne_rp:main_gate_placer"
+      },
+      "bloodborne:npc_window": {
+        "target": "bloodborne_rp:npc_window_placer"
+      },
+      "bloodborne:odeon_tomb": {
+        "target": "bloodborne_rp:odeon_tomb_placer"
+      },
+      "bloodborne:ropes": {
+        "target": "bloodborne_rp:ropes_placer"
+      },
+      "bloodborne:small_gate": {
+        "target": "bloodborne_rp:small_gate_placer"
+      },
+      "bloodborne:smallcross": {
+        "target": "bloodborne_rp:smallcross_placer"
+      },
+      "bloodborne:stairs": {
+        "target": "bloodborne_rp:stairs_placer"
+      },
+      "bloodborne:statue_1": {
+        "target": "bloodborne_rp:statue_1_placer"
+      },
+      "bloodborne:trapdoor": {
+        "target": "bloodborne_rp:trapdoor_placer"
+      },
+      "bloodborne:tree1": {
+        "target": "bloodborne_rp:tree1_placer"
+      },
+      "bloodborne:tree2": {
+        "target": "bloodborne_rp:tree2_placer"
+      },
+      "bloodborne:tree3": {
+        "target": "bloodborne_rp:tree3_placer"
+      },
+      "bloodborne:wheelchair": {
+        "target": "bloodborne_rp:wheelchair_placer"
+      },
+      "bloodborne:wood_gate": {
+        "target": "bloodborne_rp:wood_gate_placer"
+      },
+      "bloodborne:sawcleaver_false": {
+        "target": "bloodborne_rp:saw_cleaver",
+        "BloodborneRpForm": false
+      },
+      "bloodborne:sawcleaver_true": {
+        "target": "bloodborne_rp:saw_cleaver",
+        "BloodborneRpForm": true
+      },
+      "bloodborne:sawspear_false": {
+        "target": "bloodborne_rp:saw_spear",
+        "BloodborneRpForm": false
+      },
+      "bloodborne:sawspear_true": {
+        "target": "bloodborne_rp:saw_spear",
+        "BloodborneRpForm": true
+      },
+      "bloodborne:boomhammer_false": {
+        "target": "bloodborne_rp:boom_hammer",
+        "BloodborneRpForm": false
+      },
+      "bloodborne:boomhammer_true": {
+        "target": "bloodborne_rp:boom_hammer",
+        "BloodborneRpForm": true
+      }
+    },
+    "catalog_sha256": "594bd2a47153e52888b1fcd5db34ced0c429fc2419f498eb848603236389d8dd"
+  },
+  "observed_entities": [
+    {
+      "source_id": "bloodborne:babycart",
+      "target_id": "bloodborne_rp:babycart",
+      "count": 1,
+      "status": "VALIDATED_REGISTRY_TARGET"
+    },
+    {
+      "source_id": "bloodborne:boat",
+      "target_id": "bloodborne_rp:boat",
+      "count": 4,
+      "status": "VALIDATED_REGISTRY_TARGET"
+    },
+    {
+      "source_id": "bloodborne:cabriolet_closed",
+      "target_id": "bloodborne_rp:cabriolet_closed",
+      "count": 3,
+      "status": "VALIDATED_REGISTRY_TARGET"
+    },
+    {
+      "source_id": "bloodborne:cabriolet_open",
+      "target_id": "bloodborne_rp:cabriolet_open",
+      "count": 1,
+      "status": "VALIDATED_REGISTRY_TARGET"
+    },
+    {
+      "source_id": "bloodborne:cage_obj_1",
+      "target_id": "bloodborne_rp:cage_obj_1",
+      "count": 1,
+      "status": "VALIDATED_REGISTRY_TARGET"
+    },
+    {
+      "source_id": "bloodborne:cage_obj_2",
+      "target_id": "bloodborne_rp:cage_obj_2",
+      "count": 1,
+      "status": "VALIDATED_REGISTRY_TARGET"
+    },
+    {
+      "source_id": "bloodborne:cage_obj_3",
+      "target_id": "bloodborne_rp:cage_obj_3",
+      "count": 1,
+      "status": "VALIDATED_REGISTRY_TARGET"
+    },
+    {
+      "source_id": "bloodborne:carriage",
+      "target_id": "bloodborne_rp:carriage",
+      "count": 16,
+      "status": "VALIDATED_REGISTRY_TARGET"
+    },
+    {
+      "source_id": "bloodborne:chair",
+      "target_id": "bloodborne_rp:chair",
+      "count": 6,
+      "status": "VALIDATED_REGISTRY_TARGET"
+    },
+    {
+      "source_id": "bloodborne:chandelier_large",
+      "target_id": "bloodborne_rp:chandelier_large",
+      "count": 4,
+      "status": "VALIDATED_REGISTRY_TARGET"
+    },
+    {
+      "source_id": "bloodborne:chandelier_small",
+      "target_id": "bloodborne_rp:chandelier_small",
+      "count": 3,
+      "status": "VALIDATED_REGISTRY_TARGET"
+    },
+    {
+      "source_id": "bloodborne:chest",
+      "target_id": "bloodborne_rp:chest",
+      "count": 2,
+      "status": "VALIDATED_REGISTRY_TARGET"
+    },
+    {
+      "source_id": "bloodborne:coffin_1",
+      "target_id": "bloodborne_rp:coffin_1",
+      "count": 8,
+      "status": "VALIDATED_REGISTRY_TARGET"
+    },
+    {
+      "source_id": "bloodborne:coffin_2",
+      "target_id": "bloodborne_rp:coffin_2",
+      "count": 5,
+      "status": "VALIDATED_REGISTRY_TARGET"
+    },
+    {
+      "source_id": "bloodborne:coffin_3",
+      "target_id": "bloodborne_rp:coffin_3",
+      "count": 4,
+      "status": "VALIDATED_REGISTRY_TARGET"
+    },
+    {
+      "source_id": "bloodborne:coffin_stand",
+      "target_id": "bloodborne_rp:coffin_stand",
+      "count": 1,
+      "status": "VALIDATED_REGISTRY_TARGET"
+    },
+    {
+      "source_id": "bloodborne:coffins_1",
+      "target_id": "bloodborne_rp:coffins_1",
+      "count": 10,
+      "status": "VALIDATED_REGISTRY_TARGET"
+    },
+    {
+      "source_id": "bloodborne:coffins_2",
+      "target_id": "bloodborne_rp:coffins_2",
+      "count": 10,
+      "status": "VALIDATED_REGISTRY_TARGET"
+    },
+    {
+      "source_id": "bloodborne:coffins_3",
+      "target_id": "bloodborne_rp:coffins_3",
+      "count": 13,
+      "status": "VALIDATED_REGISTRY_TARGET"
+    },
+    {
+      "source_id": "bloodborne:coffins_4",
+      "target_id": "bloodborne_rp:coffins_4",
+      "count": 5,
+      "status": "VALIDATED_REGISTRY_TARGET"
+    },
+    {
+      "source_id": "bloodborne:coffins_5",
+      "target_id": "bloodborne_rp:coffins_5",
+      "count": 5,
+      "status": "VALIDATED_REGISTRY_TARGET"
+    },
+    {
+      "source_id": "bloodborne:cross_beast",
+      "target_id": "bloodborne_rp:cross_beast",
+      "count": 1,
+      "status": "VALIDATED_REGISTRY_TARGET"
+    },
+    {
+      "source_id": "bloodborne:curtainsmall",
+      "target_id": "bloodborne_rp:curtainsmall",
+      "count": 2,
+      "status": "VALIDATED_REGISTRY_TARGET"
+    },
+    {
+      "source_id": "bloodborne:dog_cage",
+      "target_id": "bloodborne_rp:dog_cage",
+      "count": 2,
+      "status": "VALIDATED_REGISTRY_TARGET"
+    },
+    {
+      "source_id": "bloodborne:dog_cage2",
+      "target_id": "bloodborne_rp:dog_cage2",
+      "count": 2,
+      "status": "VALIDATED_REGISTRY_TARGET"
+    },
+    {
+      "source_id": "bloodborne:door_1",
+      "target_id": "bloodborne_rp:door_1",
+      "count": 3,
+      "status": "VALIDATED_REGISTRY_TARGET"
+    },
+    {
+      "source_id": "bloodborne:door_2",
+      "target_id": "bloodborne_rp:door_2",
+      "count": 5,
+      "status": "VALIDATED_REGISTRY_TARGET"
+    },
+    {
+      "source_id": "bloodborne:door_empty",
+      "target_id": "bloodborne_rp:door_empty",
+      "count": 3,
+      "status": "VALIDATED_REGISTRY_TARGET"
+    },
+    {
+      "source_id": "bloodborne:elevator",
+      "target_id": "bloodborne_rp:elevator",
+      "count": 1,
+      "status": "VALIDATED_REGISTRY_TARGET"
+    },
+    {
+      "source_id": "bloodborne:furniture_1",
+      "target_id": "bloodborne_rp:furniture_1",
+      "count": 4,
+      "status": "VALIDATED_REGISTRY_TARGET"
+    },
+    {
+      "source_id": "bloodborne:furniture_14",
+      "target_id": "bloodborne_rp:furniture_14",
+      "count": 2,
+      "status": "VALIDATED_REGISTRY_TARGET"
+    },
+    {
+      "source_id": "bloodborne:furniture_16",
+      "target_id": "bloodborne_rp:furniture_16",
+      "count": 3,
+      "status": "VALIDATED_REGISTRY_TARGET"
+    },
+    {
+      "source_id": "bloodborne:furniture_2",
+      "target_id": "bloodborne_rp:furniture_2",
+      "count": 3,
+      "status": "VALIDATED_REGISTRY_TARGET"
+    },
+    {
+      "source_id": "bloodborne:furniture_4",
+      "target_id": "bloodborne_rp:furniture_4",
+      "count": 6,
+      "status": "VALIDATED_REGISTRY_TARGET"
+    },
+    {
+      "source_id": "bloodborne:furniture_6",
+      "target_id": "bloodborne_rp:furniture_6",
+      "count": 1,
+      "status": "VALIDATED_REGISTRY_TARGET"
+    },
+    {
+      "source_id": "bloodborne:furniture_books",
+      "target_id": "bloodborne_rp:furniture_books",
+      "count": 7,
+      "status": "VALIDATED_REGISTRY_TARGET"
+    },
+    {
+      "source_id": "bloodborne:furniture_cabinet_pantry",
+      "target_id": "bloodborne_rp:furniture_cabinet_pantry",
+      "count": 1,
+      "status": "VALIDATED_REGISTRY_TARGET"
+    },
+    {
+      "source_id": "bloodborne:furniture_pantry",
+      "target_id": "bloodborne_rp:furniture_pantry",
+      "count": 2,
+      "status": "VALIDATED_REGISTRY_TARGET"
+    },
+    {
+      "source_id": "bloodborne:gate_empty",
+      "target_id": "bloodborne_rp:gate_empty",
+      "count": 1,
+      "status": "VALIDATED_REGISTRY_TARGET"
+    },
+    {
+      "source_id": "bloodborne:hearse",
+      "target_id": "bloodborne_rp:hearse",
+      "count": 5,
+      "status": "VALIDATED_REGISTRY_TARGET"
+    },
+    {
+      "source_id": "bloodborne:hook",
+      "target_id": "bloodborne_rp:hook",
+      "count": 6,
+      "status": "VALIDATED_REGISTRY_TARGET"
+    },
+    {
+      "source_id": "bloodborne:horse_carcass",
+      "target_id": "bloodborne_rp:horse_carcass",
+      "count": 4,
+      "status": "VALIDATED_REGISTRY_TARGET"
+    },
+    {
+      "source_id": "bloodborne:hunterlamp",
+      "target_id": "bloodborne_rp:hunterlamp",
+      "count": 1,
+      "status": "VALIDATED_REGISTRY_TARGET"
+    },
+    {
+      "source_id": "bloodborne:ladder",
+      "target_id": "bloodborne_rp:ladder",
+      "count": 1,
+      "status": "VALIDATED_REGISTRY_TARGET"
+    },
+    {
+      "source_id": "bloodborne:lamp_npc",
+      "target_id": "bloodborne_rp:lamp_npc",
+      "count": 1,
+      "status": "VALIDATED_REGISTRY_TARGET"
+    },
+    {
+      "source_id": "bloodborne:lever_1",
+      "target_id": "bloodborne_rp:lever_1",
+      "count": 6,
+      "status": "VALIDATED_REGISTRY_TARGET"
+    },
+    {
+      "source_id": "bloodborne:long_table",
+      "target_id": "bloodborne_rp:long_table",
+      "count": 2,
+      "status": "VALIDATED_REGISTRY_TARGET"
+    },
+    {
+      "source_id": "bloodborne:main_gate",
+      "target_id": "bloodborne_rp:main_gate",
+      "count": 4,
+      "status": "VALIDATED_REGISTRY_TARGET"
+    },
+    {
+      "source_id": "bloodborne:maneater_boar",
+      "target_id": "bloodborne_rp:maneater_boar",
+      "count": 2,
+      "status": "VALIDATED_REGISTRY_TARGET"
+    },
+    {
+      "source_id": "bloodborne:npc_window",
+      "target_id": "bloodborne_rp:npc_window",
+      "count": 2,
+      "status": "VALIDATED_REGISTRY_TARGET"
+    },
+    {
+      "source_id": "bloodborne:odeon_tomb",
+      "target_id": "bloodborne_rp:odeon_tomb",
+      "count": 1,
+      "status": "VALIDATED_REGISTRY_TARGET"
+    },
+    {
+      "source_id": "bloodborne:small_gate",
+      "target_id": "bloodborne_rp:small_gate",
+      "count": 3,
+      "status": "VALIDATED_REGISTRY_TARGET"
+    },
+    {
+      "source_id": "bloodborne:smallcross",
+      "target_id": "bloodborne_rp:smallcross",
+      "count": 3,
+      "status": "VALIDATED_REGISTRY_TARGET"
+    },
+    {
+      "source_id": "bloodborne:statue_1",
+      "target_id": "bloodborne_rp:statue_1",
+      "count": 6,
+      "status": "VALIDATED_REGISTRY_TARGET"
+    },
+    {
+      "source_id": "bloodborne:trapdoor",
+      "target_id": "bloodborne_rp:trapdoor",
+      "count": 1,
+      "status": "VALIDATED_REGISTRY_TARGET"
+    },
+    {
+      "source_id": "bloodborne:tree1",
+      "target_id": "bloodborne_rp:tree1",
+      "count": 19,
+      "status": "VALIDATED_REGISTRY_TARGET"
+    },
+    {
+      "source_id": "bloodborne:tree2",
+      "target_id": "bloodborne_rp:tree2",
+      "count": 27,
+      "status": "VALIDATED_REGISTRY_TARGET"
+    },
+    {
+      "source_id": "bloodborne:tree3",
+      "target_id": "bloodborne_rp:tree3",
+      "count": 13,
+      "status": "VALIDATED_REGISTRY_TARGET"
+    },
+    {
+      "source_id": "bloodborne:wheelchair",
+      "target_id": "bloodborne_rp:wheelchair",
+      "count": 1,
+      "status": "VALIDATED_REGISTRY_TARGET"
+    },
+    {
+      "source_id": "bloodborne:wood_gate",
+      "target_id": "bloodborne_rp:wood_gate",
+      "count": 1,
+      "status": "VALIDATED_REGISTRY_TARGET"
+    }
+  ],
+  "world_audit": "bloodborne complete\\reports\\WORLD_AUDIT.json",
+  "application_status": "NOT_APPLIED",
+  "game_save_preservation": "NOT_RUN",
+  "rules": [
+    "only explicit entity and ItemStack id contexts",
+    "preserve UUID Pos Rotation Scale Open Locked EntityState Links ConnectionId and timers",
+    "preserve Health Attributes Brain ForgeCaps AI flags and original unknown mod fields",
+    "do not add frozen state",
+    "unknown IDs remain unchanged and are reported",
+    "main/small gates already read EntityState; ambiguous aliases require review",
+    "legacy weapon false/true suffixes collapse to family item with BloodborneRpForm byte",
+    "preserve lamp dat file bytes; route registration is separate from entity existence"
+  ],
+  "limitations": [
+    "Forge unknown fields may be discarded by Minecraft/port on game save; must verify separately",
+    "datapack commands, spawner entity snapshots, POI and ticks require context-specific analysis",
+    "transient Forge bullet and blood_puddle have no registered RP entity counterpart"
+  ],
+  "legacy_lamp_data": [
+    {
+      "path": "data/hunter_lamp_manager.dat",
+      "root_keys": [
+        "data",
+        "DataVersion"
+      ],
+      "data": {
+        "data": {
+          "HunterLamps": [
+            {
+              "area": "area.bloodborne.name.0",
+              "X": 229,
+              "Y": 69,
+              "hunterLampId": [
+                2119845798,
+                -1233039827,
+                -1132772455,
+                -1113870321
+              ],
+              "Z": -931
+            },
+            {
+              "area": "area.bloodborne.name.0",
+              "X": 229,
+              "Y": 69,
+              "hunterLampId": [
+                2119845798,
+                -1233039827,
+                -1132772455,
+                -1113870321
+              ],
+              "Z": -931
+            }
+          ]
+        },
+        "DataVersion": 2975
+      }
+    }
+  ],
+  "source_lamp_entities": [
+    {
+      "dimension": "minecraft:overworld",
+      "region": "entities/r.0.-2.mca",
+      "id": "bloodborne:hunterlamp",
+      "uuid": [
+        614039691,
+        1402487662,
+        -1386688151,
+        1241422566
+      ],
+      "pos": [
+        229.0,
+        69.0,
+        -931.0
+      ],
+      "data": {
+        "Motion": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "AnimationId": 0,
+        "Invulnerable": 0,
+        "Scale": 1.0,
+        "Air": 300,
+        "OnGround": 0,
+        "EntityState": 0,
+        "PortalCooldown": 0,
+        "Rotation": [
+          0.0,
+          0.0
+        ],
+        "FallDistance": 0.0,
+        "ConnectionId": "0",
+        "IsActivated": 1,
+        "CanUpdate": 1,
+        "Pos": [
+          229.0,
+          69.0,
+          -931.0
+        ],
+        "Fire": -1,
+        "id": "bloodborne:hunterlamp",
+        "Id": [
+          2119845798,
+          -1233039827,
+          -1132772455,
+          -1113870321
+        ],
+        "UUID": [
+          614039691,
+          1402487662,
+          -1386688151,
+          1241422566
+        ]
+      }
+    }
+  ],
+  "lamp_migration_rule": "Preserve original file; create separate bloodborne_rp_lamps.dat candidate by custom Id match; node Id retains original registration ID and Lamp retains entity UUID; exact duplicates reported; no invented routes.",
+  "source_mechanisms": [
+    {
+      "id": "bloodborne:lever_1",
+      "uuid": [
+        960086497,
+        2013742423,
+        -2073202254,
+        -1731004185
+      ],
+      "dimension": "minecraft:overworld",
+      "pos": [
+        218.25,
+        69.0,
+        -943.875
+      ],
+      "ConnectionId": "terrace",
+      "EntityState": 0,
+      "CustomName": "{\"text\":\"terrace\"}"
+    },
+    {
+      "id": "bloodborne:small_gate",
+      "uuid": [
+        -1595497819,
+        -154844366,
+        -1545928524,
+        1572170844
+      ],
+      "dimension": "minecraft:overworld",
+      "pos": [
+        221.25,
+        69.0,
+        -941.375
+      ],
+      "ConnectionId": "terrace",
+      "EntityState": 0,
+      "CustomName": "{\"text\":\"terrace\"}"
+    },
+    {
+      "id": "bloodborne:lever_1",
+      "uuid": [
+        115178077,
+        -467844889,
+        -1541757768,
+        -1277256746
+      ],
+      "dimension": "minecraft:overworld",
+      "pos": [
+        225.875,
+        40.0,
+        -908.625
+      ],
+      "ConnectionId": "0",
+      "EntityState": 0,
+      "CustomName": null
+    },
+    {
+      "id": "bloodborne:main_gate",
+      "uuid": [
+        829317585,
+        -1727249850,
+        -1999464304,
+        -1827637436
+      ],
+      "dimension": "minecraft:overworld",
+      "pos": [
+        260.0,
+        40.0,
+        -908.0
+      ],
+      "ConnectionId": "m1",
+      "EntityState": 0,
+      "CustomName": "{\"text\":\"m1\"}"
+    },
+    {
+      "id": "bloodborne:lever_1",
+      "uuid": [
+        -1060819211,
+        20990702,
+        -2137621999,
+        308382966
+      ],
+      "dimension": "minecraft:overworld",
+      "pos": [
+        265.0,
+        40.0,
+        -907.0
+      ],
+      "ConnectionId": "m1",
+      "EntityState": 0,
+      "CustomName": "{\"text\":\"m1\"}"
+    },
+    {
+      "id": "bloodborne:main_gate",
+      "uuid": [
+        1562288632,
+        1723941098,
+        -1123275206,
+        -197482946
+      ],
+      "dimension": "minecraft:overworld",
+      "pos": [
+        262.375,
+        36.0,
+        -875.5
+      ],
+      "ConnectionId": "clinic_gate",
+      "EntityState": 0,
+      "CustomName": "{\"text\":\"clinic_gate\"}"
+    },
+    {
+      "id": "bloodborne:lever_1",
+      "uuid": [
+        897057547,
+        387205860,
+        -1398321835,
+        1357957236
+      ],
+      "dimension": "minecraft:overworld",
+      "pos": [
+        268.375,
+        34.0,
+        -872.5
+      ],
+      "ConnectionId": "clinic_gate",
+      "EntityState": 0,
+      "CustomName": "{\"text\":\"clinic_gate\"}"
+    },
+    {
+      "id": "bloodborne:small_gate",
+      "uuid": [
+        -917532534,
+        -237482371,
+        -1501468049,
+        1018728200
+      ],
+      "dimension": "minecraft:overworld",
+      "pos": [
+        287.125,
+        34.0,
+        -877.0
+      ],
+      "ConnectionId": "clinic",
+      "EntityState": 0,
+      "CustomName": "{\"text\":\"clinic\"}"
+    },
+    {
+      "id": "bloodborne:lever_1",
+      "uuid": [
+        -488337130,
+        1684422987,
+        -1868536682,
+        -1657078569
+      ],
+      "dimension": "minecraft:overworld",
+      "pos": [
+        290.0,
+        34.0,
+        -879.5
+      ],
+      "ConnectionId": "clinic",
+      "EntityState": 0,
+      "CustomName": "{\"text\":\"clinic\"}"
+    },
+    {
+      "id": "bloodborne:small_gate",
+      "uuid": [
+        880088674,
+        531055524,
+        -1089670818,
+        -338128252
+      ],
+      "dimension": "minecraft:overworld",
+      "pos": [
+        307.625,
+        34.0,
+        -872.625
+      ],
+      "ConnectionId": "t1",
+      "EntityState": 1,
+      "CustomName": "{\"text\":\"t1\"}"
+    },
+    {
+      "id": "bloodborne:main_gate",
+      "uuid": [
+        416804399,
+        124406610,
+        -1744196484,
+        466260872
+      ],
+      "dimension": "minecraft:overworld",
+      "pos": [
+        59.0,
+        62.0,
+        -675.875
+      ],
+      "ConnectionId": "",
+      "EntityState": 1,
+      "CustomName": null
+    },
+    {
+      "id": "bloodborne:main_gate",
+      "uuid": [
+        -364321888,
+        -1908653537,
+        -1831125641,
+        1739548238
+      ],
+      "dimension": "minecraft:overworld",
+      "pos": [
+        61.875,
+        52.0,
+        -1059.625
+      ],
+      "ConnectionId": "m2",
+      "EntityState": 0,
+      "CustomName": "{\"text\":\"m2\"}"
+    },
+    {
+      "id": "bloodborne:lever_1",
+      "uuid": [
+        633703762,
+        -227192966,
+        -1619732104,
+        -854668832
+      ],
+      "dimension": "minecraft:overworld",
+      "pos": [
+        58.875,
+        52.0,
+        -1063.125
+      ],
+      "ConnectionId": "m2",
+      "EntityState": 0,
+      "CustomName": "{\"text\":\"m2\"}"
+    }
+  ]
+}

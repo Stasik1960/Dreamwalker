@@ -1,0 +1,366 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:prototype_double_door",
+  "displayName": "Резная входная дверь · одна створка",
+  "openable": true,
+  "support": {
+    "offset": [
+      0,
+      -1,
+      0
+    ],
+    "required": true
+  },
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:base/prototype_door/left_panel",
+              "altModel": "bloodborne_dw:alt/prototype_door/left_panel",
+              "offset": [
+                0,
+                16,
+                -16
+              ],
+              "yaw": 180,
+              "pivot": [
+                8,
+                8,
+                8
+              ]
+            },
+            {
+              "model": "bloodborne_dw:base/prototype_door/right_panel",
+              "altModel": "bloodborne_dw:alt/prototype_door/right_panel",
+              "offset": [
+                0,
+                16,
+                -16
+              ],
+              "yaw": 180,
+              "pivot": [
+                8,
+                8,
+                8
+              ]
+            },
+            {
+              "model": "bloodborne_dw:base/prototype_door/central_leaf",
+              "altModel": "bloodborne_dw:alt/prototype_door/central_leaf",
+              "offset": [
+                0,
+                16,
+                -16
+              ],
+              "yaw": 180,
+              "pivot": [
+                8,
+                8,
+                8
+              ]
+            },
+            {
+              "model": "bloodborne_dw:base/prototype_door/source_header",
+              "altModel": "bloodborne_dw:alt/prototype_door/source_header",
+              "offset": [
+                0,
+                48,
+                -16
+              ],
+              "yaw": 180,
+              "pivot": [
+                8,
+                8,
+                8
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                31,
+                0,
+                1
+              ],
+              "to": [
+                32,
+                48,
+                3
+              ]
+            },
+            {
+              "from": [
+                -16,
+                0,
+                1
+              ],
+              "to": [
+                -15,
+                48,
+                3
+              ]
+            },
+            {
+              "from": [
+                0,
+                0,
+                1
+              ],
+              "to": [
+                16,
+                48,
+                3
+              ]
+            },
+            {
+              "from": [
+                -16,
+                48,
+                1
+              ],
+              "to": [
+                32,
+                64,
+                3
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                16,
+                0,
+                1
+              ],
+              "to": [
+                32,
+                48,
+                3
+              ]
+            },
+            {
+              "from": [
+                -16,
+                0,
+                1
+              ],
+              "to": [
+                0,
+                48,
+                3
+              ]
+            },
+            {
+              "from": [
+                0,
+                0,
+                1
+              ],
+              "to": [
+                16,
+                48,
+                3
+              ]
+            },
+            {
+              "from": [
+                -16,
+                48,
+                1
+              ],
+              "to": [
+                32,
+                64,
+                3
+              ]
+            }
+          ]
+        },
+        "open": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:base/prototype_door/left_panel",
+              "altModel": "bloodborne_dw:alt/prototype_door/left_panel",
+              "offset": [
+                0,
+                16,
+                -16
+              ],
+              "yaw": 180,
+              "pivot": [
+                8,
+                8,
+                8
+              ]
+            },
+            {
+              "model": "bloodborne_dw:base/prototype_door/right_panel",
+              "altModel": "bloodborne_dw:alt/prototype_door/right_panel",
+              "offset": [
+                0,
+                16,
+                -16
+              ],
+              "yaw": 180,
+              "pivot": [
+                8,
+                8,
+                8
+              ]
+            },
+            {
+              "model": "bloodborne_dw:base/prototype_door/central_leaf",
+              "altModel": "bloodborne_dw:alt/prototype_door/central_leaf",
+              "offset": [
+                0,
+                16,
+                -16
+              ],
+              "yaw": 180,
+              "pivot": [
+                8,
+                8,
+                8
+              ],
+              "extraYaw": 90,
+              "extraPivot": [
+                0,
+                0,
+                -1
+              ]
+            },
+            {
+              "model": "bloodborne_dw:base/prototype_door/source_header",
+              "altModel": "bloodborne_dw:alt/prototype_door/source_header",
+              "offset": [
+                0,
+                48,
+                -16
+              ],
+              "yaw": 180,
+              "pivot": [
+                8,
+                8,
+                8
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                31,
+                0,
+                1
+              ],
+              "to": [
+                32,
+                48,
+                3
+              ]
+            },
+            {
+              "from": [
+                -16,
+                0,
+                1
+              ],
+              "to": [
+                -15,
+                48,
+                3
+              ]
+            },
+            {
+              "from": [
+                15.999999999999998,
+                0,
+                1.0
+              ],
+              "to": [
+                18.0,
+                48,
+                17.0
+              ]
+            },
+            {
+              "from": [
+                -16,
+                48,
+                1
+              ],
+              "to": [
+                32,
+                64,
+                3
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                16,
+                0,
+                1
+              ],
+              "to": [
+                32,
+                48,
+                3
+              ]
+            },
+            {
+              "from": [
+                -16,
+                0,
+                1
+              ],
+              "to": [
+                0,
+                48,
+                3
+              ]
+            },
+            {
+              "from": [
+                15.999999999999998,
+                0,
+                1.0
+              ],
+              "to": [
+                18.0,
+                48,
+                17.0
+              ]
+            },
+            {
+              "from": [
+                -16,
+                48,
+                1
+              ],
+              "to": [
+                32,
+                64,
+                3
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "proposal": "One central leaf x0..16,y-16..32, hinge at source x0,z-1, opens +90 degrees. Full left/right panels and source header stay static. Closed art and both-face UV exactly preserved. Source has no animation or asymmetric hinge mesh: hinge side and swing are explicitly a proposed functional interpretation at the source central-panel boundary, subject to human review. Central passage remains floor-level. Static side decoration remains selection-only apart from two thin outside jambs, preserving the previously measured source side passage under the approved cheap/partial-penetration policy.",
+  "sourceClosedExact": true,
+  "numericId": null,
+  "physicalPlacementRules": "Collision is independent from root-only reservation. Adjacent contact/decorative overlap allowed; foreign states never cleared."
+}

@@ -1,0 +1,23 @@
+gradle.projectsEvaluated {
+ def p=gradle.rootProject
+ p.sourceSets.create('streamingqa') {
+  compileClasspath += p.sourceSets.main.output + p.sourceSets.main.compileClasspath
+  runtimeClasspath += p.sourceSets.main.output + p.sourceSets.main.runtimeClasspath
+ }
+ p.configurations.streamingqaImplementation.extendsFrom(p.configurations.implementation)
+ p.tasks.register('streamingQaJar', Jar) {
+  dependsOn p.tasks.named('streamingqaClasses')
+  from p.sourceSets.streamingqa.output
+  archiveBaseName='dreamwalker-streaming-qa'
+  archiveClassifier='dev'
+ }
+ def remapType=p.tasks.getByName('remapJar').class.classLoader.loadClass('net.fabricmc.loom.task.RemapJarTask')
+ p.tasks.register('remapStreamingQaJar', remapType) {
+  dependsOn p.tasks.named('streamingQaJar')
+  inputFile.set(p.tasks.named('streamingQaJar',Jar).flatMap { it.archiveFile })
+  classpath.from(p.sourceSets.main.output,p.sourceSets.main.compileClasspath)
+  archiveBaseName='dreamwalker-streaming-qa'
+  archiveClassifier=''
+  addNestedDependencies=false
+ }
+}

@@ -1,0 +1,2920 @@
+{
+  "cage_obj_1": {
+    "id": "cage_obj_1",
+    "model": "geo/cage_obj_1.geo.json",
+    "texture": "textures/entities/decorations/cage_obj.png",
+    "animation": "animations/cage_obj_1.animation.json",
+    "width": 2.8,
+    "height": 6.5,
+    "scale": 1,
+    "displayName": "Cage Obj 1",
+    "clips": {
+      "idle": {
+        "name": "animation.cage_obj_1.idle",
+        "seconds": 3,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "hit": {
+        "name": "animation.cage_obj_1.hit",
+        "seconds": 0.5417,
+        "loop": false,
+        "loopMode": "loop"
+      },
+      "attack1": {
+        "name": "animation.cage_obj_1.attack1",
+        "seconds": 2.0833,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "attack2": {
+        "name": "animation.cage_obj_1.attack2",
+        "seconds": 2.25,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "death": {
+        "name": "animation.cage_obj_1.death",
+        "seconds": 5,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "new": {
+        "name": "animation.cage_obj_1.new",
+        "seconds": 1,
+        "loop": true,
+        "loopMode": "loop"
+      }
+    }
+  },
+  "cage_obj_2": {
+    "id": "cage_obj_2",
+    "model": "geo/cage_obj_2.geo.json",
+    "texture": "textures/entities/decorations/cage_obj.png",
+    "animation": "animations/cage_obj_2.animation.json",
+    "width": 2.8,
+    "height": 6.5,
+    "scale": 1,
+    "displayName": "Cage Obj 2",
+    "clips": {
+      "idle": {
+        "name": "animation.cage_obj_2.idle",
+        "seconds": 3,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "hit": {
+        "name": "animation.cage_obj_2.hit",
+        "seconds": 0.5417,
+        "loop": false,
+        "loopMode": "loop"
+      },
+      "attack1": {
+        "name": "animation.cage_obj_2.attack1",
+        "seconds": 2.0833,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "attack2": {
+        "name": "animation.cage_obj_2.attack2",
+        "seconds": 2.25,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "death": {
+        "name": "animation.cage_obj_2.death",
+        "seconds": 5,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "new": {
+        "name": "animation.cage_obj_2.new",
+        "seconds": 1,
+        "loop": true,
+        "loopMode": "loop"
+      }
+    }
+  },
+  "cage_obj_3": {
+    "id": "cage_obj_3",
+    "model": "geo/cage_obj_3.geo.json",
+    "texture": "textures/entities/decorations/cage_obj.png",
+    "animation": "animations/cage_obj_3.animation.json",
+    "width": 2.8,
+    "height": 6.5,
+    "scale": 1,
+    "displayName": "Cage Obj 3",
+    "clips": {
+      "idle": {
+        "name": "animation.cage_obj_3.idle",
+        "seconds": 3,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "hit": {
+        "name": "animation.cage_obj_3.hit",
+        "seconds": 0.5417,
+        "loop": false,
+        "loopMode": "loop"
+      },
+      "attack1": {
+        "name": "animation.cage_obj_3.attack1",
+        "seconds": 2.0833,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "attack2": {
+        "name": "animation.cage_obj_3.attack2",
+        "seconds": 2.25,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "death": {
+        "name": "animation.cage_obj_3.death",
+        "seconds": 5,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "new": {
+        "name": "animation.cage_obj_3.new",
+        "seconds": 1,
+        "loop": true,
+        "loopMode": "loop"
+      }
+    }
+  },
+  "cleric_beast": {
+    "id": "cleric_beast",
+    "model": "geo/cleric_beast.geo.json",
+    "texture": "textures/entities/beast/cleric_beast.png",
+    "animation": "animations/cleric_beast.animation.json",
+    "width": 2.8,
+    "height": 6.5,
+    "scale": 1.5,
+    "displayName": "Cleric Beast",
+    "clips": {
+      "idle": {
+        "name": "animation.cleric_beast.idle",
+        "seconds": 5.54167,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "walk": {
+        "name": "animation.cleric_beast.walk",
+        "seconds": 1.83333,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "attack1": {
+        "name": "animation.cleric_beast.attack1",
+        "seconds": 4.33333,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "attack2": {
+        "name": "animation.cleric_beast.attack2",
+        "seconds": 2.95833,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "attack3": {
+        "name": "animation.cleric_beast.attack3",
+        "seconds": 2.83333,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "hit": {
+        "name": "animation.cleric_beast.hit",
+        "seconds": 0.625,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "new": {
+        "name": "animation.cleric_beast.new",
+        "seconds": 1,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "death": {
+        "name": "animation.cleric_beast.death",
+        "seconds": 5,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      }
+    }
+  },
+  "vicar_amelia": {
+    "id": "vicar_amelia",
+    "model": "geo/vicar_amelia.geo.json",
+    "texture": "textures/entities/beast/vicar_amelia.png",
+    "animation": "animations/vicar_amelia.animation.json",
+    "width": 2.8,
+    "height": 4.5,
+    "scale": 1.2,
+    "displayName": "Vicar Amelia",
+    "clips": {
+      "idle": {
+        "name": "animation.vicar_amelia.idle",
+        "seconds": 4,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "walk": {
+        "name": "animation.vicar_amelia.walk",
+        "seconds": 1.5,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "run": {
+        "name": "animation.vicar_amelia.run",
+        "seconds": 0.95,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "hit": {
+        "name": "animation.vicar_amelia.hit",
+        "seconds": 0.5,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "attack1": {
+        "name": "animation.vicar_amelia.attack1",
+        "seconds": 4.25,
+        "loop": true,
+        "loopMode": "hold_on_last_frame"
+      },
+      "attack2": {
+        "name": "animation.vicar_amelia.attack2",
+        "seconds": 3.6,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "static": {
+        "name": "animation.vicar_amelia.static",
+        "seconds": 1,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "walkie2": {
+        "name": "animation.vicar_amelia.walkie2",
+        "seconds": 1.5,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "runrun": {
+        "name": "animation.vicar_amelia.runrun",
+        "seconds": 0.95,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "new": {
+        "name": "animation.vicar_amelia.new",
+        "seconds": 1,
+        "loop": true,
+        "loopMode": "loop"
+      }
+    }
+  },
+  "scourge_beast": {
+    "id": "scourge_beast",
+    "model": "geo/scourge_beast.geo.json",
+    "texture": "textures/entities/beast/scourge_beast.png",
+    "animation": "animations/scourge_beast.animation.json",
+    "width": 2.5,
+    "height": 2.0,
+    "scale": 1.2,
+    "displayName": "Scourge Beast",
+    "clips": {
+      "idle": {
+        "name": "animation.scourge_beast.idle",
+        "seconds": 5.41667,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "walk": {
+        "name": "animation.scourge_beast.walk",
+        "seconds": 2,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "run": {
+        "name": "animation.scourge_beast.run",
+        "seconds": 0.5417,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "attack1": {
+        "name": "animation.scourge_beast.attack1",
+        "seconds": 2.20833,
+        "loop": true,
+        "loopMode": "hold_on_last_frame"
+      },
+      "attack2": {
+        "name": "animation.scourge_beast.attack2",
+        "seconds": 3,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "hit": {
+        "name": "animation.scourge_beast.hit",
+        "seconds": 0.5,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "left_turn": {
+        "name": "animation.scourge_beast.left_turn",
+        "seconds": 1,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "right_turn": {
+        "name": "animation.scourge_beast.right_turn",
+        "seconds": 1,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "death": {
+        "name": "animation.scourge_beast.death",
+        "seconds": 5,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "new": {
+        "name": "animation.scourge_beast.new",
+        "seconds": 1,
+        "loop": true,
+        "loopMode": "loop"
+      }
+    }
+  },
+  "blood_starved_beast": {
+    "id": "blood_starved_beast",
+    "model": "geo/blood_starved_beast.geo.json",
+    "texture": "textures/entities/beast/blood_starved_beast.png",
+    "animation": "animations/blood_starved_beast.animation.json",
+    "width": 2.5,
+    "height": 3.25,
+    "scale": 1.2,
+    "displayName": "Blood Starved Beast",
+    "clips": {
+      "idle": {
+        "name": "animation.blood_starved_beast.idle",
+        "seconds": 7.25,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "walk": {
+        "name": "animation.blood_starved_beast.walk",
+        "seconds": 2,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "attack1": {
+        "name": "animation.blood_starved_beast.attack1",
+        "seconds": 3,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "attack1_positioning": {
+        "name": "animation.blood_starved_beast.attack1_positioning",
+        "seconds": 3,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "attack2": {
+        "name": "animation.blood_starved_beast.attack2",
+        "seconds": 2.0417,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "attack2_positioning": {
+        "name": "animation.blood_starved_beast.attack2_positioning",
+        "seconds": 2.0417,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "run": {
+        "name": "animation.blood_starved_beast.run",
+        "seconds": 0.875,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "new": {
+        "name": "animation.blood_starved_beast.new",
+        "seconds": 1,
+        "loop": true,
+        "loopMode": "loop"
+      }
+    }
+  },
+  "executioner": {
+    "id": "executioner",
+    "model": "geo/executioner.geo.json",
+    "texture": "textures/entities/church/executioner.png",
+    "animation": "animations/executioner.animation.json",
+    "width": 1.5,
+    "height": 2.5,
+    "scale": 1.75,
+    "displayName": "Executioner",
+    "clips": {
+      "idle": {
+        "name": "animation.executioner.idle",
+        "seconds": 2.75,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "walk": {
+        "name": "animation.executioner.walk",
+        "seconds": 1.75,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "static": {
+        "name": "animation.executioner.static",
+        "seconds": 1,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "attack1": {
+        "name": "animation.executioner.attack1",
+        "seconds": 3.5,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "attack2": {
+        "name": "animation.executioner.attack2",
+        "seconds": 3.58333,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "attack3": {
+        "name": "animation.executioner.attack3",
+        "seconds": 4.45833,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "hit": {
+        "name": "animation.executioner.hit",
+        "seconds": 0.5417,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "attack2_movetest": {
+        "name": "animation.executioner.attack2_movetest",
+        "seconds": 3,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "walkmovecombinetest": {
+        "name": "animation.executioner.walkmovecombinetest",
+        "seconds": 1.75,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "new": {
+        "name": "animation.executioner.new",
+        "seconds": 1,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "left_turn": {
+        "name": "animation.executioner.left_turn",
+        "seconds": 1.0833,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "right_turn": {
+        "name": "animation.executioner.right_turn",
+        "seconds": 1.0833,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "death": {
+        "name": "animation.executioner.death",
+        "seconds": 5,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      }
+    }
+  },
+  "huntsman_a": {
+    "id": "huntsman_a",
+    "model": "geo/huntsman_a.geo.json",
+    "texture": "textures/entities/church/huntsman_a.png",
+    "animation": "animations/huntsman_a.animation.json",
+    "width": 1.0,
+    "height": 2.5,
+    "scale": 1.2,
+    "displayName": "Huntsman A",
+    "clips": {
+      "idle": {
+        "name": "animation.huntsman_a.idle",
+        "seconds": 4,
+        "loop": false,
+        "loopMode": "loop"
+      },
+      "walk": {
+        "name": "animation.huntsman_a.walk",
+        "seconds": 1,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "run": {
+        "name": "animation.huntsman_a.run",
+        "seconds": 0.75,
+        "loop": false,
+        "loopMode": "loop"
+      },
+      "attack1": {
+        "name": "animation.huntsman_a.attack1",
+        "seconds": 3,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "attack2": {
+        "name": "animation.huntsman_a.attack2",
+        "seconds": 2.25,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "hit": {
+        "name": "animation.huntsman_a.hit",
+        "seconds": 0.5417,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "left_turn": {
+        "name": "animation.huntsman_a.left_turn",
+        "seconds": 1,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "right_turn": {
+        "name": "animation.huntsman_a.right_turn",
+        "seconds": 1,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "death": {
+        "name": "animation.huntsman_a.death",
+        "seconds": 5,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "new": {
+        "name": "animation.huntsman_a.new",
+        "seconds": 1,
+        "loop": true,
+        "loopMode": "loop"
+      }
+    }
+  },
+  "huntsman_b": {
+    "id": "huntsman_b",
+    "model": "geo/huntsman_b.geo.json",
+    "texture": "textures/entities/church/huntsman_b.png",
+    "animation": "animations/huntsman_b.animation.json",
+    "width": 1.0,
+    "height": 2.5,
+    "scale": 1.2,
+    "displayName": "Huntsman B",
+    "clips": {
+      "walk": {
+        "name": "animation.huntsman_b.walk",
+        "seconds": 1.25,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "idle": {
+        "name": "animation.huntsman_b.idle",
+        "seconds": 2.625,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "hit": {
+        "name": "animation.huntsman_b.hit",
+        "seconds": 0.4167,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "attack1": {
+        "name": "animation.huntsman_b.attack1",
+        "seconds": 3,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "attack2": {
+        "name": "animation.huntsman_b.attack2",
+        "seconds": 3.29167,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "attack1_movetest": {
+        "name": "animation.huntsman_b.attack1_movetest",
+        "seconds": 2.33333,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "attack2_movetest": {
+        "name": "animation.huntsman_b.attack2_movetest",
+        "seconds": 2.41667,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "new": {
+        "name": "animation.huntsman_b.new",
+        "seconds": 1,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "death": {
+        "name": "animation.huntsman_b.death",
+        "seconds": 5,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      }
+    }
+  },
+  "huntsman_c": {
+    "id": "huntsman_c",
+    "model": "geo/huntsman_c.geo.json",
+    "texture": "textures/entities/church/huntsman_c.png",
+    "animation": "animations/huntsman_c.animation.json",
+    "width": 1.0,
+    "height": 2.5,
+    "scale": 1.2,
+    "displayName": "Huntsman C",
+    "clips": {
+      "idle": {
+        "name": "animation.huntsman_c.idle",
+        "seconds": 2.5,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "walk": {
+        "name": "animation.huntsman_c.walk",
+        "seconds": 1.5,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "run": {
+        "name": "animation.huntsman_c.run",
+        "seconds": 0.83333,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "hit": {
+        "name": "animation.huntsman_c.hit",
+        "seconds": 0.58333,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "defend": {
+        "name": "animation.huntsman_c.defend",
+        "seconds": 2.5,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "attack1": {
+        "name": "animation.huntsman_c.attack1",
+        "seconds": 2.25,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "attack2": {
+        "name": "animation.huntsman_c.attack2",
+        "seconds": 1.95833,
+        "loop": true,
+        "loopMode": "hold_on_last_frame"
+      },
+      "new": {
+        "name": "animation.huntsman_c.new",
+        "seconds": 1,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "left_turn": {
+        "name": "animation.huntsman_c.left_turn",
+        "seconds": 1,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "right_turn": {
+        "name": "animation.huntsman_c.right_turn",
+        "seconds": 1,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "death": {
+        "name": "animation.huntsman_c.death",
+        "seconds": 5,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      }
+    }
+  },
+  "huntsman_d": {
+    "id": "huntsman_d",
+    "model": "geo/huntsman_d.geo.json",
+    "texture": "textures/entities/church/huntsman_d.png",
+    "animation": "animations/huntsman_d.animation.json",
+    "width": 1.0,
+    "height": 2.5,
+    "scale": 1.2,
+    "displayName": "Huntsman D",
+    "clips": {
+      "attack2": {
+        "name": "animation.huntsman_d.attack2",
+        "seconds": 3.0833,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "attack1": {
+        "name": "animation.huntsman_d.attack1",
+        "seconds": 4.375,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "walk": {
+        "name": "animation.huntsman_d.walk",
+        "seconds": 1.5,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "run": {
+        "name": "animation.huntsman_d.run",
+        "seconds": 0.8333,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "attack_sword2": {
+        "name": "animation.huntsman_d.attack_sword2",
+        "seconds": 14.5,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "attack_sword1": {
+        "name": "animation.huntsman_d.attack_sword1",
+        "seconds": 3.08333,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "change_weapon2": {
+        "name": "animation.huntsman_d.change_weapon2",
+        "seconds": 1.0833,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "change_weapon1": {
+        "name": "animation.huntsman_d.change_weapon1",
+        "seconds": 1.0833,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "idle1": {
+        "name": "animation.huntsman_d.idle1",
+        "seconds": 1,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "idle2": {
+        "name": "animation.huntsman_d.idle2",
+        "seconds": 2.5,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "hit": {
+        "name": "animation.huntsman_d.hit",
+        "seconds": 0.5833,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "new": {
+        "name": "animation.huntsman_d.new",
+        "seconds": 1,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "death_rifle": {
+        "name": "animation.huntsman_d.death_rifle",
+        "seconds": 5,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "death_saber": {
+        "name": "animation.huntsman_d.death_saber",
+        "seconds": 5,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      }
+    }
+  },
+  "huntsman_wheelchair": {
+    "id": "huntsman_wheelchair",
+    "model": "geo/huntsman_wheelchair.geo.json",
+    "texture": "textures/entities/church/wheelchair_huntsmen.png",
+    "animation": "animations/wheelchair.animation.json",
+    "width": 0.8,
+    "height": 2.0,
+    "scale": 0.9,
+    "displayName": "Huntsman Wheelchair",
+    "clips": {
+      "idle": {
+        "name": "animation.wheelchair.idle",
+        "seconds": 6,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "walk": {
+        "name": "animation.wheelchair.walk",
+        "seconds": 3.25,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "run": {
+        "name": "animation.wheelchair.run",
+        "seconds": 2.29167,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "hit": {
+        "name": "animation.wheelchair.hit",
+        "seconds": 0.5,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "attack1": {
+        "name": "animation.wheelchair.attack1",
+        "seconds": 6.25,
+        "loop": true,
+        "loopMode": "hold_on_last_frame"
+      },
+      "attack2": {
+        "name": "animation.wheelchair.attack2",
+        "seconds": 7.20833,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "new": {
+        "name": "animation.wheelchair.new",
+        "seconds": 1,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "left_turn": {
+        "name": "animation.wheelchair.left_turn",
+        "seconds": 1.75,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "right_turn": {
+        "name": "animation.wheelchair.right_turn",
+        "seconds": 1.75,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "death": {
+        "name": "animation.wheelchair.death",
+        "seconds": 5,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      }
+    }
+  },
+  "large_huntsman": {
+    "id": "large_huntsman",
+    "model": "geo/large_huntsman.geo.json",
+    "texture": "textures/entities/church/large_huntsman.png",
+    "animation": "animations/large_huntsman.animation.json",
+    "width": 1.25,
+    "height": 3.75,
+    "scale": 1.2,
+    "displayName": "Large Huntsman",
+    "clips": {
+      "idle": {
+        "name": "animation.large_huntsman.idle",
+        "seconds": 2.375,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "run": {
+        "name": "animation.large_huntsman.run",
+        "seconds": 0.66667,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "hit": {
+        "name": "animation.large_huntsman.hit",
+        "seconds": 1.54167,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "attack1": {
+        "name": "animation.large_huntsman.attack1",
+        "seconds": 3.83333,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "attack2": {
+        "name": "animation.large_huntsman.attack2",
+        "seconds": 3.83333,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "attack3": {
+        "name": "animation.large_huntsman.attack3",
+        "seconds": 3.83333,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "walk": {
+        "name": "animation.large_huntsman.walk",
+        "seconds": 1.5,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "new": {
+        "name": "animation.large_huntsman.new",
+        "seconds": 1,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "static2": {
+        "name": "animation.large_huntsman.static2",
+        "seconds": 1,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "death": {
+        "name": "animation.large_huntsman.death",
+        "seconds": 5,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      }
+    }
+  },
+  "carrion_crow": {
+    "id": "carrion_crow",
+    "model": "geo/carrion_crow.geo.json",
+    "texture": "textures/entities/carrion_crow.png",
+    "animation": "animations/carrion_crow.animation.json",
+    "width": 1.5,
+    "height": 1.0,
+    "scale": 1.4,
+    "displayName": "Carrion Crow",
+    "clips": {
+      "walk": {
+        "name": "animation.carrion_crow.walk",
+        "seconds": 3,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "idle": {
+        "name": "animation.carrion_crow.idle",
+        "seconds": 4.79167,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "attack1": {
+        "name": "animation.carrion_crow.attack1",
+        "seconds": 2.79167,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "attack2": {
+        "name": "animation.carrion_crow.attack2",
+        "seconds": 2.33333,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "hit": {
+        "name": "animation.carrion_crow.hit",
+        "seconds": 0.4583,
+        "loop": false,
+        "loopMode": "loop"
+      },
+      "left_turn": {
+        "name": "animation.carrion_crow.left_turn",
+        "seconds": 1.9167,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "right_turn": {
+        "name": "animation.carrion_crow.right_turn",
+        "seconds": 1.9167,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "death": {
+        "name": "animation.carrion_crow.death",
+        "seconds": 5,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "new": {
+        "name": "animation.carrion_crow.new",
+        "seconds": 1,
+        "loop": true,
+        "loopMode": "loop"
+      }
+    }
+  },
+  "giant_rat": {
+    "id": "giant_rat",
+    "model": "geo/giant_rat.geo.json",
+    "texture": "textures/entities/giant_rat.png",
+    "animation": "animations/giant_rat.animation.json",
+    "width": 2.5,
+    "height": 2.0,
+    "scale": 1.6,
+    "displayName": "Giant Rat",
+    "clips": {
+      "idle": {
+        "name": "animation.giant_rat.idle",
+        "seconds": 4.5,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "walk": {
+        "name": "animation.giant_rat.walk",
+        "seconds": 1.25,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "attack1": {
+        "name": "animation.giant_rat.attack1",
+        "seconds": 1.5,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "attack2": {
+        "name": "animation.giant_rat.attack2",
+        "seconds": 1.625,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "left_turn": {
+        "name": "animation.giant_rat.left_turn",
+        "seconds": 0.5,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "right_turn": {
+        "name": "animation.giant_rat.right_turn",
+        "seconds": 0.5,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "death": {
+        "name": "animation.giant_rat.death",
+        "seconds": 5,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "new": {
+        "name": "animation.giant_rat.new",
+        "seconds": 1,
+        "loop": true,
+        "loopMode": "loop"
+      }
+    }
+  },
+  "small_rat": {
+    "id": "small_rat",
+    "model": "geo/giant_rat.geo.json",
+    "texture": "textures/entities/giant_rat.png",
+    "animation": "animations/giant_rat.animation.json",
+    "width": 1.5,
+    "height": 1.5,
+    "scale": 1.1,
+    "displayName": "Small Rat",
+    "clips": {
+      "idle": {
+        "name": "animation.giant_rat.idle",
+        "seconds": 4.5,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "walk": {
+        "name": "animation.giant_rat.walk",
+        "seconds": 1.25,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "attack1": {
+        "name": "animation.giant_rat.attack1",
+        "seconds": 1.5,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "attack2": {
+        "name": "animation.giant_rat.attack2",
+        "seconds": 1.625,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "left_turn": {
+        "name": "animation.giant_rat.left_turn",
+        "seconds": 0.5,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "right_turn": {
+        "name": "animation.giant_rat.right_turn",
+        "seconds": 0.5,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "death": {
+        "name": "animation.giant_rat.death",
+        "seconds": 5,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "new": {
+        "name": "animation.giant_rat.new",
+        "seconds": 1,
+        "loop": true,
+        "loopMode": "loop"
+      }
+    }
+  },
+  "rabid_dog": {
+    "id": "rabid_dog",
+    "model": "geo/rabid_dog.geo.json",
+    "texture": "textures/entities/rabid_dog.png",
+    "animation": "animations/rabid_dog.animation.json",
+    "width": 1.5,
+    "height": 1.5,
+    "scale": 0.6,
+    "displayName": "Rabid Dog",
+    "clips": {
+      "idle": {
+        "name": "animation.rabid_dog.idle",
+        "seconds": 3,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "walk": {
+        "name": "animation.rabid_dog.walk",
+        "seconds": 1.5417,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "hit": {
+        "name": "animation.rabid_dog.hit",
+        "seconds": 0.5417,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "run": {
+        "name": "animation.rabid_dog.run",
+        "seconds": 0.6667,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "attack1": {
+        "name": "animation.rabid_dog.attack1",
+        "seconds": 2.0833,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "attack2": {
+        "name": "animation.rabid_dog.attack2",
+        "seconds": 2.25,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "left_turn": {
+        "name": "animation.rabid_dog.left_turn",
+        "seconds": 1.375,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "right_turn": {
+        "name": "animation.rabid_dog.right_turn",
+        "seconds": 1.375,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "death": {
+        "name": "animation.rabid_dog.death",
+        "seconds": 5,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "new": {
+        "name": "animation.rabid_dog.new",
+        "seconds": 1,
+        "loop": true,
+        "loopMode": "loop"
+      }
+    }
+  },
+  "maneater_boar": {
+    "id": "maneater_boar",
+    "model": "geo/maneater_boar.geo.json",
+    "texture": "textures/entities/maneater_boar.png",
+    "animation": "animations/maneater_boar.animation.json",
+    "width": 3.5,
+    "height": 4.0,
+    "scale": 1.4,
+    "displayName": "Maneater Boar",
+    "clips": {
+      "idle": {
+        "name": "animation.maneater_boar.idle",
+        "seconds": 3,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "walk": {
+        "name": "animation.maneater_boar.walk",
+        "seconds": 1,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "run": {
+        "name": "animation.maneater_boar.run",
+        "seconds": 0.6667,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "hit": {
+        "name": "animation.maneater_boar.hit",
+        "seconds": 0.66667,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "attack1": {
+        "name": "animation.maneater_boar.attack1",
+        "seconds": 5,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "attack2": {
+        "name": "animation.maneater_boar.attack2",
+        "seconds": 5.5,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "new": {
+        "name": "animation.maneater_boar.new",
+        "seconds": 1,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "left_turn": {
+        "name": "animation.maneater_boar.left_turn",
+        "seconds": 1.375,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "right_turn": {
+        "name": "animation.maneater_boar.right_turn",
+        "seconds": 1.375,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "death": {
+        "name": "animation.maneater_boar.death",
+        "seconds": 5,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      }
+    }
+  },
+  "brick_troll": {
+    "id": "brick_troll",
+    "model": "geo/brick_troll.geo.json",
+    "texture": "textures/entities/brick_troll.png",
+    "animation": "animations/brick_troll.animation.json",
+    "width": 1.5,
+    "height": 2.5,
+    "scale": 1.2,
+    "displayName": "Brick Troll",
+    "clips": {
+      "idle": {
+        "name": "animation.brick_troll.idle",
+        "seconds": 2.375,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "walk": {
+        "name": "animation.brick_troll.walk",
+        "seconds": 1.41667,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "attack1": {
+        "name": "animation.brick_troll.attack1",
+        "seconds": 6.70833,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "attack2_old": {
+        "name": "animation.brick_troll.attack2_old",
+        "seconds": 5.625,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "attack2": {
+        "name": "animation.brick_troll.attack2",
+        "seconds": 5.625,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "attack2_rotation": {
+        "name": "animation.brick_troll.attack2_rotation",
+        "seconds": 6.375,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "attack2_continuation": {
+        "name": "animation.brick_troll.attack2_continuation",
+        "seconds": 2.25,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "attack2_continuation_rotation": {
+        "name": "animation.brick_troll.attack2_continuation_rotation",
+        "seconds": 3.5,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "hit": {
+        "name": "animation.brick_troll.hit",
+        "seconds": 0.625,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "new": {
+        "name": "animation.brick_troll.new",
+        "seconds": 1,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "left_turn": {
+        "name": "animation.brick_troll.left_turn",
+        "seconds": 1,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "right_turn": {
+        "name": "animation.brick_troll.right_turn",
+        "seconds": 1,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "death": {
+        "name": "animation.brick_troll.death",
+        "seconds": 5,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      }
+    }
+  },
+  "rotted_corpse": {
+    "id": "rotted_corpse",
+    "model": "geo/rotted_corpse.geo.json",
+    "texture": "textures/entities/rotted_corpse.png",
+    "animation": "animations/rotted_corpse.animation.json",
+    "width": 2.5,
+    "height": 2.0,
+    "scale": 1.2,
+    "displayName": "Rotted Corpse",
+    "clips": {
+      "idle": {
+        "name": "animation.rotted_corpse.idle",
+        "seconds": 2,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "walk": {
+        "name": "animation.rotted_corpse.walk",
+        "seconds": 4,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "hit": {
+        "name": "animation.rotted_corpse.hit",
+        "seconds": 0.33333,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "attack1": {
+        "name": "animation.rotted_corpse.attack1",
+        "seconds": 7.125,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "attack2": {
+        "name": "animation.rotted_corpse.attack2",
+        "seconds": 2,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "new": {
+        "name": "animation.rotted_corpse.new",
+        "seconds": 1,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "left_turn": {
+        "name": "animation.rotted_corpse.left_turn",
+        "seconds": 2,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "right_turn": {
+        "name": "animation.rotted_corpse.right_turn",
+        "seconds": 2,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "death": {
+        "name": "animation.rotted_corpse.death",
+        "seconds": 5,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      }
+    }
+  },
+  "hearse": {
+    "id": "hearse",
+    "model": "geo/hearse.geo.json",
+    "texture": "textures/entities/decorations/hearse.png",
+    "animation": "animations/fallback.animation.json",
+    "width": 2.5,
+    "height": 6.8,
+    "scale": 1,
+    "displayName": "Hearse",
+    "clips": {}
+  },
+  "carriage": {
+    "id": "carriage",
+    "model": "geo/carriage.geo.json",
+    "texture": "textures/entities/decorations/carriage.png",
+    "animation": "animations/fallback.animation.json",
+    "width": 2.5,
+    "height": 5.0,
+    "scale": 1,
+    "displayName": "Carriage",
+    "clips": {}
+  },
+  "dog_cage": {
+    "id": "dog_cage",
+    "model": "geo/dog_cage.geo.json",
+    "texture": "textures/entities/decorations/dog_cage.png",
+    "animation": "animations/fallback.animation.json",
+    "width": 2.5,
+    "height": 4.5,
+    "scale": 1,
+    "displayName": "Dog Cage",
+    "clips": {}
+  },
+  "dog_cage1": {
+    "id": "dog_cage1",
+    "model": "geo/dog_cage1.geo.json",
+    "texture": "textures/entities/decorations/spirelamp_0094.png",
+    "animation": "animations/fallback.animation.json",
+    "width": 2.5,
+    "height": 4.5,
+    "scale": 1,
+    "displayName": "Dog Cage1",
+    "clips": {}
+  },
+  "dog_cage2": {
+    "id": "dog_cage2",
+    "model": "geo/dog_cage_floor.geo.json",
+    "texture": "textures/entities/decorations/spirelamp_0094.png",
+    "animation": "animations/fallback.animation.json",
+    "width": 2.5,
+    "height": 4.5,
+    "scale": 1,
+    "displayName": "Dog Cage2",
+    "clips": {}
+  },
+  "dog_cage3": {
+    "id": "dog_cage3",
+    "model": "geo/dog_cage_floor_lone.geo.json",
+    "texture": "textures/entities/decorations/spirelamp_0094.png",
+    "animation": "animations/fallback.animation.json",
+    "width": 2.5,
+    "height": 4.5,
+    "scale": 1,
+    "displayName": "Dog Cage3",
+    "clips": {}
+  },
+  "cabriolet_open": {
+    "id": "cabriolet_open",
+    "model": "geo/cabriolet_opened.geo.json",
+    "texture": "textures/entities/decorations/cabriolet.png",
+    "animation": "animations/fallback.animation.json",
+    "width": 2.5,
+    "height": 3.0,
+    "scale": 1,
+    "displayName": "Cabriolet Open",
+    "clips": {}
+  },
+  "cabriolet_closed": {
+    "id": "cabriolet_closed",
+    "model": "geo/cabriolet_closed.geo.json",
+    "texture": "textures/entities/decorations/cabriolet.png",
+    "animation": "animations/fallback.animation.json",
+    "width": 2.5,
+    "height": 3.0,
+    "scale": 1,
+    "displayName": "Cabriolet Closed",
+    "clips": {}
+  },
+  "door_1": {
+    "id": "door_1",
+    "model": "geo/door_1.geo.json",
+    "texture": "textures/entities/decorations/door_1.png",
+    "animation": "animations/door.animation.json",
+    "width": 2.0,
+    "height": 5.0,
+    "scale": 1,
+    "displayName": "Door 1",
+    "clips": {
+      "open": {
+        "name": "animation.door.open",
+        "seconds": 2.6,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "open_idle": {
+        "name": "animation.door.open_idle",
+        "seconds": 1,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "close": {
+        "name": "animation.door.close",
+        "seconds": 3.08,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "closed_idle": {
+        "name": "animation.door.closed_idle",
+        "seconds": 1,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "new": {
+        "name": "animation.door.new",
+        "seconds": 1,
+        "loop": true,
+        "loopMode": "loop"
+      }
+    }
+  },
+  "door_2": {
+    "id": "door_2",
+    "model": "geo/dubble_door.geo.json",
+    "texture": "textures/entities/decorations/door.png",
+    "animation": "animations/double_door.animation.json",
+    "width": 2.5,
+    "height": 5.0,
+    "scale": 1,
+    "displayName": "Door 2",
+    "clips": {
+      "open": {
+        "name": "animation.door.open",
+        "seconds": 2.6,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "close": {
+        "name": "animation.door.close",
+        "seconds": 3.08,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "closed_idle": {
+        "name": "animation.door.closed_idle",
+        "seconds": 1,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "open_idle": {
+        "name": "animation.door.open_idle",
+        "seconds": 1,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "new": {
+        "name": "animation.door.new",
+        "seconds": 1,
+        "loop": true,
+        "loopMode": "loop"
+      }
+    }
+  },
+  "main_gate": {
+    "id": "main_gate",
+    "model": "geo/main_gate.geo.json",
+    "texture": "textures/entities/decorations/main_gate.png",
+    "animation": "animations/main_gate.animation.json",
+    "width": 4.75,
+    "height": 12.5,
+    "scale": 1,
+    "displayName": "Main Gate",
+    "clips": {
+      "open": {
+        "name": "animation.gate.open",
+        "seconds": 8.16,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "close": {
+        "name": "animation.gate.close",
+        "seconds": 8.16,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "open_idle": {
+        "name": "animation.gate.open_idle",
+        "seconds": 1,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "closed_idle": {
+        "name": "animation.gate.closed_idle",
+        "seconds": 1,
+        "loop": true,
+        "loopMode": "loop"
+      }
+    }
+  },
+  "odeon_tomb": {
+    "id": "odeon_tomb",
+    "model": "geo/oden_tomb.geo.json",
+    "texture": "textures/entities/decorations/odeon_tomb.png",
+    "animation": "animations/fallback.animation.json",
+    "width": 6.0,
+    "height": 15.5,
+    "scale": 1,
+    "displayName": "Odeon Tomb",
+    "clips": {}
+  },
+  "wood_gate": {
+    "id": "wood_gate",
+    "model": "geo/wood_gate.geo.json",
+    "texture": "textures/entities/decorations/wood_gate.png",
+    "animation": "animations/wooden_gate.animation.json",
+    "width": 10.5,
+    "height": 13.5,
+    "scale": 1,
+    "displayName": "Wood Gate",
+    "clips": {
+      "idle": {
+        "name": "animation.gate.idle",
+        "seconds": 1.6,
+        "loop": true,
+        "loopMode": "loop"
+      }
+    }
+  },
+  "furniture_1": {
+    "id": "furniture_1",
+    "model": "geo/furnature_1.geo.json",
+    "texture": "textures/entities/decorations/furniture.png",
+    "animation": "animations/fallback.animation.json",
+    "width": 2.5,
+    "height": 4.5,
+    "scale": 1,
+    "displayName": "Furniture 1",
+    "clips": {}
+  },
+  "furniture_2": {
+    "id": "furniture_2",
+    "model": "geo/furnature_2.geo.json",
+    "texture": "textures/entities/decorations/furniture.png",
+    "animation": "animations/fallback.animation.json",
+    "width": 2.5,
+    "height": 4.5,
+    "scale": 1,
+    "displayName": "Furniture 2",
+    "clips": {}
+  },
+  "furniture_3": {
+    "id": "furniture_3",
+    "model": "geo/furnature_3.geo.json",
+    "texture": "textures/entities/decorations/furniture.png",
+    "animation": "animations/fallback.animation.json",
+    "width": 2.5,
+    "height": 4.5,
+    "scale": 1,
+    "displayName": "Furniture 3",
+    "clips": {}
+  },
+  "furniture_4": {
+    "id": "furniture_4",
+    "model": "geo/furnature_4.geo.json",
+    "texture": "textures/entities/decorations/furniture.png",
+    "animation": "animations/fallback.animation.json",
+    "width": 2.5,
+    "height": 4.5,
+    "scale": 1,
+    "displayName": "Furniture 4",
+    "clips": {}
+  },
+  "furniture_5": {
+    "id": "furniture_5",
+    "model": "geo/furnature_5.geo.json",
+    "texture": "textures/entities/decorations/furniture.png",
+    "animation": "animations/fallback.animation.json",
+    "width": 2.5,
+    "height": 4.5,
+    "scale": 1,
+    "displayName": "Furniture 5",
+    "clips": {}
+  },
+  "furniture_6": {
+    "id": "furniture_6",
+    "model": "geo/furnature_6.geo.json",
+    "texture": "textures/entities/decorations/furniture.png",
+    "animation": "animations/fallback.animation.json",
+    "width": 2.5,
+    "height": 4.5,
+    "scale": 1,
+    "displayName": "Furniture 6",
+    "clips": {}
+  },
+  "furniture_7": {
+    "id": "furniture_7",
+    "model": "geo/furnature_7.geo.json",
+    "texture": "textures/entities/decorations/furniture.png",
+    "animation": "animations/fallback.animation.json",
+    "width": 2.5,
+    "height": 4.5,
+    "scale": 1,
+    "displayName": "Furniture 7",
+    "clips": {}
+  },
+  "furniture_8": {
+    "id": "furniture_8",
+    "model": "geo/furnature_8.geo.json",
+    "texture": "textures/entities/decorations/furniture.png",
+    "animation": "animations/fallback.animation.json",
+    "width": 2.5,
+    "height": 4.5,
+    "scale": 1,
+    "displayName": "Furniture 8",
+    "clips": {}
+  },
+  "furniture_9": {
+    "id": "furniture_9",
+    "model": "geo/furnature_9.geo.json",
+    "texture": "textures/entities/decorations/furniture.png",
+    "animation": "animations/fallback.animation.json",
+    "width": 2.5,
+    "height": 4.5,
+    "scale": 1,
+    "displayName": "Furniture 9",
+    "clips": {}
+  },
+  "furniture_10": {
+    "id": "furniture_10",
+    "model": "geo/furnature_10.geo.json",
+    "texture": "textures/entities/decorations/furniture.png",
+    "animation": "animations/fallback.animation.json",
+    "width": 2.5,
+    "height": 4.5,
+    "scale": 1,
+    "displayName": "Furniture 10",
+    "clips": {}
+  },
+  "furniture_11": {
+    "id": "furniture_11",
+    "model": "geo/furnature_11.geo.json",
+    "texture": "textures/entities/decorations/furniture.png",
+    "animation": "animations/fallback.animation.json",
+    "width": 2.5,
+    "height": 4.5,
+    "scale": 1,
+    "displayName": "Furniture 11",
+    "clips": {}
+  },
+  "furniture_12": {
+    "id": "furniture_12",
+    "model": "geo/furnature_12.geo.json",
+    "texture": "textures/entities/decorations/furniture.png",
+    "animation": "animations/fallback.animation.json",
+    "width": 2.5,
+    "height": 4.5,
+    "scale": 1,
+    "displayName": "Furniture 12",
+    "clips": {}
+  },
+  "furniture_13": {
+    "id": "furniture_13",
+    "model": "geo/furnature_13.geo.json",
+    "texture": "textures/entities/decorations/furniture.png",
+    "animation": "animations/fallback.animation.json",
+    "width": 2.5,
+    "height": 4.5,
+    "scale": 1,
+    "displayName": "Furniture 13",
+    "clips": {}
+  },
+  "furniture_14": {
+    "id": "furniture_14",
+    "model": "geo/furnature_14.geo.json",
+    "texture": "textures/entities/decorations/furniture.png",
+    "animation": "animations/fallback.animation.json",
+    "width": 2.5,
+    "height": 4.5,
+    "scale": 1,
+    "displayName": "Furniture 14",
+    "clips": {}
+  },
+  "furniture_15": {
+    "id": "furniture_15",
+    "model": "geo/furnature_15.geo.json",
+    "texture": "textures/entities/decorations/furniture.png",
+    "animation": "animations/fallback.animation.json",
+    "width": 2.5,
+    "height": 4.5,
+    "scale": 1,
+    "displayName": "Furniture 15",
+    "clips": {}
+  },
+  "furniture_16": {
+    "id": "furniture_16",
+    "model": "geo/furnature_16.geo.json",
+    "texture": "textures/entities/decorations/furniture.png",
+    "animation": "animations/fallback.animation.json",
+    "width": 2.5,
+    "height": 4.5,
+    "scale": 1,
+    "displayName": "Furniture 16",
+    "clips": {}
+  },
+  "chandelier_small": {
+    "id": "chandelier_small",
+    "model": "geo/chandeliere_small.geo.json",
+    "texture": "textures/entities/decorations/chandeliere.png",
+    "animation": "animations/fallback.animation.json",
+    "width": 2.5,
+    "height": 6.5,
+    "scale": 1,
+    "displayName": "Chandelier Small",
+    "clips": {}
+  },
+  "chandelier_large": {
+    "id": "chandelier_large",
+    "model": "geo/chandeliere_large.geo.json",
+    "texture": "textures/entities/decorations/chandeliere_large.png",
+    "animation": "animations/fallback.animation.json",
+    "width": 3.5,
+    "height": 20.5,
+    "scale": 1,
+    "displayName": "Chandelier Large",
+    "clips": {}
+  },
+  "cross_beast": {
+    "id": "cross_beast",
+    "model": "geo/cross_beast.geo.json",
+    "texture": "textures/entities/decorations/cross_beast.png",
+    "animation": "animations/fallback.animation.json",
+    "width": 0.4,
+    "height": 8.0,
+    "scale": 1,
+    "displayName": "Cross Beast",
+    "clips": {}
+  },
+  "statue_1": {
+    "id": "statue_1",
+    "model": "geo/statue_1.geo.json",
+    "texture": "textures/entities/decorations/statue.png",
+    "animation": "animations/fallback.animation.json",
+    "width": 1.3,
+    "height": 7.5,
+    "scale": 1,
+    "displayName": "Statue 1",
+    "clips": {}
+  },
+  "lever_1": {
+    "id": "lever_1",
+    "model": "geo/lever_1.geo.json",
+    "texture": "textures/entities/decorations/lamp.png",
+    "animation": "animations/lever_1.animation.json",
+    "width": 1.5,
+    "height": 1.2,
+    "scale": 0.8,
+    "displayName": "Lever 1",
+    "clips": {
+      "open": {
+        "name": "animation.lever.open",
+        "seconds": 3.72,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "new": {
+        "name": "animation.lever.new",
+        "seconds": 1,
+        "loop": true,
+        "loopMode": "loop"
+      }
+    }
+  },
+  "lever_2": {
+    "id": "lever_2",
+    "model": "geo/lever_2.geo.json",
+    "texture": "textures/entities/decorations/lamp.png",
+    "animation": "animations/lever_2.animation.json",
+    "width": 1.5,
+    "height": 1.2,
+    "scale": 1,
+    "displayName": "Lever 2",
+    "clips": {
+      "open": {
+        "name": "animation.lever.open",
+        "seconds": 3.72,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "new": {
+        "name": "animation.lever.new",
+        "seconds": 1,
+        "loop": true,
+        "loopMode": "loop"
+      }
+    }
+  },
+  "wheelchair": {
+    "id": "wheelchair",
+    "model": "geo/wheelchair.geo.json",
+    "texture": "textures/entities/decorations/wheelchair.png",
+    "animation": "animations/fallback.animation.json",
+    "width": 1.1,
+    "height": 2.0,
+    "scale": 1,
+    "displayName": "Wheelchair",
+    "clips": {}
+  },
+  "smallcross": {
+    "id": "smallcross",
+    "model": "geo/smallcross.geo.json",
+    "texture": "textures/entities/decorations/smallcross.png",
+    "animation": "animations/fallback.animation.json",
+    "width": 0.5,
+    "height": 5.0,
+    "scale": 1,
+    "displayName": "Smallcross",
+    "clips": {}
+  },
+  "curtainsmall": {
+    "id": "curtainsmall",
+    "model": "geo/curtain_small.geo.json",
+    "texture": "textures/entities/decorations/curtain_small.png",
+    "animation": "animations/fallback.animation.json",
+    "width": 1.5,
+    "height": 3.5,
+    "scale": 1,
+    "displayName": "Curtainsmall",
+    "clips": {}
+  },
+  "hunterlamp": {
+    "id": "hunterlamp",
+    "model": "geo/hunter_lamp.geo.json",
+    "texture": "textures/entities/decorations/hunter_lamp.png",
+    "animation": "animations/fallback.animation.json",
+    "width": 0.4,
+    "height": 1.7,
+    "scale": 1,
+    "displayName": "Hunterlamp",
+    "clips": {}
+  },
+  "lamp_npc": {
+    "id": "lamp_npc",
+    "model": "geo/lamp_npc.geo.json",
+    "texture": "textures/entities/decorations/lamp_npc.png",
+    "animation": "animations/fallback.animation.json",
+    "width": 0.5,
+    "height": 1.0,
+    "scale": 1,
+    "displayName": "Lamp Npc",
+    "clips": {}
+  },
+  "furniture_pantry": {
+    "id": "furniture_pantry",
+    "model": "geo/furniture_pantry.geo.json",
+    "texture": "textures/entities/decorations/furniture_pantry.png",
+    "animation": "animations/fallback.animation.json",
+    "width": 2.0,
+    "height": 5.5,
+    "scale": 1,
+    "displayName": "Furniture Pantry",
+    "clips": {}
+  },
+  "furniture_cabinet_pantry": {
+    "id": "furniture_cabinet_pantry",
+    "model": "geo/furniture_cabinet_pantry.geo.json",
+    "texture": "textures/entities/decorations/furniture_cabinet_pantry.png",
+    "animation": "animations/fallback.animation.json",
+    "width": 3.0,
+    "height": 5.0,
+    "scale": 1,
+    "displayName": "Furniture Cabinet Pantry",
+    "clips": {}
+  },
+  "gate_empty": {
+    "id": "gate_empty",
+    "model": "geo/gate_empty.geo.json",
+    "texture": "textures/entities/decorations/gate_empty.png",
+    "animation": "animations/fallback.animation.json",
+    "width": 5.5,
+    "height": 13.0,
+    "scale": 1,
+    "displayName": "Gate Empty",
+    "clips": {}
+  },
+  "small_gate": {
+    "id": "small_gate",
+    "model": "geo/small_gate.geo.json",
+    "texture": "textures/entities/decorations/small_gate.png",
+    "animation": "animations/small_gate.animation.json",
+    "width": 2.5,
+    "height": 6.0,
+    "scale": 1,
+    "displayName": "Small Gate",
+    "clips": {
+      "open": {
+        "name": "animation.gate.open",
+        "seconds": 8.16,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "close": {
+        "name": "animation.gate.close",
+        "seconds": 8.16,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "open_idle": {
+        "name": "animation.gate.open_idle",
+        "seconds": 1,
+        "loop": true,
+        "loopMode": "loop"
+      },
+      "closed_idle": {
+        "name": "animation.gate.closed_idle",
+        "seconds": 1,
+        "loop": true,
+        "loopMode": "loop"
+      }
+    }
+  },
+  "trapdoor": {
+    "id": "trapdoor",
+    "model": "geo/trapdoor.geo.json",
+    "texture": "textures/entities/decorations/trapdoor.png",
+    "animation": "animations/fallback.animation.json",
+    "width": 4.0,
+    "height": 4.0,
+    "scale": 1,
+    "displayName": "Trapdoor",
+    "clips": {}
+  },
+  "stairs": {
+    "id": "stairs",
+    "model": "geo/stairs.geo.json",
+    "texture": "textures/entities/decorations/stairs.png",
+    "animation": "animations/fallback.animation.json",
+    "width": 1.5,
+    "height": 2.0,
+    "scale": 1,
+    "displayName": "Stairs",
+    "clips": {}
+  },
+  "long_table": {
+    "id": "long_table",
+    "model": "geo/long_table.geo.json",
+    "texture": "textures/entities/decorations/long_table.png",
+    "animation": "animations/fallback.animation.json",
+    "width": 1.5,
+    "height": 1.2,
+    "scale": 1,
+    "displayName": "Long Table",
+    "clips": {}
+  },
+  "hook": {
+    "id": "hook",
+    "model": "geo/hook.geo.json",
+    "texture": "textures/entities/decorations/hook.png",
+    "animation": "animations/fallback.animation.json",
+    "width": 1.5,
+    "height": 6.5,
+    "scale": 1,
+    "displayName": "Hook",
+    "clips": {}
+  },
+  "furniture_books": {
+    "id": "furniture_books",
+    "model": "geo/furniture_books.geo.json",
+    "texture": "textures/entities/decorations/furniture_books.png",
+    "animation": "animations/fallback.animation.json",
+    "width": 1.5,
+    "height": 4.2,
+    "scale": 1,
+    "displayName": "Furniture Books",
+    "clips": {}
+  },
+  "door_empty": {
+    "id": "door_empty",
+    "model": "geo/door_empty.geo.json",
+    "texture": "textures/entities/decorations/door_empty.png",
+    "animation": "animations/fallback.animation.json",
+    "width": 1.5,
+    "height": 5.0,
+    "scale": 1,
+    "displayName": "Door Empty",
+    "clips": {}
+  },
+  "curtain_half": {
+    "id": "curtain_half",
+    "model": "geo/curtain_half.geo.json",
+    "texture": "textures/entities/decorations/curtain_half.png",
+    "animation": "animations/fallback.animation.json",
+    "width": 1.5,
+    "height": 6.0,
+    "scale": 1,
+    "displayName": "Curtain Half",
+    "clips": {}
+  },
+  "coffin_stand": {
+    "id": "coffin_stand",
+    "model": "geo/coffin_stand.geo.json",
+    "texture": "textures/entities/decorations/coffin_stand.png",
+    "animation": "animations/fallback.animation.json",
+    "width": 1.5,
+    "height": 5.0,
+    "scale": 1,
+    "displayName": "Coffin Stand",
+    "clips": {}
+  },
+  "chest": {
+    "id": "chest",
+    "model": "geo/chest.geo.json",
+    "texture": "textures/entities/decorations/chest.png",
+    "animation": "animations/chest.animation.json",
+    "width": 1.5,
+    "height": 1.1,
+    "scale": 1,
+    "displayName": "Chest",
+    "clips": {
+      "open": {
+        "name": "animation.chest.open",
+        "seconds": 1.68,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "opened": {
+        "name": "animation.chest.opened",
+        "seconds": 1,
+        "loop": false,
+        "loopMode": "loop"
+      },
+      "close": {
+        "name": "animation.chest.close",
+        "seconds": 0.72,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "closed": {
+        "name": "animation.chest.closed",
+        "seconds": 1,
+        "loop": false,
+        "loopMode": "loop"
+      },
+      "new": {
+        "name": "animation.chest.new",
+        "seconds": 1,
+        "loop": true,
+        "loopMode": "loop"
+      }
+    }
+  },
+  "boat": {
+    "id": "boat",
+    "model": "geo/boat.geo.json",
+    "texture": "textures/entities/decorations/boat.png",
+    "animation": "animations/fallback.animation.json",
+    "width": 2.0,
+    "height": 1.5,
+    "scale": 1,
+    "displayName": "Boat",
+    "clips": {}
+  },
+  "babycart": {
+    "id": "babycart",
+    "model": "geo/babycart.geo.json",
+    "texture": "textures/entities/decorations/babycart.png",
+    "animation": "animations/fallback.animation.json",
+    "width": 1.2,
+    "height": 2.0,
+    "scale": 1,
+    "displayName": "Babycart",
+    "clips": {}
+  },
+  "chair": {
+    "id": "chair",
+    "model": "geo/chair.geo.json",
+    "texture": "textures/entities/decorations/chair.png",
+    "animation": "animations/fallback.animation.json",
+    "width": 1.2,
+    "height": 1.7,
+    "scale": 1,
+    "displayName": "Chair",
+    "clips": {}
+  },
+  "coffin_1": {
+    "id": "coffin_1",
+    "model": "geo/coffin_01.geo.json",
+    "texture": "textures/entities/decorations/coffins.png",
+    "animation": "animations/fallback.animation.json",
+    "width": 1.2,
+    "height": 2.4,
+    "scale": 1,
+    "displayName": "Coffin 1",
+    "clips": {}
+  },
+  "coffin_2": {
+    "id": "coffin_2",
+    "model": "geo/gold_coffin.geo.json",
+    "texture": "textures/entities/decorations/coffins.png",
+    "animation": "animations/fallback.animation.json",
+    "width": 1.2,
+    "height": 2.4,
+    "scale": 1,
+    "displayName": "Coffin 2",
+    "clips": {}
+  },
+  "coffin_3": {
+    "id": "coffin_3",
+    "model": "geo/coffin_02.geo.json",
+    "texture": "textures/entities/decorations/coffins.png",
+    "animation": "animations/fallback.animation.json",
+    "width": 1.2,
+    "height": 2.4,
+    "scale": 1,
+    "displayName": "Coffin 3",
+    "clips": {}
+  },
+  "coffins_1": {
+    "id": "coffins_1",
+    "model": "geo/coffins_1.geo.json",
+    "texture": "textures/entities/decorations/coffins.png",
+    "animation": "animations/fallback.animation.json",
+    "width": 1.2,
+    "height": 2.4,
+    "scale": 1,
+    "displayName": "Coffins 1",
+    "clips": {}
+  },
+  "coffins_2": {
+    "id": "coffins_2",
+    "model": "geo/coffins_2.geo.json",
+    "texture": "textures/entities/decorations/coffins.png",
+    "animation": "animations/fallback.animation.json",
+    "width": 1.2,
+    "height": 2.4,
+    "scale": 1,
+    "displayName": "Coffins 2",
+    "clips": {}
+  },
+  "coffins_3": {
+    "id": "coffins_3",
+    "model": "geo/coffins_3.geo.json",
+    "texture": "textures/entities/decorations/coffins.png",
+    "animation": "animations/fallback.animation.json",
+    "width": 1.2,
+    "height": 2.4,
+    "scale": 1,
+    "displayName": "Coffins 3",
+    "clips": {}
+  },
+  "coffins_4": {
+    "id": "coffins_4",
+    "model": "geo/coffins_4.geo.json",
+    "texture": "textures/entities/decorations/coffins.png",
+    "animation": "animations/fallback.animation.json",
+    "width": 1.2,
+    "height": 2.4,
+    "scale": 1,
+    "displayName": "Coffins 4",
+    "clips": {}
+  },
+  "coffins_5": {
+    "id": "coffins_5",
+    "model": "geo/coffins_5.geo.json",
+    "texture": "textures/entities/decorations/coffins.png",
+    "animation": "animations/fallback.animation.json",
+    "width": 1.2,
+    "height": 2.4,
+    "scale": 1,
+    "displayName": "Coffins 5",
+    "clips": {}
+  },
+  "horse_carcass": {
+    "id": "horse_carcass",
+    "model": "geo/hourse_carcase.geo.json",
+    "texture": "textures/entities/decorations/horse_carcass.png",
+    "animation": "animations/fallback.animation.json",
+    "width": 2.5,
+    "height": 1.0,
+    "scale": 1,
+    "displayName": "Horse Carcass",
+    "clips": {}
+  },
+  "elevator": {
+    "id": "elevator",
+    "model": "geo/elevator.geo.json",
+    "texture": "textures/entities/decorations/elevator.png",
+    "animation": "animations/elevator.animation.json",
+    "width": 4.5,
+    "height": 45.0,
+    "scale": 1,
+    "displayName": "Elevator",
+    "clips": {
+      "up": {
+        "name": "animation.elevator.up",
+        "seconds": 23.04,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "up_idle": {
+        "name": "animation.elevator.up_idle",
+        "seconds": 1,
+        "loop": false,
+        "loopMode": "loop"
+      },
+      "down": {
+        "name": "animation.elevator.down",
+        "seconds": 21.4,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "down_idle": {
+        "name": "animation.elevator.down_idle",
+        "seconds": 1,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      }
+    }
+  },
+  "ladder": {
+    "id": "ladder",
+    "model": "geo/ladder.geo.json",
+    "texture": "textures/entities/decorations/ladder.png",
+    "animation": "animations/ladder.animation.json",
+    "width": 2.0,
+    "height": 30.0,
+    "scale": 1,
+    "displayName": "Ladder",
+    "clips": {
+      "true": {
+        "name": "animation.ladder.true",
+        "seconds": 2.4,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "false": {
+        "name": "animation.ladder.false",
+        "seconds": 1,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      }
+    }
+  },
+  "npc_window": {
+    "id": "npc_window",
+    "model": "geo/npc_window.geo.json",
+    "texture": "textures/entities/decorations/spirelamp_0094.png",
+    "animation": "animations/fallback.animation.json",
+    "width": 1.5,
+    "height": 4.0,
+    "scale": 1,
+    "displayName": "Npc Window",
+    "clips": {}
+  },
+  "curtains": {
+    "id": "curtains",
+    "model": "geo/curtains.geo.json",
+    "texture": "textures/entities/decorations/ropes.png",
+    "animation": "animations/fallback.animation.json",
+    "width": 8.0,
+    "height": 6.0,
+    "scale": 1,
+    "displayName": "Curtains",
+    "clips": {}
+  },
+  "ropes": {
+    "id": "ropes",
+    "model": "geo/ropes.geo.json",
+    "texture": "textures/entities/decorations/ropes.png",
+    "animation": "animations/fallback.animation.json",
+    "width": 2.0,
+    "height": 2.0,
+    "scale": 1,
+    "displayName": "Ropes",
+    "clips": {}
+  },
+  "tree1": {
+    "id": "tree1",
+    "model": "geo/tree_1.geo.json",
+    "texture": "textures/entities/decorations/tree_3.png",
+    "animation": "animations/fallback.animation.json",
+    "width": 1.4,
+    "height": 7.0,
+    "scale": 1,
+    "displayName": "Tree1",
+    "clips": {}
+  },
+  "tree2": {
+    "id": "tree2",
+    "model": "geo/tree_2.geo.json",
+    "texture": "textures/entities/decorations/tree_3.png",
+    "animation": "animations/fallback.animation.json",
+    "width": 1.4,
+    "height": 7.0,
+    "scale": 1,
+    "displayName": "Tree2",
+    "clips": {}
+  },
+  "tree3": {
+    "id": "tree3",
+    "model": "geo/tree_3.geo.json",
+    "texture": "textures/entities/decorations/tree_3.png",
+    "animation": "animations/fallback.animation.json",
+    "width": 1.4,
+    "height": 7.0,
+    "scale": 1,
+    "displayName": "Tree3",
+    "clips": {}
+  },
+  "blood_puddle": {
+    "id": "blood_puddle",
+    "model": "geo/bloodpuddle.geo.json",
+    "texture": "textures/entities/bloodpuddle.png",
+    "animation": "animations/fallback.animation.json",
+    "width": 1.4,
+    "height": 7.0,
+    "scale": 1,
+    "displayName": "Blood Puddle",
+    "clips": {}
+  },
+  "bullet": {
+    "id": "bullet",
+    "model": "geo/bullet.geo.json",
+    "texture": "textures/entities/bullet.png",
+    "animation": "animations/bullet.animation.json",
+    "width": 0.1,
+    "height": 0.1,
+    "scale": 0.2,
+    "displayName": "Bullet",
+    "clips": {
+      "new": {
+        "name": "animation.bullet.new",
+        "seconds": 1,
+        "loop": true,
+        "loopMode": "loop"
+      }
+    }
+  },
+  "sawcleaver_false": {
+    "id": "sawcleaver_false",
+    "model": "geo/sawcleaver_false.geo.json",
+    "texture": "textures/item/weapons_1.png",
+    "animation": "animations/weapons.animation.json",
+    "width": 0.25,
+    "height": 1,
+    "scale": 1,
+    "displayName": "Sawcleaver False",
+    "clips": {
+      "sawcleaver_true": {
+        "name": "animation.weapons.sawcleaver_true",
+        "seconds": 0.56,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "sawcleaver_false": {
+        "name": "animation.weapons.sawcleaver_false",
+        "seconds": 0.44,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "sawcleaver_true(old)": {
+        "name": "animation.weapons.sawcleaver_true(old)",
+        "seconds": 0.4,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "sawcleaver_false(old)": {
+        "name": "animation.weapons.sawcleaver_false(old)",
+        "seconds": 0.52,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "sawspear_true": {
+        "name": "animation.weapons.sawspear_true",
+        "seconds": 0.48,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "sawspear_false": {
+        "name": "animation.weapons.sawspear_false",
+        "seconds": 0.20833,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "sawspear_true(old)": {
+        "name": "animation.weapons.sawspear_true(old)",
+        "seconds": 0.2,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "sawspear_false(old)": {
+        "name": "animation.weapons.sawspear_false(old)",
+        "seconds": 0.2,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "boomhammer_true": {
+        "name": "animation.weapons.boomhammer_true",
+        "seconds": 0.12,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "boomhammer_false": {
+        "name": "animation.weapons.boomhammer_false",
+        "seconds": 0.12,
+        "loop": false,
+        "loopMode": "once"
+      }
+    }
+  },
+  "sawcleaver_true": {
+    "id": "sawcleaver_true",
+    "model": "geo/sawcleaver_true.geo.json",
+    "texture": "textures/item/weapons_1.png",
+    "animation": "animations/weapons.animation.json",
+    "width": 0.25,
+    "height": 1,
+    "scale": 1,
+    "displayName": "Sawcleaver True",
+    "clips": {
+      "sawcleaver_true": {
+        "name": "animation.weapons.sawcleaver_true",
+        "seconds": 0.56,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "sawcleaver_false": {
+        "name": "animation.weapons.sawcleaver_false",
+        "seconds": 0.44,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "sawcleaver_true(old)": {
+        "name": "animation.weapons.sawcleaver_true(old)",
+        "seconds": 0.4,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "sawcleaver_false(old)": {
+        "name": "animation.weapons.sawcleaver_false(old)",
+        "seconds": 0.52,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "sawspear_true": {
+        "name": "animation.weapons.sawspear_true",
+        "seconds": 0.48,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "sawspear_false": {
+        "name": "animation.weapons.sawspear_false",
+        "seconds": 0.20833,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "sawspear_true(old)": {
+        "name": "animation.weapons.sawspear_true(old)",
+        "seconds": 0.2,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "sawspear_false(old)": {
+        "name": "animation.weapons.sawspear_false(old)",
+        "seconds": 0.2,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "boomhammer_true": {
+        "name": "animation.weapons.boomhammer_true",
+        "seconds": 0.12,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "boomhammer_false": {
+        "name": "animation.weapons.boomhammer_false",
+        "seconds": 0.12,
+        "loop": false,
+        "loopMode": "once"
+      }
+    }
+  },
+  "sawspear_false": {
+    "id": "sawspear_false",
+    "model": "geo/sawspear_false.geo.json",
+    "texture": "textures/item/weapons_1.png",
+    "animation": "animations/weapons.animation.json",
+    "width": 0.25,
+    "height": 1,
+    "scale": 1,
+    "displayName": "Sawspear False",
+    "clips": {
+      "sawcleaver_true": {
+        "name": "animation.weapons.sawcleaver_true",
+        "seconds": 0.56,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "sawcleaver_false": {
+        "name": "animation.weapons.sawcleaver_false",
+        "seconds": 0.44,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "sawcleaver_true(old)": {
+        "name": "animation.weapons.sawcleaver_true(old)",
+        "seconds": 0.4,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "sawcleaver_false(old)": {
+        "name": "animation.weapons.sawcleaver_false(old)",
+        "seconds": 0.52,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "sawspear_true": {
+        "name": "animation.weapons.sawspear_true",
+        "seconds": 0.48,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "sawspear_false": {
+        "name": "animation.weapons.sawspear_false",
+        "seconds": 0.20833,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "sawspear_true(old)": {
+        "name": "animation.weapons.sawspear_true(old)",
+        "seconds": 0.2,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "sawspear_false(old)": {
+        "name": "animation.weapons.sawspear_false(old)",
+        "seconds": 0.2,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "boomhammer_true": {
+        "name": "animation.weapons.boomhammer_true",
+        "seconds": 0.12,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "boomhammer_false": {
+        "name": "animation.weapons.boomhammer_false",
+        "seconds": 0.12,
+        "loop": false,
+        "loopMode": "once"
+      }
+    }
+  },
+  "sawspear_true": {
+    "id": "sawspear_true",
+    "model": "geo/sawspear_true.geo.json",
+    "texture": "textures/item/weapons_1.png",
+    "animation": "animations/weapons.animation.json",
+    "width": 0.25,
+    "height": 1,
+    "scale": 1,
+    "displayName": "Sawspear True",
+    "clips": {
+      "sawcleaver_true": {
+        "name": "animation.weapons.sawcleaver_true",
+        "seconds": 0.56,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "sawcleaver_false": {
+        "name": "animation.weapons.sawcleaver_false",
+        "seconds": 0.44,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "sawcleaver_true(old)": {
+        "name": "animation.weapons.sawcleaver_true(old)",
+        "seconds": 0.4,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "sawcleaver_false(old)": {
+        "name": "animation.weapons.sawcleaver_false(old)",
+        "seconds": 0.52,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "sawspear_true": {
+        "name": "animation.weapons.sawspear_true",
+        "seconds": 0.48,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "sawspear_false": {
+        "name": "animation.weapons.sawspear_false",
+        "seconds": 0.20833,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "sawspear_true(old)": {
+        "name": "animation.weapons.sawspear_true(old)",
+        "seconds": 0.2,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "sawspear_false(old)": {
+        "name": "animation.weapons.sawspear_false(old)",
+        "seconds": 0.2,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "boomhammer_true": {
+        "name": "animation.weapons.boomhammer_true",
+        "seconds": 0.12,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "boomhammer_false": {
+        "name": "animation.weapons.boomhammer_false",
+        "seconds": 0.12,
+        "loop": false,
+        "loopMode": "once"
+      }
+    }
+  },
+  "boomhammer_false": {
+    "id": "boomhammer_false",
+    "model": "geo/boomhammer_false.geo.json",
+    "texture": "textures/item/weapons_1.png",
+    "animation": "animations/weapons.animation.json",
+    "width": 0.25,
+    "height": 1,
+    "scale": 1,
+    "displayName": "Boomhammer False",
+    "clips": {
+      "sawcleaver_true": {
+        "name": "animation.weapons.sawcleaver_true",
+        "seconds": 0.56,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "sawcleaver_false": {
+        "name": "animation.weapons.sawcleaver_false",
+        "seconds": 0.44,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "sawcleaver_true(old)": {
+        "name": "animation.weapons.sawcleaver_true(old)",
+        "seconds": 0.4,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "sawcleaver_false(old)": {
+        "name": "animation.weapons.sawcleaver_false(old)",
+        "seconds": 0.52,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "sawspear_true": {
+        "name": "animation.weapons.sawspear_true",
+        "seconds": 0.48,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "sawspear_false": {
+        "name": "animation.weapons.sawspear_false",
+        "seconds": 0.20833,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "sawspear_true(old)": {
+        "name": "animation.weapons.sawspear_true(old)",
+        "seconds": 0.2,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "sawspear_false(old)": {
+        "name": "animation.weapons.sawspear_false(old)",
+        "seconds": 0.2,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "boomhammer_true": {
+        "name": "animation.weapons.boomhammer_true",
+        "seconds": 0.12,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "boomhammer_false": {
+        "name": "animation.weapons.boomhammer_false",
+        "seconds": 0.12,
+        "loop": false,
+        "loopMode": "once"
+      }
+    }
+  },
+  "boomhammer_true": {
+    "id": "boomhammer_true",
+    "model": "geo/boomhammer_true.geo.json",
+    "texture": "textures/item/weapons_1.png",
+    "animation": "animations/weapons.animation.json",
+    "width": 0.25,
+    "height": 1,
+    "scale": 1,
+    "displayName": "Boomhammer True",
+    "clips": {
+      "sawcleaver_true": {
+        "name": "animation.weapons.sawcleaver_true",
+        "seconds": 0.56,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "sawcleaver_false": {
+        "name": "animation.weapons.sawcleaver_false",
+        "seconds": 0.44,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "sawcleaver_true(old)": {
+        "name": "animation.weapons.sawcleaver_true(old)",
+        "seconds": 0.4,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "sawcleaver_false(old)": {
+        "name": "animation.weapons.sawcleaver_false(old)",
+        "seconds": 0.52,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "sawspear_true": {
+        "name": "animation.weapons.sawspear_true",
+        "seconds": 0.48,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "sawspear_false": {
+        "name": "animation.weapons.sawspear_false",
+        "seconds": 0.20833,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "sawspear_true(old)": {
+        "name": "animation.weapons.sawspear_true(old)",
+        "seconds": 0.2,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "sawspear_false(old)": {
+        "name": "animation.weapons.sawspear_false(old)",
+        "seconds": 0.2,
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
+      },
+      "boomhammer_true": {
+        "name": "animation.weapons.boomhammer_true",
+        "seconds": 0.12,
+        "loop": false,
+        "loopMode": "once"
+      },
+      "boomhammer_false": {
+        "name": "animation.weapons.boomhammer_false",
+        "seconds": 0.12,
+        "loop": false,
+        "loopMode": "once"
+      }
+    }
+  }
+}

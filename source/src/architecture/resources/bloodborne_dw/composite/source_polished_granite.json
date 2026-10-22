@@ -1,0 +1,252 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_polished_granite",
+  "displayName": "Плита из мелкой каменной кладки",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/polished_granite",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                -4.0,
+                0.0,
+                -4.0
+              ],
+              "to": [
+                20.0,
+                17.0,
+                20.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -4.0,
+                1.0,
+                -4.0
+              ],
+              "to": [
+                20.0,
+                17.0,
+                20.0
+              ]
+            },
+            {
+              "from": [
+                -2.5,
+                0.0,
+                -2.5
+              ],
+              "to": [
+                18.5,
+                16.0,
+                18.5
+              ]
+            },
+            {
+              "from": [
+                -1.5,
+                0.0,
+                -1.5
+              ],
+              "to": [
+                17.5,
+                16.0,
+                17.5
+              ]
+            },
+            {
+              "from": [
+                1.5,
+                0.0,
+                1.5
+              ],
+              "to": [
+                14.5,
+                16.0,
+                14.5
+              ]
+            }
+          ],
+          "simpleCollisionByRotation": [
+            [
+              {
+                "from": [
+                  -4.0,
+                  0.0,
+                  -4.0
+                ],
+                "to": [
+                  20.0,
+                  17.0,
+                  20.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -8.97056275,
+                  0.0,
+                  -8.97056275
+                ],
+                "to": [
+                  24.97056275,
+                  17.0,
+                  24.97056275
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -4.0,
+                  0.0,
+                  -4.0
+                ],
+                "to": [
+                  20.0,
+                  17.0,
+                  20.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -8.97056275,
+                  0.0,
+                  -8.97056275
+                ],
+                "to": [
+                  24.97056275,
+                  17.0,
+                  24.97056275
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -4.0,
+                  0.0,
+                  -4.0
+                ],
+                "to": [
+                  20.0,
+                  17.0,
+                  20.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -8.97056275,
+                  0.0,
+                  -8.97056275
+                ],
+                "to": [
+                  24.97056275,
+                  17.0,
+                  24.97056275
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -4.0,
+                  0.0,
+                  -4.0
+                ],
+                "to": [
+                  20.0,
+                  17.0,
+                  20.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -8.97056275,
+                  0.0,
+                  -8.97056275
+                ],
+                "to": [
+                  24.97056275,
+                  17.0,
+                  24.97056275
+                ]
+              }
+            ]
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -4.0,
+          0.0,
+          -4.0
+        ],
+        "to": [
+          20.0,
+          17.0,
+          20.0
+        ]
+      },
+      "sourceVariant": "Плита из мелкой каменной кладки",
+      "sourcePlacementOffset": [
+        0,
+        -0.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/polished_granite"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:polished_granite_slab[variant:type=double]",
+        "minecraft:polished_granite[variant:]"
+      ]
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "simple-imported-physical-v1: one ordinary bounded cuboid by default; reviewed doorway/arch, stair/landing and ladder exceptions use at most three useful boxes; passable source planes stay passable. Eight orientations use a few ordinary AABBs bounded by the actual transformed visual vertices, never strips or a second expanded rotated AABB. Six root-cell-face overflows strictly smaller than 0.5 blocks are cropped independently after instance yaw, vertical mount and SourceShift; long extents are retained. Selection and visuals unchanged. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped.",
+  "simplePhysicalCollision": true
+}

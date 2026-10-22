@@ -1,0 +1,7 @@
+gradle.projectsEvaluated {
+ gradle.rootProject.sourceSets.gametest.java.setIncludes([
+ 'dev/dreamwalker/bloodbornedw/gametest/CompositeAsyncShapeGameTests.java',
+ 'dev/dreamwalker/bloodbornedw/gametest/CompositeNbtSnapshotGameTests.java',
+ 'dev/dreamwalker/bloodbornedw/gametest/CompositeStreamingGameTests.java'
+ ])
+}

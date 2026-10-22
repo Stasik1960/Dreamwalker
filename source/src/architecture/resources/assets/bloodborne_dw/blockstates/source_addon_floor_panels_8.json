@@ -1,0 +1,56 @@
+{
+  "multipart": [
+    {
+      "when": {
+        "compact": "false"
+      },
+      "apply": {
+        "model": "bloodborne_dw:block/source_addon_floor_panels_8_empty"
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "0",
+        "rotation": "0"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/addon/floor_panels_8",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "0",
+        "rotation": "2"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/addon/floor_panels_8",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "0",
+        "rotation": "4"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/addon/floor_panels_8",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "0",
+        "rotation": "6"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/addon/floor_panels_8",
+        "y": 270
+      }
+    }
+  ]
+}

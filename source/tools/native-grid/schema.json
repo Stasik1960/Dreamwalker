@@ -1,0 +1,16 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"Dreamwalker native-grid runtime catalog v1",
+  "type":"object",
+  "required":["schemaVersion","bankSize","materials","shapes","optics","meshes","cells","wholeObjects"],
+  "properties":{
+    "schemaVersion":{"const":1},"bankSize":{"const":128},
+    "materials":{"type":"array","items":{"type":"object","required":["sprite","layer"],"properties":{"sprite":{"type":"string"},"layer":{"enum":["solid","cutout","cutout_mipped","translucent"]},"tintSource":{"type":"string"},"tintMode":{"enum":["remaining_grass","native"]},"tintProperties":{"type":"object","additionalProperties":{"type":"string"}},"tintOffset":{"type":"array","minItems":3,"maxItems":3,"items":{"type":"integer"}}}}},
+    "shapes":{"type":"array","items":{"type":"array","items":{"type":"array","minItems":6,"maxItems":6,"items":{"type":"number"}}}},
+    "optics":{"type":"array","items":{"type":"object","required":["opacity","luminance","ambientOcclusion","transparent","sidedTransparency","opaque","opaqueFullCube","solidBlock","suffocates","blockVision"]}},
+    "meshes":{"type":"array","items":{"type":"object","required":["quadCount"],"properties":{"quadCount":{"type":"integer","minimum":0}}}},
+    "cells":{"type":"array","items":{"type":"object","required":["key","mesh","collision","outline","culling","climbing","optics","fluid","localFunction","baseState"],"properties":{"key":{"type":"string","pattern":"^[0-9a-f]{64}$"},"mesh":{"type":"integer","minimum":0},"collision":{"type":"integer","minimum":0},"outline":{"type":"integer","minimum":0},"culling":{"type":"integer","minimum":0},"climbing":{"type":"integer","minimum":0},"optics":{"type":"integer","minimum":0},"fluid":{"oneOf":[{"type":"null"},{"type":"object","required":["id","level","falling"],"properties":{"id":{"enum":["minecraft:water","minecraft:lava"]},"level":{"type":"integer","minimum":1,"maximum":8},"falling":{"type":"boolean"}}}]},"localFunction":{"oneOf":[{"type":"null"},{"type":"object","required":["kind"],"properties":{"kind":{"const":"climb"}}}]},"baseState":{"type":["null","object"]}}}},
+    "wholeObjects":{"type":"array","items":{"type":"object","required":["key","baseCell","cells"],"properties":{"key":{"type":"string"},"baseCell":{"type":"integer","minimum":0},"cells":{"type":"array","items":{"type":"object","required":["offset","cell"],"properties":{"offset":{"type":"array","minItems":3,"maxItems":3,"items":{"type":"integer","minimum":-127,"maximum":127}},"cell":{"type":"integer","minimum":0}}}}}}}
+  },
+  "description":"meshes.bin: ASCII NGQ1; big-endian int meshCount; per mesh int quadCount; per quad int material, signed byte cull(-1 none or Direction ordinal), signed byte face(Direction ordinal), int tint, unsigned byte flags(shade=1, AO=2, emissive=4); four vertices of five float32 x/y/z/sprite-local-u/v followed by signed int32 vanilla ABGR color, light, packed normal. No runtime SourcePose, UUID, owner or world coordinate storage."
+}

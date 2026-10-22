@@ -1,0 +1,499 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_diamond_ore",
+  "displayName": "Кирпичный парапет",
+  "openable": false,
+  "layer": "translucent",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/diamond_ore",
+              "offset": [
+                0,
+                16.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                -2.0,
+                0.0,
+                -7.0
+              ],
+              "to": [
+                18.0,
+                48.0,
+                23.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -2.0,
+                33.0,
+                -7.0
+              ],
+              "to": [
+                18.0,
+                37.0,
+                23.0
+              ]
+            },
+            {
+              "from": [
+                -1.0,
+                0.0,
+                -6.0
+              ],
+              "to": [
+                17.0,
+                33.0,
+                22.0
+              ]
+            },
+            {
+              "from": [
+                4.5,
+                37.0,
+                -4.0
+              ],
+              "to": [
+                11.5,
+                48.0,
+                3.0
+              ]
+            },
+            {
+              "from": [
+                4.5,
+                37.0,
+                4.5
+              ],
+              "to": [
+                11.5,
+                48.0,
+                11.5
+              ]
+            },
+            {
+              "from": [
+                4.5,
+                37.0,
+                13.0
+              ],
+              "to": [
+                11.5,
+                48.0,
+                20.0
+              ]
+            }
+          ],
+          "simpleCollisionByRotation": [
+            [
+              {
+                "from": [
+                  -2.0,
+                  0.0,
+                  -7.0
+                ],
+                "to": [
+                  18.0,
+                  48.0,
+                  23.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -9.67766953,
+                  0.0,
+                  -9.67766953
+                ],
+                "to": [
+                  25.67766953,
+                  48.0,
+                  25.67766953
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -7.0,
+                  0.0,
+                  -2.0
+                ],
+                "to": [
+                  23.0,
+                  48.0,
+                  18.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -9.67766953,
+                  0.0,
+                  -9.67766953
+                ],
+                "to": [
+                  25.67766953,
+                  48.0,
+                  25.67766953
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -2.0,
+                  0.0,
+                  -7.0
+                ],
+                "to": [
+                  18.0,
+                  48.0,
+                  23.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -9.67766953,
+                  0.0,
+                  -9.67766953
+                ],
+                "to": [
+                  25.67766953,
+                  48.0,
+                  25.67766953
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -7.0,
+                  0.0,
+                  -2.0
+                ],
+                "to": [
+                  23.0,
+                  48.0,
+                  18.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -9.67766953,
+                  0.0,
+                  -9.67766953
+                ],
+                "to": [
+                  25.67766953,
+                  48.0,
+                  25.67766953
+                ]
+              }
+            ]
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -2.0,
+          0.0,
+          -7.0
+        ],
+        "to": [
+          18.0,
+          48.0,
+          23.0
+        ]
+      },
+      "sourceVariant": "Кирпичный столб со ступенчатым завершением",
+      "sourcePlacementOffset": [
+        0,
+        16.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        16.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/diamond_ore"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:diamond_ore[variant:]"
+      ]
+    },
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/hold/chimney",
+              "offset": [
+                0,
+                16.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                -7.0,
+                0.0,
+                -2.0
+              ],
+              "to": [
+                23.0,
+                48.0,
+                18.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -7.0,
+                33.0,
+                -2.0
+              ],
+              "to": [
+                23.0,
+                37.0,
+                18.0
+              ]
+            },
+            {
+              "from": [
+                -6.0,
+                0.0,
+                -1.0
+              ],
+              "to": [
+                22.0,
+                33.0,
+                17.0
+              ]
+            },
+            {
+              "from": [
+                -4.0,
+                37.0,
+                4.5
+              ],
+              "to": [
+                3.0,
+                48.0,
+                11.5
+              ]
+            },
+            {
+              "from": [
+                4.5,
+                37.0,
+                4.5
+              ],
+              "to": [
+                11.5,
+                48.0,
+                11.5
+              ]
+            },
+            {
+              "from": [
+                13.0,
+                37.0,
+                4.5
+              ],
+              "to": [
+                20.0,
+                48.0,
+                11.5
+              ]
+            }
+          ],
+          "simpleCollisionByRotation": [
+            [
+              {
+                "from": [
+                  -7.0,
+                  0.0,
+                  -2.0
+                ],
+                "to": [
+                  23.0,
+                  48.0,
+                  18.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -9.67766953,
+                  0.0,
+                  -9.67766953
+                ],
+                "to": [
+                  25.67766953,
+                  48.0,
+                  25.67766953
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -2.0,
+                  0.0,
+                  -7.0
+                ],
+                "to": [
+                  18.0,
+                  48.0,
+                  23.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -9.67766953,
+                  0.0,
+                  -9.67766953
+                ],
+                "to": [
+                  25.67766953,
+                  48.0,
+                  25.67766953
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -7.0,
+                  0.0,
+                  -2.0
+                ],
+                "to": [
+                  23.0,
+                  48.0,
+                  18.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -9.67766953,
+                  0.0,
+                  -9.67766953
+                ],
+                "to": [
+                  25.67766953,
+                  48.0,
+                  25.67766953
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -2.0,
+                  0.0,
+                  -7.0
+                ],
+                "to": [
+                  18.0,
+                  48.0,
+                  23.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -9.67766953,
+                  0.0,
+                  -9.67766953
+                ],
+                "to": [
+                  25.67766953,
+                  48.0,
+                  25.67766953
+                ]
+              }
+            ]
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -7.0,
+          0.0,
+          -2.0
+        ],
+        "to": [
+          23.0,
+          48.0,
+          18.0
+        ]
+      },
+      "sourceVariant": "Дымовая труба",
+      "sourcePlacementOffset": [
+        0,
+        16.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        16.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/hold/chimney"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": []
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "simple-imported-physical-v1: one ordinary bounded cuboid by default; reviewed doorway/arch, stair/landing and ladder exceptions use at most three useful boxes; passable source planes stay passable. Eight orientations use a few ordinary AABBs bounded by the actual transformed visual vertices, never strips or a second expanded rotated AABB. Six root-cell-face overflows strictly smaller than 0.5 blocks are cropped independently after instance yaw, vertical mount and SourceShift; long extents are retained. Selection and visuals unchanged. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped.",
+  "simplePhysicalCollision": true
+}

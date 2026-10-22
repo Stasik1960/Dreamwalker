@@ -1,0 +1,5 @@
+$ErrorActionPreference='Stop'
+$taskJar='C:\Users\vakir\.gradle\caches\fabric-loom\minecraftMaven\net\minecraft\minecraft-merged\1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2\minecraft-merged-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar'
+$taskJavap='C:\Users\vakir\AppData\Roaming\.minecraft\runtime\java-runtime-gamma\windows\java-runtime-gamma\bin\javap.exe'
+& $taskJavap -classpath $taskJar -c -p net.minecraft.world.chunk.ChunkManager *> 'build\streaming-validation\chunk-manager-bytecode.txt'
+& $taskJavap -classpath $taskJar -c -p net.minecraft.server.world.ServerChunkManager *> 'build\streaming-validation\server-chunk-manager-bytecode.txt'

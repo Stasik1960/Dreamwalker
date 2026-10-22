@@ -1,0 +1,266 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_addon_wall_deco_7",
+  "displayName": "Настенный орнамент · вариант 8",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/addon/wall_deco_7",
+              "offset": [
+                0,
+                16.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                0.0,
+                0.0,
+                6.0
+              ],
+              "to": [
+                16.0,
+                16.0,
+                15.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                0.0,
+                0.0,
+                7.0
+              ],
+              "to": [
+                2.0,
+                13.0,
+                14.0
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                13.0,
+                6.0
+              ],
+              "to": [
+                3.0,
+                16.0,
+                15.0
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                16.0,
+                9.9375
+              ],
+              "to": [
+                16.0,
+                48.0,
+                10.0625
+              ]
+            },
+            {
+              "from": [
+                13.0,
+                13.0,
+                6.0
+              ],
+              "to": [
+                16.0,
+                16.0,
+                15.0
+              ]
+            },
+            {
+              "from": [
+                14.0,
+                0.0,
+                7.0
+              ],
+              "to": [
+                16.0,
+                13.0,
+                14.0
+              ]
+            }
+          ],
+          "simpleCollisionByRotation": [
+            [
+              {
+                "from": [
+                  0.0,
+                  0.0,
+                  6.0
+                ],
+                "to": [
+                  16.0,
+                  16.0,
+                  15.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -2.60660172,
+                  0.0,
+                  0.92893219
+                ],
+                "to": [
+                  15.07106781,
+                  16.0,
+                  18.60660172
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  1.0,
+                  0.0,
+                  0.0
+                ],
+                "to": [
+                  10.0,
+                  16.0,
+                  16.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -2.60660172,
+                  0.0,
+                  -2.60660172
+                ],
+                "to": [
+                  15.07106781,
+                  16.0,
+                  15.07106781
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "to": [
+                  16.0,
+                  16.0,
+                  10.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  0.92893219,
+                  0.0,
+                  -2.60660172
+                ],
+                "to": [
+                  18.60660172,
+                  16.0,
+                  15.07106781
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  6.0,
+                  0.0,
+                  0.0
+                ],
+                "to": [
+                  15.0,
+                  16.0,
+                  16.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  0.92893219,
+                  0.0,
+                  0.92893219
+                ],
+                "to": [
+                  18.60660172,
+                  16.0,
+                  18.60660172
+                ]
+              }
+            ]
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          0.0,
+          0.0,
+          6.0
+        ],
+        "to": [
+          16.0,
+          48.0,
+          15.0
+        ]
+      },
+      "sourceVariant": "Настенный орнамент · вариант 8",
+      "sourcePlacementOffset": [
+        0,
+        16.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        16.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/addon/wall_deco_7"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:dead_bubble_coral_wall_fan[variant:facing=east]",
+        "minecraft:dead_bubble_coral_wall_fan[variant:facing=north]",
+        "minecraft:dead_bubble_coral_wall_fan[variant:facing=south]",
+        "minecraft:dead_bubble_coral_wall_fan[variant:facing=west]"
+      ]
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "simple-imported-physical-v1: one ordinary bounded cuboid by default; reviewed doorway/arch, stair/landing and ladder exceptions use at most three useful boxes; passable source planes stay passable. Eight orientations use a few ordinary AABBs bounded by the actual transformed visual vertices, never strips or a second expanded rotated AABB. Six root-cell-face overflows strictly smaller than 0.5 blocks are cropped independently after instance yaw, vertical mount and SourceShift; long extents are retained. Selection and visuals unchanged. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped.",
+  "simplePhysicalCollision": true
+}

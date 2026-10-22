@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "id": "native_grid_relight",
+  "version": "1.0.0",
+  "name": "Native Grid Offline Relight Helper",
+  "environment": "server",
+  "entrypoints": {"main": ["dev.dreamwalker.bloodbornedw.nativegrid.NativeGridRelight"]},
+  "depends": {"fabricloader": ">=0.16.10", "fabric-api": "*", "minecraft": "1.20.1", "bloodborne_dw": "*"}
+}

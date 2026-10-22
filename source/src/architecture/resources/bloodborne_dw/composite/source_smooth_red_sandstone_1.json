@@ -1,0 +1,311 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_smooth_red_sandstone_1",
+  "displayName": "Горизонтальная секция из трёх камней · вариант 2",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/smooth_red_sandstone_1",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                -16.0,
+                0.0,
+                -2.0
+              ],
+              "to": [
+                32.0,
+                16.0,
+                18.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -16.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                -3.0,
+                15.0,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                -16.0,
+                14.0,
+                -1.0
+              ],
+              "to": [
+                -3.0,
+                15.0,
+                0.0
+              ]
+            },
+            {
+              "from": [
+                -16.0,
+                14.0,
+                16.0
+              ],
+              "to": [
+                -3.0,
+                15.0,
+                17.0
+              ]
+            },
+            {
+              "from": [
+                -3.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                17.0,
+                16.0,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                -3.0,
+                15.0,
+                -2.0
+              ],
+              "to": [
+                17.0,
+                16.0,
+                0.0
+              ]
+            },
+            {
+              "from": [
+                -3.0,
+                15.0,
+                16.0
+              ],
+              "to": [
+                17.0,
+                16.0,
+                18.0
+              ]
+            },
+            {
+              "from": [
+                17.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                32.0,
+                15.0,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                17.0,
+                14.0,
+                -1.0
+              ],
+              "to": [
+                32.0,
+                15.0,
+                0.0
+              ]
+            },
+            {
+              "from": [
+                17.0,
+                14.0,
+                16.0
+              ],
+              "to": [
+                32.0,
+                15.0,
+                17.0
+              ]
+            }
+          ],
+          "simpleCollisionByRotation": [
+            [
+              {
+                "from": [
+                  -16.0,
+                  0.0,
+                  -2.0
+                ],
+                "to": [
+                  32.0,
+                  16.0,
+                  18.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -15.33452378,
+                  0.0,
+                  -15.33452378
+                ],
+                "to": [
+                  31.33452378,
+                  16.0,
+                  31.33452378
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -2.0,
+                  0.0,
+                  -16.0
+                ],
+                "to": [
+                  18.0,
+                  16.0,
+                  32.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -15.33452378,
+                  0.0,
+                  -15.33452378
+                ],
+                "to": [
+                  31.33452378,
+                  16.0,
+                  31.33452378
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -16.0,
+                  0.0,
+                  -2.0
+                ],
+                "to": [
+                  32.0,
+                  16.0,
+                  18.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -15.33452378,
+                  0.0,
+                  -15.33452378
+                ],
+                "to": [
+                  31.33452378,
+                  16.0,
+                  31.33452378
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -2.0,
+                  0.0,
+                  -16.0
+                ],
+                "to": [
+                  18.0,
+                  16.0,
+                  32.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -15.33452378,
+                  0.0,
+                  -15.33452378
+                ],
+                "to": [
+                  31.33452378,
+                  16.0,
+                  31.33452378
+                ]
+              }
+            ]
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -16.0,
+          0.0,
+          -2.0
+        ],
+        "to": [
+          32.0,
+          16.0,
+          18.0
+        ]
+      },
+      "sourceVariant": "Горизонтальная секция из трёх камней · вариант 2",
+      "sourcePlacementOffset": [
+        0,
+        -0.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/smooth_red_sandstone_1"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:smooth_red_sandstone[variant:]"
+      ]
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "simple-imported-physical-v1: one ordinary bounded cuboid by default; reviewed doorway/arch, stair/landing and ladder exceptions use at most three useful boxes; passable source planes stay passable. Eight orientations use a few ordinary AABBs bounded by the actual transformed visual vertices, never strips or a second expanded rotated AABB. Six root-cell-face overflows strictly smaller than 0.5 blocks are cropped independently after instance yaw, vertical mount and SourceShift; long extents are retained. Selection and visuals unchanged. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped.",
+  "simplePhysicalCollision": true
+}

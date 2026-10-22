@@ -1,0 +1,96 @@
+{
+  "parent": "bloodborne_dw:remaining/source/minecraft/block/lantern_1",
+  "textures": {
+    "remaining_emissive_0": "bloodborne_dw:block/remaining/source/minecraft/block/addon/flower_pot_e"
+  },
+  "elements": [
+    {
+      "from": [
+        8,
+        -4,
+        5.5
+      ],
+      "to": [
+        8,
+        4,
+        10.5
+      ],
+      "shade": false,
+      "rotation": {
+        "angle": -22.5,
+        "axis": "y",
+        "origin": [
+          8,
+          0,
+          8
+        ]
+      },
+      "faces": {
+        "east": {
+          "uv": [
+            9,
+            8,
+            4,
+            16
+          ],
+          "texture": "#remaining_emissive_0"
+        },
+        "west": {
+          "uv": [
+            4,
+            8,
+            9,
+            16
+          ],
+          "texture": "#remaining_emissive_0"
+        }
+      }
+    },
+    {
+      "from": [
+        5.5,
+        -4,
+        8
+      ],
+      "to": [
+        10.5,
+        4,
+        8
+      ],
+      "shade": false,
+      "rotation": {
+        "angle": -22.5,
+        "axis": "y",
+        "origin": [
+          8,
+          0,
+          8
+        ]
+      },
+      "faces": {
+        "north": {
+          "uv": [
+            9,
+            8,
+            4,
+            16
+          ],
+          "texture": "#remaining_emissive_0"
+        },
+        "south": {
+          "uv": [
+            4,
+            8,
+            9,
+            16
+          ],
+          "texture": "#remaining_emissive_0"
+        }
+      }
+    }
+  ],
+  "sourceEmissiveMasks": [
+    "assets/minecraft/textures/block/addon/flower_pot_e.png"
+  ],
+  "sourceEmissivePolicy": "Only declared _e faces, same geometry/UV; renderer must use source-only fullbright overlay. No emitted world light."
+}

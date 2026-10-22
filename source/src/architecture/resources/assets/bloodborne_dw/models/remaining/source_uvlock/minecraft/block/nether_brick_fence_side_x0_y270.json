@@ -1,0 +1,163 @@
+{
+  "parent": "bloodborne_dw:remaining/source/minecraft/block/nether_brick_fence_side",
+  "elements": [
+    {
+      "from": [
+        7,
+        12,
+        0
+      ],
+      "to": [
+        9,
+        15,
+        9
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            7.0,
+            7.0,
+            16.0,
+            9.0
+          ],
+          "texture": "#texture",
+          "rotation": 270
+        },
+        "up": {
+          "uv": [
+            0.0,
+            7.0,
+            9.0,
+            9.0
+          ],
+          "texture": "#texture",
+          "rotation": 90
+        },
+        "north": {
+          "uv": [
+            7.0,
+            1.0,
+            9.0,
+            4.0
+          ],
+          "texture": "#texture",
+          "cullface": "north",
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            0.0,
+            1.0,
+            9.0,
+            4.0
+          ],
+          "texture": "#texture",
+          "rotation": 0
+        },
+        "east": {
+          "uv": [
+            0.0,
+            1.0,
+            9.0,
+            4.0
+          ],
+          "texture": "#texture",
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            7.0,
+            1.0,
+            9.0,
+            4.0
+          ],
+          "texture": "#texture",
+          "rotation": 0
+        }
+      },
+      "__comment": "top bar"
+    },
+    {
+      "from": [
+        7,
+        6,
+        0
+      ],
+      "to": [
+        9,
+        9,
+        9
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            7.0,
+            7.0,
+            16.0,
+            9.0
+          ],
+          "texture": "#texture",
+          "rotation": 270
+        },
+        "up": {
+          "uv": [
+            0.0,
+            7.0,
+            9.0,
+            9.0
+          ],
+          "texture": "#texture",
+          "rotation": 90
+        },
+        "north": {
+          "uv": [
+            7.0,
+            7.0,
+            9.0,
+            10.0
+          ],
+          "texture": "#texture",
+          "cullface": "north",
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            0.0,
+            7.0,
+            9.0,
+            10.0
+          ],
+          "texture": "#texture",
+          "rotation": 0
+        },
+        "east": {
+          "uv": [
+            0.0,
+            7.0,
+            9.0,
+            10.0
+          ],
+          "texture": "#texture",
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            7.0,
+            7.0,
+            9.0,
+            10.0
+          ],
+          "texture": "#texture",
+          "rotation": 0
+        }
+      },
+      "__comment": "lower bar"
+    }
+  ],
+  "sourceUvlockApplication": {
+    "x": 0,
+    "y": 270,
+    "uvlock": true
+  },
+  "sourceUvlockPolicy": "Private face UV/rotation wrapper; original source elements and PNG bytes remain preserved in parent."
+}

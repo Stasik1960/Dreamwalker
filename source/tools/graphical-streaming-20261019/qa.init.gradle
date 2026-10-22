@@ -1,0 +1,18 @@
+gradle.projectsEvaluated {
+ def p=gradle.rootProject
+ p.sourceSets.create('routeqa') {
+  compileClasspath += p.sourceSets.main.output + p.sourceSets.main.compileClasspath
+  runtimeClasspath += p.sourceSets.main.output + p.sourceSets.main.runtimeClasspath
+ }
+ p.configurations.routeqaImplementation.extendsFrom(p.configurations.implementation)
+ p.tasks.register('routeQaJar', Jar) {
+  dependsOn p.tasks.named('routeqaClasses');from p.sourceSets.routeqa.output
+  archiveBaseName='dreamwalker-native-route-qa';archiveClassifier='dev'
+ }
+ def remapType=p.tasks.getByName('remapJar').class.classLoader.loadClass('net.fabricmc.loom.task.RemapJarTask')
+ p.tasks.register('remapRouteQaJar', remapType) {
+  dependsOn p.tasks.named('routeQaJar');inputFile.set(p.tasks.named('routeQaJar',Jar).flatMap {it.archiveFile})
+  classpath.from(p.sourceSets.main.output,p.sourceSets.main.compileClasspath)
+  archiveBaseName='dreamwalker-native-route-qa';archiveClassifier='';addNestedDependencies=false
+ }
+}

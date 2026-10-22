@@ -1,0 +1,20 @@
+gradle.projectsEvaluated {
+ def p=gradle.rootProject
+ p.sourceSets.create('reopenqa') {
+  compileClasspath += p.sourceSets.main.output + p.sourceSets.main.compileClasspath
+  runtimeClasspath += p.sourceSets.main.output + p.sourceSets.main.runtimeClasspath
+ }
+ p.configurations.reopenqaImplementation.extendsFrom(p.configurations.implementation)
+ p.tasks.register('reopenQaJar', Jar) {
+  dependsOn p.tasks.named('reopenqaClasses')
+  from p.sourceSets.reopenqa.output
+  archiveBaseName='dreamwalker-reopen-qa';archiveClassifier='dev'
+ }
+ def remapType=p.tasks.getByName('remapJar').class.classLoader.loadClass('net.fabricmc.loom.task.RemapJarTask')
+ p.tasks.register('remapReopenQaJar', remapType) {
+  dependsOn p.tasks.named('reopenQaJar')
+  inputFile.set(p.tasks.named('reopenQaJar',Jar).flatMap { it.archiveFile })
+  classpath.from(p.sourceSets.main.output,p.sourceSets.main.compileClasspath)
+  archiveBaseName='dreamwalker-reopen-qa';archiveClassifier='';addNestedDependencies=false
+ }
+}

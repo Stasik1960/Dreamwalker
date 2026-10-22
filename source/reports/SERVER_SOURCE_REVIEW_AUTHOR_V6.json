@@ -1,0 +1,3634 @@
+{
+  "schema": "dreamwalker-final-jar-server-v1",
+  "artifact": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\libs\\dreamwalker-bb-fabric-1.20.1-0.1.0-prototype.2.jar",
+  "artifact_sha256": "a903bbf4da62dea91c41ef542da799180fc9ee7ab5a1c981618a905bdf37cf14",
+  "profile": "minimal",
+  "modset_profile_sha256": "fbde8d5d1f1a6f63ee66a73db2ed140787e1ce461b1ba4d444b4914f6cf78f9b",
+  "modset": [
+    {
+      "path": "mods/fabric-api-0.92.9+1.20.1.jar",
+      "sha256": "4056979ccaa1012354dfff14f39fdb085aefb3f1e0224ff45c3af41e4ffed5fd",
+      "id": "fabric-api",
+      "version": "0.92.9+1.20.1"
+    },
+    {
+      "path": "mods/geckolib-fabric-1.20.1-4.4.9.jar",
+      "sha256": "36d567615f7a81c265f96edd30e9534ed679d8da2a8774866f8ed09d9347e218",
+      "id": "geckolib",
+      "version": "4.4.9"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\libs\\dreamwalker-first-set-review-qa-0.1.0-prototype.2.jar",
+      "sha256": "bce0ca40e99f91bc6d3bd859242539e2808ece493216361c044c75b211e370b3",
+      "id": "bloodborne_dw_review",
+      "version": "1.0.0",
+      "extra_mod": true
+    }
+  ],
+  "minecraft": "1.20.1",
+  "loader": "0.19.5",
+  "java_version": "openjdk version \"17.0.15\" 2025-04-15 LTS\nOpenJDK Runtime Environment Microsoft-11369865 (build 17.0.15+6-LTS)\nOpenJDK 64-Bit Server VM Microsoft-11369865 (build 17.0.15+6-LTS, mixed mode)",
+  "vanilla_server_sha256": "3af73a9dc5a102e38147946360dd27d4d70bae7055bf91cf2151cd5d121b79e0",
+  "loader_metadata_source": "https://meta.fabricmc.net/v2/versions/loader/1.20.1/0.19.5/server/json",
+  "loader_metadata_sha256": "93ce901455fe33d13e00b51856812a3fde03e4d93d0821f529311fed1c135a19",
+  "libraries": [
+    {
+      "coordinate": "org.ow2.asm:asm:9.10.1",
+      "path": "libraries/org/ow2/asm/asm/9.10.1/asm-9.10.1.jar",
+      "sha256": "ed825d10ab1399c8c0cb669e688cf0c8c82629b4c8399b58352b68e92ca10fcb",
+      "source": "C:\\Users\\vakir\\Limacina\\project\\dw\\libraries\\org\\ow2\\asm\\asm\\9.10.1\\asm-9.10.1.jar"
+    },
+    {
+      "coordinate": "org.ow2.asm:asm-analysis:9.10.1",
+      "path": "libraries/org/ow2/asm/asm-analysis/9.10.1/asm-analysis-9.10.1.jar",
+      "sha256": "dede75a21306b65974ecd8f87114ff6970f09fb794157a4ca09ab25c888c2bfc",
+      "source": "C:\\Users\\vakir\\Limacina\\project\\dw\\libraries\\org\\ow2\\asm\\asm-analysis\\9.10.1\\asm-analysis-9.10.1.jar"
+    },
+    {
+      "coordinate": "org.ow2.asm:asm-commons:9.10.1",
+      "path": "libraries/org/ow2/asm/asm-commons/9.10.1/asm-commons-9.10.1.jar",
+      "sha256": "6d0abefb7cbf972ea16edb37ec14835372505063a45f976ab7ea889ed9497895",
+      "source": "C:\\Users\\vakir\\Limacina\\project\\dw\\libraries\\org\\ow2\\asm\\asm-commons\\9.10.1\\asm-commons-9.10.1.jar"
+    },
+    {
+      "coordinate": "org.ow2.asm:asm-tree:9.10.1",
+      "path": "libraries/org/ow2/asm/asm-tree/9.10.1/asm-tree-9.10.1.jar",
+      "sha256": "3dfb0d5b6a106cd40b5b250e39935fbf2f927f4477546a5369a3ac609cf0506b",
+      "source": "C:\\Users\\vakir\\Limacina\\project\\dw\\libraries\\org\\ow2\\asm\\asm-tree\\9.10.1\\asm-tree-9.10.1.jar"
+    },
+    {
+      "coordinate": "org.ow2.asm:asm-util:9.10.1",
+      "path": "libraries/org/ow2/asm/asm-util/9.10.1/asm-util-9.10.1.jar",
+      "sha256": "1bb99d091fba2597dc6d51193e9bbcf0d8447e7ed96bd8f0198b18152f09655c",
+      "source": "C:\\Users\\vakir\\Limacina\\project\\dw\\libraries\\org\\ow2\\asm\\asm-util\\9.10.1\\asm-util-9.10.1.jar"
+    },
+    {
+      "coordinate": "net.fabricmc:sponge-mixin:0.17.4+mixin.0.8.7",
+      "path": "libraries/net/fabricmc/sponge-mixin/0.17.4+mixin.0.8.7/sponge-mixin-0.17.4+mixin.0.8.7.jar",
+      "sha256": "1f0ae44db7295f8626f33b1dc0ad7f043d8954a8d6847247875fcc5dfcecc934",
+      "source": "C:\\Users\\vakir\\Limacina\\project\\dw\\libraries\\net\\fabricmc\\sponge-mixin\\0.17.4+mixin.0.8.7\\sponge-mixin-0.17.4+mixin.0.8.7.jar"
+    },
+    {
+      "coordinate": "net.fabricmc:intermediary:1.20.1",
+      "path": "libraries/net/fabricmc/intermediary/1.20.1/intermediary-1.20.1.jar",
+      "sha256": "caa3fd87dd353fc826a109a2d16f886d6519b47422e3a77cfa0ba8be5829a21e",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\net\\fabricmc\\intermediary\\1.20.1\\intermediary-1.20.1.jar"
+    },
+    {
+      "coordinate": "net.fabricmc:fabric-loader:0.19.5",
+      "path": "libraries/net/fabricmc/fabric-loader/0.19.5/fabric-loader-0.19.5.jar",
+      "sha256": "93044e4dd46de5d8136701292f05e868da096d2c9fddb4793e4fdbcc63efc695",
+      "source": "C:\\Users\\vakir\\Limacina\\project\\dw\\0.19.5.jar"
+    }
+  ],
+  "eula_evidence": {
+    "path": "C:\\Users\\vakir\\.codex\\worktrees\\bloodborne-material-review\\DW\\bloodborne complete\\build\\production-smoke\\final-city\\eula.txt",
+    "sha256": "e4db182aa77b5e31657f4b83f8973c79a8c65217a4383200f9f59f7c94752fad"
+  },
+  "run_directory": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-first-set-source-author-v6",
+  "server_bind": "127.0.0.1:50406",
+  "server_properties": {
+    "server-ip": "127.0.0.1",
+    "server-port": "50406",
+    "online-mode": "false",
+    "spawn-protection": "0",
+    "level-name": "isolated-smoke-world",
+    "level-type": "minecraft:flat",
+    "generator-settings": "{\"biome\":\"minecraft:plains\",\"layers\":[{\"block\":\"minecraft:bedrock\",\"height\":1},{\"block\":\"minecraft:dirt\",\"height\":126},{\"block\":\"minecraft:grass_block\",\"height\":1}],\"lakes\":false,\"features\":false,\"structure_overrides\":[]}",
+    "generate-structures": "false",
+    "view-distance": "2",
+    "simulation-distance": "2",
+    "max-players": "2",
+    "enable-query": "false",
+    "enable-rcon": "false"
+  },
+  "review_scene_input": null,
+  "bounded_source_input": {
+    "source": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-review-prepared-v6\\source-review-input.json",
+    "sha256": "d7061b461a8011b146fdf51995b69ddf5e52c51aa5847c16a85aff2ef10dc503",
+    "source_fixture_sha256": "f048b6affd076d53ef3bf58d4f70b437b22d962c712127141be81b75f76cae5e",
+    "source_archive_sha256": "39e83f2941b768fd2ae9f84d8f57dc76aec78bd926dc5e38eab3059251d2bb08",
+    "preload_byte_integrity": "PASS",
+    "original_snapshot": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-review-prepared-v6\\source-provenance\\Source-coordinate-fixture-original.zip",
+    "original_snapshot_sha256": "f048b6affd076d53ef3bf58d4f70b437b22d962c712127141be81b75f76cae5e"
+  },
+  "derived_world_copy": {
+    "source": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-review-prepared-v6\\world",
+    "files": [
+      {
+        "path": "data/bloodborne_rp_lamps.dat",
+        "bytes": 209,
+        "sha256": "f639439615aa7ad5d74789889357b7ebea8218ec401805c3645e61bcf67ce1c5"
+      },
+      {
+        "path": "data/capabilities.dat",
+        "bytes": 48,
+        "sha256": "564935a523b18b55504fb19c66391615c548fd69a03a84e7828059884742ac1e"
+      },
+      {
+        "path": "data/geckolib_ids.dat",
+        "bytes": 60,
+        "sha256": "0560ecfe138914ae5f99ea21b75a3ecb0a655056308aa977a10c2f1658a67a8e"
+      },
+      {
+        "path": "data/hunter_lamp_manager.dat",
+        "bytes": 148,
+        "sha256": "ba11b3fa511e246fd55f15ce7b7b77ef0f63ec95aab58efa8e64d550e1e1f34e"
+      },
+      {
+        "path": "data/raids.dat",
+        "bytes": 90,
+        "sha256": "252639932a59ed7f575ec1313f4728dd98d846a78d5af628676717400038afd5"
+      },
+      {
+        "path": "dreamwalker-source-copy.json",
+        "bytes": 2873,
+        "sha256": "a58cd8a41e84b16c72e7ece506ee9813786e39793db8f0439c67549a489dab6f"
+      },
+      {
+        "path": "entities/r.0.-2.mca",
+        "bytes": 49152,
+        "sha256": "497a5c226b1b1cabf610a6ad5aacea0aab14be08772e4d6a6883b0cf848b3587"
+      },
+      {
+        "path": "entities/r.0.-3.mca",
+        "bytes": 12288,
+        "sha256": "8e7787281e3549b0905bf73ad64ef3efc128c614da7b4dec67ebebcf049e0f4b"
+      },
+      {
+        "path": "level.dat",
+        "bytes": 37282,
+        "sha256": "633c7ae9b6525153062fc1a77790b653f49f55d878e56447bff30049445f3a6e"
+      },
+      {
+        "path": "poi/r.0.-2.mca",
+        "bytes": 16384,
+        "sha256": "d4b3f740d658531e795901b66d13de0cebc0f419e236b37279c2f5801820564b"
+      },
+      {
+        "path": "poi/r.0.-3.mca",
+        "bytes": 20480,
+        "sha256": "0396ce552af317a5abfce785446429572f8cc98e2af6adfe4fc2d18427bf7a61"
+      },
+      {
+        "path": "region/r.-1.-1.mca",
+        "bytes": 229376,
+        "sha256": "b36ca5336e8c80d66278caf17ee14e7faadedeb1eb270c787b03830bf98b31ff"
+      },
+      {
+        "path": "region/r.-1.-2.mca",
+        "bytes": 16384,
+        "sha256": "270a856f9c5baea94c9a18d40de0465cb1c974baf4bc32c7ff79c2a4651a0989"
+      },
+      {
+        "path": "region/r.-1.-3.mca",
+        "bytes": 86016,
+        "sha256": "2c017e7252b161f2ef2834dedf0e9f1ecfd30d16f0b632a9e0b84df2824f1693"
+      },
+      {
+        "path": "region/r.0.-1.mca",
+        "bytes": 24576,
+        "sha256": "6c4e200803e126ef78d9745a8eaad828cbdfdc70cd0d0aa784bda0130deacf25"
+      },
+      {
+        "path": "region/r.0.-2.mca",
+        "bytes": 196608,
+        "sha256": "1aae5c6a7db2fbac91ae1c9f3584fef876083786d689a188604458a8b3a42539"
+      },
+      {
+        "path": "region/r.0.-3.mca",
+        "bytes": 90112,
+        "sha256": "8293dabe6010b9864ef45061dbf09365b7b8aa07bab75a7feae4cf6d7834b15e"
+      }
+    ],
+    "omitted_files": [
+      "session.lock"
+    ],
+    "copy_byte_verification": "PASS",
+    "source_unchanged_after_run": true
+  },
+  "command": [
+    "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\runtime\\java-runtime-gamma\\windows\\java-runtime-gamma\\bin\\java.exe",
+    "-Xmx3G",
+    "-cp",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-first-set-source-author-v6\\libraries\\org\\ow2\\asm\\asm\\9.10.1\\asm-9.10.1.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-first-set-source-author-v6\\libraries\\org\\ow2\\asm\\asm-analysis\\9.10.1\\asm-analysis-9.10.1.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-first-set-source-author-v6\\libraries\\org\\ow2\\asm\\asm-commons\\9.10.1\\asm-commons-9.10.1.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-first-set-source-author-v6\\libraries\\org\\ow2\\asm\\asm-tree\\9.10.1\\asm-tree-9.10.1.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-first-set-source-author-v6\\libraries\\org\\ow2\\asm\\asm-util\\9.10.1\\asm-util-9.10.1.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-first-set-source-author-v6\\libraries\\net\\fabricmc\\sponge-mixin\\0.17.4+mixin.0.8.7\\sponge-mixin-0.17.4+mixin.0.8.7.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-first-set-source-author-v6\\libraries\\net\\fabricmc\\intermediary\\1.20.1\\intermediary-1.20.1.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-first-set-source-author-v6\\libraries\\net\\fabricmc\\fabric-loader\\0.19.5\\fabric-loader-0.19.5.jar",
+    "net.fabricmc.loader.impl.launch.server.FabricServerLauncher",
+    "nogui"
+  ],
+  "status": "PASS",
+  "client_visuals": "NOT_RUN",
+  "gameplay": "NOT_RUN",
+  "original_world_loaded": false,
+  "note": "A new flat smoke world cannot prove city performance or entity gameplay.",
+  "startup_seconds": 41.843,
+  "commands": [
+    "list",
+    "help bbrp",
+    "help bb",
+    "help bloodborne"
+  ],
+  "exit_code": 0,
+  "console_sha256": "8fc3ecb00c9d7c90f5c30097786850f5cfdff9dd3181d4df03485dfed1388d4d",
+  "elapsed_seconds": 50.422,
+  "world_startup": "PASS",
+  "evidence": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-first-set-source-author-v6\\launch-console.log",
+  "rp_initialization_count": 1,
+  "errors": [],
+  "bounded_source_output": {
+    "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-first-set-source-author-v6\\source-review-output.json",
+    "sha256": "97edafb0631daaa8f531ec420f6e13d4786678215f8fd9ca1675aa0e45e8928f",
+    "result": {
+      "schema": "dreamwalker-bounded-source-runtime-v1",
+      "visualAcceptance": "PENDING_USER_REVIEW",
+      "originalArchiveWritten": false,
+      "objects": [
+        {
+          "key": "architecture_tree_1",
+          "kind": "prototype_tree",
+          "root": [
+            -16,
+            119,
+            -504
+          ],
+          "expectedRoot": {
+            "pos": [
+              -16,
+              119,
+              -504
+            ],
+            "state": "minecraft:melon",
+            "block": "minecraft:melon",
+            "properties": {}
+          },
+          "members": [
+            {
+              "pos": [
+                -19,
+                125,
+                -504
+              ],
+              "state": "minecraft:oak_log[axis=z]",
+              "block": "minecraft:oak_log",
+              "properties": {
+                "axis": "z"
+              }
+            },
+            {
+              "pos": [
+                -19,
+                128,
+                -504
+              ],
+              "state": "minecraft:spruce_log[axis=z]",
+              "block": "minecraft:spruce_log",
+              "properties": {
+                "axis": "z"
+              }
+            },
+            {
+              "pos": [
+                -19,
+                131,
+                -504
+              ],
+              "state": "minecraft:birch_log[axis=z]",
+              "block": "minecraft:birch_log",
+              "properties": {
+                "axis": "z"
+              }
+            },
+            {
+              "pos": [
+                -16,
+                119,
+                -504
+              ],
+              "state": "minecraft:melon",
+              "block": "minecraft:melon",
+              "properties": {}
+            },
+            {
+              "pos": [
+                -16,
+                122,
+                -504
+              ],
+              "state": "minecraft:melon",
+              "block": "minecraft:melon",
+              "properties": {}
+            },
+            {
+              "pos": [
+                -16,
+                125,
+                -507
+              ],
+              "state": "minecraft:jungle_log[axis=x]",
+              "block": "minecraft:jungle_log",
+              "properties": {
+                "axis": "x"
+              }
+            },
+            {
+              "pos": [
+                -16,
+                125,
+                -504
+              ],
+              "state": "minecraft:orange_wool",
+              "block": "minecraft:orange_wool",
+              "properties": {}
+            },
+            {
+              "pos": [
+                -16,
+                125,
+                -501
+              ],
+              "state": "minecraft:oak_log[axis=x]",
+              "block": "minecraft:oak_log",
+              "properties": {
+                "axis": "x"
+              }
+            },
+            {
+              "pos": [
+                -16,
+                128,
+                -507
+              ],
+              "state": "minecraft:acacia_log[axis=x]",
+              "block": "minecraft:acacia_log",
+              "properties": {
+                "axis": "x"
+              }
+            },
+            {
+              "pos": [
+                -16,
+                128,
+                -504
+              ],
+              "state": "minecraft:magenta_wool",
+              "block": "minecraft:magenta_wool",
+              "properties": {}
+            },
+            {
+              "pos": [
+                -16,
+                128,
+                -501
+              ],
+              "state": "minecraft:spruce_log[axis=x]",
+              "block": "minecraft:spruce_log",
+              "properties": {
+                "axis": "x"
+              }
+            },
+            {
+              "pos": [
+                -16,
+                131,
+                -507
+              ],
+              "state": "minecraft:dark_oak_log[axis=x]",
+              "block": "minecraft:dark_oak_log",
+              "properties": {
+                "axis": "x"
+              }
+            },
+            {
+              "pos": [
+                -16,
+                131,
+                -504
+              ],
+              "state": "minecraft:light_blue_wool",
+              "block": "minecraft:light_blue_wool",
+              "properties": {}
+            },
+            {
+              "pos": [
+                -16,
+                131,
+                -501
+              ],
+              "state": "minecraft:birch_log[axis=x]",
+              "block": "minecraft:birch_log",
+              "properties": {
+                "axis": "x"
+              }
+            },
+            {
+              "pos": [
+                -16,
+                134,
+                -504
+              ],
+              "state": "minecraft:cyan_wool",
+              "block": "minecraft:cyan_wool",
+              "properties": {}
+            },
+            {
+              "pos": [
+                -13,
+                125,
+                -504
+              ],
+              "state": "minecraft:jungle_log[axis=z]",
+              "block": "minecraft:jungle_log",
+              "properties": {
+                "axis": "z"
+              }
+            },
+            {
+              "pos": [
+                -13,
+                128,
+                -504
+              ],
+              "state": "minecraft:acacia_log[axis=z]",
+              "block": "minecraft:acacia_log",
+              "properties": {
+                "axis": "z"
+              }
+            },
+            {
+              "pos": [
+                -13,
+                131,
+                -504
+              ],
+              "state": "minecraft:dark_oak_log[axis=z]",
+              "block": "minecraft:dark_oak_log",
+              "properties": {
+                "axis": "z"
+              }
+            }
+          ],
+          "rotation": 0,
+          "variant": 0,
+          "profile": "base",
+          "open": false,
+          "sourceShift": [
+            0,
+            -1,
+            0
+          ],
+          "ownerUuid": "043fd27a-166d-5ebb-bc72-a1e6ecccc2a9",
+          "migrationSignature": "2988da31b5e38efeab3c7a5145f3f24e18e0f9cc359873fcc6e1ca6b4905d36b",
+          "placementPath": "Exact-member journal + CompositeRuntime.place",
+          "actualState": "Block{bloodborne_dw:prototype_tree}[open=false,profile=base,rotation=0,variant=0]",
+          "status": "COMMITTED"
+        },
+        {
+          "key": "architecture_tree_2",
+          "kind": "prototype_tree",
+          "root": [
+            -14,
+            119,
+            -500
+          ],
+          "expectedRoot": {
+            "pos": [
+              -14,
+              119,
+              -500
+            ],
+            "state": "minecraft:melon",
+            "block": "minecraft:melon",
+            "properties": {}
+          },
+          "members": [
+            {
+              "pos": [
+                -17,
+                125,
+                -500
+              ],
+              "state": "minecraft:oak_log[axis=z]",
+              "block": "minecraft:oak_log",
+              "properties": {
+                "axis": "z"
+              }
+            },
+            {
+              "pos": [
+                -17,
+                128,
+                -500
+              ],
+              "state": "minecraft:spruce_log[axis=z]",
+              "block": "minecraft:spruce_log",
+              "properties": {
+                "axis": "z"
+              }
+            },
+            {
+              "pos": [
+                -17,
+                131,
+                -500
+              ],
+              "state": "minecraft:birch_log[axis=z]",
+              "block": "minecraft:birch_log",
+              "properties": {
+                "axis": "z"
+              }
+            },
+            {
+              "pos": [
+                -14,
+                119,
+                -500
+              ],
+              "state": "minecraft:melon",
+              "block": "minecraft:melon",
+              "properties": {}
+            },
+            {
+              "pos": [
+                -14,
+                122,
+                -500
+              ],
+              "state": "minecraft:melon",
+              "block": "minecraft:melon",
+              "properties": {}
+            },
+            {
+              "pos": [
+                -14,
+                125,
+                -503
+              ],
+              "state": "minecraft:jungle_log[axis=x]",
+              "block": "minecraft:jungle_log",
+              "properties": {
+                "axis": "x"
+              }
+            },
+            {
+              "pos": [
+                -14,
+                125,
+                -500
+              ],
+              "state": "minecraft:orange_wool",
+              "block": "minecraft:orange_wool",
+              "properties": {}
+            },
+            {
+              "pos": [
+                -14,
+                125,
+                -497
+              ],
+              "state": "minecraft:oak_log[axis=x]",
+              "block": "minecraft:oak_log",
+              "properties": {
+                "axis": "x"
+              }
+            },
+            {
+              "pos": [
+                -14,
+                128,
+                -503
+              ],
+              "state": "minecraft:acacia_log[axis=x]",
+              "block": "minecraft:acacia_log",
+              "properties": {
+                "axis": "x"
+              }
+            },
+            {
+              "pos": [
+                -14,
+                128,
+                -500
+              ],
+              "state": "minecraft:magenta_wool",
+              "block": "minecraft:magenta_wool",
+              "properties": {}
+            },
+            {
+              "pos": [
+                -14,
+                128,
+                -497
+              ],
+              "state": "minecraft:spruce_log[axis=x]",
+              "block": "minecraft:spruce_log",
+              "properties": {
+                "axis": "x"
+              }
+            },
+            {
+              "pos": [
+                -14,
+                131,
+                -503
+              ],
+              "state": "minecraft:dark_oak_log[axis=x]",
+              "block": "minecraft:dark_oak_log",
+              "properties": {
+                "axis": "x"
+              }
+            },
+            {
+              "pos": [
+                -14,
+                131,
+                -500
+              ],
+              "state": "minecraft:light_blue_wool",
+              "block": "minecraft:light_blue_wool",
+              "properties": {}
+            },
+            {
+              "pos": [
+                -14,
+                131,
+                -497
+              ],
+              "state": "minecraft:birch_log[axis=x]",
+              "block": "minecraft:birch_log",
+              "properties": {
+                "axis": "x"
+              }
+            },
+            {
+              "pos": [
+                -14,
+                134,
+                -500
+              ],
+              "state": "minecraft:cyan_wool",
+              "block": "minecraft:cyan_wool",
+              "properties": {}
+            },
+            {
+              "pos": [
+                -11,
+                125,
+                -500
+              ],
+              "state": "minecraft:jungle_log[axis=z]",
+              "block": "minecraft:jungle_log",
+              "properties": {
+                "axis": "z"
+              }
+            },
+            {
+              "pos": [
+                -11,
+                128,
+                -500
+              ],
+              "state": "minecraft:acacia_log[axis=z]",
+              "block": "minecraft:acacia_log",
+              "properties": {
+                "axis": "z"
+              }
+            },
+            {
+              "pos": [
+                -11,
+                131,
+                -500
+              ],
+              "state": "minecraft:dark_oak_log[axis=z]",
+              "block": "minecraft:dark_oak_log",
+              "properties": {
+                "axis": "z"
+              }
+            }
+          ],
+          "rotation": 0,
+          "variant": 0,
+          "profile": "base",
+          "open": false,
+          "sourceShift": [
+            0,
+            -1,
+            0
+          ],
+          "ownerUuid": "d267d8da-f8ac-53b4-95be-fb45f9b9aa58",
+          "migrationSignature": "6a60c9b92c165711a4cc2151a964280cfcb0771c080ec25998e8182b6c01f657",
+          "placementPath": "Exact-member journal + CompositeRuntime.place",
+          "actualState": "Block{bloodborne_dw:prototype_tree}[open=false,profile=base,rotation=0,variant=0]",
+          "status": "COMMITTED"
+        },
+        {
+          "key": "door_north",
+          "kind": "prototype_double_door",
+          "root": [
+            -93,
+            58,
+            -211
+          ],
+          "expectedRoot": {
+            "pos": [
+              -93,
+              58,
+              -211
+            ],
+            "state": "minecraft:air",
+            "block": "minecraft:air",
+            "properties": {}
+          },
+          "members": [
+            {
+              "pos": [
+                -93,
+                59,
+                -212
+              ],
+              "state": "minecraft:acacia_stairs[facing=north,half=bottom,shape=straight,waterlogged=false]",
+              "block": "minecraft:acacia_stairs",
+              "properties": {
+                "facing": "north",
+                "half": "bottom",
+                "shape": "straight",
+                "waterlogged": "false"
+              }
+            },
+            {
+              "pos": [
+                -93,
+                61,
+                -212
+              ],
+              "state": "minecraft:acacia_stairs[facing=north,half=top,shape=straight,waterlogged=false]",
+              "block": "minecraft:acacia_stairs",
+              "properties": {
+                "facing": "north",
+                "half": "top",
+                "shape": "straight",
+                "waterlogged": "false"
+              }
+            }
+          ],
+          "rotation": 0,
+          "variant": 0,
+          "profile": "base",
+          "open": false,
+          "sourceShift": [
+            0,
+            0,
+            0
+          ],
+          "ownerUuid": "adf7019a-6649-5ff2-a47b-5ec9354f69ee",
+          "migrationSignature": "90a82db1ed0cff76d0628f7e18d55ae545f8a2f11eb9250d3e328e00a584abbc",
+          "placementPath": "Exact-member journal + CompositeRuntime.place",
+          "actualState": "Block{bloodborne_dw:prototype_double_door}[open=false,profile=base,rotation=0,variant=0]",
+          "status": "COMMITTED"
+        },
+        {
+          "key": "wood_window",
+          "kind": "prototype_wood_window",
+          "root": [
+            -32,
+            37,
+            -1120
+          ],
+          "expectedRoot": {
+            "pos": [
+              -32,
+              37,
+              -1120
+            ],
+            "state": "minecraft:jungle_stairs[facing=north,half=bottom,shape=straight,waterlogged=false]",
+            "block": "minecraft:jungle_stairs",
+            "properties": {
+              "facing": "north",
+              "half": "bottom",
+              "shape": "straight",
+              "waterlogged": "false"
+            }
+          },
+          "members": [
+            {
+              "pos": [
+                -32,
+                37,
+                -1120
+              ],
+              "state": "minecraft:jungle_stairs[facing=north,half=bottom,shape=straight,waterlogged=false]",
+              "block": "minecraft:jungle_stairs",
+              "properties": {
+                "facing": "north",
+                "half": "bottom",
+                "shape": "straight",
+                "waterlogged": "false"
+              }
+            }
+          ],
+          "rotation": 0,
+          "variant": 0,
+          "profile": "base",
+          "open": false,
+          "sourceShift": [
+            0,
+            0,
+            0
+          ],
+          "ownerUuid": "d51e3b88-b1bb-5efe-a6c0-4e5ad00293f4",
+          "migrationSignature": "9079eb23c6a20f6845be757541efb3ad20383210b0afc84a0482d1de33054b6a",
+          "placementPath": "Exact-member journal + CompositeRuntime.place",
+          "actualState": "Block{bloodborne_dw:prototype_wood_window}[open=false,profile=base,rotation=0,variant=0]",
+          "status": "COMMITTED"
+        },
+        {
+          "key": "thin_window",
+          "kind": "prototype_thin_window",
+          "root": [
+            -121,
+            53,
+            -241
+          ],
+          "expectedRoot": {
+            "pos": [
+              -121,
+              53,
+              -241
+            ],
+            "state": "minecraft:red_sandstone_stairs[facing=north,half=bottom,shape=straight,waterlogged=false]",
+            "block": "minecraft:red_sandstone_stairs",
+            "properties": {
+              "facing": "north",
+              "half": "bottom",
+              "shape": "straight",
+              "waterlogged": "false"
+            }
+          },
+          "members": [
+            {
+              "pos": [
+                -121,
+                53,
+                -241
+              ],
+              "state": "minecraft:red_sandstone_stairs[facing=north,half=bottom,shape=straight,waterlogged=false]",
+              "block": "minecraft:red_sandstone_stairs",
+              "properties": {
+                "facing": "north",
+                "half": "bottom",
+                "shape": "straight",
+                "waterlogged": "false"
+              }
+            }
+          ],
+          "rotation": 0,
+          "variant": 0,
+          "profile": "base",
+          "open": false,
+          "sourceShift": [
+            0,
+            0,
+            0
+          ],
+          "ownerUuid": "6ee1163a-ccd4-55ff-8139-e199b9417986",
+          "migrationSignature": "d1f43db3a5eee7781bf8e587569db4ee01e1716cc0df014d3604bb6db830d4c4",
+          "placementPath": "Exact-member journal + CompositeRuntime.place",
+          "actualState": "Block{bloodborne_dw:prototype_thin_window}[open=false,profile=base,rotation=0,variant=0]",
+          "status": "COMMITTED"
+        },
+        {
+          "key": "wall",
+          "kind": "prototype_wall",
+          "root": [
+            154,
+            58,
+            -976
+          ],
+          "expectedRoot": {
+            "pos": [
+              154,
+              58,
+              -976
+            ],
+            "state": "minecraft:polished_deepslate_wall[east=low,north=low,south=low,up=true,waterlogged=false,west=none]",
+            "block": "minecraft:polished_deepslate_wall",
+            "properties": {
+              "east": "low",
+              "north": "low",
+              "south": "low",
+              "up": "true",
+              "waterlogged": "false",
+              "west": "none"
+            }
+          },
+          "members": [
+            {
+              "pos": [
+                154,
+                58,
+                -976
+              ],
+              "state": "minecraft:polished_deepslate_wall[east=low,north=low,south=low,up=true,waterlogged=false,west=none]",
+              "block": "minecraft:polished_deepslate_wall",
+              "properties": {
+                "east": "low",
+                "north": "low",
+                "south": "low",
+                "up": "true",
+                "waterlogged": "false",
+                "west": "none"
+              }
+            }
+          ],
+          "rotation": 0,
+          "variant": 0,
+          "profile": "base",
+          "open": false,
+          "sourceShift": [
+            0,
+            0,
+            0
+          ],
+          "art": {
+            "connections": "manual",
+            "rotation": "0",
+            "course": "low",
+            "profile": "base",
+            "material": "0",
+            "post": "true",
+            "waterlogged": "false",
+            "north": "true",
+            "east": "true",
+            "south": "true",
+            "west": "false"
+          },
+          "ownerUuid": "afeb3b08-2da2-51f1-aca2-6ee23e5aa270",
+          "migrationSignature": "005cce30006a1ec4a295a961a3717347d5892a41a761ef55dfc9a75d77060182",
+          "placementPath": "Explicit one-member manual source wall state",
+          "actualState": "Block{bloodborne_dw:prototype_wall}[connections=manual,course=low,east=true,material=0,north=true,post=true,profile=base,rotation=0,south=true,waterlogged=false,west=false]",
+          "status": "COMMITTED"
+        },
+        {
+          "key": "roof",
+          "kind": "prototype_roof",
+          "root": [
+            -173,
+            59,
+            -239
+          ],
+          "expectedRoot": {
+            "pos": [
+              -173,
+              59,
+              -239
+            ],
+            "state": "minecraft:jungle_stairs[facing=north,half=top,shape=straight,waterlogged=false]",
+            "block": "minecraft:jungle_stairs",
+            "properties": {
+              "facing": "north",
+              "half": "top",
+              "shape": "straight",
+              "waterlogged": "false"
+            }
+          },
+          "members": [
+            {
+              "pos": [
+                -173,
+                59,
+                -239
+              ],
+              "state": "minecraft:jungle_stairs[facing=north,half=top,shape=straight,waterlogged=false]",
+              "block": "minecraft:jungle_stairs",
+              "properties": {
+                "facing": "north",
+                "half": "top",
+                "shape": "straight",
+                "waterlogged": "false"
+              }
+            }
+          ],
+          "rotation": 0,
+          "variant": 0,
+          "profile": "base",
+          "open": false,
+          "sourceShift": [
+            0,
+            -0.1875,
+            0.3125
+          ],
+          "ownerUuid": "182c4c67-3128-549f-80fd-2a5b4dada8b0",
+          "migrationSignature": "a2921d40898a1f247bfdbea29b17306394aced1fef927ae88b587613d127bbae",
+          "placementPath": "Exact-member journal + CompositeRuntime.place",
+          "actualState": "Block{bloodborne_dw:prototype_roof}[open=false,profile=base,rotation=0,variant=0]",
+          "status": "COMMITTED"
+        },
+        {
+          "key": "source_ladder_00",
+          "kind": "source_ladder_pair",
+          "root": [
+            174,
+            60,
+            -1105
+          ],
+          "visual": [
+            173,
+            60,
+            -1105
+          ],
+          "physical": [
+            174,
+            60,
+            -1105
+          ],
+          "members": [
+            {
+              "pos": [
+                173,
+                60,
+                -1105
+              ],
+              "state": "minecraft:beehive[facing=west,honey_level=1]",
+              "block": "minecraft:beehive",
+              "properties": {
+                "facing": "west",
+                "honey_level": "1"
+              },
+              "sourceNbt": "CgAAAQAKa2VlcFBhY2tlZAADAAF4AAAArQMAAXkAAAA8AwABev//+68IAAJpZAARbWluZWNyYWZ0OmJlZWhpdmUJAARCZWVzAAAAAAAA",
+              "sourceNbtSha256": "080ff024a655dc2da805742c3ae7656aaf3096c0c5a474897e6afc9ca0e5aa95"
+            },
+            {
+              "pos": [
+                174,
+                60,
+                -1105
+              ],
+              "state": "minecraft:ladder[facing=east,waterlogged=false]",
+              "block": "minecraft:ladder",
+              "properties": {
+                "facing": "east",
+                "waterlogged": "false"
+              }
+            }
+          ],
+          "variant": 1,
+          "profile": "base",
+          "sourceVisualModel": "minecraft:block/hold/wood_ladder_03",
+          "ownerUuid": "609d5ae5-0269-5ccf-9cc9-038a941e4233",
+          "migrationSignature": "b5905627d022b85f035eb7db25a65f84ec16345b3f5b0bd551bceccb0d7446b8",
+          "placementPath": "SourceLadderRuntime.install exact two-cell source pair",
+          "actualState": "Block{bloodborne_dw:prototype_ladder}[diagonal=false,facing=east,profile=base,source_clone=true,variant=1,waterlogged=false]",
+          "status": "COMMITTED"
+        },
+        {
+          "key": "source_ladder_01",
+          "kind": "source_ladder_pair",
+          "root": [
+            174,
+            61,
+            -1105
+          ],
+          "visual": [
+            173,
+            61,
+            -1105
+          ],
+          "physical": [
+            174,
+            61,
+            -1105
+          ],
+          "members": [
+            {
+              "pos": [
+                173,
+                61,
+                -1105
+              ],
+              "state": "minecraft:beehive[facing=west,honey_level=1]",
+              "block": "minecraft:beehive",
+              "properties": {
+                "facing": "west",
+                "honey_level": "1"
+              },
+              "sourceNbt": "CgAAAQAKa2VlcFBhY2tlZAADAAF4AAAArQMAAXkAAAA9AwABev//+68IAAJpZAARbWluZWNyYWZ0OmJlZWhpdmUJAARCZWVzAAAAAAAA",
+              "sourceNbtSha256": "7d9e514ed99df4945b688b577818331d8c90add9236c718b7bd34320c329206e"
+            },
+            {
+              "pos": [
+                174,
+                61,
+                -1105
+              ],
+              "state": "minecraft:ladder[facing=east,waterlogged=false]",
+              "block": "minecraft:ladder",
+              "properties": {
+                "facing": "east",
+                "waterlogged": "false"
+              }
+            }
+          ],
+          "variant": 0,
+          "profile": "base",
+          "sourceVisualModel": "minecraft:block/hold/wood_ladder_02",
+          "ownerUuid": "05e2d486-538f-56b8-a8b4-bd816716f990",
+          "migrationSignature": "16e2f7dc767ae10c986754eafb533ec369da95f359992f11e1d955673dc1c003",
+          "placementPath": "SourceLadderRuntime.install exact two-cell source pair",
+          "actualState": "Block{bloodborne_dw:prototype_ladder}[diagonal=false,facing=east,profile=base,source_clone=true,variant=0,waterlogged=false]",
+          "status": "COMMITTED"
+        },
+        {
+          "key": "source_ladder_02",
+          "kind": "source_ladder_pair",
+          "root": [
+            174,
+            62,
+            -1105
+          ],
+          "visual": [
+            173,
+            62,
+            -1105
+          ],
+          "physical": [
+            174,
+            62,
+            -1105
+          ],
+          "members": [
+            {
+              "pos": [
+                173,
+                62,
+                -1105
+              ],
+              "state": "minecraft:beehive[facing=west,honey_level=1]",
+              "block": "minecraft:beehive",
+              "properties": {
+                "facing": "west",
+                "honey_level": "1"
+              },
+              "sourceNbt": "CgAAAQAKa2VlcFBhY2tlZAADAAF4AAAArQMAAXkAAAA+AwABev//+68IAAJpZAARbWluZWNyYWZ0OmJlZWhpdmUJAARCZWVzAAAAAAAA",
+              "sourceNbtSha256": "9d631087e7b1b74b91744a09cabe83bd15298c664686898525e623df46887da9"
+            },
+            {
+              "pos": [
+                174,
+                62,
+                -1105
+              ],
+              "state": "minecraft:ladder[facing=east,waterlogged=false]",
+              "block": "minecraft:ladder",
+              "properties": {
+                "facing": "east",
+                "waterlogged": "false"
+              }
+            }
+          ],
+          "variant": 2,
+          "profile": "base",
+          "sourceVisualModel": "minecraft:block/hold/wood_ladder_04",
+          "ownerUuid": "deb5f297-8ad5-53fb-a2ea-d23342590751",
+          "migrationSignature": "ca483aa77077e156a3084ccdf65f451d0a3f6f40b38aba9bb8dabe39a77abada",
+          "placementPath": "SourceLadderRuntime.install exact two-cell source pair",
+          "actualState": "Block{bloodborne_dw:prototype_ladder}[diagonal=false,facing=east,profile=base,source_clone=true,variant=2,waterlogged=false]",
+          "status": "COMMITTED"
+        },
+        {
+          "key": "source_ladder_03",
+          "kind": "source_ladder_pair",
+          "root": [
+            174,
+            63,
+            -1105
+          ],
+          "visual": [
+            173,
+            63,
+            -1105
+          ],
+          "physical": [
+            174,
+            63,
+            -1105
+          ],
+          "members": [
+            {
+              "pos": [
+                173,
+                63,
+                -1105
+              ],
+              "state": "minecraft:beehive[facing=west,honey_level=1]",
+              "block": "minecraft:beehive",
+              "properties": {
+                "facing": "west",
+                "honey_level": "1"
+              },
+              "sourceNbt": "CgAAAQAKa2VlcFBhY2tlZAADAAF4AAAArQMAAXkAAAA/AwABev//+68IAAJpZAARbWluZWNyYWZ0OmJlZWhpdmUJAARCZWVzAAAAAAAA",
+              "sourceNbtSha256": "d566c059791475f75423f03399ad1ec0b33d21ade9de2ac27e849a4c927f78aa"
+            },
+            {
+              "pos": [
+                174,
+                63,
+                -1105
+              ],
+              "state": "minecraft:ladder[facing=east,waterlogged=false]",
+              "block": "minecraft:ladder",
+              "properties": {
+                "facing": "east",
+                "waterlogged": "false"
+              }
+            }
+          ],
+          "variant": 1,
+          "profile": "base",
+          "sourceVisualModel": "minecraft:block/hold/wood_ladder_03",
+          "ownerUuid": "2fcc2e88-8129-59c5-bb34-22ac6dc78354",
+          "migrationSignature": "36fc6717838f3dd3c3627e308574f32385d41ea86f6e0685f98982e1b9af67d8",
+          "placementPath": "SourceLadderRuntime.install exact two-cell source pair",
+          "actualState": "Block{bloodborne_dw:prototype_ladder}[diagonal=false,facing=east,profile=base,source_clone=true,variant=1,waterlogged=false]",
+          "status": "COMMITTED"
+        },
+        {
+          "key": "source_ladder_04",
+          "kind": "source_ladder_pair",
+          "root": [
+            174,
+            64,
+            -1105
+          ],
+          "visual": [
+            173,
+            64,
+            -1105
+          ],
+          "physical": [
+            174,
+            64,
+            -1105
+          ],
+          "members": [
+            {
+              "pos": [
+                173,
+                64,
+                -1105
+              ],
+              "state": "minecraft:beehive[facing=west,honey_level=1]",
+              "block": "minecraft:beehive",
+              "properties": {
+                "facing": "west",
+                "honey_level": "1"
+              },
+              "sourceNbt": "CgAAAQAKa2VlcFBhY2tlZAADAAF4AAAArQMAAXkAAABAAwABev//+68IAAJpZAARbWluZWNyYWZ0OmJlZWhpdmUJAARCZWVzAAAAAAAA",
+              "sourceNbtSha256": "a951a7200fd535d08ffa8c4ab945dabf2c2f5feb9cbe76a4d74e46d83f6468ce"
+            },
+            {
+              "pos": [
+                174,
+                64,
+                -1105
+              ],
+              "state": "minecraft:ladder[facing=east,waterlogged=false]",
+              "block": "minecraft:ladder",
+              "properties": {
+                "facing": "east",
+                "waterlogged": "false"
+              }
+            }
+          ],
+          "variant": 2,
+          "profile": "base",
+          "sourceVisualModel": "minecraft:block/hold/wood_ladder_04",
+          "ownerUuid": "ea6afe14-c936-5b60-94de-80f504c0e3cc",
+          "migrationSignature": "36a5364aaf5844c4708c43303dabde3b03e592b407d48a41df3c367af7c37d2d",
+          "placementPath": "SourceLadderRuntime.install exact two-cell source pair",
+          "actualState": "Block{bloodborne_dw:prototype_ladder}[diagonal=false,facing=east,profile=base,source_clone=true,variant=2,waterlogged=false]",
+          "status": "COMMITTED"
+        },
+        {
+          "key": "source_ladder_05",
+          "kind": "source_ladder_pair",
+          "root": [
+            174,
+            65,
+            -1105
+          ],
+          "visual": [
+            173,
+            65,
+            -1105
+          ],
+          "physical": [
+            174,
+            65,
+            -1105
+          ],
+          "members": [
+            {
+              "pos": [
+                173,
+                65,
+                -1105
+              ],
+              "state": "minecraft:beehive[facing=west,honey_level=1]",
+              "block": "minecraft:beehive",
+              "properties": {
+                "facing": "west",
+                "honey_level": "1"
+              },
+              "sourceNbt": "CgAAAQAKa2VlcFBhY2tlZAADAAF4AAAArQMAAXkAAABBAwABev//+68IAAJpZAARbWluZWNyYWZ0OmJlZWhpdmUJAARCZWVzAAAAAAAA",
+              "sourceNbtSha256": "a2c1353eb5f2b5b87f10f0cd5560c5189be463991b29b2e82ba7baaf18384a4a"
+            },
+            {
+              "pos": [
+                174,
+                65,
+                -1105
+              ],
+              "state": "minecraft:ladder[facing=east,waterlogged=false]",
+              "block": "minecraft:ladder",
+              "properties": {
+                "facing": "east",
+                "waterlogged": "false"
+              }
+            }
+          ],
+          "variant": 2,
+          "profile": "base",
+          "sourceVisualModel": "minecraft:block/hold/wood_ladder_04",
+          "ownerUuid": "0cde7007-960f-5c1d-8dd9-85b1497aad75",
+          "migrationSignature": "06d6bf8cb6316b67cf7952389e5544621f2b5ea4c4e96744a0ab9da451a11ba0",
+          "placementPath": "SourceLadderRuntime.install exact two-cell source pair",
+          "actualState": "Block{bloodborne_dw:prototype_ladder}[diagonal=false,facing=east,profile=base,source_clone=true,variant=2,waterlogged=false]",
+          "status": "COMMITTED"
+        },
+        {
+          "key": "source_ladder_06",
+          "kind": "source_ladder_pair",
+          "root": [
+            177,
+            33,
+            -1107
+          ],
+          "visual": [
+            177,
+            33,
+            -1108
+          ],
+          "physical": [
+            177,
+            33,
+            -1107
+          ],
+          "members": [
+            {
+              "pos": [
+                177,
+                33,
+                -1108
+              ],
+              "state": "minecraft:beehive[facing=north,honey_level=1]",
+              "block": "minecraft:beehive",
+              "properties": {
+                "facing": "north",
+                "honey_level": "1"
+              },
+              "sourceNbt": "CgAAAQAKa2VlcFBhY2tlZAADAAF4AAAAsQMAAXkAAAAhAwABev//+6wIAAJpZAARbWluZWNyYWZ0OmJlZWhpdmUJAARCZWVzAAAAAAAA",
+              "sourceNbtSha256": "feaa87b4d8e97b492035f5d056639e8245c5d7702b9fb503fb4e222a281d08c5"
+            },
+            {
+              "pos": [
+                177,
+                33,
+                -1107
+              ],
+              "state": "minecraft:ladder[facing=south,waterlogged=false]",
+              "block": "minecraft:ladder",
+              "properties": {
+                "facing": "south",
+                "waterlogged": "false"
+              }
+            }
+          ],
+          "variant": 1,
+          "profile": "base",
+          "sourceVisualModel": "minecraft:block/hold/wood_ladder_03",
+          "ownerUuid": "f44656fd-6e12-55de-a2a6-8dbb82b7d58e",
+          "migrationSignature": "18b637b1475c9ee2ee1d98fb8996979a7f61ad01d160e1cb93203be13d0abd43",
+          "placementPath": "SourceLadderRuntime.install exact two-cell source pair",
+          "actualState": "Block{bloodborne_dw:prototype_ladder}[diagonal=false,facing=south,profile=base,source_clone=true,variant=1,waterlogged=false]",
+          "status": "COMMITTED"
+        },
+        {
+          "key": "source_ladder_07",
+          "kind": "source_ladder_pair",
+          "root": [
+            177,
+            34,
+            -1107
+          ],
+          "visual": [
+            177,
+            34,
+            -1108
+          ],
+          "physical": [
+            177,
+            34,
+            -1107
+          ],
+          "members": [
+            {
+              "pos": [
+                177,
+                34,
+                -1108
+              ],
+              "state": "minecraft:beehive[facing=north,honey_level=1]",
+              "block": "minecraft:beehive",
+              "properties": {
+                "facing": "north",
+                "honey_level": "1"
+              },
+              "sourceNbt": "CgAAAQAKa2VlcFBhY2tlZAADAAF4AAAAsQMAAXkAAAAiAwABev//+6wIAAJpZAARbWluZWNyYWZ0OmJlZWhpdmUJAARCZWVzAAAAAAAA",
+              "sourceNbtSha256": "51eb38638875038da1d5fa8f43f4acc169885d0b438f0aa4c474b96a59c768dd"
+            },
+            {
+              "pos": [
+                177,
+                34,
+                -1107
+              ],
+              "state": "minecraft:ladder[facing=south,waterlogged=false]",
+              "block": "minecraft:ladder",
+              "properties": {
+                "facing": "south",
+                "waterlogged": "false"
+              }
+            }
+          ],
+          "variant": 0,
+          "profile": "base",
+          "sourceVisualModel": "minecraft:block/hold/wood_ladder_02",
+          "ownerUuid": "fba3d206-1d63-57cd-8ea4-6256a3e3db53",
+          "migrationSignature": "238de8a4f6ddca86dbcc5f94e867f2146e80bb4ac860dfa3f5d464763e6b6412",
+          "placementPath": "SourceLadderRuntime.install exact two-cell source pair",
+          "actualState": "Block{bloodborne_dw:prototype_ladder}[diagonal=false,facing=south,profile=base,source_clone=true,variant=0,waterlogged=false]",
+          "status": "COMMITTED"
+        },
+        {
+          "key": "source_ladder_08",
+          "kind": "source_ladder_pair",
+          "root": [
+            177,
+            35,
+            -1107
+          ],
+          "visual": [
+            177,
+            35,
+            -1108
+          ],
+          "physical": [
+            177,
+            35,
+            -1107
+          ],
+          "members": [
+            {
+              "pos": [
+                177,
+                35,
+                -1108
+              ],
+              "state": "minecraft:beehive[facing=north,honey_level=1]",
+              "block": "minecraft:beehive",
+              "properties": {
+                "facing": "north",
+                "honey_level": "1"
+              },
+              "sourceNbt": "CgAAAQAKa2VlcFBhY2tlZAADAAF4AAAAsQMAAXkAAAAjAwABev//+6wIAAJpZAARbWluZWNyYWZ0OmJlZWhpdmUJAARCZWVzAAAAAAAA",
+              "sourceNbtSha256": "5d3598c721647570f87d22f118c811fc6ff57a42f8cee70443551908086c66a6"
+            },
+            {
+              "pos": [
+                177,
+                35,
+                -1107
+              ],
+              "state": "minecraft:ladder[facing=south,waterlogged=false]",
+              "block": "minecraft:ladder",
+              "properties": {
+                "facing": "south",
+                "waterlogged": "false"
+              }
+            }
+          ],
+          "variant": 2,
+          "profile": "base",
+          "sourceVisualModel": "minecraft:block/hold/wood_ladder_04",
+          "ownerUuid": "bbd9f793-7538-51cf-8439-b0792acd8624",
+          "migrationSignature": "123424c4fbf3fbd002b73abceee9e9fb9ad6e61cbcf4b86da0251ec817f118a9",
+          "placementPath": "SourceLadderRuntime.install exact two-cell source pair",
+          "actualState": "Block{bloodborne_dw:prototype_ladder}[diagonal=false,facing=south,profile=base,source_clone=true,variant=2,waterlogged=false]",
+          "status": "COMMITTED"
+        },
+        {
+          "key": "source_ladder_09",
+          "kind": "source_ladder_pair",
+          "root": [
+            177,
+            36,
+            -1107
+          ],
+          "visual": [
+            177,
+            36,
+            -1108
+          ],
+          "physical": [
+            177,
+            36,
+            -1107
+          ],
+          "members": [
+            {
+              "pos": [
+                177,
+                36,
+                -1108
+              ],
+              "state": "minecraft:beehive[facing=north,honey_level=1]",
+              "block": "minecraft:beehive",
+              "properties": {
+                "facing": "north",
+                "honey_level": "1"
+              },
+              "sourceNbt": "CgAAAQAKa2VlcFBhY2tlZAADAAF4AAAAsQMAAXkAAAAkAwABev//+6wIAAJpZAARbWluZWNyYWZ0OmJlZWhpdmUJAARCZWVzAAAAAAAA",
+              "sourceNbtSha256": "1038e869899d4b91e02aebfdf5fae10c891b80f7d1bb9cac3d196c7d33a4bcfa"
+            },
+            {
+              "pos": [
+                177,
+                36,
+                -1107
+              ],
+              "state": "minecraft:ladder[facing=south,waterlogged=false]",
+              "block": "minecraft:ladder",
+              "properties": {
+                "facing": "south",
+                "waterlogged": "false"
+              }
+            }
+          ],
+          "variant": 2,
+          "profile": "base",
+          "sourceVisualModel": "minecraft:block/hold/wood_ladder_04",
+          "ownerUuid": "03ad784a-83d9-5b5f-9640-27fa3eedd85c",
+          "migrationSignature": "1b70a0bf4e1b8df791a08fb897d264b9180d5e226bb11f01c7869ca69dbbeeb3",
+          "placementPath": "SourceLadderRuntime.install exact two-cell source pair",
+          "actualState": "Block{bloodborne_dw:prototype_ladder}[diagonal=false,facing=south,profile=base,source_clone=true,variant=2,waterlogged=false]",
+          "status": "COMMITTED"
+        },
+        {
+          "key": "source_ladder_10",
+          "kind": "source_ladder_pair",
+          "root": [
+            177,
+            37,
+            -1107
+          ],
+          "visual": [
+            177,
+            37,
+            -1108
+          ],
+          "physical": [
+            177,
+            37,
+            -1107
+          ],
+          "members": [
+            {
+              "pos": [
+                177,
+                37,
+                -1108
+              ],
+              "state": "minecraft:beehive[facing=north,honey_level=1]",
+              "block": "minecraft:beehive",
+              "properties": {
+                "facing": "north",
+                "honey_level": "1"
+              },
+              "sourceNbt": "CgAAAQAKa2VlcFBhY2tlZAADAAF4AAAAsQMAAXkAAAAlAwABev//+6wIAAJpZAARbWluZWNyYWZ0OmJlZWhpdmUJAARCZWVzAAAAAAAA",
+              "sourceNbtSha256": "6f22056482988135dc88632c61844ec63c3810831a23be91db710cb5b3830d47"
+            },
+            {
+              "pos": [
+                177,
+                37,
+                -1107
+              ],
+              "state": "minecraft:ladder[facing=south,waterlogged=false]",
+              "block": "minecraft:ladder",
+              "properties": {
+                "facing": "south",
+                "waterlogged": "false"
+              }
+            }
+          ],
+          "variant": 0,
+          "profile": "base",
+          "sourceVisualModel": "minecraft:block/hold/wood_ladder_02",
+          "ownerUuid": "e95dabaf-cce5-59b6-8a52-46f9edbdb479",
+          "migrationSignature": "9c14f9149836aaedc9c03176d4048415b663baaa31a2523c645848cfce7df90e",
+          "placementPath": "SourceLadderRuntime.install exact two-cell source pair",
+          "actualState": "Block{bloodborne_dw:prototype_ladder}[diagonal=false,facing=south,profile=base,source_clone=true,variant=0,waterlogged=false]",
+          "status": "COMMITTED"
+        },
+        {
+          "key": "source_ladder_11",
+          "kind": "source_ladder_pair",
+          "root": [
+            177,
+            38,
+            -1107
+          ],
+          "visual": [
+            177,
+            38,
+            -1108
+          ],
+          "physical": [
+            177,
+            38,
+            -1107
+          ],
+          "members": [
+            {
+              "pos": [
+                177,
+                38,
+                -1108
+              ],
+              "state": "minecraft:beehive[facing=north,honey_level=1]",
+              "block": "minecraft:beehive",
+              "properties": {
+                "facing": "north",
+                "honey_level": "1"
+              },
+              "sourceNbt": "CgAAAQAKa2VlcFBhY2tlZAADAAF4AAAAsQMAAXkAAAAmAwABev//+6wIAAJpZAARbWluZWNyYWZ0OmJlZWhpdmUJAARCZWVzAAAAAAAA",
+              "sourceNbtSha256": "ec942fb1600dd30e49ac0cd79c68abece3e3eee2373e9e742e7d90b4b3979d96"
+            },
+            {
+              "pos": [
+                177,
+                38,
+                -1107
+              ],
+              "state": "minecraft:ladder[facing=south,waterlogged=false]",
+              "block": "minecraft:ladder",
+              "properties": {
+                "facing": "south",
+                "waterlogged": "false"
+              }
+            }
+          ],
+          "variant": 2,
+          "profile": "base",
+          "sourceVisualModel": "minecraft:block/hold/wood_ladder_04",
+          "ownerUuid": "284eec03-6cb1-5979-b7aa-e58c09b02118",
+          "migrationSignature": "24bd4ad7194920645db9e2abe7073fc435661370f40043bd1e4c3517fe170e57",
+          "placementPath": "SourceLadderRuntime.install exact two-cell source pair",
+          "actualState": "Block{bloodborne_dw:prototype_ladder}[diagonal=false,facing=south,profile=base,source_clone=true,variant=2,waterlogged=false]",
+          "status": "COMMITTED"
+        },
+        {
+          "key": "source_ladder_12",
+          "kind": "source_ladder_pair",
+          "root": [
+            177,
+            39,
+            -1107
+          ],
+          "visual": [
+            177,
+            39,
+            -1108
+          ],
+          "physical": [
+            177,
+            39,
+            -1107
+          ],
+          "members": [
+            {
+              "pos": [
+                177,
+                39,
+                -1108
+              ],
+              "state": "minecraft:beehive[facing=north,honey_level=1]",
+              "block": "minecraft:beehive",
+              "properties": {
+                "facing": "north",
+                "honey_level": "1"
+              },
+              "sourceNbt": "CgAAAQAKa2VlcFBhY2tlZAADAAF4AAAAsQMAAXkAAAAnAwABev//+6wIAAJpZAARbWluZWNyYWZ0OmJlZWhpdmUJAARCZWVzAAAAAAAA",
+              "sourceNbtSha256": "14d2568a938d2fe77b0956d882d0895758042c0578dafa4d14f68d09b46b697c"
+            },
+            {
+              "pos": [
+                177,
+                39,
+                -1107
+              ],
+              "state": "minecraft:ladder[facing=south,waterlogged=false]",
+              "block": "minecraft:ladder",
+              "properties": {
+                "facing": "south",
+                "waterlogged": "false"
+              }
+            }
+          ],
+          "variant": 2,
+          "profile": "base",
+          "sourceVisualModel": "minecraft:block/hold/wood_ladder_04",
+          "ownerUuid": "6f3f7aab-f4ab-5265-a332-e505a296632c",
+          "migrationSignature": "a323d7a0d70f859a8425dbf7404a15fc1f8e58e98b373a174cc27d48dbcfdfbd",
+          "placementPath": "SourceLadderRuntime.install exact two-cell source pair",
+          "actualState": "Block{bloodborne_dw:prototype_ladder}[diagonal=false,facing=south,profile=base,source_clone=true,variant=2,waterlogged=false]",
+          "status": "COMMITTED"
+        },
+        {
+          "key": "source_ladder_13",
+          "kind": "source_ladder_pair",
+          "root": [
+            177,
+            40,
+            -1107
+          ],
+          "visual": [
+            177,
+            40,
+            -1108
+          ],
+          "physical": [
+            177,
+            40,
+            -1107
+          ],
+          "members": [
+            {
+              "pos": [
+                177,
+                40,
+                -1108
+              ],
+              "state": "minecraft:beehive[facing=north,honey_level=1]",
+              "block": "minecraft:beehive",
+              "properties": {
+                "facing": "north",
+                "honey_level": "1"
+              },
+              "sourceNbt": "CgAAAQAKa2VlcFBhY2tlZAADAAF4AAAAsQMAAXkAAAAoAwABev//+6wIAAJpZAARbWluZWNyYWZ0OmJlZWhpdmUJAARCZWVzAAAAAAAA",
+              "sourceNbtSha256": "767473617a72f51a2b091ece2396d8f3fd67662dd4f14acd84652f4a9f74c859"
+            },
+            {
+              "pos": [
+                177,
+                40,
+                -1107
+              ],
+              "state": "minecraft:ladder[facing=south,waterlogged=false]",
+              "block": "minecraft:ladder",
+              "properties": {
+                "facing": "south",
+                "waterlogged": "false"
+              }
+            }
+          ],
+          "variant": 0,
+          "profile": "base",
+          "sourceVisualModel": "minecraft:block/hold/wood_ladder_02",
+          "ownerUuid": "03e8ac29-f4e8-557c-ad39-b9fcc841baae",
+          "migrationSignature": "15faf609e81f42a75eae40908ffe15718ea3aaba12bec1ba01d73c6d196e2a01",
+          "placementPath": "SourceLadderRuntime.install exact two-cell source pair",
+          "actualState": "Block{bloodborne_dw:prototype_ladder}[diagonal=false,facing=south,profile=base,source_clone=true,variant=0,waterlogged=false]",
+          "status": "COMMITTED"
+        },
+        {
+          "key": "source_ladder_14",
+          "kind": "source_ladder_pair",
+          "root": [
+            177,
+            41,
+            -1107
+          ],
+          "visual": [
+            177,
+            41,
+            -1108
+          ],
+          "physical": [
+            177,
+            41,
+            -1107
+          ],
+          "members": [
+            {
+              "pos": [
+                177,
+                41,
+                -1108
+              ],
+              "state": "minecraft:beehive[facing=north,honey_level=1]",
+              "block": "minecraft:beehive",
+              "properties": {
+                "facing": "north",
+                "honey_level": "1"
+              },
+              "sourceNbt": "CgAAAQAKa2VlcFBhY2tlZAADAAF4AAAAsQMAAXkAAAApAwABev//+6wIAAJpZAARbWluZWNyYWZ0OmJlZWhpdmUJAARCZWVzAAAAAAAA",
+              "sourceNbtSha256": "0692ce88fa942810c343c2160c82b52688128d201f738ac774ed2cdd508fd5a8"
+            },
+            {
+              "pos": [
+                177,
+                41,
+                -1107
+              ],
+              "state": "minecraft:ladder[facing=south,waterlogged=false]",
+              "block": "minecraft:ladder",
+              "properties": {
+                "facing": "south",
+                "waterlogged": "false"
+              }
+            }
+          ],
+          "variant": 0,
+          "profile": "base",
+          "sourceVisualModel": "minecraft:block/hold/wood_ladder_02",
+          "ownerUuid": "92b3f407-53a2-59af-a7e8-c4814e5b6da1",
+          "migrationSignature": "c9d94531bddf03fa3e7631fd1890017b4a4ff912737a4aeda9b09757472367d6",
+          "placementPath": "SourceLadderRuntime.install exact two-cell source pair",
+          "actualState": "Block{bloodborne_dw:prototype_ladder}[diagonal=false,facing=south,profile=base,source_clone=true,variant=0,waterlogged=false]",
+          "status": "COMMITTED"
+        },
+        {
+          "key": "source_ladder_15",
+          "kind": "source_ladder_pair",
+          "root": [
+            177,
+            42,
+            -1107
+          ],
+          "visual": [
+            177,
+            42,
+            -1108
+          ],
+          "physical": [
+            177,
+            42,
+            -1107
+          ],
+          "members": [
+            {
+              "pos": [
+                177,
+                42,
+                -1108
+              ],
+              "state": "minecraft:beehive[facing=north,honey_level=1]",
+              "block": "minecraft:beehive",
+              "properties": {
+                "facing": "north",
+                "honey_level": "1"
+              },
+              "sourceNbt": "CgAAAQAKa2VlcFBhY2tlZAADAAF4AAAAsQMAAXkAAAAqAwABev//+6wIAAJpZAARbWluZWNyYWZ0OmJlZWhpdmUJAARCZWVzAAAAAAAA",
+              "sourceNbtSha256": "0dea9707f1958d0ffb4d0bb46b1e045bd38bbdcc34b3193a65e731d636f7b8c7"
+            },
+            {
+              "pos": [
+                177,
+                42,
+                -1107
+              ],
+              "state": "minecraft:ladder[facing=south,waterlogged=false]",
+              "block": "minecraft:ladder",
+              "properties": {
+                "facing": "south",
+                "waterlogged": "false"
+              }
+            }
+          ],
+          "variant": 1,
+          "profile": "base",
+          "sourceVisualModel": "minecraft:block/hold/wood_ladder_03",
+          "ownerUuid": "3152ff4e-fa2d-5233-95a1-21777db15019",
+          "migrationSignature": "8673ea28f3436617749eb2d84edddd706cdd9c490d3c0211b62f386a5ceb11d3",
+          "placementPath": "SourceLadderRuntime.install exact two-cell source pair",
+          "actualState": "Block{bloodborne_dw:prototype_ladder}[diagonal=false,facing=south,profile=base,source_clone=true,variant=1,waterlogged=false]",
+          "status": "COMMITTED"
+        },
+        {
+          "key": "source_ladder_16",
+          "kind": "source_ladder_pair",
+          "root": [
+            177,
+            43,
+            -1107
+          ],
+          "visual": [
+            177,
+            43,
+            -1108
+          ],
+          "physical": [
+            177,
+            43,
+            -1107
+          ],
+          "members": [
+            {
+              "pos": [
+                177,
+                43,
+                -1108
+              ],
+              "state": "minecraft:beehive[facing=north,honey_level=1]",
+              "block": "minecraft:beehive",
+              "properties": {
+                "facing": "north",
+                "honey_level": "1"
+              },
+              "sourceNbt": "CgAAAQAKa2VlcFBhY2tlZAADAAF4AAAAsQMAAXkAAAArAwABev//+6wIAAJpZAARbWluZWNyYWZ0OmJlZWhpdmUJAARCZWVzAAAAAAAA",
+              "sourceNbtSha256": "f4be71bf24c465d9a7f990afb9b50c60370b07a31ae3b26c7fe67ef071a910fc"
+            },
+            {
+              "pos": [
+                177,
+                43,
+                -1107
+              ],
+              "state": "minecraft:ladder[facing=south,waterlogged=false]",
+              "block": "minecraft:ladder",
+              "properties": {
+                "facing": "south",
+                "waterlogged": "false"
+              }
+            }
+          ],
+          "variant": 0,
+          "profile": "base",
+          "sourceVisualModel": "minecraft:block/hold/wood_ladder_02",
+          "ownerUuid": "6d97bb38-66ee-594d-ab0c-e704a094aaa0",
+          "migrationSignature": "88da9141a85e873c10abb99702885cc443aad9d3f350857731689db7fb1433d0",
+          "placementPath": "SourceLadderRuntime.install exact two-cell source pair",
+          "actualState": "Block{bloodborne_dw:prototype_ladder}[diagonal=false,facing=south,profile=base,source_clone=true,variant=0,waterlogged=false]",
+          "status": "COMMITTED"
+        },
+        {
+          "key": "source_ladder_17",
+          "kind": "source_ladder_pair",
+          "root": [
+            177,
+            44,
+            -1107
+          ],
+          "visual": [
+            177,
+            44,
+            -1108
+          ],
+          "physical": [
+            177,
+            44,
+            -1107
+          ],
+          "members": [
+            {
+              "pos": [
+                177,
+                44,
+                -1108
+              ],
+              "state": "minecraft:beehive[facing=north,honey_level=1]",
+              "block": "minecraft:beehive",
+              "properties": {
+                "facing": "north",
+                "honey_level": "1"
+              },
+              "sourceNbt": "CgAAAQAKa2VlcFBhY2tlZAADAAF4AAAAsQMAAXkAAAAsAwABev//+6wIAAJpZAARbWluZWNyYWZ0OmJlZWhpdmUJAARCZWVzAAAAAAAA",
+              "sourceNbtSha256": "0706e9efd1d06bc4d028c7c173f2cdd09ad1cd8746c16780973c0692e1e583e2"
+            },
+            {
+              "pos": [
+                177,
+                44,
+                -1107
+              ],
+              "state": "minecraft:ladder[facing=south,waterlogged=false]",
+              "block": "minecraft:ladder",
+              "properties": {
+                "facing": "south",
+                "waterlogged": "false"
+              }
+            }
+          ],
+          "variant": 1,
+          "profile": "base",
+          "sourceVisualModel": "minecraft:block/hold/wood_ladder_03",
+          "ownerUuid": "94b8c17e-e929-5d06-a6a2-59ec4763e3e9",
+          "migrationSignature": "eaa336ff3f97425800c510c8bcbe7cf06ef46657ffd2c1c493bdefa6990e2b87",
+          "placementPath": "SourceLadderRuntime.install exact two-cell source pair",
+          "actualState": "Block{bloodborne_dw:prototype_ladder}[diagonal=false,facing=south,profile=base,source_clone=true,variant=1,waterlogged=false]",
+          "status": "COMMITTED"
+        },
+        {
+          "key": "source_ladder_18",
+          "kind": "source_ladder_pair",
+          "root": [
+            177,
+            45,
+            -1107
+          ],
+          "visual": [
+            177,
+            45,
+            -1108
+          ],
+          "physical": [
+            177,
+            45,
+            -1107
+          ],
+          "members": [
+            {
+              "pos": [
+                177,
+                45,
+                -1108
+              ],
+              "state": "minecraft:beehive[facing=north,honey_level=1]",
+              "block": "minecraft:beehive",
+              "properties": {
+                "facing": "north",
+                "honey_level": "1"
+              },
+              "sourceNbt": "CgAAAQAKa2VlcFBhY2tlZAADAAF4AAAAsQMAAXkAAAAtAwABev//+6wIAAJpZAARbWluZWNyYWZ0OmJlZWhpdmUJAARCZWVzAAAAAAAA",
+              "sourceNbtSha256": "e6b87750d84ec3f3d255ea863fb0ff8b4447879f366c2587be43a4792e701506"
+            },
+            {
+              "pos": [
+                177,
+                45,
+                -1107
+              ],
+              "state": "minecraft:ladder[facing=south,waterlogged=false]",
+              "block": "minecraft:ladder",
+              "properties": {
+                "facing": "south",
+                "waterlogged": "false"
+              }
+            }
+          ],
+          "variant": 2,
+          "profile": "base",
+          "sourceVisualModel": "minecraft:block/hold/wood_ladder_04",
+          "ownerUuid": "a080ad39-e297-580e-b5f5-645caf2d1093",
+          "migrationSignature": "08ba5b81bf660c55ccc70682c37b09282e7f3399796b35738bc25f09412d604c",
+          "placementPath": "SourceLadderRuntime.install exact two-cell source pair",
+          "actualState": "Block{bloodborne_dw:prototype_ladder}[diagonal=false,facing=south,profile=base,source_clone=true,variant=2,waterlogged=false]",
+          "status": "COMMITTED"
+        },
+        {
+          "key": "source_ladder_19",
+          "kind": "source_ladder_pair",
+          "root": [
+            177,
+            46,
+            -1107
+          ],
+          "visual": [
+            177,
+            46,
+            -1108
+          ],
+          "physical": [
+            177,
+            46,
+            -1107
+          ],
+          "members": [
+            {
+              "pos": [
+                177,
+                46,
+                -1108
+              ],
+              "state": "minecraft:beehive[facing=north,honey_level=1]",
+              "block": "minecraft:beehive",
+              "properties": {
+                "facing": "north",
+                "honey_level": "1"
+              },
+              "sourceNbt": "CgAAAQAKa2VlcFBhY2tlZAADAAF4AAAAsQMAAXkAAAAuAwABev//+6wIAAJpZAARbWluZWNyYWZ0OmJlZWhpdmUJAARCZWVzAAAAAAAA",
+              "sourceNbtSha256": "8fdb78ee92bbfd76a6870ece2e489e63f4c04abd27cf46a3c04654702f616fb7"
+            },
+            {
+              "pos": [
+                177,
+                46,
+                -1107
+              ],
+              "state": "minecraft:ladder[facing=south,waterlogged=false]",
+              "block": "minecraft:ladder",
+              "properties": {
+                "facing": "south",
+                "waterlogged": "false"
+              }
+            }
+          ],
+          "variant": 0,
+          "profile": "base",
+          "sourceVisualModel": "minecraft:block/hold/wood_ladder_02",
+          "ownerUuid": "b6c43c71-a5d0-5e0f-8d7c-c3594ee33808",
+          "migrationSignature": "7ab3d1dbbb155e69ea18568d8a0f5bf5a34beaa79646b152d6a48d90cba1d4f3",
+          "placementPath": "SourceLadderRuntime.install exact two-cell source pair",
+          "actualState": "Block{bloodborne_dw:prototype_ladder}[diagonal=false,facing=south,profile=base,source_clone=true,variant=0,waterlogged=false]",
+          "status": "COMMITTED"
+        },
+        {
+          "key": "source_ladder_20",
+          "kind": "source_ladder_pair",
+          "root": [
+            177,
+            47,
+            -1107
+          ],
+          "visual": [
+            177,
+            47,
+            -1108
+          ],
+          "physical": [
+            177,
+            47,
+            -1107
+          ],
+          "members": [
+            {
+              "pos": [
+                177,
+                47,
+                -1108
+              ],
+              "state": "minecraft:beehive[facing=north,honey_level=1]",
+              "block": "minecraft:beehive",
+              "properties": {
+                "facing": "north",
+                "honey_level": "1"
+              },
+              "sourceNbt": "CgAAAQAKa2VlcFBhY2tlZAADAAF4AAAAsQMAAXkAAAAvAwABev//+6wIAAJpZAARbWluZWNyYWZ0OmJlZWhpdmUJAARCZWVzAAAAAAAA",
+              "sourceNbtSha256": "1461d6adf1e44abcb794ad8b19e74a8ab8e5ef43275e4632c52bd022e203c4f8"
+            },
+            {
+              "pos": [
+                177,
+                47,
+                -1107
+              ],
+              "state": "minecraft:ladder[facing=south,waterlogged=false]",
+              "block": "minecraft:ladder",
+              "properties": {
+                "facing": "south",
+                "waterlogged": "false"
+              }
+            }
+          ],
+          "variant": 1,
+          "profile": "base",
+          "sourceVisualModel": "minecraft:block/hold/wood_ladder_03",
+          "ownerUuid": "b5145cae-e5ba-5d90-b5cf-7bf63835ec0b",
+          "migrationSignature": "4ff5bfc71b524827c25ed36eb6ab5a5aea3535a2c98123ab7915a9a87fe2541e",
+          "placementPath": "SourceLadderRuntime.install exact two-cell source pair",
+          "actualState": "Block{bloodborne_dw:prototype_ladder}[diagonal=false,facing=south,profile=base,source_clone=true,variant=1,waterlogged=false]",
+          "status": "COMMITTED"
+        },
+        {
+          "key": "source_ladder_21",
+          "kind": "source_ladder_pair",
+          "root": [
+            177,
+            48,
+            -1107
+          ],
+          "visual": [
+            177,
+            48,
+            -1108
+          ],
+          "physical": [
+            177,
+            48,
+            -1107
+          ],
+          "members": [
+            {
+              "pos": [
+                177,
+                48,
+                -1108
+              ],
+              "state": "minecraft:beehive[facing=north,honey_level=1]",
+              "block": "minecraft:beehive",
+              "properties": {
+                "facing": "north",
+                "honey_level": "1"
+              },
+              "sourceNbt": "CgAAAQAKa2VlcFBhY2tlZAADAAF4AAAAsQMAAXkAAAAwAwABev//+6wIAAJpZAARbWluZWNyYWZ0OmJlZWhpdmUJAARCZWVzAAAAAAAA",
+              "sourceNbtSha256": "1e7a29b4025318bc2c6ae418434fbb30619a315033f4eda34ea72df6d24e3b63"
+            },
+            {
+              "pos": [
+                177,
+                48,
+                -1107
+              ],
+              "state": "minecraft:ladder[facing=south,waterlogged=false]",
+              "block": "minecraft:ladder",
+              "properties": {
+                "facing": "south",
+                "waterlogged": "false"
+              }
+            }
+          ],
+          "variant": 2,
+          "profile": "base",
+          "sourceVisualModel": "minecraft:block/hold/wood_ladder_04",
+          "ownerUuid": "642ba676-d101-544e-b095-9c8531dde673",
+          "migrationSignature": "68835814d9d90d4992715099beb080bbcefaac4612b00d22a22bf4cae20f8dd7",
+          "placementPath": "SourceLadderRuntime.install exact two-cell source pair",
+          "actualState": "Block{bloodborne_dw:prototype_ladder}[diagonal=false,facing=south,profile=base,source_clone=true,variant=2,waterlogged=false]",
+          "status": "COMMITTED"
+        },
+        {
+          "key": "source_ladder_22",
+          "kind": "source_ladder_pair",
+          "root": [
+            177,
+            49,
+            -1107
+          ],
+          "visual": [
+            177,
+            49,
+            -1108
+          ],
+          "physical": [
+            177,
+            49,
+            -1107
+          ],
+          "members": [
+            {
+              "pos": [
+                177,
+                49,
+                -1108
+              ],
+              "state": "minecraft:beehive[facing=north,honey_level=1]",
+              "block": "minecraft:beehive",
+              "properties": {
+                "facing": "north",
+                "honey_level": "1"
+              },
+              "sourceNbt": "CgAAAQAKa2VlcFBhY2tlZAADAAF4AAAAsQMAAXkAAAAxAwABev//+6wIAAJpZAARbWluZWNyYWZ0OmJlZWhpdmUJAARCZWVzAAAAAAAA",
+              "sourceNbtSha256": "91edf0bfade759b37695d3e2378ab336d3c46f76403f27376ae38b5e645d37a4"
+            },
+            {
+              "pos": [
+                177,
+                49,
+                -1107
+              ],
+              "state": "minecraft:ladder[facing=south,waterlogged=false]",
+              "block": "minecraft:ladder",
+              "properties": {
+                "facing": "south",
+                "waterlogged": "false"
+              }
+            }
+          ],
+          "variant": 0,
+          "profile": "base",
+          "sourceVisualModel": "minecraft:block/hold/wood_ladder_02",
+          "ownerUuid": "9991fe8d-b137-5a90-831b-259d1a2b8a49",
+          "migrationSignature": "8ec4f355a4de5632426727d3426550834eb6e0c449105e78f44597029b7d8a6b",
+          "placementPath": "SourceLadderRuntime.install exact two-cell source pair",
+          "actualState": "Block{bloodborne_dw:prototype_ladder}[diagonal=false,facing=south,profile=base,source_clone=true,variant=0,waterlogged=false]",
+          "status": "COMMITTED"
+        },
+        {
+          "key": "source_ladder_23",
+          "kind": "source_ladder_pair",
+          "root": [
+            177,
+            50,
+            -1107
+          ],
+          "visual": [
+            177,
+            50,
+            -1108
+          ],
+          "physical": [
+            177,
+            50,
+            -1107
+          ],
+          "members": [
+            {
+              "pos": [
+                177,
+                50,
+                -1108
+              ],
+              "state": "minecraft:beehive[facing=north,honey_level=1]",
+              "block": "minecraft:beehive",
+              "properties": {
+                "facing": "north",
+                "honey_level": "1"
+              },
+              "sourceNbt": "CgAAAQAKa2VlcFBhY2tlZAADAAF4AAAAsQMAAXkAAAAyAwABev//+6wIAAJpZAARbWluZWNyYWZ0OmJlZWhpdmUJAARCZWVzAAAAAAAA",
+              "sourceNbtSha256": "4d3ea3d068c434283b6819b4abf39d528f296857bc78e84272fea31e679d491b"
+            },
+            {
+              "pos": [
+                177,
+                50,
+                -1107
+              ],
+              "state": "minecraft:ladder[facing=south,waterlogged=false]",
+              "block": "minecraft:ladder",
+              "properties": {
+                "facing": "south",
+                "waterlogged": "false"
+              }
+            }
+          ],
+          "variant": 2,
+          "profile": "base",
+          "sourceVisualModel": "minecraft:block/hold/wood_ladder_04",
+          "ownerUuid": "e4b9300a-e1a9-5b75-9a45-30626693de6f",
+          "migrationSignature": "3a9dc392a37f9e2f49a889fbd2cbaee3b26de59ebab6f596eb7d53effe7caa2d",
+          "placementPath": "SourceLadderRuntime.install exact two-cell source pair",
+          "actualState": "Block{bloodborne_dw:prototype_ladder}[diagonal=false,facing=south,profile=base,source_clone=true,variant=2,waterlogged=false]",
+          "status": "COMMITTED"
+        },
+        {
+          "key": "source_ladder_24",
+          "kind": "source_ladder_pair",
+          "root": [
+            177,
+            51,
+            -1107
+          ],
+          "visual": [
+            177,
+            51,
+            -1108
+          ],
+          "physical": [
+            177,
+            51,
+            -1107
+          ],
+          "members": [
+            {
+              "pos": [
+                177,
+                51,
+                -1108
+              ],
+              "state": "minecraft:beehive[facing=north,honey_level=1]",
+              "block": "minecraft:beehive",
+              "properties": {
+                "facing": "north",
+                "honey_level": "1"
+              },
+              "sourceNbt": "CgAAAQAKa2VlcFBhY2tlZAADAAF4AAAAsQMAAXkAAAAzAwABev//+6wIAAJpZAARbWluZWNyYWZ0OmJlZWhpdmUJAARCZWVzAAAAAAAA",
+              "sourceNbtSha256": "26d73b427550d3a98df6bebda3b0972ae9c300e005c2577a77e5a854185de378"
+            },
+            {
+              "pos": [
+                177,
+                51,
+                -1107
+              ],
+              "state": "minecraft:ladder[facing=south,waterlogged=false]",
+              "block": "minecraft:ladder",
+              "properties": {
+                "facing": "south",
+                "waterlogged": "false"
+              }
+            }
+          ],
+          "variant": 0,
+          "profile": "base",
+          "sourceVisualModel": "minecraft:block/hold/wood_ladder_02",
+          "ownerUuid": "42abbf8e-7d97-55cf-912d-90eec7604c4c",
+          "migrationSignature": "d1bf12662da16e956968afb0fe8547bdc3bb397b0bbbcdc21cf2065fb64c93e3",
+          "placementPath": "SourceLadderRuntime.install exact two-cell source pair",
+          "actualState": "Block{bloodborne_dw:prototype_ladder}[diagonal=false,facing=south,profile=base,source_clone=true,variant=0,waterlogged=false]",
+          "status": "COMMITTED"
+        },
+        {
+          "key": "source_ladder_25",
+          "kind": "source_ladder_pair",
+          "root": [
+            177,
+            52,
+            -1107
+          ],
+          "visual": [
+            177,
+            52,
+            -1108
+          ],
+          "physical": [
+            177,
+            52,
+            -1107
+          ],
+          "members": [
+            {
+              "pos": [
+                177,
+                52,
+                -1108
+              ],
+              "state": "minecraft:beehive[facing=north,honey_level=1]",
+              "block": "minecraft:beehive",
+              "properties": {
+                "facing": "north",
+                "honey_level": "1"
+              },
+              "sourceNbt": "CgAAAQAKa2VlcFBhY2tlZAADAAF4AAAAsQMAAXkAAAA0AwABev//+6wIAAJpZAARbWluZWNyYWZ0OmJlZWhpdmUJAARCZWVzAAAAAAAA",
+              "sourceNbtSha256": "d46de32bd50620a86b88498c6ef4199ea779ba6deaa90c814d3800688d3ef134"
+            },
+            {
+              "pos": [
+                177,
+                52,
+                -1107
+              ],
+              "state": "minecraft:ladder[facing=south,waterlogged=false]",
+              "block": "minecraft:ladder",
+              "properties": {
+                "facing": "south",
+                "waterlogged": "false"
+              }
+            }
+          ],
+          "variant": 1,
+          "profile": "base",
+          "sourceVisualModel": "minecraft:block/hold/wood_ladder_03",
+          "ownerUuid": "11580d54-ca6b-51d8-b8c2-e1f22c74ac45",
+          "migrationSignature": "8faeb91464818ddc7f19aa9629f5ce495787ad2733c3255f429090839dd08f77",
+          "placementPath": "SourceLadderRuntime.install exact two-cell source pair",
+          "actualState": "Block{bloodborne_dw:prototype_ladder}[diagonal=false,facing=south,profile=base,source_clone=true,variant=1,waterlogged=false]",
+          "status": "COMMITTED"
+        },
+        {
+          "key": "source_ladder_26",
+          "kind": "source_ladder_pair",
+          "root": [
+            177,
+            53,
+            -1107
+          ],
+          "visual": [
+            177,
+            53,
+            -1108
+          ],
+          "physical": [
+            177,
+            53,
+            -1107
+          ],
+          "members": [
+            {
+              "pos": [
+                177,
+                53,
+                -1108
+              ],
+              "state": "minecraft:beehive[facing=north,honey_level=1]",
+              "block": "minecraft:beehive",
+              "properties": {
+                "facing": "north",
+                "honey_level": "1"
+              },
+              "sourceNbt": "CgAAAQAKa2VlcFBhY2tlZAADAAF4AAAAsQMAAXkAAAA1AwABev//+6wIAAJpZAARbWluZWNyYWZ0OmJlZWhpdmUJAARCZWVzAAAAAAAA",
+              "sourceNbtSha256": "81124181322ee3bf58422022257c19851dda8a32ca9fa40d8368289a9a0480f9"
+            },
+            {
+              "pos": [
+                177,
+                53,
+                -1107
+              ],
+              "state": "minecraft:ladder[facing=south,waterlogged=false]",
+              "block": "minecraft:ladder",
+              "properties": {
+                "facing": "south",
+                "waterlogged": "false"
+              }
+            }
+          ],
+          "variant": 0,
+          "profile": "base",
+          "sourceVisualModel": "minecraft:block/hold/wood_ladder_02",
+          "ownerUuid": "afbc8d98-b42a-5ea7-87e3-9de1ce92675f",
+          "migrationSignature": "7461acabb41382ea4c63b4f8deeb4e634861d1833b7dadfe354a69af4e4b65ac",
+          "placementPath": "SourceLadderRuntime.install exact two-cell source pair",
+          "actualState": "Block{bloodborne_dw:prototype_ladder}[diagonal=false,facing=south,profile=base,source_clone=true,variant=0,waterlogged=false]",
+          "status": "COMMITTED"
+        },
+        {
+          "key": "source_ladder_27",
+          "kind": "source_ladder_pair",
+          "root": [
+            177,
+            54,
+            -1107
+          ],
+          "visual": [
+            177,
+            54,
+            -1108
+          ],
+          "physical": [
+            177,
+            54,
+            -1107
+          ],
+          "members": [
+            {
+              "pos": [
+                177,
+                54,
+                -1108
+              ],
+              "state": "minecraft:beehive[facing=north,honey_level=1]",
+              "block": "minecraft:beehive",
+              "properties": {
+                "facing": "north",
+                "honey_level": "1"
+              },
+              "sourceNbt": "CgAAAQAKa2VlcFBhY2tlZAADAAF4AAAAsQMAAXkAAAA2AwABev//+6wIAAJpZAARbWluZWNyYWZ0OmJlZWhpdmUJAARCZWVzAAAAAAAA",
+              "sourceNbtSha256": "038394a6ba344f64bf0daf912136ed50b4ff174bd4528fe2e1379f05bfdeaaaf"
+            },
+            {
+              "pos": [
+                177,
+                54,
+                -1107
+              ],
+              "state": "minecraft:ladder[facing=south,waterlogged=false]",
+              "block": "minecraft:ladder",
+              "properties": {
+                "facing": "south",
+                "waterlogged": "false"
+              }
+            }
+          ],
+          "variant": 0,
+          "profile": "base",
+          "sourceVisualModel": "minecraft:block/hold/wood_ladder_02",
+          "ownerUuid": "fb10d794-7501-5f5c-9cd8-2d75558375dc",
+          "migrationSignature": "1cc4eb72ab08175b5f1c33808215b994e7ee642eaff8e13e0aab5aa3cd4ce6ab",
+          "placementPath": "SourceLadderRuntime.install exact two-cell source pair",
+          "actualState": "Block{bloodborne_dw:prototype_ladder}[diagonal=false,facing=south,profile=base,source_clone=true,variant=0,waterlogged=false]",
+          "status": "COMMITTED"
+        },
+        {
+          "key": "source_ladder_28",
+          "kind": "source_ladder_pair",
+          "root": [
+            177,
+            55,
+            -1107
+          ],
+          "visual": [
+            177,
+            55,
+            -1108
+          ],
+          "physical": [
+            177,
+            55,
+            -1107
+          ],
+          "members": [
+            {
+              "pos": [
+                177,
+                55,
+                -1108
+              ],
+              "state": "minecraft:beehive[facing=north,honey_level=1]",
+              "block": "minecraft:beehive",
+              "properties": {
+                "facing": "north",
+                "honey_level": "1"
+              },
+              "sourceNbt": "CgAAAQAKa2VlcFBhY2tlZAADAAF4AAAAsQMAAXkAAAA3AwABev//+6wIAAJpZAARbWluZWNyYWZ0OmJlZWhpdmUJAARCZWVzAAAAAAAA",
+              "sourceNbtSha256": "c43989c140318d5b913378fb11029ab1b6306ede591258e09d9a956bf5c19d23"
+            },
+            {
+              "pos": [
+                177,
+                55,
+                -1107
+              ],
+              "state": "minecraft:ladder[facing=south,waterlogged=false]",
+              "block": "minecraft:ladder",
+              "properties": {
+                "facing": "south",
+                "waterlogged": "false"
+              }
+            }
+          ],
+          "variant": 1,
+          "profile": "base",
+          "sourceVisualModel": "minecraft:block/hold/wood_ladder_03",
+          "ownerUuid": "2b8b568e-290e-588b-bced-838d094de99a",
+          "migrationSignature": "b0a36acaaf8d1b18c6046879f14f46a42aa54d891b22774ce7d6ee6759124b43",
+          "placementPath": "SourceLadderRuntime.install exact two-cell source pair",
+          "actualState": "Block{bloodborne_dw:prototype_ladder}[diagonal=false,facing=south,profile=base,source_clone=true,variant=1,waterlogged=false]",
+          "status": "COMMITTED"
+        },
+        {
+          "key": "source_ladder_29",
+          "kind": "source_ladder_pair",
+          "root": [
+            177,
+            56,
+            -1107
+          ],
+          "visual": [
+            177,
+            56,
+            -1108
+          ],
+          "physical": [
+            177,
+            56,
+            -1107
+          ],
+          "members": [
+            {
+              "pos": [
+                177,
+                56,
+                -1108
+              ],
+              "state": "minecraft:beehive[facing=north,honey_level=1]",
+              "block": "minecraft:beehive",
+              "properties": {
+                "facing": "north",
+                "honey_level": "1"
+              },
+              "sourceNbt": "CgAAAQAKa2VlcFBhY2tlZAADAAF4AAAAsQMAAXkAAAA4AwABev//+6wIAAJpZAARbWluZWNyYWZ0OmJlZWhpdmUJAARCZWVzAAAAAAAA",
+              "sourceNbtSha256": "84dd457b3449a96398bb76abf97c3431b89d2219d7d39c8da485b078a4cc1e57"
+            },
+            {
+              "pos": [
+                177,
+                56,
+                -1107
+              ],
+              "state": "minecraft:ladder[facing=south,waterlogged=false]",
+              "block": "minecraft:ladder",
+              "properties": {
+                "facing": "south",
+                "waterlogged": "false"
+              }
+            }
+          ],
+          "variant": 0,
+          "profile": "base",
+          "sourceVisualModel": "minecraft:block/hold/wood_ladder_02",
+          "ownerUuid": "e06109e8-9db3-58eb-b06b-638d811a20e9",
+          "migrationSignature": "90fd087bb994d64af785ac251a95b33773cf86abb00374e45a097bac864b71fa",
+          "placementPath": "SourceLadderRuntime.install exact two-cell source pair",
+          "actualState": "Block{bloodborne_dw:prototype_ladder}[diagonal=false,facing=south,profile=base,source_clone=true,variant=0,waterlogged=false]",
+          "status": "COMMITTED"
+        },
+        {
+          "key": "source_ladder_30",
+          "kind": "source_ladder_pair",
+          "root": [
+            177,
+            57,
+            -1107
+          ],
+          "visual": [
+            177,
+            57,
+            -1108
+          ],
+          "physical": [
+            177,
+            57,
+            -1107
+          ],
+          "members": [
+            {
+              "pos": [
+                177,
+                57,
+                -1108
+              ],
+              "state": "minecraft:beehive[facing=north,honey_level=1]",
+              "block": "minecraft:beehive",
+              "properties": {
+                "facing": "north",
+                "honey_level": "1"
+              },
+              "sourceNbt": "CgAAAQAKa2VlcFBhY2tlZAADAAF4AAAAsQMAAXkAAAA5AwABev//+6wIAAJpZAARbWluZWNyYWZ0OmJlZWhpdmUJAARCZWVzAAAAAAAA",
+              "sourceNbtSha256": "9bec19e7e8d60a6bd2532223234b11dafeba1d7efadae29632a3b0d68ca18ee6"
+            },
+            {
+              "pos": [
+                177,
+                57,
+                -1107
+              ],
+              "state": "minecraft:ladder[facing=south,waterlogged=false]",
+              "block": "minecraft:ladder",
+              "properties": {
+                "facing": "south",
+                "waterlogged": "false"
+              }
+            }
+          ],
+          "variant": 0,
+          "profile": "base",
+          "sourceVisualModel": "minecraft:block/hold/wood_ladder_02",
+          "ownerUuid": "18b48f68-3219-5583-95fa-bd14b459bcab",
+          "migrationSignature": "890fe5b32a30e7ed88bb6ef5edffd1e2a68b5711280fe217eb69cfbe9233683c",
+          "placementPath": "SourceLadderRuntime.install exact two-cell source pair",
+          "actualState": "Block{bloodborne_dw:prototype_ladder}[diagonal=false,facing=south,profile=base,source_clone=true,variant=0,waterlogged=false]",
+          "status": "COMMITTED"
+        },
+        {
+          "key": "source_ladder_31",
+          "kind": "source_ladder_pair",
+          "root": [
+            177,
+            58,
+            -1107
+          ],
+          "visual": [
+            177,
+            58,
+            -1108
+          ],
+          "physical": [
+            177,
+            58,
+            -1107
+          ],
+          "members": [
+            {
+              "pos": [
+                177,
+                58,
+                -1108
+              ],
+              "state": "minecraft:beehive[facing=north,honey_level=1]",
+              "block": "minecraft:beehive",
+              "properties": {
+                "facing": "north",
+                "honey_level": "1"
+              },
+              "sourceNbt": "CgAAAQAKa2VlcFBhY2tlZAADAAF4AAAAsQMAAXkAAAA6AwABev//+6wIAAJpZAARbWluZWNyYWZ0OmJlZWhpdmUJAARCZWVzAAAAAAAA",
+              "sourceNbtSha256": "7ec799e191ee773ca3c7c944247896dfca9f77a7b8b245ae8cb7e19feb6ba45c"
+            },
+            {
+              "pos": [
+                177,
+                58,
+                -1107
+              ],
+              "state": "minecraft:ladder[facing=south,waterlogged=false]",
+              "block": "minecraft:ladder",
+              "properties": {
+                "facing": "south",
+                "waterlogged": "false"
+              }
+            }
+          ],
+          "variant": 1,
+          "profile": "base",
+          "sourceVisualModel": "minecraft:block/hold/wood_ladder_03",
+          "ownerUuid": "cf1b1eac-ca56-5ce1-b925-8dc9d13bb0fb",
+          "migrationSignature": "c5147f1b3a53aa3ff755afe927e9b99b9b08db0123c22d2755cf82b4b9f5522b",
+          "placementPath": "SourceLadderRuntime.install exact two-cell source pair",
+          "actualState": "Block{bloodborne_dw:prototype_ladder}[diagonal=false,facing=south,profile=base,source_clone=true,variant=1,waterlogged=false]",
+          "status": "COMMITTED"
+        },
+        {
+          "key": "source_ladder_32",
+          "kind": "source_ladder_pair",
+          "root": [
+            177,
+            59,
+            -1107
+          ],
+          "visual": [
+            177,
+            59,
+            -1108
+          ],
+          "physical": [
+            177,
+            59,
+            -1107
+          ],
+          "members": [
+            {
+              "pos": [
+                177,
+                59,
+                -1108
+              ],
+              "state": "minecraft:beehive[facing=north,honey_level=1]",
+              "block": "minecraft:beehive",
+              "properties": {
+                "facing": "north",
+                "honey_level": "1"
+              },
+              "sourceNbt": "CgAAAQAKa2VlcFBhY2tlZAADAAF4AAAAsQMAAXkAAAA7AwABev//+6wIAAJpZAARbWluZWNyYWZ0OmJlZWhpdmUJAARCZWVzAAAAAAAA",
+              "sourceNbtSha256": "08352e5be3188ed600e93e93cd5da2935fa8e14aea9ab2a0f818fc5bdcd886f3"
+            },
+            {
+              "pos": [
+                177,
+                59,
+                -1107
+              ],
+              "state": "minecraft:ladder[facing=south,waterlogged=false]",
+              "block": "minecraft:ladder",
+              "properties": {
+                "facing": "south",
+                "waterlogged": "false"
+              }
+            }
+          ],
+          "variant": 1,
+          "profile": "base",
+          "sourceVisualModel": "minecraft:block/hold/wood_ladder_03",
+          "ownerUuid": "0336d363-556b-5d53-9303-3f07cf8dda20",
+          "migrationSignature": "e36aa23887864bfc9e2f537ab94cea326bd04e7a48d6d8487b44dea66208da20",
+          "placementPath": "SourceLadderRuntime.install exact two-cell source pair",
+          "actualState": "Block{bloodborne_dw:prototype_ladder}[diagonal=false,facing=south,profile=base,source_clone=true,variant=1,waterlogged=false]",
+          "status": "COMMITTED"
+        },
+        {
+          "key": "source_ladder_33",
+          "kind": "source_ladder_pair",
+          "root": [
+            177,
+            60,
+            -1107
+          ],
+          "visual": [
+            177,
+            60,
+            -1108
+          ],
+          "physical": [
+            177,
+            60,
+            -1107
+          ],
+          "members": [
+            {
+              "pos": [
+                177,
+                60,
+                -1108
+              ],
+              "state": "minecraft:beehive[facing=north,honey_level=1]",
+              "block": "minecraft:beehive",
+              "properties": {
+                "facing": "north",
+                "honey_level": "1"
+              },
+              "sourceNbt": "CgAAAQAKa2VlcFBhY2tlZAADAAF4AAAAsQMAAXkAAAA8AwABev//+6wIAAJpZAARbWluZWNyYWZ0OmJlZWhpdmUJAARCZWVzAAAAAAAA",
+              "sourceNbtSha256": "7db76dd1ad77db7a494b7c11faca3f88ed29d167c30a14b6255c53bcf2973229"
+            },
+            {
+              "pos": [
+                177,
+                60,
+                -1107
+              ],
+              "state": "minecraft:ladder[facing=south,waterlogged=false]",
+              "block": "minecraft:ladder",
+              "properties": {
+                "facing": "south",
+                "waterlogged": "false"
+              }
+            }
+          ],
+          "variant": 2,
+          "profile": "base",
+          "sourceVisualModel": "minecraft:block/hold/wood_ladder_04",
+          "ownerUuid": "b7ee9ddc-0018-55f2-804c-7bf4cbd6c9c3",
+          "migrationSignature": "bd6280020c3f5726cfeb6d4c58505fa4eb6fed10a03a7030f05ca0b6ea8a4fd8",
+          "placementPath": "SourceLadderRuntime.install exact two-cell source pair",
+          "actualState": "Block{bloodborne_dw:prototype_ladder}[diagonal=false,facing=south,profile=base,source_clone=true,variant=2,waterlogged=false]",
+          "status": "COMMITTED"
+        }
+      ],
+      "sourceFixtureSha256": "f048b6affd076d53ef3bf58d4f70b437b22d962c712127141be81b75f76cae5e",
+      "sourceArchiveSha256": "39e83f2941b768fd2ae9f84d8f57dc76aec78bd926dc5e38eab3059251d2bb08",
+      "excludedInstances": [
+        {
+          "key": "door_east",
+          "reason": "SOURCE_MEMBER_CHUNKS_ABSENT_FROM_FROZEN_SUBSET",
+          "sourceMembers": [
+            {
+              "pos": [
+                -58,
+                76,
+                -113
+              ],
+              "state": "minecraft:acacia_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]",
+              "terrain_chunk": [
+                -4,
+                -8
+              ],
+              "source_chunk_exists": true,
+              "included_in_frozen_source_fixture": false
+            },
+            {
+              "pos": [
+                -58,
+                78,
+                -113
+              ],
+              "state": "minecraft:acacia_stairs[facing=east,half=top,shape=straight,waterlogged=false]",
+              "terrain_chunk": [
+                -4,
+                -8
+              ],
+              "source_chunk_exists": true,
+              "included_in_frozen_source_fixture": false
+            }
+          ]
+        }
+      ],
+      "sourceNbtSerializationNormalization": "Live createNbtWithId omits x/y/z and chunk-loader keepPacked byte0; every raw typed field remains in SourceMembers/RawSourceMembers provenance",
+      "technicalLights": [
+        {
+          "pos": [
+            228,
+            69,
+            -932
+          ],
+          "beforeState": "bloodborne:hunter_lamp_light_source",
+          "afterState": "bloodborne_dw:source_hunter_lamp_light",
+          "originalTypedState": "CgAACAAETmFtZQAjYmxvb2Rib3JuZTpodW50ZXJfbGFtcF9saWdodF9zb3VyY2UA",
+          "targetTypedState": "CgAACAAETmFtZQAmYmxvb2Rib3JuZV9kdzpzb3VyY2VfaHVudGVyX2xhbXBfbGlnaHQA",
+          "luminance": 9,
+          "collision": "EMPTY",
+          "selection": "EMPTY",
+          "isAir": false,
+          "replaceable": true,
+          "actualState": "Block{bloodborne_dw:source_hunter_lamp_light}",
+          "runtimeParity": "PASS_LIGHT9_EMPTY_COLLISION_EMPTY_SELECTION_REPLACEABLE_NOT_ISAIR_NO_BE"
+        },
+        {
+          "pos": [
+            229,
+            69,
+            -931
+          ],
+          "beforeState": "bloodborne:hunter_lamp_light_source",
+          "afterState": "bloodborne_dw:source_hunter_lamp_light",
+          "originalTypedState": "CgAACAAETmFtZQAjYmxvb2Rib3JuZTpodW50ZXJfbGFtcF9saWdodF9zb3VyY2UA",
+          "targetTypedState": "CgAACAAETmFtZQAmYmxvb2Rib3JuZV9kdzpzb3VyY2VfaHVudGVyX2xhbXBfbGlnaHQA",
+          "luminance": 9,
+          "collision": "EMPTY",
+          "selection": "EMPTY",
+          "isAir": false,
+          "replaceable": true,
+          "actualState": "Block{bloodborne_dw:source_hunter_lamp_light}",
+          "runtimeParity": "PASS_LIGHT9_EMPTY_COLLISION_EMPTY_SELECTION_REPLACEABLE_NOT_ISAIR_NO_BE"
+        }
+      ],
+      "transactionFailureChecks": [
+        {
+          "case": "CHANGED_SOURCE_STATE_REJECTED",
+          "status": "PASS"
+        },
+        {
+          "case": "CHANGED_SOURCE_TYPED_NBT_REJECTED",
+          "status": "PASS"
+        },
+        {
+          "case": "UNCLEARED_SOURCE_ROOT_REJECTED",
+          "status": "PASS"
+        },
+        {
+          "case": "INJECTED_PARTIAL_EXPLICIT_MEMBER_CLEAR_STATE_NBT_LEDGER_NO_DROPS_RESTORED",
+          "status": "PASS"
+        },
+        {
+          "case": "INJECTED_AFTER_COMMITTED_RUNTIME_PLACEMENT_STATE_NBT_LEDGER_NO_DROPS_RESTORED",
+          "status": "PASS"
+        }
+      ],
+      "sourceNativeFabricMovements": [
+        {
+          "purpose": "tree_foliage_gap_west",
+          "start": [
+            -17.5,
+            128.05,
+            -505.5
+          ],
+          "delta": [
+            0,
+            0,
+            3
+          ],
+          "actual_displacement": [
+            0.0,
+            0.0,
+            3.0
+          ],
+          "unobstructed": true,
+          "allSweptMovementChunksPreloaded": true,
+          "fabricDisplacement": [
+            0.0,
+            0.0,
+            3.0
+          ],
+          "fabricUnobstructed": true
+        },
+        {
+          "purpose": "tree_central_source_wool",
+          "start": [
+            -15.5,
+            128.05,
+            -505.5
+          ],
+          "delta": [
+            0,
+            0,
+            3
+          ],
+          "actual_displacement": [
+            0.0,
+            0.0,
+            1.199999988079071
+          ],
+          "unobstructed": false,
+          "allSweptMovementChunksPreloaded": true,
+          "fabricDisplacement": [
+            0.0,
+            0.0,
+            1.199999988079071
+          ],
+          "fabricUnobstructed": false
+        },
+        {
+          "purpose": "source_melon_trunk",
+          "start": [
+            -15.5,
+            119.05,
+            -505.5
+          ],
+          "delta": [
+            0,
+            0,
+            3
+          ],
+          "actual_displacement": [
+            0.0,
+            0.0,
+            1.199999988079071
+          ],
+          "unobstructed": false,
+          "allSweptMovementChunksPreloaded": true,
+          "fabricDisplacement": [
+            0.0,
+            0.0,
+            1.199999988079071
+          ],
+          "fabricUnobstructed": false
+        },
+        {
+          "purpose": "source_door_center",
+          "start": [
+            -92.5,
+            58.05,
+            -213.5
+          ],
+          "delta": [
+            0,
+            0,
+            4
+          ],
+          "actual_displacement": [
+            0.0,
+            0.0,
+            1.199999988079071
+          ],
+          "unobstructed": false,
+          "allSweptMovementChunksPreloaded": true,
+          "fabricDisplacement": [
+            0.0,
+            0.0,
+            1.199999988079071
+          ],
+          "fabricUnobstructed": false
+        },
+        {
+          "purpose": "source_door_side",
+          "start": [
+            -93.6,
+            58.05,
+            -213.5
+          ],
+          "delta": [
+            0,
+            0,
+            4
+          ],
+          "actual_displacement": [
+            0.0,
+            0.0,
+            4.0
+          ],
+          "unobstructed": true,
+          "allSweptMovementChunksPreloaded": true,
+          "fabricDisplacement": [
+            0.0,
+            0.0,
+            4.0
+          ],
+          "fabricUnobstructed": true
+        },
+        {
+          "purpose": "source_window_center",
+          "start": [
+            -31.5,
+            37.05,
+            -1121.5
+          ],
+          "delta": [
+            0,
+            0,
+            3
+          ],
+          "actual_displacement": [
+            0.0,
+            0.0,
+            0.19999998807907104
+          ],
+          "unobstructed": false,
+          "allSweptMovementChunksPreloaded": true,
+          "fabricDisplacement": [
+            0.0,
+            0.0,
+            0.19999998807907104
+          ],
+          "fabricUnobstructed": false
+        },
+        {
+          "purpose": "source_ladder_entry",
+          "start": [
+            177.5,
+            33.05,
+            -1105.5
+          ],
+          "delta": [
+            0,
+            0,
+            -2
+          ],
+          "actual_displacement": [
+            0.0,
+            0.0,
+            -1.012499988079071
+          ],
+          "unobstructed": false,
+          "allSweptMovementChunksPreloaded": true,
+          "fabricDisplacement": [
+            0.0,
+            0.0,
+            -1.012499988079071
+          ],
+          "fabricUnobstructed": false
+        }
+      ],
+      "injectedWholeBatchRollback": "PASS_41_OBJECTS_110_SOURCE_CELLS_STATE_TYPED_NBT_LEDGER_NO_ITEM_DROPS",
+      "convertedClosedMovements": [
+        {
+          "purpose": "tree_foliage_gap_west",
+          "start": [
+            -17.5,
+            128.05,
+            -505.5
+          ],
+          "delta": [
+            0,
+            0,
+            3
+          ],
+          "actual_displacement": [
+            0.0,
+            0.0,
+            3.0
+          ],
+          "unobstructed": true,
+          "allSweptMovementChunksPreloaded": true,
+          "fabricDisplacement": [
+            0.0,
+            0.0,
+            3.0
+          ],
+          "fabricUnobstructed": true
+        },
+        {
+          "purpose": "tree_central_source_wool",
+          "start": [
+            -15.5,
+            128.05,
+            -505.5
+          ],
+          "delta": [
+            0,
+            0,
+            3
+          ],
+          "actual_displacement": [
+            0.0,
+            0.0,
+            1.199999988079071
+          ],
+          "unobstructed": false,
+          "allSweptMovementChunksPreloaded": true,
+          "fabricDisplacement": [
+            0.0,
+            0.0,
+            3.0
+          ],
+          "fabricUnobstructed": true
+        },
+        {
+          "purpose": "source_melon_trunk",
+          "start": [
+            -15.5,
+            119.05,
+            -505.5
+          ],
+          "delta": [
+            0,
+            0,
+            3
+          ],
+          "actual_displacement": [
+            0.0,
+            0.0,
+            1.199999988079071
+          ],
+          "unobstructed": false,
+          "allSweptMovementChunksPreloaded": true,
+          "fabricDisplacement": [
+            0.0,
+            0.0,
+            1.574999988079071
+          ],
+          "fabricUnobstructed": false
+        },
+        {
+          "purpose": "source_door_center",
+          "start": [
+            -92.5,
+            58.05,
+            -213.5
+          ],
+          "delta": [
+            0,
+            0,
+            4
+          ],
+          "actual_displacement": [
+            0.0,
+            0.0,
+            1.199999988079071
+          ],
+          "unobstructed": false,
+          "allSweptMovementChunksPreloaded": true,
+          "fabricDisplacement": [
+            0.0,
+            0.0,
+            2.262499988079071
+          ],
+          "fabricUnobstructed": false
+        },
+        {
+          "purpose": "source_door_side",
+          "start": [
+            -93.6,
+            58.05,
+            -213.5
+          ],
+          "delta": [
+            0,
+            0,
+            4
+          ],
+          "actual_displacement": [
+            0.0,
+            0.0,
+            4.0
+          ],
+          "unobstructed": true,
+          "allSweptMovementChunksPreloaded": true,
+          "fabricDisplacement": [
+            0.0,
+            0.0,
+            2.262499988079071
+          ],
+          "fabricUnobstructed": false
+        },
+        {
+          "purpose": "source_window_center",
+          "start": [
+            -31.5,
+            37.05,
+            -1121.5
+          ],
+          "delta": [
+            0,
+            0,
+            3
+          ],
+          "actual_displacement": [
+            0.0,
+            0.0,
+            0.19999998807907104
+          ],
+          "unobstructed": false,
+          "allSweptMovementChunksPreloaded": true,
+          "fabricDisplacement": [
+            0.0,
+            0.0,
+            0.19999998807907104
+          ],
+          "fabricUnobstructed": false
+        },
+        {
+          "purpose": "source_ladder_entry",
+          "start": [
+            177.5,
+            33.05,
+            -1105.5
+          ],
+          "delta": [
+            0,
+            0,
+            -2
+          ],
+          "actual_displacement": [
+            0.0,
+            0.0,
+            -1.012499988079071
+          ],
+          "unobstructed": false,
+          "allSweptMovementChunksPreloaded": true,
+          "fabricDisplacement": [
+            0.0,
+            0.0,
+            -1.012499988079071
+          ],
+          "fabricUnobstructed": false
+        }
+      ],
+      "convertedOpenMovements": [
+        {
+          "purpose": "tree_foliage_gap_west",
+          "start": [
+            -17.5,
+            128.05,
+            -505.5
+          ],
+          "delta": [
+            0,
+            0,
+            3
+          ],
+          "actual_displacement": [
+            0.0,
+            0.0,
+            3.0
+          ],
+          "unobstructed": true,
+          "allSweptMovementChunksPreloaded": true,
+          "fabricDisplacement": [
+            0.0,
+            0.0,
+            3.0
+          ],
+          "fabricUnobstructed": true
+        },
+        {
+          "purpose": "tree_central_source_wool",
+          "start": [
+            -15.5,
+            128.05,
+            -505.5
+          ],
+          "delta": [
+            0,
+            0,
+            3
+          ],
+          "actual_displacement": [
+            0.0,
+            0.0,
+            1.199999988079071
+          ],
+          "unobstructed": false,
+          "allSweptMovementChunksPreloaded": true,
+          "fabricDisplacement": [
+            0.0,
+            0.0,
+            3.0
+          ],
+          "fabricUnobstructed": true
+        },
+        {
+          "purpose": "source_melon_trunk",
+          "start": [
+            -15.5,
+            119.05,
+            -505.5
+          ],
+          "delta": [
+            0,
+            0,
+            3
+          ],
+          "actual_displacement": [
+            0.0,
+            0.0,
+            1.199999988079071
+          ],
+          "unobstructed": false,
+          "allSweptMovementChunksPreloaded": true,
+          "fabricDisplacement": [
+            0.0,
+            0.0,
+            1.574999988079071
+          ],
+          "fabricUnobstructed": false
+        },
+        {
+          "purpose": "source_door_center",
+          "start": [
+            -92.5,
+            58.05,
+            -213.5
+          ],
+          "delta": [
+            0,
+            0,
+            4
+          ],
+          "actual_displacement": [
+            0.0,
+            0.0,
+            1.199999988079071
+          ],
+          "unobstructed": false,
+          "allSweptMovementChunksPreloaded": true,
+          "fabricDisplacement": [
+            0.0,
+            0.0,
+            4.0
+          ],
+          "fabricUnobstructed": true
+        },
+        {
+          "purpose": "source_door_side",
+          "start": [
+            -93.6,
+            58.05,
+            -213.5
+          ],
+          "delta": [
+            0,
+            0,
+            4
+          ],
+          "actual_displacement": [
+            0.0,
+            0.0,
+            4.0
+          ],
+          "unobstructed": true,
+          "allSweptMovementChunksPreloaded": true,
+          "fabricDisplacement": [
+            0.0,
+            0.0,
+            4.0
+          ],
+          "fabricUnobstructed": true
+        },
+        {
+          "purpose": "source_window_center",
+          "start": [
+            -31.5,
+            37.05,
+            -1121.5
+          ],
+          "delta": [
+            0,
+            0,
+            3
+          ],
+          "actual_displacement": [
+            0.0,
+            0.0,
+            0.19999998807907104
+          ],
+          "unobstructed": false,
+          "allSweptMovementChunksPreloaded": true,
+          "fabricDisplacement": [
+            0.0,
+            0.0,
+            0.19999998807907104
+          ],
+          "fabricUnobstructed": false
+        },
+        {
+          "purpose": "source_ladder_entry",
+          "start": [
+            177.5,
+            33.05,
+            -1105.5
+          ],
+          "delta": [
+            0,
+            0,
+            -2
+          ],
+          "actual_displacement": [
+            0.0,
+            0.0,
+            -1.012499988079071
+          ],
+          "unobstructed": false,
+          "allSweptMovementChunksPreloaded": true,
+          "fabricDisplacement": [
+            0.0,
+            0.0,
+            -1.012499988079071
+          ],
+          "fabricUnobstructed": false
+        }
+      ],
+      "nativeNonmemberChanges": [],
+      "nativeNonmemberBlocksCompared": 160243,
+      "idempotence": "PASS_SECOND_CALL_SIGNATURE_UUID_AND_ALL_FOOTPRINT_BINDINGS_NO_OP",
+      "commands": [
+        "gamerule spawnRadius 0",
+        "gamerule doTileDrops true",
+        "defaultgamemode creative",
+        "setworldspawn -93 58 -211",
+        "time set noon",
+        "weather clear"
+      ],
+      "status": "PASS_BOUNDED_SOURCE_MIGRATION_REQUIRES_PRODUCTION_REOPEN",
+      "objectCount": 41,
+      "sourceMemberCount": 110,
+      "nativeNonmemberPreservation": "PASS_LOADED_BEFORE_AFTER_STATE_ALL_NBT_AND_SAME_BE_INSTANCE",
+      "limit": "Original pre-load bytes and loaded-state comparison are separate; no claim that vanilla DFU or RP entity save preserves unknown Forge fields."
+    }
+  }
+}

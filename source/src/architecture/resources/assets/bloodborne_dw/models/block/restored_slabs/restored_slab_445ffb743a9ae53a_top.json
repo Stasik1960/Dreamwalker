@@ -1,0 +1,88 @@
+{
+  "ambientocclusion": true,
+  "textures": {
+    "particle": "bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0095",
+    "face_down": "bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0095",
+    "face_up": "bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0095",
+    "face_north": "bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0095",
+    "face_south": "bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0095",
+    "face_west": "bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0095",
+    "face_east": "bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0095"
+  },
+  "elements": [
+    {
+      "from": [
+        0,
+        8,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            0,
+            0,
+            2,
+            2
+          ],
+          "texture": "#face_down"
+        },
+        "up": {
+          "uv": [
+            3,
+            0,
+            5,
+            2
+          ],
+          "rotation": 90,
+          "texture": "#face_up",
+          "cullface": "up"
+        },
+        "north": {
+          "uv": [
+            3,
+            0,
+            5,
+            1
+          ],
+          "texture": "#face_north",
+          "cullface": "north"
+        },
+        "south": {
+          "uv": [
+            3,
+            0,
+            5,
+            1
+          ],
+          "texture": "#face_south",
+          "cullface": "south"
+        },
+        "west": {
+          "uv": [
+            3,
+            0,
+            5,
+            1
+          ],
+          "texture": "#face_west",
+          "cullface": "west"
+        },
+        "east": {
+          "uv": [
+            3,
+            0,
+            5,
+            1
+          ],
+          "texture": "#face_east",
+          "cullface": "east"
+        }
+      }
+    }
+  ]
+}

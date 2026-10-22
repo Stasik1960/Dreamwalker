@@ -1,0 +1,227 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_soul_lantern",
+  "displayName": "Фонарь",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/soul_lantern",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                5.0,
+                0.0,
+                5.0
+              ],
+              "to": [
+                11.0,
+                9.0,
+                11.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                5.0,
+                0.0,
+                5.0
+              ],
+              "to": [
+                11.0,
+                7.0,
+                11.0
+              ]
+            },
+            {
+              "from": [
+                6.0,
+                7.0,
+                6.0
+              ],
+              "to": [
+                10.0,
+                11,
+                10.0
+              ]
+            }
+          ],
+          "simpleCollisionByRotation": [
+            [
+              {
+                "from": [
+                  5.0,
+                  0.0,
+                  5.0
+                ],
+                "to": [
+                  11.0,
+                  9.0,
+                  11.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  3.75735931,
+                  0.0,
+                  3.75735931
+                ],
+                "to": [
+                  12.24264069,
+                  9.0,
+                  12.24264069
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  5.0,
+                  0.0,
+                  5.0
+                ],
+                "to": [
+                  11.0,
+                  9.0,
+                  11.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  3.75735931,
+                  0.0,
+                  3.75735931
+                ],
+                "to": [
+                  12.24264069,
+                  9.0,
+                  12.24264069
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  5.0,
+                  0.0,
+                  5.0
+                ],
+                "to": [
+                  11.0,
+                  9.0,
+                  11.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  3.75735931,
+                  0.0,
+                  3.75735931
+                ],
+                "to": [
+                  12.24264069,
+                  9.0,
+                  12.24264069
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  5.0,
+                  0.0,
+                  5.0
+                ],
+                "to": [
+                  11.0,
+                  9.0,
+                  11.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  3.75735931,
+                  0.0,
+                  3.75735931
+                ],
+                "to": [
+                  12.24264069,
+                  9.0,
+                  12.24264069
+                ]
+              }
+            ]
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          5.0,
+          0.0,
+          5.0
+        ],
+        "to": [
+          11.0,
+          11,
+          11.0
+        ]
+      },
+      "sourceVariant": "Фонарь",
+      "sourcePlacementOffset": [
+        0,
+        -0.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/soul_lantern"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:soul_lantern[variant:hanging=false]"
+      ]
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "simple-imported-physical-v1: one ordinary bounded cuboid by default; reviewed doorway/arch, stair/landing and ladder exceptions use at most three useful boxes; passable source planes stay passable. Eight orientations use a few ordinary AABBs bounded by the actual transformed visual vertices, never strips or a second expanded rotated AABB. Six root-cell-face overflows strictly smaller than 0.5 blocks are cropped independently after instance yaw, vertical mount and SourceShift; long extents are retained. Selection and visuals unchanged. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped.",
+  "simplePhysicalCollision": true
+}

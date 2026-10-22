@@ -1,0 +1,47 @@
+
+> Configure project :
+Fabric Loom: 1.6.12
+
+> Task :compileJava
+Note: Some input files use or override a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+
+> Task :processResources UP-TO-DATE
+> Task :classes
+> Task :compileGametestJava
+> Task :compileReviewJava
+> Task :compileTestJava
+> Task :processTestResources NO-SOURCE
+> Task :testClasses
+
+> Task :transactionCheck
+PASS whole object placement/removal
+PASS foreign state and BE preservation
+PASS shared helper targeting and independent removal
+PASS shared root insertion retains other object NBT
+PASS partial write failure restores every snapshot
+PASS stale plan rejects without a write
+PASS unloaded owner is deferred; same ID reuse is stale
+PASS support reads become commit preconditions
+PASS visual-only transition ignores unchanged collision
+PASS entity movement between preflight and commit
+PASS chunk boundary rejects unloaded cells without loading
+PASS rotation hook keeps BE payload and four-turn geometry
+PASS notifications see complete commit and can roll back
+PASS rollback failure is an explicit failure
+PASS bounded multi-owner capacity
+PASS dimension-scoped plan
+PASS obsolete membership prunes links without destroying roots
+PASS snapshots copy opaque bytes and state maps
+PASS unchanged helpers refresh cached data and roll back separately
+PASS trusted functional payload transition preserves explicit adapter update
+PASS 20 transaction core checks; Java 17.0.15
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.8/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 7s
+6 actionable tasks: 5 executed, 1 up-to-date

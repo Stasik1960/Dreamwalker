@@ -1,0 +1,218 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_spruce_fence_gate_open",
+  "displayName": "Красноватая полосатая кладка",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/spruce_fence_gate_open",
+              "offset": [
+                0,
+                -5.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                0.0,
+                0.0,
+                3.5
+              ],
+              "to": [
+                16.0,
+                11.0,
+                12.5
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                0.0,
+                0.0,
+                3.5
+              ],
+              "to": [
+                16.0,
+                11.0,
+                12.5
+              ]
+            }
+          ],
+          "simpleCollisionByRotation": [
+            [
+              {
+                "from": [
+                  0.0,
+                  0.0,
+                  3.5
+                ],
+                "to": [
+                  16.0,
+                  11.0,
+                  12.5
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -0.83883476,
+                  0.0,
+                  -0.83883476
+                ],
+                "to": [
+                  16.83883476,
+                  11.0,
+                  16.83883476
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  3.5,
+                  0.0,
+                  0.0
+                ],
+                "to": [
+                  12.5,
+                  11.0,
+                  16.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -0.83883476,
+                  0.0,
+                  -0.83883476
+                ],
+                "to": [
+                  16.83883476,
+                  11.0,
+                  16.83883476
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  0.0,
+                  0.0,
+                  3.5
+                ],
+                "to": [
+                  16.0,
+                  11.0,
+                  12.5
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -0.83883476,
+                  0.0,
+                  -0.83883476
+                ],
+                "to": [
+                  16.83883476,
+                  11.0,
+                  16.83883476
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  3.5,
+                  0.0,
+                  0.0
+                ],
+                "to": [
+                  12.5,
+                  11.0,
+                  16.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -0.83883476,
+                  0.0,
+                  -0.83883476
+                ],
+                "to": [
+                  16.83883476,
+                  11.0,
+                  16.83883476
+                ]
+              }
+            ]
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          0.0,
+          0.0,
+          3.5
+        ],
+        "to": [
+          16.0,
+          11.0,
+          12.5
+        ]
+      },
+      "sourceVariant": "Секция ворот · открытая",
+      "sourcePlacementOffset": [
+        0,
+        -5.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -5.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/spruce_fence_gate_open"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:spruce_fence_gate[variant:facing=east,in_wall=false,open=true]",
+        "minecraft:spruce_fence_gate[variant:facing=north,in_wall=false,open=true]",
+        "minecraft:spruce_fence_gate[variant:facing=south,in_wall=false,open=true]",
+        "minecraft:spruce_fence_gate[variant:facing=west,in_wall=false,open=true]"
+      ]
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "simple-imported-physical-v1: one ordinary bounded cuboid by default; reviewed doorway/arch, stair/landing and ladder exceptions use at most three useful boxes; passable source planes stay passable. Eight orientations use a few ordinary AABBs bounded by the actual transformed visual vertices, never strips or a second expanded rotated AABB. Six root-cell-face overflows strictly smaller than 0.5 blocks are cropped independently after instance yaw, vertical mount and SourceShift; long extents are retained. Selection and visuals unchanged. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped.",
+  "simplePhysicalCollision": true
+}

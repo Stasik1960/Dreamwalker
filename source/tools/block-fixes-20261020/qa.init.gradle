@@ -1,0 +1,11 @@
+gradle.projectsEvaluated {
+ def p=gradle.rootProject
+ p.sourceSets.create('blockqa') {
+  compileClasspath += p.sourceSets.main.output + p.sourceSets.main.compileClasspath
+  runtimeClasspath += p.sourceSets.main.output + p.sourceSets.main.runtimeClasspath
+ }
+ p.configurations.blockqaImplementation.extendsFrom(p.configurations.implementation)
+ p.tasks.register('blockQaJar',Jar) { dependsOn p.tasks.named('blockqaClasses');from p.sourceSets.blockqa.output;archiveBaseName='dreamwalker-block-repair-checks';archiveClassifier='dev' }
+ def type=p.tasks.getByName('remapJar').class.classLoader.loadClass('net.fabricmc.loom.task.RemapJarTask')
+ p.tasks.register('remapBlockQaJar',type) { dependsOn p.tasks.named('blockQaJar');inputFile.set(p.tasks.named('blockQaJar',Jar).flatMap{it.archiveFile});classpath.from(p.sourceSets.main.output,p.sourceSets.main.compileClasspath);archiveBaseName='dreamwalker-block-repair-checks';archiveClassifier='';addNestedDependencies=false }
+}

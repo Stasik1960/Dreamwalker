@@ -1,0 +1,61 @@
+{
+  "schema": "dw-v10-old-alias-actual-server-command-plan-v2",
+  "status": "PREPARED_CANDIDATE9_QA25_ALIAS3_NOT_RUN",
+  "executionPerformed": false,
+  "productionJarSha256": "ad7fb47b9f22594f05d8c9523030c2d35f13154be61ba44b1bacf964838fabe5",
+  "qaJarSha256": "21c7a7c170329e693c7ec637e715d37465402607e675632f051cfe0bcdf6c082",
+  "permanentOldRegistryInstances": 14,
+  "instancesPerOldAlias": 2,
+  "savedOldInventoryStacks": 7,
+  "temporaryCanonicalOldItemProbes": 7,
+  "prepareOnlyArgv": [
+    "C:/Users/vakir/miniconda3/python.exe",
+    "tools/run_review_v10_alias_servers.py",
+    "--jar",
+    "build/frozen-artifacts/v10-attempt-9/dreamwalker-bb-fabric-1.20.1-0.1.0-prototype.5.jar",
+    "--qa-jar",
+    "build/frozen-artifacts/v10-qa-25/dreamwalker-first-set-review-qa-0.1.0-prototype.5.jar",
+    "--artifact-sha",
+    "ad7fb47b9f22594f05d8c9523030c2d35f13154be61ba44b1bacf964838fabe5",
+    "--accepted-eula-file",
+    "C:/Users/vakir/.codex/worktrees/bloodborne-material-review/DW/bloodborne complete/build/production-smoke/final-city/eula.txt",
+    "--suffix",
+    "release3"
+  ],
+  "executeOnlyAfterRootGo": [
+    "C:/Users/vakir/miniconda3/python.exe",
+    "tools/run_review_v10_alias_servers.py",
+    "--jar",
+    "build/frozen-artifacts/v10-attempt-9/dreamwalker-bb-fabric-1.20.1-0.1.0-prototype.5.jar",
+    "--qa-jar",
+    "build/frozen-artifacts/v10-qa-25/dreamwalker-first-set-review-qa-0.1.0-prototype.5.jar",
+    "--artifact-sha",
+    "ad7fb47b9f22594f05d8c9523030c2d35f13154be61ba44b1bacf964838fabe5",
+    "--accepted-eula-file",
+    "C:/Users/vakir/.codex/worktrees/bloodborne-material-review/DW/bloodborne complete/build/production-smoke/final-city/eula.txt",
+    "--suffix",
+    "release3",
+    "--execute"
+  ],
+  "verifyOnlyAfterThreeActualNormalPassWrappersArgv": [
+    "C:/Users/vakir/miniconda3/python.exe",
+    "tools/verify_review_v10_alias_saved.py",
+    "--author-report",
+    "reports/V10_ALIAS_AUTHOR_RELEASE3.json",
+    "--reenter-report",
+    "reports/V10_ALIAS_REENTER_RELEASE3.json",
+    "--production-report",
+    "reports/V10_ALIAS_PRODUCTION_REOPEN_RELEASE3.json",
+    "--artifact-sha",
+    "ad7fb47b9f22594f05d8c9523030c2d35f13154be61ba44b1bacf964838fabe5",
+    "--report",
+    "reports/V10_ALIAS_DISK_INDEPENDENT_RELEASE3.json"
+  ],
+  "expectedActualWrapperPaths": [
+    "reports/V10_ALIAS_AUTHOR_RELEASE3.json",
+    "reports/V10_ALIAS_REENTER_RELEASE3.json",
+    "reports/V10_ALIAS_PRODUCTION_REOPEN_RELEASE3.json"
+  ],
+  "actualEvidenceStatus": "NOT_RUN",
+  "manualVisualOrClientPacketProof": "NOT_CLAIMED"
+}

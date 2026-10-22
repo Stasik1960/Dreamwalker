@@ -1,0 +1,228 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_rails_activator_2",
+  "displayName": "Каменная напольная панель с прорезями · вариант 3",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/rails/activator_2",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                4.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                12.0,
+                4.0,
+                16.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                4.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                7.0,
+                2.0,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                7.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                12.0,
+                4.0,
+                16.0
+              ]
+            }
+          ],
+          "simpleCollisionByRotation": [
+            [
+              {
+                "from": [
+                  4.0,
+                  0.0,
+                  0.0
+                ],
+                "to": [
+                  12.0,
+                  4.0,
+                  16.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -0.48528137,
+                  0.0,
+                  -0.48528137
+                ],
+                "to": [
+                  16.48528137,
+                  4.0,
+                  16.48528137
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  0.0,
+                  0.0,
+                  4.0
+                ],
+                "to": [
+                  16.0,
+                  4.0,
+                  12.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -0.48528137,
+                  0.0,
+                  -0.48528137
+                ],
+                "to": [
+                  16.48528137,
+                  4.0,
+                  16.48528137
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  4.0,
+                  0.0,
+                  0.0
+                ],
+                "to": [
+                  12.0,
+                  4.0,
+                  16.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -0.48528137,
+                  0.0,
+                  -0.48528137
+                ],
+                "to": [
+                  16.48528137,
+                  4.0,
+                  16.48528137
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  0.0,
+                  0.0,
+                  4.0
+                ],
+                "to": [
+                  16.0,
+                  4.0,
+                  12.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -0.48528137,
+                  0.0,
+                  -0.48528137
+                ],
+                "to": [
+                  16.48528137,
+                  4.0,
+                  16.48528137
+                ]
+              }
+            ]
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          4.0,
+          0.0,
+          0.0
+        ],
+        "to": [
+          12.0,
+          4.0,
+          16.0
+        ]
+      },
+      "sourceVariant": "Каменная напольная панель с прорезями · вариант 3",
+      "sourcePlacementOffset": [
+        0,
+        -0.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/rails/activator_2"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:activator_rail[variant:powered=false,shape=east_west]",
+        "minecraft:activator_rail[variant:powered=false,shape=north_south]"
+      ]
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "simple-imported-physical-v1: one ordinary bounded cuboid by default; reviewed doorway/arch, stair/landing and ladder exceptions use at most three useful boxes; passable source planes stay passable. Eight orientations use a few ordinary AABBs bounded by the actual transformed visual vertices, never strips or a second expanded rotated AABB. Six root-cell-face overflows strictly smaller than 0.5 blocks are cropped independently after instance yaw, vertical mount and SourceShift; long extents are retained. Selection and visuals unchanged. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped.",
+  "simplePhysicalCollision": true
+}

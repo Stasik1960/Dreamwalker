@@ -1,0 +1,227 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_cracked_polished_blackstone_bricks",
+  "displayName": "Столб мелкой кладки",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/cracked_polished_blackstone_bricks",
+              "offset": [
+                0,
+                16.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                0.5,
+                0.0,
+                0.5
+              ],
+              "to": [
+                15.5,
+                48.0,
+                15.5
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                0.5,
+                0.0,
+                0.5
+              ],
+              "to": [
+                15.5,
+                48.0,
+                15.5
+              ]
+            },
+            {
+              "from": [
+                2.0,
+                0.0,
+                2.0
+              ],
+              "to": [
+                14.0,
+                48.0,
+                14.0
+              ]
+            }
+          ],
+          "simpleCollisionByRotation": [
+            [
+              {
+                "from": [
+                  0.5,
+                  0.0,
+                  0.5
+                ],
+                "to": [
+                  15.5,
+                  48.0,
+                  15.5
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -2.60660172,
+                  0.0,
+                  -2.60660172
+                ],
+                "to": [
+                  18.60660172,
+                  48.0,
+                  18.60660172
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  0.5,
+                  0.0,
+                  0.5
+                ],
+                "to": [
+                  15.5,
+                  48.0,
+                  15.5
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -2.60660172,
+                  0.0,
+                  -2.60660172
+                ],
+                "to": [
+                  18.60660172,
+                  48.0,
+                  18.60660172
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  0.5,
+                  0.0,
+                  0.5
+                ],
+                "to": [
+                  15.5,
+                  48.0,
+                  15.5
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -2.60660172,
+                  0.0,
+                  -2.60660172
+                ],
+                "to": [
+                  18.60660172,
+                  48.0,
+                  18.60660172
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  0.5,
+                  0.0,
+                  0.5
+                ],
+                "to": [
+                  15.5,
+                  48.0,
+                  15.5
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -2.60660172,
+                  0.0,
+                  -2.60660172
+                ],
+                "to": [
+                  18.60660172,
+                  48.0,
+                  18.60660172
+                ]
+              }
+            ]
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          0.5,
+          0.0,
+          0.5
+        ],
+        "to": [
+          15.5,
+          48.0,
+          15.5
+        ]
+      },
+      "sourceVariant": "Кирпичная кладка",
+      "sourcePlacementOffset": [
+        0,
+        16.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        16.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/cracked_polished_blackstone_bricks"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:cracked_polished_blackstone_bricks[variant:]"
+      ]
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "simple-imported-physical-v1: one ordinary bounded cuboid by default; reviewed doorway/arch, stair/landing and ladder exceptions use at most three useful boxes; passable source planes stay passable. Eight orientations use a few ordinary AABBs bounded by the actual transformed visual vertices, never strips or a second expanded rotated AABB. Six root-cell-face overflows strictly smaller than 0.5 blocks are cropped independently after instance yaw, vertical mount and SourceShift; long extents are retained. Selection and visuals unchanged. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped.",
+  "simplePhysicalCollision": true
+}

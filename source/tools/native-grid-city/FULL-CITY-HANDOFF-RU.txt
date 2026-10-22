@@ -1,0 +1,124 @@
+Продолжение после фактического PASS плотного игрового пилота
+=========================================================
+
+Этот файл описывает следующие реальные команды root. Они ещё НЕ выполнены.
+Рабочий каталог: source. Все Python-процессы — через CodexControl/Guard.ps1
+-Mode Operation. Остаётся один research/native-grid-plan/plan.sqlite; original
+old SQLite mode=ro, immutable blocks.2 map и его copyManifest не меняются.
+
+1. Root gate JSON должен содержать status=PASS, denseBrickPilot=true и точный
+   catalogSha256 фактически принятого пилота. До этого promote запрещён.
+
+python tools/native-grid-city/migrate.py promote-city --pilot-gate <actual-pilot-gate.json>
+
+В pilot-state.json/pilot_* tables/pilot-journals остаются свидетельства.
+stage-history/stage-001 и context-extension тоже остаются свидетельствами.
+Удаляются только активные pilot/context binding keys:
+contextExtension, contextRegionBinding, contextNativeFunctionGate,
+contextNativeFunctionDecisions, contextRequirePriorOwners,
+contextRuntimeEntryProof, contextLightAdoption, contextDependencyRepair,
+contextNativeLightRestart.
+Обычные scope/target/runtime/apply/catalog/bindings сбрасываются существующим
+promotion. fullNativeFunctionGateRequired=true требует НОВУЮ полную проверку.
+Из-за отсутствия contextExtension full apply не попадёт в writer 427 chunks и
+не примет восемь пилотных light rows как доказательство для нового full target.
+
+2. Actual full input census использует ТОЛЬКО уже сохранённые objects,
+pose_cells и old.chunk_cache, без повторного world scan:
+
+python tools/native-grid/qa/full_native_inputs.py --plan ../research/native-grid-plan --out ../research/native-grid-plan/full-native-inputs.json
+
+Source/API helper принадлежит native_runtime. Его scope=FULL_CITY,
+sourceBinding равен meta.binding, coverage.candidateObjects равен фактическому
+SELECT count(*) FROM objects WHERE kind IN ('static','whole').
+nativeBaseCandidates и blockEntityHostCandidates — ОБЕ обязательные группы
+для конечных решений. sameRootSourcePoseCarriers — только разделение источника,
+не право удалить настоящий BE или считать его AIR.
+
+3. Exporter готовит фактический полный finite function report, а не копирует
+260 пилотных решений. Обязательная форма:
+
+{
+  "schemaVersion":1,
+  "status":"PASS",
+  "scope":"FULL_CITY",
+  "mapWrites":0,
+  "sourceBinding":<exact meta.binding>,
+  "sourceJar":<absolute immutable source-40ce JAR path>,
+  "sourceJarSha256":<exact 40ce SHA256>,
+  "inputEvidence":{"path":<absolute full-native-inputs.json>,"sha256":<SHA256>},
+  "states":[
+    {"state":{"registryId":<ID>,"properties":<exact properties>},
+     "decision":"static_base|bridge_host_only|retain_local", "reason":<evidence>}
+  ]
+}
+
+Неизвестный настоящий механизм/контейнер/BE сохраняется локально. Native ladder,
+vine, scaffolding, lever/button, redstone/openable нельзя объявлять статичными
+из-за одного hasBE=false. ImportedLadder SourcePose имеет отдельный уже
+доказанный finite climbing contract, который не распространяется на эти bases.
+
+python tools/native-grid-city/migrate.py import-full-native-functions --report <full-function-report.json>
+python tools/native-grid-city/migrate.py compose
+
+Команда без bounds строит полный город. Synthetic/native compact изолированно
+не переезжают; needed native substrates подключаются только для композиции.
+Полный готовый native-states-needed.json — машинный список точных actual tuples
+после конечной активации корней, а не palette-superset всего мира.
+
+4. Exporter закрывает реальные missing rows этим списком. Новые SourcePose,
+native visuals/shapes/optics/fluid не заменяются defaults/boxes. Strict append
+lineage связывает historical compositionGeneration.sourceFragments с latest
+fragments, сохраняя ВСЕ предыдущие записи. Полная ширина native visual требует
+finite clipping/activation; contained native route может быть адресно исправлен
+только отдельным проверяемым route-patch receipt.
+
+python tools/native-grid-city/audit_context_states.py --plan ../research/native-grid-plan --append-lineage <strict-append-lineage.json>
+
+После promotion этот CLI сам пишет full-native-input-coverage.json, scope=FULL_CITY.
+PASS обязателен для apply: все exact function tuples/physics/visuals проверены,
+missing lists пусты; raw/source/function/fragment SHA связаны. Если дополнений
+нет и historical/current fragment SHA равны, --append-lineage не нужен.
+
+5. Normalizer/compiler работают append-only в ТОМ ЖЕ catalog-state.sqlite.
+Старые mapping keys, materials/shapes/optics/meshes/cells/wholeObjects и binary
+mesh prefix неизменны. Root импортирует новый mapping, запускает audit-cleanup-bes,
+собирает production и actual registry bridge audit всех фактических host/index
+pairs. Source/copy bindings и native function/final input gates обязательны.
+Root делает ОДНУ full target копию immutable исходной карты (не candidate pilot):
+
+python tools/native-grid-city/migrate.py clone --target <full-output-map>
+python tools/native-grid-city/migrate.py apply --target <full-output-map> --runtime-jar <full-candidate.jar> --pilot-gate <actual-pilot-gate.json>
+
+Все очистки идут только после полного покрытия owner footprints и записи всех
+регионов; exact protected IDs/payloads и локальные несовместимые whole сохраняются.
+Resume повторяет ту же apply с before/after journals, без отката исходных данных.
+
+6. FULL native light — НОВОЕ пространство результатов, не пилотный done cursor.
+Перед promotion root архивирует текущие relight-queue.tsv, relight-binding.json,
+relight-engine.json, relight-engine.json.done.tsv, launch binding/receipt/log в
+отдельную immutable папку pilot-light-history с SHA manifest. Их нельзя удалять,
+подменять новым RUNNING или выдавать восемь saved rows за свет нового full target.
+После full apply очередь и binding в том же плане относятся к FULL target.
+Реальный полный сервер root запускает с НОВЫМИ properties:
+
+-Dnativegrid.relight.queue=<absolute plan>/relight-queue.tsv
+-Dnativegrid.relight.receipt=<absolute plan>/full-city-relight-engine.json
+-Dnativegrid.relight.batch=2
+-Dnativegrid.relight.stop=true
+
+export_relight сам публикует engineReceipt/engineDoneCursor этих FULL путей в
+relight-binding.json при fullNativeFunctionGateRequired и отсутствии scope.
+Root runner использует эти поля для настоящего JVM system property, а не
+только в отчёте; пилотный context namespace после promotion не активен.
+
+<plan>/full-city-relight-engine.json.done.tsv перед первым запуском не существует.
+Helper сам создаёт header '# <queueSHA> <runtimeSHA>' и добавляет только реально
+сохранённые/flush/fsync batches. Никакого переноса старого saved prefix.
+
+python tools/native-grid-city/migrate.py accept-relight --receipt ../research/native-grid-plan/full-city-relight-engine.json
+
+PASS требует queued=processed, pending=0, saveFlushed=true и exact world/runtime/
+catalog/queue bindings. После этого root завершает полные функции, клиентский
+маршрут, save/reopen, performance и финальные deliverables; этот handoff и пилот
+не являются конечным результатом пользовательского задания.

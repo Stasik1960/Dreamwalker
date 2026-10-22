@@ -1,0 +1,102 @@
+{
+  "parent": "builtin/entity",
+  "display": {
+    "thirdperson_righthand": {
+      "rotation": [
+        90,
+        0,
+        0
+      ],
+      "translation": [
+        -6.25,
+        -2,
+        -12.5
+      ]
+    },
+    "thirdperson_lefthand": {
+      "rotation": [
+        90,
+        0,
+        0
+      ],
+      "translation": [
+        6,
+        -2,
+        -12.5
+      ]
+    },
+    "firstperson_righthand": {
+      "rotation": [
+        60,
+        0,
+        0
+      ],
+      "translation": [
+        0,
+        -6.25,
+        -13.75
+      ]
+    },
+    "firstperson_lefthand": {
+      "rotation": [
+        60,
+        0,
+        0
+      ],
+      "translation": [
+        12,
+        -6.25,
+        -13.75
+      ]
+    },
+    "ground": {
+      "translation": [
+        -5.25,
+        -7.75,
+        0
+      ]
+    },
+    "gui": {
+      "rotation": [
+        90,
+        -51.81,
+        90
+      ],
+      "translation": [
+        5,
+        -5.25,
+        6
+      ],
+      "scale": [
+        1,
+        0.67,
+        0.67
+      ]
+    },
+    "fixed": {
+      "rotation": [
+        90,
+        51.75,
+        -90
+      ],
+      "translation": [
+        -6,
+        -6.75,
+        6
+      ],
+      "scale": [
+        1,
+        0.8,
+        0.8
+      ]
+    }
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "bloodborne_rp:extended": 1
+      },
+      "model": "bloodborne_rp:item/saw_spear_extended"
+    }
+  ]
+}

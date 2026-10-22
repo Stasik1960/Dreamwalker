@@ -1,0 +1,315 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_crimson_planks",
+  "displayName": "Резной тонкий шпиль",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/crimson_planks",
+              "offset": [
+                0,
+                16.0,
+                0
+              ]
+            }
+          ],
+          "collision": [],
+          "selection": [
+            {
+              "from": [
+                10,
+                0,
+                -6
+              ],
+              "to": [
+                12,
+                36,
+                -5
+              ]
+            },
+            {
+              "from": [
+                10,
+                0,
+                -5
+              ],
+              "to": [
+                13,
+                36,
+                -4
+              ]
+            },
+            {
+              "from": [
+                10,
+                0,
+                4
+              ],
+              "to": [
+                13,
+                36,
+                5
+              ]
+            },
+            {
+              "from": [
+                10,
+                0,
+                5
+              ],
+              "to": [
+                12,
+                36,
+                6
+              ]
+            },
+            {
+              "from": [
+                11,
+                0,
+                -4
+              ],
+              "to": [
+                14,
+                36,
+                -3
+              ]
+            },
+            {
+              "from": [
+                11,
+                0,
+                3
+              ],
+              "to": [
+                14,
+                36,
+                4
+              ]
+            },
+            {
+              "from": [
+                12,
+                0,
+                -3
+              ],
+              "to": [
+                15,
+                36,
+                -2
+              ]
+            },
+            {
+              "from": [
+                12,
+                0,
+                2
+              ],
+              "to": [
+                15,
+                36,
+                3
+              ]
+            },
+            {
+              "from": [
+                13,
+                0,
+                -2
+              ],
+              "to": [
+                19,
+                36,
+                -1
+              ]
+            },
+            {
+              "from": [
+                13,
+                0,
+                1
+              ],
+              "to": [
+                19,
+                36,
+                2
+              ]
+            },
+            {
+              "from": [
+                14,
+                0,
+                -1
+              ],
+              "to": [
+                18,
+                36,
+                1
+              ]
+            },
+            {
+              "from": [
+                17,
+                0,
+                -3
+              ],
+              "to": [
+                20,
+                36,
+                -2
+              ]
+            },
+            {
+              "from": [
+                17,
+                0,
+                2
+              ],
+              "to": [
+                20,
+                36,
+                3
+              ]
+            },
+            {
+              "from": [
+                18,
+                0,
+                -4
+              ],
+              "to": [
+                21,
+                36,
+                -3
+              ]
+            },
+            {
+              "from": [
+                18,
+                0,
+                3
+              ],
+              "to": [
+                21,
+                36,
+                4
+              ]
+            },
+            {
+              "from": [
+                19,
+                0,
+                -5
+              ],
+              "to": [
+                22,
+                36,
+                -4
+              ]
+            },
+            {
+              "from": [
+                19,
+                0,
+                4
+              ],
+              "to": [
+                22,
+                36,
+                5
+              ]
+            },
+            {
+              "from": [
+                20,
+                0,
+                -6
+              ],
+              "to": [
+                22,
+                36,
+                -5
+              ]
+            },
+            {
+              "from": [
+                20,
+                0,
+                5
+              ],
+              "to": [
+                22,
+                36,
+                6
+              ]
+            }
+          ],
+          "simpleCollisionByRotation": [
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            []
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          10,
+          0,
+          -6
+        ],
+        "to": [
+          22,
+          36,
+          6
+        ]
+      },
+      "sourceVariant": "Тонкий декоративный шпиль",
+      "sourcePlacementOffset": [
+        0,
+        16.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        16.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/crimson_planks"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:crimson_planks[variant:]",
+        "minecraft:crimson_slab[variant:type=double]"
+      ]
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "simple-imported-physical-v1: one ordinary bounded cuboid by default; reviewed doorway/arch, stair/landing and ladder exceptions use at most three useful boxes; passable source planes stay passable. Eight orientations use a few ordinary AABBs bounded by the actual transformed visual vertices, never strips or a second expanded rotated AABB. Six root-cell-face overflows strictly smaller than 0.5 blocks are cropped independently after instance yaw, vertical mount and SourceShift; long extents are retained. Selection and visuals unchanged. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped.",
+  "simplePhysicalCollision": true
+}

@@ -1,0 +1,163 @@
+{
+  "schema": "dw-review-v10-client-implementation-v1",
+  "status": "PASS_ISOLATED_JAVA17_COMPILE_ACTUAL_CLIENT_PARTIAL_FAILURE_RETRY_PENDING",
+  "productionJarSha256": "521337222c6f75b31a094c4944963c4103c514985d5696d55187f31dc4b17ca5",
+  "mainFrozen": true,
+  "qaSourcesFrozen": true,
+  "actualSceneAuthor": "PASS_FRESH_AUTHOR_ATTEMPT_5_CURRENT_ARTIFACT",
+  "actualClientPackets": "PARTIAL_ACTUAL_MIN8_FIRST_CANONICAL_PLACEMENT_REFUSAL_TRACE_RETRY_PENDING",
+  "nativeEvidence": {
+    "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\reports\\FIRST_SET_GAMETEST_V10_ATTEMPT_6.xml",
+    "sha256": "0f73673b5a634ffeb1cc9980fad3c32410db158d5cd74fdf03d88cf040cffdd1",
+    "tests": 130,
+    "failures": 0,
+    "rpCases": [
+      "rpv10editinggametests.registeredconstructionitemspassthroughopenablerpwithoutchangingitstypedidentity",
+      "rpv10editinggametests.creativepartattackrejectstoolseitherhandsurvivalandenvironmentaldamage",
+      "rpv10editinggametests.ordinaryrpplacementandeditingoverlapnativechestandrpwithoutanynativemutation",
+      "rpv10editinggametests.ladderhasfullauthoredtopplatformwithnativesupportacrossitsworkingarea",
+      "rpv10editinggametests.openedanimateddoorhasselectablemovingenvelopewithoutexpandingmovementphysics",
+      "rpv10editinggametests.offsetmoveseveryworkingshapeexactlyandpersistsidentitywithoutdoubleapplication",
+      "rpv10editinggametests.nativeplacementignoresrpwhilemovementandlivingobstructionremainreal",
+      "rpv10editinggametests.everycanonicalrptypecanbeattackedatitsloadedsourcepart"
+    ],
+    "coreChecks": 20,
+    "log": "reports/V10_NATIVE_ATTEMPT_06.log"
+  },
+  "freshWorldGuard": "FRESH_FLAT_ISOLATED_WORLD_ONLY",
+  "clientGuard": "ISOLATED_SAVED_REVIEW_CLIENT_ONLY",
+  "inputFilename": "bloodborne-review-v10-client-input.json",
+  "authorInputFilename": "review-v10-scene-input.json",
+  "authorOutputFilename": "review-v10-scene-output.json",
+  "clientOutputFilename": "client-review-output.json",
+  "actualCasePlan": {
+    "canonicalRpOrdinaryPlaceAndCreativePartAttack": 69,
+    "canonicalArchitectureOrdinaryPlaceAndCreativeRootHelperAttack": 18,
+    "additionalRpPartCases": [
+      "door_1 opened moving part",
+      "ladder collapsed lower part",
+      "ladder upper platform with actual Survival forward-key movement",
+      "retained npc_window native BlockItem/tool-height checks"
+    ],
+    "menus": "Real current Screen widgets, keyboard and ordinary interactionManager packets; runtime-audit-owned probe",
+    "diagnostics": "Optional actual OFF/ON/OFF, current server/render ACK chain, exact temporary native/ledger cleanup and local exports",
+    "shader": "Optional strict Iris requested pack and 42 effective getters; no manual visual acceptance",
+    "canonicalNativeBlockItemSameUuidRetentionCleanup": 69,
+    "nativeBlockRelationScope": "INTERSECTS_SOURCE_SELECTION or explicitly ADJACENT_ROOT for small wholly covered selections; actual foreign block occlusion retained",
+    "rpOnRpDuplicateOrdinaryPlacementRoute": 1
+  },
+  "outputKeys": [
+    "menusActual",
+    "architectureV10",
+    "ordinaryArchitectureCases",
+    "ordinaryRpCases",
+    "diagnosticsActualClient",
+    "irisRuntime",
+    "actualIntegratedSave",
+    "ordinaryRpOverlap"
+  ],
+  "actorSetupOnly": [
+    "marker-guarded inventory",
+    "integrated-server camera teleport",
+    "explicit Survival platform-walk setup and Creative restoration",
+    "author-only source template and VerticalMount sample offsets"
+  ],
+  "objectMutationAsClientProof": false,
+  "remoteAuthorFix": {
+    "chunk": [
+      50,
+      4
+    ],
+    "waitServerTicks": 5,
+    "ticketRadius": 2,
+    "removed": "callback finally",
+    "persistedForceLoad": false,
+    "lampTravelLease": false,
+    "scope": "Exact authorized remote destination setup only; subsequent actual GUI travel/unload requires runtime proof",
+    "postSpawnWaitTicksActual": 17,
+    "postSpawnWaitMaxTicks": 100,
+    "capture": "new UUID + exact canonical asset/origin through actual loaded spatial query after real world ticks",
+    "ticketRemovedBeforeTerminalOutput": true
+  },
+  "retainedAuthorFailures": [
+    "reports/V10_SERVER_AUTHOR_MIN_ATTEMPT_1.json",
+    "reports/V10_SERVER_AUTHOR_MIN_ATTEMPT_2.json",
+    "reports/V10_SERVER_AUTHOR_MIN_ATTEMPT_3.json"
+  ],
+  "deliveryWorldPolicy": "Pristine author baseline production-only reopen; mutated GUI AUTHOR/REENTER worlds are separate proof",
+  "pending": [
+    "complete actual client AUTHOR and REENTER on current artifact",
+    "full client strict shader proof",
+    "manual visual acceptance",
+    "whole catalogue behavior",
+    "mass city migration"
+  ],
+  "sourceSha256": {
+    "src/review/java/dev/dreamwalker/bloodbornedw/review/ReviewV10ProofSupport.java": "531b61878083c4a1d04d64666cce75389bc8d7cfecf1cc0fbdac91b9f8b7d92a",
+    "src/review/java/dev/dreamwalker/bloodbornedw/review/ReviewV10SceneBootstrap.java": "3a243f077a52c52e7c836db3c673053ca80d89c4b27f55c47fd235c303199575",
+    "src/review/java/dev/dreamwalker/bloodbornedw/review/ReviewV10ClientBootstrap.java": "3e69bce1ff4d871f7ee6a40cdaa12a6738863ac17ea5fbb95ffea84f485d9ca6",
+    "tools/prepare_review_v10_client_marker.py": "fdf02c25f329a596069cb65f4f9213f6fef534aeddaa2b0c51ad11f2ff24e5d4",
+    "tools/review_v10_scene_input.json": "48ea332e892d48548ec909f4ed5e1af21da57c8234219047451ef86b2a391e3e"
+  },
+  "compileLogs": [
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\review-v10-client-compile\\javac.log",
+      "sha256": "3ecf827479ca76a6a3e9f3adf1dbd1e30cb8b2b00c9d98d24aada341580e5b8c",
+      "status": "PASS_ISOLATED_JAVAC"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\review-v10-scene-compile\\javac.log",
+      "sha256": "3ecf827479ca76a6a3e9f3adf1dbd1e30cb8b2b00c9d98d24aada341580e5b8c",
+      "status": "PASS_ISOLATED_JAVAC"
+    }
+  ],
+  "nativeCanonicalCaseFields": [
+    "nativeBlockItemPlaced",
+    "nativePlacementSameServerClientUuid",
+    "nativeBlockSurvivesRpAttack",
+    "nativeBlockOrdinaryCleanup",
+    "nativeBlockCell",
+    "nativeBlockRegistry",
+    "nativeBlockRelation",
+    "nativeStableRpBefore",
+    "nativeStableRpAfter"
+  ],
+  "actualRpOnRpRoute": "PASS_ACTUAL_ORDINARY_RP_ON_RP_PLACE_PRESERVE_AND_CREATIVE_CLEANUP",
+  "historicalPreviousCandidate5": "reports/v10-history/rp-candidate5/CLIENT_V10_IMPLEMENTATION.json",
+  "retainedClientFailures": [
+    "reports/V10_CLIENT_MIN_ATTEMPT_1.json",
+    "reports/V10_CLIENT_MIN_ATTEMPT_5.json",
+    "reports/V10_CLIENT_MIN_ATTEMPT_6.json",
+    "reports/V10_CLIENT_MIN_ATTEMPT_7.json",
+    "reports/V10_CLIENT_MIN_ATTEMPT_8.json"
+  ],
+  "qaFixes": {
+    "worldDirectory": "normalize saved-world ROOT path before getFileName guard",
+    "serverReadbacks": "bounded immutable actual server-thread snapshots; getWorldChunk explicitly returns null off-thread",
+    "firstOrdinaryRpOverlap": "actual npc_window then chair ordinary item use before canonical runs; exact support/original stable/created UUIDs/counts; real two-UUID cleanup if successful",
+    "unshiftedNativeAttackTarget": "Actual root BLOCK hit + native wall/ladder + offset0 + exact resident UUID; composite/helper/shifted targets continue contribution ray resolver."
+  },
+  "actualSceneAuthorEvidence": "reports/V10_SERVER_AUTHOR_MIN_ATTEMPT_5.json",
+  "actualClientPartial": {
+    "wrapper": "reports/V10_CLIENT_MIN_ATTEMPT_8.json",
+    "raw": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-v10-client-min-attempt8\\client-review-output.json",
+    "menusSteps": 237,
+    "architectureRendererSamples": 18,
+    "ordinaryArchitectureCompleted": 18,
+    "canonicalRpCompleted": 0,
+    "stoppedAt": "ordinary use key places cage_obj_1",
+    "classification": "ACTUAL_ORDINARY_ITEM_PLACEMENT_NOT_OBSERVED_CAUSE_PENDING",
+    "fixReport": "reports/V10_FIRST_CANONICAL_PLACEMENT_TRACE_QA.json",
+    "retry": "PENDING"
+  },
+  "firstCanonicalRefusalTrace": {
+    "filter": "runtime RpDiagnostics.typeIdForAsset(cage_obj_1), currently91007",
+    "seconds": 30,
+    "controlPath": "actual operator chat command packets start/mark/stop/export",
+    "objectOperations": "unchanged ordinary use/attack keys",
+    "readbacks": "actual server-thread enabled/filter/session/recordingOFF",
+    "failureWaitMaxClientTicks": 100,
+    "exportCompleteGuard": "sameUUID ZIP filename plus final EOCD signature, bytes and SHA256",
+    "finalMatchedDiagnostics": "separate session after first-cage trace stopped and exported"
+  }
+}

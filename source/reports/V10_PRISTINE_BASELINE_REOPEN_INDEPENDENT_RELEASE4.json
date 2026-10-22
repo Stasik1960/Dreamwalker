@@ -1,0 +1,618 @@
+{
+  "schema": "dw-v10-pristine-baseline-production-reopen-independent-v1",
+  "status": "PASS_CURRENT_MAIN7_PRISTINE_BASELINE_TYPED_OWNER_RP_GRAPH_PRODUCTION_REOPEN",
+  "productionJarSha256": "2cf96fbe771bb44bba4e4e8f320ed65a8bc0a8ffe7a8149b07fbd9ec691592c1",
+  "authorReport": {
+    "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\reports\\V10_SERVER_AUTHOR_MIN_ATTEMPT_6.json",
+    "sha256": "4ef3b910bba76d47d1f7a9f331feaa65df99b44ce36c3730c3119856e8e29b39"
+  },
+  "settingsReport": {
+    "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\reports\\V10_SCENE_BEFORE_FIRST_ENTRY_SETTINGS_6.json",
+    "sha256": "80382ef2719ab8bf662526909d32e7f4160289817b1d733b8538eb4eba65d113"
+  },
+  "productionOnlyReopen": {
+    "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\reports\\V10_SERVER_PRODUCTION_ONLY_REOPEN_RELEASE4.json",
+    "sha256": "5744c6d797e7bc99e3f7631e11b4c32be1d8c8320bef376501754fe1fa96f73d"
+  },
+  "sourceWorld": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v10-author-min-attempt6\\isolated-smoke-world",
+  "reopenedWorld": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v10-production-only-reopen-release4\\isolated-smoke-world",
+  "sourceWorldFilesByteExactUnchanged": true,
+  "sourceSnapshot": {
+    "data/bloodborne_dw_composite_owners.dat": {
+      "bytes": 4830,
+      "sha256": "031956bd973fb5c600aa57db027420a06a89aa44663a4d1897ef7585c1eeedc7"
+    },
+    "data/bloodborne_rp_lamps.dat": {
+      "bytes": 226,
+      "sha256": "5d54b4abc1bde9ac3e7e82c065d99537da0f68705ba0ce332e5af71c83b2e3d5"
+    },
+    "data/raids.dat": {
+      "bytes": 89,
+      "sha256": "992ac3aaeeb0f3a614f2bdfcd7151d3f9dee08bf37fad945c8dbbf28f349972b"
+    },
+    "data/scoreboard.dat": {
+      "bytes": 200,
+      "sha256": "91c5eb4587e34221c8051ed9352059b0ac0304713a0565bf2d73d044a4b784e6"
+    },
+    "DIM-1/data/raids.dat": {
+      "bytes": 89,
+      "sha256": "992ac3aaeeb0f3a614f2bdfcd7151d3f9dee08bf37fad945c8dbbf28f349972b"
+    },
+    "DIM1/data/raids_end.dat": {
+      "bytes": 89,
+      "sha256": "992ac3aaeeb0f3a614f2bdfcd7151d3f9dee08bf37fad945c8dbbf28f349972b"
+    },
+    "entities/r.-1.-1.mca": {
+      "bytes": 16384,
+      "sha256": "0d37c0079b965d2a14979d174b254f478b7f6c820c2756e12d410845946097e2"
+    },
+    "entities/r.-1.0.mca": {
+      "bytes": 12288,
+      "sha256": "01864ea711f54be7705e0776b285eafeeb42cbc08d6b441cd1ac0b2afcd70b13"
+    },
+    "entities/r.0.-1.mca": {
+      "bytes": 28672,
+      "sha256": "7751d30d35b6d296d853b87861cdfbf301cd2a12a3384dd642e75a5c0a0353c6"
+    },
+    "entities/r.0.0.mca": {
+      "bytes": 20480,
+      "sha256": "57583f072807d904ad75ea76909f645af11363514189e33d9bf5c9b549d303a4"
+    },
+    "entities/r.1.0.mca": {
+      "bytes": 12288,
+      "sha256": "49065aecb68cbded6dd6640594a1482342c942c107246609ae1569761d945322"
+    },
+    "level.dat": {
+      "bytes": 1499,
+      "sha256": "28884363d72b670574f6f831a921fac993274ca744c207c39cbfcd49092c36d7"
+    },
+    "level.dat_old": {
+      "bytes": 1402,
+      "sha256": "110f0824b5d877649f1e833f5294316f12f8a5d83ca0cddfbb43d203927f9be0"
+    },
+    "poi/r.-1.0.mca": {
+      "bytes": 12288,
+      "sha256": "527e32d7d40b4d00b3e09678d7dfcea7d8dabb6aaa06489f69789bb925f51f16"
+    },
+    "region/r.-1.-1.mca": {
+      "bytes": 2170880,
+      "sha256": "1f87064fb8dc9ce1175e6c62014ef767fc9ba927de5ca97a57b78fe3b5b025d5"
+    },
+    "region/r.-1.0.mca": {
+      "bytes": 2080768,
+      "sha256": "9b895f79ef114f4c935293e5a46c9e48a761898a28ac6057b949cea6673d7b0e"
+    },
+    "region/r.0.-1.mca": {
+      "bytes": 2269184,
+      "sha256": "3b16311b3f23d932ea97ebfd5b7640b5126725bc4895a11c6edacd76286affd6"
+    },
+    "region/r.0.0.mca": {
+      "bytes": 2174976,
+      "sha256": "e987703093100ac2c51b5c97e218c93629153db1608aca3fd230a37160d4c414"
+    },
+    "region/r.1.-1.mca": {
+      "bytes": 1003520,
+      "sha256": "9824693773b200e70dc93ebfb5dfa292a129078e75147d7961c569333d72c013"
+    },
+    "region/r.1.0.mca": {
+      "bytes": 1998848,
+      "sha256": "249a6081f91aae3996259ad04e1093af60ee72717d8bde3b9cbcc616a3245f05"
+    }
+  },
+  "actual": {
+    "rootCount": 20,
+    "architectureSampleCount": 18,
+    "architectureOwners": [
+      {
+        "root": [
+          -8,
+          64,
+          -16
+        ],
+        "uuid": "61b7c29a-0ee5-4716-a68a-a21df8d6fb63",
+        "registry": "bloodborne_dw:prototype_double_door",
+        "state": "bloodborne_dw:prototype_double_door[open=false,profile=base,rotation=0,variant=0]",
+        "verticalOffset": 0,
+        "fullTypedBeEqualOnReopen": true,
+        "typedNbtSha256": "3e2b0aaf4cd2977d7f757782a6f6bce12019bbca6d546586ec0af504c622ec1f"
+      },
+      {
+        "root": [
+          -60,
+          64,
+          40
+        ],
+        "uuid": "21446ec5-1fb2-45d7-b442-bb95ad7836f9",
+        "registry": "bloodborne_dw:prototype_double_door",
+        "state": "bloodborne_dw:prototype_double_door[open=false,profile=base,rotation=0,variant=0]",
+        "verticalOffset": 0.125,
+        "fullTypedBeEqualOnReopen": true,
+        "typedNbtSha256": "b96df88a51f5a624605d6692063f7131c58e2d88e504584c31a8d04491697405"
+      },
+      {
+        "root": [
+          -36,
+          64,
+          40
+        ],
+        "uuid": "1f7ae1f5-c1a6-47ac-ba32-e3fdcd82b385",
+        "registry": "bloodborne_dw:prototype_wall",
+        "state": "bloodborne_dw:prototype_wall[connections=auto,east=none,material=6,north=none,profile=base,rotation=4,south=none,up=true,waterlogged=false,west=none]",
+        "verticalOffset": 2.0,
+        "fullTypedBeEqualOnReopen": true,
+        "typedNbtSha256": "093c7804a4b1d7c4eb4db5c45f9e544068c669f99baf5d001af94ec88e07bac8"
+      },
+      {
+        "root": [
+          -12,
+          64,
+          40
+        ],
+        "uuid": "c7c35c57-f15c-4e42-bfcc-b0ea9e937b5f",
+        "registry": "bloodborne_dw:prototype_roof",
+        "state": "bloodborne_dw:prototype_roof[open=false,profile=base,rotation=0,variant=0]",
+        "verticalOffset": 2.0,
+        "fullTypedBeEqualOnReopen": true,
+        "typedNbtSha256": "3b53af09b196fed27137d1a890ac45cf19fe4554caaae613c4b0294bc3a11c22"
+      },
+      {
+        "root": [
+          12,
+          64,
+          40
+        ],
+        "uuid": "2691f172-8c5a-4c34-914b-081484c1ff00",
+        "registry": "bloodborne_dw:prototype_thin_window",
+        "state": "bloodborne_dw:prototype_thin_window[mount=vertical,open=false,profile=base,rotation=0,variant=0]",
+        "verticalOffset": -0.125,
+        "fullTypedBeEqualOnReopen": true,
+        "typedNbtSha256": "7db7bedd8d9b803bcf91cd65dc050ab8ef5bce928058f12caa911c914d8c901d"
+      },
+      {
+        "root": [
+          36,
+          64,
+          40
+        ],
+        "uuid": "17019367-dd48-4308-a7f0-2852c20a51af",
+        "registry": "bloodborne_dw:prototype_tree",
+        "state": "bloodborne_dw:prototype_tree[open=false,profile=base,rotation=0,variant=0]",
+        "verticalOffset": 0.125,
+        "fullTypedBeEqualOnReopen": true,
+        "typedNbtSha256": "1421db91b6411674aba1ae73e2077d9dadbf19f15a7c9fd5b89be69abb79b8f3"
+      },
+      {
+        "root": [
+          60,
+          64,
+          40
+        ],
+        "uuid": "6ee64210-538e-46f5-a694-a06fd8f43a6b",
+        "registry": "bloodborne_dw:prototype_ladder",
+        "state": "bloodborne_dw:prototype_ladder[diagonal=false,facing=north,freestanding=true,profile=base,source_clone=false,variant=0,waterlogged=false]",
+        "verticalOffset": 2.0,
+        "fullTypedBeEqualOnReopen": true,
+        "typedNbtSha256": "f2856efea0b7643f5e9f04b0a980d5622cad05d50af6db8f80860aa3a23801b7"
+      },
+      {
+        "root": [
+          -60,
+          64,
+          60
+        ],
+        "uuid": "58360215-55cd-42f6-9e6a-d65b09b1a3d7",
+        "registry": "bloodborne_dw:prototype_wood_window",
+        "state": "bloodborne_dw:prototype_wood_window[open=false,profile=base,rotation=0,variant=0]",
+        "verticalOffset": 0.125,
+        "fullTypedBeEqualOnReopen": true,
+        "typedNbtSha256": "17ae99ae54164ed0adcc934881464fcf82f11be997b6fe51ba3dd6bfbd1371b7"
+      },
+      {
+        "root": [
+          -36,
+          64,
+          60
+        ],
+        "uuid": "9803e655-aa80-4cfa-aaf0-78f5f6eb9fec",
+        "registry": "bloodborne_dw:prototype_glass_window_02",
+        "state": "bloodborne_dw:prototype_glass_window_02[mount=vertical,open=false,profile=base,rotation=0,variant=0]",
+        "verticalOffset": -0.125,
+        "fullTypedBeEqualOnReopen": true,
+        "typedNbtSha256": "60c558bca07c70261b4d269d35d820ed0443652c5f974d80444fac108617158d"
+      },
+      {
+        "root": [
+          -12,
+          64,
+          60
+        ],
+        "uuid": "2b52dc32-3ff2-4c29-9b6c-952a73357efe",
+        "registry": "bloodborne_dw:prototype_wall_skin_0",
+        "state": "bloodborne_dw:prototype_wall_skin_0[connections=auto,east=none,north=none,profile=base,rotation=4,south=none,up=true,waterlogged=false,west=none]",
+        "verticalOffset": 0.125,
+        "fullTypedBeEqualOnReopen": true,
+        "typedNbtSha256": "ae62268a1d2d93879c9cfa6a8464ac1a2f183745b6239fdfd008fc03c92d4f80"
+      },
+      {
+        "root": [
+          12,
+          64,
+          60
+        ],
+        "uuid": "8144a14d-dd78-4187-9881-cff22f5569fb",
+        "registry": "bloodborne_dw:prototype_wall_skin_1",
+        "state": "bloodborne_dw:prototype_wall_skin_1[connections=auto,east=none,north=none,profile=base,rotation=4,south=none,up=true,waterlogged=false,west=none]",
+        "verticalOffset": -0.125,
+        "fullTypedBeEqualOnReopen": true,
+        "typedNbtSha256": "e1574d1e7a9576602306172e52c0b50d0ce866f1ece568afcef62c1f85751ea9"
+      },
+      {
+        "root": [
+          36,
+          64,
+          60
+        ],
+        "uuid": "1221441f-dbb3-4660-aa4e-9e3cacc05fcb",
+        "registry": "bloodborne_dw:prototype_wall_skin_2",
+        "state": "bloodborne_dw:prototype_wall_skin_2[connections=auto,east=none,north=none,profile=base,rotation=4,south=none,up=true,waterlogged=false,west=none]",
+        "verticalOffset": 0.125,
+        "fullTypedBeEqualOnReopen": true,
+        "typedNbtSha256": "415ce0c15cf7d178d907d68dcb183202ba9f470df6419fc014411f9bd028ae7f"
+      },
+      {
+        "root": [
+          60,
+          64,
+          60
+        ],
+        "uuid": "2ab5b06b-7d2d-4d2f-aaa5-8a12a8afa6d4",
+        "registry": "bloodborne_dw:prototype_wall_skin_3",
+        "state": "bloodborne_dw:prototype_wall_skin_3[connections=auto,east=none,north=none,profile=base,rotation=4,south=none,up=true,waterlogged=false,west=none]",
+        "verticalOffset": -0.125,
+        "fullTypedBeEqualOnReopen": true,
+        "typedNbtSha256": "96cef4e01c6cfcb74148e6905feedfb02c162e8a07e6d386c0ef943b970cf988"
+      },
+      {
+        "root": [
+          -60,
+          64,
+          80
+        ],
+        "uuid": "9857232f-c0a2-4ab1-93cf-8f6066ae6bdc",
+        "registry": "bloodborne_dw:prototype_wall_skin_4",
+        "state": "bloodborne_dw:prototype_wall_skin_4[connections=auto,east=none,north=none,profile=base,rotation=4,south=none,up=true,waterlogged=false,west=none]",
+        "verticalOffset": 0.125,
+        "fullTypedBeEqualOnReopen": true,
+        "typedNbtSha256": "a49baec65b2263663e5dd65acf45d034e7c4dec8c3b26c2b7ef7f8aeebf942d6"
+      },
+      {
+        "root": [
+          -36,
+          64,
+          80
+        ],
+        "uuid": "149d0d51-0f6b-473e-807a-2d0e29e4cca8",
+        "registry": "bloodborne_dw:prototype_wall_skin_5",
+        "state": "bloodborne_dw:prototype_wall_skin_5[connections=auto,east=none,north=none,profile=base,rotation=4,south=none,up=true,waterlogged=false,west=none]",
+        "verticalOffset": -0.125,
+        "fullTypedBeEqualOnReopen": true,
+        "typedNbtSha256": "4f53873a2c54f4f3577a48b5fb93391000e2148677a175af0c5af5a7d89ed7a7"
+      },
+      {
+        "root": [
+          -12,
+          64,
+          80
+        ],
+        "uuid": "3d52e771-ff47-4874-990c-2fa624e48e77",
+        "registry": "bloodborne_dw:prototype_wall_skin_7",
+        "state": "bloodborne_dw:prototype_wall_skin_7[connections=auto,east=none,north=none,profile=base,rotation=4,south=none,up=true,waterlogged=false,west=none]",
+        "verticalOffset": 0.125,
+        "fullTypedBeEqualOnReopen": true,
+        "typedNbtSha256": "1e19eff5973917132c9e3e784451caf7d4667607d09cc187efdc4ded2b54e900"
+      },
+      {
+        "root": [
+          12,
+          64,
+          80
+        ],
+        "uuid": "0d002f8f-d518-4db4-96aa-8a7765ee7d3f",
+        "registry": "bloodborne_dw:prototype_ladder_art_1",
+        "state": "bloodborne_dw:prototype_ladder_art_1[diagonal=false,facing=north,freestanding=true,profile=base,source_clone=false,variant=1,waterlogged=false]",
+        "verticalOffset": -0.125,
+        "fullTypedBeEqualOnReopen": true,
+        "typedNbtSha256": "2210ac19bfe261f804f6d98ab8f503c4e02f2a96a4420e3e29d50fcfd9630cdd"
+      },
+      {
+        "root": [
+          36,
+          64,
+          80
+        ],
+        "uuid": "f4d8e835-a4db-4644-9bc6-4ffc165f817d",
+        "registry": "bloodborne_dw:prototype_ladder_art_2",
+        "state": "bloodborne_dw:prototype_ladder_art_2[diagonal=false,facing=north,freestanding=true,profile=base,source_clone=false,variant=2,waterlogged=false]",
+        "verticalOffset": 0.125,
+        "fullTypedBeEqualOnReopen": true,
+        "typedNbtSha256": "182996a60c38d9b13a9570cf54ac9aa2785b70203e7b841681670fc9f22bee94"
+      },
+      {
+        "root": [
+          60,
+          64,
+          80
+        ],
+        "uuid": "b7b7cb98-93e1-4cb7-9a4f-2cf447a78a8b",
+        "registry": "bloodborne_dw:prototype_glass_window_03",
+        "state": "bloodborne_dw:prototype_glass_window_03[mount=vertical,open=false,profile=base,rotation=0,variant=0]",
+        "verticalOffset": 2.0,
+        "fullTypedBeEqualOnReopen": true,
+        "typedNbtSha256": "b3b42b1e2a89e585988afb592dff5bf316601e50dbc24c3d3792e360288c7925"
+      },
+      {
+        "root": [
+          -84,
+          64,
+          61
+        ],
+        "uuid": "32957bdf-5768-4ffa-b942-7852beb188d3",
+        "registry": "bloodborne_dw:prototype_ladder",
+        "state": "bloodborne_dw:prototype_ladder[diagonal=false,facing=south,freestanding=false,profile=base,source_clone=true,variant=0,waterlogged=false]",
+        "verticalOffset": 0,
+        "fullTypedBeEqualOnReopen": true,
+        "typedNbtSha256": "86f91bb7c4f5ee591e8b3f6e2cf302c71e995a4dd1770d72bd3a9cdc59e6f3b9"
+      }
+    ],
+    "ledgerCells": 373,
+    "ownerContributionCounts": {
+      "61b7c29a-0ee5-4716-a68a-a21df8d6fb63": 12,
+      "21446ec5-1fb2-45d7-b442-bb95ad7836f9": 15,
+      "1f7ae1f5-c1a6-47ac-ba32-e3fdcd82b385": 3,
+      "c7c35c57-f15c-4e42-bfcc-b0ea9e937b5f": 19,
+      "2691f172-8c5a-4c34-914b-081484c1ff00": 13,
+      "17019367-dd48-4308-a7f0-2852c20a51af": 251,
+      "6ee64210-538e-46f5-a694-a06fd8f43a6b": 2,
+      "58360215-55cd-42f6-9e6a-d65b09b1a3d7": 14,
+      "9803e655-aa80-4cfa-aaf0-78f5f6eb9fec": 13,
+      "2b52dc32-3ff2-4c29-9b6c-952a73357efe": 2,
+      "8144a14d-dd78-4187-9881-cff22f5569fb": 3,
+      "1221441f-dbb3-4660-aa4e-9e3cacc05fcb": 2,
+      "2ab5b06b-7d2d-4d2f-aaa5-8a12a8afa6d4": 3,
+      "9857232f-c0a2-4ab1-93cf-8f6066ae6bdc": 2,
+      "149d0d51-0f6b-473e-807a-2d0e29e4cca8": 3,
+      "3d52e771-ff47-4874-990c-2fa624e48e77": 2,
+      "0d002f8f-d518-4db4-96aa-8a7765ee7d3f": 2,
+      "f4d8e835-a4db-4644-9bc6-4ffc165f817d": 2,
+      "b7b7cb98-93e1-4cb7-9a4f-2cf447a78a8b": 10,
+      "32957bdf-5768-4ffa-b942-7852beb188d3": 0
+    },
+    "rpFixtures": [
+      {
+        "key": "lamp_A",
+        "uuid": "ee12de7a-a5b6-4242-abc2-287d924e21f3",
+        "registry": "bloodborne_rp:hunterlamp",
+        "position": [
+          60.0,
+          64.0,
+          -16.0
+        ],
+        "open": false,
+        "verticalOffset": 0.0,
+        "stableReopenFieldsEqual": true,
+        "typedNbtSha256": "5e49da54b39434cea47e856b414a88d2bd081451f0c16eb1208fbc2467494693"
+      },
+      {
+        "key": "lamp_B",
+        "uuid": "bd743dcd-8d1c-4f25-982d-d925678655fb",
+        "registry": "bloodborne_rp:hunterlamp",
+        "position": [
+          72.0,
+          64.0,
+          -16.0
+        ],
+        "open": false,
+        "verticalOffset": 0.0,
+        "stableReopenFieldsEqual": true,
+        "typedNbtSha256": "ad6b0325a765392608304495db76dd976f407f5602152e44ec7be16618e5d92d"
+      },
+      {
+        "key": "lamp_C",
+        "uuid": "4621ecac-6f65-4a90-b1c9-2bef3aafd11d",
+        "registry": "bloodborne_rp:hunterlamp",
+        "position": [
+          84.0,
+          64.0,
+          -16.0
+        ],
+        "open": false,
+        "verticalOffset": 0.0,
+        "stableReopenFieldsEqual": true,
+        "typedNbtSha256": "d1bad52baa5ffdbfb5a8d504d24e85cea96dd75dded928135cc23616f20c8aad"
+      },
+      {
+        "key": "lever_1",
+        "uuid": "875ac9c8-fa07-4305-82de-03b1dfd4915c",
+        "registry": "bloodborne_rp:lever_1",
+        "position": [
+          -32.0,
+          64.0,
+          -16.0
+        ],
+        "open": false,
+        "verticalOffset": 0.0,
+        "stableReopenFieldsEqual": true,
+        "typedNbtSha256": "8a6e27bb44359cd05c4d238a3c21f4774bbdf6e383c86efd5c99ceb8a647cb98"
+      },
+      {
+        "key": "lever_2",
+        "uuid": "6714780f-0b49-411e-8705-51497d9cbc10",
+        "registry": "bloodborne_rp:lever_2",
+        "position": [
+          -24.0,
+          64.0,
+          -16.0
+        ],
+        "open": false,
+        "verticalOffset": 0.0,
+        "stableReopenFieldsEqual": true,
+        "typedNbtSha256": "c43098bd22385267154cecd48ee7e3b3668cfa28c079e8fd6c097794ad155e10"
+      },
+      {
+        "key": "lever_3",
+        "uuid": "0f1a9aba-864c-413b-879c-5d1b3e09466e",
+        "registry": "bloodborne_rp:lever_1",
+        "position": [
+          -16.0,
+          64.0,
+          -16.0
+        ],
+        "open": false,
+        "verticalOffset": 0.0,
+        "stableReopenFieldsEqual": true,
+        "typedNbtSha256": "c3b723511b682081f34bb210aa1c5636511f99c757b9e76446615a9b925a0c3a"
+      },
+      {
+        "key": "rp_door",
+        "uuid": "3616a6e4-ef86-4adc-8a9e-fd93789926a6",
+        "registry": "bloodborne_rp:door_1",
+        "position": [
+          8.0,
+          64.0,
+          -16.0
+        ],
+        "open": false,
+        "verticalOffset": 0.0,
+        "stableReopenFieldsEqual": true,
+        "typedNbtSha256": "9b463a49dbbd6fad382f92cd24d5d2dab64ba1bdfa51e57f05f59451c3dd7bed"
+      },
+      {
+        "key": "wood_gate",
+        "uuid": "9d888412-42f5-4e9f-a181-2cddcbdb06ce",
+        "registry": "bloodborne_rp:wood_gate",
+        "position": [
+          24.5,
+          64.0,
+          -15.5
+        ],
+        "open": false,
+        "verticalOffset": 0.0,
+        "stableReopenFieldsEqual": true,
+        "typedNbtSha256": "e28a619f2431c7856a37157fa6665eb7358e82ad97368d45378acdff2abea214"
+      },
+      {
+        "key": "accepted_rp_tree",
+        "uuid": "ff78988e-419b-4695-929b-03d336b3edb8",
+        "registry": "bloodborne_rp:tree1",
+        "position": [
+          -76.0,
+          64.0,
+          32.0
+        ],
+        "open": false,
+        "verticalOffset": 0.0,
+        "stableReopenFieldsEqual": true,
+        "typedNbtSha256": "53f8dd38220d57ee393e33a644b0752360bef969c5b86dd13b70cebea413c3e7"
+      },
+      {
+        "key": "rp_ladder",
+        "uuid": "9f3d0c0f-7978-4684-9431-25d8e414c24b",
+        "registry": "bloodborne_rp:ladder",
+        "position": [
+          40.5,
+          93.5625,
+          18.046875
+        ],
+        "open": true,
+        "verticalOffset": 0.0,
+        "stableReopenFieldsEqual": true,
+        "typedNbtSha256": "f305ceba2739dca054ed145b049a145fab949894047be59e149f98a34cc40548"
+      },
+      {
+        "key": "rp_stairs",
+        "uuid": "95bb49f2-3ebe-4f86-b162-e1a6907e8ccb",
+        "registry": "bloodborne_rp:stairs",
+        "position": [
+          64.5,
+          76.0,
+          29.8125
+        ],
+        "open": false,
+        "verticalOffset": 0.0,
+        "stableReopenFieldsEqual": true,
+        "typedNbtSha256": "265cbc101d25178d6ce8c7e9207ca274fbe229a637d8d2bae59356903707a4c0"
+      },
+      {
+        "key": "diag_rp_door",
+        "uuid": "ab1e714f-e7c2-4f13-817e-709c0610cc17",
+        "registry": "bloodborne_rp:door_2",
+        "position": [
+          8.0,
+          64.0,
+          16.0
+        ],
+        "open": false,
+        "verticalOffset": 0.0,
+        "stableReopenFieldsEqual": true,
+        "typedNbtSha256": "c155b6037d30d44d73d2438d3155a3afcd242ab4aed32af085b0dacb8176c651"
+      },
+      {
+        "key": "lamp_D",
+        "uuid": "b0a497d0-7f80-4ee2-92a4-343a9bfd43a5",
+        "registry": "bloodborne_rp:hunterlamp",
+        "position": [
+          800.0,
+          64.0,
+          64.0
+        ],
+        "open": false,
+        "verticalOffset": 0.0,
+        "stableReopenFieldsEqual": true,
+        "typedNbtSha256": "06316736db8493b16dd0c47000e8cefa0c02a859d9fe561692ff98db989578cf"
+      }
+    ],
+    "totalRpEntities": 13,
+    "intentionalRemovedFixtures": [],
+    "creativeLevelAndAllSavedPlayers": {
+      "levelGameType": 1,
+      "allowCommands": true,
+      "savedPlayers": [],
+      "neverJoinedPristineBaselineAllowed": true
+    },
+    "allRootAndForeignBlockEntitiesTypedEqual": true,
+    "freshStand": {
+      "usableLocalLamps": 3,
+      "usableRemoteLamps": 1,
+      "usableLevers": 3,
+      "configuredGuiRules": 0,
+      "configuredGuiLines": 0,
+      "remoteDRegistration": "AUTHOR_ONLY_EXPLICIT_UNLINKED_NODE",
+      "harmlessCommandCounter": 0,
+      "savedControlFiles": [
+        {
+          "file": "bloodborne_dw_mechanism_rules.dat",
+          "present": false
+        },
+        {
+          "file": "bloodborne_dw_object_policies.dat",
+          "present": false
+        },
+        {
+          "file": "bloodborne_rp_lamps.dat",
+          "present": true,
+          "typedSavedStateSha256": "4358701be0105e9a294ac92e3f418763047f561b8c3faecee716455355b876db",
+          "newEmptyPersistenceFile": false
+        }
+      ],
+      "status": "PASS_PRISTINE_FIXTURES_NO_GUI_GRAPH_IMPORTED"
+    },
+    "guiPersistenceEvidence": "Separate actual client AUTHOR/REENTER worlds and their persisted snapshots; NOT the delivered pristine world"
+  },
+  "scope": [
+    "No Minecraft/Gradle launched by this independent verifier. Saved worlds onlyread.",
+    "Normal ordinary client GUIs/catalogue/art acceptance remainsseparatepending; this is the pristine AUTHOR scene, withoutGUI-createdpolicies/lines.",
+    "Allsourcefiles exceptsession.lock retained;copyhashesandcurrent sourcebytesexact.",
+    "Everyexistingarchitecturestate/fulltypedBE/ownerledgerunchanged; RPfixtureUUID/type/pose/roleandemptycontrolsstrictverified.",
+    "Nooriginalworld/sourceinputsmodified."
+  ]
+}

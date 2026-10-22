@@ -1,0 +1,265 @@
+EXPORT_CELLS — ПЕРЕНОС НА НОВЫЙ ПК/В НОВЫЙ ЧАТ
+Состояние: реализация остановлена по новому приоритету upload/transfer. Файлы стабильны.
+Ни FULL census/compose, ни новый экспорт, build, Minecraft, catalog append или map write
+для подготовки этого handoff не запускались. Последнее выполнение — малая helper fixture.
+
+ПУТИ
+ROOT = C:\Users\vakir\.codex\worktrees\3f07\DW-native-grid-city-20261022
+SOURCE = ROOT\source
+OLD = C:\Users\vakir\.codex\worktrees\3f07\DW-ordinary-city-pilot-20261020
+BASE = C:\Users\vakir\.codex\worktrees\3f07\DW-city-mesh-20261018
+PRESERVED = C:\Users\vakir\.codex\worktrees\3f07\DW
+В командах ниже cwd=SOURCE; Python запускается через Guard Operation +
+tools/native-grid/run_task.py. Guard exit0 недостаточен: проверить соответствующий
+research/processes/<timestamp>-<script>.json, PASS/exitCode0 и его log.
+E: migration PAUSED; не возобновлять. Для нового ПК потребуется явная переносная
+привязка путей/Guard, а не молчаливое ослабление проверок старых manifests.
+
+FROZEN РЕСУРСЫ И СОВМЕСТИМЫЙ JAR
+source/src/architecture/resources/assets/bloodborne_dw/native_grid/catalog.json
+  SHA256 638d84a879a7823fd4ed866b2109fbe864cda4690383745fbc5a53bc940fa550
+meshes.bin рядом
+  SHA256 bf3745f38ab455b0630682e4286ae7327e54a8ee77067da169d144d077d37447
+research/type-mapping.jsonl
+  SHA256 3ed78e5e6a6b7f1c1f010b89bed041919b447905e1da2bd6701f5c640962a90c
+source/build/libs/dreamwalker-bb-fabric-1.20.1-0.1.0-v12.7.4-native-grid.1.jar
+  SHA256 3477fa1f016126eb58ea294a37a0ba06ad711f7e137ae72b103919df45e35bd3
+3179 cell types /25 block banks /2805 shared meshes /841 shapes /11 optics /
+151 materials /72 actual whole-object templates /820 whole member cells.
+62,328 shared quads; runtime resources10,247,908bytes. All64 current bridge
+backgrounds dry/luminance0/opaque=false/sidedTransparency=false.
+Pinned compiler algorithm fingerprint111b89688889fa961f2ae19bc5e0f0683d2ec4c9bfa8fbcf0b36117a5e96e13f.
+Этот fingerprint, production runtime, catalogue и catalog-state DB не изменялись
+последними FULL-readiness helper правками.
+
+research/fragments.sqlite: source2923poses/27769fragments/native1290/native_fragments73.
+  Последний подтверждённый SHA256 96b0ac0fb72481b6c59c83167e5649a494da3a6ccafedccf3907b219bc424bca.
+research/catalog-state.sqlite: сохранять ЭТУ БД для append, не начинать пустую.
+research/catalog-prefix-4306e64f: старое неизменное prefix evidence, all945 old mappings.
+research/native-grid-plan/context-extension/frozen-catalog.json:
+  SHA256 2cc74a580d9a7f4300eb7274cc30d2447b3c6bf7cec3f9eb58dca63e4e94ce68.
+Там точные source/normalizer/coverage/append-lineage/prefix/statistics bindings.
+Текущие raw composition3333ec6d9f6bab318971fd5fcd182813937a3eb17bfb077dcd889b57c828d087,
+normalizeda0658ddf8a7e48f9170e3fc2a951b38ebef7d0e5734b2f91f64e5c5c6b10e17f.
+
+ТОЧНЫЕ ПОСЛЕДНИЕ DIFFS: ТОЛЬКО AUTHORING PYTHON, НЕ COMPILER/RUNTIME
+1) tools/native-grid/compiler/catalog_prefix.py
+ SHA256231fb81f2efcf88b272ed59901892a2174097d4611ab9c242914913b7b9012a5
+ baseline_hashes(): добавлены три явных snapshot-only CLI hash args вместе;
+ отсутствие args сохраняет точный старый4306/4b6/fca0 default.
+ snapshot(): сравнивает actual catalogue/mesh/mapping с заданной тройкой и
+ записывает эту тройку в immutable manifest. Partial/malformed triple fails.
+ verify(): ВСЕ прежние prefix comparisons сохранены; prior hashes берутся из
+ immutable snapshot manifest вместо старых4306 constants. Новые baseline args
+ для verify запрещены. Это позволяет новый638 snapshot, не отменяя старый4306.
+
+2) tools/native-grid/compiler/catalog_normalize_carriers.py
+ SHA256a00128c3c4aefa47ac9e6cc0db6aff8dc4fd839f5830489575768be6f65676b6
+ Новый --full-function-gate; full_function_states() обнаруживает promoted FULL
+ plan и требует EXACT imported fullNativeFunctionGate binding/hash, scopeFULL_CITY,
+ sourceBinding+immutable manifest+sourceJar40ce, inputEvidenceSHA, actual candidate
+ count, complete saved cell/chunk coverage и обе группы native bases/BE hosts.
+ full_host_decision(): EVERY actual bridge host должен иметь exact bridge_host_only.
+ Unknown/retain_local/static_base host fails. Actual carrier audit обязателен.
+ materialize_observed_carrier(): теперь каждый bridge получает full effective
+ optics с заменой ТОЛЬКО двух native-observed flags opaque/sidedTransparency,
+ даже если FULL raw не содержит carrierPredicates. Это закрывает реальный gap:
+ promote удаляет contextExtension, поэтому context_stage.carrier_predicates()
+ возвращаетNone; pinnedcompiler _native(AIR) иначе возвращал sided=true.
+ Остальные optics считаются прежними exactnative+regularfragments functions;
+ geometry/physics/fluid/localFunction/raw keys не меняются. Unknown host fails.
+ Добавлены report поля materializedObservedCarrierRows/derivedObservedCarrierRows/
+ fullFunctionGate; прежние64 context partial rows byte-equivalent.
+
+3) Новый tools/native-grid/qa/full_authoring_helpers_fixture.py
+ SHA25615b2702ec2162b5b0ea651f036707e45598b9ee0bee92778899feb3f9dbafbf5
+ Одна малая fixture PASS20261022T062314 (0.657s), без actual FULL census и DB writes.
+ research/full-authoring-helper-fixture/result.json
+ SHA2563762c67a0b5910ad4ff26722dc950bbe9fbfa093419f7869404680e41dc8e53f
+ Проверено: old4306 evidence ещё PASS/945mappings; explicit638 triple/partial
+ rejection; FULL AIR without partial raw flags; exact other optics/keys/refs;
+ missing/changed full function gate rejection; unknown/nonbridge host rejection;
+ все64 старые normalized bridge rows byte-equivalent. Синтетические input/gate
+ файлы fixtureOnly:true НЕ ЯВЛЯЮТСЯ actualFULL evidence/import/apply gate.
+
+Root должен просмотреть конкретные2 helper diffs перед FULL использованием.
+research/checkpoints/20261022T062013Z/current-sources.zip ПРЕДШЕСТВУЕТ финальной
+normalizer правке/fixture выше: для transfer брать текущий SOURCE, а не только
+этот старый ZIP. Старый checkpoint/pair honest status NOT_FINAL_READY сохранять.
+
+ЧТО ЕЩЁ НЕ ПРОВЕРЕНО / НЕ ГОТОВО
+НЕТ actualFULL census, freshFULL function decisions, full compose, full input gate,
+638 prefix snapshot, FULLnormalizer на настоящем globalplan, FULLcatalog append,
+full light, full route/save/reopen. Полный pilot PASS этот handoff НЕ утверждает.
+Точный текущий assembly/QA/native light курсор находится у root/city/native.
+Новый target full profile нельзя облегчать; baseline full gameplay OOM не был PASS.
+Честный substitute только OFFLINE_ASSET_REFERENCE_NOT_GAMEPLAY:
+research/function-qa/offline-source-reference.json SHA074176148f8a18e421e5c651a4e8b8812ad21c0d33c2c7c975638dd9f11be756.
+
+FUTURE FULL WORKFLOW — ТОЛЬКО ПОСЛЕ ACTUAL PILOT PASS И ROOT HANDOFF
+1) tools/native-grid-city/migrate.py --plan ../research/native-grid-plan
+     promote-city --pilot-gate <actualpassedrootgate.json>
+   Один и тот же global plan; не повторять discovery/import исходной карты.
+2) tools/native-grid/qa/full_native_inputs.py --plan ../research/native-grid-plan
+     --out ../research/native-grid-plan/full-native-inputs.json
+   Existing saved DB/cache only; freshout. Output status
+   READ_ONLY_NATIVE_BASE_INPUT_EVIDENCE_NOT_APPLY_GATE, scopeFULL_CITY.
+   Native authorит fresh decision report:
+   {schemaVersion:1,status:PASS,scope:FULL_CITY,sourceBinding:exact,
+    sourceJar:<immutable40ce>,sourceJarSha256:40ce...,inputEvidence:{path,sha256},
+    states:[{state:{registryId,properties},decision:static_base|bridge_host_only|
+      retain_local,reason,primaryProof...}],mapWrites:0}.
+   ВСЕ actual nativeBaseCandidates И blockEntityHostCandidates должны иметь
+   exact decision; реальный BE host никогда static_base; actual bridgehost только
+   bridge_host_only. Pilot260 report сам по себе FULL не разрешает.
+3) migrate.py --plan ... import-full-native-functions --report <freshFULLgate>
+   migrate.py --plan ... compose    (БЕЗ --bounds)
+   Outputs samePlan/compositions.jsonl +native-states-needed.json +bridge-carriers +
+   planned-be-safety/functional-guest gates. Последние содержат actual activated
+   closure, поэтому initial census НЕ является final coverage.
+4) tools/native-grid-city/audit_context_states.py --plan ../research/native-grid-plan
+   Автоматически FULL output full-native-input-coverage.json. Если появились
+   реальные missingFunctionDecisions/native exports/source footprints, закрывать
+   адресно, не дописывать default. Unknown gameplay -> locally retained route.
+5) Export ТОЛЬКО genuinely missing exact states/poses, original40ce+helper8ebb.
+   export_missing_native.py --request <native-states-needed.json> --fragments
+   ../research/fragments.sqlite --out <freshrequest> — диагностический physicsOnly
+   список; НЕ запускать слепо: сначала actual composition visual route proof.
+   StaticArchitecture physicsOnly допустим при exactsource-origin substrate visual.
+   Compact/native MODEL без своего visual требует FULL asset, не physicsOnly.
+   export_missing_visual.py --needed <actualneeded> --fragments ...
+   --plan ../research/native-grid-plan/plan.sqlite --out <freshvisualrequest>
+   Этот helper дополняет уже известных physical-only compact/slab, а реальные
+   missingNativePhysics отдельно перечисляет, не придумывает модели.
+   run_native_physics.py --request ... --out FRESHOUT: state-only2G/minimalemptyserver.
+   run_export.py --request ... --out FRESHOUT: worldfree2G asset exporter.
+   Только root запускает JVM; clean normalexit/noOOM/actualbindings обязательны.
+   export_merge_physics.py /export_merge_assets.py strict merge только после rootgo.
+   export_native_bounds.py -> для новыхwide export_native_cells.py exactclip.
+   Existing geometry-final2923pose archive не reprocess, prepare_database geometry
+   не перезапускать. Newactualposes: merge_additional_sources() толькоfreshsubset.
+   export_native_lineage.py snapshot/verify сохраняет exactpriorposes/fragments/
+   native rows, binds generation.sourceFragmentsSHA→latest. Upgrade existing
+   physicsOnly→fullvisual меняет native row: текущий allpriorrows-unchanged lineage
+   helper его НЕ принимает; потребуется явный отдельный enrichment proof, не bypass.
+   При containednative+foreignsubstrate не терять ownnative (Sandstone precedent):
+   targetedcitypatch nativePlusSubstrateFragments с exact rowhash/bounds/ref lineage;
+   wide -> exactclip+boundedclosure. Не повторять полный compose без нужды.
+6) Fresh finalchecker ALLactualneeded PASS, importedlatestfragments+fullfunctiongate.
+   audit_context_states.py --plan ... --append-lineage <strictreceipt>.
+   Then rawpreflight -> fullnormalizer -> normalizedpreflight -> rootappendgo.
+   Normalizer: catalog_normalize_carriers.py --compositions <raw> --raw-sha256 EXACT
+   --fragments ../research/fragments.sqlite --plan ../research/native-grid-plan
+   --audit <actualpassedcarrierquery.json> [--audit ...]
+   --full-function-gate <freshimportedFULLgate> --out <Plan/full/compositions.normalized.jsonl>
+   --receipt <Plan/full/normalizer-receipt.json>.
+   Unknownhost requires actualsourcefunction AND nativecarrierquery, neverdefaultflags.
+7) Перед первым FULL append создать immutable snapshot current638:
+   compiler/catalog_prefix.py snapshot --snapshot ../research/catalog-prefix-638d84
+   --resources src/architecture/resources/assets/bloodborne_dw/native_grid
+   --database ../research/catalog-state.sqlite --mapping ../research/type-mapping.jsonl
+   --baseline-catalog-sha256 638d84a879a7823fd4ed866b2109fbe864cda4690383745fbc5a53bc940fa550
+   --baseline-meshes-sha256 bf3745f38ab455b0630682e4286ae7327e54a8ee77067da169d144d077d37447
+   --baseline-mapping-sha256 3ed78e5e6a6b7f1c1f010b89bed041919b447905e1da2bd6701f5c640962a90c
+   Then compiler/catalog.py --fragments ../research/fragments.sqlite
+   --compositions <FULLnormalized> --whole-objects ../research/whole-objects.jsonl
+   --database ../research/catalog-state.sqlite
+   --resources src/architecture/resources/assets/bloodborne_dw/native_grid
+   --textures src/architecture/resources --out ../research/type-mapping.jsonl.
+   SAME DB append, pinned111b unchanged. Then catalog_prefix.py verify (samepaths,
+   snapshot638, --out proof; NO baseline args), catalog_report.py, catalog_bridge_report.py.
+   Explicit root build then fresh actualnewJARbridgeaudit/mapapply/light/QA.
+   Phase2 catalog_append_gate.py/catalog_freeze.py hard-code phase2 SHA paths:
+   НЕ выдавать их за genericFULL gate без нового явноsourcebound input binding.
+
+PORTABLE: ОБЯЗАТЕЛЬНЫЕ ДАННЫЕ ВНУТРИ ROOT, НЕ ТОЛЬКО sourceZIP
+research/native-grid-plan/plan.sqlite +its proof/journal/history files; research/
+fragments.sqlite; research/catalog-state.sqlite; whole-objects.jsonl; type-mapping;
+source resource assets/blockstate/model markers; geometry-final/geometry-supplement/
+geometry-phase2-* raw outputs+requests+bindings+launch/merge receipts (включая честные
+failed/OOMattempts); full research/native-functional-bases; catalogue prefix snapshots;
+pilot baseline/candidate +dependencyrepair history; profiles mods/locks; QAplans,
+offline source reference+four raw owner snapshots, route proof, native light cursors.
+Сохранять SQLite согласованными snapshots/WAL cursors, не вырезать shadowtables/journals.
+ROOT/source/build/libs production3477 иauthoringexport8ebb иQA/route/relight helpers.
+
+PORTABLE: КОНКРЕТНЫЕ ВНЕ ROOT INPUTS
+A) BASE/deliverables/block-fixes-2-20261020/game/
+ dreamwalker-bb-materials.1-streaming.7-blocks.2.jar
+ SHA40cecfb7e5cf783a762e350fc1864518c39abff177f6f025cb94892a181fbf51.
+ Это источник точных exports/physics, его НЕЛЬЗЯ заменить rebuild из mutableworkingtree.
+ BASE/deliverables/block-fixes-2-20261020/source/block-repair-source-overlay.zip
+ SHAdeebca4cac621acb1b488817ee26a547360b655faf22e04f4c5df7c307c75467.
+ Это только sourceOVERLAY blocks.2, не полный исходник исходнойцепочки. Также сохранить
+ release.json/README-RU.txt/SHA256SUMS/checks и предшествующую базовую sourceцепочку.
+ BASE/bloodborne complete — старое mutableworkingcode, полезно для rebuild provenance,
+ но не самостоятельное доказательство byte-equivalence с40ce. Current nativecode=ROOT/source.
+B) Исходная immutable карта BASE/deliverables/block-fixes-2-20261020/map/
+ bloodborne-blocks-fixed-2/ (3887 files/437197194bytes boundcopyManifest).
+ Есть portable archive рядом bloodborne-blocks-fixed-2.zip
+ SHA016616d6422616020de3194d078abc81b409ce0b36aef828436e90c7063e399e.
+C) OLD/research/city-pilot/full-city-copy.ordinary-migration/
+ plan.sqlite (6,793,261,056bytes), copy.json
+ SHAf922f5804c89bcba1ac8f7a22e82fd3c7deb8e844bc5e924778312b2b5ce7fcc,
+ planner-binding.json, read-only-plan.json, planner-snapshots/02c1b811f4a3aa121e149b456858dd9ba657258e759e7e90fabcf327e6ae6e5a/.
+ Source cache old.chunk_cache +members/stored_owners/stored_contributions нужны для
+ продолжения без нового global scan. SHA-only manifest НЕ заменяет эти bytes.
+ OLD/tools/ordinary-stage1/source-capabilities.json
+ SHA4631f03fe354733a230dab9d5bbffc339a3cbf3fefb9362544199569685dc461,
+ native-supports-canonical.json и referenced finite policy files изplanner-binding.
+ Discovery DB oldmtime1792532766177907600 был частью binding: перенос должен
+ сохранитьtimestamps либо явно создать проверенный portable binding, не стереть proof.
+D) Build API used by ROOT/source/tools/native-grid/build.py:
+ PRESERVED/bloodborne complete/build/v127-dependencies/worldedit-mod-7.2.15.jar.
+ Historical original-baseline export compile classes:
+ BASE/bloodborne complete/build/classes/java/main/ (named Minecraft/Java classes).
+ Известный successful build research/build/20261021T224022.json использовал
+ -Pnative_grid_export_baseline_classes=<этот каталог> remapNativeGridExportJar.
+ Текущий готовый ROOT/source/build/libs/dreamwalker-native-grid-export-0.1.0-v12.7.4-native-grid.1.jar
+ SHA8ebbebae73d69c73ed31e40cce34c0d9535543e946f5359643caf773d919de20
+ позволяет продолжитьaddressedexports безrebuild старыхbaselineclasses.
+E) JVM/launcher dependencies, конкретные runtimepaths:
+ C:\Users\vakir\AppData\Roaming\.minecraft\runtime\java-runtime-gamma\windows\java-runtime-gamma\
+ (Java17.0.15; bin/java.exe; build.py JAVA_HOME uses этот runtime).
+ BASE/bloodborne complete/build/runtime-client-city-mesh-baseline/libraries/
+ (58 library entries +Windows LWJGLnativesJARs; FabricLoader0.19.5 runtime).
+ BASE/bloodborne complete/build/runtime-client-city-mesh-baseline/minecraft-client.jar.
+ C:\Users\vakir\.gradle\caches\fabric-loom\1.20.1\minecraft-extracted_server.jar
+ (59-й serverclasspath entry, фактически используется native.args).
+ BASE/bloodborne complete/build/client-assets-1.20.1-50ce48459eb9e29836662862273d7b15d41c2c33/
+ (actual --assetsDir; --assetIndex5, indices/objects нужныclient asset bake/render).
+ BASE/bloodborne complete/build/runtime-server-rp-streaming7/native.args;
+ BASE/research/graphical-streaming-20261019/after/prepared.json clientArgs.
+ Эти args содержат абсолютныеpaths: создать sanitized portable launcher templates,
+ сохранивoriginalargfile hashes/provenance; не исполнять пути старогоПК вслепую.
+ BASE/bloodborne complete/build/runtime-{client,server}-rp-streaming7/mods/ иserver/eula.txt
+ нужны sourceprofile templates; фактические target dependency копии уже ROOT/research/profiles.
+ Сохранять profile-lock.json +benchmark-helper.json иточныеmodSHA, не менять pairprofile.
+ prepare_profiles.py НЕ запускатьповторно поверх frozen profile (он пишетsettings/lock).
+F) Offline Gradle build нуждается .gradle caches/wrapper distributions либо их
+ официальном bootstrap до использования --offline; НЕ копировать Gradle credentials.
+ build.gradle pins Loom1.6.12, MC1.20.1, Yarn1.20.1+build.10, Fabric compileloader0.16.10,
+ FabricAPI0.92.9+1.20.1, GeckoLib4.4.9, mclib20; build.py uses --offline/maxworkers2/heap1G.
+ Install Python3 с stdlib sqlite3/json/zlib/hashlib (использовался miniconda3/python.exe).
+ C:\Users\vakir\CodexControl/{Guard.ps1,Job.cs,storage-mode.json,C-return-result.txt}
+ — local operation contract; на новомПК explicit recreate/rebind approvedworkspace,
+ не переносить весь .codex/AppData/accountprofile ради этих4files.
+
+BOOTSTRAP НА НОВОМ ПК: сначала скачать/hashverify ROOT+external data исогласованные
+ SQLite snapshots; восстановить source/old/base locations через portablepathmap с
+ явнойnewbinding lineage (абсолютныепути есть в JSON/SQLitemeta/launcher args/Python).
+ Затем установить Java17/Python/Gradle deps иsafe launcher paths. Готовые3477/8ebb
+ JARs позволяют read-only resume до любого нового build. Продолжить с ROOT/transfer
+ README/cursor root; actualpilot acceptance иfullgate всёещёобязательны.
+Не загружатьaccounts.json/launcher_accounts.json/tokens/cookies/SSH/privatekeys,
+полныеbrowserprofiles или .minecraft accountsettings. Sanitize --accessToken to0/
+offlineQA identity в bootstraptemplates, а не импортироватьcredentials.
+
+ОТДЕЛЬНОЕ FROZEN FINITE17 TREE PROOF
+research/native-functional-bases/unknown-native-tree-footprints.json
+SHA7de51902eb54e31e9473fec40274dfb3587f3b67a82065629c9c89b5f0cf6724.
+17 protected partial-treeposes/207actualruntimefootprintcells; exact immutable40ce
+ImportedFullMapCollisionV127 route, no visualBBox approximation; WoodFloorpriority/
+wholeoptics exclusions bound. Не re-export trees длязаполненияgeometryarchive.
+
+БОЛЬШЕ ИЗМЕНЕНИЙ EXPORT_CELLS НЕ ПЛАНИРУЕТ ДО ROOT TRANSFER HANDOFF.

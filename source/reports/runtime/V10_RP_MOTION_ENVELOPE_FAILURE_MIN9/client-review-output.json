@@ -1,0 +1,5009 @@
+{
+  "schema": "dw-review-v10-actual-client-v1",
+  "status": "FAIL_ACTUAL_CLIENT_V10",
+  "mode": "AUTHOR",
+  "revision": "V10",
+  "markerSha256": "00d9879983080e54c8d2007bef89b543172d6d1fb861ad552c511acbdb678018",
+  "manualVisualAcceptance": "NOT_RUN",
+  "screenshots": "See menusActual actual framebuffer paths; no manual visual acceptance",
+  "directObjectMutationUsedAsClientProof": false,
+  "actorSetupScope": "Integrated server inventory/camera and one explicit Survival platform-walk setup only; actual object actions use ordinary input, interaction packets and screen widgets",
+  "steps": [
+    {
+      "name": "prepare ordinary item npc_window",
+      "status": "PASS",
+      "ticks": 4
+    },
+    {
+      "name": "actual floor crosshair for npc_window",
+      "status": "PASS",
+      "ticks": 3
+    },
+    {
+      "name": "ordinary use key places npc_window",
+      "status": "PASS",
+      "ticks": 4
+    },
+    {
+      "name": "prepare actual part camera npc_window",
+      "status": "PASS",
+      "ticks": 3
+    },
+    {
+      "name": "actual selected UUID at source part npc_window",
+      "status": "PASS",
+      "ticks": 3
+    },
+    {
+      "name": "retain ordinary window for actual GUI and native overlap",
+      "status": "PASS",
+      "ticks": 3
+    },
+    {
+      "name": "capture original RP duplicate-placement identity",
+      "status": "PASS",
+      "ticks": 4
+    },
+    {
+      "name": "prepare second ordinary RP item through original real part",
+      "status": "PASS",
+      "ticks": 3
+    },
+    {
+      "name": "original RP crosshair and exact native floor for duplicate",
+      "status": "PASS",
+      "ticks": 3
+    },
+    {
+      "name": "second ordinary RP use-key creates new overlapping UUID",
+      "status": "PASS",
+      "ticks": 4
+    },
+    {
+      "name": "prepare actual second RP cleanup ray",
+      "status": "PASS",
+      "ticks": 3
+    },
+    {
+      "name": "actual second RP cleanup target",
+      "status": "PASS",
+      "ticks": 3
+    },
+    {
+      "name": "ordinary Creative removes only duplicate RP",
+      "status": "PASS",
+      "ticks": 4
+    },
+    {
+      "name": "prepare actual original RP cleanup ray",
+      "status": "PASS",
+      "ticks": 3
+    },
+    {
+      "name": "actual original RP cleanup target",
+      "status": "PASS",
+      "ticks": 3
+    },
+    {
+      "name": "ordinary Creative removes original temporary RP",
+      "status": "PASS",
+      "ticks": 4
+    },
+    {
+      "name": "prepare ordinary architecture item bloodborne_dw:prototype_double_door",
+      "status": "PASS",
+      "ticks": 3
+    },
+    {
+      "name": "actual native floor for architecture bloodborne_dw:prototype_double_door",
+      "status": "PASS",
+      "ticks": 3
+    },
+    {
+      "name": "ordinary use key places architecture bloodborne_dw:prototype_double_door",
+      "status": "PASS",
+      "ticks": 4
+    },
+    {
+      "name": "actual helper/root crosshair for architecture bloodborne_dw:prototype_double_door",
+      "status": "PASS",
+      "ticks": 3
+    },
+    {
+      "name": "ordinary Creative attack removes architecture bloodborne_dw:prototype_double_door",
+      "status": "PASS",
+      "ticks": 4
+    },
+    {
+      "name": "exact architecture UUID helper cleanup bloodborne_dw:prototype_double_door",
+      "status": "PASS",
+      "ticks": 4
+    },
+    {
+      "name": "prepare ordinary architecture item bloodborne_dw:prototype_wall",
+      "status": "PASS",
+      "ticks": 3
+    },
+    {
+      "name": "actual native floor for architecture bloodborne_dw:prototype_wall",
+      "status": "PASS",
+      "ticks": 3
+    },
+    {
+      "name": "ordinary use key places architecture bloodborne_dw:prototype_wall",
+      "status": "PASS",
+      "ticks": 4
+    },
+    {
+      "name": "actual helper/root crosshair for architecture bloodborne_dw:prototype_wall",
+      "status": "PASS",
+      "ticks": 3
+    },
+    {
+      "name": "ordinary Creative attack removes architecture bloodborne_dw:prototype_wall",
+      "status": "PASS",
+      "ticks": 4
+    },
+    {
+      "name": "exact architecture UUID helper cleanup bloodborne_dw:prototype_wall",
+      "status": "PASS",
+      "ticks": 4
+    },
+    {
+      "name": "prepare ordinary architecture item bloodborne_dw:prototype_roof",
+      "status": "PASS",
+      "ticks": 3
+    },
+    {
+      "name": "actual native floor for architecture bloodborne_dw:prototype_roof",
+      "status": "PASS",
+      "ticks": 3
+    },
+    {
+      "name": "ordinary use key places architecture bloodborne_dw:prototype_roof",
+      "status": "PASS",
+      "ticks": 4
+    },
+    {
+      "name": "actual helper/root crosshair for architecture bloodborne_dw:prototype_roof",
+      "status": "PASS",
+      "ticks": 3
+    },
+    {
+      "name": "ordinary Creative attack removes architecture bloodborne_dw:prototype_roof",
+      "status": "PASS",
+      "ticks": 4
+    },
+    {
+      "name": "exact architecture UUID helper cleanup bloodborne_dw:prototype_roof",
+      "status": "PASS",
+      "ticks": 4
+    },
+    {
+      "name": "prepare ordinary architecture item bloodborne_dw:prototype_thin_window",
+      "status": "PASS",
+      "ticks": 3
+    },
+    {
+      "name": "actual native floor for architecture bloodborne_dw:prototype_thin_window",
+      "status": "PASS",
+      "ticks": 3
+    },
+    {
+      "name": "ordinary use key places architecture bloodborne_dw:prototype_thin_window",
+      "status": "PASS",
+      "ticks": 4
+    },
+    {
+      "name": "actual helper/root crosshair for architecture bloodborne_dw:prototype_thin_window",
+      "status": "PASS",
+      "ticks": 3
+    },
+    {
+      "name": "ordinary Creative attack removes architecture bloodborne_dw:prototype_thin_window",
+      "status": "PASS",
+      "ticks": 4
+    },
+    {
+      "name": "exact architecture UUID helper cleanup bloodborne_dw:prototype_thin_window",
+      "status": "PASS",
+      "ticks": 4
+    },
+    {
+      "name": "prepare ordinary architecture item bloodborne_dw:prototype_tree",
+      "status": "PASS",
+      "ticks": 3
+    },
+    {
+      "name": "actual native floor for architecture bloodborne_dw:prototype_tree",
+      "status": "PASS",
+      "ticks": 3
+    },
+    {
+      "name": "ordinary use key places architecture bloodborne_dw:prototype_tree",
+      "status": "PASS",
+      "ticks": 4
+    },
+    {
+      "name": "actual helper/root crosshair for architecture bloodborne_dw:prototype_tree",
+      "status": "PASS",
+      "ticks": 3
+    },
+    {
+      "name": "ordinary Creative attack removes architecture bloodborne_dw:prototype_tree",
+      "status": "PASS",
+      "ticks": 4
+    },
+    {
+      "name": "exact architecture UUID helper cleanup bloodborne_dw:prototype_tree",
+      "status": "PASS",
+      "ticks": 4
+    },
+    {
+      "name": "prepare ordinary architecture item bloodborne_dw:prototype_ladder",
+      "status": "PASS",
+      "ticks": 3
+    },
+    {
+      "name": "actual native floor for architecture bloodborne_dw:prototype_ladder",
+      "status": "PASS",
+      "ticks": 3
+    },
+    {
+      "name": "ordinary use key places architecture bloodborne_dw:prototype_ladder",
+      "status": "PASS",
+      "ticks": 4
+    },
+    {
+      "name": "actual helper/root crosshair for architecture bloodborne_dw:prototype_ladder",
+      "status": "PASS",
+      "ticks": 3
+    },
+    {
+      "name": "ordinary Creative attack removes architecture bloodborne_dw:prototype_ladder",
+      "status": "PASS",
+      "ticks": 4
+    },
+    {
+      "name": "exact architecture UUID helper cleanup bloodborne_dw:prototype_ladder",
+      "status": "PASS",
+      "ticks": 4
+    },
+    {
+      "name": "prepare ordinary architecture item bloodborne_dw:prototype_wood_window",
+      "status": "PASS",
+      "ticks": 3
+    },
+    {
+      "name": "actual native floor for architecture bloodborne_dw:prototype_wood_window",
+      "status": "PASS",
+      "ticks": 3
+    },
+    {
+      "name": "ordinary use key places architecture bloodborne_dw:prototype_wood_window",
+      "status": "PASS",
+      "ticks": 4
+    },
+    {
+      "name": "actual helper/root crosshair for architecture bloodborne_dw:prototype_wood_window",
+      "status": "PASS",
+      "ticks": 3
+    },
+    {
+      "name": "ordinary Creative attack removes architecture bloodborne_dw:prototype_wood_window",
+      "status": "PASS",
+      "ticks": 4
+    },
+    {
+      "name": "exact architecture UUID helper cleanup bloodborne_dw:prototype_wood_window",
+      "status": "PASS",
+      "ticks": 4
+    },
+    {
+      "name": "prepare ordinary architecture item bloodborne_dw:prototype_glass_window_02",
+      "status": "PASS",
+      "ticks": 3
+    },
+    {
+      "name": "actual native floor for architecture bloodborne_dw:prototype_glass_window_02",
+      "status": "PASS",
+      "ticks": 3
+    },
+    {
+      "name": "ordinary use key places architecture bloodborne_dw:prototype_glass_window_02",
+      "status": "PASS",
+      "ticks": 4
+    },
+    {
+      "name": "actual helper/root crosshair for architecture bloodborne_dw:prototype_glass_window_02",
+      "status": "PASS",
+      "ticks": 3
+    },
+    {
+      "name": "ordinary Creative attack removes architecture bloodborne_dw:prototype_glass_window_02",
+      "status": "PASS",
+      "ticks": 4
+    },
+    {
+      "name": "exact architecture UUID helper cleanup bloodborne_dw:prototype_glass_window_02",
+      "status": "PASS",
+      "ticks": 4
+    },
+    {
+      "name": "prepare ordinary architecture item bloodborne_dw:prototype_wall_skin_0",
+      "status": "PASS",
+      "ticks": 3
+    },
+    {
+      "name": "actual native floor for architecture bloodborne_dw:prototype_wall_skin_0",
+      "status": "PASS",
+      "ticks": 3
+    },
+    {
+      "name": "ordinary use key places architecture bloodborne_dw:prototype_wall_skin_0",
+      "status": "PASS",
+      "ticks": 4
+    },
+    {
+      "name": "actual helper/root crosshair for architecture bloodborne_dw:prototype_wall_skin_0",
+      "status": "PASS",
+      "ticks": 3
+    },
+    {
+      "name": "ordinary Creative attack removes architecture bloodborne_dw:prototype_wall_skin_0",
+      "status": "PASS",
+      "ticks": 4
+    },
+    {
+      "name": "exact architecture UUID helper cleanup bloodborne_dw:prototype_wall_skin_0",
+      "status": "PASS",
+      "ticks": 4
+    },
+    {
+      "name": "prepare ordinary architecture item bloodborne_dw:prototype_wall_skin_1",
+      "status": "PASS",
+      "ticks": 3
+    },
+    {
+      "name": "actual native floor for architecture bloodborne_dw:prototype_wall_skin_1",
+      "status": "PASS",
+      "ticks": 3
+    },
+    {
+      "name": "ordinary use key places architecture bloodborne_dw:prototype_wall_skin_1",
+      "status": "PASS",
+      "ticks": 4
+    },
+    {
+      "name": "actual helper/root crosshair for architecture bloodborne_dw:prototype_wall_skin_1",
+      "status": "PASS",
+      "ticks": 3
+    },
+    {
+      "name": "ordinary Creative attack removes architecture bloodborne_dw:prototype_wall_skin_1",
+      "status": "PASS",
+      "ticks": 4
+    },
+    {
+      "name": "exact architecture UUID helper cleanup bloodborne_dw:prototype_wall_skin_1",
+      "status": "PASS",
+      "ticks": 4
+    },
+    {
+      "name": "prepare ordinary architecture item bloodborne_dw:prototype_wall_skin_2",
+      "status": "PASS",
+      "ticks": 3
+    },
+    {
+      "name": "actual native floor for architecture bloodborne_dw:prototype_wall_skin_2",
+      "status": "PASS",
+      "ticks": 3
+    },
+    {
+      "name": "ordinary use key places architecture bloodborne_dw:prototype_wall_skin_2",
+      "status": "PASS",
+      "ticks": 4
+    },
+    {
+      "name": "actual helper/root crosshair for architecture bloodborne_dw:prototype_wall_skin_2",
+      "status": "PASS",
+      "ticks": 3
+    },
+    {
+      "name": "ordinary Creative attack removes architecture bloodborne_dw:prototype_wall_skin_2",
+      "status": "PASS",
+      "ticks": 4
+    },
+    {
+      "name": "exact architecture UUID helper cleanup bloodborne_dw:prototype_wall_skin_2",
+      "status": "PASS",
+      "ticks": 4
+    },
+    {
+      "name": "prepare ordinary architecture item bloodborne_dw:prototype_wall_skin_3",
+      "status": "PASS",
+      "ticks": 3
+    },
+    {
+      "name": "actual native floor for architecture bloodborne_dw:prototype_wall_skin_3",
+      "status": "PASS",
+      "ticks": 3
+    },
+    {
+      "name": "ordinary use key places architecture bloodborne_dw:prototype_wall_skin_3",
+      "status": "PASS",
+      "ticks": 4
+    },
+    {
+      "name": "actual helper/root crosshair for architecture bloodborne_dw:prototype_wall_skin_3",
+      "status": "PASS",
+      "ticks": 3
+    },
+    {
+      "name": "ordinary Creative attack removes architecture bloodborne_dw:prototype_wall_skin_3",
+      "status": "PASS",
+      "ticks": 4
+    },
+    {
+      "name": "exact architecture UUID helper cleanup bloodborne_dw:prototype_wall_skin_3",
+      "status": "PASS",
+      "ticks": 4
+    },
+    {
+      "name": "prepare ordinary architecture item bloodborne_dw:prototype_wall_skin_4",
+      "status": "PASS",
+      "ticks": 3
+    },
+    {
+      "name": "actual native floor for architecture bloodborne_dw:prototype_wall_skin_4",
+      "status": "PASS",
+      "ticks": 3
+    },
+    {
+      "name": "ordinary use key places architecture bloodborne_dw:prototype_wall_skin_4",
+      "status": "PASS",
+      "ticks": 4
+    },
+    {
+      "name": "actual helper/root crosshair for architecture bloodborne_dw:prototype_wall_skin_4",
+      "status": "PASS",
+      "ticks": 3
+    },
+    {
+      "name": "ordinary Creative attack removes architecture bloodborne_dw:prototype_wall_skin_4",
+      "status": "PASS",
+      "ticks": 4
+    },
+    {
+      "name": "exact architecture UUID helper cleanup bloodborne_dw:prototype_wall_skin_4",
+      "status": "PASS",
+      "ticks": 4
+    },
+    {
+      "name": "prepare ordinary architecture item bloodborne_dw:prototype_wall_skin_5",
+      "status": "PASS",
+      "ticks": 3
+    },
+    {
+      "name": "actual native floor for architecture bloodborne_dw:prototype_wall_skin_5",
+      "status": "PASS",
+      "ticks": 3
+    },
+    {
+      "name": "ordinary use key places architecture bloodborne_dw:prototype_wall_skin_5",
+      "status": "PASS",
+      "ticks": 4
+    },
+    {
+      "name": "actual helper/root crosshair for architecture bloodborne_dw:prototype_wall_skin_5",
+      "status": "PASS",
+      "ticks": 3
+    },
+    {
+      "name": "ordinary Creative attack removes architecture bloodborne_dw:prototype_wall_skin_5",
+      "status": "PASS",
+      "ticks": 4
+    },
+    {
+      "name": "exact architecture UUID helper cleanup bloodborne_dw:prototype_wall_skin_5",
+      "status": "PASS",
+      "ticks": 4
+    },
+    {
+      "name": "prepare ordinary architecture item bloodborne_dw:prototype_wall_skin_7",
+      "status": "PASS",
+      "ticks": 3
+    },
+    {
+      "name": "actual native floor for architecture bloodborne_dw:prototype_wall_skin_7",
+      "status": "PASS",
+      "ticks": 3
+    },
+    {
+      "name": "ordinary use key places architecture bloodborne_dw:prototype_wall_skin_7",
+      "status": "PASS",
+      "ticks": 4
+    },
+    {
+      "name": "actual helper/root crosshair for architecture bloodborne_dw:prototype_wall_skin_7",
+      "status": "PASS",
+      "ticks": 3
+    },
+    {
+      "name": "ordinary Creative attack removes architecture bloodborne_dw:prototype_wall_skin_7",
+      "status": "PASS",
+      "ticks": 4
+    },
+    {
+      "name": "exact architecture UUID helper cleanup bloodborne_dw:prototype_wall_skin_7",
+      "status": "PASS",
+      "ticks": 4
+    },
+    {
+      "name": "prepare ordinary architecture item bloodborne_dw:prototype_ladder_art_1",
+      "status": "PASS",
+      "ticks": 3
+    },
+    {
+      "name": "actual native floor for architecture bloodborne_dw:prototype_ladder_art_1",
+      "status": "PASS",
+      "ticks": 3
+    },
+    {
+      "name": "ordinary use key places architecture bloodborne_dw:prototype_ladder_art_1",
+      "status": "PASS",
+      "ticks": 4
+    },
+    {
+      "name": "actual helper/root crosshair for architecture bloodborne_dw:prototype_ladder_art_1",
+      "status": "PASS",
+      "ticks": 3
+    },
+    {
+      "name": "ordinary Creative attack removes architecture bloodborne_dw:prototype_ladder_art_1",
+      "status": "PASS",
+      "ticks": 4
+    },
+    {
+      "name": "exact architecture UUID helper cleanup bloodborne_dw:prototype_ladder_art_1",
+      "status": "PASS",
+      "ticks": 4
+    },
+    {
+      "name": "prepare ordinary architecture item bloodborne_dw:prototype_ladder_art_2",
+      "status": "PASS",
+      "ticks": 3
+    },
+    {
+      "name": "actual native floor for architecture bloodborne_dw:prototype_ladder_art_2",
+      "status": "PASS",
+      "ticks": 3
+    },
+    {
+      "name": "ordinary use key places architecture bloodborne_dw:prototype_ladder_art_2",
+      "status": "PASS",
+      "ticks": 4
+    },
+    {
+      "name": "actual helper/root crosshair for architecture bloodborne_dw:prototype_ladder_art_2",
+      "status": "PASS",
+      "ticks": 3
+    },
+    {
+      "name": "ordinary Creative attack removes architecture bloodborne_dw:prototype_ladder_art_2",
+      "status": "PASS",
+      "ticks": 4
+    },
+    {
+      "name": "exact architecture UUID helper cleanup bloodborne_dw:prototype_ladder_art_2",
+      "status": "PASS",
+      "ticks": 4
+    },
+    {
+      "name": "prepare ordinary architecture item bloodborne_dw:prototype_glass_window_03",
+      "status": "PASS",
+      "ticks": 3
+    },
+    {
+      "name": "actual native floor for architecture bloodborne_dw:prototype_glass_window_03",
+      "status": "PASS",
+      "ticks": 3
+    },
+    {
+      "name": "ordinary use key places architecture bloodborne_dw:prototype_glass_window_03",
+      "status": "PASS",
+      "ticks": 4
+    },
+    {
+      "name": "actual helper/root crosshair for architecture bloodborne_dw:prototype_glass_window_03",
+      "status": "PASS",
+      "ticks": 3
+    },
+    {
+      "name": "ordinary Creative attack removes architecture bloodborne_dw:prototype_glass_window_03",
+      "status": "PASS",
+      "ticks": 4
+    },
+    {
+      "name": "exact architecture UUID helper cleanup bloodborne_dw:prototype_glass_window_03",
+      "status": "PASS",
+      "ticks": 4
+    },
+    {
+      "name": "prepare ordinary item cage_obj_1",
+      "status": "PASS",
+      "ticks": 4
+    },
+    {
+      "name": "actual operator starts bounded first-cage refusal trace",
+      "status": "PASS",
+      "ticks": 6
+    },
+    {
+      "name": "actual floor crosshair for cage_obj_1",
+      "status": "PASS",
+      "ticks": 3
+    }
+  ],
+  "ordinaryRpCases": [],
+  "ordinaryArchitectureCases": [
+    {
+      "registry": "bloodborne_dw:prototype_double_door",
+      "actualPlacementBlockHit": {
+        "type": "BLOCK",
+        "hitPos": [
+          -63.5,
+          100.0,
+          64.50077857961777
+        ],
+        "blockPos": [
+          -64,
+          99,
+          64
+        ],
+        "side": "up",
+        "insideBlock": false
+      },
+      "serverThreadPlacementObservation": {
+        "registry": "bloodborne_dw:prototype_double_door",
+        "state": "Block{bloodborne_dw:prototype_double_door}[open\u003dfalse,profile\u003dbase,rotation\u003d0,variant\u003d0]",
+        "air": false,
+        "nativeChunkAvailable": true,
+        "safeChunkAvailable": true,
+        "nativeBlockEntityClass": "dev.dreamwalker.bloodbornedw.composite.CompositeBlockEntity",
+        "nativeResident": "bfd68c03-91ff-4c59-a467-0a662f8b7367",
+        "safeOwner": "bfd68c03-91ff-4c59-a467-0a662f8b7367",
+        "readThread": "ACTUAL_SERVER_THREAD"
+      },
+      "clientPlacementObservation": {
+        "registry": "bloodborne_dw:prototype_double_door",
+        "state": "Block{bloodborne_dw:prototype_double_door}[open\u003dfalse,profile\u003dbase,rotation\u003d0,variant\u003d0]",
+        "nativeChunkAvailable": true,
+        "safeChunkAvailable": true,
+        "nativeBlockEntityClass": "dev.dreamwalker.bloodbornedw.composite.CompositeBlockEntity",
+        "nativeResident": "bfd68c03-91ff-4c59-a467-0a662f8b7367",
+        "safeOwner": "bfd68c03-91ff-4c59-a467-0a662f8b7367"
+      },
+      "uuid": "bfd68c03-91ff-4c59-a467-0a662f8b7367",
+      "serverThreadRemovalObservation": {
+        "registry": "minecraft:air",
+        "state": "Block{minecraft:air}",
+        "air": true,
+        "nativeChunkAvailable": true,
+        "safeChunkAvailable": true,
+        "nativeBlockEntityClass": "NONE",
+        "readThread": "ACTUAL_SERVER_THREAD"
+      },
+      "serverThreadLedgerCleanup": {
+        "owner": "bfd68c03-91ff-4c59-a467-0a662f8b7367",
+        "remainingOwnerContributions": 0,
+        "readThread": "ACTUAL_SERVER_THREAD"
+      },
+      "status": "PASS_ACTUAL_ORDINARY_ARCHITECTURE_ITEM_AND_CREATIVE_ROOT_OR_HELPER_ATTACK",
+      "placementAndAttackPath": "MinecraftClient ordinary use/attack keys; exact actual root/art/UUID and zero residual owner ledger"
+    },
+    {
+      "registry": "bloodborne_dw:prototype_wall",
+      "actualPlacementBlockHit": {
+        "type": "BLOCK",
+        "hitPos": [
+          -63.5,
+          100.0,
+          64.50077857961777
+        ],
+        "blockPos": [
+          -64,
+          99,
+          64
+        ],
+        "side": "up",
+        "insideBlock": false
+      },
+      "serverThreadPlacementObservation": {
+        "registry": "bloodborne_dw:prototype_wall",
+        "state": "Block{bloodborne_dw:prototype_wall}[connections\u003dauto,east\u003dnone,material\u003d6,north\u003dnone,profile\u003dbase,rotation\u003d4,south\u003dnone,up\u003dtrue,waterlogged\u003dfalse,west\u003dnone]",
+        "air": false,
+        "nativeChunkAvailable": true,
+        "safeChunkAvailable": true,
+        "nativeBlockEntityClass": "dev.dreamwalker.bloodbornedw.composite.CompositeBlockEntity",
+        "nativeResident": "cfba51fb-bc34-4470-9f94-71b6aa65ad55",
+        "safeOwner": "cfba51fb-bc34-4470-9f94-71b6aa65ad55",
+        "readThread": "ACTUAL_SERVER_THREAD"
+      },
+      "clientPlacementObservation": {
+        "registry": "bloodborne_dw:prototype_wall",
+        "state": "Block{bloodborne_dw:prototype_wall}[connections\u003dauto,east\u003dnone,material\u003d6,north\u003dnone,profile\u003dbase,rotation\u003d4,south\u003dnone,up\u003dtrue,waterlogged\u003dfalse,west\u003dnone]",
+        "nativeChunkAvailable": true,
+        "safeChunkAvailable": true,
+        "nativeBlockEntityClass": "dev.dreamwalker.bloodbornedw.composite.CompositeBlockEntity",
+        "nativeResident": "cfba51fb-bc34-4470-9f94-71b6aa65ad55",
+        "safeOwner": "cfba51fb-bc34-4470-9f94-71b6aa65ad55"
+      },
+      "uuid": "cfba51fb-bc34-4470-9f94-71b6aa65ad55",
+      "actualNativeAttackTarget": {
+        "path": "ACTUAL_UNSHIFTED_NATIVE_BLOCK_HIT",
+        "blockHit": {
+          "type": "BLOCK",
+          "hitPos": [
+            -63.5,
+            100.57022643305008,
+            64.25
+          ],
+          "blockPos": [
+            -64,
+            100,
+            64
+          ],
+          "side": "north",
+          "insideBlock": false
+        },
+        "residentUuid": "cfba51fb-bc34-4470-9f94-71b6aa65ad55",
+        "verticalOffset": 0
+      },
+      "serverThreadRemovalObservation": {
+        "registry": "minecraft:air",
+        "state": "Block{minecraft:air}",
+        "air": true,
+        "nativeChunkAvailable": true,
+        "safeChunkAvailable": true,
+        "nativeBlockEntityClass": "NONE",
+        "readThread": "ACTUAL_SERVER_THREAD"
+      },
+      "serverThreadLedgerCleanup": {
+        "owner": "cfba51fb-bc34-4470-9f94-71b6aa65ad55",
+        "remainingOwnerContributions": 0,
+        "readThread": "ACTUAL_SERVER_THREAD"
+      },
+      "status": "PASS_ACTUAL_ORDINARY_ARCHITECTURE_ITEM_AND_CREATIVE_ROOT_OR_HELPER_ATTACK",
+      "placementAndAttackPath": "MinecraftClient ordinary use/attack keys; exact actual root/art/UUID and zero residual owner ledger"
+    },
+    {
+      "registry": "bloodborne_dw:prototype_roof",
+      "actualPlacementBlockHit": {
+        "type": "BLOCK",
+        "hitPos": [
+          -63.5,
+          100.0,
+          64.50077857961777
+        ],
+        "blockPos": [
+          -64,
+          99,
+          64
+        ],
+        "side": "up",
+        "insideBlock": false
+      },
+      "serverThreadPlacementObservation": {
+        "registry": "bloodborne_dw:prototype_roof",
+        "state": "Block{bloodborne_dw:prototype_roof}[open\u003dfalse,profile\u003dbase,rotation\u003d0,variant\u003d0]",
+        "air": false,
+        "nativeChunkAvailable": true,
+        "safeChunkAvailable": true,
+        "nativeBlockEntityClass": "dev.dreamwalker.bloodbornedw.composite.CompositeBlockEntity",
+        "nativeResident": "7ab4c30d-1fe7-4e6d-b698-f5320d611466",
+        "safeOwner": "7ab4c30d-1fe7-4e6d-b698-f5320d611466",
+        "readThread": "ACTUAL_SERVER_THREAD"
+      },
+      "clientPlacementObservation": {
+        "registry": "bloodborne_dw:prototype_roof",
+        "state": "Block{bloodborne_dw:prototype_roof}[open\u003dfalse,profile\u003dbase,rotation\u003d0,variant\u003d0]",
+        "nativeChunkAvailable": true,
+        "safeChunkAvailable": true,
+        "nativeBlockEntityClass": "dev.dreamwalker.bloodbornedw.composite.CompositeBlockEntity",
+        "nativeResident": "7ab4c30d-1fe7-4e6d-b698-f5320d611466",
+        "safeOwner": "7ab4c30d-1fe7-4e6d-b698-f5320d611466"
+      },
+      "uuid": "7ab4c30d-1fe7-4e6d-b698-f5320d611466",
+      "serverThreadRemovalObservation": {
+        "registry": "minecraft:air",
+        "state": "Block{minecraft:air}",
+        "air": true,
+        "nativeChunkAvailable": true,
+        "safeChunkAvailable": true,
+        "nativeBlockEntityClass": "NONE",
+        "readThread": "ACTUAL_SERVER_THREAD"
+      },
+      "serverThreadLedgerCleanup": {
+        "owner": "7ab4c30d-1fe7-4e6d-b698-f5320d611466",
+        "remainingOwnerContributions": 0,
+        "readThread": "ACTUAL_SERVER_THREAD"
+      },
+      "status": "PASS_ACTUAL_ORDINARY_ARCHITECTURE_ITEM_AND_CREATIVE_ROOT_OR_HELPER_ATTACK",
+      "placementAndAttackPath": "MinecraftClient ordinary use/attack keys; exact actual root/art/UUID and zero residual owner ledger"
+    },
+    {
+      "registry": "bloodborne_dw:prototype_thin_window",
+      "actualPlacementBlockHit": {
+        "type": "BLOCK",
+        "hitPos": [
+          -63.5,
+          100.0,
+          64.50077857961777
+        ],
+        "blockPos": [
+          -64,
+          99,
+          64
+        ],
+        "side": "up",
+        "insideBlock": false
+      },
+      "serverThreadPlacementObservation": {
+        "registry": "bloodborne_dw:prototype_thin_window",
+        "state": "Block{bloodborne_dw:prototype_thin_window}[mount\u003dfloor,open\u003dfalse,profile\u003dbase,rotation\u003d0,variant\u003d0]",
+        "air": false,
+        "nativeChunkAvailable": true,
+        "safeChunkAvailable": true,
+        "nativeBlockEntityClass": "dev.dreamwalker.bloodbornedw.composite.CompositeBlockEntity",
+        "nativeResident": "16f104a1-ca56-421e-948f-5263931cc297",
+        "safeOwner": "16f104a1-ca56-421e-948f-5263931cc297",
+        "readThread": "ACTUAL_SERVER_THREAD"
+      },
+      "clientPlacementObservation": {
+        "registry": "bloodborne_dw:prototype_thin_window",
+        "state": "Block{bloodborne_dw:prototype_thin_window}[mount\u003dfloor,open\u003dfalse,profile\u003dbase,rotation\u003d0,variant\u003d0]",
+        "nativeChunkAvailable": true,
+        "safeChunkAvailable": true,
+        "nativeBlockEntityClass": "dev.dreamwalker.bloodbornedw.composite.CompositeBlockEntity",
+        "nativeResident": "16f104a1-ca56-421e-948f-5263931cc297",
+        "safeOwner": "16f104a1-ca56-421e-948f-5263931cc297"
+      },
+      "uuid": "16f104a1-ca56-421e-948f-5263931cc297",
+      "serverThreadRemovalObservation": {
+        "registry": "minecraft:air",
+        "state": "Block{minecraft:air}",
+        "air": true,
+        "nativeChunkAvailable": true,
+        "safeChunkAvailable": true,
+        "nativeBlockEntityClass": "NONE",
+        "readThread": "ACTUAL_SERVER_THREAD"
+      },
+      "serverThreadLedgerCleanup": {
+        "owner": "16f104a1-ca56-421e-948f-5263931cc297",
+        "remainingOwnerContributions": 0,
+        "readThread": "ACTUAL_SERVER_THREAD"
+      },
+      "status": "PASS_ACTUAL_ORDINARY_ARCHITECTURE_ITEM_AND_CREATIVE_ROOT_OR_HELPER_ATTACK",
+      "placementAndAttackPath": "MinecraftClient ordinary use/attack keys; exact actual root/art/UUID and zero residual owner ledger"
+    },
+    {
+      "registry": "bloodborne_dw:prototype_tree",
+      "actualPlacementBlockHit": {
+        "type": "BLOCK",
+        "hitPos": [
+          -63.5,
+          100.0,
+          64.50077857961777
+        ],
+        "blockPos": [
+          -64,
+          99,
+          64
+        ],
+        "side": "up",
+        "insideBlock": false
+      },
+      "serverThreadPlacementObservation": {
+        "registry": "bloodborne_dw:prototype_tree",
+        "state": "Block{bloodborne_dw:prototype_tree}[open\u003dfalse,profile\u003dbase,rotation\u003d0,variant\u003d0]",
+        "air": false,
+        "nativeChunkAvailable": true,
+        "safeChunkAvailable": true,
+        "nativeBlockEntityClass": "dev.dreamwalker.bloodbornedw.composite.CompositeBlockEntity",
+        "nativeResident": "e36692be-6626-4e34-a42f-6e023cbb9c95",
+        "safeOwner": "e36692be-6626-4e34-a42f-6e023cbb9c95",
+        "readThread": "ACTUAL_SERVER_THREAD"
+      },
+      "clientPlacementObservation": {
+        "registry": "bloodborne_dw:prototype_tree",
+        "state": "Block{bloodborne_dw:prototype_tree}[open\u003dfalse,profile\u003dbase,rotation\u003d0,variant\u003d0]",
+        "nativeChunkAvailable": true,
+        "safeChunkAvailable": true,
+        "nativeBlockEntityClass": "dev.dreamwalker.bloodbornedw.composite.CompositeBlockEntity",
+        "nativeResident": "e36692be-6626-4e34-a42f-6e023cbb9c95",
+        "safeOwner": "e36692be-6626-4e34-a42f-6e023cbb9c95"
+      },
+      "uuid": "e36692be-6626-4e34-a42f-6e023cbb9c95",
+      "serverThreadRemovalObservation": {
+        "registry": "minecraft:air",
+        "state": "Block{minecraft:air}",
+        "air": true,
+        "nativeChunkAvailable": true,
+        "safeChunkAvailable": true,
+        "nativeBlockEntityClass": "NONE",
+        "readThread": "ACTUAL_SERVER_THREAD"
+      },
+      "serverThreadLedgerCleanup": {
+        "owner": "e36692be-6626-4e34-a42f-6e023cbb9c95",
+        "remainingOwnerContributions": 0,
+        "readThread": "ACTUAL_SERVER_THREAD"
+      },
+      "status": "PASS_ACTUAL_ORDINARY_ARCHITECTURE_ITEM_AND_CREATIVE_ROOT_OR_HELPER_ATTACK",
+      "placementAndAttackPath": "MinecraftClient ordinary use/attack keys; exact actual root/art/UUID and zero residual owner ledger"
+    },
+    {
+      "registry": "bloodborne_dw:prototype_ladder",
+      "actualPlacementBlockHit": {
+        "type": "BLOCK",
+        "hitPos": [
+          -63.5,
+          100.0,
+          64.50077857961777
+        ],
+        "blockPos": [
+          -64,
+          99,
+          64
+        ],
+        "side": "up",
+        "insideBlock": false
+      },
+      "serverThreadPlacementObservation": {
+        "registry": "bloodborne_dw:prototype_ladder",
+        "state": "Block{bloodborne_dw:prototype_ladder}[diagonal\u003dfalse,facing\u003dnorth,freestanding\u003dtrue,profile\u003dbase,source_clone\u003dfalse,variant\u003d0,waterlogged\u003dfalse]",
+        "air": false,
+        "nativeChunkAvailable": true,
+        "safeChunkAvailable": true,
+        "nativeBlockEntityClass": "dev.dreamwalker.bloodbornedw.composite.CompositeBlockEntity",
+        "nativeResident": "c06dc73f-02d3-4a92-b6fb-1b3f885693c3",
+        "safeOwner": "c06dc73f-02d3-4a92-b6fb-1b3f885693c3",
+        "readThread": "ACTUAL_SERVER_THREAD"
+      },
+      "clientPlacementObservation": {
+        "registry": "bloodborne_dw:prototype_ladder",
+        "state": "Block{bloodborne_dw:prototype_ladder}[diagonal\u003dfalse,facing\u003dnorth,freestanding\u003dtrue,profile\u003dbase,source_clone\u003dfalse,variant\u003d0,waterlogged\u003dfalse]",
+        "nativeChunkAvailable": true,
+        "safeChunkAvailable": true,
+        "nativeBlockEntityClass": "dev.dreamwalker.bloodbornedw.composite.CompositeBlockEntity",
+        "nativeResident": "c06dc73f-02d3-4a92-b6fb-1b3f885693c3",
+        "safeOwner": "c06dc73f-02d3-4a92-b6fb-1b3f885693c3"
+      },
+      "uuid": "c06dc73f-02d3-4a92-b6fb-1b3f885693c3",
+      "actualNativeAttackTarget": {
+        "path": "ACTUAL_UNSHIFTED_NATIVE_BLOCK_HIT",
+        "blockHit": {
+          "type": "BLOCK",
+          "hitPos": [
+            -63.5,
+            100.52080011533685,
+            64.824865625
+          ],
+          "blockPos": [
+            -64,
+            100,
+            64
+          ],
+          "side": "north",
+          "insideBlock": false
+        },
+        "residentUuid": "c06dc73f-02d3-4a92-b6fb-1b3f885693c3",
+        "verticalOffset": 0
+      },
+      "serverThreadRemovalObservation": {
+        "registry": "minecraft:air",
+        "state": "Block{minecraft:air}",
+        "air": true,
+        "nativeChunkAvailable": true,
+        "safeChunkAvailable": true,
+        "nativeBlockEntityClass": "NONE",
+        "readThread": "ACTUAL_SERVER_THREAD"
+      },
+      "serverThreadLedgerCleanup": {
+        "owner": "c06dc73f-02d3-4a92-b6fb-1b3f885693c3",
+        "remainingOwnerContributions": 0,
+        "readThread": "ACTUAL_SERVER_THREAD"
+      },
+      "status": "PASS_ACTUAL_ORDINARY_ARCHITECTURE_ITEM_AND_CREATIVE_ROOT_OR_HELPER_ATTACK",
+      "placementAndAttackPath": "MinecraftClient ordinary use/attack keys; exact actual root/art/UUID and zero residual owner ledger"
+    },
+    {
+      "registry": "bloodborne_dw:prototype_wood_window",
+      "actualPlacementBlockHit": {
+        "type": "BLOCK",
+        "hitPos": [
+          -63.5,
+          100.0,
+          64.50077857961777
+        ],
+        "blockPos": [
+          -64,
+          99,
+          64
+        ],
+        "side": "up",
+        "insideBlock": false
+      },
+      "serverThreadPlacementObservation": {
+        "registry": "bloodborne_dw:prototype_wood_window",
+        "state": "Block{bloodborne_dw:prototype_wood_window}[open\u003dfalse,profile\u003dbase,rotation\u003d0,variant\u003d0]",
+        "air": false,
+        "nativeChunkAvailable": true,
+        "safeChunkAvailable": true,
+        "nativeBlockEntityClass": "dev.dreamwalker.bloodbornedw.composite.CompositeBlockEntity",
+        "nativeResident": "32a3a9d3-0061-4ad3-a8c9-23f5f8af2992",
+        "safeOwner": "32a3a9d3-0061-4ad3-a8c9-23f5f8af2992",
+        "readThread": "ACTUAL_SERVER_THREAD"
+      },
+      "clientPlacementObservation": {
+        "registry": "bloodborne_dw:prototype_wood_window",
+        "state": "Block{bloodborne_dw:prototype_wood_window}[open\u003dfalse,profile\u003dbase,rotation\u003d0,variant\u003d0]",
+        "nativeChunkAvailable": true,
+        "safeChunkAvailable": true,
+        "nativeBlockEntityClass": "dev.dreamwalker.bloodbornedw.composite.CompositeBlockEntity",
+        "nativeResident": "32a3a9d3-0061-4ad3-a8c9-23f5f8af2992",
+        "safeOwner": "32a3a9d3-0061-4ad3-a8c9-23f5f8af2992"
+      },
+      "uuid": "32a3a9d3-0061-4ad3-a8c9-23f5f8af2992",
+      "serverThreadRemovalObservation": {
+        "registry": "minecraft:air",
+        "state": "Block{minecraft:air}",
+        "air": true,
+        "nativeChunkAvailable": true,
+        "safeChunkAvailable": true,
+        "nativeBlockEntityClass": "NONE",
+        "readThread": "ACTUAL_SERVER_THREAD"
+      },
+      "serverThreadLedgerCleanup": {
+        "owner": "32a3a9d3-0061-4ad3-a8c9-23f5f8af2992",
+        "remainingOwnerContributions": 0,
+        "readThread": "ACTUAL_SERVER_THREAD"
+      },
+      "status": "PASS_ACTUAL_ORDINARY_ARCHITECTURE_ITEM_AND_CREATIVE_ROOT_OR_HELPER_ATTACK",
+      "placementAndAttackPath": "MinecraftClient ordinary use/attack keys; exact actual root/art/UUID and zero residual owner ledger"
+    },
+    {
+      "registry": "bloodborne_dw:prototype_glass_window_02",
+      "actualPlacementBlockHit": {
+        "type": "BLOCK",
+        "hitPos": [
+          -63.5,
+          100.0,
+          64.50077857961777
+        ],
+        "blockPos": [
+          -64,
+          99,
+          64
+        ],
+        "side": "up",
+        "insideBlock": false
+      },
+      "serverThreadPlacementObservation": {
+        "registry": "bloodborne_dw:prototype_glass_window_02",
+        "state": "Block{bloodborne_dw:prototype_glass_window_02}[mount\u003dfloor,open\u003dfalse,profile\u003dbase,rotation\u003d0,variant\u003d0]",
+        "air": false,
+        "nativeChunkAvailable": true,
+        "safeChunkAvailable": true,
+        "nativeBlockEntityClass": "dev.dreamwalker.bloodbornedw.composite.CompositeBlockEntity",
+        "nativeResident": "cbf56a05-8683-4e97-9d65-757be4924d35",
+        "safeOwner": "cbf56a05-8683-4e97-9d65-757be4924d35",
+        "readThread": "ACTUAL_SERVER_THREAD"
+      },
+      "clientPlacementObservation": {
+        "registry": "bloodborne_dw:prototype_glass_window_02",
+        "state": "Block{bloodborne_dw:prototype_glass_window_02}[mount\u003dfloor,open\u003dfalse,profile\u003dbase,rotation\u003d0,variant\u003d0]",
+        "nativeChunkAvailable": true,
+        "safeChunkAvailable": true,
+        "nativeBlockEntityClass": "dev.dreamwalker.bloodbornedw.composite.CompositeBlockEntity",
+        "nativeResident": "cbf56a05-8683-4e97-9d65-757be4924d35",
+        "safeOwner": "cbf56a05-8683-4e97-9d65-757be4924d35"
+      },
+      "uuid": "cbf56a05-8683-4e97-9d65-757be4924d35",
+      "serverThreadRemovalObservation": {
+        "registry": "minecraft:air",
+        "state": "Block{minecraft:air}",
+        "air": true,
+        "nativeChunkAvailable": true,
+        "safeChunkAvailable": true,
+        "nativeBlockEntityClass": "NONE",
+        "readThread": "ACTUAL_SERVER_THREAD"
+      },
+      "serverThreadLedgerCleanup": {
+        "owner": "cbf56a05-8683-4e97-9d65-757be4924d35",
+        "remainingOwnerContributions": 0,
+        "readThread": "ACTUAL_SERVER_THREAD"
+      },
+      "status": "PASS_ACTUAL_ORDINARY_ARCHITECTURE_ITEM_AND_CREATIVE_ROOT_OR_HELPER_ATTACK",
+      "placementAndAttackPath": "MinecraftClient ordinary use/attack keys; exact actual root/art/UUID and zero residual owner ledger"
+    },
+    {
+      "registry": "bloodborne_dw:prototype_wall_skin_0",
+      "actualPlacementBlockHit": {
+        "type": "BLOCK",
+        "hitPos": [
+          -63.5,
+          100.0,
+          64.50077857961777
+        ],
+        "blockPos": [
+          -64,
+          99,
+          64
+        ],
+        "side": "up",
+        "insideBlock": false
+      },
+      "serverThreadPlacementObservation": {
+        "registry": "bloodborne_dw:prototype_wall_skin_0",
+        "state": "Block{bloodborne_dw:prototype_wall_skin_0}[connections\u003dauto,east\u003dnone,north\u003dnone,profile\u003dbase,rotation\u003d4,south\u003dnone,up\u003dtrue,waterlogged\u003dfalse,west\u003dnone]",
+        "air": false,
+        "nativeChunkAvailable": true,
+        "safeChunkAvailable": true,
+        "nativeBlockEntityClass": "dev.dreamwalker.bloodbornedw.composite.CompositeBlockEntity",
+        "nativeResident": "09ffef4e-5e2c-4476-8a4f-4ad5c59fd13f",
+        "safeOwner": "09ffef4e-5e2c-4476-8a4f-4ad5c59fd13f",
+        "readThread": "ACTUAL_SERVER_THREAD"
+      },
+      "clientPlacementObservation": {
+        "registry": "bloodborne_dw:prototype_wall_skin_0",
+        "state": "Block{bloodborne_dw:prototype_wall_skin_0}[connections\u003dauto,east\u003dnone,north\u003dnone,profile\u003dbase,rotation\u003d4,south\u003dnone,up\u003dtrue,waterlogged\u003dfalse,west\u003dnone]",
+        "nativeChunkAvailable": true,
+        "safeChunkAvailable": true,
+        "nativeBlockEntityClass": "dev.dreamwalker.bloodbornedw.composite.CompositeBlockEntity",
+        "nativeResident": "09ffef4e-5e2c-4476-8a4f-4ad5c59fd13f",
+        "safeOwner": "09ffef4e-5e2c-4476-8a4f-4ad5c59fd13f"
+      },
+      "uuid": "09ffef4e-5e2c-4476-8a4f-4ad5c59fd13f",
+      "actualNativeAttackTarget": {
+        "path": "ACTUAL_UNSHIFTED_NATIVE_BLOCK_HIT",
+        "blockHit": {
+          "type": "BLOCK",
+          "hitPos": [
+            -63.5,
+            100.57022643305008,
+            64.25
+          ],
+          "blockPos": [
+            -64,
+            100,
+            64
+          ],
+          "side": "north",
+          "insideBlock": false
+        },
+        "residentUuid": "09ffef4e-5e2c-4476-8a4f-4ad5c59fd13f",
+        "verticalOffset": 0
+      },
+      "serverThreadRemovalObservation": {
+        "registry": "minecraft:air",
+        "state": "Block{minecraft:air}",
+        "air": true,
+        "nativeChunkAvailable": true,
+        "safeChunkAvailable": true,
+        "nativeBlockEntityClass": "NONE",
+        "readThread": "ACTUAL_SERVER_THREAD"
+      },
+      "serverThreadLedgerCleanup": {
+        "owner": "09ffef4e-5e2c-4476-8a4f-4ad5c59fd13f",
+        "remainingOwnerContributions": 0,
+        "readThread": "ACTUAL_SERVER_THREAD"
+      },
+      "status": "PASS_ACTUAL_ORDINARY_ARCHITECTURE_ITEM_AND_CREATIVE_ROOT_OR_HELPER_ATTACK",
+      "placementAndAttackPath": "MinecraftClient ordinary use/attack keys; exact actual root/art/UUID and zero residual owner ledger"
+    },
+    {
+      "registry": "bloodborne_dw:prototype_wall_skin_1",
+      "actualPlacementBlockHit": {
+        "type": "BLOCK",
+        "hitPos": [
+          -63.5,
+          100.0,
+          64.50077857961777
+        ],
+        "blockPos": [
+          -64,
+          99,
+          64
+        ],
+        "side": "up",
+        "insideBlock": false
+      },
+      "serverThreadPlacementObservation": {
+        "registry": "bloodborne_dw:prototype_wall_skin_1",
+        "state": "Block{bloodborne_dw:prototype_wall_skin_1}[connections\u003dauto,east\u003dnone,north\u003dnone,profile\u003dbase,rotation\u003d4,south\u003dnone,up\u003dtrue,waterlogged\u003dfalse,west\u003dnone]",
+        "air": false,
+        "nativeChunkAvailable": true,
+        "safeChunkAvailable": true,
+        "nativeBlockEntityClass": "dev.dreamwalker.bloodbornedw.composite.CompositeBlockEntity",
+        "nativeResident": "f105653f-c2d7-4cc1-bfb8-644d634a2589",
+        "safeOwner": "f105653f-c2d7-4cc1-bfb8-644d634a2589",
+        "readThread": "ACTUAL_SERVER_THREAD"
+      },
+      "clientPlacementObservation": {
+        "registry": "bloodborne_dw:prototype_wall_skin_1",
+        "state": "Block{bloodborne_dw:prototype_wall_skin_1}[connections\u003dauto,east\u003dnone,north\u003dnone,profile\u003dbase,rotation\u003d4,south\u003dnone,up\u003dtrue,waterlogged\u003dfalse,west\u003dnone]",
+        "nativeChunkAvailable": true,
+        "safeChunkAvailable": true,
+        "nativeBlockEntityClass": "dev.dreamwalker.bloodbornedw.composite.CompositeBlockEntity",
+        "nativeResident": "f105653f-c2d7-4cc1-bfb8-644d634a2589",
+        "safeOwner": "f105653f-c2d7-4cc1-bfb8-644d634a2589"
+      },
+      "uuid": "f105653f-c2d7-4cc1-bfb8-644d634a2589",
+      "actualNativeAttackTarget": {
+        "path": "ACTUAL_UNSHIFTED_NATIVE_BLOCK_HIT",
+        "blockHit": {
+          "type": "BLOCK",
+          "hitPos": [
+            -63.5,
+            100.57022643305008,
+            64.25
+          ],
+          "blockPos": [
+            -64,
+            100,
+            64
+          ],
+          "side": "north",
+          "insideBlock": false
+        },
+        "residentUuid": "f105653f-c2d7-4cc1-bfb8-644d634a2589",
+        "verticalOffset": 0
+      },
+      "serverThreadRemovalObservation": {
+        "registry": "minecraft:air",
+        "state": "Block{minecraft:air}",
+        "air": true,
+        "nativeChunkAvailable": true,
+        "safeChunkAvailable": true,
+        "nativeBlockEntityClass": "NONE",
+        "readThread": "ACTUAL_SERVER_THREAD"
+      },
+      "serverThreadLedgerCleanup": {
+        "owner": "f105653f-c2d7-4cc1-bfb8-644d634a2589",
+        "remainingOwnerContributions": 0,
+        "readThread": "ACTUAL_SERVER_THREAD"
+      },
+      "status": "PASS_ACTUAL_ORDINARY_ARCHITECTURE_ITEM_AND_CREATIVE_ROOT_OR_HELPER_ATTACK",
+      "placementAndAttackPath": "MinecraftClient ordinary use/attack keys; exact actual root/art/UUID and zero residual owner ledger"
+    },
+    {
+      "registry": "bloodborne_dw:prototype_wall_skin_2",
+      "actualPlacementBlockHit": {
+        "type": "BLOCK",
+        "hitPos": [
+          -63.5,
+          100.0,
+          64.50077857961777
+        ],
+        "blockPos": [
+          -64,
+          99,
+          64
+        ],
+        "side": "up",
+        "insideBlock": false
+      },
+      "serverThreadPlacementObservation": {
+        "registry": "bloodborne_dw:prototype_wall_skin_2",
+        "state": "Block{bloodborne_dw:prototype_wall_skin_2}[connections\u003dauto,east\u003dnone,north\u003dnone,profile\u003dbase,rotation\u003d4,south\u003dnone,up\u003dtrue,waterlogged\u003dfalse,west\u003dnone]",
+        "air": false,
+        "nativeChunkAvailable": true,
+        "safeChunkAvailable": true,
+        "nativeBlockEntityClass": "dev.dreamwalker.bloodbornedw.composite.CompositeBlockEntity",
+        "nativeResident": "b48626e1-db4a-4a78-8177-fb4a5eae8c60",
+        "safeOwner": "b48626e1-db4a-4a78-8177-fb4a5eae8c60",
+        "readThread": "ACTUAL_SERVER_THREAD"
+      },
+      "clientPlacementObservation": {
+        "registry": "bloodborne_dw:prototype_wall_skin_2",
+        "state": "Block{bloodborne_dw:prototype_wall_skin_2}[connections\u003dauto,east\u003dnone,north\u003dnone,profile\u003dbase,rotation\u003d4,south\u003dnone,up\u003dtrue,waterlogged\u003dfalse,west\u003dnone]",
+        "nativeChunkAvailable": true,
+        "safeChunkAvailable": true,
+        "nativeBlockEntityClass": "dev.dreamwalker.bloodbornedw.composite.CompositeBlockEntity",
+        "nativeResident": "b48626e1-db4a-4a78-8177-fb4a5eae8c60",
+        "safeOwner": "b48626e1-db4a-4a78-8177-fb4a5eae8c60"
+      },
+      "uuid": "b48626e1-db4a-4a78-8177-fb4a5eae8c60",
+      "actualNativeAttackTarget": {
+        "path": "ACTUAL_UNSHIFTED_NATIVE_BLOCK_HIT",
+        "blockHit": {
+          "type": "BLOCK",
+          "hitPos": [
+            -63.5,
+            100.57022643305008,
+            64.25
+          ],
+          "blockPos": [
+            -64,
+            100,
+            64
+          ],
+          "side": "north",
+          "insideBlock": false
+        },
+        "residentUuid": "b48626e1-db4a-4a78-8177-fb4a5eae8c60",
+        "verticalOffset": 0
+      },
+      "serverThreadRemovalObservation": {
+        "registry": "minecraft:air",
+        "state": "Block{minecraft:air}",
+        "air": true,
+        "nativeChunkAvailable": true,
+        "safeChunkAvailable": true,
+        "nativeBlockEntityClass": "NONE",
+        "readThread": "ACTUAL_SERVER_THREAD"
+      },
+      "serverThreadLedgerCleanup": {
+        "owner": "b48626e1-db4a-4a78-8177-fb4a5eae8c60",
+        "remainingOwnerContributions": 0,
+        "readThread": "ACTUAL_SERVER_THREAD"
+      },
+      "status": "PASS_ACTUAL_ORDINARY_ARCHITECTURE_ITEM_AND_CREATIVE_ROOT_OR_HELPER_ATTACK",
+      "placementAndAttackPath": "MinecraftClient ordinary use/attack keys; exact actual root/art/UUID and zero residual owner ledger"
+    },
+    {
+      "registry": "bloodborne_dw:prototype_wall_skin_3",
+      "actualPlacementBlockHit": {
+        "type": "BLOCK",
+        "hitPos": [
+          -63.5,
+          100.0,
+          64.50077857961777
+        ],
+        "blockPos": [
+          -64,
+          99,
+          64
+        ],
+        "side": "up",
+        "insideBlock": false
+      },
+      "serverThreadPlacementObservation": {
+        "registry": "bloodborne_dw:prototype_wall_skin_3",
+        "state": "Block{bloodborne_dw:prototype_wall_skin_3}[connections\u003dauto,east\u003dnone,north\u003dnone,profile\u003dbase,rotation\u003d4,south\u003dnone,up\u003dtrue,waterlogged\u003dfalse,west\u003dnone]",
+        "air": false,
+        "nativeChunkAvailable": true,
+        "safeChunkAvailable": true,
+        "nativeBlockEntityClass": "dev.dreamwalker.bloodbornedw.composite.CompositeBlockEntity",
+        "nativeResident": "93bafc7f-1a64-4957-af59-61f61e10633b",
+        "safeOwner": "93bafc7f-1a64-4957-af59-61f61e10633b",
+        "readThread": "ACTUAL_SERVER_THREAD"
+      },
+      "clientPlacementObservation": {
+        "registry": "bloodborne_dw:prototype_wall_skin_3",
+        "state": "Block{bloodborne_dw:prototype_wall_skin_3}[connections\u003dauto,east\u003dnone,north\u003dnone,profile\u003dbase,rotation\u003d4,south\u003dnone,up\u003dtrue,waterlogged\u003dfalse,west\u003dnone]",
+        "nativeChunkAvailable": true,
+        "safeChunkAvailable": true,
+        "nativeBlockEntityClass": "dev.dreamwalker.bloodbornedw.composite.CompositeBlockEntity",
+        "nativeResident": "93bafc7f-1a64-4957-af59-61f61e10633b",
+        "safeOwner": "93bafc7f-1a64-4957-af59-61f61e10633b"
+      },
+      "uuid": "93bafc7f-1a64-4957-af59-61f61e10633b",
+      "actualNativeAttackTarget": {
+        "path": "ACTUAL_UNSHIFTED_NATIVE_BLOCK_HIT",
+        "blockHit": {
+          "type": "BLOCK",
+          "hitPos": [
+            -63.5,
+            100.57022643305008,
+            64.25
+          ],
+          "blockPos": [
+            -64,
+            100,
+            64
+          ],
+          "side": "north",
+          "insideBlock": false
+        },
+        "residentUuid": "93bafc7f-1a64-4957-af59-61f61e10633b",
+        "verticalOffset": 0
+      },
+      "serverThreadRemovalObservation": {
+        "registry": "minecraft:air",
+        "state": "Block{minecraft:air}",
+        "air": true,
+        "nativeChunkAvailable": true,
+        "safeChunkAvailable": true,
+        "nativeBlockEntityClass": "NONE",
+        "readThread": "ACTUAL_SERVER_THREAD"
+      },
+      "serverThreadLedgerCleanup": {
+        "owner": "93bafc7f-1a64-4957-af59-61f61e10633b",
+        "remainingOwnerContributions": 0,
+        "readThread": "ACTUAL_SERVER_THREAD"
+      },
+      "status": "PASS_ACTUAL_ORDINARY_ARCHITECTURE_ITEM_AND_CREATIVE_ROOT_OR_HELPER_ATTACK",
+      "placementAndAttackPath": "MinecraftClient ordinary use/attack keys; exact actual root/art/UUID and zero residual owner ledger"
+    },
+    {
+      "registry": "bloodborne_dw:prototype_wall_skin_4",
+      "actualPlacementBlockHit": {
+        "type": "BLOCK",
+        "hitPos": [
+          -63.5,
+          100.0,
+          64.50077857961777
+        ],
+        "blockPos": [
+          -64,
+          99,
+          64
+        ],
+        "side": "up",
+        "insideBlock": false
+      },
+      "serverThreadPlacementObservation": {
+        "registry": "bloodborne_dw:prototype_wall_skin_4",
+        "state": "Block{bloodborne_dw:prototype_wall_skin_4}[connections\u003dauto,east\u003dnone,north\u003dnone,profile\u003dbase,rotation\u003d4,south\u003dnone,up\u003dtrue,waterlogged\u003dfalse,west\u003dnone]",
+        "air": false,
+        "nativeChunkAvailable": true,
+        "safeChunkAvailable": true,
+        "nativeBlockEntityClass": "dev.dreamwalker.bloodbornedw.composite.CompositeBlockEntity",
+        "nativeResident": "2f16dab3-5900-4f2d-8f5c-82d9198ceda5",
+        "safeOwner": "2f16dab3-5900-4f2d-8f5c-82d9198ceda5",
+        "readThread": "ACTUAL_SERVER_THREAD"
+      },
+      "clientPlacementObservation": {
+        "registry": "bloodborne_dw:prototype_wall_skin_4",
+        "state": "Block{bloodborne_dw:prototype_wall_skin_4}[connections\u003dauto,east\u003dnone,north\u003dnone,profile\u003dbase,rotation\u003d4,south\u003dnone,up\u003dtrue,waterlogged\u003dfalse,west\u003dnone]",
+        "nativeChunkAvailable": true,
+        "safeChunkAvailable": true,
+        "nativeBlockEntityClass": "dev.dreamwalker.bloodbornedw.composite.CompositeBlockEntity",
+        "nativeResident": "2f16dab3-5900-4f2d-8f5c-82d9198ceda5",
+        "safeOwner": "2f16dab3-5900-4f2d-8f5c-82d9198ceda5"
+      },
+      "uuid": "2f16dab3-5900-4f2d-8f5c-82d9198ceda5",
+      "actualNativeAttackTarget": {
+        "path": "ACTUAL_UNSHIFTED_NATIVE_BLOCK_HIT",
+        "blockHit": {
+          "type": "BLOCK",
+          "hitPos": [
+            -63.5,
+            100.57022643305008,
+            64.25
+          ],
+          "blockPos": [
+            -64,
+            100,
+            64
+          ],
+          "side": "north",
+          "insideBlock": false
+        },
+        "residentUuid": "2f16dab3-5900-4f2d-8f5c-82d9198ceda5",
+        "verticalOffset": 0
+      },
+      "serverThreadRemovalObservation": {
+        "registry": "minecraft:air",
+        "state": "Block{minecraft:air}",
+        "air": true,
+        "nativeChunkAvailable": true,
+        "safeChunkAvailable": true,
+        "nativeBlockEntityClass": "NONE",
+        "readThread": "ACTUAL_SERVER_THREAD"
+      },
+      "serverThreadLedgerCleanup": {
+        "owner": "2f16dab3-5900-4f2d-8f5c-82d9198ceda5",
+        "remainingOwnerContributions": 0,
+        "readThread": "ACTUAL_SERVER_THREAD"
+      },
+      "status": "PASS_ACTUAL_ORDINARY_ARCHITECTURE_ITEM_AND_CREATIVE_ROOT_OR_HELPER_ATTACK",
+      "placementAndAttackPath": "MinecraftClient ordinary use/attack keys; exact actual root/art/UUID and zero residual owner ledger"
+    },
+    {
+      "registry": "bloodborne_dw:prototype_wall_skin_5",
+      "actualPlacementBlockHit": {
+        "type": "BLOCK",
+        "hitPos": [
+          -63.5,
+          100.0,
+          64.50077857961777
+        ],
+        "blockPos": [
+          -64,
+          99,
+          64
+        ],
+        "side": "up",
+        "insideBlock": false
+      },
+      "serverThreadPlacementObservation": {
+        "registry": "bloodborne_dw:prototype_wall_skin_5",
+        "state": "Block{bloodborne_dw:prototype_wall_skin_5}[connections\u003dauto,east\u003dnone,north\u003dnone,profile\u003dbase,rotation\u003d4,south\u003dnone,up\u003dtrue,waterlogged\u003dfalse,west\u003dnone]",
+        "air": false,
+        "nativeChunkAvailable": true,
+        "safeChunkAvailable": true,
+        "nativeBlockEntityClass": "dev.dreamwalker.bloodbornedw.composite.CompositeBlockEntity",
+        "nativeResident": "51528cd5-3285-464a-9043-a9de1e59a31e",
+        "safeOwner": "51528cd5-3285-464a-9043-a9de1e59a31e",
+        "readThread": "ACTUAL_SERVER_THREAD"
+      },
+      "clientPlacementObservation": {
+        "registry": "bloodborne_dw:prototype_wall_skin_5",
+        "state": "Block{bloodborne_dw:prototype_wall_skin_5}[connections\u003dauto,east\u003dnone,north\u003dnone,profile\u003dbase,rotation\u003d4,south\u003dnone,up\u003dtrue,waterlogged\u003dfalse,west\u003dnone]",
+        "nativeChunkAvailable": true,
+        "safeChunkAvailable": true,
+        "nativeBlockEntityClass": "dev.dreamwalker.bloodbornedw.composite.CompositeBlockEntity",
+        "nativeResident": "51528cd5-3285-464a-9043-a9de1e59a31e",
+        "safeOwner": "51528cd5-3285-464a-9043-a9de1e59a31e"
+      },
+      "uuid": "51528cd5-3285-464a-9043-a9de1e59a31e",
+      "actualNativeAttackTarget": {
+        "path": "ACTUAL_UNSHIFTED_NATIVE_BLOCK_HIT",
+        "blockHit": {
+          "type": "BLOCK",
+          "hitPos": [
+            -63.5,
+            100.57022643305008,
+            64.25
+          ],
+          "blockPos": [
+            -64,
+            100,
+            64
+          ],
+          "side": "north",
+          "insideBlock": false
+        },
+        "residentUuid": "51528cd5-3285-464a-9043-a9de1e59a31e",
+        "verticalOffset": 0
+      },
+      "serverThreadRemovalObservation": {
+        "registry": "minecraft:air",
+        "state": "Block{minecraft:air}",
+        "air": true,
+        "nativeChunkAvailable": true,
+        "safeChunkAvailable": true,
+        "nativeBlockEntityClass": "NONE",
+        "readThread": "ACTUAL_SERVER_THREAD"
+      },
+      "serverThreadLedgerCleanup": {
+        "owner": "51528cd5-3285-464a-9043-a9de1e59a31e",
+        "remainingOwnerContributions": 0,
+        "readThread": "ACTUAL_SERVER_THREAD"
+      },
+      "status": "PASS_ACTUAL_ORDINARY_ARCHITECTURE_ITEM_AND_CREATIVE_ROOT_OR_HELPER_ATTACK",
+      "placementAndAttackPath": "MinecraftClient ordinary use/attack keys; exact actual root/art/UUID and zero residual owner ledger"
+    },
+    {
+      "registry": "bloodborne_dw:prototype_wall_skin_7",
+      "actualPlacementBlockHit": {
+        "type": "BLOCK",
+        "hitPos": [
+          -63.5,
+          100.0,
+          64.50077857961777
+        ],
+        "blockPos": [
+          -64,
+          99,
+          64
+        ],
+        "side": "up",
+        "insideBlock": false
+      },
+      "serverThreadPlacementObservation": {
+        "registry": "bloodborne_dw:prototype_wall_skin_7",
+        "state": "Block{bloodborne_dw:prototype_wall_skin_7}[connections\u003dauto,east\u003dnone,north\u003dnone,profile\u003dbase,rotation\u003d4,south\u003dnone,up\u003dtrue,waterlogged\u003dfalse,west\u003dnone]",
+        "air": false,
+        "nativeChunkAvailable": true,
+        "safeChunkAvailable": true,
+        "nativeBlockEntityClass": "dev.dreamwalker.bloodbornedw.composite.CompositeBlockEntity",
+        "nativeResident": "829f31d6-6750-4b63-840a-3c83bdb7c3eb",
+        "safeOwner": "829f31d6-6750-4b63-840a-3c83bdb7c3eb",
+        "readThread": "ACTUAL_SERVER_THREAD"
+      },
+      "clientPlacementObservation": {
+        "registry": "bloodborne_dw:prototype_wall_skin_7",
+        "state": "Block{bloodborne_dw:prototype_wall_skin_7}[connections\u003dauto,east\u003dnone,north\u003dnone,profile\u003dbase,rotation\u003d4,south\u003dnone,up\u003dtrue,waterlogged\u003dfalse,west\u003dnone]",
+        "nativeChunkAvailable": true,
+        "safeChunkAvailable": true,
+        "nativeBlockEntityClass": "dev.dreamwalker.bloodbornedw.composite.CompositeBlockEntity",
+        "nativeResident": "829f31d6-6750-4b63-840a-3c83bdb7c3eb",
+        "safeOwner": "829f31d6-6750-4b63-840a-3c83bdb7c3eb"
+      },
+      "uuid": "829f31d6-6750-4b63-840a-3c83bdb7c3eb",
+      "actualNativeAttackTarget": {
+        "path": "ACTUAL_UNSHIFTED_NATIVE_BLOCK_HIT",
+        "blockHit": {
+          "type": "BLOCK",
+          "hitPos": [
+            -63.5,
+            100.57022643305008,
+            64.25
+          ],
+          "blockPos": [
+            -64,
+            100,
+            64
+          ],
+          "side": "north",
+          "insideBlock": false
+        },
+        "residentUuid": "829f31d6-6750-4b63-840a-3c83bdb7c3eb",
+        "verticalOffset": 0
+      },
+      "serverThreadRemovalObservation": {
+        "registry": "minecraft:air",
+        "state": "Block{minecraft:air}",
+        "air": true,
+        "nativeChunkAvailable": true,
+        "safeChunkAvailable": true,
+        "nativeBlockEntityClass": "NONE",
+        "readThread": "ACTUAL_SERVER_THREAD"
+      },
+      "serverThreadLedgerCleanup": {
+        "owner": "829f31d6-6750-4b63-840a-3c83bdb7c3eb",
+        "remainingOwnerContributions": 0,
+        "readThread": "ACTUAL_SERVER_THREAD"
+      },
+      "status": "PASS_ACTUAL_ORDINARY_ARCHITECTURE_ITEM_AND_CREATIVE_ROOT_OR_HELPER_ATTACK",
+      "placementAndAttackPath": "MinecraftClient ordinary use/attack keys; exact actual root/art/UUID and zero residual owner ledger"
+    },
+    {
+      "registry": "bloodborne_dw:prototype_ladder_art_1",
+      "actualPlacementBlockHit": {
+        "type": "BLOCK",
+        "hitPos": [
+          -63.5,
+          100.0,
+          64.50077857961777
+        ],
+        "blockPos": [
+          -64,
+          99,
+          64
+        ],
+        "side": "up",
+        "insideBlock": false
+      },
+      "serverThreadPlacementObservation": {
+        "registry": "bloodborne_dw:prototype_ladder_art_1",
+        "state": "Block{bloodborne_dw:prototype_ladder_art_1}[diagonal\u003dfalse,facing\u003dnorth,freestanding\u003dtrue,profile\u003dbase,source_clone\u003dfalse,variant\u003d1,waterlogged\u003dfalse]",
+        "air": false,
+        "nativeChunkAvailable": true,
+        "safeChunkAvailable": true,
+        "nativeBlockEntityClass": "dev.dreamwalker.bloodbornedw.composite.CompositeBlockEntity",
+        "nativeResident": "792f9c01-ac4b-46b1-b8a6-728a14498ae7",
+        "safeOwner": "792f9c01-ac4b-46b1-b8a6-728a14498ae7",
+        "readThread": "ACTUAL_SERVER_THREAD"
+      },
+      "clientPlacementObservation": {
+        "registry": "bloodborne_dw:prototype_ladder_art_1",
+        "state": "Block{bloodborne_dw:prototype_ladder_art_1}[diagonal\u003dfalse,facing\u003dnorth,freestanding\u003dtrue,profile\u003dbase,source_clone\u003dfalse,variant\u003d1,waterlogged\u003dfalse]",
+        "nativeChunkAvailable": true,
+        "safeChunkAvailable": true,
+        "nativeBlockEntityClass": "dev.dreamwalker.bloodbornedw.composite.CompositeBlockEntity",
+        "nativeResident": "792f9c01-ac4b-46b1-b8a6-728a14498ae7",
+        "safeOwner": "792f9c01-ac4b-46b1-b8a6-728a14498ae7"
+      },
+      "uuid": "792f9c01-ac4b-46b1-b8a6-728a14498ae7",
+      "actualNativeAttackTarget": {
+        "path": "ACTUAL_UNSHIFTED_NATIVE_BLOCK_HIT",
+        "blockHit": {
+          "type": "BLOCK",
+          "hitPos": [
+            -63.5,
+            100.52080011533685,
+            64.824865625
+          ],
+          "blockPos": [
+            -64,
+            100,
+            64
+          ],
+          "side": "north",
+          "insideBlock": false
+        },
+        "residentUuid": "792f9c01-ac4b-46b1-b8a6-728a14498ae7",
+        "verticalOffset": 0
+      },
+      "serverThreadRemovalObservation": {
+        "registry": "minecraft:air",
+        "state": "Block{minecraft:air}",
+        "air": true,
+        "nativeChunkAvailable": true,
+        "safeChunkAvailable": true,
+        "nativeBlockEntityClass": "NONE",
+        "readThread": "ACTUAL_SERVER_THREAD"
+      },
+      "serverThreadLedgerCleanup": {
+        "owner": "792f9c01-ac4b-46b1-b8a6-728a14498ae7",
+        "remainingOwnerContributions": 0,
+        "readThread": "ACTUAL_SERVER_THREAD"
+      },
+      "status": "PASS_ACTUAL_ORDINARY_ARCHITECTURE_ITEM_AND_CREATIVE_ROOT_OR_HELPER_ATTACK",
+      "placementAndAttackPath": "MinecraftClient ordinary use/attack keys; exact actual root/art/UUID and zero residual owner ledger"
+    },
+    {
+      "registry": "bloodborne_dw:prototype_ladder_art_2",
+      "actualPlacementBlockHit": {
+        "type": "BLOCK",
+        "hitPos": [
+          -63.5,
+          100.0,
+          64.50077857961777
+        ],
+        "blockPos": [
+          -64,
+          99,
+          64
+        ],
+        "side": "up",
+        "insideBlock": false
+      },
+      "serverThreadPlacementObservation": {
+        "registry": "bloodborne_dw:prototype_ladder_art_2",
+        "state": "Block{bloodborne_dw:prototype_ladder_art_2}[diagonal\u003dfalse,facing\u003dnorth,freestanding\u003dtrue,profile\u003dbase,source_clone\u003dfalse,variant\u003d2,waterlogged\u003dfalse]",
+        "air": false,
+        "nativeChunkAvailable": true,
+        "safeChunkAvailable": true,
+        "nativeBlockEntityClass": "dev.dreamwalker.bloodbornedw.composite.CompositeBlockEntity",
+        "nativeResident": "e4720712-4d41-4c82-bb1d-bbfc527e1e55",
+        "safeOwner": "e4720712-4d41-4c82-bb1d-bbfc527e1e55",
+        "readThread": "ACTUAL_SERVER_THREAD"
+      },
+      "clientPlacementObservation": {
+        "registry": "bloodborne_dw:prototype_ladder_art_2",
+        "state": "Block{bloodborne_dw:prototype_ladder_art_2}[diagonal\u003dfalse,facing\u003dnorth,freestanding\u003dtrue,profile\u003dbase,source_clone\u003dfalse,variant\u003d2,waterlogged\u003dfalse]",
+        "nativeChunkAvailable": true,
+        "safeChunkAvailable": true,
+        "nativeBlockEntityClass": "dev.dreamwalker.bloodbornedw.composite.CompositeBlockEntity",
+        "nativeResident": "e4720712-4d41-4c82-bb1d-bbfc527e1e55",
+        "safeOwner": "e4720712-4d41-4c82-bb1d-bbfc527e1e55"
+      },
+      "uuid": "e4720712-4d41-4c82-bb1d-bbfc527e1e55",
+      "actualNativeAttackTarget": {
+        "path": "ACTUAL_UNSHIFTED_NATIVE_BLOCK_HIT",
+        "blockHit": {
+          "type": "BLOCK",
+          "hitPos": [
+            -63.5,
+            100.52080011533685,
+            64.824865625
+          ],
+          "blockPos": [
+            -64,
+            100,
+            64
+          ],
+          "side": "north",
+          "insideBlock": false
+        },
+        "residentUuid": "e4720712-4d41-4c82-bb1d-bbfc527e1e55",
+        "verticalOffset": 0
+      },
+      "serverThreadRemovalObservation": {
+        "registry": "minecraft:air",
+        "state": "Block{minecraft:air}",
+        "air": true,
+        "nativeChunkAvailable": true,
+        "safeChunkAvailable": true,
+        "nativeBlockEntityClass": "NONE",
+        "readThread": "ACTUAL_SERVER_THREAD"
+      },
+      "serverThreadLedgerCleanup": {
+        "owner": "e4720712-4d41-4c82-bb1d-bbfc527e1e55",
+        "remainingOwnerContributions": 0,
+        "readThread": "ACTUAL_SERVER_THREAD"
+      },
+      "status": "PASS_ACTUAL_ORDINARY_ARCHITECTURE_ITEM_AND_CREATIVE_ROOT_OR_HELPER_ATTACK",
+      "placementAndAttackPath": "MinecraftClient ordinary use/attack keys; exact actual root/art/UUID and zero residual owner ledger"
+    },
+    {
+      "registry": "bloodborne_dw:prototype_glass_window_03",
+      "actualPlacementBlockHit": {
+        "type": "BLOCK",
+        "hitPos": [
+          -63.5,
+          100.0,
+          64.50077857961777
+        ],
+        "blockPos": [
+          -64,
+          99,
+          64
+        ],
+        "side": "up",
+        "insideBlock": false
+      },
+      "serverThreadPlacementObservation": {
+        "registry": "bloodborne_dw:prototype_glass_window_03",
+        "state": "Block{bloodborne_dw:prototype_glass_window_03}[mount\u003dfloor,open\u003dfalse,profile\u003dbase,rotation\u003d0,variant\u003d0]",
+        "air": false,
+        "nativeChunkAvailable": true,
+        "safeChunkAvailable": true,
+        "nativeBlockEntityClass": "dev.dreamwalker.bloodbornedw.composite.CompositeBlockEntity",
+        "nativeResident": "295ada3d-b2cc-4d0b-879d-fcea082986d2",
+        "safeOwner": "295ada3d-b2cc-4d0b-879d-fcea082986d2",
+        "readThread": "ACTUAL_SERVER_THREAD"
+      },
+      "clientPlacementObservation": {
+        "registry": "bloodborne_dw:prototype_glass_window_03",
+        "state": "Block{bloodborne_dw:prototype_glass_window_03}[mount\u003dfloor,open\u003dfalse,profile\u003dbase,rotation\u003d0,variant\u003d0]",
+        "nativeChunkAvailable": true,
+        "safeChunkAvailable": true,
+        "nativeBlockEntityClass": "dev.dreamwalker.bloodbornedw.composite.CompositeBlockEntity",
+        "nativeResident": "295ada3d-b2cc-4d0b-879d-fcea082986d2",
+        "safeOwner": "295ada3d-b2cc-4d0b-879d-fcea082986d2"
+      },
+      "uuid": "295ada3d-b2cc-4d0b-879d-fcea082986d2",
+      "serverThreadRemovalObservation": {
+        "registry": "minecraft:air",
+        "state": "Block{minecraft:air}",
+        "air": true,
+        "nativeChunkAvailable": true,
+        "safeChunkAvailable": true,
+        "nativeBlockEntityClass": "NONE",
+        "readThread": "ACTUAL_SERVER_THREAD"
+      },
+      "serverThreadLedgerCleanup": {
+        "owner": "295ada3d-b2cc-4d0b-879d-fcea082986d2",
+        "remainingOwnerContributions": 0,
+        "readThread": "ACTUAL_SERVER_THREAD"
+      },
+      "status": "PASS_ACTUAL_ORDINARY_ARCHITECTURE_ITEM_AND_CREATIVE_ROOT_OR_HELPER_ATTACK",
+      "placementAndAttackPath": "MinecraftClient ordinary use/attack keys; exact actual root/art/UUID and zero residual owner ledger"
+    }
+  ],
+  "productionArtifactOrigins": [
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-v10-client-min-attempt9\\mods\\dreamwalker-bb-fabric-1.20.1-0.1.0-prototype.5.jar",
+      "sha256": "521337222c6f75b31a094c4944963c4103c514985d5696d55187f31dc4b17ca5"
+    }
+  ],
+  "productionJarSha256": "521337222c6f75b31a094c4944963c4103c514985d5696d55187f31dc4b17ca5",
+  "firstEntryCreative": true,
+  "firstEntryGameMode": "creative",
+  "firstEntryOperator4": true,
+  "menusActual": {
+    "schema": "dw-review-v10-actual-client-menus-v1",
+    "status": "PASS_ACTUAL_CLIENT_MENUS_PACKETS_RULES_COMMANDS",
+    "mode": "AUTHOR",
+    "artifactSha256": "521337222c6f75b31a094c4944963c4103c514985d5696d55187f31dc4b17ca5",
+    "manualVisualAcceptance": "NOT_RUN",
+    "directMutationEndpointsUsedAsGuiProof": false,
+    "scope": "Automated actual Screen.mouseClicked/charTyped/keyPressed, mouse input and ordinary interactionManager packets; not human acceptance",
+    "steps": [
+      {
+        "name": "prepare fixture position lamp_A",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "aim at exact authored selection lamp_A",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "ordinary item packet opens BuilderScreen for lamp_A",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "actual tab click Фонари",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "type own lamp name QA A",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "save own lamp name QA A",
+        "status": "PASS",
+        "clientTicks": 5
+      },
+      {
+        "name": "server-returned own lamp name QA A",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "close renamed lamp tool",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "prepare fixture position lamp_B",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "aim at exact authored selection lamp_B",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "ordinary item packet opens BuilderScreen for lamp_B",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "actual tab click Фонари",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "type own lamp name QA B",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "save own lamp name QA B",
+        "status": "PASS",
+        "clientTicks": 5
+      },
+      {
+        "name": "server-returned own lamp name QA B",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "close renamed lamp tool",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "prepare fixture position lamp_C",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "aim at exact authored selection lamp_C",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "ordinary item packet opens BuilderScreen for lamp_C",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "actual tab click Фонари",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "type own lamp name QA C",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "save own lamp name QA C",
+        "status": "PASS",
+        "clientTicks": 5
+      },
+      {
+        "name": "server-returned own lamp name QA C",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "close renamed lamp tool",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "prepare fixture position lamp_B",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "aim at exact authored selection lamp_B",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "ordinary item packet opens BuilderScreen for lamp_B",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "actual tab click Объект",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "actual GUI types lamp B instance offset",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "actual GUI applies lamp B offset",
+        "status": "PASS",
+        "clientTicks": 5
+      },
+      {
+        "name": "network node follows same shifted lamp UUID",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "render current actual menu before screenshot v10-tool-objects.png",
+        "status": "PASS",
+        "clientTicks": 5
+      },
+      {
+        "name": "native framebuffer screenshot v10-tool-objects.png",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "close shifted lamp B form",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "prepare fixture position lamp_A",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "aim at exact authored selection lamp_A",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "ordinary item packet opens BuilderScreen for lamp_A",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "actual tab click Фонари",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "choose source action in actual menu",
+        "status": "PASS",
+        "clientTicks": 5
+      },
+      {
+        "name": "Esc closes tool without removing selected action",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "actual mouse press executes selected tool action on lamp_A",
+        "status": "PASS",
+        "clientTicks": 9
+      },
+      {
+        "name": "prepare fixture position lamp_B",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "aim at exact authored selection lamp_B",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "ordinary item packet opens BuilderScreen for lamp_B",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "actual tab click Фонари",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "type explicit line QA Main",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "save default bidirectional parameters",
+        "status": "PASS",
+        "clientTicks": 5
+      },
+      {
+        "name": "choose destination action",
+        "status": "PASS",
+        "clientTicks": 5
+      },
+      {
+        "name": "Esc closes tool before destination click",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "actual mouse press executes selected tool action on lamp_B",
+        "status": "PASS",
+        "clientTicks": 9
+      },
+      {
+        "name": "prepare fixture position lamp_C",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "aim at exact authored selection lamp_C",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "ordinary item packet opens BuilderScreen for lamp_C",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "actual tab click Фонари",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "type explicit line QA Main",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "save default bidirectional parameters",
+        "status": "PASS",
+        "clientTicks": 5
+      },
+      {
+        "name": "choose destination action",
+        "status": "PASS",
+        "clientTicks": 5
+      },
+      {
+        "name": "Esc closes tool before destination click",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "actual mouse press executes selected tool action on lamp_C",
+        "status": "PASS",
+        "clientTicks": 9
+      },
+      {
+        "name": "prepare fixture position lamp_D",
+        "status": "PASS",
+        "clientTicks": 10
+      },
+      {
+        "name": "aim at exact authored selection lamp_D",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "ordinary item packet opens BuilderScreen for lamp_D",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "actual tab click Фонари",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "type own lamp name QA D",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "save own lamp name QA D",
+        "status": "PASS",
+        "clientTicks": 5
+      },
+      {
+        "name": "server-returned own lamp name QA D",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "close renamed lamp tool",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "prepare fixture position lamp_D",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "aim at exact authored selection lamp_D",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "ordinary item packet opens BuilderScreen for lamp_D",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "actual tab click Фонари",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "type explicit line QA Main",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "save default bidirectional parameters",
+        "status": "PASS",
+        "clientTicks": 5
+      },
+      {
+        "name": "choose destination action",
+        "status": "PASS",
+        "clientTicks": 5
+      },
+      {
+        "name": "Esc closes tool before destination click",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "actual mouse press executes selected tool action on lamp_D",
+        "status": "PASS",
+        "clientTicks": 9
+      },
+      {
+        "name": "prepare fixture position lamp_A",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "aim at exact authored selection lamp_A",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "ordinary exact lamp click lamp_A",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "lamp screen is non-pausing lamp_A",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "A lists explicitly authored B and C once",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "render current actual menu before screenshot v10-lamp-destinations.png",
+        "status": "PASS",
+        "clientTicks": 5
+      },
+      {
+        "name": "native framebuffer screenshot v10-lamp-destinations.png",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "actual B destination widget sends travel",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "after first travel re-aim exact B",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "B ordinary menu opens during real cooldown",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "cooldown proceeds while menu does not pause",
+        "status": "PASS",
+        "clientTicks": 92
+      },
+      {
+        "name": "actual A destination widget returns B→A",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "prepare fixture position lamp_A",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "aim at exact authored selection lamp_A",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "ordinary exact lamp click lamp_A",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "lamp screen is non-pausing lamp_A",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "record position before Esc",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "lamp Esc sends cancellation, no teleport",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "Esc retained exact position",
+        "status": "PASS",
+        "clientTicks": 12
+      },
+      {
+        "name": "prepare fixture position lamp_A",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "aim at exact authored selection lamp_A",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "ordinary item packet opens BuilderScreen for lamp_A",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "actual tab click Фонари",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "render current actual menu before screenshot v10-tool-lamps.png",
+        "status": "PASS",
+        "clientTicks": 5
+      },
+      {
+        "name": "native framebuffer screenshot v10-tool-lamps.png",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "select Main line for direction edit",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "choose one-way parameter",
+        "status": "PASS",
+        "clientTicks": 5
+      },
+      {
+        "name": "actual chosen A→B connection direction widget",
+        "status": "PASS",
+        "clientTicks": 6
+      },
+      {
+        "name": "close one-way edit",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "prepare fixture position lamp_B",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "aim at exact authored selection lamp_B",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "ordinary exact lamp click lamp_B",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "lamp screen is non-pausing lamp_B",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "one-way A→B does not invent B→A",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "close empty B menu",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "prepare fixture position lamp_A",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "aim at exact authored selection lamp_A",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "ordinary item packet opens BuilderScreen for lamp_A",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "actual tab click Фонари",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "type own lamp name QA A renamed",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "save own lamp name QA A renamed",
+        "status": "PASS",
+        "clientTicks": 5
+      },
+      {
+        "name": "server-returned own lamp name QA A renamed",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "close renamed lamp tool",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "prepare fixture position lamp_C",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "aim at exact authored selection lamp_C",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "ordinary exact lamp click lamp_C",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "lamp screen is non-pausing lamp_C",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "C sees renamed destination only once",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "close renamed C menu",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "prepare fixture position lamp_A",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "aim at exact authored selection lamp_A",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "ordinary item packet opens BuilderScreen for lamp_A",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "actual tab click Фонари",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "unlink only explicit A→C chosen direction",
+        "status": "PASS",
+        "clientTicks": 6
+      },
+      {
+        "name": "close selected direction unlink",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "prepare fixture position lamp_A",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "aim at exact authored selection lamp_A",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "ordinary exact lamp click lamp_A",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "lamp screen is non-pausing lamp_A",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "other A→B route remains after selected unlink",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "close remaining route menu",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "prepare fixture position lever_1",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "aim at exact authored selection lever_1",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "ordinary item packet opens BuilderScreen for lever_1",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "actual tab click Рычаги",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "type ALL rule name",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "create rule through actual widget",
+        "status": "PASS",
+        "clientTicks": 5
+      },
+      {
+        "name": "actual server rule response",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "capture server rule UUID only for readback",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "select source tool action",
+        "status": "PASS",
+        "clientTicks": 5
+      },
+      {
+        "name": "close source selection form",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "actual mouse press executes selected tool action on lever_1",
+        "status": "PASS",
+        "clientTicks": 9
+      },
+      {
+        "name": "prepare fixture position lever_2",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "aim at exact authored selection lever_2",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "actual mouse press executes selected tool action on lever_2",
+        "status": "PASS",
+        "clientTicks": 9
+      },
+      {
+        "name": "prepare fixture position lever_3",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "aim at exact authored selection lever_3",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "actual mouse press executes selected tool action on lever_3",
+        "status": "PASS",
+        "clientTicks": 9
+      },
+      {
+        "name": "prepare fixture position architecture_door",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "aim at exact authored selection architecture_door",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "ordinary item packet opens BuilderScreen for architecture_door",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "actual tab click Рычаги",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "select target tool action",
+        "status": "PASS",
+        "clientTicks": 5
+      },
+      {
+        "name": "close target form",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "actual mouse press executes selected tool action on architecture_door",
+        "status": "PASS",
+        "clientTicks": 9
+      },
+      {
+        "name": "prepare fixture position rp_door",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "aim at exact authored selection rp_door",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "actual mouse press executes selected tool action on rp_door",
+        "status": "PASS",
+        "clientTicks": 9
+      },
+      {
+        "name": "prepare fixture position wood_gate",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "aim at exact authored selection wood_gate",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "actual mouse press executes selected tool action on wood_gate",
+        "status": "PASS",
+        "clientTicks": 9
+      },
+      {
+        "name": "prepare fixture position architecture_door",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "aim at exact authored selection architecture_door",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "ordinary item packet opens BuilderScreen for architecture_door",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "actual tab click Рычаги",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "choose ALL logical condition",
+        "status": "PASS",
+        "clientTicks": 5
+      },
+      {
+        "name": "apply ALL configuration without firing",
+        "status": "PASS",
+        "clientTicks": 5
+      },
+      {
+        "name": "ALL3 starts0/3 and configuration does not open",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "actual tab click Объект",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "choose levers-only manual policy",
+        "status": "PASS",
+        "clientTicks": 5
+      },
+      {
+        "name": "apply manual policy through widget",
+        "status": "PASS",
+        "clientTicks": 5
+      },
+      {
+        "name": "levers-only policy is returned by server",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "actual tab click События",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "type harmless after-open command",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "add ordered after-open command draft",
+        "status": "PASS",
+        "clientTicks": 5
+      },
+      {
+        "name": "save after-open command list",
+        "status": "PASS",
+        "clientTicks": 5
+      },
+      {
+        "name": "select after-close list",
+        "status": "PASS",
+        "clientTicks": 5
+      },
+      {
+        "name": "type harmless after-close command",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "add ordered after-close draft",
+        "status": "PASS",
+        "clientTicks": 5
+      },
+      {
+        "name": "save after-close command list",
+        "status": "PASS",
+        "clientTicks": 5
+      },
+      {
+        "name": "read initial harmless command counter",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "close event editor without transition",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "prepare fixture position architecture_door",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "aim at exact authored selection architecture_door",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "ordinary manual door packet is refused by levers-only policy",
+        "status": "PASS",
+        "clientTicks": 12
+      },
+      {
+        "name": "prepare fixture position lever_1",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "aim at exact authored selection lever_1",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "ordinary original delayed lever activation 1",
+        "status": "PASS",
+        "clientTicks": 8
+      },
+      {
+        "name": "original70tick logical activation 1",
+        "status": "PASS",
+        "clientTicks": 63
+      },
+      {
+        "name": "ALL not yet satisfied after 1",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "prepare fixture position lever_2",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "aim at exact authored selection lever_2",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "ordinary original delayed lever activation 2",
+        "status": "PASS",
+        "clientTicks": 8
+      },
+      {
+        "name": "original70tick logical activation 2",
+        "status": "PASS",
+        "clientTicks": 63
+      },
+      {
+        "name": "ALL not yet satisfied after 2",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "prepare fixture position lever_3",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "aim at exact authored selection lever_3",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "ordinary original delayed lever activation 3",
+        "status": "PASS",
+        "clientTicks": 8
+      },
+      {
+        "name": "original70tick logical activation 3",
+        "status": "PASS",
+        "clientTicks": 63
+      },
+      {
+        "name": "ALL3 actual opens stable targets and pulses mixed gate",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "gate returns to authored idle, event command does not repeat",
+        "status": "PASS",
+        "clientTicks": 45
+      },
+      {
+        "name": "prepare fixture position lever_1",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "aim at exact authored selection lever_1",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "same original lever second activation",
+        "status": "PASS",
+        "clientTicks": 8
+      },
+      {
+        "name": "one flag removed produces actual close, not toggle-open",
+        "status": "PASS",
+        "clientTicks": 64
+      },
+      {
+        "name": "prepare fixture position architecture_door",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "aim at exact authored selection architecture_door",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "ordinary item packet opens BuilderScreen for architecture_door",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "actual tab click Рычаги",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "GUI reports2/3 shared source flags",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "render current actual menu before screenshot v10-tool-rules-all.png",
+        "status": "PASS",
+        "clientTicks": 5
+      },
+      {
+        "name": "native framebuffer screenshot v10-tool-rules-all.png",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "request reset confirmation",
+        "status": "PASS",
+        "clientTicks": 5
+      },
+      {
+        "name": "explicit reset real confirmation",
+        "status": "PASS",
+        "clientTicks": 5
+      },
+      {
+        "name": "reset shows0/3 without ANY event or duplicate close command",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "close reset rule form",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "prepare fixture position lamp_C",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "aim at exact authored selection lamp_C",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "ordinary creative attack intentionally destroys lamp C",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "prepare fixture position lever_3",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "aim at exact authored selection lever_3",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "ordinary creative attack destroys mandatory source",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "prepare fixture position architecture_door",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "aim at exact authored selection architecture_door",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "ordinary item packet opens BuilderScreen for architecture_door",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "actual tab click Рычаги",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "select saved ALL rule through actual list",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "removed ALL source marks rule incomplete",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "finish tool with saved incomplete rule",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "actual integrated save after GUI edits",
+        "status": "PASS",
+        "clientTicks": 3
+      },
+      {
+        "name": "read-only structured saved instance/policy state persistedStateAfter",
+        "status": "PASS",
+        "clientTicks": 3
+      }
+    ],
+    "gestures": [
+      {
+        "kind": "ordinary_interact_item",
+        "detail": "lamp_A",
+        "clientTick": 7
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Фонари",
+        "clientTick": 10
+      },
+      {
+        "kind": "screen_keyboard_text",
+        "detail": "QA A",
+        "clientTick": 13
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Применить имя выбранного фонаря",
+        "clientTick": 16
+      },
+      {
+        "kind": "screen_esc",
+        "detail": "close renamed lamp tool",
+        "clientTick": 24
+      },
+      {
+        "kind": "ordinary_interact_item",
+        "detail": "lamp_B",
+        "clientTick": 33
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Фонари",
+        "clientTick": 36
+      },
+      {
+        "kind": "screen_keyboard_text",
+        "detail": "QA B",
+        "clientTick": 39
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Применить имя выбранного фонаря",
+        "clientTick": 42
+      },
+      {
+        "kind": "screen_esc",
+        "detail": "close renamed lamp tool",
+        "clientTick": 50
+      },
+      {
+        "kind": "ordinary_interact_item",
+        "detail": "lamp_C",
+        "clientTick": 59
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Фонари",
+        "clientTick": 62
+      },
+      {
+        "kind": "screen_keyboard_text",
+        "detail": "QA C",
+        "clientTick": 65
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Применить имя выбранного фонаря",
+        "clientTick": 68
+      },
+      {
+        "kind": "screen_esc",
+        "detail": "close renamed lamp tool",
+        "clientTick": 76
+      },
+      {
+        "kind": "ordinary_interact_item",
+        "detail": "lamp_B",
+        "clientTick": 85
+      },
+      {
+        "kind": "screen_tab_already_selected",
+        "detail": "Объект",
+        "clientTick": 88
+      },
+      {
+        "kind": "screen_keyboard_text",
+        "detail": "0.125",
+        "clientTick": 91
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Применить высоту",
+        "clientTick": 94
+      },
+      {
+        "kind": "screen_esc",
+        "detail": "close shifted lamp B form",
+        "clientTick": 110
+      },
+      {
+        "kind": "ordinary_interact_item",
+        "detail": "lamp_A",
+        "clientTick": 119
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Фонари",
+        "clientTick": 122
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "выбрать исходный фонарь",
+        "clientTick": 125
+      },
+      {
+        "kind": "screen_esc",
+        "detail": "Esc closes tool without removing selected action",
+        "clientTick": 130
+      },
+      {
+        "kind": "ordinary_mouse_attack_key",
+        "detail": "lamp_A",
+        "clientTick": 133
+      },
+      {
+        "kind": "READ_ONLY_ORDINARY_TOOL_CONSEQUENCE",
+        "fixture": "lamp_A",
+        "expectedUuid": "dc9c153d-4e92-45d8-9bde-d5f91f510ff8",
+        "expectedAction": "LAMP_SOURCE",
+        "actualServerHeldAction": "LAMP_SOURCE",
+        "actualSelectedLampUuid": "dc9c153d-4e92-45d8-9bde-d5f91f510ff8",
+        "consequenceVerified": true,
+        "scope": "Read-only consequence after actual mouse/ordinary production packet; no member/link/target mutation API"
+      },
+      {
+        "kind": "ordinary_interact_item",
+        "detail": "lamp_B",
+        "clientTick": 148
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Фонари",
+        "clientTick": 151
+      },
+      {
+        "kind": "screen_keyboard_text",
+        "detail": "QA Main",
+        "clientTick": 154
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Применить параметры назначения",
+        "clientTick": 157
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "добавить фонарь назначения",
+        "clientTick": 162
+      },
+      {
+        "kind": "screen_esc",
+        "detail": "Esc closes tool before destination click",
+        "clientTick": 167
+      },
+      {
+        "kind": "ordinary_mouse_attack_key",
+        "detail": "lamp_B",
+        "clientTick": 170
+      },
+      {
+        "kind": "READ_ONLY_ORDINARY_TOOL_CONSEQUENCE",
+        "fixture": "lamp_B",
+        "expectedUuid": "8e2cad5e-eddf-4846-a74d-ca4551aae0b6",
+        "expectedAction": "LAMP_TARGET",
+        "actualServerHeldAction": "LAMP_TARGET",
+        "actualSelectedLampUuid": "dc9c153d-4e92-45d8-9bde-d5f91f510ff8",
+        "line": "QA Main",
+        "actualConnectionDefaultBidirectional": true,
+        "consequenceVerified": true,
+        "scope": "Read-only consequence after actual mouse/ordinary production packet; no member/link/target mutation API"
+      },
+      {
+        "kind": "ordinary_interact_item",
+        "detail": "lamp_C",
+        "clientTick": 185
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Фонари",
+        "clientTick": 188
+      },
+      {
+        "kind": "screen_keyboard_text",
+        "detail": "QA Main",
+        "clientTick": 191
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Применить параметры назначения",
+        "clientTick": 194
+      },
+      {
+        "kind": "ALREADY_SELECTED_SERVER_ACTION",
+        "detail": "LAMP_TARGET",
+        "clientTick": 199
+      },
+      {
+        "kind": "screen_esc",
+        "detail": "Esc closes tool before destination click",
+        "clientTick": 204
+      },
+      {
+        "kind": "ordinary_mouse_attack_key",
+        "detail": "lamp_C",
+        "clientTick": 207
+      },
+      {
+        "kind": "READ_ONLY_ORDINARY_TOOL_CONSEQUENCE",
+        "fixture": "lamp_C",
+        "expectedUuid": "bb768afc-fe10-4a70-a1ba-8084f0b4f8ca",
+        "expectedAction": "LAMP_TARGET",
+        "actualServerHeldAction": "LAMP_TARGET",
+        "actualSelectedLampUuid": "dc9c153d-4e92-45d8-9bde-d5f91f510ff8",
+        "line": "QA Main",
+        "actualConnectionDefaultBidirectional": true,
+        "consequenceVerified": true,
+        "scope": "Read-only consequence after actual mouse/ordinary production packet; no member/link/target mutation API"
+      },
+      {
+        "kind": "ordinary_interact_item",
+        "detail": "lamp_D",
+        "clientTick": 229
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Фонари",
+        "clientTick": 232
+      },
+      {
+        "kind": "screen_keyboard_text",
+        "detail": "QA D",
+        "clientTick": 235
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Применить имя выбранного фонаря",
+        "clientTick": 238
+      },
+      {
+        "kind": "screen_esc",
+        "detail": "close renamed lamp tool",
+        "clientTick": 246
+      },
+      {
+        "kind": "ordinary_interact_item",
+        "detail": "lamp_D",
+        "clientTick": 255
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Фонари",
+        "clientTick": 258
+      },
+      {
+        "kind": "screen_keyboard_text",
+        "detail": "QA Main",
+        "clientTick": 261
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Применить параметры назначения",
+        "clientTick": 264
+      },
+      {
+        "kind": "ALREADY_SELECTED_SERVER_ACTION",
+        "detail": "LAMP_TARGET",
+        "clientTick": 269
+      },
+      {
+        "kind": "screen_esc",
+        "detail": "Esc closes tool before destination click",
+        "clientTick": 274
+      },
+      {
+        "kind": "ordinary_mouse_attack_key",
+        "detail": "lamp_D",
+        "clientTick": 277
+      },
+      {
+        "kind": "READ_ONLY_ORDINARY_TOOL_CONSEQUENCE",
+        "fixture": "lamp_D",
+        "expectedUuid": "51651109-2bd4-4905-bb82-90bb6572f768",
+        "expectedAction": "LAMP_TARGET",
+        "actualServerHeldAction": "LAMP_TARGET",
+        "actualSelectedLampUuid": "dc9c153d-4e92-45d8-9bde-d5f91f510ff8",
+        "line": "QA Main",
+        "actualConnectionDefaultBidirectional": true,
+        "consequenceVerified": true,
+        "scope": "Read-only consequence after actual mouse/ordinary production packet; no member/link/target mutation API"
+      },
+      {
+        "kind": "ordinary_entity_interact_packet",
+        "detail": "lamp_A:SUCCESS",
+        "clientTick": 292
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "QA B",
+        "clientTick": 309
+      },
+      {
+        "kind": "ordinary_entity_interact_packet",
+        "detail": "lamp_B:SUCCESS",
+        "clientTick": 315
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "QA A",
+        "clientTick": 410
+      },
+      {
+        "kind": "ordinary_entity_interact_packet",
+        "detail": "lamp_A:SUCCESS",
+        "clientTick": 419
+      },
+      {
+        "kind": "screen_esc",
+        "detail": "lamp Esc sends cancellation, no teleport",
+        "clientTick": 428
+      },
+      {
+        "kind": "ordinary_interact_item",
+        "detail": "lamp_A",
+        "clientTick": 449
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Фонари",
+        "clientTick": 452
+      },
+      {
+        "kind": "screen_keyboard_text",
+        "detail": "QA Main",
+        "clientTick": 463
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Направление: В обе стороны",
+        "clientTick": 466
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Направление → QA B",
+        "clientTick": 471
+      },
+      {
+        "kind": "screen_esc",
+        "detail": "close one-way edit",
+        "clientTick": 477
+      },
+      {
+        "kind": "ordinary_entity_interact_packet",
+        "detail": "lamp_B:SUCCESS",
+        "clientTick": 486
+      },
+      {
+        "kind": "screen_esc",
+        "detail": "close empty B menu",
+        "clientTick": 495
+      },
+      {
+        "kind": "ordinary_interact_item",
+        "detail": "lamp_A",
+        "clientTick": 504
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Фонари",
+        "clientTick": 507
+      },
+      {
+        "kind": "screen_keyboard_text",
+        "detail": "QA A renamed",
+        "clientTick": 510
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Применить имя выбранного фонаря",
+        "clientTick": 513
+      },
+      {
+        "kind": "screen_esc",
+        "detail": "close renamed lamp tool",
+        "clientTick": 521
+      },
+      {
+        "kind": "ordinary_entity_interact_packet",
+        "detail": "lamp_C:SUCCESS",
+        "clientTick": 530
+      },
+      {
+        "kind": "screen_esc",
+        "detail": "close renamed C menu",
+        "clientTick": 539
+      },
+      {
+        "kind": "ordinary_interact_item",
+        "detail": "lamp_A",
+        "clientTick": 548
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Фонари",
+        "clientTick": 551
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Разорвать → QA C",
+        "clientTick": 554
+      },
+      {
+        "kind": "screen_esc",
+        "detail": "close selected direction unlink",
+        "clientTick": 560
+      },
+      {
+        "kind": "ordinary_entity_interact_packet",
+        "detail": "lamp_A:SUCCESS",
+        "clientTick": 569
+      },
+      {
+        "kind": "screen_esc",
+        "detail": "close remaining route menu",
+        "clientTick": 578
+      },
+      {
+        "kind": "ordinary_interact_item",
+        "detail": "lever_1",
+        "clientTick": 587
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Рычаги",
+        "clientTick": 590
+      },
+      {
+        "kind": "screen_keyboard_text",
+        "detail": "QA All",
+        "clientTick": 593
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Создать правило (Любой, открывать/закрывать)",
+        "clientTick": 596
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "выбрать источники",
+        "clientTick": 607
+      },
+      {
+        "kind": "screen_esc",
+        "detail": "close source selection form",
+        "clientTick": 612
+      },
+      {
+        "kind": "ordinary_mouse_attack_key",
+        "detail": "lever_1",
+        "clientTick": 615
+      },
+      {
+        "kind": "READ_ONLY_ORDINARY_TOOL_CONSEQUENCE",
+        "fixture": "lever_1",
+        "expectedUuid": "cca17ff6-5e81-40ca-9c5a-32220c7e5837",
+        "expectedAction": "RULE_SOURCE",
+        "actualServerHeldAction": "RULE_SOURCE",
+        "ruleUuid": "a0b87706-1c30-42c5-add3-e36729c87c90",
+        "actualMemberUuid": "cca17ff6-5e81-40ca-9c5a-32220c7e5837",
+        "sourceCount": 1,
+        "targetCount": 0,
+        "consequenceVerified": true,
+        "scope": "Read-only consequence after actual mouse/ordinary production packet; no member/link/target mutation API"
+      },
+      {
+        "kind": "ordinary_mouse_attack_key",
+        "detail": "lever_2",
+        "clientTick": 630
+      },
+      {
+        "kind": "READ_ONLY_ORDINARY_TOOL_CONSEQUENCE",
+        "fixture": "lever_2",
+        "expectedUuid": "51f8e0cb-a880-4e95-b641-e5265f37b489",
+        "expectedAction": "RULE_SOURCE",
+        "actualServerHeldAction": "RULE_SOURCE",
+        "ruleUuid": "a0b87706-1c30-42c5-add3-e36729c87c90",
+        "actualMemberUuid": "51f8e0cb-a880-4e95-b641-e5265f37b489",
+        "sourceCount": 2,
+        "targetCount": 0,
+        "consequenceVerified": true,
+        "scope": "Read-only consequence after actual mouse/ordinary production packet; no member/link/target mutation API"
+      },
+      {
+        "kind": "ordinary_mouse_attack_key",
+        "detail": "lever_3",
+        "clientTick": 645
+      },
+      {
+        "kind": "READ_ONLY_ORDINARY_TOOL_CONSEQUENCE",
+        "fixture": "lever_3",
+        "expectedUuid": "69bc97b7-c64a-4dc7-9c81-7cfdaddb176f",
+        "expectedAction": "RULE_SOURCE",
+        "actualServerHeldAction": "RULE_SOURCE",
+        "ruleUuid": "a0b87706-1c30-42c5-add3-e36729c87c90",
+        "actualMemberUuid": "69bc97b7-c64a-4dc7-9c81-7cfdaddb176f",
+        "sourceCount": 3,
+        "targetCount": 0,
+        "consequenceVerified": true,
+        "scope": "Read-only consequence after actual mouse/ordinary production packet; no member/link/target mutation API"
+      },
+      {
+        "kind": "ordinary_interact_item",
+        "detail": "architecture_door",
+        "clientTick": 660
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Рычаги",
+        "clientTick": 663
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "добавить цели",
+        "clientTick": 666
+      },
+      {
+        "kind": "screen_esc",
+        "detail": "close target form",
+        "clientTick": 671
+      },
+      {
+        "kind": "ordinary_mouse_attack_key",
+        "detail": "architecture_door",
+        "clientTick": 674
+      },
+      {
+        "kind": "READ_ONLY_ORDINARY_TOOL_CONSEQUENCE",
+        "fixture": "architecture_door",
+        "expectedUuid": "cfd181dd-a915-45d6-93f7-d5c51b3ba2f3",
+        "expectedAction": "RULE_TARGET",
+        "actualServerHeldAction": "RULE_TARGET",
+        "ruleUuid": "a0b87706-1c30-42c5-add3-e36729c87c90",
+        "actualMemberUuid": "cfd181dd-a915-45d6-93f7-d5c51b3ba2f3",
+        "sourceCount": 3,
+        "targetCount": 1,
+        "consequenceVerified": true,
+        "scope": "Read-only consequence after actual mouse/ordinary production packet; no member/link/target mutation API"
+      },
+      {
+        "kind": "ordinary_mouse_attack_key",
+        "detail": "rp_door",
+        "clientTick": 689
+      },
+      {
+        "kind": "READ_ONLY_ORDINARY_TOOL_CONSEQUENCE",
+        "fixture": "rp_door",
+        "expectedUuid": "975aa8de-997c-449e-b1a2-be0e41098d6d",
+        "expectedAction": "RULE_TARGET",
+        "actualServerHeldAction": "RULE_TARGET",
+        "ruleUuid": "a0b87706-1c30-42c5-add3-e36729c87c90",
+        "actualMemberUuid": "975aa8de-997c-449e-b1a2-be0e41098d6d",
+        "sourceCount": 3,
+        "targetCount": 2,
+        "consequenceVerified": true,
+        "scope": "Read-only consequence after actual mouse/ordinary production packet; no member/link/target mutation API"
+      },
+      {
+        "kind": "ordinary_mouse_attack_key",
+        "detail": "wood_gate",
+        "clientTick": 704
+      },
+      {
+        "kind": "READ_ONLY_ORDINARY_TOOL_CONSEQUENCE",
+        "fixture": "wood_gate",
+        "expectedUuid": "ff4f5cc3-0530-4a9e-b0ee-c32266f93188",
+        "expectedAction": "RULE_TARGET",
+        "actualServerHeldAction": "RULE_TARGET",
+        "ruleUuid": "a0b87706-1c30-42c5-add3-e36729c87c90",
+        "actualMemberUuid": "ff4f5cc3-0530-4a9e-b0ee-c32266f93188",
+        "sourceCount": 3,
+        "targetCount": 3,
+        "consequenceVerified": true,
+        "scope": "Read-only consequence after actual mouse/ordinary production packet; no member/link/target mutation API"
+      },
+      {
+        "kind": "ordinary_interact_item",
+        "detail": "architecture_door",
+        "clientTick": 719
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Рычаги",
+        "clientTick": 722
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Условие: Любой",
+        "clientTick": 725
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Применить правило",
+        "clientTick": 730
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Объект",
+        "clientTick": 738
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Управление: Рукой и рычагами",
+        "clientTick": 741
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Применить управление",
+        "clientTick": 746
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "События",
+        "clientTick": 754
+      },
+      {
+        "kind": "screen_keyboard_text",
+        "detail": "scoreboard players add event_counter dw_v10_gui 1",
+        "clientTick": 757
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Добавить команду",
+        "clientTick": 760
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Сохранить список команд",
+        "clientTick": 765
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "После открытия",
+        "clientTick": 770
+      },
+      {
+        "kind": "screen_keyboard_text",
+        "detail": "scoreboard players add event_counter dw_v10_gui 1",
+        "clientTick": 775
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Добавить команду",
+        "clientTick": 778
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Сохранить список команд",
+        "clientTick": 783
+      },
+      {
+        "kind": "screen_esc",
+        "detail": "close event editor without transition",
+        "clientTick": 791
+      },
+      {
+        "kind": "ordinary_block_interact_packet",
+        "detail": "SUCCESS",
+        "clientTick": 800
+      },
+      {
+        "kind": "ordinary_entity_interact_packet",
+        "detail": "lever_1:SUCCESS",
+        "clientTick": 818
+      },
+      {
+        "kind": "ordinary_entity_interact_packet",
+        "detail": "lever_2:SUCCESS",
+        "clientTick": 898
+      },
+      {
+        "kind": "ordinary_entity_interact_packet",
+        "detail": "lever_3:SUCCESS",
+        "clientTick": 978
+      },
+      {
+        "kind": "ordinary_entity_interact_packet",
+        "detail": "lever_1:SUCCESS",
+        "clientTick": 1103
+      },
+      {
+        "kind": "ordinary_interact_item",
+        "detail": "architecture_door",
+        "clientTick": 1181
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Рычаги",
+        "clientTick": 1184
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Сброс / удаление: показать подтверждение",
+        "clientTick": 1198
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Подтвердить сброс",
+        "clientTick": 1203
+      },
+      {
+        "kind": "screen_esc",
+        "detail": "close reset rule form",
+        "clientTick": 1211
+      },
+      {
+        "kind": "ordinary_creative_attack_entity_packet",
+        "detail": "lamp_C",
+        "clientTick": 1220
+      },
+      {
+        "kind": "ordinary_creative_attack_entity_packet",
+        "detail": "lever_3",
+        "clientTick": 1229
+      },
+      {
+        "kind": "ordinary_interact_item",
+        "detail": "architecture_door",
+        "clientTick": 1238
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "Рычаги",
+        "clientTick": 1241
+      },
+      {
+        "kind": "screen_mouse_clicked",
+        "detail": "№1 · QA All · Все",
+        "clientTick": 1244
+      },
+      {
+        "kind": "screen_esc",
+        "detail": "finish tool with saved incomplete rule",
+        "clientTick": 1250
+      }
+    ],
+    "screenshots": [
+      {
+        "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-v10-client-min-attempt9\\screenshots\\v10-tool-objects.png",
+        "screenClass": "dev.dreamwalker.bloodbornedw.tool.BuilderScreen",
+        "width": 1280,
+        "height": 720,
+        "manualAcceptance": "NOT_RUN"
+      },
+      {
+        "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-v10-client-min-attempt9\\screenshots\\v10-lamp-destinations.png",
+        "screenClass": "dev.dreamwalker.bloodbornerp.client.lamp.LampClient$LampScreen",
+        "width": 1280,
+        "height": 720,
+        "manualAcceptance": "NOT_RUN"
+      },
+      {
+        "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-v10-client-min-attempt9\\screenshots\\v10-tool-lamps.png",
+        "screenClass": "dev.dreamwalker.bloodbornedw.tool.BuilderScreen",
+        "width": 1280,
+        "height": 720,
+        "manualAcceptance": "NOT_RUN"
+      },
+      {
+        "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-v10-client-min-attempt9\\screenshots\\v10-tool-rules-all.png",
+        "screenClass": "dev.dreamwalker.bloodbornedw.tool.BuilderScreen",
+        "width": 1280,
+        "height": 720,
+        "manualAcceptance": "NOT_RUN"
+      }
+    ],
+    "actualWindowWidth": 1280,
+    "actualWindowHeight": 720,
+    "menusGuiScale": 1,
+    "sourceWorld": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-v10-client-min-attempt9\\saves\\prototype-fixture\\.",
+    "intentionalRemovedFixtures": "lamp_C,lever_3",
+    "ordinaryClientReentryActual": "NOT_RUN_UNTIL_DISTINCT_REENTER_MARKER",
+    "savedRemoteDestinationReloadActual": "PENDING_DISTINCT_REENTER_GUI_RUN",
+    "lastFixtureReadiness": {
+      "fixture": "architecture_door",
+      "expectedUuid": "cfd181dd-a915-45d6-93f7-d5c51b3ba2f3",
+      "clientChunkLoaded": true,
+      "exactClientIdentityLoaded": true,
+      "actualSelectionBindingAvailable": true,
+      "waitClientTicks": 3,
+      "scope": "Read-only actual client chunk/entity/owner/selection state after ordinary server teleport; no spawn, ticket or object mutation"
+    },
+    "lastActualToolActionReadback": {
+      "kind": "READ_ONLY_ORDINARY_TOOL_CONSEQUENCE",
+      "fixture": "wood_gate",
+      "expectedUuid": "ff4f5cc3-0530-4a9e-b0ee-c32266f93188",
+      "expectedAction": "RULE_TARGET",
+      "actualServerHeldAction": "RULE_TARGET",
+      "ruleUuid": "a0b87706-1c30-42c5-add3-e36729c87c90",
+      "actualMemberUuid": "ff4f5cc3-0530-4a9e-b0ee-c32266f93188",
+      "sourceCount": 3,
+      "targetCount": 3,
+      "consequenceVerified": true,
+      "scope": "Read-only consequence after actual mouse/ordinary production packet; no member/link/target mutation API"
+    },
+    "persistedStateAfter": {
+      "schema": "dw-v10-menus-persisted-state-v1",
+      "state": {
+        "scope": "Bounded known fixture semantic persistent state; read-only, no object setters or full-world NBT. Transient loaded availability, player, cooldown and ticket state excluded.",
+        "rule": {
+          "uuid": "a0b87706-1c30-42c5-add3-e36729c87c90",
+          "name": "QA All",
+          "order": 1,
+          "condition": "ALL",
+          "effect": "TOGGLE",
+          "incomplete": true,
+          "satisfied": false,
+          "sources": [
+            {
+              "kind": "RP",
+              "dimension": "minecraft:overworld",
+              "uuid": "cca17ff6-5e81-40ca-9c5a-32220c7e5837",
+              "root": [
+                -32,
+                64,
+                -16
+              ],
+              "registry": "lever_1",
+              "savedActive": false
+            },
+            {
+              "kind": "RP",
+              "dimension": "minecraft:overworld",
+              "uuid": "51f8e0cb-a880-4e95-b641-e5265f37b489",
+              "root": [
+                -24,
+                64,
+                -16
+              ],
+              "registry": "lever_2",
+              "savedActive": false
+            }
+          ],
+          "targets": [
+            {
+              "kind": "ARCHITECTURE",
+              "dimension": "minecraft:overworld",
+              "uuid": "cfd181dd-a915-45d6-93f7-d5c51b3ba2f3",
+              "root": [
+                -8,
+                64,
+                -16
+              ],
+              "registry": "bloodborne_dw:prototype_double_door"
+            },
+            {
+              "kind": "RP",
+              "dimension": "minecraft:overworld",
+              "uuid": "975aa8de-997c-449e-b1a2-be0e41098d6d",
+              "root": [
+                8,
+                64,
+                -16
+              ],
+              "registry": "door_1"
+            },
+            {
+              "kind": "RP",
+              "dimension": "minecraft:overworld",
+              "uuid": "ff4f5cc3-0530-4a9e-b0ee-c32266f93188",
+              "root": [
+                24,
+                64,
+                -16
+              ],
+              "registry": "wood_gate"
+            }
+          ]
+        },
+        "sourceFlags": {
+          "lever_1": {
+            "uuid": "cca17ff6-5e81-40ca-9c5a-32220c7e5837",
+            "ruleMember": true,
+            "savedActive": false
+          },
+          "lever_2": {
+            "uuid": "51f8e0cb-a880-4e95-b641-e5265f37b489",
+            "ruleMember": true,
+            "savedActive": false
+          },
+          "lever_3": {
+            "uuid": "69bc97b7-c64a-4dc7-9c81-7cfdaddb176f",
+            "ruleMember": false,
+            "savedActive": false
+          }
+        },
+        "targets": {
+          "architecture_door": {
+            "blockState": "Block{bloodborne_dw:prototype_double_door}[open\u003dfalse,profile\u003dbase,rotation\u003d0,variant\u003d0]",
+            "open": false,
+            "identity": {
+              "kind": "ARCHITECTURE",
+              "dimension": "minecraft:overworld",
+              "uuid": "cfd181dd-a915-45d6-93f7-d5c51b3ba2f3",
+              "root": [
+                -8,
+                64,
+                -16
+              ],
+              "registry": "bloodborne_dw:prototype_double_door"
+            },
+            "leversOnly": true,
+            "afterOpen": [
+              "scoreboard players add event_counter dw_v10_gui 1"
+            ],
+            "afterClose": [
+              "scoreboard players add event_counter dw_v10_gui 1"
+            ],
+            "pendingEffect": false
+          },
+          "rp_door": {
+            "open": false,
+            "locked": false,
+            "verticalOffset": 0.0,
+            "pulseOnly": false,
+            "actualPulseIdle": true,
+            "identity": {
+              "kind": "RP",
+              "dimension": "minecraft:overworld",
+              "uuid": "975aa8de-997c-449e-b1a2-be0e41098d6d",
+              "root": [
+                8,
+                64,
+                -16
+              ],
+              "registry": "door_1"
+            },
+            "leversOnly": false,
+            "afterOpen": [],
+            "afterClose": [],
+            "pendingEffect": false
+          },
+          "wood_gate": {
+            "open": false,
+            "locked": false,
+            "verticalOffset": 0.0,
+            "pulseOnly": true,
+            "actualPulseIdle": true,
+            "identity": {
+              "kind": "RP",
+              "dimension": "minecraft:overworld",
+              "uuid": "ff4f5cc3-0530-4a9e-b0ee-c32266f93188",
+              "root": [
+                24,
+                64,
+                -16
+              ],
+              "registry": "wood_gate"
+            },
+            "leversOnly": false,
+            "afterOpen": [],
+            "afterClose": [],
+            "pendingEffect": false
+          }
+        },
+        "lampGraph": {
+          "schema": 2,
+          "nodes": [
+            {
+              "nodeUuid": "a94d58c1-b079-4634-9dee-e4098f3579bf",
+              "entityUuid": "51651109-2bd4-4905-bb82-90bb6572f768",
+              "name": "QA D",
+              "dimension": "minecraft:overworld",
+              "root": [
+                800,
+                64,
+                64
+              ],
+              "position": [
+                800.0,
+                64.0,
+                64.0
+              ],
+              "routes": [
+                "f108c7a4-07d1-4e6a-bb75-58f7ab61ec4d"
+              ]
+            },
+            {
+              "nodeUuid": "f108c7a4-07d1-4e6a-bb75-58f7ab61ec4d",
+              "entityUuid": "dc9c153d-4e92-45d8-9bde-d5f91f510ff8",
+              "name": "QA A renamed",
+              "dimension": "minecraft:overworld",
+              "root": [
+                60,
+                64,
+                -16
+              ],
+              "position": [
+                60.0,
+                64.0,
+                -16.0
+              ],
+              "routes": [
+                "4d45fefd-306c-46f3-a04e-6537bce482e4",
+                "a94d58c1-b079-4634-9dee-e4098f3579bf"
+              ]
+            },
+            {
+              "nodeUuid": "4d45fefd-306c-46f3-a04e-6537bce482e4",
+              "entityUuid": "8e2cad5e-eddf-4846-a74d-ca4551aae0b6",
+              "name": "QA B",
+              "dimension": "minecraft:overworld",
+              "root": [
+                72,
+                64,
+                -16
+              ],
+              "position": [
+                72.0,
+                64.125,
+                -16.0
+              ],
+              "routes": []
+            }
+          ],
+          "lines": [
+            {
+              "lineUuid": "7651c78a-4e99-4d63-9928-e886b426a1c5",
+              "name": "QA Main",
+              "connections": [
+                {
+                  "connectionUuid": "4aa96233-8cf0-4967-ae91-fafc4c225d4a",
+                  "a": "f108c7a4-07d1-4e6a-bb75-58f7ab61ec4d",
+                  "b": "4d45fefd-306c-46f3-a04e-6537bce482e4",
+                  "aToB": true,
+                  "bToA": false
+                },
+                {
+                  "connectionUuid": "72f6820b-341f-4cd7-b421-8eff1c79f98a",
+                  "a": "f108c7a4-07d1-4e6a-bb75-58f7ab61ec4d",
+                  "b": "a94d58c1-b079-4634-9dee-e4098f3579bf",
+                  "aToB": true,
+                  "bToA": true
+                }
+              ]
+            }
+          ]
+        },
+        "removedFixtures": {
+          "lamp_C_uuid": "bb768afc-fe10-4a70-a1ba-8084f0b4f8ca",
+          "lever_3_uuid": "69bc97b7-c64a-4dc7-9c81-7cfdaddb176f",
+          "lamp_C_still_registered": false,
+          "lever_3_still_rule_member": false
+        },
+        "harmlessCommandCounter": 2
+      },
+      "canonicalJson": "{\"harmlessCommandCounter\":2,\"lampGraph\":{\"lines\":[{\"connections\":[{\"a\":\"f108c7a4-07d1-4e6a-bb75-58f7ab61ec4d\",\"aToB\":true,\"b\":\"4d45fefd-306c-46f3-a04e-6537bce482e4\",\"bToA\":false,\"connectionUuid\":\"4aa96233-8cf0-4967-ae91-fafc4c225d4a\"},{\"a\":\"f108c7a4-07d1-4e6a-bb75-58f7ab61ec4d\",\"aToB\":true,\"b\":\"a94d58c1-b079-4634-9dee-e4098f3579bf\",\"bToA\":true,\"connectionUuid\":\"72f6820b-341f-4cd7-b421-8eff1c79f98a\"}],\"lineUuid\":\"7651c78a-4e99-4d63-9928-e886b426a1c5\",\"name\":\"QA Main\"}],\"nodes\":[{\"dimension\":\"minecraft:overworld\",\"entityUuid\":\"51651109-2bd4-4905-bb82-90bb6572f768\",\"name\":\"QA D\",\"nodeUuid\":\"a94d58c1-b079-4634-9dee-e4098f3579bf\",\"position\":[800.0,64.0,64.0],\"root\":[800,64,64],\"routes\":[\"f108c7a4-07d1-4e6a-bb75-58f7ab61ec4d\"]},{\"dimension\":\"minecraft:overworld\",\"entityUuid\":\"dc9c153d-4e92-45d8-9bde-d5f91f510ff8\",\"name\":\"QA A renamed\",\"nodeUuid\":\"f108c7a4-07d1-4e6a-bb75-58f7ab61ec4d\",\"position\":[60.0,64.0,-16.0],\"root\":[60,64,-16],\"routes\":[\"4d45fefd-306c-46f3-a04e-6537bce482e4\",\"a94d58c1-b079-4634-9dee-e4098f3579bf\"]},{\"dimension\":\"minecraft:overworld\",\"entityUuid\":\"8e2cad5e-eddf-4846-a74d-ca4551aae0b6\",\"name\":\"QA B\",\"nodeUuid\":\"4d45fefd-306c-46f3-a04e-6537bce482e4\",\"position\":[72.0,64.125,-16.0],\"root\":[72,64,-16],\"routes\":[]}],\"schema\":2},\"removedFixtures\":{\"lamp_C_still_registered\":false,\"lamp_C_uuid\":\"bb768afc-fe10-4a70-a1ba-8084f0b4f8ca\",\"lever_3_still_rule_member\":false,\"lever_3_uuid\":\"69bc97b7-c64a-4dc7-9c81-7cfdaddb176f\"},\"rule\":{\"condition\":\"ALL\",\"effect\":\"TOGGLE\",\"incomplete\":true,\"name\":\"QA All\",\"order\":1,\"satisfied\":false,\"sources\":[{\"dimension\":\"minecraft:overworld\",\"kind\":\"RP\",\"registry\":\"lever_1\",\"root\":[-32,64,-16],\"savedActive\":false,\"uuid\":\"cca17ff6-5e81-40ca-9c5a-32220c7e5837\"},{\"dimension\":\"minecraft:overworld\",\"kind\":\"RP\",\"registry\":\"lever_2\",\"root\":[-24,64,-16],\"savedActive\":false,\"uuid\":\"51f8e0cb-a880-4e95-b641-e5265f37b489\"}],\"targets\":[{\"dimension\":\"minecraft:overworld\",\"kind\":\"ARCHITECTURE\",\"registry\":\"bloodborne_dw:prototype_double_door\",\"root\":[-8,64,-16],\"uuid\":\"cfd181dd-a915-45d6-93f7-d5c51b3ba2f3\"},{\"dimension\":\"minecraft:overworld\",\"kind\":\"RP\",\"registry\":\"door_1\",\"root\":[8,64,-16],\"uuid\":\"975aa8de-997c-449e-b1a2-be0e41098d6d\"},{\"dimension\":\"minecraft:overworld\",\"kind\":\"RP\",\"registry\":\"wood_gate\",\"root\":[24,64,-16],\"uuid\":\"ff4f5cc3-0530-4a9e-b0ee-c32266f93188\"}],\"uuid\":\"a0b87706-1c30-42c5-add3-e36729c87c90\"},\"scope\":\"Bounded known fixture semantic persistent state; read-only, no object setters or full-world NBT. Transient loaded availability, player, cooldown and ticket state excluded.\",\"sourceFlags\":{\"lever_1\":{\"ruleMember\":true,\"savedActive\":false,\"uuid\":\"cca17ff6-5e81-40ca-9c5a-32220c7e5837\"},\"lever_2\":{\"ruleMember\":true,\"savedActive\":false,\"uuid\":\"51f8e0cb-a880-4e95-b641-e5265f37b489\"},\"lever_3\":{\"ruleMember\":false,\"savedActive\":false,\"uuid\":\"69bc97b7-c64a-4dc7-9c81-7cfdaddb176f\"}},\"targets\":{\"architecture_door\":{\"afterClose\":[\"scoreboard players add event_counter dw_v10_gui 1\"],\"afterOpen\":[\"scoreboard players add event_counter dw_v10_gui 1\"],\"blockState\":\"Block{bloodborne_dw:prototype_double_door}[open\\u003dfalse,profile\\u003dbase,rotation\\u003d0,variant\\u003d0]\",\"identity\":{\"dimension\":\"minecraft:overworld\",\"kind\":\"ARCHITECTURE\",\"registry\":\"bloodborne_dw:prototype_double_door\",\"root\":[-8,64,-16],\"uuid\":\"cfd181dd-a915-45d6-93f7-d5c51b3ba2f3\"},\"leversOnly\":true,\"open\":false,\"pendingEffect\":false},\"rp_door\":{\"actualPulseIdle\":true,\"afterClose\":[],\"afterOpen\":[],\"identity\":{\"dimension\":\"minecraft:overworld\",\"kind\":\"RP\",\"registry\":\"door_1\",\"root\":[8,64,-16],\"uuid\":\"975aa8de-997c-449e-b1a2-be0e41098d6d\"},\"leversOnly\":false,\"locked\":false,\"open\":false,\"pendingEffect\":false,\"pulseOnly\":false,\"verticalOffset\":0.0},\"wood_gate\":{\"actualPulseIdle\":true,\"afterClose\":[],\"afterOpen\":[],\"identity\":{\"dimension\":\"minecraft:overworld\",\"kind\":\"RP\",\"registry\":\"wood_gate\",\"root\":[24,64,-16],\"uuid\":\"ff4f5cc3-0530-4a9e-b0ee-c32266f93188\"},\"leversOnly\":false,\"locked\":false,\"open\":false,\"pendingEffect\":false,\"pulseOnly\":true,\"verticalOffset\":0.0}}}",
+      "sha256": "d2ed3c34b9055a9765b6a8efbdc283982bbedec23a0079540ae069059919b8b9",
+      "canonicalEncoding": "UTF-8 compact Gson JSON, recursively lexicographically sorted object keys; array order preserved. No loaded/chunk/player/cooldown/ticket fields."
+    },
+    "completedSteps": 237
+  },
+  "architectureV10": {
+    "scope": "actual client baked resources and BlockEntityRenderer invocation; no world edits; no GPU/manual visual claim",
+    "builderIcons": [
+      {
+        "item": "bloodborne_dw:builder_tool",
+        "quadCount": 46,
+        "sprites": [
+          "bloodborne_dw:item/builder_tool"
+        ]
+      },
+      {
+        "item": "bloodborne_dw:composite_builder",
+        "quadCount": 42,
+        "sprites": [
+          "bloodborne_dw:item/composite_builder"
+        ]
+      }
+    ],
+    "frontBackUv": [
+      {
+        "type": "90010",
+        "model": "bloodborne_dw:base/v10_windows/window_02",
+        "face": "north",
+        "sprite": "bloodborne_dw:base/source/minecraft/block/addon/window_5",
+        "actualAtlasUvBounds": [
+          0.5010605,
+          0.08016205,
+          0.5438614,
+          0.12296295
+        ],
+        "actualUvAtLocalXyVertexBits": {
+          "-1084227584:-1085276160": [
+            0.5438614,
+            0.12296295
+          ],
+          "-1084227584:1073217536": [
+            0.5438614,
+            0.08016205
+          ],
+          "1072693248:-1085276160": [
+            0.5010605,
+            0.12296295
+          ],
+          "1072693248:1073217536": [
+            0.5010605,
+            0.08016205
+          ]
+        },
+        "vertexHash": -107166723,
+        "frontBackAtlasUvEqualAtSameLocalXy": true
+      },
+      {
+        "type": "90010",
+        "model": "bloodborne_dw:base/v10_windows/window_02",
+        "face": "south",
+        "sprite": "bloodborne_dw:base/source/minecraft/block/addon/window_5",
+        "actualAtlasUvBounds": [
+          0.5010605,
+          0.08016205,
+          0.5438614,
+          0.12296295
+        ],
+        "actualUvAtLocalXyVertexBits": {
+          "-1084227584:-1085276160": [
+            0.5438614,
+            0.12296295
+          ],
+          "-1084227584:1073217536": [
+            0.5438614,
+            0.08016205
+          ],
+          "1072693248:-1085276160": [
+            0.5010605,
+            0.12296295
+          ],
+          "1072693248:1073217536": [
+            0.5010605,
+            0.08016205
+          ]
+        },
+        "vertexHash": 554746877,
+        "frontBackAtlasUvEqualAtSameLocalXy": true
+      },
+      {
+        "type": "90020",
+        "model": "bloodborne_dw:base/v10_windows/window_03",
+        "face": "north",
+        "sprite": "bloodborne_dw:base/source/minecraft/block/addon/window_5",
+        "actualAtlasUvBounds": [
+          0.5010605,
+          0.08016205,
+          0.5438614,
+          0.12296295
+        ],
+        "actualUvAtLocalXyVertexBits": {
+          "-1084227584:-1085276160": [
+            0.5438614,
+            0.12296295
+          ],
+          "-1084227584:1073217536": [
+            0.5438614,
+            0.08016205
+          ],
+          "1072693248:-1085276160": [
+            0.5010605,
+            0.12296295
+          ],
+          "1072693248:1073217536": [
+            0.5010605,
+            0.08016205
+          ]
+        },
+        "vertexHash": 1080869885,
+        "frontBackAtlasUvEqualAtSameLocalXy": true
+      },
+      {
+        "type": "90020",
+        "model": "bloodborne_dw:base/v10_windows/window_03",
+        "face": "south",
+        "sprite": "bloodborne_dw:base/source/minecraft/block/addon/window_5",
+        "actualAtlasUvBounds": [
+          0.5010605,
+          0.08016205,
+          0.5438614,
+          0.12296295
+        ],
+        "actualUvAtLocalXyVertexBits": {
+          "-1084227584:-1085276160": [
+            0.5438614,
+            0.12296295
+          ],
+          "-1084227584:1073217536": [
+            0.5438614,
+            0.08016205
+          ],
+          "1072693248:-1085276160": [
+            0.5010605,
+            0.12296295
+          ],
+          "1072693248:1073217536": [
+            0.5010605,
+            0.08016205
+          ]
+        },
+        "vertexHash": -1413430275,
+        "frontBackAtlasUvEqualAtSameLocalXy": true
+      }
+    ],
+    "shiftedInstances": [
+      {
+        "root": [
+          -60,
+          64,
+          40
+        ],
+        "type": "90001",
+        "registry": "bloodborne_dw:prototype_double_door",
+        "uuid": "7400a07c-2735-4233-bf8c-22ba028ab040",
+        "actualOffset": 0.125,
+        "rendererClass": "dev.dreamwalker.bloodbornedw.composite.CompositeClient$1",
+        "actualVertices": 32,
+        "actualLocalRendererBounds": [
+          -1.0,
+          0.125,
+          0.0625,
+          2.0,
+          4.125,
+          0.1875
+        ],
+        "staticEmitterCallsAtOldAnchor": 0,
+        "shiftedOwnerCells": 15,
+        "clientPick": "90001"
+      },
+      {
+        "root": [
+          -36,
+          64,
+          40
+        ],
+        "type": "90002",
+        "registry": "bloodborne_dw:prototype_wall",
+        "uuid": "750d6567-1f6d-4b7a-8b9b-6bb7a67e7aef",
+        "actualOffset": 2.0,
+        "rendererClass": "dev.dreamwalker.bloodbornedw.composite.CompositeClient$1",
+        "actualVertices": 24,
+        "actualLocalRendererBounds": [
+          0.25,
+          2.0,
+          0.25,
+          0.75,
+          3.0,
+          0.75
+        ],
+        "staticEmitterCallsAtOldAnchor": 0,
+        "shiftedOwnerCells": 3,
+        "clientPick": "90002"
+      },
+      {
+        "root": [
+          -12,
+          64,
+          40
+        ],
+        "type": "90003",
+        "registry": "bloodborne_dw:prototype_roof",
+        "uuid": "32348edf-62a6-44dd-9c87-e31a554e3959",
+        "actualOffset": 2.0,
+        "rendererClass": "dev.dreamwalker.bloodbornedw.composite.CompositeClient$1",
+        "actualVertices": 60,
+        "actualLocalRendererBounds": [
+          -0.0625,
+          2.0,
+          -0.5,
+          1.0625,
+          3.9470338821411133,
+          1.4470338821411133
+        ],
+        "staticEmitterCallsAtOldAnchor": 0,
+        "shiftedOwnerCells": 19,
+        "clientPick": "90003"
+      },
+      {
+        "root": [
+          12,
+          64,
+          40
+        ],
+        "type": "90004",
+        "registry": "bloodborne_dw:prototype_thin_window",
+        "uuid": "954db611-5643-4126-a723-9faf61bc757f",
+        "actualOffset": -0.125,
+        "rendererClass": "dev.dreamwalker.bloodbornedw.composite.CompositeClient$1",
+        "actualVertices": 8,
+        "actualLocalRendererBounds": [
+          -0.875,
+          -0.125,
+          -0.15625,
+          1.875,
+          2.625,
+          -0.09375
+        ],
+        "staticEmitterCallsAtOldAnchor": 0,
+        "shiftedOwnerCells": 13,
+        "clientPick": "90004"
+      },
+      {
+        "root": [
+          36,
+          64,
+          40
+        ],
+        "type": "90005",
+        "registry": "bloodborne_dw:prototype_tree",
+        "uuid": "8baef9eb-3e62-48d3-9f1d-d8827c4b1b3f",
+        "actualOffset": 0.125,
+        "rendererClass": "dev.dreamwalker.bloodbornedw.composite.CompositeClient$1",
+        "actualVertices": 448,
+        "actualLocalRendererBounds": [
+          -4.0,
+          0.125,
+          -4.0,
+          5.0,
+          18.125,
+          5.0
+        ],
+        "staticEmitterCallsAtOldAnchor": 0,
+        "shiftedOwnerCells": 251,
+        "clientPick": "90005"
+      },
+      {
+        "root": [
+          60,
+          64,
+          40
+        ],
+        "type": "90006",
+        "registry": "bloodborne_dw:prototype_ladder",
+        "uuid": "0dc15794-2f88-4df3-81f9-3673dc11e10d",
+        "actualOffset": 2.0,
+        "rendererClass": "dev.dreamwalker.bloodbornedw.composite.CompositeClient$1",
+        "actualVertices": 104,
+        "actualLocalRendererBounds": [
+          -0.3125,
+          2.0,
+          0.8626344203948975,
+          1.2558413743972778,
+          3.144606828689575,
+          1.1751344203948975
+        ],
+        "staticEmitterCallsAtOldAnchor": 0,
+        "shiftedOwnerCells": 2,
+        "clientPick": "90006",
+        "shiftedClimbingOwnerResolved": true
+      },
+      {
+        "root": [
+          -60,
+          64,
+          60
+        ],
+        "type": "90007",
+        "registry": "bloodborne_dw:prototype_wood_window",
+        "uuid": "2c40f235-2074-4bad-87cd-92fe8c3275ab",
+        "actualOffset": 0.125,
+        "rendererClass": "dev.dreamwalker.bloodbornedw.composite.CompositeClient$1",
+        "actualVertices": 72,
+        "actualLocalRendererBounds": [
+          -1.09794282913208,
+          0.125,
+          -0.9288971424102783,
+          2.09794282913208,
+          1.125,
+          0.5625
+        ],
+        "staticEmitterCallsAtOldAnchor": 0,
+        "shiftedOwnerCells": 14,
+        "clientPick": "90007"
+      },
+      {
+        "root": [
+          -36,
+          64,
+          60
+        ],
+        "type": "90010",
+        "registry": "bloodborne_dw:prototype_glass_window_02",
+        "uuid": "543e273f-7904-4cf9-a0a5-88249786b499",
+        "actualOffset": -0.125,
+        "rendererClass": "dev.dreamwalker.bloodbornedw.composite.CompositeClient$1",
+        "actualVertices": 8,
+        "actualLocalRendererBounds": [
+          -0.875,
+          -0.125,
+          -0.15625,
+          1.875,
+          2.625,
+          -0.09375
+        ],
+        "staticEmitterCallsAtOldAnchor": 0,
+        "shiftedOwnerCells": 13,
+        "clientPick": "90010"
+      },
+      {
+        "root": [
+          -12,
+          64,
+          60
+        ],
+        "type": "90011",
+        "registry": "bloodborne_dw:prototype_wall_skin_0",
+        "uuid": "b39d0ab9-b30d-4d3b-91e5-693447b403c3",
+        "actualOffset": 0.125,
+        "rendererClass": "dev.dreamwalker.bloodbornedw.composite.CompositeClient$1",
+        "actualVertices": 24,
+        "actualLocalRendererBounds": [
+          0.25,
+          0.125,
+          0.25,
+          0.75,
+          1.125,
+          0.75
+        ],
+        "staticEmitterCallsAtOldAnchor": 0,
+        "shiftedOwnerCells": 2,
+        "clientPick": "90011"
+      },
+      {
+        "root": [
+          12,
+          64,
+          60
+        ],
+        "type": "90012",
+        "registry": "bloodborne_dw:prototype_wall_skin_1",
+        "uuid": "865f9ba3-98ea-4900-8a38-2006e0854913",
+        "actualOffset": -0.125,
+        "rendererClass": "dev.dreamwalker.bloodbornedw.composite.CompositeClient$1",
+        "actualVertices": 24,
+        "actualLocalRendererBounds": [
+          0.25,
+          -0.125,
+          0.25,
+          0.75,
+          0.875,
+          0.75
+        ],
+        "staticEmitterCallsAtOldAnchor": 0,
+        "shiftedOwnerCells": 3,
+        "clientPick": "90012"
+      },
+      {
+        "root": [
+          36,
+          64,
+          60
+        ],
+        "type": "90013",
+        "registry": "bloodborne_dw:prototype_wall_skin_2",
+        "uuid": "445f8603-ae84-47ec-9f43-3fa322baff5a",
+        "actualOffset": 0.125,
+        "rendererClass": "dev.dreamwalker.bloodbornedw.composite.CompositeClient$1",
+        "actualVertices": 24,
+        "actualLocalRendererBounds": [
+          0.25,
+          0.125,
+          0.25,
+          0.75,
+          1.125,
+          0.75
+        ],
+        "staticEmitterCallsAtOldAnchor": 0,
+        "shiftedOwnerCells": 2,
+        "clientPick": "90013"
+      },
+      {
+        "root": [
+          60,
+          64,
+          60
+        ],
+        "type": "90014",
+        "registry": "bloodborne_dw:prototype_wall_skin_3",
+        "uuid": "e561d9e2-5600-49d1-9e48-0d06737d4e94",
+        "actualOffset": -0.125,
+        "rendererClass": "dev.dreamwalker.bloodbornedw.composite.CompositeClient$1",
+        "actualVertices": 24,
+        "actualLocalRendererBounds": [
+          0.25,
+          -0.125,
+          0.25,
+          0.75,
+          0.875,
+          0.75
+        ],
+        "staticEmitterCallsAtOldAnchor": 0,
+        "shiftedOwnerCells": 3,
+        "clientPick": "90014"
+      },
+      {
+        "root": [
+          -60,
+          64,
+          80
+        ],
+        "type": "90015",
+        "registry": "bloodborne_dw:prototype_wall_skin_4",
+        "uuid": "aad1b106-611d-48f2-b171-d14d6ece9ce2",
+        "actualOffset": 0.125,
+        "rendererClass": "dev.dreamwalker.bloodbornedw.composite.CompositeClient$1",
+        "actualVertices": 24,
+        "actualLocalRendererBounds": [
+          0.25,
+          0.125,
+          0.25,
+          0.75,
+          1.125,
+          0.75
+        ],
+        "staticEmitterCallsAtOldAnchor": 0,
+        "shiftedOwnerCells": 2,
+        "clientPick": "90015"
+      },
+      {
+        "root": [
+          -36,
+          64,
+          80
+        ],
+        "type": "90016",
+        "registry": "bloodborne_dw:prototype_wall_skin_5",
+        "uuid": "6d8a6d41-edcf-452e-b5f8-38513e67e48e",
+        "actualOffset": -0.125,
+        "rendererClass": "dev.dreamwalker.bloodbornedw.composite.CompositeClient$1",
+        "actualVertices": 24,
+        "actualLocalRendererBounds": [
+          0.25,
+          -0.125,
+          0.25,
+          0.75,
+          0.875,
+          0.75
+        ],
+        "staticEmitterCallsAtOldAnchor": 0,
+        "shiftedOwnerCells": 3,
+        "clientPick": "90016"
+      },
+      {
+        "root": [
+          -12,
+          64,
+          80
+        ],
+        "type": "90017",
+        "registry": "bloodborne_dw:prototype_wall_skin_7",
+        "uuid": "a96e9804-5184-4b1c-8cc1-d4ee633f6895",
+        "actualOffset": 0.125,
+        "rendererClass": "dev.dreamwalker.bloodbornedw.composite.CompositeClient$1",
+        "actualVertices": 24,
+        "actualLocalRendererBounds": [
+          0.25,
+          0.125,
+          0.25,
+          0.75,
+          1.125,
+          0.75
+        ],
+        "staticEmitterCallsAtOldAnchor": 0,
+        "shiftedOwnerCells": 2,
+        "clientPick": "90017"
+      },
+      {
+        "root": [
+          12,
+          64,
+          80
+        ],
+        "type": "90018",
+        "registry": "bloodborne_dw:prototype_ladder_art_1",
+        "uuid": "d75838de-6dba-48e6-b2a4-6fdc130068e5",
+        "actualOffset": -0.125,
+        "rendererClass": "dev.dreamwalker.bloodbornedw.composite.CompositeClient$1",
+        "actualVertices": 104,
+        "actualLocalRendererBounds": [
+          -0.2226957082748413,
+          -0.125,
+          0.8626344203948975,
+          1.375,
+          1.0085582733154297,
+          1.1751344203948975
+        ],
+        "staticEmitterCallsAtOldAnchor": 0,
+        "shiftedOwnerCells": 2,
+        "clientPick": "90018",
+        "shiftedClimbingOwnerResolved": true
+      },
+      {
+        "root": [
+          36,
+          64,
+          80
+        ],
+        "type": "90019",
+        "registry": "bloodborne_dw:prototype_ladder_art_2",
+        "uuid": "a58cd414-0585-4c58-a754-9058bc5ddc76",
+        "actualOffset": 0.125,
+        "rendererClass": "dev.dreamwalker.bloodbornedw.composite.CompositeClient$1",
+        "actualVertices": 104,
+        "actualLocalRendererBounds": [
+          -0.20251119136810303,
+          0.125,
+          0.8626344203948975,
+          1.375,
+          1.2494224309921265,
+          1.1751344203948975
+        ],
+        "staticEmitterCallsAtOldAnchor": 0,
+        "shiftedOwnerCells": 2,
+        "clientPick": "90019",
+        "shiftedClimbingOwnerResolved": true
+      },
+      {
+        "root": [
+          60,
+          64,
+          80
+        ],
+        "type": "90020",
+        "registry": "bloodborne_dw:prototype_glass_window_03",
+        "uuid": "430f88b1-bde8-4b6a-907c-3d3b05b4d27f",
+        "actualOffset": 2.0,
+        "rendererClass": "dev.dreamwalker.bloodbornedw.composite.CompositeClient$1",
+        "actualVertices": 8,
+        "actualLocalRendererBounds": [
+          -0.875,
+          2.0,
+          0.09375,
+          1.875,
+          4.75,
+          0.15625
+        ],
+        "staticEmitterCallsAtOldAnchor": 0,
+        "shiftedOwnerCells": 10,
+        "clientPick": "90020"
+      }
+    ],
+    "sampleCount": 18,
+    "status": "PASS_ACTUAL_LOADED_CLIENT_BAKES_UV_AND_REQUESTED_RENDERER_HEIGHT_SAMPLES",
+    "manualVisual": "NOT_RUN"
+  },
+  "expectedCanonicalRpCases": 69,
+  "caseScope": "Every canonical object placement item; independent extra opened door, collapsed ladder, upper-platform and remote lower-part cases. Mob/weapon attack semantics are outside this RP construction section.",
+  "ordinaryRpOverlap": {
+    "schema": "dw-actual-rp-on-rp-placement-v1",
+    "status": "PASS_ACTUAL_ORDINARY_RP_ON_RP_PLACE_PRESERVE_AND_CREATIVE_CLEANUP",
+    "originalAsset": "npc_window",
+    "secondAsset": "chair",
+    "originalUuid": "41b5a38e-4d16-4320-bf6d-af58a7a80f86",
+    "originalStableBefore": {
+      "UUID": "[I;1102422926,1293304608,-1083330728,-1482158202]",
+      "Pos": "[-64.28125d,101.875d,64.50077857961777d]",
+      "Rotation": "[-180.0f,0.0f]",
+      "Open": "0b",
+      "VerticalOffset": "0.0d",
+      "Links": "[]",
+      "actualRegistry": "bloodborne_rp:npc_window",
+      "actualUuid": "41b5a38e-4d16-4320-bf6d-af58a7a80f86",
+      "actualScale": 1.0,
+      "actualOpen": false,
+      "actualOffset": 0.0
+    },
+    "initialServerObservation": {
+      "originalStable": {
+        "UUID": "[I;1102422926,1293304608,-1083330728,-1482158202]",
+        "Pos": "[-64.28125d,101.875d,64.50077857961777d]",
+        "Rotation": "[-180.0f,0.0f]",
+        "Open": "0b",
+        "VerticalOffset": "0.0d",
+        "Links": "[]",
+        "actualRegistry": "bloodborne_rp:npc_window",
+        "actualUuid": "41b5a38e-4d16-4320-bf6d-af58a7a80f86",
+        "actualScale": 1.0,
+        "actualOpen": false,
+        "actualOffset": 0.0
+      },
+      "initialLoadedUuidCount": 2,
+      "nativeSupportState": "Block{minecraft:stone}",
+      "readThread": "ACTUAL_SERVER_THREAD"
+    },
+    "selectedOriginalRpHit": {
+      "type": "ENTITY",
+      "hitPos": [
+        -63.5,
+        100.76282626391098,
+        62.83827858557824
+      ],
+      "entityUuid": "41b5a38e-4d16-4320-bf6d-af58a7a80f86",
+      "entityRegistry": "bloodborne_rp:npc_window"
+    },
+    "blockOnlyNativeSupportHit": {
+      "type": "BLOCK",
+      "hitPos": [
+        -63.5,
+        100.0,
+        64.75163219614838
+      ],
+      "blockPos": [
+        -64,
+        99,
+        64
+      ],
+      "side": "up",
+      "insideBlock": false
+    },
+    "actualMainHand": "bloodborne_rp:chair_placer",
+    "inputPath": "ordinary use-key at real original RP EntityHitResult; no direct Item.useOnBlock/entity mutation",
+    "latestActualServerThreadObservation": {
+      "originalPresent": true,
+      "originalStable": {
+        "UUID": "[I;1102422926,1293304608,-1083330728,-1482158202]",
+        "Pos": "[-64.28125d,101.875d,64.50077857961777d]",
+        "Rotation": "[-180.0f,0.0f]",
+        "Open": "0b",
+        "VerticalOffset": "0.0d",
+        "Links": "[]",
+        "actualRegistry": "bloodborne_rp:npc_window",
+        "actualUuid": "41b5a38e-4d16-4320-bf6d-af58a7a80f86",
+        "actualScale": 1.0,
+        "actualOpen": false,
+        "actualOffset": 0.0
+      },
+      "created": [
+        {
+          "uuid": "6cd930dc-44f3-4b98-83fa-9ba0dc427a50",
+          "asset": "chair",
+          "registry": "bloodborne_rp:chair"
+        }
+      ],
+      "newServerCount": 1,
+      "nativeSupportState": "Block{minecraft:stone}",
+      "readThread": "ACTUAL_SERVER_THREAD"
+    },
+    "observedSecondServerCount": 1,
+    "observedSecondClientCount": 1,
+    "originalStableAfter": {
+      "UUID": "[I;1102422926,1293304608,-1083330728,-1482158202]",
+      "Pos": "[-64.28125d,101.875d,64.50077857961777d]",
+      "Rotation": "[-180.0f,0.0f]",
+      "Open": "0b",
+      "VerticalOffset": "0.0d",
+      "Links": "[]",
+      "actualRegistry": "bloodborne_rp:npc_window",
+      "actualUuid": "41b5a38e-4d16-4320-bf6d-af58a7a80f86",
+      "actualScale": 1.0,
+      "actualOpen": false,
+      "actualOffset": 0.0
+    },
+    "newUuid": "6cd930dc-44f3-4b98-83fa-9ba0dc427a50",
+    "ordinaryTwoUuidCleanup": true
+  },
+  "firstCagePlacementTrace": {
+    "schema": "dw-v10-actual-operator-placement-trace-v1",
+    "asset": "cage_obj_1",
+    "typeId": "91007",
+    "recordingInitiallyOff": true,
+    "objectMutationUsed": false,
+    "sourceItem": "bloodborne_rp:cage_obj_1_placer",
+    "sessionId": "8ea47d47-9ede-4b27-a1e4-1e2cfaafd269",
+    "actualStartServerReadback": {
+      "enabled": true,
+      "sessionId": "8ea47d47-9ede-4b27-a1e4-1e2cfaafd269",
+      "stopReason": "ACTIVE",
+      "events": {
+        "allCount": 1,
+        "retained": 1,
+        "capacity": 2048,
+        "dropped": 0
+      },
+      "snapshots": {
+        "allCount": 0,
+        "retained": 0,
+        "capacity": 128,
+        "dropped": 0
+      },
+      "errorKeys": 0,
+      "diagnosticIoQueueSize": 0,
+      "diagnosticIoActiveWorkers": 0,
+      "diagnosticIoQueueMaximum": 4,
+      "filter": {
+        "instanceId": "",
+        "mode": "id",
+        "radius": 0.0,
+        "center": [
+          -64,
+          100,
+          60
+        ],
+        "dimension": "minecraft:overworld",
+        "typeId": "91007"
+      },
+      "ticks": {
+        "allCount": 1,
+        "retained": 1,
+        "capacity": 4096,
+        "dropped": 0,
+        "unit": "ns",
+        "allSumNs": 89083700,
+        "status": "MEASURED",
+        "allMeanNs": 8.90837E7,
+        "allMaxNs": 89083700,
+        "allCountOver50ms": 1,
+        "quantileScope": "RETAINED_WINDOW_ONLY",
+        "p95Ns": 89083700,
+        "p99Ns": 89083700
+      },
+      "clientBatches": {
+        "allCount": 0,
+        "retained": 0,
+        "capacity": 256,
+        "dropped": 0
+      },
+      "remainingSeconds": 29.5499339,
+      "readThread": "ACTUAL_SERVER_THREAD"
+    },
+    "stopAndExportPath": "actual operator chat-command packets; no direct diagnostics mutation API",
+    "actualStopServerReadback": {
+      "enabled": false,
+      "sessionId": "8ea47d47-9ede-4b27-a1e4-1e2cfaafd269",
+      "stopReason": "OPERATOR_STOP",
+      "events": {
+        "allCount": 3,
+        "retained": 3,
+        "capacity": 2048,
+        "dropped": 0
+      },
+      "snapshots": {
+        "allCount": 0,
+        "retained": 0,
+        "capacity": 128,
+        "dropped": 0
+      },
+      "errorKeys": 0,
+      "diagnosticIoQueueSize": 0,
+      "diagnosticIoActiveWorkers": 1,
+      "diagnosticIoQueueMaximum": 4,
+      "filter": {
+        "instanceId": "",
+        "mode": "id",
+        "radius": 0.0,
+        "center": [
+          -64,
+          100,
+          60
+        ],
+        "dimension": "minecraft:overworld",
+        "typeId": "91007"
+      },
+      "ticks": {
+        "allCount": 209,
+        "retained": 209,
+        "capacity": 4096,
+        "dropped": 0,
+        "unit": "ns",
+        "allSumNs": 1772539200,
+        "status": "MEASURED",
+        "allMeanNs": 8481048.803827751,
+        "allMaxNs": 89083700,
+        "allCountOver50ms": 1,
+        "quantileScope": "RETAINED_WINDOW_ONLY",
+        "p95Ns": 26053800,
+        "p99Ns": 36925700
+      },
+      "clientBatches": {
+        "allCount": 9,
+        "retained": 9,
+        "capacity": 256,
+        "dropped": 0
+      },
+      "remainingSeconds": 19.5107065
+    },
+    "exportZipPath": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-v10-client-min-attempt9\\dreamwalker-diagnostics\\diagnostics-8ea47d47-9ede-4b27-a1e4-1e2cfaafd269-1791462467553.zip",
+    "exportBytes": 14838,
+    "exportZipSha256": "64e9b00ee86be7980e67e65b495583d4f3dbf65d54e17b1d22942d87b9f1fffe",
+    "actualStoppedAndExported": true,
+    "recordingFinallyOff": true
+  },
+  "phase": 2,
+  "failedStep": "ordinary use key places cage_obj_1",
+  "clientTicks": 2188,
+  "screen": "NONE",
+  "actualCrosshair": {
+    "type": "BLOCK",
+    "hitPos": [
+      -63.5,
+      100.0,
+      64.50077857961777
+    ],
+    "blockPos": [
+      -64,
+      99,
+      64
+    ],
+    "side": "up",
+    "insideBlock": false
+  },
+  "actualMainHand": "bloodborne_rp:cage_obj_1_placer",
+  "actualOffHand": "minecraft:air",
+  "lastActualServerThreadReadback": {
+    "added": [],
+    "readThread": "ACTUAL_SERVER_THREAD"
+  },
+  "clientPadObservation": {
+    "registry": "minecraft:air",
+    "state": "Block{minecraft:air}",
+    "nativeChunkAvailable": true,
+    "safeChunkAvailable": true,
+    "nativeBlockEntityClass": "NONE"
+  },
+  "failureClass": "java.lang.IllegalStateException",
+  "failure": "Actual input step timed out: ordinary use key places cage_obj_1 hit\u003dnet.minecraft.class_3965@696d8dba hand\u003dbloodborne_rp:cage_obj_1_placer position\u003d(-63.5, 100.0, 60.5)",
+  "failureFrames": [
+    "knot//dev.dreamwalker.bloodbornedw.review.ReviewV10ClientBootstrap.step(ReviewV10ClientBootstrap.java:245)",
+    "knot//dev.dreamwalker.bloodbornedw.review.ReviewV10ClientBootstrap.tick(ReviewV10ClientBootstrap.java:72)",
+    "knot//net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents.lambda$static$2(ClientTickEvents.java:43)",
+    "knot//net.minecraft.class_310.handler$zgb000$fabric-lifecycle-events-v1$onEndTick(class_310.java:5022)",
+    "knot//net.minecraft.class_310.method_1574(class_310.java:1957)",
+    "knot//net.minecraft.class_310.method_1523(class_310.java:1181)",
+    "knot//net.minecraft.class_310.method_1514(class_310.java:802)",
+    "knot//net.minecraft.client.main.Main.main(Main.java:250)",
+    "net.fabricmc.loader.impl.game.minecraft.MinecraftGameProvider.launch(MinecraftGameProvider.java:517)",
+    "net.fabricmc.loader.impl.launch.knot.Knot.launch(Knot.java:72)"
+  ]
+}

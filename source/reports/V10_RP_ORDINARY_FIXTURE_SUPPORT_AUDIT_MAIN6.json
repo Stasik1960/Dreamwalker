@@ -1,0 +1,3471 @@
+{
+  "schema": "dw-v10-rp-ordinary-fixture-support-audit-v1",
+  "status": "STATIC_SOURCE_DEFAULT_POSE_AND_PHYSICAL_GUARD_AUDIT_NOT_RUNTIME_PASS",
+  "productionJarSha256": "521337222c6f75b31a094c4944963c4103c514985d5696d55187f31dc4b17ca5",
+  "motionAudit": "reports\\V10_RP_MOTION_ENVELOPE_SOURCE_AUDIT_MAIN6.json",
+  "motionAuditSha256": "c4f876d07c9d5c20364a1ffc0ab2c34aff39d5789bdadfc27a5698bcfb8c788d",
+  "canonicalPopulation": 69,
+  "actorFeet": [
+    -63.5,
+    100.0,
+    60.5
+  ],
+  "actorAssumedNormalBoundingBox": [
+    -63.8,
+    100.0,
+    60.2,
+    -63.2,
+    101.8,
+    60.8
+  ],
+  "customSurface": [
+    -63.5,
+    100.0,
+    64.5
+  ],
+  "placedYaw": -180.0,
+  "clickedSupport": [
+    -64,
+    99,
+    64
+  ],
+  "sourceAlgorithms": [
+    "ObjectRegistry.place non-custom integer origin and legacy chandelier Y−5.5",
+    "placementAnchor custom ordinary UP",
+    "localPhysical cardinal boxes",
+    "EntityDimensions.fixed legacy square X/Z collider",
+    "PlacementPhysics.entityConflict positive actual living-volume rejection"
+  ],
+  "physicalActorConflictAssets": [
+    "wood_gate"
+  ],
+  "current6DefaultBuildHeightRefusalAssets": [
+    "cage_obj_1",
+    "cage_obj_2",
+    "cage_obj_3"
+  ],
+  "woodGateAlternativeCamera": {
+    "asset": "wood_gate",
+    "feet": [
+      -64.8,
+      100.0,
+      60.5
+    ],
+    "eyeAssumingStandingHeight1_62": [
+      -64.8,
+      101.62,
+      60.5
+    ],
+    "target": [
+      -63.5,
+      100.0,
+      64.5
+    ],
+    "eyeToActualSurfaceDistance": 4.5071498754756325,
+    "feetToPlacementSurfaceDistance": 4.2059481689626175,
+    "physicalOverlap": false,
+    "withinCreativeBlockReach5": true,
+    "withinServerPlacementReach8": true,
+    "support": "Actor may fly; target remains original native pad.down UP surface, with no QA support write.",
+    "runtimeProof": "NOT_RUN; actual ordinary use-key and floor ray must independently confirm this camera."
+  },
+  "assets": [
+    {
+      "asset": "cage_obj_1",
+      "defaultOpen": false,
+      "defaultDogsVisible": true,
+      "defaultMotionEnvelopeActive": true,
+      "sourceCubeCount": 196,
+      "placementMode": "LEGACY_INTEGER_ORIGIN",
+      "sourceAnchorLocal": null,
+      "origin": [
+        -64.0,
+        100.0,
+        64.0
+      ],
+      "staticWorldVisual": [
+        -65.26565490501885,
+        99.78738057149661,
+        60.108928819169996,
+        -59.94325930593156,
+        106.9375,
+        67.83255446645504
+      ],
+      "physicalBoxes": [
+        [
+          -65.39999997615814,
+          100.0,
+          62.60000002384186,
+          -62.60000002384186,
+          106.5,
+          65.39999997615814
+        ]
+      ],
+      "physicalBoxCount": 1,
+      "actorPositivePhysicalOverlap": false,
+      "actorOverlappingBoxes": [],
+      "current6DefaultQueryBounds": [
+        -231.342534209727,
+        -67.90503420972698,
+        -106.967534209727,
+        106.467534209727,
+        268.155034209727,
+        231.217534209727
+      ],
+      "current6DefaultHeightGuardRefusal": true,
+      "queryFloorRelation": "Default author pad has native 5x5 support cells X[-66,-62],Z[62,66] atY99; this is a clicked surface, not a requirement for all visual/selection cells to have floor.",
+      "nativeSurfacePreservation": "No native block write by RP placement; visual/selection overlap is not a movement obstruction."
+    },
+    {
+      "asset": "cage_obj_2",
+      "defaultOpen": false,
+      "defaultDogsVisible": true,
+      "defaultMotionEnvelopeActive": true,
+      "sourceCubeCount": 167,
+      "placementMode": "LEGACY_INTEGER_ORIGIN",
+      "sourceAnchorLocal": null,
+      "origin": [
+        -64.0,
+        100.0,
+        64.0
+      ],
+      "staticWorldVisual": [
+        -68.43756957314373,
+        99.78738057149661,
+        61.609062620269455,
+        -63.07394890516765,
+        106.5,
+        66.14912612973055
+      ],
+      "physicalBoxes": [
+        [
+          -65.39999997615814,
+          100.0,
+          62.60000002384186,
+          -62.60000002384186,
+          106.5,
+          65.39999997615814
+        ]
+      ],
+      "physicalBoxCount": 1,
+      "actorPositivePhysicalOverlap": false,
+      "actorOverlappingBoxes": [],
+      "current6DefaultQueryBounds": [
+        -269.9805360181052,
+        -104.10553601810523,
+        -141.85553601810525,
+        138.73053601810525,
+        304.3555360181052,
+        269.6055360181052
+      ],
+      "current6DefaultHeightGuardRefusal": true,
+      "queryFloorRelation": "Default author pad has native 5x5 support cells X[-66,-62],Z[62,66] atY99; this is a clicked surface, not a requirement for all visual/selection cells to have floor.",
+      "nativeSurfacePreservation": "No native block write by RP placement; visual/selection overlap is not a movement obstruction."
+    },
+    {
+      "asset": "cage_obj_3",
+      "defaultOpen": false,
+      "defaultDogsVisible": true,
+      "defaultMotionEnvelopeActive": true,
+      "sourceCubeCount": 166,
+      "placementMode": "LEGACY_INTEGER_ORIGIN",
+      "sourceAnchorLocal": null,
+      "origin": [
+        -64.0,
+        100.0,
+        64.0
+      ],
+      "staticWorldVisual": [
+        -68.07815490501885,
+        99.78738057149661,
+        61.98626849791019,
+        -59.525695064846346,
+        105.0,
+        67.47989004004582
+      ],
+      "physicalBoxes": [
+        [
+          -65.39999997615814,
+          100.0,
+          62.60000002384186,
+          -62.60000002384186,
+          106.5,
+          65.39999997615814
+        ]
+      ],
+      "physicalBoxCount": 1,
+      "actorPositivePhysicalOverlap": false,
+      "actorOverlappingBoxes": [],
+      "current6DefaultQueryBounds": [
+        -234.155034209727,
+        -67.90503420972698,
+        -105.405034209727,
+        103.655034209727,
+        268.155034209727,
+        232.780034209727
+      ],
+      "current6DefaultHeightGuardRefusal": true,
+      "queryFloorRelation": "Default author pad has native 5x5 support cells X[-66,-62],Z[62,66] atY99; this is a clicked surface, not a requirement for all visual/selection cells to have floor.",
+      "nativeSurfacePreservation": "No native block write by RP placement; visual/selection overlap is not a movement obstruction."
+    },
+    {
+      "asset": "hearse",
+      "defaultOpen": false,
+      "defaultDogsVisible": false,
+      "defaultMotionEnvelopeActive": false,
+      "sourceCubeCount": 216,
+      "placementMode": "LEGACY_INTEGER_ORIGIN",
+      "sourceAnchorLocal": null,
+      "origin": [
+        -64.0,
+        100.0,
+        64.0
+      ],
+      "staticWorldVisual": [
+        -73.162744375,
+        99.9375,
+        60.265625,
+        -54.837255625,
+        108.01902379465652,
+        67.66605339059328
+      ],
+      "physicalBoxes": [
+        [
+          -65.25,
+          100.0,
+          62.75,
+          -62.75,
+          106.80000019073486,
+          65.25
+        ]
+      ],
+      "physicalBoxCount": 1,
+      "actorPositivePhysicalOverlap": false,
+      "actorOverlappingBoxes": [],
+      "current6DefaultQueryBounds": [
+        -73.162744375,
+        99.9375,
+        60.265625,
+        -54.837255625,
+        108.01902379465652,
+        67.66605339059328
+      ],
+      "current6DefaultHeightGuardRefusal": false,
+      "queryFloorRelation": "Default author pad has native 5x5 support cells X[-66,-62],Z[62,66] atY99; this is a clicked surface, not a requirement for all visual/selection cells to have floor.",
+      "nativeSurfacePreservation": "No native block write by RP placement; visual/selection overlap is not a movement obstruction."
+    },
+    {
+      "asset": "carriage",
+      "defaultOpen": false,
+      "defaultDogsVisible": false,
+      "defaultMotionEnvelopeActive": false,
+      "sourceCubeCount": 105,
+      "placementMode": "LEGACY_INTEGER_ORIGIN",
+      "sourceAnchorLocal": null,
+      "origin": [
+        -64.0,
+        100.0,
+        64.0
+      ],
+      "staticWorldVisual": [
+        -68.256494375,
+        99.9375,
+        61.40625,
+        -59.256494375,
+        106.625,
+        66.59375
+      ],
+      "physicalBoxes": [
+        [
+          -65.25,
+          100.0,
+          62.75,
+          -62.75,
+          105.0,
+          65.25
+        ]
+      ],
+      "physicalBoxCount": 1,
+      "actorPositivePhysicalOverlap": false,
+      "actorOverlappingBoxes": [],
+      "current6DefaultQueryBounds": [
+        -68.256494375,
+        99.9375,
+        61.40625,
+        -59.256494375,
+        106.625,
+        66.59375
+      ],
+      "current6DefaultHeightGuardRefusal": false,
+      "queryFloorRelation": "Default author pad has native 5x5 support cells X[-66,-62],Z[62,66] atY99; this is a clicked surface, not a requirement for all visual/selection cells to have floor.",
+      "nativeSurfacePreservation": "No native block write by RP placement; visual/selection overlap is not a movement obstruction."
+    },
+    {
+      "asset": "dog_cage",
+      "defaultOpen": false,
+      "defaultDogsVisible": false,
+      "defaultMotionEnvelopeActive": false,
+      "sourceCubeCount": 39,
+      "placementMode": "LEGACY_INTEGER_ORIGIN",
+      "sourceAnchorLocal": null,
+      "origin": [
+        -64.0,
+        100.0,
+        64.0
+      ],
+      "staticWorldVisual": [
+        -66.375,
+        97.5625,
+        62.5625,
+        -61.625,
+        101.5,
+        65.4375
+      ],
+      "physicalBoxes": [
+        [
+          -65.25,
+          100.0,
+          62.75,
+          -62.75,
+          104.5,
+          65.25
+        ]
+      ],
+      "physicalBoxCount": 1,
+      "actorPositivePhysicalOverlap": false,
+      "actorOverlappingBoxes": [],
+      "current6DefaultQueryBounds": [
+        -66.375,
+        97.5625,
+        62.5625,
+        -61.625,
+        104.5,
+        65.4375
+      ],
+      "current6DefaultHeightGuardRefusal": false,
+      "queryFloorRelation": "Default author pad has native 5x5 support cells X[-66,-62],Z[62,66] atY99; this is a clicked surface, not a requirement for all visual/selection cells to have floor.",
+      "nativeSurfacePreservation": "No native block write by RP placement; visual/selection overlap is not a movement obstruction."
+    },
+    {
+      "asset": "dog_cage1",
+      "defaultOpen": false,
+      "defaultDogsVisible": false,
+      "defaultMotionEnvelopeActive": false,
+      "sourceCubeCount": 39,
+      "placementMode": "LEGACY_INTEGER_ORIGIN",
+      "sourceAnchorLocal": null,
+      "origin": [
+        -64.0,
+        100.0,
+        64.0
+      ],
+      "staticWorldVisual": [
+        -66.375,
+        100.0,
+        62.5625,
+        -61.625,
+        103.9375,
+        65.4375
+      ],
+      "physicalBoxes": [
+        [
+          -65.25,
+          100.0,
+          62.75,
+          -62.75,
+          104.5,
+          65.25
+        ]
+      ],
+      "physicalBoxCount": 1,
+      "actorPositivePhysicalOverlap": false,
+      "actorOverlappingBoxes": [],
+      "current6DefaultQueryBounds": [
+        -66.375,
+        100.0,
+        62.5625,
+        -61.625,
+        104.5,
+        65.4375
+      ],
+      "current6DefaultHeightGuardRefusal": false,
+      "queryFloorRelation": "Default author pad has native 5x5 support cells X[-66,-62],Z[62,66] atY99; this is a clicked surface, not a requirement for all visual/selection cells to have floor.",
+      "nativeSurfacePreservation": "No native block write by RP placement; visual/selection overlap is not a movement obstruction."
+    },
+    {
+      "asset": "dog_cage2",
+      "defaultOpen": false,
+      "defaultDogsVisible": false,
+      "defaultMotionEnvelopeActive": false,
+      "sourceCubeCount": 58,
+      "placementMode": "LEGACY_INTEGER_ORIGIN",
+      "sourceAnchorLocal": null,
+      "origin": [
+        -64.0,
+        100.0,
+        64.0
+      ],
+      "staticWorldVisual": [
+        -66.375,
+        100.0,
+        62.14946679351581,
+        -61.625,
+        104.5,
+        65.74313727042953
+      ],
+      "physicalBoxes": [
+        [
+          -65.25,
+          100.0,
+          62.75,
+          -62.75,
+          104.5,
+          65.25
+        ]
+      ],
+      "physicalBoxCount": 1,
+      "actorPositivePhysicalOverlap": false,
+      "actorOverlappingBoxes": [],
+      "current6DefaultQueryBounds": [
+        -66.375,
+        100.0,
+        62.14946679351581,
+        -61.625,
+        104.5,
+        65.74313727042953
+      ],
+      "current6DefaultHeightGuardRefusal": false,
+      "queryFloorRelation": "Default author pad has native 5x5 support cells X[-66,-62],Z[62,66] atY99; this is a clicked surface, not a requirement for all visual/selection cells to have floor.",
+      "nativeSurfacePreservation": "No native block write by RP placement; visual/selection overlap is not a movement obstruction."
+    },
+    {
+      "asset": "dog_cage3",
+      "defaultOpen": false,
+      "defaultDogsVisible": false,
+      "defaultMotionEnvelopeActive": false,
+      "sourceCubeCount": 29,
+      "placementMode": "LEGACY_INTEGER_ORIGIN",
+      "sourceAnchorLocal": null,
+      "origin": [
+        -64.0,
+        100.0,
+        64.0
+      ],
+      "staticWorldVisual": [
+        -66.375,
+        100.0,
+        62.75,
+        -61.625,
+        102.5625,
+        65.25
+      ],
+      "physicalBoxes": [
+        [
+          -65.25,
+          100.0,
+          62.75,
+          -62.75,
+          104.5,
+          65.25
+        ]
+      ],
+      "physicalBoxCount": 1,
+      "actorPositivePhysicalOverlap": false,
+      "actorOverlappingBoxes": [],
+      "current6DefaultQueryBounds": [
+        -66.375,
+        100.0,
+        62.75,
+        -61.625,
+        104.5,
+        65.25
+      ],
+      "current6DefaultHeightGuardRefusal": false,
+      "queryFloorRelation": "Default author pad has native 5x5 support cells X[-66,-62],Z[62,66] atY99; this is a clicked surface, not a requirement for all visual/selection cells to have floor.",
+      "nativeSurfacePreservation": "No native block write by RP placement; visual/selection overlap is not a movement obstruction."
+    },
+    {
+      "asset": "cabriolet_open",
+      "defaultOpen": false,
+      "defaultDogsVisible": false,
+      "defaultMotionEnvelopeActive": false,
+      "sourceCubeCount": 79,
+      "placementMode": "LEGACY_INTEGER_ORIGIN",
+      "sourceAnchorLocal": null,
+      "origin": [
+        -64.0,
+        100.0,
+        64.0
+      ],
+      "staticWorldVisual": [
+        -67.5625,
+        99.8125,
+        62.84375,
+        -61.4375,
+        104.29701054296868,
+        65.15625
+      ],
+      "physicalBoxes": [
+        [
+          -65.25,
+          100.0,
+          62.75,
+          -62.75,
+          103.0,
+          65.25
+        ]
+      ],
+      "physicalBoxCount": 1,
+      "actorPositivePhysicalOverlap": false,
+      "actorOverlappingBoxes": [],
+      "current6DefaultQueryBounds": [
+        -67.5625,
+        99.8125,
+        62.75,
+        -61.4375,
+        104.29701054296868,
+        65.25
+      ],
+      "current6DefaultHeightGuardRefusal": false,
+      "queryFloorRelation": "Default author pad has native 5x5 support cells X[-66,-62],Z[62,66] atY99; this is a clicked surface, not a requirement for all visual/selection cells to have floor.",
+      "nativeSurfacePreservation": "No native block write by RP placement; visual/selection overlap is not a movement obstruction."
+    },
+    {
+      "asset": "cabriolet_closed",
+      "defaultOpen": false,
+      "defaultDogsVisible": false,
+      "defaultMotionEnvelopeActive": false,
+      "sourceCubeCount": 79,
+      "placementMode": "LEGACY_INTEGER_ORIGIN",
+      "sourceAnchorLocal": null,
+      "origin": [
+        -64.0,
+        100.0,
+        64.0
+      ],
+      "staticWorldVisual": [
+        -67.5625,
+        99.8125,
+        62.84375,
+        -61.05508907948971,
+        103.79809584547235,
+        65.15625
+      ],
+      "physicalBoxes": [
+        [
+          -65.25,
+          100.0,
+          62.75,
+          -62.75,
+          103.0,
+          65.25
+        ]
+      ],
+      "physicalBoxCount": 1,
+      "actorPositivePhysicalOverlap": false,
+      "actorOverlappingBoxes": [],
+      "current6DefaultQueryBounds": [
+        -67.5625,
+        99.8125,
+        62.75,
+        -61.05508907948971,
+        103.79809584547235,
+        65.25
+      ],
+      "current6DefaultHeightGuardRefusal": false,
+      "queryFloorRelation": "Default author pad has native 5x5 support cells X[-66,-62],Z[62,66] atY99; this is a clicked surface, not a requirement for all visual/selection cells to have floor.",
+      "nativeSurfacePreservation": "No native block write by RP placement; visual/selection overlap is not a movement obstruction."
+    },
+    {
+      "asset": "door_1",
+      "defaultOpen": false,
+      "defaultDogsVisible": false,
+      "defaultMotionEnvelopeActive": false,
+      "sourceCubeCount": 42,
+      "placementMode": "LEGACY_INTEGER_ORIGIN",
+      "sourceAnchorLocal": null,
+      "origin": [
+        -64.0,
+        100.0,
+        64.0
+      ],
+      "staticWorldVisual": [
+        -64.5,
+        100.0,
+        62.375,
+        -63.5,
+        105.5625,
+        65.625
+      ],
+      "physicalBoxes": [
+        [
+          -65.0,
+          100.0,
+          63.0,
+          -63.0,
+          105.0,
+          65.0
+        ]
+      ],
+      "physicalBoxCount": 1,
+      "actorPositivePhysicalOverlap": false,
+      "actorOverlappingBoxes": [],
+      "current6DefaultQueryBounds": [
+        -65.0,
+        100.0,
+        62.375,
+        -63.0,
+        105.5625,
+        65.625
+      ],
+      "current6DefaultHeightGuardRefusal": false,
+      "queryFloorRelation": "Default author pad has native 5x5 support cells X[-66,-62],Z[62,66] atY99; this is a clicked surface, not a requirement for all visual/selection cells to have floor.",
+      "nativeSurfacePreservation": "No native block write by RP placement; visual/selection overlap is not a movement obstruction."
+    },
+    {
+      "asset": "door_2",
+      "defaultOpen": false,
+      "defaultDogsVisible": false,
+      "defaultMotionEnvelopeActive": false,
+      "sourceCubeCount": 57,
+      "placementMode": "LEGACY_INTEGER_ORIGIN",
+      "sourceAnchorLocal": null,
+      "origin": [
+        -64.0,
+        100.0,
+        64.0
+      ],
+      "staticWorldVisual": [
+        -64.5,
+        100.0,
+        62.03125,
+        -63.5,
+        105.5625,
+        65.90625
+      ],
+      "physicalBoxes": [
+        [
+          -65.25,
+          100.0,
+          62.75,
+          -62.75,
+          105.0,
+          65.25
+        ]
+      ],
+      "physicalBoxCount": 1,
+      "actorPositivePhysicalOverlap": false,
+      "actorOverlappingBoxes": [],
+      "current6DefaultQueryBounds": [
+        -65.25,
+        100.0,
+        62.03125,
+        -62.75,
+        105.5625,
+        65.90625
+      ],
+      "current6DefaultHeightGuardRefusal": false,
+      "queryFloorRelation": "Default author pad has native 5x5 support cells X[-66,-62],Z[62,66] atY99; this is a clicked surface, not a requirement for all visual/selection cells to have floor.",
+      "nativeSurfacePreservation": "No native block write by RP placement; visual/selection overlap is not a movement obstruction."
+    },
+    {
+      "asset": "main_gate",
+      "defaultOpen": false,
+      "defaultDogsVisible": false,
+      "defaultMotionEnvelopeActive": false,
+      "sourceCubeCount": 239,
+      "placementMode": "LEGACY_INTEGER_ORIGIN",
+      "sourceAnchorLocal": null,
+      "origin": [
+        -64.0,
+        100.0,
+        64.0
+      ],
+      "staticWorldVisual": [
+        -65.8125,
+        100.0,
+        57.6875,
+        -62.1875,
+        113.0625,
+        70.3125
+      ],
+      "physicalBoxes": [
+        [
+          -66.375,
+          100.0,
+          61.625,
+          -61.625,
+          112.5,
+          66.375
+        ]
+      ],
+      "physicalBoxCount": 1,
+      "actorPositivePhysicalOverlap": false,
+      "actorOverlappingBoxes": [],
+      "current6DefaultQueryBounds": [
+        -66.375,
+        100.0,
+        57.6875,
+        -61.625,
+        113.0625,
+        70.3125
+      ],
+      "current6DefaultHeightGuardRefusal": false,
+      "queryFloorRelation": "Default author pad has native 5x5 support cells X[-66,-62],Z[62,66] atY99; this is a clicked surface, not a requirement for all visual/selection cells to have floor.",
+      "nativeSurfacePreservation": "No native block write by RP placement; visual/selection overlap is not a movement obstruction."
+    },
+    {
+      "asset": "odeon_tomb",
+      "defaultOpen": false,
+      "defaultDogsVisible": false,
+      "defaultMotionEnvelopeActive": false,
+      "sourceCubeCount": 375,
+      "placementMode": "LEGACY_INTEGER_ORIGIN",
+      "sourceAnchorLocal": null,
+      "origin": [
+        -64.0,
+        100.0,
+        64.0
+      ],
+      "staticWorldVisual": [
+        -67.5,
+        100.0,
+        60.134112448986954,
+        -60.5,
+        119.5,
+        67.5
+      ],
+      "physicalBoxes": [
+        [
+          -67.0,
+          100.0,
+          61.0,
+          -61.0,
+          115.5,
+          67.0
+        ]
+      ],
+      "physicalBoxCount": 1,
+      "actorPositivePhysicalOverlap": false,
+      "actorOverlappingBoxes": [],
+      "current6DefaultQueryBounds": [
+        -67.5,
+        100.0,
+        60.134112448986954,
+        -60.5,
+        119.5,
+        67.5
+      ],
+      "current6DefaultHeightGuardRefusal": false,
+      "queryFloorRelation": "Default author pad has native 5x5 support cells X[-66,-62],Z[62,66] atY99; this is a clicked surface, not a requirement for all visual/selection cells to have floor.",
+      "nativeSurfacePreservation": "No native block write by RP placement; visual/selection overlap is not a movement obstruction."
+    },
+    {
+      "asset": "wood_gate",
+      "defaultOpen": false,
+      "defaultDogsVisible": false,
+      "defaultMotionEnvelopeActive": false,
+      "sourceCubeCount": 59,
+      "placementMode": "REVIEWED_UP_SURFACE_ANCHOR",
+      "sourceAnchorLocal": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "origin": [
+        -63.5,
+        100.0,
+        64.5
+      ],
+      "staticWorldVisual": [
+        -64.5625,
+        100.0,
+        56.8125,
+        -62.4375,
+        116.3125,
+        72.1875
+      ],
+      "physicalBoxes": [
+        [
+          -64.0,
+          101.0,
+          57.0625,
+          -63.0,
+          110.6875,
+          71.9375
+        ]
+      ],
+      "physicalBoxCount": 1,
+      "actorPositivePhysicalOverlap": true,
+      "actorOverlappingBoxes": [
+        [
+          -64.0,
+          101.0,
+          57.0625,
+          -63.0,
+          110.6875,
+          71.9375
+        ]
+      ],
+      "current6DefaultQueryBounds": [
+        -64.5625,
+        100.0,
+        56.8125,
+        -62.4375,
+        116.3125,
+        72.1875
+      ],
+      "current6DefaultHeightGuardRefusal": false,
+      "queryFloorRelation": "Default author pad has native 5x5 support cells X[-66,-62],Z[62,66] atY99; this is a clicked surface, not a requirement for all visual/selection cells to have floor.",
+      "nativeSurfacePreservation": "No native block write by RP placement; visual/selection overlap is not a movement obstruction."
+    },
+    {
+      "asset": "furniture_1",
+      "defaultOpen": false,
+      "defaultDogsVisible": false,
+      "defaultMotionEnvelopeActive": false,
+      "sourceCubeCount": 211,
+      "placementMode": "LEGACY_INTEGER_ORIGIN",
+      "sourceAnchorLocal": null,
+      "origin": [
+        -64.0,
+        100.0,
+        64.0
+      ],
+      "staticWorldVisual": [
+        -64.8359375,
+        100.0,
+        61.90625,
+        -63.1484375,
+        104.1875,
+        66.09375
+      ],
+      "physicalBoxes": [
+        [
+          -65.25,
+          100.0,
+          62.75,
+          -62.75,
+          104.5,
+          65.25
+        ]
+      ],
+      "physicalBoxCount": 1,
+      "actorPositivePhysicalOverlap": false,
+      "actorOverlappingBoxes": [],
+      "current6DefaultQueryBounds": [
+        -65.25,
+        100.0,
+        61.90625,
+        -62.75,
+        104.5,
+        66.09375
+      ],
+      "current6DefaultHeightGuardRefusal": false,
+      "queryFloorRelation": "Default author pad has native 5x5 support cells X[-66,-62],Z[62,66] atY99; this is a clicked surface, not a requirement for all visual/selection cells to have floor.",
+      "nativeSurfacePreservation": "No native block write by RP placement; visual/selection overlap is not a movement obstruction."
+    },
+    {
+      "asset": "furniture_2",
+      "defaultOpen": false,
+      "defaultDogsVisible": false,
+      "defaultMotionEnvelopeActive": false,
+      "sourceCubeCount": 141,
+      "placementMode": "LEGACY_INTEGER_ORIGIN",
+      "sourceAnchorLocal": null,
+      "origin": [
+        -64.0,
+        100.0,
+        64.0
+      ],
+      "staticWorldVisual": [
+        -64.9198675,
+        100.0,
+        62.443631147618326,
+        -63.037055,
+        104.87500003423055,
+        65.55636885238167
+      ],
+      "physicalBoxes": [
+        [
+          -65.25,
+          100.0,
+          62.75,
+          -62.75,
+          104.5,
+          65.25
+        ]
+      ],
+      "physicalBoxCount": 1,
+      "actorPositivePhysicalOverlap": false,
+      "actorOverlappingBoxes": [],
+      "current6DefaultQueryBounds": [
+        -65.25,
+        100.0,
+        62.443631147618326,
+        -62.75,
+        104.87500003423055,
+        65.55636885238167
+      ],
+      "current6DefaultHeightGuardRefusal": false,
+      "queryFloorRelation": "Default author pad has native 5x5 support cells X[-66,-62],Z[62,66] atY99; this is a clicked surface, not a requirement for all visual/selection cells to have floor.",
+      "nativeSurfacePreservation": "No native block write by RP placement; visual/selection overlap is not a movement obstruction."
+    },
+    {
+      "asset": "furniture_10",
+      "defaultOpen": false,
+      "defaultDogsVisible": false,
+      "defaultMotionEnvelopeActive": false,
+      "sourceCubeCount": 247,
+      "placementMode": "LEGACY_INTEGER_ORIGIN",
+      "sourceAnchorLocal": null,
+      "origin": [
+        -64.0,
+        100.0,
+        64.0
+      ],
+      "staticWorldVisual": [
+        -65.2265625,
+        100.0,
+        62.523383125,
+        -62.7890625,
+        105.625,
+        65.523383125
+      ],
+      "physicalBoxes": [
+        [
+          -65.25,
+          100.0,
+          62.75,
+          -62.75,
+          104.5,
+          65.25
+        ]
+      ],
+      "physicalBoxCount": 1,
+      "actorPositivePhysicalOverlap": false,
+      "actorOverlappingBoxes": [],
+      "current6DefaultQueryBounds": [
+        -65.25,
+        100.0,
+        62.523383125,
+        -62.75,
+        105.625,
+        65.523383125
+      ],
+      "current6DefaultHeightGuardRefusal": false,
+      "queryFloorRelation": "Default author pad has native 5x5 support cells X[-66,-62],Z[62,66] atY99; this is a clicked surface, not a requirement for all visual/selection cells to have floor.",
+      "nativeSurfacePreservation": "No native block write by RP placement; visual/selection overlap is not a movement obstruction."
+    },
+    {
+      "asset": "furniture_11",
+      "defaultOpen": false,
+      "defaultDogsVisible": false,
+      "defaultMotionEnvelopeActive": false,
+      "sourceCubeCount": 55,
+      "placementMode": "LEGACY_INTEGER_ORIGIN",
+      "sourceAnchorLocal": null,
+      "origin": [
+        -64.0,
+        100.0,
+        64.0
+      ],
+      "staticWorldVisual": [
+        -64.65688196198894,
+        100.0,
+        62.21875,
+        -63.40625,
+        103.0625,
+        65.78125
+      ],
+      "physicalBoxes": [
+        [
+          -65.25,
+          100.0,
+          62.75,
+          -62.75,
+          104.5,
+          65.25
+        ]
+      ],
+      "physicalBoxCount": 1,
+      "actorPositivePhysicalOverlap": false,
+      "actorOverlappingBoxes": [],
+      "current6DefaultQueryBounds": [
+        -65.25,
+        100.0,
+        62.21875,
+        -62.75,
+        104.5,
+        65.78125
+      ],
+      "current6DefaultHeightGuardRefusal": false,
+      "queryFloorRelation": "Default author pad has native 5x5 support cells X[-66,-62],Z[62,66] atY99; this is a clicked surface, not a requirement for all visual/selection cells to have floor.",
+      "nativeSurfacePreservation": "No native block write by RP placement; visual/selection overlap is not a movement obstruction."
+    },
+    {
+      "asset": "furniture_12",
+      "defaultOpen": false,
+      "defaultDogsVisible": false,
+      "defaultMotionEnvelopeActive": false,
+      "sourceCubeCount": 51,
+      "placementMode": "LEGACY_INTEGER_ORIGIN",
+      "sourceAnchorLocal": null,
+      "origin": [
+        -64.0,
+        100.0,
+        64.0
+      ],
+      "staticWorldVisual": [
+        -64.640625,
+        100.0,
+        63.18996123615969,
+        -63.421875,
+        103.375,
+        64.71411048807444
+      ],
+      "physicalBoxes": [
+        [
+          -65.25,
+          100.0,
+          62.75,
+          -62.75,
+          104.5,
+          65.25
+        ]
+      ],
+      "physicalBoxCount": 1,
+      "actorPositivePhysicalOverlap": false,
+      "actorOverlappingBoxes": [],
+      "current6DefaultQueryBounds": [
+        -65.25,
+        100.0,
+        62.75,
+        -62.75,
+        104.5,
+        65.25
+      ],
+      "current6DefaultHeightGuardRefusal": false,
+      "queryFloorRelation": "Default author pad has native 5x5 support cells X[-66,-62],Z[62,66] atY99; this is a clicked surface, not a requirement for all visual/selection cells to have floor.",
+      "nativeSurfacePreservation": "No native block write by RP placement; visual/selection overlap is not a movement obstruction."
+    },
+    {
+      "asset": "furniture_13",
+      "defaultOpen": false,
+      "defaultDogsVisible": false,
+      "defaultMotionEnvelopeActive": false,
+      "sourceCubeCount": 192,
+      "placementMode": "LEGACY_INTEGER_ORIGIN",
+      "sourceAnchorLocal": null,
+      "origin": [
+        -64.0,
+        100.0,
+        64.0
+      ],
+      "staticWorldVisual": [
+        -64.78016227231745,
+        100.0,
+        62.644075,
+        -63.376886875,
+        103.823275625,
+        65.34852700818637
+      ],
+      "physicalBoxes": [
+        [
+          -65.25,
+          100.0,
+          62.75,
+          -62.75,
+          104.5,
+          65.25
+        ]
+      ],
+      "physicalBoxCount": 1,
+      "actorPositivePhysicalOverlap": false,
+      "actorOverlappingBoxes": [],
+      "current6DefaultQueryBounds": [
+        -65.25,
+        100.0,
+        62.644075,
+        -62.75,
+        104.5,
+        65.34852700818637
+      ],
+      "current6DefaultHeightGuardRefusal": false,
+      "queryFloorRelation": "Default author pad has native 5x5 support cells X[-66,-62],Z[62,66] atY99; this is a clicked surface, not a requirement for all visual/selection cells to have floor.",
+      "nativeSurfacePreservation": "No native block write by RP placement; visual/selection overlap is not a movement obstruction."
+    },
+    {
+      "asset": "furniture_14",
+      "defaultOpen": false,
+      "defaultDogsVisible": false,
+      "defaultMotionEnvelopeActive": false,
+      "sourceCubeCount": 546,
+      "placementMode": "LEGACY_INTEGER_ORIGIN",
+      "sourceAnchorLocal": null,
+      "origin": [
+        -64.0,
+        100.0,
+        64.0
+      ],
+      "staticWorldVisual": [
+        -66.62565625,
+        100.0,
+        61.36625875,
+        -61.37434375,
+        103.83042187361268,
+        66.69510619079031
+      ],
+      "physicalBoxes": [
+        [
+          -65.25,
+          100.0,
+          62.75,
+          -62.75,
+          104.5,
+          65.25
+        ]
+      ],
+      "physicalBoxCount": 1,
+      "actorPositivePhysicalOverlap": false,
+      "actorOverlappingBoxes": [],
+      "current6DefaultQueryBounds": [
+        -66.62565625,
+        100.0,
+        61.36625875,
+        -61.37434375,
+        104.5,
+        66.69510619079031
+      ],
+      "current6DefaultHeightGuardRefusal": false,
+      "queryFloorRelation": "Default author pad has native 5x5 support cells X[-66,-62],Z[62,66] atY99; this is a clicked surface, not a requirement for all visual/selection cells to have floor.",
+      "nativeSurfacePreservation": "No native block write by RP placement; visual/selection overlap is not a movement obstruction."
+    },
+    {
+      "asset": "furniture_15",
+      "defaultOpen": false,
+      "defaultDogsVisible": false,
+      "defaultMotionEnvelopeActive": false,
+      "sourceCubeCount": 115,
+      "placementMode": "LEGACY_INTEGER_ORIGIN",
+      "sourceAnchorLocal": null,
+      "origin": [
+        -64.0,
+        100.0,
+        64.0
+      ],
+      "staticWorldVisual": [
+        -64.8359375,
+        100.0,
+        61.90625,
+        -63.1484375,
+        104.1875,
+        66.09375
+      ],
+      "physicalBoxes": [
+        [
+          -65.25,
+          100.0,
+          62.75,
+          -62.75,
+          104.5,
+          65.25
+        ]
+      ],
+      "physicalBoxCount": 1,
+      "actorPositivePhysicalOverlap": false,
+      "actorOverlappingBoxes": [],
+      "current6DefaultQueryBounds": [
+        -65.25,
+        100.0,
+        61.90625,
+        -62.75,
+        104.5,
+        66.09375
+      ],
+      "current6DefaultHeightGuardRefusal": false,
+      "queryFloorRelation": "Default author pad has native 5x5 support cells X[-66,-62],Z[62,66] atY99; this is a clicked surface, not a requirement for all visual/selection cells to have floor.",
+      "nativeSurfacePreservation": "No native block write by RP placement; visual/selection overlap is not a movement obstruction."
+    },
+    {
+      "asset": "furniture_16",
+      "defaultOpen": false,
+      "defaultDogsVisible": false,
+      "defaultMotionEnvelopeActive": false,
+      "sourceCubeCount": 116,
+      "placementMode": "LEGACY_INTEGER_ORIGIN",
+      "sourceAnchorLocal": null,
+      "origin": [
+        -64.0,
+        100.0,
+        64.0
+      ],
+      "staticWorldVisual": [
+        -65.2265625,
+        100.0,
+        62.523383125,
+        -62.7890625,
+        105.0625,
+        65.523383125
+      ],
+      "physicalBoxes": [
+        [
+          -65.25,
+          100.0,
+          62.75,
+          -62.75,
+          104.5,
+          65.25
+        ]
+      ],
+      "physicalBoxCount": 1,
+      "actorPositivePhysicalOverlap": false,
+      "actorOverlappingBoxes": [],
+      "current6DefaultQueryBounds": [
+        -65.25,
+        100.0,
+        62.523383125,
+        -62.75,
+        105.0625,
+        65.523383125
+      ],
+      "current6DefaultHeightGuardRefusal": false,
+      "queryFloorRelation": "Default author pad has native 5x5 support cells X[-66,-62],Z[62,66] atY99; this is a clicked surface, not a requirement for all visual/selection cells to have floor.",
+      "nativeSurfacePreservation": "No native block write by RP placement; visual/selection overlap is not a movement obstruction."
+    },
+    {
+      "asset": "chandelier_small",
+      "defaultOpen": false,
+      "defaultDogsVisible": false,
+      "defaultMotionEnvelopeActive": false,
+      "sourceCubeCount": 20,
+      "placementMode": "REVIEWED_UP_SURFACE_ANCHOR",
+      "sourceAnchorLocal": [
+        0.0,
+        -0.9375,
+        0.0
+      ],
+      "origin": [
+        -63.5,
+        100.9375,
+        64.5
+      ],
+      "staticWorldVisual": [
+        -64.61796846086229,
+        100.0,
+        63.27695755652644,
+        -62.382031539137714,
+        106.25,
+        65.72304244347356
+      ],
+      "physicalBoxes": [],
+      "physicalBoxCount": 0,
+      "actorPositivePhysicalOverlap": false,
+      "actorOverlappingBoxes": [],
+      "current6DefaultQueryBounds": [
+        -64.61796846086229,
+        100.0,
+        63.27695755652644,
+        -62.382031539137714,
+        106.25,
+        65.72304244347356
+      ],
+      "current6DefaultHeightGuardRefusal": false,
+      "queryFloorRelation": "Default author pad has native 5x5 support cells X[-66,-62],Z[62,66] atY99; this is a clicked surface, not a requirement for all visual/selection cells to have floor.",
+      "nativeSurfacePreservation": "No native block write by RP placement; visual/selection overlap is not a movement obstruction."
+    },
+    {
+      "asset": "chandelier_large",
+      "defaultOpen": false,
+      "defaultDogsVisible": false,
+      "defaultMotionEnvelopeActive": false,
+      "sourceCubeCount": 111,
+      "placementMode": "LEGACY_INTEGER_ORIGIN",
+      "sourceAnchorLocal": null,
+      "origin": [
+        -64.0,
+        94.5,
+        64.0
+      ],
+      "staticWorldVisual": [
+        -67.56227092053369,
+        93.25,
+        60.3125,
+        -60.43772907946631,
+        116.375,
+        67.6875
+      ],
+      "physicalBoxes": [
+        [
+          -65.75,
+          94.5,
+          62.25,
+          -62.25,
+          115.0,
+          65.75
+        ]
+      ],
+      "physicalBoxCount": 1,
+      "actorPositivePhysicalOverlap": false,
+      "actorOverlappingBoxes": [],
+      "current6DefaultQueryBounds": [
+        -67.56227092053369,
+        93.25,
+        60.3125,
+        -60.43772907946631,
+        116.375,
+        67.6875
+      ],
+      "current6DefaultHeightGuardRefusal": false,
+      "queryFloorRelation": "Default author pad has native 5x5 support cells X[-66,-62],Z[62,66] atY99; this is a clicked surface, not a requirement for all visual/selection cells to have floor.",
+      "nativeSurfacePreservation": "No native block write by RP placement; visual/selection overlap is not a movement obstruction."
+    },
+    {
+      "asset": "cross_beast",
+      "defaultOpen": false,
+      "defaultDogsVisible": false,
+      "defaultMotionEnvelopeActive": false,
+      "sourceCubeCount": 198,
+      "placementMode": "LEGACY_INTEGER_ORIGIN",
+      "sourceAnchorLocal": null,
+      "origin": [
+        -64.0,
+        100.0,
+        64.0
+      ],
+      "staticWorldVisual": [
+        -66.05972584895613,
+        99.84933233223083,
+        61.6792510308348,
+        -62.48058145583248,
+        105.10925239909423,
+        65.51941854416752
+      ],
+      "physicalBoxes": [
+        [
+          -64.20000000298023,
+          100.0,
+          63.79999999701977,
+          -63.79999999701977,
+          108.0,
+          64.20000000298023
+        ]
+      ],
+      "physicalBoxCount": 1,
+      "actorPositivePhysicalOverlap": false,
+      "actorOverlappingBoxes": [],
+      "current6DefaultQueryBounds": [
+        -66.05972584895613,
+        99.84933233223083,
+        61.6792510308348,
+        -62.48058145583248,
+        108.0,
+        65.51941854416752
+      ],
+      "current6DefaultHeightGuardRefusal": false,
+      "queryFloorRelation": "Default author pad has native 5x5 support cells X[-66,-62],Z[62,66] atY99; this is a clicked surface, not a requirement for all visual/selection cells to have floor.",
+      "nativeSurfacePreservation": "No native block write by RP placement; visual/selection overlap is not a movement obstruction."
+    },
+    {
+      "asset": "statue_1",
+      "defaultOpen": false,
+      "defaultDogsVisible": false,
+      "defaultMotionEnvelopeActive": false,
+      "sourceCubeCount": 34,
+      "placementMode": "LEGACY_INTEGER_ORIGIN",
+      "sourceAnchorLocal": null,
+      "origin": [
+        -64.0,
+        100.0,
+        64.0
+      ],
+      "staticWorldVisual": [
+        -64.84375,
+        100.0,
+        63.15625,
+        -63.15625,
+        107.30565708383935,
+        64.84375
+      ],
+      "physicalBoxes": [
+        [
+          -64.64999997615814,
+          100.0,
+          63.35000002384186,
+          -63.35000002384186,
+          107.5,
+          64.64999997615814
+        ]
+      ],
+      "physicalBoxCount": 1,
+      "actorPositivePhysicalOverlap": false,
+      "actorOverlappingBoxes": [],
+      "current6DefaultQueryBounds": [
+        -64.84375,
+        100.0,
+        63.15625,
+        -63.15625,
+        107.5,
+        64.84375
+      ],
+      "current6DefaultHeightGuardRefusal": false,
+      "queryFloorRelation": "Default author pad has native 5x5 support cells X[-66,-62],Z[62,66] atY99; this is a clicked surface, not a requirement for all visual/selection cells to have floor.",
+      "nativeSurfacePreservation": "No native block write by RP placement; visual/selection overlap is not a movement obstruction."
+    },
+    {
+      "asset": "lever_1",
+      "defaultOpen": false,
+      "defaultDogsVisible": false,
+      "defaultMotionEnvelopeActive": false,
+      "sourceCubeCount": 31,
+      "placementMode": "LEGACY_INTEGER_ORIGIN",
+      "sourceAnchorLocal": null,
+      "origin": [
+        -64.0,
+        100.0,
+        64.0
+      ],
+      "staticWorldVisual": [
+        -64.9,
+        99.79396,
+        63.525,
+        -62.8,
+        102.04338537042057,
+        64.475
+      ],
+      "physicalBoxes": [
+        [
+          -64.75,
+          100.0,
+          63.25,
+          -63.25,
+          101.20000004768372,
+          64.75
+        ]
+      ],
+      "physicalBoxCount": 1,
+      "actorPositivePhysicalOverlap": false,
+      "actorOverlappingBoxes": [],
+      "current6DefaultQueryBounds": [
+        -64.9,
+        99.79396,
+        63.25,
+        -62.8,
+        102.04338537042057,
+        64.75
+      ],
+      "current6DefaultHeightGuardRefusal": false,
+      "queryFloorRelation": "Default author pad has native 5x5 support cells X[-66,-62],Z[62,66] atY99; this is a clicked surface, not a requirement for all visual/selection cells to have floor.",
+      "nativeSurfacePreservation": "No native block write by RP placement; visual/selection overlap is not a movement obstruction."
+    },
+    {
+      "asset": "lever_2",
+      "defaultOpen": false,
+      "defaultDogsVisible": false,
+      "defaultMotionEnvelopeActive": false,
+      "sourceCubeCount": 17,
+      "placementMode": "LEGACY_INTEGER_ORIGIN",
+      "sourceAnchorLocal": null,
+      "origin": [
+        -64.0,
+        100.0,
+        64.0
+      ],
+      "staticWorldVisual": [
+        -64.5,
+        99.875,
+        62.86863880447491,
+        -63.5,
+        101.90229289358422,
+        64.78125
+      ],
+      "physicalBoxes": [
+        [
+          -64.75,
+          100.0,
+          63.25,
+          -63.25,
+          101.20000004768372,
+          64.75
+        ]
+      ],
+      "physicalBoxCount": 1,
+      "actorPositivePhysicalOverlap": false,
+      "actorOverlappingBoxes": [],
+      "current6DefaultQueryBounds": [
+        -64.75,
+        99.875,
+        62.86863880447491,
+        -63.25,
+        101.90229289358422,
+        64.78125
+      ],
+      "current6DefaultHeightGuardRefusal": false,
+      "queryFloorRelation": "Default author pad has native 5x5 support cells X[-66,-62],Z[62,66] atY99; this is a clicked surface, not a requirement for all visual/selection cells to have floor.",
+      "nativeSurfacePreservation": "No native block write by RP placement; visual/selection overlap is not a movement obstruction."
+    },
+    {
+      "asset": "wheelchair",
+      "defaultOpen": false,
+      "defaultDogsVisible": false,
+      "defaultMotionEnvelopeActive": false,
+      "sourceCubeCount": 17,
+      "placementMode": "LEGACY_INTEGER_ORIGIN",
+      "sourceAnchorLocal": null,
+      "origin": [
+        -64.0,
+        100.0,
+        64.0
+      ],
+      "staticWorldVisual": [
+        -65.6875,
+        99.9375,
+        63.40625,
+        -63.21875,
+        102.3311357122541,
+        64.59375
+      ],
+      "physicalBoxes": [
+        [
+          -64.55000001192093,
+          100.0,
+          63.44999998807907,
+          -63.44999998807907,
+          102.0,
+          64.55000001192093
+        ]
+      ],
+      "physicalBoxCount": 1,
+      "actorPositivePhysicalOverlap": false,
+      "actorOverlappingBoxes": [],
+      "current6DefaultQueryBounds": [
+        -65.6875,
+        99.9375,
+        63.40625,
+        -63.21875,
+        102.3311357122541,
+        64.59375
+      ],
+      "current6DefaultHeightGuardRefusal": false,
+      "queryFloorRelation": "Default author pad has native 5x5 support cells X[-66,-62],Z[62,66] atY99; this is a clicked surface, not a requirement for all visual/selection cells to have floor.",
+      "nativeSurfacePreservation": "No native block write by RP placement; visual/selection overlap is not a movement obstruction."
+    },
+    {
+      "asset": "smallcross",
+      "defaultOpen": false,
+      "defaultDogsVisible": false,
+      "defaultMotionEnvelopeActive": false,
+      "sourceCubeCount": 218,
+      "placementMode": "LEGACY_INTEGER_ORIGIN",
+      "sourceAnchorLocal": null,
+      "origin": [
+        -64.0,
+        100.0,
+        64.0
+      ],
+      "staticWorldVisual": [
+        -65.71377657618706,
+        99.662165625,
+        61.63002016894408,
+        -62.987900166449364,
+        105.44250151802217,
+        66.43469655554524
+      ],
+      "physicalBoxes": [
+        [
+          -64.25,
+          100.0,
+          63.75,
+          -63.75,
+          105.0,
+          64.25
+        ]
+      ],
+      "physicalBoxCount": 1,
+      "actorPositivePhysicalOverlap": false,
+      "actorOverlappingBoxes": [],
+      "current6DefaultQueryBounds": [
+        -65.71377657618706,
+        99.662165625,
+        61.63002016894408,
+        -62.987900166449364,
+        105.44250151802217,
+        66.43469655554524
+      ],
+      "current6DefaultHeightGuardRefusal": false,
+      "queryFloorRelation": "Default author pad has native 5x5 support cells X[-66,-62],Z[62,66] atY99; this is a clicked surface, not a requirement for all visual/selection cells to have floor.",
+      "nativeSurfacePreservation": "No native block write by RP placement; visual/selection overlap is not a movement obstruction."
+    },
+    {
+      "asset": "curtainsmall",
+      "defaultOpen": false,
+      "defaultDogsVisible": false,
+      "defaultMotionEnvelopeActive": false,
+      "sourceCubeCount": 7,
+      "placementMode": "LEGACY_INTEGER_ORIGIN",
+      "sourceAnchorLocal": null,
+      "origin": [
+        -64.0,
+        100.0,
+        64.0
+      ],
+      "staticWorldVisual": [
+        -64.0,
+        100.015625,
+        62.375,
+        -63.855583739263764,
+        103.65625,
+        65.625
+      ],
+      "physicalBoxes": [],
+      "physicalBoxCount": 0,
+      "actorPositivePhysicalOverlap": false,
+      "actorOverlappingBoxes": [],
+      "current6DefaultQueryBounds": [
+        -64.0,
+        100.015625,
+        62.375,
+        -63.855583739263764,
+        103.65625,
+        65.625
+      ],
+      "current6DefaultHeightGuardRefusal": false,
+      "queryFloorRelation": "Default author pad has native 5x5 support cells X[-66,-62],Z[62,66] atY99; this is a clicked surface, not a requirement for all visual/selection cells to have floor.",
+      "nativeSurfacePreservation": "No native block write by RP placement; visual/selection overlap is not a movement obstruction."
+    },
+    {
+      "asset": "hunterlamp",
+      "defaultOpen": false,
+      "defaultDogsVisible": false,
+      "defaultMotionEnvelopeActive": false,
+      "sourceCubeCount": 23,
+      "placementMode": "LEGACY_INTEGER_ORIGIN",
+      "sourceAnchorLocal": null,
+      "origin": [
+        -64.0,
+        100.0,
+        64.0
+      ],
+      "staticWorldVisual": [
+        -64.33043828589211,
+        99.893638125,
+        63.717659058021155,
+        -63.53125,
+        101.90908511495165,
+        64.34484094197884
+      ],
+      "physicalBoxes": [
+        [
+          -64.20000000298023,
+          100.0,
+          63.79999999701977,
+          -63.79999999701977,
+          101.70000004768372,
+          64.20000000298023
+        ]
+      ],
+      "physicalBoxCount": 1,
+      "actorPositivePhysicalOverlap": false,
+      "actorOverlappingBoxes": [],
+      "current6DefaultQueryBounds": [
+        -64.33043828589211,
+        99.893638125,
+        63.717659058021155,
+        -63.53125,
+        101.90908511495165,
+        64.34484094197884
+      ],
+      "current6DefaultHeightGuardRefusal": false,
+      "queryFloorRelation": "Default author pad has native 5x5 support cells X[-66,-62],Z[62,66] atY99; this is a clicked surface, not a requirement for all visual/selection cells to have floor.",
+      "nativeSurfacePreservation": "No native block write by RP placement; visual/selection overlap is not a movement obstruction."
+    },
+    {
+      "asset": "lamp_npc",
+      "defaultOpen": false,
+      "defaultDogsVisible": false,
+      "defaultMotionEnvelopeActive": false,
+      "sourceCubeCount": 6,
+      "placementMode": "LEGACY_INTEGER_ORIGIN",
+      "sourceAnchorLocal": null,
+      "origin": [
+        -64.0,
+        100.0,
+        64.0
+      ],
+      "staticWorldVisual": [
+        -64.1875,
+        100.0,
+        63.8125,
+        -63.8125,
+        101.25,
+        64.1875
+      ],
+      "physicalBoxes": [
+        [
+          -64.25,
+          100.0,
+          63.75,
+          -63.75,
+          101.0,
+          64.25
+        ]
+      ],
+      "physicalBoxCount": 1,
+      "actorPositivePhysicalOverlap": false,
+      "actorOverlappingBoxes": [],
+      "current6DefaultQueryBounds": [
+        -64.25,
+        100.0,
+        63.75,
+        -63.75,
+        101.25,
+        64.25
+      ],
+      "current6DefaultHeightGuardRefusal": false,
+      "queryFloorRelation": "Default author pad has native 5x5 support cells X[-66,-62],Z[62,66] atY99; this is a clicked surface, not a requirement for all visual/selection cells to have floor.",
+      "nativeSurfacePreservation": "No native block write by RP placement; visual/selection overlap is not a movement obstruction."
+    },
+    {
+      "asset": "furniture_pantry",
+      "defaultOpen": false,
+      "defaultDogsVisible": false,
+      "defaultMotionEnvelopeActive": false,
+      "sourceCubeCount": 46,
+      "placementMode": "LEGACY_INTEGER_ORIGIN",
+      "sourceAnchorLocal": null,
+      "origin": [
+        -64.0,
+        100.0,
+        64.0
+      ],
+      "staticWorldVisual": [
+        -65.25,
+        100.0,
+        62.0,
+        -62.75,
+        105.4375,
+        66.0
+      ],
+      "physicalBoxes": [
+        [
+          -65.0,
+          100.0,
+          63.0,
+          -63.0,
+          105.5,
+          65.0
+        ]
+      ],
+      "physicalBoxCount": 1,
+      "actorPositivePhysicalOverlap": false,
+      "actorOverlappingBoxes": [],
+      "current6DefaultQueryBounds": [
+        -65.25,
+        100.0,
+        62.0,
+        -62.75,
+        105.5,
+        66.0
+      ],
+      "current6DefaultHeightGuardRefusal": false,
+      "queryFloorRelation": "Default author pad has native 5x5 support cells X[-66,-62],Z[62,66] atY99; this is a clicked surface, not a requirement for all visual/selection cells to have floor.",
+      "nativeSurfacePreservation": "No native block write by RP placement; visual/selection overlap is not a movement obstruction."
+    },
+    {
+      "asset": "furniture_cabinet_pantry",
+      "defaultOpen": false,
+      "defaultDogsVisible": false,
+      "defaultMotionEnvelopeActive": false,
+      "sourceCubeCount": 193,
+      "placementMode": "LEGACY_INTEGER_ORIGIN",
+      "sourceAnchorLocal": null,
+      "origin": [
+        -64.0,
+        100.0,
+        64.0
+      ],
+      "staticWorldVisual": [
+        -65.59375,
+        100.0,
+        60.78125,
+        -62.40625,
+        105.81422486644115,
+        67.21875
+      ],
+      "physicalBoxes": [
+        [
+          -65.5,
+          100.0,
+          62.5,
+          -62.5,
+          105.0,
+          65.5
+        ]
+      ],
+      "physicalBoxCount": 1,
+      "actorPositivePhysicalOverlap": false,
+      "actorOverlappingBoxes": [],
+      "current6DefaultQueryBounds": [
+        -65.59375,
+        100.0,
+        60.78125,
+        -62.40625,
+        105.81422486644115,
+        67.21875
+      ],
+      "current6DefaultHeightGuardRefusal": false,
+      "queryFloorRelation": "Default author pad has native 5x5 support cells X[-66,-62],Z[62,66] atY99; this is a clicked surface, not a requirement for all visual/selection cells to have floor.",
+      "nativeSurfacePreservation": "No native block write by RP placement; visual/selection overlap is not a movement obstruction."
+    },
+    {
+      "asset": "gate_empty",
+      "defaultOpen": false,
+      "defaultDogsVisible": false,
+      "defaultMotionEnvelopeActive": false,
+      "sourceCubeCount": 237,
+      "placementMode": "LEGACY_INTEGER_ORIGIN",
+      "sourceAnchorLocal": null,
+      "origin": [
+        -64.0,
+        100.0,
+        64.0
+      ],
+      "staticWorldVisual": [
+        -65.8125,
+        100.0,
+        57.6875,
+        -62.1875,
+        113.0625,
+        70.3125
+      ],
+      "physicalBoxes": [],
+      "physicalBoxCount": 0,
+      "actorPositivePhysicalOverlap": false,
+      "actorOverlappingBoxes": [],
+      "current6DefaultQueryBounds": [
+        -65.8125,
+        100.0,
+        57.6875,
+        -62.1875,
+        113.0625,
+        70.3125
+      ],
+      "current6DefaultHeightGuardRefusal": false,
+      "queryFloorRelation": "Default author pad has native 5x5 support cells X[-66,-62],Z[62,66] atY99; this is a clicked surface, not a requirement for all visual/selection cells to have floor.",
+      "nativeSurfacePreservation": "No native block write by RP placement; visual/selection overlap is not a movement obstruction."
+    },
+    {
+      "asset": "small_gate",
+      "defaultOpen": false,
+      "defaultDogsVisible": false,
+      "defaultMotionEnvelopeActive": false,
+      "sourceCubeCount": 75,
+      "placementMode": "LEGACY_INTEGER_ORIGIN",
+      "sourceAnchorLocal": null,
+      "origin": [
+        -64.0,
+        100.0,
+        64.0
+      ],
+      "staticWorldVisual": [
+        -64.8125,
+        100.0,
+        60.6875,
+        -63.1875,
+        107.25,
+        67.3125
+      ],
+      "physicalBoxes": [
+        [
+          -65.25,
+          100.0,
+          62.75,
+          -62.75,
+          106.0,
+          65.25
+        ]
+      ],
+      "physicalBoxCount": 1,
+      "actorPositivePhysicalOverlap": false,
+      "actorOverlappingBoxes": [],
+      "current6DefaultQueryBounds": [
+        -65.25,
+        100.0,
+        60.6875,
+        -62.75,
+        107.25,
+        67.3125
+      ],
+      "current6DefaultHeightGuardRefusal": false,
+      "queryFloorRelation": "Default author pad has native 5x5 support cells X[-66,-62],Z[62,66] atY99; this is a clicked surface, not a requirement for all visual/selection cells to have floor.",
+      "nativeSurfacePreservation": "No native block write by RP placement; visual/selection overlap is not a movement obstruction."
+    },
+    {
+      "asset": "trapdoor",
+      "defaultOpen": false,
+      "defaultDogsVisible": false,
+      "defaultMotionEnvelopeActive": false,
+      "sourceCubeCount": 18,
+      "placementMode": "LEGACY_INTEGER_ORIGIN",
+      "sourceAnchorLocal": null,
+      "origin": [
+        -64.0,
+        100.0,
+        64.0
+      ],
+      "staticWorldVisual": [
+        -66.375,
+        100.0,
+        61.625,
+        -61.625,
+        104.28425841560326,
+        66.375
+      ],
+      "physicalBoxes": [],
+      "physicalBoxCount": 0,
+      "actorPositivePhysicalOverlap": false,
+      "actorOverlappingBoxes": [],
+      "current6DefaultQueryBounds": [
+        -66.375,
+        100.0,
+        61.625,
+        -61.625,
+        104.28425841560326,
+        66.375
+      ],
+      "current6DefaultHeightGuardRefusal": false,
+      "queryFloorRelation": "Default author pad has native 5x5 support cells X[-66,-62],Z[62,66] atY99; this is a clicked surface, not a requirement for all visual/selection cells to have floor.",
+      "nativeSurfacePreservation": "No native block write by RP placement; visual/selection overlap is not a movement obstruction."
+    },
+    {
+      "asset": "stairs",
+      "defaultOpen": false,
+      "defaultDogsVisible": false,
+      "defaultMotionEnvelopeActive": false,
+      "sourceCubeCount": 360,
+      "placementMode": "REVIEWED_UP_SURFACE_ANCHOR",
+      "sourceAnchorLocal": [
+        0,
+        -12,
+        -13.3125
+      ],
+      "origin": [
+        -50.1875,
+        112.0,
+        64.5
+      ],
+      "staticWorldVisual": [
+        -65.75,
+        99.44419625,
+        62.75,
+        -49.0,
+        114.875,
+        66.25
+      ],
+      "physicalBoxes": [
+        [
+          -53.25,
+          110.0,
+          63.0,
+          -52.75,
+          111.0,
+          66.0
+        ],
+        [
+          -53.75,
+          110.0,
+          63.0,
+          -53.25,
+          110.5,
+          66.0
+        ],
+        [
+          -52.25,
+          111.0,
+          63.0,
+          -51.75,
+          112.0,
+          66.0
+        ],
+        [
+          -52.75,
+          111.0,
+          63.0,
+          -52.25,
+          111.5,
+          66.0
+        ],
+        [
+          -51.25,
+          112.0,
+          63.0,
+          -50.75,
+          113.0,
+          66.0
+        ],
+        [
+          -51.75,
+          112.0,
+          63.0,
+          -51.25,
+          112.5,
+          66.0
+        ],
+        [
+          -54.75,
+          109.0,
+          63.0,
+          -54.25,
+          109.5,
+          66.0
+        ],
+        [
+          -54.25,
+          109.0,
+          63.0,
+          -53.75,
+          110.0,
+          66.0
+        ],
+        [
+          -55.75,
+          108.0,
+          63.0,
+          -55.25,
+          108.5,
+          66.0
+        ],
+        [
+          -55.25,
+          108.0,
+          63.0,
+          -54.75,
+          109.0,
+          66.0
+        ],
+        [
+          -56.75,
+          107.0,
+          63.0,
+          -56.25,
+          107.5,
+          66.0
+        ],
+        [
+          -56.25,
+          107.0,
+          63.0,
+          -55.75,
+          108.0,
+          66.0
+        ],
+        [
+          -59.75,
+          104.0,
+          63.0,
+          -59.25,
+          104.5,
+          66.0
+        ],
+        [
+          -58.25,
+          105.0,
+          63.0,
+          -57.75,
+          106.0,
+          66.0
+        ],
+        [
+          -58.75,
+          105.0,
+          63.0,
+          -58.25,
+          105.5,
+          66.0
+        ],
+        [
+          -57.25,
+          106.0,
+          63.0,
+          -56.75,
+          107.0,
+          66.0
+        ],
+        [
+          -57.75,
+          106.0,
+          63.0,
+          -57.25,
+          106.5,
+          66.0
+        ],
+        [
+          -60.75,
+          103.0,
+          63.0,
+          -60.25,
+          103.5,
+          66.0
+        ],
+        [
+          -60.25,
+          103.0,
+          63.0,
+          -59.75,
+          104.0,
+          66.0
+        ],
+        [
+          -61.75,
+          102.0,
+          63.0,
+          -61.25,
+          102.5,
+          66.0
+        ],
+        [
+          -59.25,
+          104.0,
+          63.0,
+          -58.75,
+          105.0,
+          66.0
+        ],
+        [
+          -61.25,
+          102.0,
+          63.0,
+          -60.75,
+          103.0,
+          66.0
+        ],
+        [
+          -62.25,
+          101.0,
+          63.0,
+          -61.75,
+          102.0,
+          66.0
+        ],
+        [
+          -62.75,
+          101.0,
+          63.0,
+          -62.25,
+          101.5,
+          66.0
+        ],
+        [
+          -63.75,
+          100.0,
+          63.0,
+          -63.25,
+          100.5,
+          66.0
+        ],
+        [
+          -63.25,
+          100.0,
+          63.0,
+          -62.75,
+          101.0,
+          66.0
+        ]
+      ],
+      "physicalBoxCount": 26,
+      "actorPositivePhysicalOverlap": false,
+      "actorOverlappingBoxes": [],
+      "current6DefaultQueryBounds": [
+        -65.75,
+        99.44419625,
+        62.75,
+        -49.0,
+        114.875,
+        66.25
+      ],
+      "current6DefaultHeightGuardRefusal": false,
+      "queryFloorRelation": "Default author pad has native 5x5 support cells X[-66,-62],Z[62,66] atY99; this is a clicked surface, not a requirement for all visual/selection cells to have floor.",
+      "nativeSurfacePreservation": "No native block write by RP placement; visual/selection overlap is not a movement obstruction."
+    },
+    {
+      "asset": "long_table",
+      "defaultOpen": false,
+      "defaultDogsVisible": false,
+      "defaultMotionEnvelopeActive": false,
+      "sourceCubeCount": 25,
+      "placementMode": "LEGACY_INTEGER_ORIGIN",
+      "sourceAnchorLocal": null,
+      "origin": [
+        -64.0,
+        100.0,
+        64.0
+      ],
+      "staticWorldVisual": [
+        -65.21115785298564,
+        100.0,
+        60.67913910299933,
+        -62.90625,
+        101.378125,
+        67.1875
+      ],
+      "physicalBoxes": [
+        [
+          -64.75,
+          100.0,
+          63.25,
+          -63.25,
+          101.20000004768372,
+          64.75
+        ]
+      ],
+      "physicalBoxCount": 1,
+      "actorPositivePhysicalOverlap": false,
+      "actorOverlappingBoxes": [],
+      "current6DefaultQueryBounds": [
+        -65.21115785298564,
+        100.0,
+        60.67913910299933,
+        -62.90625,
+        101.378125,
+        67.1875
+      ],
+      "current6DefaultHeightGuardRefusal": false,
+      "queryFloorRelation": "Default author pad has native 5x5 support cells X[-66,-62],Z[62,66] atY99; this is a clicked surface, not a requirement for all visual/selection cells to have floor.",
+      "nativeSurfacePreservation": "No native block write by RP placement; visual/selection overlap is not a movement obstruction."
+    },
+    {
+      "asset": "hook",
+      "defaultOpen": false,
+      "defaultDogsVisible": false,
+      "defaultMotionEnvelopeActive": false,
+      "sourceCubeCount": 56,
+      "placementMode": "LEGACY_INTEGER_ORIGIN",
+      "sourceAnchorLocal": null,
+      "origin": [
+        -64.0,
+        100.0,
+        64.0
+      ],
+      "staticWorldVisual": [
+        -66.59375,
+        98.75,
+        62.46875,
+        -62.5,
+        106.375,
+        65.53125
+      ],
+      "physicalBoxes": [
+        [
+          -64.75,
+          100.0,
+          63.25,
+          -63.25,
+          106.5,
+          64.75
+        ]
+      ],
+      "physicalBoxCount": 1,
+      "actorPositivePhysicalOverlap": false,
+      "actorOverlappingBoxes": [],
+      "current6DefaultQueryBounds": [
+        -66.59375,
+        98.75,
+        62.46875,
+        -62.5,
+        106.5,
+        65.53125
+      ],
+      "current6DefaultHeightGuardRefusal": false,
+      "queryFloorRelation": "Default author pad has native 5x5 support cells X[-66,-62],Z[62,66] atY99; this is a clicked surface, not a requirement for all visual/selection cells to have floor.",
+      "nativeSurfacePreservation": "No native block write by RP placement; visual/selection overlap is not a movement obstruction."
+    },
+    {
+      "asset": "furniture_books",
+      "defaultOpen": false,
+      "defaultDogsVisible": false,
+      "defaultMotionEnvelopeActive": false,
+      "sourceCubeCount": 115,
+      "placementMode": "LEGACY_INTEGER_ORIGIN",
+      "sourceAnchorLocal": null,
+      "origin": [
+        -64.0,
+        100.0,
+        64.0
+      ],
+      "staticWorldVisual": [
+        -64.8359375,
+        100.0,
+        61.90625,
+        -63.1484375,
+        104.1875,
+        66.09375
+      ],
+      "physicalBoxes": [
+        [
+          -64.75,
+          100.0,
+          63.25,
+          -63.25,
+          104.19999980926514,
+          64.75
+        ]
+      ],
+      "physicalBoxCount": 1,
+      "actorPositivePhysicalOverlap": false,
+      "actorOverlappingBoxes": [],
+      "current6DefaultQueryBounds": [
+        -64.8359375,
+        100.0,
+        61.90625,
+        -63.1484375,
+        104.19999980926514,
+        66.09375
+      ],
+      "current6DefaultHeightGuardRefusal": false,
+      "queryFloorRelation": "Default author pad has native 5x5 support cells X[-66,-62],Z[62,66] atY99; this is a clicked surface, not a requirement for all visual/selection cells to have floor.",
+      "nativeSurfacePreservation": "No native block write by RP placement; visual/selection overlap is not a movement obstruction."
+    },
+    {
+      "asset": "door_empty",
+      "defaultOpen": false,
+      "defaultDogsVisible": false,
+      "defaultMotionEnvelopeActive": false,
+      "sourceCubeCount": 27,
+      "placementMode": "LEGACY_INTEGER_ORIGIN",
+      "sourceAnchorLocal": null,
+      "origin": [
+        -64.0,
+        100.0,
+        64.0
+      ],
+      "staticWorldVisual": [
+        -64.5,
+        100.0,
+        62.375,
+        -63.5,
+        105.5625,
+        65.625
+      ],
+      "physicalBoxes": [],
+      "physicalBoxCount": 0,
+      "actorPositivePhysicalOverlap": false,
+      "actorOverlappingBoxes": [],
+      "current6DefaultQueryBounds": [
+        -64.5,
+        100.0,
+        62.375,
+        -63.5,
+        105.5625,
+        65.625
+      ],
+      "current6DefaultHeightGuardRefusal": false,
+      "queryFloorRelation": "Default author pad has native 5x5 support cells X[-66,-62],Z[62,66] atY99; this is a clicked surface, not a requirement for all visual/selection cells to have floor.",
+      "nativeSurfacePreservation": "No native block write by RP placement; visual/selection overlap is not a movement obstruction."
+    },
+    {
+      "asset": "curtain_half",
+      "defaultOpen": false,
+      "defaultDogsVisible": false,
+      "defaultMotionEnvelopeActive": false,
+      "sourceCubeCount": 14,
+      "placementMode": "LEGACY_INTEGER_ORIGIN",
+      "sourceAnchorLocal": null,
+      "origin": [
+        -64.0,
+        100.0,
+        64.0
+      ],
+      "staticWorldVisual": [
+        -64.25,
+        100.1875,
+        62.0,
+        -63.75,
+        107.0625,
+        66.0
+      ],
+      "physicalBoxes": [],
+      "physicalBoxCount": 0,
+      "actorPositivePhysicalOverlap": false,
+      "actorOverlappingBoxes": [],
+      "current6DefaultQueryBounds": [
+        -64.25,
+        100.1875,
+        62.0,
+        -63.75,
+        107.0625,
+        66.0
+      ],
+      "current6DefaultHeightGuardRefusal": false,
+      "queryFloorRelation": "Default author pad has native 5x5 support cells X[-66,-62],Z[62,66] atY99; this is a clicked surface, not a requirement for all visual/selection cells to have floor.",
+      "nativeSurfacePreservation": "No native block write by RP placement; visual/selection overlap is not a movement obstruction."
+    },
+    {
+      "asset": "coffin_stand",
+      "defaultOpen": false,
+      "defaultDogsVisible": false,
+      "defaultMotionEnvelopeActive": false,
+      "sourceCubeCount": 67,
+      "placementMode": "LEGACY_INTEGER_ORIGIN",
+      "sourceAnchorLocal": null,
+      "origin": [
+        -64.0,
+        100.0,
+        64.0
+      ],
+      "staticWorldVisual": [
+        -65.234375,
+        100.0,
+        63.03125,
+        -62.734375,
+        105.0,
+        64.96875
+      ],
+      "physicalBoxes": [
+        [
+          -64.75,
+          100.0,
+          63.25,
+          -63.25,
+          105.0,
+          64.75
+        ]
+      ],
+      "physicalBoxCount": 1,
+      "actorPositivePhysicalOverlap": false,
+      "actorOverlappingBoxes": [],
+      "current6DefaultQueryBounds": [
+        -65.234375,
+        100.0,
+        63.03125,
+        -62.734375,
+        105.0,
+        64.96875
+      ],
+      "current6DefaultHeightGuardRefusal": false,
+      "queryFloorRelation": "Default author pad has native 5x5 support cells X[-66,-62],Z[62,66] atY99; this is a clicked surface, not a requirement for all visual/selection cells to have floor.",
+      "nativeSurfacePreservation": "No native block write by RP placement; visual/selection overlap is not a movement obstruction."
+    },
+    {
+      "asset": "chest",
+      "defaultOpen": false,
+      "defaultDogsVisible": false,
+      "defaultMotionEnvelopeActive": false,
+      "sourceCubeCount": 40,
+      "placementMode": "LEGACY_INTEGER_ORIGIN",
+      "sourceAnchorLocal": null,
+      "origin": [
+        -64.0,
+        100.0,
+        64.0
+      ],
+      "staticWorldVisual": [
+        -64.625,
+        100.0,
+        63.125,
+        -63.5,
+        101.15625,
+        64.875
+      ],
+      "physicalBoxes": [
+        [
+          -64.75,
+          100.0,
+          63.25,
+          -63.25,
+          101.10000002384186,
+          64.75
+        ]
+      ],
+      "physicalBoxCount": 1,
+      "actorPositivePhysicalOverlap": false,
+      "actorOverlappingBoxes": [],
+      "current6DefaultQueryBounds": [
+        -64.75,
+        100.0,
+        63.125,
+        -63.25,
+        101.15625,
+        64.875
+      ],
+      "current6DefaultHeightGuardRefusal": false,
+      "queryFloorRelation": "Default author pad has native 5x5 support cells X[-66,-62],Z[62,66] atY99; this is a clicked surface, not a requirement for all visual/selection cells to have floor.",
+      "nativeSurfacePreservation": "No native block write by RP placement; visual/selection overlap is not a movement obstruction."
+    },
+    {
+      "asset": "boat",
+      "defaultOpen": false,
+      "defaultDogsVisible": false,
+      "defaultMotionEnvelopeActive": false,
+      "sourceCubeCount": 93,
+      "placementMode": "LEGACY_INTEGER_ORIGIN",
+      "sourceAnchorLocal": null,
+      "origin": [
+        -64.0,
+        100.0,
+        64.0
+      ],
+      "staticWorldVisual": [
+        -68.88464082449916,
+        99.973431875,
+        62.37657628447757,
+        -59.11535917550084,
+        101.75,
+        65.62342371731243
+      ],
+      "physicalBoxes": [
+        [
+          -65.0,
+          100.0,
+          63.0,
+          -63.0,
+          101.5,
+          65.0
+        ]
+      ],
+      "physicalBoxCount": 1,
+      "actorPositivePhysicalOverlap": false,
+      "actorOverlappingBoxes": [],
+      "current6DefaultQueryBounds": [
+        -68.88464082449916,
+        99.973431875,
+        62.37657628447757,
+        -59.11535917550084,
+        101.75,
+        65.62342371731243
+      ],
+      "current6DefaultHeightGuardRefusal": false,
+      "queryFloorRelation": "Default author pad has native 5x5 support cells X[-66,-62],Z[62,66] atY99; this is a clicked surface, not a requirement for all visual/selection cells to have floor.",
+      "nativeSurfacePreservation": "No native block write by RP placement; visual/selection overlap is not a movement obstruction."
+    },
+    {
+      "asset": "babycart",
+      "defaultOpen": false,
+      "defaultDogsVisible": false,
+      "defaultMotionEnvelopeActive": false,
+      "sourceCubeCount": 29,
+      "placementMode": "LEGACY_INTEGER_ORIGIN",
+      "sourceAnchorLocal": null,
+      "origin": [
+        -64.0,
+        100.0,
+        64.0
+      ],
+      "staticWorldVisual": [
+        -65.46875,
+        99.96823167744571,
+        63.4375,
+        -62.84375,
+        102.375,
+        64.5625
+      ],
+      "physicalBoxes": [
+        [
+          -64.60000002384186,
+          100.0,
+          63.39999997615814,
+          -63.39999997615814,
+          102.0,
+          64.60000002384186
+        ]
+      ],
+      "physicalBoxCount": 1,
+      "actorPositivePhysicalOverlap": false,
+      "actorOverlappingBoxes": [],
+      "current6DefaultQueryBounds": [
+        -65.46875,
+        99.96823167744571,
+        63.39999997615814,
+        -62.84375,
+        102.375,
+        64.60000002384186
+      ],
+      "current6DefaultHeightGuardRefusal": false,
+      "queryFloorRelation": "Default author pad has native 5x5 support cells X[-66,-62],Z[62,66] atY99; this is a clicked surface, not a requirement for all visual/selection cells to have floor.",
+      "nativeSurfacePreservation": "No native block write by RP placement; visual/selection overlap is not a movement obstruction."
+    },
+    {
+      "asset": "chair",
+      "defaultOpen": false,
+      "defaultDogsVisible": false,
+      "defaultMotionEnvelopeActive": false,
+      "sourceCubeCount": 14,
+      "placementMode": "LEGACY_INTEGER_ORIGIN",
+      "sourceAnchorLocal": null,
+      "origin": [
+        -64.0,
+        100.0,
+        64.0
+      ],
+      "staticWorldVisual": [
+        -64.54822741234587,
+        100.0,
+        63.42824685643154,
+        -63.28775281386536,
+        101.875,
+        64.57175314356846
+      ],
+      "physicalBoxes": [
+        [
+          -64.60000002384186,
+          100.0,
+          63.39999997615814,
+          -63.39999997615814,
+          101.70000004768372,
+          64.60000002384186
+        ]
+      ],
+      "physicalBoxCount": 1,
+      "actorPositivePhysicalOverlap": false,
+      "actorOverlappingBoxes": [],
+      "current6DefaultQueryBounds": [
+        -64.60000002384186,
+        100.0,
+        63.39999997615814,
+        -63.28775281386536,
+        101.875,
+        64.60000002384186
+      ],
+      "current6DefaultHeightGuardRefusal": false,
+      "queryFloorRelation": "Default author pad has native 5x5 support cells X[-66,-62],Z[62,66] atY99; this is a clicked surface, not a requirement for all visual/selection cells to have floor.",
+      "nativeSurfacePreservation": "No native block write by RP placement; visual/selection overlap is not a movement obstruction."
+    },
+    {
+      "asset": "coffin_1",
+      "defaultOpen": false,
+      "defaultDogsVisible": false,
+      "defaultMotionEnvelopeActive": false,
+      "sourceCubeCount": 14,
+      "placementMode": "LEGACY_INTEGER_ORIGIN",
+      "sourceAnchorLocal": null,
+      "origin": [
+        -64.0,
+        100.0,
+        64.0
+      ],
+      "staticWorldVisual": [
+        -64.96870669014129,
+        99.9549620861955,
+        63.23626874717703,
+        -63.03129330985871,
+        102.58493410352762,
+        64.53915005632373
+      ],
+      "physicalBoxes": [
+        [
+          -64.60000002384186,
+          100.0,
+          63.39999997615814,
+          -63.39999997615814,
+          102.40000009536743,
+          64.60000002384186
+        ]
+      ],
+      "physicalBoxCount": 1,
+      "actorPositivePhysicalOverlap": false,
+      "actorOverlappingBoxes": [],
+      "current6DefaultQueryBounds": [
+        -64.96870669014129,
+        99.9549620861955,
+        63.23626874717703,
+        -63.03129330985871,
+        102.58493410352762,
+        64.60000002384186
+      ],
+      "current6DefaultHeightGuardRefusal": false,
+      "queryFloorRelation": "Default author pad has native 5x5 support cells X[-66,-62],Z[62,66] atY99; this is a clicked surface, not a requirement for all visual/selection cells to have floor.",
+      "nativeSurfacePreservation": "No native block write by RP placement; visual/selection overlap is not a movement obstruction."
+    },
+    {
+      "asset": "coffin_2",
+      "defaultOpen": false,
+      "defaultDogsVisible": false,
+      "defaultMotionEnvelopeActive": false,
+      "sourceCubeCount": 13,
+      "placementMode": "LEGACY_INTEGER_ORIGIN",
+      "sourceAnchorLocal": null,
+      "origin": [
+        -64.0,
+        100.0,
+        64.0
+      ],
+      "staticWorldVisual": [
+        -64.72627002147247,
+        99.86993961184373,
+        63.12777657588289,
+        -63.27372997852752,
+        102.92457259597548,
+        64.32506937199595
+      ],
+      "physicalBoxes": [
+        [
+          -64.60000002384186,
+          100.0,
+          63.39999997615814,
+          -63.39999997615814,
+          102.40000009536743,
+          64.60000002384186
+        ]
+      ],
+      "physicalBoxCount": 1,
+      "actorPositivePhysicalOverlap": false,
+      "actorOverlappingBoxes": [],
+      "current6DefaultQueryBounds": [
+        -64.72627002147247,
+        99.86993961184373,
+        63.12777657588289,
+        -63.27372997852752,
+        102.92457259597548,
+        64.60000002384186
+      ],
+      "current6DefaultHeightGuardRefusal": false,
+      "queryFloorRelation": "Default author pad has native 5x5 support cells X[-66,-62],Z[62,66] atY99; this is a clicked surface, not a requirement for all visual/selection cells to have floor.",
+      "nativeSurfacePreservation": "No native block write by RP placement; visual/selection overlap is not a movement obstruction."
+    },
+    {
+      "asset": "coffin_3",
+      "defaultOpen": false,
+      "defaultDogsVisible": false,
+      "defaultMotionEnvelopeActive": false,
+      "sourceCubeCount": 12,
+      "placementMode": "LEGACY_INTEGER_ORIGIN",
+      "sourceAnchorLocal": null,
+      "origin": [
+        -64.0,
+        100.0,
+        64.0
+      ],
+      "staticWorldVisual": [
+        -64.659755625,
+        99.9458614800566,
+        63.22096338727852,
+        -63.347255625,
+        102.84239215560268,
+        64.40910857872261
+      ],
+      "physicalBoxes": [
+        [
+          -64.60000002384186,
+          100.0,
+          63.39999997615814,
+          -63.39999997615814,
+          102.40000009536743,
+          64.60000002384186
+        ]
+      ],
+      "physicalBoxCount": 1,
+      "actorPositivePhysicalOverlap": false,
+      "actorOverlappingBoxes": [],
+      "current6DefaultQueryBounds": [
+        -64.659755625,
+        99.9458614800566,
+        63.22096338727852,
+        -63.347255625,
+        102.84239215560268,
+        64.60000002384186
+      ],
+      "current6DefaultHeightGuardRefusal": false,
+      "queryFloorRelation": "Default author pad has native 5x5 support cells X[-66,-62],Z[62,66] atY99; this is a clicked surface, not a requirement for all visual/selection cells to have floor.",
+      "nativeSurfacePreservation": "No native block write by RP placement; visual/selection overlap is not a movement obstruction."
+    },
+    {
+      "asset": "coffins_1",
+      "defaultOpen": false,
+      "defaultDogsVisible": false,
+      "defaultMotionEnvelopeActive": false,
+      "sourceCubeCount": 27,
+      "placementMode": "LEGACY_INTEGER_ORIGIN",
+      "sourceAnchorLocal": null,
+      "origin": [
+        -64.0,
+        100.0,
+        64.0
+      ],
+      "staticWorldVisual": [
+        -65.35127002147247,
+        99.86993961184373,
+        63.12777657588289,
+        -62.40629330985871,
+        102.92457259597548,
+        64.53915005632373
+      ],
+      "physicalBoxes": [
+        [
+          -64.60000002384186,
+          100.0,
+          63.39999997615814,
+          -63.39999997615814,
+          102.40000009536743,
+          64.60000002384186
+        ]
+      ],
+      "physicalBoxCount": 1,
+      "actorPositivePhysicalOverlap": false,
+      "actorOverlappingBoxes": [],
+      "current6DefaultQueryBounds": [
+        -65.35127002147247,
+        99.86993961184373,
+        63.12777657588289,
+        -62.40629330985871,
+        102.92457259597548,
+        64.60000002384186
+      ],
+      "current6DefaultHeightGuardRefusal": false,
+      "queryFloorRelation": "Default author pad has native 5x5 support cells X[-66,-62],Z[62,66] atY99; this is a clicked surface, not a requirement for all visual/selection cells to have floor.",
+      "nativeSurfacePreservation": "No native block write by RP placement; visual/selection overlap is not a movement obstruction."
+    },
+    {
+      "asset": "coffins_2",
+      "defaultOpen": false,
+      "defaultDogsVisible": false,
+      "defaultMotionEnvelopeActive": false,
+      "sourceCubeCount": 27,
+      "placementMode": "LEGACY_INTEGER_ORIGIN",
+      "sourceAnchorLocal": null,
+      "origin": [
+        -64.0,
+        100.0,
+        64.0
+      ],
+      "staticWorldVisual": [
+        -65.65620669014129,
+        99.86993961184373,
+        63.12777657588289,
+        -62.64872997852752,
+        102.92457259597548,
+        64.53915005632373
+      ],
+      "physicalBoxes": [
+        [
+          -64.60000002384186,
+          100.0,
+          63.39999997615814,
+          -63.39999997615814,
+          102.40000009536743,
+          64.60000002384186
+        ]
+      ],
+      "physicalBoxCount": 1,
+      "actorPositivePhysicalOverlap": false,
+      "actorOverlappingBoxes": [],
+      "current6DefaultQueryBounds": [
+        -65.65620669014129,
+        99.86993961184373,
+        63.12777657588289,
+        -62.64872997852752,
+        102.92457259597548,
+        64.60000002384186
+      ],
+      "current6DefaultHeightGuardRefusal": false,
+      "queryFloorRelation": "Default author pad has native 5x5 support cells X[-66,-62],Z[62,66] atY99; this is a clicked surface, not a requirement for all visual/selection cells to have floor.",
+      "nativeSurfacePreservation": "No native block write by RP placement; visual/selection overlap is not a movement obstruction."
+    },
+    {
+      "asset": "coffins_3",
+      "defaultOpen": false,
+      "defaultDogsVisible": false,
+      "defaultMotionEnvelopeActive": false,
+      "sourceCubeCount": 24,
+      "placementMode": "LEGACY_INTEGER_ORIGIN",
+      "sourceAnchorLocal": null,
+      "origin": [
+        -64.0,
+        100.0,
+        64.0
+      ],
+      "staticWorldVisual": [
+        -65.284755625,
+        99.9458614337453,
+        63.104511991152116,
+        -62.62658444173653,
+        102.84239220778775,
+        64.40910857872261
+      ],
+      "physicalBoxes": [
+        [
+          -64.60000002384186,
+          100.0,
+          63.39999997615814,
+          -63.39999997615814,
+          102.40000009536743,
+          64.60000002384186
+        ]
+      ],
+      "physicalBoxCount": 1,
+      "actorPositivePhysicalOverlap": false,
+      "actorOverlappingBoxes": [],
+      "current6DefaultQueryBounds": [
+        -65.284755625,
+        99.9458614337453,
+        63.104511991152116,
+        -62.62658444173653,
+        102.84239220778775,
+        64.60000002384186
+      ],
+      "current6DefaultHeightGuardRefusal": false,
+      "queryFloorRelation": "Default author pad has native 5x5 support cells X[-66,-62],Z[62,66] atY99; this is a clicked surface, not a requirement for all visual/selection cells to have floor.",
+      "nativeSurfacePreservation": "No native block write by RP placement; visual/selection overlap is not a movement obstruction."
+    },
+    {
+      "asset": "coffins_4",
+      "defaultOpen": false,
+      "defaultDogsVisible": false,
+      "defaultMotionEnvelopeActive": false,
+      "sourceCubeCount": 25,
+      "placementMode": "LEGACY_INTEGER_ORIGIN",
+      "sourceAnchorLocal": null,
+      "origin": [
+        -64.0,
+        100.0,
+        64.0
+      ],
+      "staticWorldVisual": [
+        -65.35127002147247,
+        99.86993961184373,
+        63.104511991152116,
+        -62.62658444173653,
+        102.92457259597548,
+        64.40252787895653
+      ],
+      "physicalBoxes": [
+        [
+          -64.60000002384186,
+          100.0,
+          63.39999997615814,
+          -63.39999997615814,
+          102.40000009536743,
+          64.60000002384186
+        ]
+      ],
+      "physicalBoxCount": 1,
+      "actorPositivePhysicalOverlap": false,
+      "actorOverlappingBoxes": [],
+      "current6DefaultQueryBounds": [
+        -65.35127002147247,
+        99.86993961184373,
+        63.104511991152116,
+        -62.62658444173653,
+        102.92457259597548,
+        64.60000002384186
+      ],
+      "current6DefaultHeightGuardRefusal": false,
+      "queryFloorRelation": "Default author pad has native 5x5 support cells X[-66,-62],Z[62,66] atY99; this is a clicked surface, not a requirement for all visual/selection cells to have floor.",
+      "nativeSurfacePreservation": "No native block write by RP placement; visual/selection overlap is not a movement obstruction."
+    },
+    {
+      "asset": "coffins_5",
+      "defaultOpen": false,
+      "defaultDogsVisible": false,
+      "defaultMotionEnvelopeActive": false,
+      "sourceCubeCount": 25,
+      "placementMode": "LEGACY_INTEGER_ORIGIN",
+      "sourceAnchorLocal": null,
+      "origin": [
+        -64.0,
+        100.0,
+        64.0
+      ],
+      "staticWorldVisual": [
+        -65.53673604432343,
+        99.7767913003052,
+        63.06452667396869,
+        -62.39090895764592,
+        102.99488592624512,
+        64.45181744025207
+      ],
+      "physicalBoxes": [
+        [
+          -64.60000002384186,
+          100.0,
+          63.39999997615814,
+          -63.39999997615814,
+          102.40000009536743,
+          64.60000002384186
+        ]
+      ],
+      "physicalBoxCount": 1,
+      "actorPositivePhysicalOverlap": false,
+      "actorOverlappingBoxes": [],
+      "current6DefaultQueryBounds": [
+        -65.53673604432343,
+        99.7767913003052,
+        63.06452667396869,
+        -62.39090895764592,
+        102.99488592624512,
+        64.60000002384186
+      ],
+      "current6DefaultHeightGuardRefusal": false,
+      "queryFloorRelation": "Default author pad has native 5x5 support cells X[-66,-62],Z[62,66] atY99; this is a clicked surface, not a requirement for all visual/selection cells to have floor.",
+      "nativeSurfacePreservation": "No native block write by RP placement; visual/selection overlap is not a movement obstruction."
+    },
+    {
+      "asset": "horse_carcass",
+      "defaultOpen": false,
+      "defaultDogsVisible": false,
+      "defaultMotionEnvelopeActive": false,
+      "sourceCubeCount": 53,
+      "placementMode": "LEGACY_INTEGER_ORIGIN",
+      "sourceAnchorLocal": null,
+      "origin": [
+        -64.0,
+        100.0,
+        64.0
+      ],
+      "staticWorldVisual": [
+        -67.59375,
+        99.625,
+        60.968523125,
+        -60.03125,
+        101.79576945662545,
+        66.843523125
+      ],
+      "physicalBoxes": [
+        [
+          -65.25,
+          100.0,
+          62.75,
+          -62.75,
+          101.0,
+          65.25
+        ]
+      ],
+      "physicalBoxCount": 1,
+      "actorPositivePhysicalOverlap": false,
+      "actorOverlappingBoxes": [],
+      "current6DefaultQueryBounds": [
+        -67.59375,
+        99.625,
+        60.968523125,
+        -60.03125,
+        101.79576945662545,
+        66.843523125
+      ],
+      "current6DefaultHeightGuardRefusal": false,
+      "queryFloorRelation": "Default author pad has native 5x5 support cells X[-66,-62],Z[62,66] atY99; this is a clicked surface, not a requirement for all visual/selection cells to have floor.",
+      "nativeSurfacePreservation": "No native block write by RP placement; visual/selection overlap is not a movement obstruction."
+    },
+    {
+      "asset": "elevator",
+      "defaultOpen": false,
+      "defaultDogsVisible": false,
+      "defaultMotionEnvelopeActive": false,
+      "sourceCubeCount": 478,
+      "placementMode": "LEGACY_INTEGER_ORIGIN",
+      "sourceAnchorLocal": null,
+      "origin": [
+        -64.0,
+        100.0,
+        64.0
+      ],
+      "staticWorldVisual": [
+        -68.640625,
+        68.0,
+        61.0,
+        -59.609375,
+        110.5625,
+        67.559611875
+      ],
+      "physicalBoxes": [
+        [
+          -66.25,
+          100.0,
+          61.75,
+          -61.75,
+          145.0,
+          66.25
+        ]
+      ],
+      "physicalBoxCount": 1,
+      "actorPositivePhysicalOverlap": false,
+      "actorOverlappingBoxes": [],
+      "current6DefaultQueryBounds": [
+        -68.640625,
+        68.0,
+        61.0,
+        -59.609375,
+        145.0,
+        67.559611875
+      ],
+      "current6DefaultHeightGuardRefusal": false,
+      "queryFloorRelation": "Default author pad has native 5x5 support cells X[-66,-62],Z[62,66] atY99; this is a clicked surface, not a requirement for all visual/selection cells to have floor.",
+      "nativeSurfacePreservation": "No native block write by RP placement; visual/selection overlap is not a movement obstruction."
+    },
+    {
+      "asset": "ladder",
+      "defaultOpen": true,
+      "defaultDogsVisible": false,
+      "defaultMotionEnvelopeActive": true,
+      "sourceCubeCount": 28,
+      "placementMode": "REVIEWED_UP_SURFACE_ANCHOR",
+      "sourceAnchorLocal": [
+        0,
+        -29.5625,
+        -1.546875
+      ],
+      "origin": [
+        -61.953125,
+        129.5625,
+        64.5
+      ],
+      "staticWorldVisual": [
+        -63.6875,
+        100.0,
+        63.75,
+        -59.703125,
+        131.5625,
+        65.25
+      ],
+      "physicalBoxes": [
+        [
+          -63.5625,
+          117.5625,
+          63.9375,
+          -63.4375,
+          130.4375,
+          65.0625
+        ],
+        [
+          -63.5625,
+          100.0,
+          63.9375,
+          -63.4375,
+          117.5625,
+          65.0625
+        ],
+        [
+          -63.453125,
+          130.25,
+          63.8125,
+          -60.453125,
+          130.3125,
+          65.1875
+        ]
+      ],
+      "physicalBoxCount": 3,
+      "actorPositivePhysicalOverlap": false,
+      "actorOverlappingBoxes": [],
+      "current6DefaultQueryBounds": [
+        -63.6875,
+        100.0,
+        63.75,
+        -59.703125,
+        131.5625,
+        65.25
+      ],
+      "current6DefaultHeightGuardRefusal": false,
+      "queryFloorRelation": "Default author pad has native 5x5 support cells X[-66,-62],Z[62,66] atY99; this is a clicked surface, not a requirement for all visual/selection cells to have floor.",
+      "nativeSurfacePreservation": "No native block write by RP placement; visual/selection overlap is not a movement obstruction."
+    },
+    {
+      "asset": "npc_window",
+      "defaultOpen": false,
+      "defaultDogsVisible": false,
+      "defaultMotionEnvelopeActive": false,
+      "sourceCubeCount": 27,
+      "placementMode": "REVIEWED_UP_SURFACE_ANCHOR",
+      "sourceAnchorLocal": [
+        0.0,
+        -1.875,
+        0.78125
+      ],
+      "origin": [
+        -64.28125,
+        101.875,
+        64.5
+      ],
+      "staticWorldVisual": [
+        -64.03125,
+        100.0,
+        63.1875,
+        -62.96875,
+        104.03125,
+        65.8125
+      ],
+      "physicalBoxes": [
+        [
+          -63.53125,
+          100.0,
+          63.46875,
+          -63.34375,
+          104.03125,
+          65.53125
+        ]
+      ],
+      "physicalBoxCount": 1,
+      "actorPositivePhysicalOverlap": false,
+      "actorOverlappingBoxes": [],
+      "current6DefaultQueryBounds": [
+        -64.03125,
+        100.0,
+        63.1875,
+        -62.96875,
+        104.03125,
+        65.8125
+      ],
+      "current6DefaultHeightGuardRefusal": false,
+      "queryFloorRelation": "Default author pad has native 5x5 support cells X[-66,-62],Z[62,66] atY99; this is a clicked surface, not a requirement for all visual/selection cells to have floor.",
+      "nativeSurfacePreservation": "No native block write by RP placement; visual/selection overlap is not a movement obstruction."
+    },
+    {
+      "asset": "curtains",
+      "defaultOpen": false,
+      "defaultDogsVisible": false,
+      "defaultMotionEnvelopeActive": false,
+      "sourceCubeCount": 14,
+      "placementMode": "LEGACY_INTEGER_ORIGIN",
+      "sourceAnchorLocal": null,
+      "origin": [
+        -64.0,
+        100.0,
+        64.0
+      ],
+      "staticWorldVisual": [
+        -64.25,
+        100.1875,
+        59.5,
+        -63.75,
+        107.0625,
+        68.5
+      ],
+      "physicalBoxes": [],
+      "physicalBoxCount": 0,
+      "actorPositivePhysicalOverlap": false,
+      "actorOverlappingBoxes": [],
+      "current6DefaultQueryBounds": [
+        -64.25,
+        100.1875,
+        59.5,
+        -63.75,
+        107.0625,
+        68.5
+      ],
+      "current6DefaultHeightGuardRefusal": false,
+      "queryFloorRelation": "Default author pad has native 5x5 support cells X[-66,-62],Z[62,66] atY99; this is a clicked surface, not a requirement for all visual/selection cells to have floor.",
+      "nativeSurfacePreservation": "No native block write by RP placement; visual/selection overlap is not a movement obstruction."
+    },
+    {
+      "asset": "ropes",
+      "defaultOpen": false,
+      "defaultDogsVisible": false,
+      "defaultMotionEnvelopeActive": false,
+      "sourceCubeCount": 78,
+      "placementMode": "LEGACY_INTEGER_ORIGIN",
+      "sourceAnchorLocal": null,
+      "origin": [
+        -64.0,
+        100.0,
+        64.0
+      ],
+      "staticWorldVisual": [
+        -69.6761040066007,
+        98.0,
+        59.0,
+        -59.07389599339931,
+        103.625,
+        69.0636205035495
+      ],
+      "physicalBoxes": [
+        [
+          -65.0,
+          100.0,
+          63.0,
+          -63.0,
+          102.0,
+          65.0
+        ]
+      ],
+      "physicalBoxCount": 1,
+      "actorPositivePhysicalOverlap": false,
+      "actorOverlappingBoxes": [],
+      "current6DefaultQueryBounds": [
+        -69.6761040066007,
+        98.0,
+        59.0,
+        -59.07389599339931,
+        103.625,
+        69.0636205035495
+      ],
+      "current6DefaultHeightGuardRefusal": false,
+      "queryFloorRelation": "Default author pad has native 5x5 support cells X[-66,-62],Z[62,66] atY99; this is a clicked surface, not a requirement for all visual/selection cells to have floor.",
+      "nativeSurfacePreservation": "No native block write by RP placement; visual/selection overlap is not a movement obstruction."
+    },
+    {
+      "asset": "tree1",
+      "defaultOpen": false,
+      "defaultDogsVisible": false,
+      "defaultMotionEnvelopeActive": false,
+      "sourceCubeCount": 87,
+      "placementMode": "LEGACY_INTEGER_ORIGIN",
+      "sourceAnchorLocal": null,
+      "origin": [
+        -64.0,
+        100.0,
+        64.0
+      ],
+      "staticWorldVisual": [
+        -68.88995881229943,
+        99.26483889399434,
+        58.8073125,
+        -58.57613216306008,
+        116.86895797594308,
+        70.3698125
+      ],
+      "physicalBoxes": [
+        [
+          -64.69999998807907,
+          100.0,
+          63.30000001192093,
+          -63.30000001192093,
+          107.0,
+          64.69999998807907
+        ]
+      ],
+      "physicalBoxCount": 1,
+      "actorPositivePhysicalOverlap": false,
+      "actorOverlappingBoxes": [],
+      "current6DefaultQueryBounds": [
+        -68.88995881229943,
+        99.26483889399434,
+        58.8073125,
+        -58.57613216306008,
+        116.86895797594308,
+        70.3698125
+      ],
+      "current6DefaultHeightGuardRefusal": false,
+      "queryFloorRelation": "Default author pad has native 5x5 support cells X[-66,-62],Z[62,66] atY99; this is a clicked surface, not a requirement for all visual/selection cells to have floor.",
+      "nativeSurfacePreservation": "No native block write by RP placement; visual/selection overlap is not a movement obstruction."
+    },
+    {
+      "asset": "tree2",
+      "defaultOpen": false,
+      "defaultDogsVisible": false,
+      "defaultMotionEnvelopeActive": false,
+      "sourceCubeCount": 86,
+      "placementMode": "LEGACY_INTEGER_ORIGIN",
+      "sourceAnchorLocal": null,
+      "origin": [
+        -64.0,
+        100.0,
+        64.0
+      ],
+      "staticWorldVisual": [
+        -70.06218894856235,
+        99.26483889399434,
+        58.845871192391016,
+        -59.61369191201692,
+        111.875,
+        69.74519752909694
+      ],
+      "physicalBoxes": [
+        [
+          -64.69999998807907,
+          100.0,
+          63.30000001192093,
+          -63.30000001192093,
+          107.0,
+          64.69999998807907
+        ]
+      ],
+      "physicalBoxCount": 1,
+      "actorPositivePhysicalOverlap": false,
+      "actorOverlappingBoxes": [],
+      "current6DefaultQueryBounds": [
+        -70.06218894856235,
+        99.26483889399434,
+        58.845871192391016,
+        -59.61369191201692,
+        111.875,
+        69.74519752909694
+      ],
+      "current6DefaultHeightGuardRefusal": false,
+      "queryFloorRelation": "Default author pad has native 5x5 support cells X[-66,-62],Z[62,66] atY99; this is a clicked surface, not a requirement for all visual/selection cells to have floor.",
+      "nativeSurfacePreservation": "No native block write by RP placement; visual/selection overlap is not a movement obstruction."
+    },
+    {
+      "asset": "tree3",
+      "defaultOpen": false,
+      "defaultDogsVisible": false,
+      "defaultMotionEnvelopeActive": false,
+      "sourceCubeCount": 87,
+      "placementMode": "LEGACY_INTEGER_ORIGIN",
+      "sourceAnchorLocal": null,
+      "origin": [
+        -64.0,
+        100.0,
+        64.0
+      ],
+      "staticWorldVisual": [
+        -69.26165644660222,
+        99.26483889399434,
+        59.295732848556646,
+        -58.426206518852744,
+        112.38779388673692,
+        69.9024391099217
+      ],
+      "physicalBoxes": [
+        [
+          -64.69999998807907,
+          100.0,
+          63.30000001192093,
+          -63.30000001192093,
+          107.0,
+          64.69999998807907
+        ]
+      ],
+      "physicalBoxCount": 1,
+      "actorPositivePhysicalOverlap": false,
+      "actorOverlappingBoxes": [],
+      "current6DefaultQueryBounds": [
+        -69.26165644660222,
+        99.26483889399434,
+        59.295732848556646,
+        -58.426206518852744,
+        112.38779388673692,
+        69.9024391099217
+      ],
+      "current6DefaultHeightGuardRefusal": false,
+      "queryFloorRelation": "Default author pad has native 5x5 support cells X[-66,-62],Z[62,66] atY99; this is a clicked surface, not a requirement for all visual/selection cells to have floor.",
+      "nativeSurfacePreservation": "No native block write by RP placement; visual/selection overlap is not a movement obstruction."
+    }
+  ],
+  "catalogueScope": {
+    "temporaryTableRows": 118,
+    "kindCounts": {
+      "architecture": 18,
+      "technical_tool": 2,
+      "rp_object": 76,
+      "rp_mob": 18,
+      "rp_item": 4
+    },
+    "canonicalConstructionRpTypes": 69,
+    "retainedDuplicateRpAliases": 7,
+    "architectureCanonicalTypes": 18,
+    "independentOfferedTemporaryRows": 111,
+    "temporaryFinalNumericIdsAssigned": false,
+    "originalModelRecords": 1121,
+    "unreferencedGeometryRecords": 87,
+    "candidateEvidenceClassificationCounts": {
+      "ambiguous": 11,
+      "confirmed_template": 13,
+      "exact_duplicate": 18,
+      "finished_candidate": 923,
+      "missing": 15,
+      "part": 141
+    },
+    "originalIndependentObjectCount": null,
+    "originalIndependentObjectCountStatus": "NOT_FINALIZED",
+    "currentScope": "18 architectural types plus canonical retained RP object/mob/item resources; bounded new stand and historical source41-member110 derivative only, not complete source city conversion.",
+    "remaining": [
+      "Finalize independent source object membership/assemblies/material forms; one model is not one object.",
+      "Resolve original missing dependencies and ambiguous/unreferenced candidates with evidence.",
+      "Freeze final numeric IDs and explicit all-source migration map.",
+      "Full-city gameplay/permissions/lighting/entities/foreignNBT/reopen validation and user art/visual acceptance."
+    ]
+  },
+  "limitations": [
+    "This derives boxes from source resources and declared legacy dimensions; no Minecraft actor pose or native obstruction result is fabricated.",
+    "Source motion report reproduces candidate6; proposed source geometry correction is owned separately and requires new freeze/runtime proof.",
+    "Chunk rectangle is a bounded loaded-check cost, not a claim that this method loads or generates those chunks.",
+    "No global performance/FPS/whole-catalogue gameplay claim follows from cube counts or static bounds.",
+    "Default ordinary stack has no custom Open/Scale/DogsVisible tags. Picked altered stacks and all active animations require separate states/runtime checks."
+  ]
+}
