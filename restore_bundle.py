@@ -32,8 +32,10 @@ def main():
         for i,row in enumerate(manifest['files'],1):
             rel=PurePosixPath(row['path']);assert not rel.is_absolute() and '..' not in rel.parts and all(':' not in p for p in rel.parts),'Unsafe restore path'
             out=target.joinpath(*rel.parts) if target else None
+            if out:assert out.resolve().is_relative_to(target),'Restore path crosses a junction or symlink outside target'
             if out and out.exists():
                 assert out.is_file() and out.stat().st_size==row['bytes'] and digest(out)==row['sha256'],'Refusing to overwrite differing file: '+str(out)
+                os.utime(out,ns=(row['mtimeNs'],row['mtimeNs']))
                 continue
             h=hashlib.sha256();count=0
             if out:
