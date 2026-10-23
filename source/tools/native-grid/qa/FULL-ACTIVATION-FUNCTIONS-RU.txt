@@ -1,0 +1,59 @@
+FULL после activation: адресное дополнение функций и свойств
+
+Инструмент: tools/native-grid/qa/full_activation_functions.py.
+Исходный full_native_functions.py f42425c3... и принятый native-functions-final.json
+35394c6c... (3337 exact states) остаются неизменными. Этот инструмент ещё НЕ запускался.
+Реальные действия выполняет root через Guard.ps1 -Mode Operation; команды ниже —
+аргументы Python из source, только после завершённого compose и фиксации SHA.
+
+1. Snapshot готовых производных входов, без нового census:
+
+python tools/native-grid/qa/full_activation_functions.py snapshot --prior-full-gate ../research/native-grid-plan/full/native-functions-final.json --prior-full-sha256 35394c6c93ae00202070a17fb362ce0e453c433008d10be02631800d6f0672e5 --plan ../research/native-grid-plan --compositions ../research/native-grid-plan/compositions.jsonl --raw-sha256 <FINAL_RAW_SHA> --coverage ../research/native-grid-plan/full-native-input-coverage.json --coverage-sha256 <FINAL_COVERAGE_SHA> --native-needed ../research/native-grid-plan/native-states-needed.json --native-needed-sha256 <FINAL_NEEDED_SHA> --out ../research/native-grid-plan/full/post-activation-inputs.json
+
+Только SAME plan.sqlite в mode=ro/query_only: meta и bridge_cells JOIN placements.
+Без objects, old.chunk_cache, fragments.sqlite, worldfiles и discovery. RAW читается
+потоком для exact baseState и witness composition keys. counts мостов сравниваются
+с final coverage, полные строки мостов получают SHA256. Требуются FULL до apply,
+sourceBinding, неизменный импортированный gate и compositionGeneration текущей БД,
+согласованные RAW/native-needed/coverage. Ошибка/старый provisional queued report
+не заменяют FINAL snapshot. BLOCKED_FINITE_INPUTS coverage допустим как вход для
+подготовки недостающих функций; его экспортные/физические проблемы не скрываются.
+
+2. File-only supplement, новые имена выходов обязательны:
+
+python tools/native-grid/qa/full_activation_functions.py produce --prior-full-gate ../research/native-grid-plan/full/native-functions-final.json --prior-full-sha256 35394c6c93ae00202070a17fb362ce0e453c433008d10be02631800d6f0672e5 --input ../research/native-grid-plan/full/post-activation-inputs.json --input-sha256 <SNAPSHOT_SHA> --out ../research/native-grid-plan/full/native-functions-post-activation-initial.json --policy-out ../research/native-grid-plan/full/post-activation-proved-policy-initial.json --requests-out ../research/native-grid-plan/full/post-activation-properties-needed.json
+
+Produce не открывает SQLite. Он повторно проверяет старые exact policies,
+immutable40ce/JAR classes, saved javap и прежние actual source/target flags.
+Старые решения не переписываются; новые registry/state tuples получают решение
+только из exact policy либо уже рассмотренной primary-code ветки с точными
+immutable spec/compact/recipe/material данными и actual canonical state query.
+source-capabilities определяет только существование registry и class; её defaults
+не используются для функций или flags. Новая неподтверждённая subclass (например
+ImportedStairBlock$Trimmed) остаётся BLOCKED до отдельной exact --policy.
+Защищённый буквальный v12 entry получает retain_local, не bridge permission.
+
+UNKNOWN function, missing actual host flags, BE/role conflict, wet/emitting host
+или compiled base с retain_local/bridge_host_only => общий BLOCKED и exit2.
+Отдельный proved-policy содержит только доказанное подмножество; его PASS не
+является FULL PASS. Unknowns остаются в общем blocked report. Запрос properties
+содержит только отсутствующие измерения, не претендует доказать функцию.
+
+3. Только если нужен свежий properties query, root использует существующий
+run_native_physics.py на immutable40ce с properties-only API. Нужен реально
+использованный immutable helper JAR + request + state-properties.json и соседние
+binding.json/launch-receipt.json с PASS/exit0. Не запускать query на весь источник.
+После него повторяется ТОЛЬКО produce под новыми выходными именами:
+
+--state-properties <QUERY_DIR>/state-properties.json --query-request ../research/native-grid-plan/full/post-activation-properties-needed.json --properties-helper <IMMUTABLE_ACTUAL_HELPER_JAR> [--policy <ADDITIONAL_EXACT_POLICY>] --carrier-audit-dir <FRESH_NORMALIZATION_FLAGS_DIR>
+
+Нормализатору передаются actual flags только для dry/lum0 bridge_host_only.
+Файлы явно NORMALIZATION_ONLY, catalogSha256=null/nativeGridBridgeValidated=false.
+Они не заменяют обязательный actual TARGET NativeGridBridge.validate после FULL
+compile/import-types. Результат supplement сохраняет original census/inputEvidence,
+820023 candidateObjects из принятого gate и отдельные FINAL generation/coverage
+bindings. Никаких постоянных изменений БД, карты, каталога, профиля или JAR.
+
+После PASS root выполняет существующие import-full-functions/final coverage gates.
+При новой generation нужен новый snapshot. Все прошлые BLOCKED/FAIL и принятые
+пилотные QA223+83+5+17 сохраняются и не повторяются этим инструментом.

@@ -1,0 +1,25 @@
+Адресный point-proof для будущего существующего FOREIGN QA; исходный инструмент,
+не выполненная проверка. Только root запускает через Guard Operation после FULL
+catalog_freeze --mode full, import-types и успешного actual TARGET bridge audit.
+
+Из source:
+
+python tools/native-grid/qa/foreign_guest_point_proof.py --plan ../research/native-grid-plan --frozen <ACTUAL_FULL_FROZEN_CATALOG_JSON> --frozen-sha256 <SHA> --production <IMMUTABLE_FULL_PRODUCTION_JAR> --target-audit <ACTUAL_FULL_TARGET_AUDIT_DIR>/bridge-carrier-gate.json --target-audit-sha256 <SHA> --source-proof ../research/native-grid-plan/full/gold-pose-native-and-owner-runtime-proof.json --member-policy ../research/native-grid-plan/full/gold-member-overlay-source-proof.json --out <FRESH_POINT_PROOF_JSON>
+
+Инструмент выбирает РОВНО [-243,31,-214] и [-243,31,-213], не ищет другие типы.
+SOURCE6261 и mixed-policy7939 закреплены константами; D e700 остаётся вне selected
+и fragments, его pose запрещён в compiled physical/visual refs обеих точек.
+SQLite mode=ro/query_only: только метаданные и адресные indexed записи/queries.
+Никаких old.chunk_cache, fragments.sqlite, worldfiles, исходных ledger или maps.
+Целый mapping читается потоком для двух composition keys; RAW только хешируется,
+адресные raw composition bodies берутся из CURRENT compositions по точному ключу.
+Проверяются CURRENT FULL generation/catalog import, frozen append lineage,
+production catalog/meshes bytes, полный TARGET request/pairs и normal exit.
+
+Первый member обязан быть plain FOREIGN без bridge, второй — тем же существующим
+composite_cell/noresident helper с NativeGridBase. Коллизия/outline берутся из
+точного actual catalog index, без старых пилотных typeIndex/догадок о геометрии.
+Выход имеет схему prepare_foreign_guest_plan.py и targetBridgeAudit={path,sha256}.
+Это authoring evidence, не gameplay PASS. После него существующий plan builder
+создаёт install_save/reopen_finish только на известном empty-authoring QA world.
+Все прежние QA223 и FAIL history остаются неизменными; Java helper94c не менялся.

@@ -10,6 +10,7 @@ import java.lang.reflect.Method;
 import java.nio.file.*;
 import java.security.MessageDigest;
 import java.util.*;
+import java.util.zip.*;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.*;
 import net.minecraft.block.*;
@@ -35,7 +36,7 @@ import net.minecraft.world.*;
  * only after a native_grid registry state has actually been found. */
 public final class NativeGridFunctionChecks implements ModInitializer {
     private static final Gson JSON = new GsonBuilder().setPrettyPrinting().create();
-    private JsonObject plan, report;
+    private JsonObject plan, report, inheritedAirDoor, inheritedBridgeDoor, runtimePatch;
     private final JsonArray checks = new JsonArray(), windows = new JsonArray(), actions = new JsonArray(), placements = new JsonArray();
     private final Set<Long> allowedChunks = new HashSet<>();
     private final Map<BlockPos, JsonObject> watched = new LinkedHashMap<>();
@@ -48,6 +49,7 @@ public final class NativeGridFunctionChecks implements ModInitializer {
     private boolean done, candidate, continuation;
     private Runnable activeCleanup;
     private List<String> placementMessages;
+    private ForeignGuestFixture foreignGuestFixture;
     private record Source(BlockPos root, BlockState state, NbtCompound payload,
                           ObjectInstance.Owner owner, List<BlockPos> offsets, boolean nativeGrid) {}
     private record BridgeFixture(BlockPos pos,int index,BlockState background,VoxelShape collision,VoxelShape outline) {}
@@ -67,6 +69,7 @@ public final class NativeGridFunctionChecks implements ModInitializer {
             report = new JsonObject(); report.addProperty("status", "WAITING"); report.addProperty("variant", candidate ? "candidate" : "baseline");
             report.addProperty("productionSha256", plan.get("productionSha256").getAsString());
             report.addProperty("planSha256", sha(input)); report.add("checks",checks); report.add("windows",windows); report.add("actions",actions); report.add("placements",placements);
+            if(plan.has("runtimePatch"))validateRuntimePatch();
             if(plan.has("continuation"))bindContinuation();
             save();
         } catch (Exception failure) { throw new IllegalStateException("Bound function QA refused",failure); }
@@ -79,6 +82,7 @@ public final class NativeGridFunctionChecks implements ModInitializer {
                 require(++ticks <= 600, "Function QA could not settle within 600 native ticks");
                 if (world.getChunkManager().getLightingProvider().hasUpdates()) { settled=0; return; }
                 if (++settled < 40) return;
+                if(foreignGuestFixture!=null){if(foreignGuestFixture.step())finish(server,null);return;}
                 run(); finish(server,null);
             } catch (Throwable failure) { finish(server,failure); }
         });
@@ -103,15 +107,52 @@ public final class NativeGridFunctionChecks implements ModInitializer {
         require(candidate,"Only the affected candidate run may continue");JsonObject bound=plan.getAsJsonObject("continuation");
         JsonObject parentPlan=readBoundJson(bound.getAsJsonObject("previousPlan")),previous=readBoundJson(bound.getAsJsonObject("previousReport"));
         require(previous.get("status").getAsString().equals("FAIL")&&previous.get("standRestored").getAsBoolean(),"Continuation needs the unchanged failed run with a restored stand");
-        require(previous.get("planSha256").getAsString().equals(bound.getAsJsonObject("previousPlan").get("sha256").getAsString())&&previous.get("productionSha256").equals(plan.get("productionSha256")),"Continuation evidence belongs to another plan/runtime");
-        JsonObject current=plan.deepCopy(),prior=parentPlan.deepCopy();current.remove("continuation");current.remove("output");prior.remove("output");require(current.equals(prior),"Continuation may change only output and its explicit evidence binding");
+        require(previous.get("planSha256").getAsString().equals(bound.getAsJsonObject("previousPlan").get("sha256").getAsString())&&compatibleProduction(previous),"Continuation evidence belongs to another plan/runtime");
+        JsonObject current=comparablePlan(plan),prior=comparablePlan(parentPlan);require(current.equals(prior),"Continuation may change only output, its evidence binding and a proven adapter-only runtime patch");
         JsonArray oldActions=previous.getAsJsonArray("actions");require(oldActions.size()==1&&text(oldActions.get(0).getAsJsonObject(),"kind","").equals("staticCell")&&text(oldActions.get(0).getAsJsonObject(),"status","").equals("PASS"),"Only the failed door plus not-yet-run tree/statue may continue");
         JsonArray inherited=new JsonArray();int failures=0;
         for(JsonElement raw:previous.getAsJsonArray("checks")){JsonObject row=raw.getAsJsonObject();if(row.get("pass").getAsBoolean())inherited.add(row.deepCopy());else{failures++;require(row.get("name").getAsString().startsWith("registered picked BlockItem places at "),"Continuation contains another failed check");}}
         require(failures==1&&inherited.size()==bound.get("inheritedSuccessfulChecks").getAsInt(),"Continuation successful-check count changed");
-        if(bound.has("diagnosticPreviousAttempt")){JsonObject diagnostic=readBoundJson(bound.getAsJsonObject("diagnosticPreviousAttempt"));require(text(diagnostic,"status","").equals("FAIL")&&diagnostic.get("standRestored").getAsBoolean()&&diagnostic.get("normalServerThreadFinished").getAsBoolean()&&diagnostic.get("productionSha256").equals(plan.get("productionSha256")),"The intervening failed diagnostic run must remain exact, restored and normally stopped");}
+        if(bound.has("diagnosticPreviousAttempt")){JsonObject diagnostic=readBoundJson(bound.getAsJsonObject("diagnosticPreviousAttempt"));require(text(diagnostic,"status","").equals("FAIL")&&diagnostic.get("standRestored").getAsBoolean()&&diagnostic.get("normalServerThreadFinished").getAsBoolean()&&compatibleProduction(diagnostic),"The intervening failed diagnostic run must remain exact, restored and normally stopped");}
+        if(bound.has("priorFailedAttempts"))for(JsonElement raw:bound.getAsJsonArray("priorFailedAttempts")){JsonObject failure=raw.getAsJsonObject(),oldReport=readBoundJson(failure.getAsJsonObject("report"));readBoundJson(failure.getAsJsonObject("plan"));require(text(oldReport,"status","").equals("FAIL")&&compatibleProduction(oldReport)&&oldReport.get("planSha256").equals(failure.getAsJsonObject("plan").get("sha256")),"Prior failed-attempt history changed");}
+        if(bound.has("inheritedAirDoor")){
+            JsonObject air=bound.getAsJsonObject("inheritedAirDoor"),airReport=readBoundJson(air.getAsJsonObject("report")),airPlan=readBoundJson(air.getAsJsonObject("plan"));
+            require(text(airReport,"status","").equals("FAIL")&&airReport.get("standRestored").getAsBoolean()&&airReport.get("normalServerThreadFinished").getAsBoolean()&&compatibleProduction(airReport),"Inherited AIR motion must come from the unchanged restored failed run on this runtime");
+            require(airReport.get("planSha256").equals(air.getAsJsonObject("plan").get("sha256")),"Inherited AIR report belongs to another plan");
+            require(comparablePlan(airPlan).equals(current),"Inherited AIR motion uses another source/stand/catalog plan");
+            JsonArray inheritedMotion=new JsonArray();for(JsonElement raw:airReport.getAsJsonArray("checks")){JsonObject row=raw.getAsJsonObject();if(airDoorCheck(row.get("name").getAsString())){require(row.get("pass").getAsBoolean(),"An inherited AIR motion check failed");inheritedMotion.add(row.deepCopy());}}
+            require(inheritedMotion.size()==5&&inheritedMotion.equals(air.getAsJsonArray("checks")),"Inherited AIR motion needs both real right clicks and the exact open/closed collision checks");
+            List<JsonObject> installedDoor=new ArrayList<>();for(JsonElement raw:airReport.getAsJsonArray("installedWholeObjects")){JsonObject row=raw.getAsJsonObject();if(text(row,"kind","").equals("door"))installedDoor.add(row);}
+            require(installedDoor.size()==1&&installedDoor.get(0).get("state").equals(air.get("manualState"))&&installedDoor.get(0).get("payloadNbt").equals(air.get("manualPayloadNbt")),"Inherited manual-door state/payload evidence differs");
+            JsonObject proof=readBoundJson(air.getAsJsonObject("helperProof"));require(text(proof,"status","").equals("PASS")&&proof.get("helperInBothStates").getAsBoolean()&&proof.get("manualState").equals(air.get("manualState"))&&proof.get("manualPayloadNbt").equals(air.get("manualPayloadNbt")),"Inherited manual helper needs its exact source-bound two-pose proof");
+            JsonObject representative=air.getAsJsonObject("representativeAssembly"),manifest=readBoundJson(representative.getAsJsonObject("manifest"));boolean matched=false;
+            for(JsonElement raw:manifest.getAsJsonArray("entries")){JsonObject row=raw.getAsJsonObject();if(text(row,"key","").equals(representative.get("entryKey").getAsString())){require(!matched&&row.get("registryId").equals(air.getAsJsonObject("manualState").get("registryId"))&&row.getAsJsonObject("sourceSpec").get("sha256").equals(representative.get("sourceSpecSha256")),"Representative assembly identity/source decision differs");matched=true;}}
+            require(matched,"The exact chosen whole-door assembly is absent from the confirmed manifest");
+            try(InputStream stream=ImportedSourcePartsV127.class.getResourceAsStream("/bloodborne_dw/composite/source_dark_arch_door.json")){require(stream!=null&&HexFormat.of().formatHex(MessageDigest.getInstance("SHA-256").digest(stream.readAllBytes())).equals(representative.get("sourceSpecSha256").getAsString()),"Representative whole-door spec differs from the actually loaded resource");}
+            inheritedAirDoor=air;report.add("inheritedAirDoorChecks",inheritedMotion);report.add("inheritedAirDoorEvidence",air.deepCopy());
+        }
+        if(bound.has("inheritedBridgeDoor")){
+            require(runtimePatch!=null&&bound.has("fixtureRecovery"),"A failed terminal-bridge run needs the exact adapter patch and owned-fixture recovery");
+            JsonObject bridge=bound.getAsJsonObject("inheritedBridgeDoor"),bridgeReport=readBoundJson(bridge.getAsJsonObject("report")),bridgePlan=readBoundJson(bridge.getAsJsonObject("plan"));
+            require(text(bridgeReport,"status","").equals("FAIL")&&!bridgeReport.get("standRestored").getAsBoolean()&&bridgeReport.get("normalServerThreadFinished").getAsBoolean()&&compatibleProduction(bridgeReport)&&bridgeReport.get("planSha256").equals(bridge.getAsJsonObject("plan").get("sha256"))&&comparablePlan(bridgePlan).equals(current),"Inherited bridge motion belongs to another failure/runtime/fixture");
+            JsonArray motion=new JsonArray();for(JsonElement raw:bridgeReport.getAsJsonArray("checks")){JsonObject check=raw.getAsJsonObject();if(!check.get("pass").getAsBoolean())break;motion.add(check.deepCopy());}
+            require(motion.size()==17&&motion.equals(bridge.getAsJsonArray("checks")),"The exact seventeen successful bridge setup/motion checks are required");
+            inheritedBridgeDoor=bridge;report.add("inheritedBridgeDoorChecks",motion);report.add("inheritedBridgeDoorEvidence",bridge.deepCopy());
+        }
         report.add("continuation",bound.deepCopy());report.addProperty("priorRunStatus","FAIL");report.add("inheritedSuccessfulChecks",inherited);report.add("inheritedSuccessfulActions",oldActions.deepCopy());continuation=true;
     }
+    private static boolean airDoorCheck(String name){return name.equals("actual selected door part handles right-click")||name.equals("door right click changes one whole door open state")||name.equals("door open collision moves with the leaf")||name.equals("door second right click restores closed-state exact collision");}
+    private boolean compatibleProduction(JsonObject evidence){return evidence.get("productionSha256").equals(plan.get("productionSha256"))||runtimePatch!=null&&evidence.get("productionSha256").equals(runtimePatch.getAsJsonObject("before").get("sha256"));}
+    private JsonObject comparablePlan(JsonObject input){JsonObject copy=input.deepCopy();copy.remove("continuation");copy.remove("output");if(runtimePatch!=null){copy.remove("runtimePatch");copy.remove("productionJar");copy.remove("productionSha256");}return copy;}
+    private void validateRuntimePatch() throws Exception {
+        JsonObject patch=readBoundJson(plan.getAsJsonObject("runtimePatch"));require(text(patch,"status","").equals("PASS_EXACT_BRIDGE_CLASS_DIFF_NOT_GAMEPLAY")&&!patch.get("gameplayAccepted").getAsBoolean()&&patch.get("allResourcesExact").getAsBoolean()&&patch.get("allNonAdapterClassesExact").getAsBoolean(),"Unknown adapter patch receipt");
+        Path before=ordinary(Path.of(patch.getAsJsonObject("before").get("path").getAsString())),after=ordinary(Path.of(patch.getAsJsonObject("after").get("path").getAsString()));
+        require(sha(before).equals(patch.getAsJsonObject("before").get("sha256").getAsString())&&sha(after).equals(patch.getAsJsonObject("after").get("sha256").getAsString())&&after.equals(ordinary(Path.of(plan.get("productionJar").getAsString())))&&patch.getAsJsonObject("after").get("sha256").equals(plan.get("productionSha256")),"Adapter patch JAR binding changed");
+        Map<String,String> old=jarInventory(before),next=jarInventory(after);require(old.keySet().equals(next.keySet()),"Adapter patch added or removed JAR entries");JsonArray changes=new JsonArray();String adapter="dev/dreamwalker/bloodbornedw/composite/FabricCompositeWorld";
+        for(String entry:old.keySet())if(!old.get(entry).equals(next.get(entry))){require(entry.equals(adapter+".class")||entry.startsWith(adapter+"$")&&entry.endsWith(".class"),"Production changed outside the reviewed bridge adapter: "+entry);JsonObject change=new JsonObject();change.addProperty("entry",entry);change.addProperty("beforeSha256",old.get(entry));change.addProperty("afterSha256",next.get(entry));changes.add(change);}
+        require(changes.size()>0&&changes.equals(patch.getAsJsonArray("changedEntries"))&&old.get("assets/bloodborne_dw/native_grid/catalog.json").equals(patch.get("catalogSha256").getAsString()),"Adapter patch entry/catalog proof differs");runtimePatch=patch;report.add("runtimePatch",plan.getAsJsonObject("runtimePatch").deepCopy());report.addProperty("runtimePatchScope","exact adapter-only class diff; prior evidence keeps its original production SHA");
+    }
+    private static Map<String,String> jarInventory(Path path)throws Exception{Map<String,String> values=new TreeMap<>();try(ZipFile zip=new ZipFile(path.toFile())){var entries=zip.entries();while(entries.hasMoreElements()){var entry=entries.nextElement();if(entry.isDirectory())continue;MessageDigest digest=MessageDigest.getInstance("SHA-256");try(InputStream stream=zip.getInputStream(entry)){byte[] buffer=new byte[1<<16];for(int n;(n=stream.read(buffer))>=0;)digest.update(buffer,0,n);}require(values.put(entry.getName(),HexFormat.of().formatHex(digest.digest()))==null,"Duplicate JAR entry");}}return values;}
     private JsonObject readBoundJson(JsonObject binding) throws Exception {Path path=ordinary(Path.of(binding.get("path").getAsString()));require(sha(path).equals(binding.get("sha256").getAsString()),"Continuation evidence bytes changed");return JsonParser.parseString(Files.readString(path)).getAsJsonObject();}
 
     private void prepare(MinecraftServer server) throws Exception {
@@ -126,16 +167,51 @@ public final class NativeGridFunctionChecks implements ModInitializer {
         require(standMin.getX()<=standMax.getX()&&standMin.getY()<=standMax.getY()&&standMin.getZ()<=standMax.getZ(),"Invalid empty stand bounds");
         long volume=(long)(standMax.getX()-standMin.getX()+1)*(standMax.getY()-standMin.getY()+1)*(standMax.getZ()-standMin.getZ()+1);
         require(volume>0&&volume<=512000,"Finite empty stand exceeds 512000 cells");
-        for(BlockPos point:BlockPos.iterate(standMin,standMax)) { allowed(point); require(empty(point),"Stand is not genuinely empty: "+point); }
         require(inside(standRoot),"Stand root outside guard");
-        standInitiallyAir=true;report.addProperty("standAirCellsVerified",volume);report.add("stand",stand.deepCopy());
         actor=new ServerPlayerEntity(server,world,new GameProfile(UUID.randomUUID(),"NativeGridProbe")) {
             @Override public boolean hasPermissionLevel(int level) { return level<=4; }
             @Override public void sendMessage(Text message,boolean overlay) { if(placementMessages!=null)placementMessages.add(message.getString()); }
         };
         new ServerPlayNetworkHandler(server,new ClientConnection(NetworkSide.SERVERBOUND),actor);
         actor.changeGameMode(GameMode.CREATIVE); actor.setPosition(standRoot.getX()+6,standRoot.getY(),standRoot.getZ()+6);
+        if(plan.has("foreignGuestFixture")){
+            require(candidate&&!plan.has("continuation"),"The addressed foreign-guest case is a separate finite candidate action, not a replay of accepted groups");
+            foreignGuestFixture=new ForeignGuestFixture(plan.getAsJsonObject("foreignGuestFixture"));
+            if(foreignGuestFixture.reopening()){foreignGuestFixture.prepareReopen();report.addProperty("status","RUNNING");save();return;}
+        }
+        if(continuation&&plan.getAsJsonObject("continuation").has("fixtureRecovery"))recoverOwnedFixture(plan.getAsJsonObject("continuation").getAsJsonObject("fixtureRecovery"));
+        for(BlockPos point:BlockPos.iterate(standMin,standMax)) { allowed(point); require(empty(point),"Stand is not genuinely empty: "+point); }
+        standInitiallyAir=true;report.addProperty("standAirCellsVerified",volume);report.add("stand",stand.deepCopy());
         report.addProperty("status","RUNNING"); save();
+    }
+
+    private void recoverOwnedFixture(JsonObject input) throws Exception {
+        require(candidate&&runtimePatch!=null&&inheritedBridgeDoor!=null,"Recovery is limited to the proven terminal-bridge failure with its adapter-only fix");
+        JsonObject failed=readBoundJson(input.getAsJsonObject("report"));require(input.getAsJsonObject("report").equals(inheritedBridgeDoor.getAsJsonObject("report")),"Recovery must bind the exact inherited bridge failure");
+        JsonObject observation=readBoundJson(input.getAsJsonObject("observation"));require(text(observation,"status","").equals("OBSERVED_EXACT_QA_STAND")&&observation.getAsJsonArray("issues").size()==0&&observation.get("ownerUuid").equals(input.get("ownerUuid"))&&observation.get("report").equals(input.get("report"))&&ordinary(Path.of(observation.get("world").getAsString())).equals(ordinary(Path.of(plan.get("targetWorldPath").getAsString()))),"Recovery lacks its exact read-only twelve-cell observation");
+        JsonObject installed=failed.getAsJsonArray("installedWholeObjects").get(0).getAsJsonObject();UUID uuid=UUID.fromString(installed.get("ownerUuid").getAsString());
+        require(uuid.equals(UUID.fromString(input.get("ownerUuid").getAsString()))&&!failed.get("standRestored").getAsBoolean(),"Recovery owner/failure role differs");
+        List<BlockPos> points=positions(installed.getAsJsonArray("closedOpenCells"));require(points.size()==12,"Only this exact twelve-cell fresh fixture may recover");
+        BlockPos background=pos(input.getAsJsonArray("background"));int index=input.get("cell").getAsInt();require(index==1713&&background.equals(standRoot.add(0,0,1))&&points.contains(background),"Recovery background differs from the fresh fixture");
+        for(BlockPos point:BlockPos.iterate(standMin,standMax)){allowed(point);require(points.contains(point)||empty(point),"Recovery found data outside the twelve known owned cells: "+point);}
+        require(world.getBlockEntity(standRoot) instanceof CompositeBlockEntity,"Recovery root is absent");CompositeBlockEntity root=(CompositeBlockEntity)world.getBlockEntity(standRoot);ObjectInstance.Owner owner=root.resident();
+        require(owner!=null&&owner.instanceId().equals(uuid)&&CompositeData.pos(owner.root()).equals(standRoot),"Recovery root belongs to another owner");
+        BlockState state=world.getBlockState(standRoot);NbtCompound payload=root.payload();require(canonicalState(Registries.BLOCK.getId(state.getBlock()).toString(),state).equals(installed.get("state"))&&Base64.getEncoder().encodeToString(CompositeData.bytes(payload)).equals(installed.get("payloadNbt").getAsString()),"Recovery root state/private payload changed");
+        ObjectInstance expected=CompositeRuntime.instance(world,standRoot,state,uuid,payload);Set<BlockPos> expectedPoints=new HashSet<>();for(var offset:expected.cells().keySet())expectedPoints.add(standRoot.add(offset.x(),offset.y(),offset.z()));require(expectedPoints.equals(new HashSet<>(points)),"Recovery original full footprint differs");
+        Map<BlockPos,JsonObject> before=new LinkedHashMap<>();
+        for(BlockPos point:points){require(inside(point)&&world.isChunkLoaded(point)&&world.getBlockEntity(point) instanceof CompositeBlockEntity,"Recovery cell is outside its loaded owned fixture");CompositeBlockEntity entity=(CompositeBlockEntity)world.getBlockEntity(point);
+            require(point.equals(standRoot)?owner.equals(entity.resident()):entity.resident()==null&&world.getBlockState(point).isOf(CompositeArchitecture.CELL),"Recovery resident/physical host differs");
+            require((Integer)call(entity,"nativeGridBase")== (point.equals(background)?index:-1),"Recovery has another background reference");
+            require(entity.createNbt().getKeys().stream().allMatch(key->Set.of("payload","resident",CompositeOwnerNbt.KEY,"owners","NativeGridBase").contains(key)),"Recovery found unknown typed BE data");
+            var entries=CompositeRuntime.contributions(world,point);require(entries.size()==1&&entries.get(0).owner().equals(owner)&&entries.get(0).rootData().equals(expected.rootData())&&entries.get(0).shape().equals(expected.at(CompositeData.cell(point))),"Recovery found foreign or changed contribution data");before.put(point.toImmutable(),cell(point));
+        }
+        JsonObject recovery=new JsonObject();recovery.add("binding",input.deepCopy());recovery.add("before",snapshots(before));recovery.addProperty("preconditionsExact",true);report.add("ownedFixtureRecovery",recovery);save();
+        TransactionCore.Result result=CompositeRuntime.remove(world,owner,null,false);recovery.add("removalResult",transaction(result));save();require(result.outcome()==TransactionCore.Outcome.COMMITTED,"Owned fixture recovery removal did not commit: "+result.reason());
+        Class<?> catalog=Class.forName("dev.dreamwalker.bloodbornedw.composite.NativeGridCatalog");BlockState base=(BlockState)catalog.getMethod("state",int.class).invoke(null,index);
+        for(BlockPos point:points)require(point.equals(background)?world.getBlockState(point).equals(base)&&world.getBlockEntity(point)==null&&CompositeRuntime.contributions(world,point).isEmpty():empty(point),"Owned recovery did not restore exactly the twelve expected cells");
+        require(new FabricCompositeWorld(world,Map.of()).read(CompositeData.cell(background)).kind()==dev.dreamwalker.bloodbornedw.runtime.CellSnapshot.Kind.FOREIGN,"Cold recovery adapter must expose the real plain native base as FOREIGN");
+        actor.setStackInHand(Hand.MAIN_HAND,ItemStack.EMPTY);recovery.addProperty("ordinaryBackgroundBreakApiReturn",actor.interactionManager.tryBreakBlock(background));require(standEmpty(),"Recovery did not restore the complete originally AIR stand");
+        recovery.addProperty("standRestored",true);recovery.addProperty("scope","only exact fresh test-owned UUID and its one attached background; original city data untouched");save();
     }
 
     private void run() throws Exception {
@@ -249,8 +325,9 @@ public final class NativeGridFunctionChecks implements ModInitializer {
         check(!picked.isEmpty()&&picked.getItem() instanceof BlockItem,"whole "+kind+" has a usable pick/place item");
         final ObjectInstance.Owner[] installed={null};
         final BridgeFixture[] bridge={null};
-        activeCleanup=()->{if(!source.nativeGrid()){ObjectInstance.Owner owner=installed[0];if(owner==null&&world.getBlockEntity(standRoot) instanceof CompositeBlockEntity entity)owner=entity.resident();if(owner!=null)CompositeRuntime.remove(world,owner,null,false);}else for(BlockPos point:guardedFootprint)if(nativeGrid(world.getBlockState(point)))world.breakBlock(point,false);if(bridge[0]!=null&&world.getBlockState(bridge[0].pos()).equals(bridge[0].background())&&CompositeRuntime.contributions(world,bridge[0].pos()).isEmpty())world.breakBlock(bridge[0].pos(),false);};
+        activeCleanup=()->{if(!source.nativeGrid()){ObjectInstance.Owner owner=installed[0];if(owner==null&&world.getBlockEntity(standRoot) instanceof CompositeBlockEntity entity)owner=entity.resident();if(owner!=null){TransactionCore.Result result=CompositeRuntime.remove(world,owner,null,false);JsonArray cleanups=report.has("cleanupAttempts")?report.getAsJsonArray("cleanupAttempts"):new JsonArray();JsonObject cleanup=new JsonObject();cleanup.addProperty("ownerUuid",owner.instanceId().toString());cleanup.add("result",transaction(result));cleanups.add(cleanup);report.add("cleanupAttempts",cleanups);save();UUID cleanupOwner=owner.instanceId();require(guardedFootprint.stream().allMatch(p->CompositeRuntime.contributions(world,p).stream().noneMatch(c->c.owner().instanceId().equals(cleanupOwner))),"Owned cleanup transaction left its fixture contributions: "+result.reason());}}else for(BlockPos point:guardedFootprint)if(nativeGrid(world.getBlockState(point)))world.breakBlock(point,false);if(bridge[0]!=null&&world.getBlockState(bridge[0].pos()).equals(bridge[0].background())&&CompositeRuntime.contributions(world,bridge[0].pos()).isEmpty())world.breakBlock(bridge[0].pos(),false);};
         try{
+            FabricCompositeWorld releasedRollbackProbe=null;
             if(source.nativeGrid())placeItem(picked.copy(),standRoot);
             else{
                 actor.setYaw(source.state().get(CompositeRootBlock.ROTATION)*45F);actor.setHeadYaw(actor.getYaw());
@@ -277,14 +354,23 @@ public final class NativeGridFunctionChecks implements ModInitializer {
             check(!closedOutline.isEmpty(),"whole "+kind+" retains selectable authored parts");
             if(kind.equals("door")){
                 require(!source.nativeGrid(),"Openable doors must remain their existing complete object");
+                if(inheritedAirDoor!=null){
+                    CompositeBlockEntity entity=(CompositeBlockEntity)world.getBlockEntity(standRoot);BlockState state=world.getBlockState(standRoot);NbtCompound payload=entity.payload();
+                    require(canonicalState(Registries.BLOCK.getId(state.getBlock()).toString(),state).equals(inheritedAirDoor.get("manualState"))&&Base64.getEncoder().encodeToString(CompositeData.bytes(payload)).equals(inheritedAirDoor.get("manualPayloadNbt").getAsString()),"Ordinary setup differs from the exact previously exercised AIR door");
+                    var current=CompositeRuntime.instance(world,standRoot,state,installed[0].instanceId(),payload);var opened=CompositeRuntime.instance(world,standRoot,state.cycle(CompositeRootBlock.OPEN),installed[0].instanceId(),payload);
+                    check(same(closed,instanceUnion(current,true))&&same(closedOutline,instanceUnion(current,false)),"fresh closed-door setup matches its actual prepared instance collision and outline");
+                    openCollision=instanceUnion(opened,true);openOutline=instanceUnion(opened,false);require(!same(openCollision,closed),"Actual prepared manual open/closed collision unexpectedly stopped moving");
+                    report.addProperty("airDoorMotionReused",true);report.addProperty("openReferenceOrigin","actual installed state/payload -> existing CompositeRuntime.instance; real AIR right-click checks inherited by exact report hash");
+                }else{
                 boolean before=world.getBlockState(standRoot).get(CompositeRootBlock.OPEN);useByRay(footprint);
                 check(world.getBlockState(standRoot).get(CompositeRootBlock.OPEN)!=before,"door right click changes one whole door open state");
                 VoxelShape open=union(footprint,standRoot,true);openCollision=open;openOutline=union(footprint,standRoot,false);check(!same(open,closed),"door open collision moves with the leaf");
                 useByRay(footprint);check(world.getBlockState(standRoot).get(CompositeRootBlock.OPEN)==before&&same(union(footprint,standRoot,true),closed),"door second right click restores closed-state exact collision");
+                }
             }
             if(candidate&&kind.equals("door")){
-                // Repeat ordinary door motion with the actual persistent floor
-                // helper background. Selection stays above that solid floor.
+                // Exercise the actual persistent lower-helper background once.
+                // The bound background has exact EMPTY collision and outline.
                 require(input.has("bridgeFixture"),"Candidate door needs the one bound NativeGridBase fixture");
                 require(openCollision!=null&&openOutline!=null,"The preceding AIR door cycle must supply exact open-shape references");
                 bridge[0]=attachBridge(input.getAsJsonObject("bridgeFixture"),source,installed[0],guardedFootprint,bridge);
@@ -293,6 +379,8 @@ public final class NativeGridFunctionChecks implements ModInitializer {
                 VoxelShape expectedOutline=VoxelShapes.union(closedOutline,bridge[0].outline().offset(offset.getX(),offset.getY(),offset.getZ()));
                 closed=union(footprint,standRoot,true);closedOutline=union(footprint,standRoot,false);
                 check(same(closed,expected)&&same(closedOutline,expectedOutline),"candidate bridge is the exact shared background plus retained closed-door shape");
+                if(inheritedBridgeDoor!=null){report.addProperty("bridgeDoorMotionReused",true);report.addProperty("bridgeMotionScope","seventeen exact prior setup/open/close checks inherited through the verified adapter-only patch; terminal detach and rollback are tested now");}
+                else{
                 List<BlockPos> aboveFloor=footprint.stream().filter(p->p.getY()>bridge[0].pos().getY()).toList();
                 boolean before=world.getBlockState(standRoot).get(CompositeRootBlock.OPEN);useByRay(aboveFloor);
                 check(world.getBlockState(standRoot).get(CompositeRootBlock.OPEN)!=before,"bridged door actual right click opens above its persistent floor background");
@@ -302,15 +390,84 @@ public final class NativeGridFunctionChecks implements ModInitializer {
                 useByRay(aboveFloor);
                 check(world.getBlockState(standRoot).get(CompositeRootBlock.OPEN)==before&&same(union(footprint,standRoot,true),closed)&&same(union(footprint,standRoot,false),closedOutline),"bridged second right click restores exact closed collision and outline union");
                 checkBridge(bridge[0],installed[0],"after actual door closing");
+                }
+                if(runtimePatch!=null)releasedRollbackProbe=probeTerminalBridgeRollback(installed[0],bridge[0],footprint);
             }
             List<BlockPos> doorTargets=bridge[0]==null?footprint:footprint.stream().filter(p->p.getY()!=bridge[0].pos().getY()).toList();
             BlockPos hit=selectable(kind.equals("door")?doorTargets:footprint,input.has("requireCrossChunk")&&input.get("requireCrossChunk").getAsBoolean());breakByRay(hit);
             for(BlockPos point:footprint)if(bridge[0]!=null&&point.equals(bridge[0].pos()))check(world.getBlockState(point).equals(bridge[0].background())&&world.getBlockEntity(point)==null,"whole door break retains only its exact ordinary shared background");else check(empty(point),"whole "+kind+" break clears every authored/helper cell at "+point);
+            if(bridge[0]!=null&&releasedRollbackProbe!=null){var at=CompositeData.cell(bridge[0].pos());check(releasedRollbackProbe.read(at).kind()==dev.dreamwalker.bloodbornedw.runtime.CellSnapshot.Kind.FOREIGN&&new FabricCompositeWorld(world,Map.of()).read(at).kind()==dev.dreamwalker.bloodbornedw.runtime.CellSnapshot.Kind.FOREIGN,"after terminal commit both released and cold adapters expose the actual plain native base as FOREIGN, never cached AIR");}
             if(installed[0]!=null)for(BlockPos point:footprint)check(CompositeRuntime.contributions(world,point).stream().noneMatch(c->c.owner().instanceId().equals(installed[0].instanceId())),"whole "+kind+" break retires its local contributions");
             if(bridge[0]!=null){if(bridge[0].outline().isEmpty()){actor.setStackInHand(Hand.MAIN_HAND,ItemStack.EMPTY);check(actor.interactionManager.tryBreakBlock(bridge[0].pos()),"server interaction API accepts independent background break; exact original outline is EMPTY so no ray assertion applies");}else breakByRay(bridge[0].pos());check(empty(bridge[0].pos()),"ordinary independent background break returns the bridge fixture cell to AIR");}
-            JsonObject result=new JsonObject();result.addProperty("kind",kind);result.addProperty("status","PASS");result.add("source",coordinates(source.root()));result.addProperty("picked",picked.toString());result.addProperty("cells",source.offsets().size());result.add("collision",boxes(closed));result.add("outline",boxes(closedOutline));result.add("breakCell",coordinates(hit));result.addProperty("placementPath","registered picked item.useOnBlock -> BlockItem.place");actions.add(result);
-            if(bridge[0]!=null){JsonObject bound=new JsonObject();bound.addProperty("cell",bridge[0].index());bound.add("pos",coordinates(bridge[0].pos()));bound.add("helperOffset",coordinates(bridge[0].pos().subtract(standRoot)));bound.addProperty("persistentInBothStates",true);bound.addProperty("installedOnFreshOwnedHelperOnly",true);bound.addProperty("openCloseScope","normal AIR cycle followed by actual open/close with the bound persistent floor-helper background; selection above floor");bound.addProperty("backgroundRestorePath","existing transaction adapter across open/close and whole break; final independent ordinary break");bound.addProperty("independentBreakMode",bridge[0].outline().isEmpty()?"server interaction API; ray not applicable: exact original outline EMPTY":"native selection ray + server interaction API");result.add("bridgeFixture",bound);}
+            if(kind.equals("door")&&inheritedAirDoor!=null)testAssemblyParts(source,picked,footprint);
+            JsonObject result=new JsonObject();result.addProperty("kind",kind);result.addProperty("status","PASS");result.add("source",coordinates(source.root()));result.addProperty("picked",picked.toString());result.addProperty("cells",footprint.size());result.addProperty("originalSourceCells",source.offsets().size());result.add("collision",boxes(closed));result.add("outline",boxes(closedOutline));result.add("breakCell",coordinates(hit));result.addProperty("placementPath","registered picked item.useOnBlock -> BlockItem.place");actions.add(result);
+            if(kind.equals("door")&&inheritedAirDoor!=null)result.add("representativePreservedAssembly",inheritedAirDoor.getAsJsonObject("representativeAssembly").deepCopy());
+            if(bridge[0]!=null){JsonObject bound=new JsonObject();bound.addProperty("cell",bridge[0].index());bound.add("pos",coordinates(bridge[0].pos()));bound.add("helperOffset",coordinates(bridge[0].pos().subtract(standRoot)));bound.addProperty("persistentInBothStates",true);bound.addProperty("installedOnFreshOwnedHelperOnly",true);bound.addProperty("openCloseScope",inheritedAirDoor!=null?"prior real AIR motion inherited by exact report hash; one actual open/close cycle with the exact EMPTY-shape lower-helper background":"normal AIR cycle followed by actual open/close with the bound persistent lower-helper background");bound.addProperty("backgroundRestorePath","existing transaction adapter across open/close and whole break; final independent ordinary break");bound.addProperty("independentBreakMode",bridge[0].outline().isEmpty()?"server interaction API; ray not applicable: exact original outline EMPTY":"native selection ray + server interaction API");result.add("bridgeFixture",bound);}
         }finally{cleanupActive();check(guardedFootprint.stream().allMatch(this::empty)&&standEmpty(),kind+" fixture returns its actual cells and complete finite stand exactly");}
+    }
+
+    private void testAssemblyParts(Source source,ItemStack mainItem,List<BlockPos> provedFootprint) throws Exception {
+        require(provedFootprint.size()>0&&provedFootprint.size()<=64,"Representative assembly part loop must remain finite");
+        JsonArray parts=new JsonArray();report.add("representativeAssemblyParts",parts);int accessible=0;
+        for(BlockPos target:provedFootprint){
+            refreshStandChunks("representative assembly part setup");require(standEmpty(),"Each representative part starts from the complete proved AIR stand");
+            ObjectInstance.Owner owner=null;JsonObject row=new JsonObject();row.add("requestedPart",coordinates(target));parts.add(row);
+            try{
+                actor.setYaw(source.state().get(CompositeRootBlock.ROTATION)*45F);actor.setHeadYaw(actor.getYaw());placeItem(mainItem.copy(),standRoot);
+                require(world.getBlockEntity(standRoot) instanceof CompositeBlockEntity,"Representative part setup lacks its ordinary root");
+                CompositeBlockEntity root=(CompositeBlockEntity)world.getBlockEntity(standRoot);owner=root.resident();require(owner!=null&&!owner.instanceId().equals(source.owner().instanceId()),"Representative part setup reused the source identity");
+                BlockState state=world.getBlockState(standRoot);NbtCompound payload=root.payload();
+                require(canonicalState(Registries.BLOCK.getId(state.getBlock()).toString(),state).equals(inheritedAirDoor.get("manualState"))&&Base64.getEncoder().encodeToString(CompositeData.bytes(payload)).equals(inheritedAirDoor.get("manualPayloadNbt").getAsString()),"Per-part ordinary placement changed the exact confirmed whole pose");
+                List<BlockPos> actual=new ArrayList<>();addFootprint(actual,state,payload);addFootprint(actual,state.cycle(CompositeRootBlock.OPEN),payload);actual=new ArrayList<>(new LinkedHashSet<>(actual));
+                for(BlockPos point:actual){require(inside(point)&&world.isChunkLoaded(point),"Per-part whole footprint escaped its proved loaded stand");allowed(point);}
+                require(new HashSet<>(actual).equals(new HashSet<>(provedFootprint))&&actual.contains(target),"Per-part ordinary placement changed the actual whole footprint");
+                BlockState partState=world.getBlockState(target);ItemStack picked=partState.getBlock().getPickStack(world,target,partState);
+                check(ItemStack.areEqual(picked,mainItem),"representative assembly part picks the same single main item at "+target);row.addProperty("pickedSameMainItem",true);row.addProperty("ownerUuid",owner.instanceId().toString());
+                if(partState.getOutlineShape(world,target).isEmpty()){row.addProperty("accessible",false);row.addProperty("reason","exact actual outline EMPTY; no ray or destruction PASS claimed");continue;}
+                BlockHitResult hit=exactPartRay(target,row);
+                if(hit==null){row.addProperty("accessible",false);row.addProperty("reason","occluded under the declared authored-box-centres by six-side ray search; no destruction PASS claimed");continue;}
+                row.addProperty("accessible",true);row.add("actualRayHit",coordinates(hit.getBlockPos()));row.addProperty("raySearch","each authored outline-box centre from six cardinal sides at three blocks");
+                performBreak(target,hit);
+                UUID removed=owner.instanceId();check(actual.stream().allMatch(this::empty)&&actual.stream().allMatch(p->CompositeRuntime.contributions(world,p).stream().noneMatch(c->c.owner().instanceId().equals(removed))),"representative assembly break from this part clears the complete whole and its owner entries at "+target);
+                row.addProperty("wholeRemoved",true);accessible++;
+            }finally{
+                if(owner!=null)CompositeRuntime.remove(world,owner,null,false);
+                check(standEmpty(),"representative assembly part fixture restores the complete AIR stand after "+target);save();
+            }
+        }
+        require(accessible>0,"Representative assembly has no actually selectable part");report.addProperty("representativeAccessiblePartsBroken",accessible);
+    }
+
+    private FabricCompositeWorld probeTerminalBridgeRollback(ObjectInstance.Owner owner,BridgeFixture bridge,List<BlockPos> footprint){
+        Map<BlockPos,JsonObject> before=new LinkedHashMap<>();for(BlockPos point:footprint)before.put(point,cell(point));
+        var target=CompositeData.cell(bridge.pos());boolean[] reached={false};JsonObject result=new JsonObject();result.add("before",snapshots(before));report.add("terminalBridgeRollbackProbe",result);save();
+        FabricCompositeWorld access=new FabricCompositeWorld(world,Map.of()){
+            @Override public boolean writeSilently(dev.dreamwalker.bloodbornedw.runtime.ObjectGeometry.Cell cell,dev.dreamwalker.bloodbornedw.runtime.CellSnapshot next){
+                boolean written=super.writeSilently(cell,next);
+                if(cell.equals(target)&&next.kind()==dev.dreamwalker.bloodbornedw.runtime.CellSnapshot.Kind.AIR){
+                    require(world.getBlockState(bridge.pos()).equals(bridge.background())&&world.getBlockEntity(bridge.pos())==null&&CompositeRuntime.contributions(world,bridge.pos()).isEmpty(),"Rollback probe terminal write did not preserve the exact physical background");
+                    require(super.read(cell).equals(next),"Terminal write is not projected as logical AIR for exact transaction verification");reached[0]=true;result.addProperty("physicalNativeBaseObserved",true);result.addProperty("logicalTerminalAirObserved",true);save();return false;
+                }
+                return written;
+            }
+        };
+        var preparation=CompositeRuntime.core().removal(access,owner);require(preparation.accepted(),"Owned rollback probe removal preflight refused: "+preparation.reason());
+        TransactionCore.Result transaction=CompositeRuntime.execute(access,preparation);result.add("result",transaction(transaction));save();
+        check(reached[0]&&transaction.outcome()==TransactionCore.Outcome.ROLLED_BACK&&transaction.reason().startsWith("write_rejected:"),"controlled failure after the real terminal base write rolls the transaction back");
+        check(before.entrySet().stream().allMatch(entry->cell(entry.getKey()).equals(entry.getValue())),"terminal rollback restores all twelve exact states, typed BE payloads, background references and owner entries");
+        check(access.read(target).kind()==dev.dreamwalker.bloodbornedw.runtime.CellSnapshot.Kind.HELPER,"released rollback adapter reads its restored real helper, with no terminal AIR projection");result.addProperty("restoredExactly",true);save();return access;
+    }
+
+    private BlockHitResult exactPartRay(BlockPos target,JsonObject result){
+        JsonArray attempts=new JsonArray();result.add("rayAttempts",attempts);
+        for(Box box:world.getBlockState(target).getOutlineShape(world,target).getBoundingBoxes())for(Direction side:Direction.values()){
+            Vec3d center=box.getCenter().add(target.getX(),target.getY(),target.getZ()),delta=new Vec3d(side.getOffsetX(),side.getOffsetY(),side.getOffsetZ()),eye=center.add(delta.multiply(3));
+            BlockHitResult hit=world.raycast(new RaycastContext(eye,center.subtract(delta.multiply(.25)),RaycastContext.ShapeType.OUTLINE,RaycastContext.FluidHandling.NONE,actor));
+            JsonObject attempt=new JsonObject();attempt.addProperty("side",side.asString());attempt.addProperty("hitType",hit.getType().name());if(hit.getType()==HitResult.Type.BLOCK)attempt.add("hitBlockPos",coordinates(hit.getBlockPos()));attempts.add(attempt);result.addProperty("testedRays",attempts.size());
+            if(hit.getType()!=HitResult.Type.BLOCK||!hit.getBlockPos().equals(target))continue;
+            actor.setPosition(eye.x,eye.y-actor.getStandingEyeHeight(),eye.z);Vec3d direction=center.subtract(eye);actor.setYaw((float)Math.toDegrees(Math.atan2(-direction.x,direction.z)));actor.setHeadYaw(actor.getYaw());actor.setPitch((float)-Math.toDegrees(Math.atan2(direction.y,Math.hypot(direction.x,direction.z))));return hit;
+        }
+        return null;
     }
 
     private Source source(JsonObject input,BlockPos requested) throws Exception {
@@ -349,12 +506,14 @@ public final class NativeGridFunctionChecks implements ModInitializer {
         NbtCompound payload=root.payload();var closed=CompositeRuntime.instance(world,standRoot,state,owner.instanceId(),payload);
         var opened=CompositeRuntime.instance(world,standRoot,state.cycle(CompositeRootBlock.OPEN),owner.instanceId(),payload);
         BlockPos sourceOffset=pos(input.getAsJsonArray("helperOffset"));require(sourceOffset.equals(new BlockPos(0,-1,1)),"Bridge fixture must bind the exact original source floor contact");
-        require(state.isOf(source.state().getBlock())&&state.get(CompositeRootBlock.ROTATION).equals(source.state().get(CompositeRootBlock.ROTATION))&&state.get(CompositeRootBlock.VARIANT).equals(source.state().get(CompositeRootBlock.VARIANT)),"Manual door must retain the bound source art and yaw");
+        require(state.isOf(source.state().getBlock())&&state.get(CompositeRootBlock.ROTATION).equals(source.state().get(CompositeRootBlock.ROTATION)),"Manual door must retain the bound source registry and yaw");
+        BlockState normal=ImportedSourcePartsV127.installation(source.state());
+        require(CompositeSpec.poseVariant(state)==CompositeSpec.poseVariant(normal),"Manual door must follow its exact existing source-parts defaultInstallationPose policy");
         var oldShift=CompositeSourceShift.world(source.state(),source.payload());var newShift=CompositeSourceShift.world(state,payload);
         double x=sourceOffset.getX()+newShift.x()-oldShift.x(),y=sourceOffset.getY()+newShift.y()-oldShift.y()+payload.getDouble("MountY")-source.payload().getDouble("MountY"),z=sourceOffset.getZ()+newShift.z()-oldShift.z();
         require(Math.abs(x-Math.rint(x))<1e-7&&Math.abs(y-Math.rint(y))<1e-7&&Math.abs(z-Math.rint(z))<1e-7,"Manual persistent helper translation must be integral");
         BlockPos offset=new BlockPos((int)Math.rint(x),(int)Math.rint(y),(int)Math.rint(z));
-        JsonObject helperPlacement=new JsonObject();helperPlacement.add("originalSourceHelperOffset",coordinates(sourceOffset));helperPlacement.add("actualManualHelperOffset",coordinates(offset));helperPlacement.addProperty("manualSourceShiftCopied",false);report.add("bridgePlacement",helperPlacement);
+        JsonObject helperPlacement=new JsonObject();helperPlacement.add("originalSourceHelperOffset",coordinates(sourceOffset));helperPlacement.add("actualManualHelperOffset",coordinates(offset));helperPlacement.addProperty("manualSourceShiftCopied",false);helperPlacement.addProperty("sourceCompatibilityPart",ImportedSourcePartsV127.part(source.state()));helperPlacement.addProperty("sourcePose",CompositeSpec.poseVariant(source.state()));helperPlacement.addProperty("manualInstallationPose",CompositeSpec.poseVariant(state));helperPlacement.addProperty("installationPolicy","existing ImportedSourcePartsV127.installation; same registry and yaw, no source installation privileges");report.add("bridgePlacement",helperPlacement);
         BlockPos point=standRoot.add(offset);
         require(!point.equals(standRoot)&&guarded.contains(point)&&inside(point),"Bound floor helper is outside the fresh owned guarded door fixture");
         require(closed.at(CompositeData.cell(point))!=null&&opened.at(CompositeData.cell(point))!=null,"Bound floor helper must persist in both actual closed/open door footprints");
@@ -427,10 +586,20 @@ public final class NativeGridFunctionChecks implements ModInitializer {
         }
     }
     private void useByRay(List<BlockPos> footprint){refreshStandChunks("door right click");assertDoorPhysicalProbes();BlockPos target=selectable(footprint,false);BlockHitResult hit=ray(target);actor.setStackInHand(Hand.MAIN_HAND,ItemStack.EMPTY);actor.setStackInHand(Hand.OFF_HAND,ItemStack.EMPTY);BlockState state=world.getBlockState(hit.getBlockPos());check(state.getBlock().onUse(state,world,hit.getBlockPos(),actor,Hand.MAIN_HAND,hit).isAccepted(),"actual selected door part handles right-click");}
-    private void breakByRay(BlockPos target){refreshStandChunks("selected break");BlockHitResult hit=ray(target);actor.setStackInHand(Hand.MAIN_HAND,ItemStack.EMPTY);actor.interactionManager.tryBreakBlock(hit.getBlockPos());}
+    private void breakByRay(BlockPos target){refreshStandChunks("selected break");BlockHitResult hit=ray(target);performBreak(target,hit);}
+    private void performBreak(BlockPos requested,BlockHitResult hit){
+        actor.setStackInHand(Hand.MAIN_HAND,ItemStack.EMPTY);actor.setStackInHand(Hand.OFF_HAND,ItemStack.EMPTY);boolean owned=!CompositeRuntime.contributions(world,hit.getBlockPos()).isEmpty();
+        TransactionCore.Result before=CompositeRuntime.lastResult();JsonObject row=new JsonObject();row.add("requested",coordinates(requested));row.add("actualRayHit",coordinates(hit.getBlockPos()));row.add("before",cell(hit.getBlockPos()));row.add("previousTransaction",transaction(before));
+        boolean api=actor.interactionManager.tryBreakBlock(hit.getBlockPos());TransactionCore.Result after=CompositeRuntime.lastResult();row.addProperty("apiReturn",api);row.addProperty("ownedBefore",owned);row.addProperty("transactionUpdated",after!=before);row.add("transaction",transaction(after));row.add("after",cell(hit.getBlockPos()));
+        JsonArray breaks=report.has("breakAttempts")?report.getAsJsonArray("breakAttempts"):new JsonArray();breaks.add(row);report.add("breakAttempts",breaks);save();
+        // BEFORE deliberately returns false after a handled composite removal.
+        // The actual transaction and complete postconditions determine success.
+        if(owned)check(after!=before&&after!=null&&after.outcome()==TransactionCore.Outcome.COMMITTED,"selected whole-object removal transaction commits at "+hit.getBlockPos());
+    }
+    private static JsonObject transaction(TransactionCore.Result result){JsonObject row=new JsonObject();row.addProperty("available",result!=null);if(result!=null){row.addProperty("outcome",result.outcome().name());row.addProperty("changedCells",result.changedCells());row.addProperty("reason",result.reason());}return row;}
     private BlockHitResult ray(BlockPos target){List<Box> selection=world.getBlockState(target).getOutlineShape(world,target).getBoundingBoxes();require(!selection.isEmpty(),"No native selection at "+target);Vec3d center=selection.get(0).getCenter().add(target.getX(),target.getY(),target.getZ());Vec3d eye=center.add(0,0,-3);actor.setPosition(eye.x,eye.y-actor.getStandingEyeHeight(),eye.z);Vec3d delta=center.subtract(eye);actor.setYaw((float)Math.toDegrees(Math.atan2(-delta.x,delta.z)));actor.setHeadYaw(actor.getYaw());actor.setPitch((float)-Math.toDegrees(Math.atan2(delta.y,Math.hypot(delta.x,delta.z))));var hit=world.raycast(new RaycastContext(eye,center.add(0,0,1),RaycastContext.ShapeType.OUTLINE,RaycastContext.FluidHandling.NONE,actor));require(hit.getType()==HitResult.Type.BLOCK&&inside(hit.getBlockPos()),"Native selection ray missed guarded object");return hit;}
     private BlockPos selectable(List<BlockPos> footprint,boolean across){return footprint.stream().filter(p->!world.getBlockState(p).getOutlineShape(world,p).isEmpty()).sorted(Comparator.comparingInt(p->across&&new ChunkPos(p).toLong()!=new ChunkPos(standRoot).toLong()?0:1)).findFirst().orElseThrow(()->new IllegalStateException("No selectable whole-object cell"));}
-    private void cleanupActive(){Runnable cleanup=activeCleanup;activeCleanup=null;if(cleanup!=null)cleanup.run();}
+    private void cleanupActive(){Runnable cleanup=activeCleanup;if(cleanup!=null)cleanup.run();activeCleanup=null;}
     private void guard(Collection<BlockPos> positions){for(BlockPos point:positions){allowed(point);require(inside(point)&&empty(point),"Proposed fixture outside empty stand: "+point);}}
     private boolean inside(BlockPos p){return p.getX()>=standMin.getX()&&p.getX()<=standMax.getX()&&p.getY()>=standMin.getY()&&p.getY()<=standMax.getY()&&p.getZ()>=standMin.getZ()&&p.getZ()<=standMax.getZ();}
     private boolean empty(BlockPos point){return world.getBlockState(point).isOf(Blocks.AIR)&&world.getFluidState(point).isEmpty()&&world.getBlockEntity(point)==null&&CompositeRuntime.contributions(world,point).isEmpty();}
@@ -464,6 +633,7 @@ public final class NativeGridFunctionChecks implements ModInitializer {
     private boolean standEmpty(){for(BlockPos point:BlockPos.iterate(standMin,standMax))if(!empty(point))return false;return true;}
     private JsonArray snapshots(Map<BlockPos,JsonObject> input){JsonArray rows=new JsonArray();for(var e:input.entrySet()){JsonObject row=new JsonObject();row.add("pos",coordinates(e.getKey()));row.add("reference",e.getValue());rows.add(row);}return rows;}
     private VoxelShape union(List<BlockPos> positions,BlockPos origin,boolean collision){VoxelShape result=VoxelShapes.empty();for(BlockPos point:positions){BlockState state=world.getBlockState(point);VoxelShape shape=collision?state.getCollisionShape(world,point):state.getOutlineShape(world,point);result=VoxelShapes.union(result,shape.offset(point.getX()-origin.getX(),point.getY()-origin.getY(),point.getZ()-origin.getZ()));}return result;}
+    private static VoxelShape instanceUnion(ObjectInstance instance,boolean collision){VoxelShape result=VoxelShapes.empty();for(var entry:instance.cells().entrySet()){var offset=entry.getKey();for(var b:collision?entry.getValue().collision():entry.getValue().selection())result=VoxelShapes.union(result,VoxelShapes.cuboid(b.minX()+offset.x(),b.minY()+offset.y(),b.minZ()+offset.z(),b.maxX()+offset.x(),b.maxY()+offset.y(),b.maxZ()+offset.z()));}return result;}
     private static boolean nativeGrid(BlockState state){var id=Registries.BLOCK.getId(state.getBlock());return id.getNamespace().equals("bloodborne_dw")&&id.getPath().startsWith("native_grid_");}
     private static boolean same(VoxelShape a,VoxelShape b){return !VoxelShapes.matchesAnywhere(a,b,BooleanBiFunction.NOT_SAME);}
     private static JsonArray boxes(VoxelShape shape){return JSON.toJsonTree(shape.getBoundingBoxes().stream().map(b->List.of(b.minX,b.minY,b.minZ,b.maxX,b.maxY,b.maxZ)).toList()).getAsJsonArray();}
@@ -475,7 +645,235 @@ public final class NativeGridFunctionChecks implements ModInitializer {
     private void check(boolean condition,String name){JsonObject row=new JsonObject();row.addProperty("name",name);row.addProperty("pass",condition);checks.add(row);require(condition,name);}
     private static void require(boolean condition,String message){if(!condition)throw new IllegalStateException(message);}
     private static String text(JsonObject row,String key,String fallback){return row.has(key)?row.get(key).getAsString():fallback;}
-    private void finish(MinecraftServer server,Throwable failure){if(done)return;done=true;try{cleanupActive();if(standInitiallyAir&&!standRestored){standRestored=standEmpty();check(standRestored,"stand state/NBT/owners restored at completion");}}catch(Throwable cleanup){if(failure==null)failure=cleanup;else failure.addSuppressed(cleanup);}if(actor!=null)actor.getTextStream().onDisconnect();if(report==null)report=new JsonObject();report.addProperty("status",failure==null?"PASS":"FAIL");report.addProperty("standRestored",standRestored);if(failure!=null){failure.printStackTrace();report.addProperty("error",failure.toString());}save();server.stop(false);}
+    /** One exact retained ImportedRoot case. Its one plain substitution and one
+     * existing-helper background are authorized setup, not placement claims. */
+    private final class ForeignGuestFixture {
+        private static final String SOURCE_SHA="6261a58cd23120f0fc5ae6b9210919f18e385482d03464da0b8366e720eee268";
+        private static final String SOURCE_OWNER="[-1182530740,-1421322098,-1822126450,163509195]";
+        private static final String SOURCE_POSE="sp_e70009f84997fbb5b6ede9de";
+        private static final String POLICY_SHA="79392979f165ef447666f947b49d539c6cb262ce126e6b217cdcaf8bf6556afe";
+        private final JsonObject input,proof,fact,detail=new JsonObject();
+        private final List<BlockPos> members=new ArrayList<>();
+        private final Map<BlockPos,BlockState> backgrounds=new LinkedHashMap<>();
+        private final Map<BlockPos,JsonObject> backgroundRows=new LinkedHashMap<>();
+        private ObjectInstance.Owner owner;
+        private ObjectInstance instance;
+        private BlockPos plainPoint,bridgePoint;
+        private int bridgeIndex;
+        private Map<BlockPos,JsonObject> installed;
+        private boolean setupComplete,savedForReopen,foreignFinished;
+        private final LegacyWholeItemFixture legacyWhole;
+        ForeignGuestFixture(JsonObject input)throws Exception{
+            this.input=input;
+            require(Set.of("install_save","reopen_finish").contains(text(input,"phase","")),"Unknown finite foreign-guest phase");
+            require(input.getAsJsonObject("sourceProof").get("sha256").getAsString().equals(SOURCE_SHA),"Foreign fixture must use the exact addressed source facts");
+            JsonObject source=readBoundJson(input.getAsJsonObject("sourceProof"));
+            fact=java.util.stream.StreamSupport.stream(source.getAsJsonArray("allAddressedOwnerSourceFacts").spliterator(),false).map(JsonElement::getAsJsonObject).filter(row->row.get("uuid").getAsString().equals(SOURCE_OWNER)).findFirst().orElseThrow();
+            require(fact.get("pose").getAsString().equals(SOURCE_POSE)&&fact.getAsJsonArray("sourceFailures").size()==0&&fact.get("className").getAsString().equals("dev.dreamwalker.bloodbornedw.composite.ImportedRootBlock"),"Addressed source D facts did not pass");
+            require(input.getAsJsonObject("pointProof").has("sha256"),"Exact FULL composition/type proof required");
+            proof=readBoundJson(input.getAsJsonObject("pointProof"));
+            require(text(proof,"status","").equals("PASS_SOURCE_COMPOSITION_AND_TYPE_BINDING_NOT_GAMEPLAY")&&text(proof,"kind","").equals("EXACT_D_E_NONROOT_NATIVE_GRID_OVERLAY")&&text(proof,"scope","").equals("FULL_CITY")&&proof.get("sourceOwnerUuid").getAsString().equals(SOURCE_OWNER)&&proof.get("sourcePose").getAsString().equals(SOURCE_POSE)&&proof.get("sourceBinding").equals(source.get("sourceBinding")),"Unknown or unbound foreign-guest point certificate");
+            require(proof.getAsJsonObject("sourceProof").equals(input.getAsJsonObject("sourceProof")),"Point/type evidence used different source facts");
+            require(input.getAsJsonObject("memberPolicyProof").get("sha256").getAsString().equals(POLICY_SHA)&&proof.getAsJsonObject("memberPolicyProof").equals(input.getAsJsonObject("memberPolicyProof")),"Exact mixed nonroot member policies must remain bound");
+            JsonObject policies=readBoundJson(input.getAsJsonObject("memberPolicyProof"));require(text(policies,"status","").equals("PASS")&&policies.get("sourceBinding").equals(source.get("sourceBinding")),"Member-policy source proof changed");
+            Class<?> catalog=Class.forName("dev.dreamwalker.bloodbornedw.composite.NativeGridCatalog");
+            try(InputStream stream=catalog.getResourceAsStream("/assets/bloodborne_dw/native_grid/catalog.json")){
+                require(stream!=null&&HexFormat.of().formatHex(MessageDigest.getInstance("SHA-256").digest(stream.readAllBytes())).equals(proof.get("catalogSha256").getAsString()),"Foreign fixture needs its actual FULL catalog");
+            }
+            JsonObject audit=readBoundJson(input.getAsJsonObject("targetBridgeAudit"));
+            require(text(audit,"status","").equals("PASS")&&audit.get("nativeRegistryQueries").getAsBoolean()&&audit.get("runtimeSha256").equals(plan.get("productionSha256"))&&audit.get("catalogSha256").equals(proof.get("catalogSha256"))&&audit.get("bridgePlanSha256").equals(proof.get("targetBridgePlanSha256")),"Actual all-target bridge audit is absent or bound to another FULL build");
+            require(proof.getAsJsonArray("overlays").size()==2,"Exactly two addressed nonroot overlay cells required");
+            BlockPos sourceRoot=pos(fact.getAsJsonArray("root"));
+            for(BlockPos point:positions(fact.getAsJsonArray("runtimeMemberCells")))members.add(standRoot.add(point.subtract(sourceRoot)));
+            require(members.size()==4&&members.contains(standRoot),"Exact D must keep all four runtime members");
+            Set<BlockPos> expected=Set.of(standRoot.add(0,-1,-1),standRoot.add(0,-1,0));
+            for(JsonElement raw:proof.getAsJsonArray("overlays")){
+                JsonObject row=raw.getAsJsonObject();BlockPos offset=pos(row.getAsJsonArray("offset")),point=standRoot.add(offset);
+                require(expected.contains(point)&&!backgrounds.containsKey(point)&&row.get("baseExcludesD").getAsBoolean()&&row.has("compositionKey")&&pos(row.getAsJsonArray("sourcePosition")).equals(sourceRoot.add(offset)),"Foreign overlay is not the exact source D/E point");
+                BlockState state=(BlockState)catalog.getMethod("state",int.class).invoke(null,row.get("cell").getAsInt());
+                require(nativeGrid(state)&&nativeMembers(state)==null&&!state.hasBlockEntity()&&state.getFluidState().isEmpty()&&state.getLuminance()==0,"Foreign background must be a plain dry nonemitting catalog cell");
+                require(same(state.getBlock().getCollisionShape(state,EmptyBlockView.INSTANCE,BlockPos.ORIGIN,ShapeContext.absent()),shape(row.getAsJsonArray("collision")))&&same(state.getBlock().getOutlineShape(state,EmptyBlockView.INSTANCE,BlockPos.ORIGIN,ShapeContext.absent()),shape(row.getAsJsonArray("outline"))),"FULL target background shapes differ from exact composition/type evidence");
+                backgrounds.put(point,state);backgroundRows.put(point,row);
+                if(offset.equals(new BlockPos(0,-1,-1))){require(text(row,"carrierMode","").equals("plain_foreign"),"First actual member must remain the proved plain FOREIGN route");plainPoint=point;}
+                else{require(text(row,"carrierMode","").equals("existing_helper_bridge"),"Second actual member must retain its existing nonresident CompositeBE");bridgePoint=point;bridgeIndex=row.get("cell").getAsInt();}
+            }
+            if(!reopening())guard(members);for(BlockPos point:members){require(inside(point),"Foreign fixture escapes the existing empty stand");allowed(point);}
+            legacyWhole=input.has("legacyNativeWholeItem")?new LegacyWholeItemFixture(input.getAsJsonObject("legacyNativeWholeItem")):null;
+            detail.add("binding",input.deepCopy());detail.addProperty("sourceOwnerUuid",SOURCE_OWNER);detail.addProperty("sourcePose",SOURCE_POSE);detail.addProperty("authorizedSetupCarrierSubstitutions",1);detail.addProperty("existingHelperBackgroundReferencesAdded",1);detail.addProperty("ordinaryPlacementClaim",false);detail.addProperty("newBlockEntitiesCreatedBySubstitution",0);report.add("foreignGuestFixture",detail);
+        }
+        boolean reopening(){return text(input,"phase","").equals("reopen_finish");}
+        void prepareReopen()throws Exception{
+            JsonObject previous=readBoundJson(input.getAsJsonObject("previousReport"));
+            require(text(previous,"status","").equals("PASS")&&previous.get("normalServerThreadFinished").getAsBoolean()&&previous.get("productionSha256").equals(plan.get("productionSha256")),"Reopen requires the exact normally saved first phase");
+            JsonObject prior=previous.getAsJsonObject("foreignGuestFixture"),priorInput=prior.getAsJsonObject("binding").deepCopy(),now=input.deepCopy();
+            priorInput.remove("phase");priorInput.remove("previousReport");now.remove("phase");now.remove("previousReport");
+            require(priorInput.equals(now)&&prior.get("standRetainedForReopen").getAsBoolean()&&!prior.get("gameplayComplete").getAsBoolean(),"Reopen changed the exact retained fixture/proofs");
+            UUID uuid=UUID.fromString(prior.get("freshOwnerUuid").getAsString());owner=new ObjectInstance.Owner(uuid,fact.getAsJsonObject("actualRootState").get("registryId").getAsString(),CompositeData.cell(standRoot));
+            installed=new LinkedHashMap<>();for(JsonElement raw:prior.getAsJsonArray("savedCells")){JsonObject row=raw.getAsJsonObject();installed.put(pos(row.getAsJsonArray("pos")),row.getAsJsonObject("reference"));}
+            require(installed.keySet().equals(new LinkedHashSet<>(members)),"Reopen snapshots do not cover the four exact cells");
+            if(legacyWhole!=null)legacyWhole.prepareReopen(prior.getAsJsonObject("retainedNativeWholeItem"));
+            assertOutsideAir();require(world.getBlockEntity(standRoot) instanceof CompositeBlockEntity,"Saved D root BE is missing");
+            CompositeBlockEntity root=(CompositeBlockEntity)world.getBlockEntity(standRoot);instance=CompositeRuntime.instance(world,standRoot,world.getBlockState(standRoot),uuid,root.payload());
+            activeCleanup=this::cleanup;standInitiallyAir=true;
+            check(installed.entrySet().stream().allMatch(row->cell(row.getKey()).equals(row.getValue())),"real server reopen preserves all four exact native states, typed D payload and ledger refs");
+            assertWhole("after real reopen");detail.addProperty("freshOwnerUuid",uuid.toString());detail.add("reopenedCells",snapshots(installed));
+        }
+        boolean step()throws Exception{
+            refreshStandChunks("finite FOREIGN guest fixture");
+            if(reopening()){if(!foreignFinished){finishReopened();foreignFinished=true;}if(legacyWhole!=null){legacyWhole.finishReopened();check(standEmpty(),"mixed FOREIGN and retained old-native whole fixtures restore the complete AIR stand");standRestored=true;activeCleanup=null;save();}return true;}
+            if(!setupComplete){install();if(legacyWhole!=null)legacyWhole.install();setupComplete=true;return false;}
+            // A world tick has now drained any onStateReplaced cleanup scheduled
+            // by the substitution; it may not silently erase live refs.
+            assertWhole("after the real callback tick");probeRollback();
+            if(legacyWhole!=null)legacyWhole.savedAfterCallback();
+            installed=snapshotMembers();detail.add("savedCells",snapshots(installed));detail.addProperty("standRetainedForReopen",true);detail.addProperty("gameplayComplete",false);detail.addProperty("phaseResult","SETUP_AND_SAVE_ONLY_PENDING_REAL_REOPEN");
+            savedForReopen=true;activeCleanup=null;report.addProperty("rawSetBlockCalls",legacyWhole==null?1:4);save();return true;
+        }
+        void install()throws Exception{
+            require(standEmpty(),"Foreign setup needs the original complete AIR/no-owner stand");
+            JsonObject stateRow=fact.getAsJsonObject("actualRootState");BlockState state=exactState(stateRow);
+            NbtCompound payload=new NbtCompound();payload.putInt("ImportedTypeVersion",1);net.minecraft.nbt.NbtList shift=new net.minecraft.nbt.NbtList();for(double n:new double[]{0,-1,0})shift.add(net.minecraft.nbt.NbtDouble.of(n));payload.put("SourceShift",shift);
+            JsonObject savedPayload=fact.getAsJsonObject("rootBE").getAsJsonObject("payload");require(savedPayload.keySet().equals(Set.of("SourceShift","ImportedTypeVersion"))&&savedPayload.get("ImportedTypeVersion").getAsInt()==1&&savedPayload.getAsJsonArray("SourceShift").equals(JSON.toJsonTree(new double[]{0,-1,0})),"Exact D source payload changed");
+            UUID uuid=UUID.randomUUID();owner=new ObjectInstance.Owner(uuid,stateRow.get("registryId").getAsString(),CompositeData.cell(standRoot));activeCleanup=this::cleanup;
+            TransactionCore.Result placed=CompositeRuntime.place(world,standRoot,state,uuid,actor,payload);detail.add("initialPlacement",transaction(placed));save();check(placed.outcome()==TransactionCore.Outcome.COMMITTED,"fresh exact-payload D installs through existing public transaction API");
+            require(canonicalState(Registries.BLOCK.getId(world.getBlockState(standRoot).getBlock()).toString(),world.getBlockState(standRoot)).equals(stateRow),"Existing source API normalized D into a different state");
+            CompositeBlockEntity root=(CompositeBlockEntity)world.getBlockEntity(standRoot);require(root.payload().equals(payload),"Exact source D payload changed during fixture setup");
+            instance=CompositeRuntime.instance(world,standRoot,state,uuid,root.payload());require(instance.cells().keySet().stream().map(c->standRoot.add(c.x(),c.y(),c.z())).collect(java.util.stream.Collectors.toSet()).equals(new HashSet<>(members)),"Fresh D does not have the four proven runtime members");
+            Map<BlockPos,JsonObject> before=snapshotMembers();detail.add("beforeSubstitution",snapshots(before));detail.addProperty("freshOwnerUuid",uuid.toString());save();
+            for(var entry:backgrounds.entrySet()){
+                BlockPos point=entry.getKey();require(!point.equals(standRoot)&&world.getBlockState(point).isOf(CompositeArchitecture.CELL)&&world.getBlockEntity(point) instanceof CompositeBlockEntity helper&&helper.resident()==null,"Only a fresh nonresident test-owned helper may be substituted");
+                require(CompositeRuntime.contributions(world,point).size()==1&&CompositeRuntime.contributions(world,point).get(0).owner().equals(owner),"Substitution found a foreign owner");
+                if(point.equals(plainPoint))require(world.setBlockState(point,entry.getValue(),Block.FORCE_STATE|Block.NOTIFY_ALL|Block.SKIP_DROPS)||world.getBlockState(point).equals(entry.getValue()),"Authorized own-helper substitution refused");
+                else{
+                    CompositeBlockEntity helper=(CompositeBlockEntity)world.getBlockEntity(point);NbtCompound original=helper.createNbt();require(helper.payload().isEmpty()&&!original.contains("NativeGridBase"),"Exact fresh bridge helper has unexpected private payload/background");
+                    helper.getClass().getMethod("nativeGridBase",int.class).invoke(helper,bridgeIndex);helper.markDirty();helper.publishShapeSnapshot();world.updateListeners(point,world.getBlockState(point),world.getBlockState(point),Block.NOTIFY_LISTENERS);world.getChunkManager().markForUpdate(point);
+                    NbtCompound after=helper.createNbt();require(after.contains("NativeGridBase",3)&&after.getInt("NativeGridBase")==bridgeIndex,"Shared base was not attached to the exact existing helper");after.remove("NativeGridBase");check(after.equals(original),"existing fresh helper typed NBT changes only by its exact shared NativeGridBase reference");
+                }
+            }
+            check(cell(standRoot).equals(before.get(standRoot)),"authorized mixed nonroot setup preserves exact D root/resident/typed payload");
+            for(BlockPos point:members)check(cell(point).get("owners").equals(before.get(point).get("owners")),"authorized substitution preserves the original fresh D ledger ref at "+point);
+            assertWhole("immediately after substitution");detail.add("afterSubstitution",snapshots(snapshotMembers()));save();
+        }
+        void assertWhole(String when){
+            require(world.getBlockEntity(standRoot) instanceof CompositeBlockEntity root&&owner.equals(root.resident())&&world.getBlockState(standRoot).equals(CompositeData.state(instance.rootData()))&&root.payload().equals(CompositeData.nbt(instance.rootData().blockEntityNbt())),"D root/payload changed "+when);
+            for(BlockPos point:members){var entries=CompositeRuntime.contributions(world,point);require(entries.size()==1&&entries.get(0).owner().equals(owner)&&entries.get(0).rootData().equals(instance.rootData())&&entries.get(0).shape().equals(instance.at(CompositeData.cell(point))),"D exact ledger member changed "+when+": "+point);}
+            VoxelShape collision=instanceUnion(instance,true),outline=instanceUnion(instance,false);
+            for(var entry:backgrounds.entrySet())if(world.getBlockState(entry.getKey()).equals(entry.getValue())||entry.getKey().equals(bridgePoint)){
+                if(entry.getKey().equals(bridgePoint))require(world.getBlockState(bridgePoint).isOf(CompositeArchitecture.CELL)&&world.getBlockEntity(bridgePoint) instanceof CompositeBlockEntity helper&&helper.resident()==null&&helper.payload().isEmpty()&&bridgeIndex(helper)==bridgeIndex,"Exact existing helper/background changed "+when);
+                else require(world.getBlockEntity(entry.getKey())==null&&new FabricCompositeWorld(world,Map.of()).read(CompositeData.cell(entry.getKey())).kind()==dev.dreamwalker.bloodbornedw.runtime.CellSnapshot.Kind.FOREIGN,"Plain background became a BE or helper "+when);
+                BlockPos offset=entry.getKey().subtract(standRoot);JsonObject row=backgroundRows.get(entry.getKey());collision=VoxelShapes.union(collision,shape(row.getAsJsonArray("collision")).offset(offset.getX(),offset.getY(),offset.getZ()));outline=VoxelShapes.union(outline,shape(row.getAsJsonArray("outline")).offset(offset.getX(),offset.getY(),offset.getZ()));
+            }
+            check(same(union(members,standRoot,true),collision)&&same(union(members,standRoot,false),outline),"live FOREIGN guest collision/outline is exact D plus remaining native backgrounds "+when);
+        }
+        void probeRollback(){
+            Map<BlockPos,JsonObject> before=snapshotMembers();BlockPos target=plainPoint;boolean[] reached={false,false};
+            FabricCompositeWorld access=new FabricCompositeWorld(world,Map.of()){@Override public boolean writeSilently(dev.dreamwalker.bloodbornedw.runtime.ObjectGeometry.Cell cell,dev.dreamwalker.bloodbornedw.runtime.CellSnapshot next){boolean ok=super.writeSilently(cell,next);if(ok&&cell.equals(CompositeData.cell(target))){require(world.getBlockState(target).equals(backgrounds.get(target))&&world.getBlockEntity(target)==null&&CompositeRuntime.contributions(world,target).isEmpty(),"Forced rollback never reached the real FOREIGN ledger detach");reached[0]=true;}if(ok&&cell.equals(owner.root())){require(reached[0]&&world.getBlockEntity(standRoot)==null&&CompositeRuntime.contributions(world,standRoot).isEmpty(),"Forced rollback did not reach root detach after the FOREIGN carrier");reached[1]=true;return false;}return ok;}};
+            var preparation=CompositeRuntime.core().removal(access,owner);require(preparation.accepted()&&preparation.plan().writes().size()==4,"Exact D rollback preparation refused or changed its four write cells: "+preparation.reason());
+            TransactionCore.Result result=CompositeRuntime.execute(access,preparation);detail.add("rollback",transaction(result));save();
+            check(reached[0]&&reached[1]&&result.outcome()==TransactionCore.Outcome.ROLLED_BACK&&before.entrySet().stream().allMatch(row->cell(row.getKey()).equals(row.getValue())),"forced FOREIGN detach rollback restores all four exact states/payload/ledger refs");assertWhole("after rollback");
+        }
+        void finishReopened()throws Exception{
+            assertWhole("before live background break");JsonObject rootBefore=cell(standRoot);Map<BlockPos,JsonObject> before=snapshotMembers();BlockPos target=plainPoint;
+            JsonObject rayProof=new JsonObject();BlockHitResult hit=exactBackgroundRay(target,rayProof);detail.add("backgroundBreakRay",rayProof);save();
+            actor.setStackInHand(Hand.MAIN_HAND,ItemStack.EMPTY);actor.setStackInHand(Hand.OFF_HAND,ItemStack.EMPTY);
+            require(CompositeRuntime.target(world,target,actor)==null,"Background interaction still selects retained D");boolean api=actor.interactionManager.tryBreakBlock(target);detail.addProperty("backgroundBreakApiReturn",api);save();
+            check(world.getBlockState(target).isAir()&&world.getBlockEntity(target)==null,"ordinary static background break removes only the plain carrier while D remains live");
+            check(cell(standRoot).equals(rootBefore)&&members.stream().allMatch(point->cell(point).get("owners").equals(before.get(point).get("owners"))),"background break preserves exact D root/payload and every one of its four ledger refs");assertWhole("after live background break");
+            JsonObject partSearch=new JsonObject();BlockHitResult part=exactPartRay(plainPoint,partSearch);detail.add("exposedPlainMemberRay",partSearch);save();if(part!=null&&!owner.equals(CompositeRuntime.target(world,part.getBlockPos(),actor)))part=null;
+            require(part!=null,"No selectable D part is accessible after background break");
+            ItemStack expected=CompositeRuntime.pick(world,owner);check(!expected.isEmpty()&&expected.getCount()==1&&expected.getItem() instanceof BlockItem,"retained D picks one usable whole main item");detail.addProperty("pickedMainItem",Registries.ITEM.getId(expected.getItem()).toString());detail.addProperty("pickedMainItemNbt",String.valueOf(expected.getNbt()));
+            check(CompositeRuntime.target(world,part.getBlockPos(),actor).equals(owner),"actual selected remaining part targets exactly the fresh D whole owner");performBreak(part.getBlockPos(),part);
+            check(world.getBlockEntity(standRoot)==null&&members.stream().allMatch(point->CompositeRuntime.contributions(world,point).isEmpty()),"one real ray break removes D root and all four original ledger memberships");
+            detail.add("afterDWholeRemovalBeforeBackgroundCleanup",snapshots(snapshotMembers()));save();
+            check(world.getBlockState(bridgePoint).equals(backgrounds.get(bridgePoint))&&nativeGrid(world.getBlockState(bridgePoint))&&world.getBlockEntity(bridgePoint)==null&&CompositeRuntime.contributions(world,bridgePoint).isEmpty()&&new FabricCompositeWorld(world,Map.of()).read(CompositeData.cell(bridgePoint)).kind()==dev.dreamwalker.bloodbornedw.runtime.CellSnapshot.Kind.FOREIGN,"D whole break preserves the second exact background as an ordinary FOREIGN NativeGrid state with no BE or owner refs before cleanup");
+            check(empty(plainPoint)&&members.stream().filter(point->!point.equals(bridgePoint)).allMatch(NativeGridFunctionChecks.this::empty),"D whole break leaves the previously broken plain cell and both other D members AIR before cleanup");
+            actor.interactionManager.tryBreakBlock(bridgePoint);check(empty(bridgePoint),"the preserved second background independently breaks to AIR");
+            if(legacyWhole==null){check(standEmpty(),"foreign-guest fixture restores the complete original AIR/no-BE/no-owner stand");standRestored=true;activeCleanup=null;}detail.addProperty("gameplayComplete",true);detail.addProperty("realReopenVerified",true);detail.addProperty("standRetainedForReopen",false);detail.add("finalCells",snapshots(snapshotMembers()));report.addProperty("rawSetBlockCalls",0);report.addProperty("inheritedSetupRawSetBlockCalls",legacyWhole==null?1:4);save();
+        }
+        BlockHitResult exactBackgroundRay(BlockPos point,JsonObject result){
+            JsonArray attempts=new JsonArray();result.add("attempts",attempts);BlockState state=backgrounds.get(point);
+            for(Box box:state.getBlock().getOutlineShape(state,EmptyBlockView.INSTANCE,BlockPos.ORIGIN,ShapeContext.absent()).getBoundingBoxes())for(Direction side:Direction.values()){
+                Vec3d center=box.getCenter().add(point.getX(),point.getY(),point.getZ()),delta=new Vec3d(side.getOffsetX(),side.getOffsetY(),side.getOffsetZ()),eye=center.add(delta.multiply(3));BlockHitResult hit=world.raycast(new RaycastContext(eye,center.subtract(delta.multiply(.25)),RaycastContext.ShapeType.OUTLINE,RaycastContext.FluidHandling.NONE,actor));
+                actor.setPosition(eye.x,eye.y-actor.getStandingEyeHeight(),eye.z);Vec3d direction=center.subtract(eye);actor.setYaw((float)Math.toDegrees(Math.atan2(-direction.x,direction.z)));actor.setHeadYaw(actor.getYaw());actor.setPitch((float)-Math.toDegrees(Math.atan2(direction.y,Math.hypot(direction.x,direction.z))));
+                JsonObject attempt=new JsonObject();attempt.addProperty("side",side.asString());attempt.addProperty("hit",hit.getType().name());if(hit.getType()==HitResult.Type.BLOCK)attempt.add("position",coordinates(hit.getBlockPos()));ObjectInstance.Owner selected=hit.getType()==HitResult.Type.BLOCK?CompositeRuntime.target(world,hit.getBlockPos(),actor):null;attempt.addProperty("retainedDSelected",owner.equals(selected));attempts.add(attempt);
+                if(hit.getType()==HitResult.Type.BLOCK&&hit.getBlockPos().equals(point)&&selected==null){result.addProperty("mode","actual background outline ray + server interaction API");return hit;}
+            }
+            if(state.getBlock().getOutlineShape(state,EmptyBlockView.INSTANCE,BlockPos.ORIGIN,ShapeContext.absent()).isEmpty()){actor.setPosition(standRoot.getX()+8,standRoot.getY()+6,standRoot.getZ()+8);actor.setYaw(0);actor.setPitch(-90);result.addProperty("mode","server interaction API; exact background outline EMPTY, no ray PASS claimed");return null;}
+            throw new IllegalStateException("No independent background face is accessible under the declared six-side authored-centre search");
+        }
+        Map<BlockPos,JsonObject> snapshotMembers(){Map<BlockPos,JsonObject> result=new LinkedHashMap<>();for(BlockPos point:members)result.put(point,cell(point));return result;}
+        int bridgeIndex(CompositeBlockEntity helper){try{return (Integer)call(helper,"nativeGridBase");}catch(Exception failure){throw new IllegalStateException("Bound candidate lacks its existing shared-base API",failure);}}
+        void assertOutsideAir(){Set<BlockPos> exact=new HashSet<>(members);if(legacyWhole!=null)exact.addAll(legacyWhole.savedCells());for(BlockPos point:BlockPos.iterate(standMin,standMax)){allowed(point);require(exact.contains(point)||empty(point),"Unrecognized data outside the declared finite related fixtures");}}
+        void cleanup(){if(legacyWhole!=null)legacyWhole.cleanup();if(owner==null||foreignFinished)return;if(world.getBlockEntity(standRoot) instanceof CompositeBlockEntity root&&owner.equals(root.resident())){TransactionCore.Result result=CompositeRuntime.remove(world,owner,null,false);detail.add("cleanup",transaction(result));save();require(result.outcome()==TransactionCore.Outcome.COMMITTED,"Foreign fixture cleanup refused: "+result.reason());}else require(members.stream().allMatch(point->CompositeRuntime.contributions(world,point).isEmpty()),"Refuse cleanup of orphaned/unrecognized D memberships");for(var entry:backgrounds.entrySet())if(world.getBlockState(entry.getKey()).equals(entry.getValue())&&CompositeRuntime.contributions(world,entry.getKey()).isEmpty())actor.interactionManager.tryBreakBlock(entry.getKey());}
+        BlockState exactState(JsonObject row){Identifier id=new Identifier(row.get("registryId").getAsString());require(Registries.BLOCK.containsId(id),"Unknown exact D registry id");BlockState state=Registries.BLOCK.get(id).getDefaultState();for(var entry:row.getAsJsonObject("properties").entrySet()){Property<?> property=state.getBlock().getStateManager().getProperty(entry.getKey());require(property!=null,"Unknown exact D property");state=withProperty(state,property,entry.getValue().getAsString());}require(canonicalState(id.toString(),state).equals(row),"D property tuple is not exact/canonical");return state;}
+        private <T extends Comparable<T>> BlockState withProperty(BlockState state,Property<T> property,String value){return state.with(property,property.parse(value).orElseThrow());}
+
+        /** The exact retained W component shares this fixture's save/reopen.
+         * Native source cells are authorized setup; item placement is ordinary. */
+        private final class LegacyWholeItemFixture {
+            private static final String POSE_KEY="p17ee1b36da539f69c340",SOURCE_PROOF_SHA="de0cf82fb53bb61beea39ebaefba67e911b1622c7525554ddd76b2fc2ec41d28";
+            private final JsonObject binding,result=new JsonObject();
+            private final StaticArchitectureCatalog.Pose pose;
+            private final Map<BlockPos,BlockState> nativeStates=new LinkedHashMap<>();
+            private final BlockPos nativeRoot=standRoot.add(0,8,0),placementRoot=nativeRoot,backgroundPoint=nativeRoot.up();
+            private final BlockState background;
+            private final Class<?> itemApi;
+            private final Set<UUID> ownedDrops=new HashSet<>();
+            private ObjectInstance.Owner placedOwner;
+            private ObjectInstance placedInstance;
+            private Map<BlockPos,JsonObject> savedNative;
+            LegacyWholeItemFixture(JsonObject input)throws Exception{
+                binding=input;require(text(input,"legacyPose","").equals(POSE_KEY)&&input.getAsJsonObject("sourceRecipeProof").get("sha256").getAsString().equals(SOURCE_PROOF_SHA),"Only the addressed native W source component is a gameplay fixture");
+                JsonObject source=readBoundJson(input.getAsJsonObject("sourceRecipeProof")),resourceProof=readBoundJson(input.getAsJsonObject("resourceProof"));
+                require(text(source,"status","").equals("READ_ONLY_EXACT_NATIVE_STATUE_MEMBER_AND_VISUAL_PROOF_NOT_ADMISSION")&&source.get("sourceBinding").equals(proof.get("sourceBinding")),"W source recipes belong to another immutable source");
+                require(text(resourceProof,"status","").equals("PASS_EXACT_RETAINED_NATIVE_WHOLE_ITEM_RESOURCE_NOT_GAMEPLAY")&&text(resourceProof,"kind","").equals("FINITE_OBSERVED_RETAINED_NATIVE_WHOLE_ITEMS")&&resourceProof.get("sourceBinding").equals(source.get("sourceBinding"))&&resourceProof.get("originalV12Excluded").getAsBoolean()&&resourceProof.getAsJsonObject("resource").equals(input.getAsJsonObject("resource")),"Retained item list is not actual finite FULL authoring");
+                JsonObject whitelist=readBoundJson(input.getAsJsonObject("resource"));require(whitelist.get("schemaVersion").getAsInt()==1&&java.util.stream.StreamSupport.stream(whitelist.getAsJsonArray("poses").spliterator(),false).map(JsonElement::getAsJsonObject).anyMatch(row->row.get("legacyPose").getAsString().equals(POSE_KEY)),"Actual retained item resource omits the representative W");
+                pose=StaticArchitectureCatalog.pose(POSE_KEY);itemApi=Class.forName("dev.dreamwalker.bloodbornedw.composite.NativeGridRetainedWholeItems");
+                require(itemApi.getMethod("resourceSha256").invoke(null).equals(input.getAsJsonObject("resource").get("sha256").getAsString())&&(Boolean)itemApi.getMethod("allowed",StaticArchitectureCatalog.Pose.class).invoke(null,pose),"Loaded runtime retained-item whitelist differs");
+                require(pose.mountY()==0&&pose.state().get(CompositeRootBlock.ROTATION)==4&&pose.state().get(CompositeRootBlock.VARIANT)==1&&pose.block().spec.id.toString().equals("bloodborne_dw:source_hold_statue"),"Exact W art/mount changed");
+                require(pose.block().getClass()==ImportedRootBlock.class&&pose.block().asItem().getClass()==CompositeItem.class&&MaterialSlabs.replacement(pose.block(),item())==null,"Exact W canonical item no longer follows the existing ImportedRootBlock/CompositeItem transaction placement path");
+                var helperSource=StaticArchitectureCatalog.recipes().get(8037);require(helperSource.removal(1)==7177&&helperSource.removal(0)==1901,"Source W/independent-part finite removal closure changed");
+                nativeStates.put(nativeRoot.down(),StaticArchitectureCatalog.state(7177));nativeStates.put(nativeRoot,StaticArchitectureCatalog.state(7176));
+                require(pose.footprint().keySet().equals(Set.of(new dev.dreamwalker.bloodbornedw.runtime.ObjectGeometry.Cell(0,-1,0),dev.dreamwalker.bloodbornedw.runtime.ObjectGeometry.Cell.ORIGIN)),"W no longer has the two source-bound native members");
+                for(var entry:nativeStates.entrySet()){allowed(entry.getKey());require(inside(entry.getKey())&&!members.contains(entry.getKey()),"W setup overlaps another fixture or the stand edge");var recipe=StaticArchitectureCatalog.recipe(entry.getValue());require(recipe.fragments().size()==1&&recipe.fragments().get(0).pose()==pose&&entry.getKey().add(recipe.fragments().get(0).origin().x(),recipe.fragments().get(0).origin().y(),recipe.fragments().get(0).origin().z()).equals(nativeRoot),"W-only fixture recipe introduces an independent phantom component");}
+                JsonObject neighbour=input.getAsJsonObject("visualNeighbourBackground");require(neighbour.equals(proof.getAsJsonObject("retainedNativeVisualBackground"))&&pos(neighbour.getAsJsonArray("sourcePosition")).equals(new BlockPos(-100,114,-643))&&pos(neighbour.getAsJsonArray("offset")).equals(new BlockPos(0,1,0))&&text(neighbour,"carrierMode","").equals("plain_native_visual_neighbour")&&neighbour.get("baseExcludesW").getAsBoolean()&&neighbour.getAsJsonObject("sourceRecipeProof").equals(input.getAsJsonObject("sourceRecipeProof")),"W visual-only neighbour must be the exact actual final C placement, with no W geometry compiled");
+                background=(BlockState)Class.forName("dev.dreamwalker.bloodbornedw.composite.NativeGridCatalog").getMethod("state",int.class).invoke(null,neighbour.get("cell").getAsInt());
+                require(nativeGrid(background)&&nativeMembers(background)==null&&!background.hasBlockEntity()&&background.getFluidState().isEmpty()&&background.getLuminance()==0&&same(background.getBlock().getCollisionShape(background,EmptyBlockView.INSTANCE,BlockPos.ORIGIN,ShapeContext.absent()),shape(neighbour.getAsJsonArray("collision")))&&same(background.getBlock().getOutlineShape(background,EmptyBlockView.INSTANCE,BlockPos.ORIGIN,ShapeContext.absent()),shape(neighbour.getAsJsonArray("outline"))),"W visual neighbour differs from its final dry plain catalog cell/shapes");
+                allowed(backgroundPoint);require(inside(backgroundPoint)&&!nativeStates.containsKey(backgroundPoint)&&!members.contains(backgroundPoint),"W visual neighbour is not a separate bounded stand cell");
+                allowed(placementRoot);require(inside(placementRoot),"W item placement root outside the existing stand");
+                result.add("binding",input.deepCopy());result.add("nativeRoot",coordinates(nativeRoot));result.add("itemPlacementRoot",coordinates(placementRoot));result.add("backgroundPoint",coordinates(backgroundPoint));result.addProperty("nativeSetupStateWrites",2);result.addProperty("backgroundSetupStateWrites",1);result.addProperty("exactCanonicalPlacementPath","ImportedRootBlock / CompositeItem / CompositeRuntime.place");result.addProperty("independentSourcePartNotInstalled",true);result.addProperty("gameplayComplete",false);detail.add("retainedNativeWholeItem",result);
+            }
+            ItemStack item()throws Exception{return (ItemStack)itemApi.getMethod("item",StaticArchitectureCatalog.Pose.class).invoke(null,pose);}
+            ItemStack pick(BlockPos point)throws Exception{return (ItemStack)itemApi.getMethod("pick",World.class,BlockPos.class,net.minecraft.entity.player.PlayerEntity.class).invoke(null,world,point,actor);}
+            Set<BlockPos> savedCells(){Set<BlockPos> cells=new LinkedHashSet<>(nativeStates.keySet());cells.add(backgroundPoint);return cells;}
+            void assertBackground(String stage){check(world.getBlockState(backgroundPoint).equals(background)&&world.getBlockEntity(backgroundPoint)==null&&CompositeRuntime.contributions(world,backgroundPoint).isEmpty(),"actual final C background remains exact plain NativeGrid/no-BE/no-W-ledger "+stage);}
+            void install(){guard(savedCells());for(var entry:nativeStates.entrySet())require(world.setBlockState(entry.getKey(),entry.getValue(),Block.FORCE_STATE|Block.NOTIFY_ALL|Block.SKIP_DROPS)||world.getBlockState(entry.getKey()).equals(entry.getValue()),"Own W native setup refused");require(world.setBlockState(backgroundPoint,background,Block.FORCE_STATE|Block.NOTIFY_ALL|Block.SKIP_DROPS)||world.getBlockState(backgroundPoint).equals(background),"Own actual final C background setup refused");assertBackground("at W setup");result.addProperty("setupComplete",true);save();}
+            void assertNative(String stage){
+                for(var entry:nativeStates.entrySet())require(world.getBlockState(entry.getKey()).equals(entry.getValue())&&world.getBlockEntity(entry.getKey())==null&&CompositeRuntime.contributions(world,entry.getKey()).isEmpty(),"Retained native W state/empty ledger changed "+stage);
+                require(StaticArchitectureCatalog.matchesRoot(world.getBlockState(nativeRoot),pose),"Canonical W native resident disappeared "+stage);
+                VoxelShape collision=VoxelShapes.empty(),outline=VoxelShapes.empty();for(var entry:pose.footprint().entrySet()){var at=entry.getKey();collision=VoxelShapes.union(collision,ImportedPhysicalShapes.exact(entry.getValue().collision()).offset(at.x(),at.y(),at.z()));outline=VoxelShapes.union(outline,ImportedPhysicalShapes.exact(pose.outline().getOrDefault(at,List.of())).offset(at.x(),at.y(),at.z()));}
+                check(same(union(new ArrayList<>(nativeStates.keySet()),nativeRoot,true),collision)&&same(union(new ArrayList<>(nativeStates.keySet()),nativeRoot,false),outline),"retained old-native W collision/outline equals the canonical source component "+stage);
+                assertBackground(stage);
+            }
+            Map<BlockPos,JsonObject> snapshot(){Map<BlockPos,JsonObject> rows=new LinkedHashMap<>();for(BlockPos point:savedCells())rows.put(point,cell(point));return rows;}
+            void savedAfterCallback(){assertNative("after setup callback tick");savedNative=snapshot();result.add("savedCells",snapshots(savedNative));result.addProperty("standRetainedForReopen",true);save();}
+            void prepareReopen(JsonObject previous){require(previous.getAsJsonObject("binding").equals(binding)&&previous.get("standRetainedForReopen").getAsBoolean()&&!previous.get("gameplayComplete").getAsBoolean(),"Saved native whole fixture/proofs changed");savedNative=new LinkedHashMap<>();for(JsonElement raw:previous.getAsJsonArray("savedCells")){JsonObject row=raw.getAsJsonObject();savedNative.put(pos(row.getAsJsonArray("pos")),row.getAsJsonObject("reference"));}require(savedNative.keySet().equals(savedCells()),"Native W/background saved snapshots are incomplete");check(savedNative.entrySet().stream().allMatch(row->cell(row.getKey()).equals(row.getValue())),"real server reopen preserves both exact old-native W recipes and actual final C background with no BE/UUID ledger");assertNative("after real reopen");result.add("reopenedCells",snapshots(snapshot()));result.addProperty("realReopenVerified",true);}
+            BlockHitResult nativeRay(BlockPos target,JsonArray attempts){for(Box box:world.getBlockState(target).getOutlineShape(world,target).getBoundingBoxes())for(Direction side:Direction.values()){
+                Vec3d center=box.getCenter().add(target.getX(),target.getY(),target.getZ()),delta=new Vec3d(side.getOffsetX(),side.getOffsetY(),side.getOffsetZ()),eye=center.add(delta.multiply(3));actor.setPosition(eye.x,eye.y-actor.getStandingEyeHeight(),eye.z);Vec3d direction=center.subtract(eye);actor.setYaw((float)Math.toDegrees(Math.atan2(-direction.x,direction.z)));actor.setHeadYaw(actor.getYaw());actor.setPitch((float)-Math.toDegrees(Math.atan2(direction.y,Math.hypot(direction.x,direction.z))));BlockHitResult hit=world.raycast(new RaycastContext(eye,center.subtract(delta.multiply(.25)),RaycastContext.ShapeType.OUTLINE,RaycastContext.FluidHandling.NONE,actor));var selected=hit.getType()==HitResult.Type.BLOCK?StaticArchitectureRuntime.target(world,hit.getBlockPos(),actor):null;JsonObject row=new JsonObject();row.addProperty("side",side.asString());row.addProperty("hit",hit.getType().name());if(hit.getType()==HitResult.Type.BLOCK)row.add("position",coordinates(hit.getBlockPos()));row.addProperty("selectedW",selected!=null&&selected.pose()==pose&&selected.root().equals(nativeRoot));attempts.add(row);if(hit.getType()==HitResult.Type.BLOCK&&hit.getBlockPos().equals(target)&&selected!=null&&selected.pose()==pose&&selected.root().equals(nativeRoot))return hit;
+            }return null;}
+            void capturePlaced(){result.add("actualInstalledRootBeforeGuard",cell(placementRoot));if(world.getBlockEntity(placementRoot) instanceof CompositeBlockEntity root&&root.resident()!=null){placedOwner=root.resident();placedInstance=CompositeRuntime.instance(world,placementRoot,world.getBlockState(placementRoot),placedOwner.instanceId(),root.payload());JsonArray rows=new JsonArray();for(var at:placedInstance.cells().keySet()){BlockPos point=placementRoot.add(at.x(),at.y(),at.z());JsonObject row=new JsonObject();row.add("position",coordinates(point));boolean bounded=inside(point)&&allowedChunks.contains(new ChunkPos(point).toLong());row.addProperty("insideGuard",bounded);if(bounded)row.add("reference",cell(point));rows.add(row);}result.addProperty("placedOwner",placedOwner.instanceId().toString());result.add("actualInstalledCellsBeforeGuard",rows);}save();}
+            List<net.minecraft.entity.ItemEntity> drops(){return world.getEntitiesByClass(net.minecraft.entity.ItemEntity.class,new Box(nativeRoot).expand(4),entity->true);}
+            void finishReopened()throws Exception{
+                assertNative("before native whole pick/break");ItemStack expected=item();require(!expected.isEmpty()&&expected.getCount()==1&&expected.getItem() instanceof BlockItem,"Canonical W item is not usable");JsonArray searched=new JsonArray();BlockHitResult chosen=null;
+                for(BlockPos point:nativeStates.keySet()){JsonObject part=new JsonObject();part.add("position",coordinates(point));JsonArray attempts=new JsonArray();part.add("attempts",attempts);BlockHitResult hit=nativeRay(point,attempts);part.addProperty("accessible",hit!=null);if(hit!=null){check(ItemStack.areEqual(pick(point),expected),"accessible old-native W part picks the same one canonical source item at "+point);if(chosen==null||!point.equals(nativeRoot))chosen=hit;}searched.add(part);}result.add("nativePartSearch",searched);require(chosen!=null,"No retained native W part is accessible");
+                assertBackground("after native W part picking");require(nativeRay(chosen.getBlockPos(),new JsonArray())!=null,"Chosen native W ray changed before removal");require(world.getGameRules().getBoolean(GameRules.DO_TILE_DROPS),"Survival drop QA requires actual tileDrops=true");Set<UUID> before=new HashSet<>();for(var entity:drops())before.add(entity.getUuid());TransactionCore.Result old=CompositeRuntime.lastResult();actor.changeGameMode(GameMode.SURVIVAL);try{performBreak(chosen.getBlockPos(),chosen);}finally{actor.changeGameMode(GameMode.CREATIVE);}TransactionCore.Result removed=CompositeRuntime.lastResult();require(removed!=old&&removed!=null&&removed.outcome()==TransactionCore.Outcome.COMMITTED&&removed.changedCells()==2,"Native W whole removal did not commit its two real members");check(nativeStates.keySet().stream().allMatch(NativeGridFunctionChecks.this::empty),"one real native W part break removes both source-bound component cells");assertBackground("after original native W whole break");List<net.minecraft.entity.ItemEntity> fresh=drops().stream().filter(entity->!before.contains(entity.getUuid())).toList();for(var entity:fresh)if(ItemStack.areEqual(entity.getStack(),expected))ownedDrops.add(entity.getUuid());check(fresh.size()==1&&fresh.get(0).getStack().getCount()==1&&ItemStack.areEqual(fresh.get(0).getStack(),expected),"committed survival native whole break drops exactly one canonical source item");ItemStack dropped=fresh.get(0).getStack().copy();result.addProperty("canonicalItem",Registries.ITEM.getId(dropped.getItem()).toString());result.addProperty("canonicalItemNbt",String.valueOf(dropped.getNbt()));fresh.get(0).discard();
+                require(empty(placementRoot),"Canonical W item target is no longer fresh AIR");actor.setYaw(pose.state().get(CompositeRootBlock.ROTATION)*45F);actor.setHeadYaw(actor.getYaw());actor.setSneaking(false);actor.setStackInHand(Hand.OFF_HAND,ItemStack.EMPTY);try{placeItem(dropped.copy(),placementRoot);}finally{capturePlaced();}
+                require(placedOwner!=null&&placedInstance!=null&&world.getBlockState(placementRoot).getBlock()==pose.block()&&world.getBlockEntity(placementRoot) instanceof CompositeBlockEntity,"Exact W canonical item did not use its proven ImportedRootBlock/CompositeItem transaction path");require(placedOwner.registryId().equals(pose.block().spec.id.toString()),"W canonical item installed another registry");for(var at:placedInstance.cells().keySet()){BlockPos point=placementRoot.add(at.x(),at.y(),at.z());require(inside(point)&&!members.contains(point)&&!point.equals(backgroundPoint),"Actual W item footprint escaped the guarded unused stand or touched the separate C background");allowed(point);}var installedRoot=(CompositeBlockEntity)world.getBlockEntity(placementRoot);check(world.getBlockState(placementRoot).equals(pose.state())&&ItemStack.areEqual(((CompositeRootBlock)world.getBlockState(placementRoot).getBlock()).art(world.getBlockState(placementRoot),installedRoot.payload()),expected),"ordinary canonical W item preserves the exact registered artwork/yaw/SourceShift without source privileges");assertBackground("after ordinary canonical W reinstallation at the same root");List<BlockPos> placedCells=placedInstance.cells().keySet().stream().map(at->placementRoot.add(at.x(),at.y(),at.z())).toList();BlockPos selectable=NativeGridFunctionChecks.this.selectable(placedCells,false);breakByRay(selectable);check(placedCells.stream().allMatch(NativeGridFunctionChecks.this::empty),"placed canonical W source item remains one whole object on real ray break");assertBackground("after reinstalled W whole removal");result.addProperty("backgroundSurvivedNativePickBreakAndReinstallation",true);result.add("backgroundBeforeIndependentRemoval",cell(backgroundPoint));result.addProperty("backgroundIndependentBreakApiReturn",actor.interactionManager.tryBreakBlock(backgroundPoint));check(empty(backgroundPoint),"only the final independent background break clears the exact C stand cell");result.addProperty("standRetainedForReopen",false);result.addProperty("gameplayComplete",true);result.addProperty("survivalDropCount",1);save();
+            }
+            void cleanup(){for(var entity:drops())if(ownedDrops.contains(entity.getUuid()))entity.discard();if(placedOwner!=null&&world.getBlockEntity(placementRoot) instanceof CompositeBlockEntity root&&placedOwner.equals(root.resident())){for(var at:placedInstance.cells().keySet()){BlockPos point=placementRoot.add(at.x(),at.y(),at.z());require(inside(point)&&!point.equals(backgroundPoint),"Refuse cleanup outside the test-owned W cells");allowed(point);}var removed=CompositeRuntime.remove(world,placedOwner,null,false);require(removed.outcome()==TransactionCore.Outcome.COMMITTED,"Own placed W cleanup refused");}if(!nativeStates.keySet().stream().allMatch(NativeGridFunctionChecks.this::empty)){for(var entry:nativeStates.entrySet())require(world.getBlockState(entry.getKey()).equals(entry.getValue())&&world.getBlockEntity(entry.getKey())==null&&CompositeRuntime.contributions(world,entry.getKey()).isEmpty(),"Refuse cleanup of unrecognized native W data");var removed=StaticArchitectureRuntime.remove(world,nativeRoot,pose);require(removed.outcome()==TransactionCore.Outcome.COMMITTED&&nativeStates.keySet().stream().allMatch(NativeGridFunctionChecks.this::empty),"Own native W cleanup refused");}if(!empty(backgroundPoint)){assertBackground("before owned fixture cleanup");actor.interactionManager.tryBreakBlock(backgroundPoint);require(empty(backgroundPoint),"Own C background cleanup refused");}}
+        }
+    }
+    private void finish(MinecraftServer server,Throwable failure){if(done)return;done=true;try{cleanupActive();if(standInitiallyAir&&!standRestored&&!(failure==null&&foreignGuestFixture!=null&&foreignGuestFixture.savedForReopen)){standRestored=standEmpty();check(standRestored,"stand state/NBT/owners restored at completion");}}catch(Throwable cleanup){if(failure==null)failure=cleanup;else failure.addSuppressed(cleanup);}if(actor!=null)actor.getTextStream().onDisconnect();if(report==null)report=new JsonObject();report.addProperty("status",failure==null?"PASS":"FAIL");report.addProperty("standRestored",standRestored);if(failure!=null){failure.printStackTrace();report.addProperty("error",failure.toString());}save();server.stop(false);}
     private void save(){try{Files.writeString(output.resolve("functions.json"),JSON.toJson(report)+"\n");}catch(IOException failure){throw new UncheckedIOException(failure);}}
     private static Path ordinary(Path path)throws IOException{Path absolute=path.toAbsolutePath().normalize();for(Path p=absolute;p!=null;p=p.getParent())if(Files.exists(p,LinkOption.NOFOLLOW_LINKS))require(!Files.isSymbolicLink(p)&&!Files.readAttributes(p,java.nio.file.attribute.BasicFileAttributes.class,LinkOption.NOFOLLOW_LINKS).isOther(),"Aliased QA path refused: "+p);Path real=absolute.toRealPath();require(real.equals(absolute),"Resolved QA path differs");return real;}
     private static String sha(Path file)throws Exception{MessageDigest digest=MessageDigest.getInstance("SHA-256");try(InputStream stream=Files.newInputStream(file)){byte[] buffer=new byte[1<<20];for(int n;(n=stream.read(buffer))>=0;)digest.update(buffer,0,n);}return HexFormat.of().formatHex(digest.digest());}

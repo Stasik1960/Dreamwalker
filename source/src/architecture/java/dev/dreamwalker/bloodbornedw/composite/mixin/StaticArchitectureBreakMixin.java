@@ -16,6 +16,6 @@ public abstract class StaticArchitectureBreakMixin {
     @Inject(method="breakBlock(Lnet/minecraft/util/math/BlockPos;ZLnet/minecraft/entity/Entity;I)Z",at=@At("HEAD"),cancellable=true)
     private void dw$staticWholeBreak(BlockPos pos,boolean drop,Entity entity,int depth,CallbackInfoReturnable<Boolean> result){
         if(CompositeRuntime.writing()||!((Object)this instanceof ServerWorld world)||!(world.getBlockState(pos).getBlock() instanceof StaticArchitectureBlock))return;
-        result.setReturnValue(StaticArchitectureRuntime.breakAt(world,pos,entity instanceof PlayerEntity player?player:null).outcome()==TransactionCore.Outcome.COMMITTED);
+        result.setReturnValue(StaticArchitectureRuntime.breakAt(world,pos,entity instanceof PlayerEntity player?player:null,drop).outcome()==TransactionCore.Outcome.COMMITTED);
     }
 }

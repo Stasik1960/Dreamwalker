@@ -1,0 +1,115 @@
+{
+    "sourceBinding":  {
+                          "copyManifest":  "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-ordinary-city-pilot-20261020\\research\\city-pilot\\full-city-copy.ordinary-migration\\copy.json",
+                          "copyManifestSha256":  "f922f5804c89bcba1ac8f7a22e82fd3c7deb8e844bc5e924778312b2b5ce7fcc",
+                          "oldDatabaseBytes":  6793261056,
+                          "oldDatabaseMtimeNs":  1792532766177907600,
+                          "oldPlan":  "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-ordinary-city-pilot-20261020\\research\\city-pilot\\full-city-copy.ordinary-migration",
+                          "originalPlanReadOnly":  true,
+                          "plannerBindingSha256":  "9795c6e0b168d4a5b0af1dd0b939b7bde3c362b12fc8c458bdef454bd5116f3b",
+                          "schemaVersion":  1,
+                          "source":  "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-city-mesh-20261018\\deliverables\\block-fixes-2-20261020\\map\\bloodborne-blocks-fixed-2",
+                          "sourceBytes":  437197194,
+                          "sourceFileCount":  3887,
+                          "sourceHashesVerified":  true
+                      },
+    "kind":  "EXACT_FIVE_VANILLA_STATIC_STATES",
+    "sourceJarSha256":  "40cecfb7e5cf783a762e350fc1864518c39abff177f6f025cb94892a181fbf51",
+    "priorFullFunctionGate":  {
+                                  "sha256":  "35394c6c93ae00202070a17fb362ce0e453c433008d10be02631800d6f0672e5",
+                                  "path":  "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\native-grid-plan\\full\\native-functions-final.json"
+                              },
+    "userAuthority":  {
+                          "sha256":  "f12df1ad65b9ef30b2d04ab18de0c88b1b2faeee56f1192551c025477bda9c16",
+                          "path":  "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\USER-AMENDMENT-20261023-VANILLA-BAKE-RU.txt"
+                      },
+    "preserve":  {
+                     "collision":  true,
+                     "model":  true,
+                     "luminance":  true
+                 },
+    "status":  "USER_AUTHORIZED_EXACT_STATIC_BAKE_NOT_GAMEPLAY",
+    "schemaVersion":  1,
+    "states":  [
+                   {
+                       "previousDecision":  "retain_local",
+                       "decision":  "static_base",
+                       "expectedLuminance":  1,
+                       "lostInteractions":  [
+                                                "change_light_level",
+                                                "waterlogging"
+                                            ],
+                       "state":  {
+                                     "properties":  {
+                                                        "level":  "1",
+                                                        "waterlogged":  "false"
+                                                    },
+                                     "registryId":  "minecraft:light"
+                                 }
+                   },
+                   {
+                       "previousDecision":  "retain_local",
+                       "decision":  "static_base",
+                       "expectedLuminance":  2,
+                       "lostInteractions":  [
+                                                "change_light_level",
+                                                "waterlogging"
+                                            ],
+                       "state":  {
+                                     "properties":  {
+                                                        "level":  "2",
+                                                        "waterlogged":  "false"
+                                                    },
+                                     "registryId":  "minecraft:light"
+                                 }
+                   },
+                   {
+                       "previousDecision":  "retain_local",
+                       "decision":  "static_base",
+                       "expectedLuminance":  4,
+                       "lostInteractions":  [
+                                                "change_light_level",
+                                                "waterlogging"
+                                            ],
+                       "state":  {
+                                     "properties":  {
+                                                        "level":  "4",
+                                                        "waterlogged":  "false"
+                                                    },
+                                     "registryId":  "minecraft:light"
+                                 }
+                   },
+                   {
+                       "previousDecision":  "retain_local",
+                       "decision":  "static_base",
+                       "expectedLuminance":  5,
+                       "lostInteractions":  [
+                                                "change_light_level",
+                                                "waterlogging"
+                                            ],
+                       "state":  {
+                                     "properties":  {
+                                                        "level":  "5",
+                                                        "waterlogged":  "false"
+                                                    },
+                                     "registryId":  "minecraft:light"
+                                 }
+                   },
+                   {
+                       "previousDecision":  "retain_local",
+                       "decision":  "static_base",
+                       "expectedLuminance":  0,
+                       "lostInteractions":  [
+                                                "slab_merge",
+                                                "waterlogging"
+                                            ],
+                       "state":  {
+                                     "properties":  {
+                                                        "type":  "bottom",
+                                                        "waterlogged":  "false"
+                                                    },
+                                     "registryId":  "minecraft:andesite_slab"
+                                 }
+                   }
+               ]
+}

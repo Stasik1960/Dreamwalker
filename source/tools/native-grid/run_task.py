@@ -7,9 +7,14 @@ script=Path(sys.argv[1]).resolve();args=sys.argv[2:]
 assert script.is_relative_to(P),script
 name=datetime.datetime.now(datetime.timezone.utc).strftime('%Y%m%dT%H%M%S')+'-'+script.stem
 input_sources={}
-if script.stem=='migrate' and 'compose' in args:
+if script.stem=='migrate' and any(command in args for command in ('compose','resume-native-compose','upgrade-native-resume-binding','retain-native-certificate','retain-native-retraction-certificate','retain-preserved-native-whole-certificate','correct-native-visual-protection','fallback-native-whole-template')):
     archive=O/(name+'.inputs');archive.mkdir()
-    for source in (script,script.with_name('context_stage.py')):
+    sources=[script,script.with_name('context_stage.py')]
+    resume_source=script.with_name('native_resume.py')
+    if resume_source.is_file():sources.append(resume_source)
+    certificate_source=script.with_name('native_certificates.py')
+    if certificate_source.is_file():sources.append(certificate_source)
+    for source in sources:
         payload=source.read_bytes();destination=archive/source.name
         destination.write_bytes(payload)
         input_sources[str(source)]={'sha256':hashlib.sha256(payload).hexdigest(),'archive':str(destination)}

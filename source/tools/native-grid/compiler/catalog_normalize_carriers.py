@@ -1,17 +1,19 @@
 """Resolve finite observed carrier predicates before the unchanged pinned compiler.
 
-Only two observed host flags are overridden. Existing composition keys survive;
+Only two observed host flags are overridden. Empty null bases on explicit visual
+routes are spelled AIR after exact fluid/optics checks. Composition keys survive;
 the receipt records raw/normalized lineage. No catalogue/plan database is edited.
 """
 import argparse,hashlib,json,sqlite3,sys
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parent.parent))
-from export_cells import canonical,state_key,read_lines
-from catalog import normalize_optics,normalize_fluid,EMPTY_OPTICS,compiler_fingerprint
+from export_cells import canonical,state_key,read_lines,unique_quads
+from catalog import normalize_optics,normalize_fluid,EMPTY_OPTICS,compiler_fingerprint,opaque_cube
 
 ALGORITHM='111b89688889fa961f2ae19bc5e0f0683d2ec4c9bfa8fbcf0b36117a5e96e13f'
 SOURCE_JAR='40cecfb7e5cf783a762e350fc1864518c39abff177f6f025cb94892a181fbf51'
 FLAGS=('opaque','sidedTransparency')
+AIR={'registryId':'minecraft:air','properties':{}}
 def require(value,message):
     if not value:raise ValueError(message)
 def sha(path):return hashlib.sha256(Path(path).read_bytes()).hexdigest()
@@ -34,6 +36,25 @@ def materialize_observed_carrier(row,optics,predicates):
 def validate_air_nonoverridden_optics(optics):
     actual=normalize_optics(optics)
     require({k:v for k,v in actual.items() if k not in FLAGS}=={k:v for k,v in EMPTY_OPTICS.items() if k not in FLAGS},'Actual AIR export disagrees with non-overridden pinned compiler semantics; do not substitute defaults')
+
+def canonicalize_empty_null_base(row,store):
+    if row.get('baseState') is not None or row.get('baseVisualMode') not in ('substrateFragments','nativePlusSubstrateFragments'):
+        return row,False
+    key=row['key'];require(any(row.get(name) for name in ('substrateFragments','substrateNativeFragments')),'Null-base visual route has no explicit fragments: '+key)
+    ordinary=[];visual=[]
+    for name in ('fragments','substrateFragments'):
+        for item in row.get(name,[]):
+            found=store.execute('SELECT data FROM fragments WHERE pose=? AND x=? AND y=? AND z=?',(item['pose'],*item['cell'])).fetchone()
+            require(found is not None,'Null-base route lacks an exact source fragment: '+key)
+            (ordinary if name=='fragments' else visual).append(json.loads(found[0]))
+    for item in row.get('substrateNativeFragments',[]):
+        found=store.execute('SELECT data FROM native_fragments WHERE state=? AND x=? AND y=? AND z=?',(state_key(item['state']),*item['cell'])).fetchone()
+        require(found is not None,'Null-base route lacks an exact native visual fragment: '+key);visual.append(json.loads(found[0]))
+    require(normalize_fluid(row.get('fluid')) is None and all(normalize_fluid(fragment.get('fluid')) is None for fragment in ordinary),'Null-base AIR canonicalization would suppress an ordinary fluid: '+key)
+    # The pinned compiler adds special optics only for a null-base opaque cube.
+    # Preserve that distinction rather than inventing a new optical override.
+    require(not opaque_cube(unique_quads([quad for fragment in ordinary+visual for quad in fragment.get('quads',[])])),'Null-base AIR canonicalization would change opaque-cube optics: '+key)
+    return {**row,'baseState':dict(AIR)},True
 def full_host_decision(decisions,key):
     require(key in decisions and decisions[key]=='bridge_host_only','Actual FULL bridge host lacks an exact bridge_host_only function decision: '+key)
 def full_function_states(path,plan):
@@ -75,9 +96,14 @@ def normalize(a):
     start=sha(a.compositions);require(start==a.raw_sha256,'Raw final compositions differ from explicit handoff SHA')
     known,proof=audit_states(a.audit);plan=ro(a.plan/'plan.sqlite');plan.execute('BEGIN');store=ro(a.fragments)
     functions,function_proof=full_function_states(a.full_function_gate,plan)
-    total=changed=partial=derived=wrappers=0;host_keys=set();examples=[];a.out.parent.mkdir(parents=True,exist_ok=True);temporary=a.out.with_suffix(a.out.suffix+'.writing')
+    bridge_hosts={}
+    for key,encoded in plan.execute('SELECT p.composition,b.host_state FROM bridge_cells b CROSS JOIN placements p WHERE p.dim=b.dim AND p.x=b.x AND p.y=b.y AND p.z=b.z'):
+        bridge_hosts.setdefault(key,set()).add(encoded)
+    total=changed=partial=derived=wrappers=0;host_keys=set();examples=[];null_base_keys=[];a.out.parent.mkdir(parents=True,exist_ok=True);temporary=a.out.with_suffix(a.out.suffix+'.writing')
     with temporary.open('w',encoding='utf-8',newline='\n') as output:
         for row in read_lines(a.compositions):
+            row,canonicalized=canonicalize_empty_null_base(row,store)
+            if canonicalized:null_base_keys.append(row['key'])
             total+=1;predicates=row.get('carrierPredicates')
             if predicates is not None:require(row.get('wrapper')=='NativeGridBase','Carrier predicates outside an existing BE bridge')
             if row.get('wrapper')=='NativeGridBase':
@@ -94,10 +120,10 @@ def normalize(a):
                 fluid=normalize_fluid(row['fluid']) if 'fluid' in row else normalize_fluid(native.get('fluid'))
                 require(fluid is None and ordinary['luminance']==0,'Bridge background is wet/emitting and must remain locally preserved')
                 require(not any(f.get('fluid') is not None for f in fragments),'A source fluid cannot be suppressed by an AIR carrier')
-                bindings=plan.execute("SELECT DISTINCT b.host_state FROM bridge_cells b JOIN placements p ON p.dim=b.dim AND p.x=b.x AND p.y=b.y AND p.z=b.z WHERE p.composition=?",(row['key'],)).fetchall()
+                bindings=bridge_hosts.get(row['key'],set())
                 require(bindings,'No actual bridge host-state binding for raw composition '+row['key'])
                 expected=[]
-                for (encoded,) in bindings:
+                for encoded in bindings:
                     host=state_key(json.loads(encoded));require(host in known,'Unknown exact carrier host state: '+host)
                     if functions is not None:full_host_decision(functions,host)
                     host_keys.add(host);expected.append(known[host])
@@ -118,7 +144,7 @@ def normalize(a):
             output.write(canonical(row)+'\n')
     require(sha(a.compositions)==start,'Raw compositions changed during normalization')
     temporary.replace(a.out)
-    report={'status':'PASS','mode':'FINITE_AUTHORING_INPUT_NORMALIZER','rawCompositions':str(a.compositions.absolute()),'rawCompositionsSha256':start,'normalizedCompositions':str(a.out.absolute()),'normalizedCompositionsSha256':sha(a.out),'compilerAlgorithmSha256':ALGORITHM,'normalizerSha256':sha(__file__),'rows':total,'bridgeCompositions':wrappers,'normalizedPartialCarrierRows':partial,'materializedObservedCarrierRows':changed,'derivedObservedCarrierRows':derived,'fullFunctionGate':function_proof,'verifiedActualHostStates':[json.loads(k) for k in sorted(host_keys)],'nativeAuditBindings':proof,'examples':examples,'compositionKeysPreserved':True,'onlyOpaqueAndSidedTransparencyOverridden':True,'physicalGeometryFluidLocalFunctionUnchanged':True,'catalogueWrites':0,'databaseWrites':0,'mapReads':0,'mapWrites':0}
+    report={'status':'PASS','mode':'FINITE_AUTHORING_INPUT_NORMALIZER','rawCompositions':str(a.compositions.absolute()),'rawCompositionsSha256':start,'normalizedCompositions':str(a.out.absolute()),'normalizedCompositionsSha256':sha(a.out),'compilerAlgorithmSha256':ALGORITHM,'normalizerSha256':sha(__file__),'rows':total,'bridgeCompositions':wrappers,'normalizedPartialCarrierRows':partial,'materializedObservedCarrierRows':changed,'derivedObservedCarrierRows':derived,'canonicalizedNullBaseRows':len(null_base_keys),'canonicalizedNullBaseKeys':null_base_keys,'onlyEmptyNullNativeBasesCanonicalized':True,'fullFunctionGate':function_proof,'verifiedActualHostStates':[json.loads(k) for k in sorted(host_keys)],'nativeAuditBindings':proof,'examples':examples,'compositionKeysPreserved':True,'onlyOpaqueAndSidedTransparencyOverridden':True,'physicalGeometryFluidLocalFunctionUnchanged':True,'catalogueWrites':0,'databaseWrites':0,'mapReads':0,'mapWrites':0}
     a.receipt.write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8');print(json.dumps({k:v for k,v in report.items() if k not in ('examples','nativeAuditBindings','verifiedActualHostStates')}))
 def self_test(out):
     native={'optics':{'opacity':3,'luminance':0,'ambientOcclusion':.35,'transparent':False,'sidedTransparency':True,'opaque':True,'opaqueFullCube':True,'solidBlock':True,'suffocates':True,'blockVision':True}}

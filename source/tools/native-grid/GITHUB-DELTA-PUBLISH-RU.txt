@@ -1,0 +1,55 @@
+Подготовленный root-only publisher нового GitHub delta
+
+github_delta_publish.py дополняет github_delta_pack.py/restore.py. Он не снимает
+checkpoint, не запускает проект, не меняет карту и не перепаковывает старые ZIP.
+До реальной публикации root заканчивает игровой результат, останавливает writers,
+создаёт inventory/freeze/новый delta по GITHUB-DELTA-CLI-RU.txt, готовит и проверяет
+отдельный чистый Git checkout с актуальными README/HANDOFF/TASK/исходниками.
+Старую DW Git и опубликованные branch/tag/assets 20261022 инструмент не меняет.
+
+Конфигурация — свежий JSON ВНЕ authoritative overlays, с точным реальным SHA:
+{
+  "schemaVersion": 1,
+  "kind": "ROOT_REVIEWED_GITHUB_DELTA_PUBLICATION",
+  "repository": "Stasik1960/Dreamwalker",
+  "branch": "codex/native-grid-city-final-YYYYMMDD",
+  "tag": "native-grid-city-final-YYYYMMDD",
+  "gitDirectory": "<fresh independent publication checkout>",
+  "assetDirectory": "<new delta output directory>",
+  "manifest": {"path": "<new bundle-manifest.json>", "sha256": "<actual>"},
+  "notes": {"path": "<reviewed UTF-8 release notes>", "sha256": "<actual>"},
+  "title": "<honest title of this actual checkpoint or final delivery>",
+  "deliveryStatus": "READY_FOR_DELIVERY"
+}
+
+deliveryStatus берётся из реального manifest, а READY допускается только при
+завершённом FULL_NATIVE_GRID_CITY_DELIVERY_ACCEPTANCE/PASS/readyForDelivery=true.
+CHECKPOINT остаётся промежуточным и prerelease. Публикация не заменяет приёмку.
+
+Из source, через Guard Operation + существующий run_task.py:
+  tools/native-grid/github_delta_publish.py check --config <JSON> --config-sha256 <SHA>
+  tools/native-grid/github_delta_publish.py create --config <same JSON> --config-sha256 <same SHA>
+  tools/native-grid/github_delta_publish.py upload --config <same JSON> --config-sha256 <same SHA>
+  tools/native-grid/github_delta_publish.py publish --config <same JSON> --config-sha256 <same SHA>
+
+check выполняет только локальную сверку: чистый commit/branch/origin, новый manifest,
+новые ZIP/bytes/SHA/URLs/checksum и честный delivery status. Сети и credentials нет.
+create проверяет fetch/push URL, создаёт новую branch, точный Git tag на проверенный
+commit и draft release. Фактический tag разрешается до commit, включая конечную
+цепочку annotated tags, и сверяется перед загрузкой/до и после публикации. upload
+передаёт последовательно только origin=delta ZIP + manifest + SHA256SUMS; старые
+origin=base восемь volumes остаются на прежних URLs и повторно не загружаются.
+publish повторно сверяет серверные SHA256 всех новых assets и открывает release.
+Ни force push, ни перезапись/удаление assets, ни изменение старого release не нужны.
+Совпадающий удалённый результат допустим при повторе; другой commit/body/digest
+останавливает операцию для ручного разбора. После неизвестного исхода не создавать
+другой tag/config: повторить тот же шаг с теми же аргументами, сверив receipt.
+
+Все authenticated HTTP redirects запрещены; upload допускает только HTTPS
+uploads.github.com с обычным TLS портом без userinfo. Credential извлекается
+локальным git credential fill и остаётся только в памяти;
+он не включается в argv, логи, config, Git или bundle. publication-state.json рядом
+с новыми ZIP содержит только commits, публичные URLs и проверенные digests.
+После публикации root добавляет этот отчёт/публичную ссылку в Git handoff отдельным
+обычным commit и проверяет доступность README/manifest. Конечная ссылка в ответе
+должна вести к новой актуальной ветке, где GPT найдёт исходную задачу и продолжение.

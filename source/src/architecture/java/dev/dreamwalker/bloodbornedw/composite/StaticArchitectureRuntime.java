@@ -46,7 +46,8 @@ public final class StaticArchitectureRuntime {
         }
         return best;
     }
-    public static TransactionCore.Result breakAt(ServerWorld world,BlockPos pos,PlayerEntity player){Component component=target(world,pos,player);return component==null?rejected("no_static_part_at_hit"):remove(world,component.root,component.pose);}
+    public static TransactionCore.Result breakAt(ServerWorld world,BlockPos pos,PlayerEntity player){return breakAt(world,pos,player,player!=null&&!player.getAbilities().creativeMode);}
+    public static TransactionCore.Result breakAt(ServerWorld world,BlockPos pos,PlayerEntity player,boolean drop){Component component=target(world,pos,player);if(component==null)return rejected("no_static_part_at_hit");var item=NativeGridRetainedWholeItems.prepareDrop(world,component,player,drop);var result=remove(world,component.root,component.pose);NativeGridRetainedWholeItems.dropCommitted(world,component,item,result);return result;}
     public static TransactionCore.Result remove(ServerWorld world,BlockPos root,StaticArchitectureCatalog.Pose pose){return remove(world,root,pose,false);}
     private static TransactionCore.Result remove(ServerWorld world,BlockPos root,StaticArchitectureCatalog.Pose pose,boolean cleanup){
         if(!world.getServer().isOnThread())throw new IllegalStateException("Static mutation requires server thread");

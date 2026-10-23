@@ -1,0 +1,71 @@
+Адресный DATA helper для СЛЕДУЮЩЕГО ФАКТИЧЕСКОГО сбоя HoldStatue
+
+SOURCE ONLY: helper подготовлен для чтения root. На момент подготовки не запускался,
+не импортировался, SQL/карты не открывал. Перед первым использованием root проверяет
+diff и разрешает запуск при остановленном writer. Это не новый consumer/QA/скан.
+
+Из source, через существующий Guard runner root:
+
+python tools/native-grid/run_task.py tools/native-grid/qa/hold_statue_native_contact.py --failed-run ../research/processes/ACTUAL-migrate.json --out-dir ../research/native-grid-plan/full/ACTUAL-hold-statue-contact
+
+Каталог результата обязан отсутствовать. --facts-only сохраняет только диагностику
+и source-only семантику. --location-proof <JSON> позволяет повторно использовать уже
+замороженную точную location actual no-UID dedicated-whole-role ошибки.
+
+Маршруты определяются только по настоящему FAIL receipt/log:
+1. Required native visual overhang meets a protected local object: UID/target берутся
+   из единственной RuntimeError строки. Требуется ровно одна whole_local_overlap W.
+   Класс W только source_hold_statue, kind whole/unselected, исходные native parts
+   без BE/ledger, exact canonical pose/origin/root resident; target вне всех W parts.
+   Исторический strict-original head/check обязателен. Выдаёт прежний v4 сертификат
+   FINITE_NATIVE_VISUAL_PROTECTION_CORRECTION_V1 для ОДНОЙ фактической строки.
+2. Native overhang would overlap a dedicated whole-object role: переиспользуется
+   immutable locate-042052-dedicated-whole-role-conflict.py (PIN 0ac0d2a2...), только
+   его authoring RUN/OUT параметры задаются на actual receipt/fresh output. Его
+   pending1024 replay остаётся прежним: local bridges/activations/order, first guard,
+   никакой подмены native_roots_at, kind или SQL. Неизвестная ветка/ранний другой
+   guard даёт BLOCK. Выдаёт прежний v5 FINITE_NATIVE_WHOLE_TEMPLATE_FALLBACK_V1:
+   W-only fallback, C остаётся обычным substrate; точные seed+root q0 сохраняются;
+   все прочие undemanded q0 проверяются конечным native-origin activation guard.
+
+Никаких будущих UID/семейств, FIRST16/lookahead, новых C/W, E/F/B-переходов и запросов
+мира. Исходные факты читаются из текущего readonly плана, уже сохранённого old cache,
+exact geometry rows и текущего immutable legacy resource. Все actual physical parts
+требуют полного совпадения export footprint и оригинальных recipe/origin. Shared
+W native recipe с другим компонентом в v5, BE, другой protected/whole owner, столкновение
+Cvisual с Wphysical, другой класс/manifest priority, q1 prune или foreign activation
+дают BLOCKED_MANUAL_FINITE_REVIEW_REQUIRED; helper не пытается их «исправить».
+Обычные independent fragments остаются только неизменными point demand строками;
+helper не читает их owner/type/footprint и никого дополнительно не удерживает.
+Смешанная исходная recipe обычного C разрешена только при прежнем exact C match,
+member/origin/root-resident/noBE/own-ledger proof. Полная recipe и её другие сырые
+fragments сохраняются в sharedOriginalRecipeRows; owner/footprint lookup не делается.
+Это не удерживает C/другие компоненты: дальнейшая активация остаётся у неизменного
+native_roots_at/compose, с его прежними guard. Правило чистой W recipe остаётся строгим.
+Исключение только для v4 visual_row: исходная общая W recipe допустима при всех
+прежних exact W member/root/noBE/own-ledger/protected/noqueue/target-outside guards
+и проверенном конечном without(W). sharedWholeNativeRemovalProofs в facts.whole и
+semantics содержат полные original/residual recipe, все other raw fragments в том
+же порядке, сохранённый resident с коррекцией индекса, base/wet derivation. Никакой
+другой owner/footprint не читается; реальные W физические состояния при исправлении
+одной визуальной строки не меняются. Unknown residual mismatch даёт BLOCK.
+Для v5 whole_template W purity остаётся обязательной без этого исключения.
+
+Используемые существующие функции:
+- research/native-grid-plan/full/prove-native-overhang-002609-batch.py,
+  PIN 5ec2e72d...: readonly connection, canonical, streaming recipe reader;
+- tools/native-grid/qa/full_native_inputs.py: saved selective NBT parser;
+- tools/native-grid/prepare_retained_whole_items.py: streaming legacy pose records,
+  сам final item materializer не вызывается и не менялся;
+- unchanged migrate.native_roots_at; текущий fragments.sqlite/native exact rows;
+- frozen f87ac2f4... generic StaticArchitectureClient/Runtime method proof.
+
+Выходы только в fresh research directory: location/facts/semantics, source proof,
+v4 history+recipe ИЛИ v5 native guard, certificate/result. Ошибка сохраняет отдельный
+blocked.json; уже выпущенные частичные факты неизменны, сертификат при BLOCK не выдаётся.
+Каждый resource/data JSON пишется exclusive UTF-8 LF. SQL writes/maps/build/MC = 0.
+Root затем отдельно проверяет data/source и выполняет existing preview→execute.
+
+itemPickDropGapUnresolved=true/gameplayPass=false остаются явными. Ни source-proof,
+ни сертификат не заменяют FULL функции, all-target carrier audit, affected gameplay
+и final retained_whole_items materialization. Producer 8057... не менялся.

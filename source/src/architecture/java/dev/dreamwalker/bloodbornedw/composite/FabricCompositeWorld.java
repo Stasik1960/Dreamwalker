@@ -18,6 +18,11 @@ public class FabricCompositeWorld implements TransactionCore.WorldAccess {
     public final ServerWorld world;
     private final Map<Owner,ObjectInstance> incoming;
     private final Map<Cell,Original> originals=new TreeMap<>();
+    // The core's AIR describes the removed owner layer. A final bridge detach
+    // physically exposes its original plain background, which is FOREIGN on
+    // every ordinary read. Keep this projection only until this transaction's
+    // exact write verification completes; it is never a world/instance cache.
+    private final Map<Cell,CellSnapshot> terminalBridgeReadbacks=new TreeMap<>();
     public FabricCompositeWorld(ServerWorld world,Map<Owner,ObjectInstance> incoming){this.world=world;this.incoming=Map.copyOf(incoming);}
     @Override public void assertMutationThread(){if(!world.getServer().isOnThread())throw new IllegalStateException("Composite mutation requires the server thread");}
     @Override public String dimensionKey(){return world.getRegistryKey().getValue().toString();}
@@ -28,6 +33,11 @@ public class FabricCompositeWorld implements TransactionCore.WorldAccess {
         BlockPos pos=CompositeData.pos(cell);BlockState state=world.getBlockState(pos);BlockEntity entity=world.getBlockEntity(pos);
         List<CompositeData.Contribution> contributions=CompositeLedger.get(world).at(cell);
         if(contributions.isEmpty()&&entity instanceof CompositeBlockEntity cached)contributions=cached.contributions();
+        CellSnapshot terminal=terminalBridgeReadbacks.get(cell);Original original=originals.get(cell);
+        if(terminal!=null&&terminal.kind()==Kind.AIR&&terminal.resident()==null&&terminal.guests().isEmpty()
+                &&original!=null&&original.fullNbt.contains(NativeGridBridge.KEY,3)
+                &&entity==null&&contributions.isEmpty()
+                &&state.equals(NativeGridCatalog.state(original.fullNbt.getInt(NativeGridBridge.KEY))))return terminal;
         Owner resident=dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.isArchitecture(state)&&entity instanceof CompositeBlockEntity cached?cached.resident():null;
         List<Owner> guests=new ArrayList<>();for(var entry:contributions)if(!entry.owner().equals(resident))guests.add(entry.owner());
         // Custom technical AirBlocks may carry source lighting or another mod's data.
@@ -41,6 +51,7 @@ public class FabricCompositeWorld implements TransactionCore.WorldAccess {
         return new CellSnapshot(kind,CompositeData.data(state,payload),resident,guests);
     }
     @Override public void prepareRollback(Map<Cell,CellSnapshot> expectedWrites){
+        terminalBridgeReadbacks.clear();
         originals.clear();
         for(var entry:expectedWrites.entrySet()){
             Cell cell=entry.getKey();
@@ -54,7 +65,7 @@ public class FabricCompositeWorld implements TransactionCore.WorldAccess {
             originals.put(cell,new Original(state,full,List.copyOf(contributions),entry.getValue()));
         }
     }
-    @Override public void releaseRollback(){originals.clear();}
+    @Override public void releaseRollback(){terminalBridgeReadbacks.clear();originals.clear();}
     @Override public Optional<ObjectInstance> describeRoot(Owner owner,CellSnapshot root){
         if(!owner.equals(root.resident()))return Optional.empty();BlockState state=CompositeData.state(root.data());
         if(!dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.isArchitecture(state)||!net.minecraft.registry.Registries.BLOCK.getId(state.getBlock()).toString().equals(owner.registryId()))return Optional.empty();
@@ -91,8 +102,9 @@ public class FabricCompositeWorld implements TransactionCore.WorldAccess {
         return dev.dreamwalker.bloodbornedw.architecture.PlacementPhysics.entityConflict(world,boxes,null,initial)!=null;
     }
     @Override public boolean needsRefresh(Cell cell,CellSnapshot before,CellSnapshot next){return incoming.keySet().stream().anyMatch(owner->owner.equals(next.resident())||next.guests().contains(owner));}
-    @Override public boolean restoreSilently(Cell cell,CellSnapshot previous){Original original=originals.get(cell);if(original==null||!original.snapshot.equals(previous))throw new IllegalStateException("Missing rollback snapshot "+cell);BlockPos pos=CompositeData.pos(cell);world.setBlockState(pos,original.state,Block.FORCE_STATE|Block.SKIP_DROPS);BlockEntity entity=world.getBlockEntity(pos);if(entity!=null){entity.readNbt(original.fullNbt.copy());entity.markDirty();}CompositeLedger.get(world).put(cell,original.contributions);return true;}
+    @Override public boolean restoreSilently(Cell cell,CellSnapshot previous){terminalBridgeReadbacks.remove(cell);Original original=originals.get(cell);if(original==null||!original.snapshot.equals(previous))throw new IllegalStateException("Missing rollback snapshot "+cell);BlockPos pos=CompositeData.pos(cell);world.setBlockState(pos,original.state,Block.FORCE_STATE|Block.SKIP_DROPS);BlockEntity entity=world.getBlockEntity(pos);if(entity!=null){entity.readNbt(original.fullNbt.copy());entity.markDirty();}CompositeLedger.get(world).put(cell,original.contributions);return true;}
     @Override public boolean writeSilently(Cell cell,CellSnapshot next){
+        terminalBridgeReadbacks.remove(cell);
         BlockPos pos=CompositeData.pos(cell);Original original=originals.get(cell);
         BlockState nextState=CompositeData.state(next.data());
         int nativeGridBase=original==null?-1:original.fullNbt.getInt(NativeGridBridge.KEY);
@@ -128,6 +140,7 @@ public class FabricCompositeWorld implements TransactionCore.WorldAccess {
             cached.nativeGridBase(nativeGridBase);
             cached.set(next.resident(),entries,CompositeData.nbt(next.data().blockEntityNbt()));
         }
+        if(nativeGridBase>=0&&next.kind()==Kind.AIR&&next.resident()==null&&next.guests().isEmpty())terminalBridgeReadbacks.put(cell,next);
         return true;
     }
     @Override public void publishCommitted(List<Cell> cells){

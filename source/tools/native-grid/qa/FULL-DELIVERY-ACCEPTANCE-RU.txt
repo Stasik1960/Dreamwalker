@@ -1,0 +1,98 @@
+SOURCE_ONLY — ещё не запускался. Само наличие схемы не означает READY.
+
+accept_full_delivery.py читает только конечные файлы и их SHA256, связывает
+существующие обязательные receipts. Не запускает игру, проверки, builds,
+SQL, скан карты, census, renderer или network. Не повторяет 223/pilot audit.
+
+Будущий root запуск через Guard после получения ВСЕХ actual final receipts:
+C:/Users/vakir/miniconda3/python.exe
+  C:/Users/vakir/.codex/worktrees/3f07/DW-native-grid-city-20261022/source/tools/native-grid/qa/accept_full_delivery.py
+  --input NEW_INPUT.json --input-sha256 ACTUAL_INPUT_SHA --out NEW_ACCEPTANCE.json
+
+Input строго schemaVersion1, kind FULL_NATIVE_GRID_DELIVERY_ACCEPTANCE_INPUT,
+artifacts с 27 обязательными {path,sha256}. Имена/схемы — в соседнем
+full_delivery_acceptance.schema.json. Пути абсолютные, SHA256 lowercase.
+Нельзя заменять FULL receipts пилотными или offline source reference.
+Внешняя jsonschema-библиотека не требуется: tool проверяет поля/контракты.
+JSON Schema дополнительно документирует два отдельных review receipts.
+
+Обязательные ссылки:
+production: immutable matching final FULL JAR.
+raw: actual final FULL compositions.jsonl.
+functions / coverage: fresh FULL decisions и actual postactivation coverage
+с одной sourceBinding/generation/rawSHA, без missing/unknown/role conflicts.
+catalogFreeze: COMPLETED_FULL_CATALOG_AUTHORING_HANDOFF с фактическим raw,
+function gate, prefix/append, compiler, statistics, bridge proofs и каталогом.
+jarCompatibility: actual PASS_EXACT_FULL_GENERATED_AND_REVIEWED_RUNTIME_PATCH_NOT_GAMEPLAY
+против accepted99f4. Ровно5 reviewed item-hook classes +1 observed resource;
+всё прочее, textures и старые resources — exact. Этот PASS ещё НЕ gameplay.
+Patch обязан ссылаться на root review707149..., sourceDelta55cb..., точные
+source files, actual class bytes и final retained_whole_items resource proof.
+targetAudit: actual ALL TARGET bridge/type query PASS на том же final JAR,
+catalog и полном bridgeHostStates request, плюс sibling binding/launch receipts.
+frozenApply / marker: actual FULL committed apply inputs, без pilot binding;
+marker READY_FOR_GAMEPLAY_QA на matching JAR/catalog/native light receipt.
+lightBinding / light / lightLaunch: actual FULL fresh native relight,
+pending0/processed==queued/saveFlushed/normal exit, без reuse пилотного prefix.
+preservedCoverage: existing FINAL_FINITE_PRESERVED_ASSEMBLY_COVERAGE с
+committed apply, actual FULL relight/4 merged groups, originalV12 и всеми
+accepted local retention members. Текущий finite accepted scope:28 entries,
+3801 matched objects,4 whole groups/8 component owners. Не новый census.
+pilotAcceptance / pairComparison: принятый реальный dense-pilot PASS и
+исходный честный paired report. Старый baseline не завершил измерение:
+нельзя получать percentage speedup/FPS из нулевых phases.
+profile / recorder: pinned profile285757... и recorder24ea..., неизменные
+client3G/server4G, view6/sim4. Не пересобирать старый benchmark helper.
+foreignInstall / foreignInstallPlan / foreignReopen / foreignReopenPlan:
+новые actual обе фазы existing isolated empty-authoring stand на FULL runtime.
+Реальный reopen, forced rollback, D guest pick/whole break/BG survival; также
+legacy native W2 + actual C visual-neighbour BG, exact one survival item,
+обычная повторная установка на ТОМ ЖЕ root, whole break, BG остаётся до
+отдельного удаления. Setup raw4/reopen0. Старые 223 действия не запускаются.
+finalRoute / finalRoutePlan: actual11 final views на FULL map, separate server
+ACK/render/delivered chunks, обычное движение, фактические3G/4Gargs и CSV.
+reopenRoute / reopenRoutePlan: новое подключение после native save/exit,
+один representative brick view, matching runtime/map/profile/recorder.
+
+visualReview — ОТДЕЛЬНЫЙ root observation, НЕ вывод из route counters:
+status PASS_ACTUAL_RENDERED_VIEWS;
+kind ACTUAL_FULL_ROUTE_AND_REOPEN_OBSERVATION;
+runtimeSha256, catalogSha256, reviewer;
+finalRouteReceipt и reopenRouteReceipt {path,sha256};
+actualImagesInspected/noNewVisibleDefects/movementUsable/
+noFrequentMultiSecondStalls/optimizationSupportedWithinReportedLimits = true;
+views:[{phase,path,sha256,observations}] — все11 final +1 reopen ПО ПОРЯДКУ.
+Изображения должны быть фактическими route-PHASE.png из запущенного client
+gameDir/screenshots, не старше своих phases. Tool проверяет file/SHA/PNG;
+содержательную оценку видимых дефектов даёт именно root.
+
+deliveryReview — отдельный финальный осмотр комплекта:
+status PASS_FINAL_DOCUMENT_AND_ARTIFACT_BINDING;
+runtimeSha256/catalogSha256, mapRoot=actual FULL light target,
+sourceRoot=.../DW-native-grid-city-20261022/source;
+runtimePatch {path,sha256}=compat.reviewedRuntimePatch;
+runtimeSourceReview {path,sha256}=patch.rootReview;
+reviewer, observations; blockingDefects=[], unresolvedRequiredFunctionalGaps=[];
+sourceTreeVerifiedCurrent/mapFolderVerifiedCurrent/matchingModMapAndSources/
+noCheckpointPresentedAsFinal/knownFailuresAndPerformanceLimitsDisclosed/
+oneItemAndWholeObjectBehaviorResolved = true;
+files:[{role,binding:{path,sha256}}] обязательно productionJar,
+installInstructions, sourceHandoff. sourceHandoff может быть source ZIP
+либо реальным manifest, связывающим актуальный исходный архив. Дополнительные
+roles mapManifest/mapArchive/sourceArchive допустимы, все files ненулевые.
+mapRoot — каталог готовой карты; обязательный map archive формат не навязан.
+Он уже связан фактическими frozenApply/light/marker/route receipts. Root
+отдельно удостоверяет актуальность финальной упаковки. Approval707149 даёт
+только source approval для affected QA, а не этот финальный deliveryReview.
+
+Любой отсутствующий/неверный gate даёт BLOCKED_FINAL_DELIVERY_GATES,
+readyForDelivery=false и exit2. Новый output нельзя перезаписывать.
+Только все успешно связанные actual gates + обе отдельные reviews дают
+FULL_NATIVE_GRID_CITY_DELIVERY_ACCEPTANCE / PASS / readyForDelivery=true.
+Этот receipt может быть final acceptance input для github_delta_pack READY;
+до него разрешён только честный CHECKPOINT, старые FAIL остаются в истории.
+
+Предел производительного вывода: accepted dense-pilot candidate загрузил
+тяжёлый район при прежних бюджетах, baseline timed out до измерения; final
+FULL route/reopen добавляет реальные наблюдения. Полного FULL before/after,
+доказанного процента ускорения/FPS или обещания remote-hosting tool не даёт.

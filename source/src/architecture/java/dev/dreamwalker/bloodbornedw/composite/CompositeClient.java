@@ -66,7 +66,7 @@ public final class CompositeClient {
             double[] bounds=visualBounds(rendered,state);double span=Math.max(bounds[3]-bounds[0],Math.max(bounds[4]-bounds[1],bounds[5]-bounds[2]));float scale=(float)(.85/Math.max(1,span));
             matrices.push();matrices.translate(.5,.5,.5);matrices.scale(scale,scale,scale);matrices.translate(-(bounds[0]+bounds[3])/2,-(bounds[1]+bounds[4])/2,-(bounds[2]+bounds[5])/2);renderParts(rendered,state,matrices,consumers,light,overlay,null,null,stack.getNbt());matrices.pop();
         });
-        ClientPickBlockGatherCallback.EVENT.register((player,hit)->{if(hit instanceof BlockHitResult blockHit){var owner=CompositeRuntime.target(player.getWorld(),blockHit.getBlockPos(),player);if(owner!=null)return CompositeRuntime.pick(player.getWorld(),owner);}return net.minecraft.item.ItemStack.EMPTY;});
+        ClientPickBlockGatherCallback.EVENT.register((player,hit)->{if(hit instanceof BlockHitResult blockHit){var owner=CompositeRuntime.target(player.getWorld(),blockHit.getBlockPos(),player);if(owner!=null)return CompositeRuntime.pick(player.getWorld(),owner);return NativeGridRetainedWholeItems.pick(player.getWorld(),blockHit.getBlockPos(),player);}return net.minecraft.item.ItemStack.EMPTY;});
         ClientPlayNetworking.registerGlobalReceiver(CompositeNetworking.OWNERS,(client,handler,buffer,response)->{
             ;
             SyncContext context=new SyncContext(CompositeNetworking.OWNERS);

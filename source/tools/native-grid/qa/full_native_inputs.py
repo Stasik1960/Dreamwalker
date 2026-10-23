@@ -147,7 +147,7 @@ def run(args):
                 sections[compound(section)['Y'].value] = ([state(item) for item in palette], values)
             chunk_refs = 0
             rows = db.execute('''SELECT r.x,r.y,r.z,group_concat(DISTINCT s.registry_id) AS root_ids
-                FROM refs r LEFT JOIN source_roots s ON s.dim=r.dim AND s.x=r.x AND s.y=r.y AND s.z=r.z
+                FROM refs r INDEXED BY ref_chunk LEFT JOIN source_roots s ON s.dim=r.dim AND s.x=r.x AND s.y=r.y AND s.z=r.z
                 WHERE r.dim=? AND r.x>>4=? AND r.z>>4=? GROUP BY r.x,r.y,r.z ORDER BY r.x,r.y,r.z''',
                 (dimension,cx,cz))
             for x,y,z,root_ids in rows:

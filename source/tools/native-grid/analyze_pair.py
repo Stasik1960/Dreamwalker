@@ -34,7 +34,31 @@ def run(folder):
     return {'binding':binding,'phases':report,'measuredSeconds':sum(p['seconds'] for p in report.values()),'clientFramesAll':distribution([v for a in frames.values() for v in a]),'serverTickWorkAll':distribution([v for a in work.values() for v in a]),'serverTickIntervalAll':distribution([v for a in gaps.values() for v in a]),'clientMaxPhaseHeapMiB':max(p['clientHeapMiB'] for p in report.values()),'serverMaxSnapshotHeapMiB':max(server_samples)/1024**2,'serverAfterUnloadGcHeapMiB':server['afterUnloadGc']['heapUsed']/1024**2,'totalDeliveredChunks':client['allUniqueDeliveredChunks']}
 def main():
     parser=argparse.ArgumentParser();parser.add_argument('--baseline',type=Path,default=ROOT/'research/pilot/performance-baseline');parser.add_argument('--candidate',type=Path,default=ROOT/'research/pilot/performance-candidate');parser.add_argument('--out',type=Path,default=ROOT/'research/pilot/comparison.json');a=parser.parse_args()
-    base,candidate=run(a.baseline),run(a.candidate)
+    baseline_receipt=read(a.baseline/'receipt.json')
+    candidate=run(a.candidate)
+    if baseline_receipt['status']=='FAIL':
+        # A watchdog/disconnect before a delivered scene is censored evidence,
+        # not a duration that can be compared with a completed candidate route.
+        binding=read(a.baseline/'binding.json')
+        assert binding['variant']=='baseline' and binding['productionSha256']=='40cecfb7e5cf783a762e350fc1864518c39abff177f6f025cb94892a181fbf51'
+        for key in ['qaSha256','profileLockSha256','routeSha256']:
+            assert binding[key]==candidate['binding'][key],key+' differs across the attempted pair'
+        client=read(a.baseline/'client/client-route.json')
+        assert client['status']=='FAIL'
+        console=(a.baseline/'server-console.log').read_text(encoding='utf-8',errors='replace')
+        result={'status':'BASELINE_INCOMPLETE_CANDIDATE_ANALYZED_NOT_READINESS',
+            'baseline':{'binding':binding,'receipt':baseline_receipt,'clientStatus':client['status'],
+                'clientError':client.get('error'),'completedPhases':len(client['phases']),
+                'watchdogReported': 'A single server tick took' in console,
+                'normalSaveConfirmed':'All dimensions are saved' in console},
+            'candidate':candidate,'measuredDurationChangePercent':None,
+            'limitations':'One attempted local separate-server pair on16GiB PC, fixed3G client/4G server. Baseline did not complete; no paired timing, FPS percentage or remote-hosting guarantee. Candidate statistics describe only its actual delivered and rendered scenes. Snapshot heap is not peak process RSS.',
+            'ready':False}
+        write(a.out,result)
+        print(json.dumps({'status':result['status'],'baselineCompletedPhases':len(client['phases']),
+            'candidateSeconds':candidate['measuredSeconds'],'candidateFrames':candidate['clientFramesAll'],'output':str(a.out)}))
+        return
+    base=run(a.baseline)
     for key in ['qaSha256','profileLockSha256','routeSha256']:assert base['binding'][key]==candidate['binding'][key],key+' differs across the pair'
     assert base['phases'].keys()==candidate['phases'].keys()
     delta=100*(candidate['measuredSeconds']/base['measuredSeconds']-1)

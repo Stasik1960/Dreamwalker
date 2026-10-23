@@ -13,6 +13,7 @@ from types import SimpleNamespace
 
 sys.path.insert(0,str(Path(__file__).resolve().parent))
 import context_stage
+import native_resume
 
 def module_api():
     return sys.modules.get(__name__) or SimpleNamespace(**globals())
@@ -38,22 +39,30 @@ CREATE TABLE IF NOT EXISTS poses(key TEXT PRIMARY KEY,data TEXT NOT NULL,objects
 CREATE TABLE IF NOT EXISTS objects(dim TEXT,uuid TEXT,pose TEXT,x INTEGER,y INTEGER,z INTEGER,
  kind TEXT DEFAULT 'unclassified',reason TEXT,source_status TEXT,PRIMARY KEY(dim,uuid));
 CREATE INDEX IF NOT EXISTS object_pose ON objects(pose);
+CREATE INDEX IF NOT EXISTS object_pose_zone ON objects(pose,dim,x,z,y);
 CREATE INDEX IF NOT EXISTS object_root ON objects(dim,x,z);
 CREATE TABLE IF NOT EXISTS pose_cells(pose TEXT,dx INTEGER,dy INTEGER,dz INTEGER,PRIMARY KEY(pose,dx,dy,dz));
 CREATE TABLE IF NOT EXISTS protected_cells(dim TEXT,x INTEGER,y INTEGER,z INTEGER,uuid TEXT,reason TEXT,PRIMARY KEY(dim,x,y,z,uuid));
 CREATE INDEX IF NOT EXISTS protected_pos ON protected_cells(dim,x,y,z);
+CREATE TABLE IF NOT EXISTS source_visual_domains(dim TEXT,uuid TEXT,data TEXT NOT NULL,digest TEXT NOT NULL,PRIMARY KEY(dim,uuid));
+CREATE TABLE IF NOT EXISTS source_visual_contacts(dim TEXT,x INTEGER,y INTEGER,z INTEGER,uuid TEXT,incoming TEXT,data TEXT NOT NULL,digest TEXT NOT NULL,PRIMARY KEY(dim,x,y,z,uuid,incoming));
+CREATE TABLE IF NOT EXISTS source_visual_owner_members(dim TEXT,uuid TEXT,sourceTable TEXT,x INTEGER,y INTEGER,z INTEGER,PRIMARY KEY(dim,uuid,sourceTable,x,y,z)) WITHOUT ROWID;
+CREATE TABLE IF NOT EXISTS source_local_retentions(sequence INTEGER PRIMARY KEY,data TEXT NOT NULL,digest TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS selected_objects(dim TEXT,uuid TEXT,pose TEXT,x INTEGER,y INTEGER,z INTEGER,kind TEXT,PRIMARY KEY(dim,uuid));
 CREATE INDEX IF NOT EXISTS selected_root ON selected_objects(dim,x,y,z);
 CREATE TABLE IF NOT EXISTS whole_cells(dim TEXT,x INTEGER,y INTEGER,z INTEGER,uuid TEXT,template TEXT,dx INTEGER,dy INTEGER,dz INTEGER,PRIMARY KEY(dim,x,y,z));
 CREATE TABLE IF NOT EXISTS fragments(dim TEXT,x INTEGER,y INTEGER,z INTEGER,uuid TEXT,pose TEXT,dx INTEGER,dy INTEGER,dz INTEGER,PRIMARY KEY(dim,x,y,z,uuid));
 CREATE INDEX IF NOT EXISTS fragment_chunk ON fragments(dim,x,z);
+CREATE INDEX IF NOT EXISTS fragment_owner ON fragments(dim,uuid);
 CREATE INDEX IF NOT EXISTS fragment_native_chunk ON fragments(dim,(x>>4),(z>>4),x,y,z);
 CREATE TABLE IF NOT EXISTS substrate_fragments(dim TEXT,x INTEGER,y INTEGER,z INTEGER,uuid TEXT,pose TEXT,dx INTEGER,dy INTEGER,dz INTEGER,PRIMARY KEY(dim,x,y,z,uuid));
+CREATE INDEX IF NOT EXISTS substrate_owner ON substrate_fragments(dim,uuid);
 CREATE TABLE IF NOT EXISTS cell_queue(dim TEXT,x INTEGER,y INTEGER,z INTEGER,processed INTEGER DEFAULT 0,PRIMARY KEY(dim,x,y,z));
 CREATE INDEX IF NOT EXISTS queue_work ON cell_queue(processed,dim,(x>>4),(z>>4));
 CREATE TABLE IF NOT EXISTS activated_native(dim TEXT,uuid TEXT,PRIMARY KEY(dim,uuid));
 CREATE TABLE IF NOT EXISTS native_visual_roots(dim TEXT,x INTEGER,y INTEGER,z INTEGER,state TEXT,PRIMARY KEY(dim,x,y,z));
 CREATE TABLE IF NOT EXISTS native_visual_fragments(dim TEXT,x INTEGER,y INTEGER,z INTEGER,rx INTEGER,ry INTEGER,rz INTEGER,state TEXT,dx INTEGER,dy INTEGER,dz INTEGER,PRIMARY KEY(dim,x,y,z,rx,ry,rz));
+CREATE INDEX IF NOT EXISTS native_visual_owner ON native_visual_fragments(dim,rx,ry,rz);
 CREATE TABLE IF NOT EXISTS bridge_cells(dim TEXT,x INTEGER,y INTEGER,z INTEGER,host_state TEXT,retained_resident INTEGER,type_index INTEGER,PRIMARY KEY(dim,x,y,z));
 CREATE INDEX IF NOT EXISTS bridge_chunk ON bridge_cells(dim,(x>>4),(z>>4));
 CREATE TABLE IF NOT EXISTS compositions(key TEXT PRIMARY KEY,data TEXT NOT NULL,type_index INTEGER);
@@ -374,7 +383,7 @@ def preflight_functional_guests(db,plan):
     for dim,uid in sorted(blocked):
         # Protect this particular finite source object. Do not walk the old
         # owner membership graph or expand a district around a container.
-        db.execute("INSERT OR IGNORE INTO protected_cells SELECT dim,x,y,z,uuid,'functional_guest' FROM fragments WHERE dim=? AND uuid=?",(dim,uid))
+        db.execute("INSERT OR IGNORE INTO protected_cells SELECT dim,x,y,z,uuid,'functional_guest' FROM fragments INDEXED BY fragment_owner WHERE dim=? AND uuid=?",(dim,uid))
         db.execute('DELETE FROM fragments WHERE dim=? AND uuid=?',(dim,uid));db.execute('DELETE FROM selected_objects WHERE dim=? AND uuid=?',(dim,uid))
     report={'schemaVersion':1,'status':'PASS','worldReads':0,'addressedSavedChunks':len(chunks),'functionalGuestCells':len(conflicts),'existingCompositeBridges':bridged,'directlyRetainedObjects':len(blocked),'conflicts':conflicts,'graphClosure':False}
     path=plan/'functional-guest-preflight.json';atomic_json(path,report);meta(db,'functionalGuestPreflight',{'path':str(path),'sha256':sha(path)})
@@ -401,8 +410,12 @@ def compose(a):
     db=connect(a.plan); plan=checked(a.plan)
     require(meta(db,'classification') and meta(db,'poseFragments'),'Classification and exported pose footprints required')
     require(not meta(db,'applyStarted'),'Applied plan is frozen')
+    require(not meta(db,'nativeLocalRetention'),'A committed native transfer must use resume-native-compose; initial selection cannot be reset')
     scope={'dimension':a.dimension,'rootBounds':a.bounds} if a.bounds else None
-    if not scope and meta(db,'fullNativeFunctionGateRequired'):context_stage.require_full_functions(module_api(),db)
+    if not scope and meta(db,'fullNativeFunctionGateRequired'):
+        context_stage.require_full_functions(module_api(),db)
+        import assembly_overrides
+        assembly_overrides.require_bound(db)
     extra=[]
     if a.additional_owners:
         extra_doc=read(a.additional_owners);extra=extra_doc.get('owners',extra_doc.get('additionalOwners',[]))
@@ -453,7 +466,7 @@ def compose(a):
     for dim,uid in whole_conflicts:
         row=db.execute('SELECT x,y,z FROM selected_objects WHERE dim=? AND uuid=?',(dim,uid)).fetchone()
         issue(db,'whole_local_overlap',dim,row,{'uuid':uid,'reason':'Statue shares a source cell with an independent object; dedicated whole-template cell cannot contain that object'})
-        db.execute("INSERT OR IGNORE INTO protected_cells SELECT dim,x,y,z,uuid,'whole_local_overlap' FROM fragments WHERE dim=? AND uuid=?",(dim,uid))
+        db.execute("INSERT OR IGNORE INTO protected_cells SELECT dim,x,y,z,uuid,'whole_local_overlap' FROM fragments INDEXED BY fragment_owner WHERE dim=? AND uuid=?",(dim,uid))
         db.execute('DELETE FROM fragments WHERE dim=? AND uuid=?',(dim,uid));db.execute('DELETE FROM selected_objects WHERE dim=? AND uuid=?',(dim,uid))
     # A locally retained statue must be protected before static compositions
     # are formed. Conflicting architecture is retained locally, once, without
@@ -466,7 +479,7 @@ def compose(a):
     templates=meta(db,'wholeTemplates') or {}
     for dim,uid,pose,x,y,z in db.execute("SELECT dim,uuid,pose,x,y,z FROM selected_objects WHERE kind='whole'"):
         template=templates.get(pose);require(template,'Missing confirmed whole-object template key: '+pose)
-        db.execute('INSERT INTO whole_cells SELECT dim,x,y,z,uuid,?,dx,dy,dz FROM fragments WHERE dim=? AND uuid=?',(template,dim,uid))
+        db.execute('INSERT INTO whole_cells SELECT dim,x,y,z,uuid,?,dx,dy,dz FROM fragments INDEXED BY fragment_owner WHERE dim=? AND uuid=?',(template,dim,uid))
     db.execute("DELETE FROM fragments WHERE EXISTS(SELECT 1 FROM selected_objects o WHERE o.dim=fragments.dim AND o.uuid=fragments.uuid AND o.kind='whole')")
     db.commit()
     # Newly retained independent sculptures and rare foreign conflicts can
@@ -486,10 +499,17 @@ def compose(a):
     # encountered by this finite work queue are activated; isolated native
     # states remain byte-for-byte unchanged. Source fragment physics is ignored
     # in favor of exact installed native-state physics in every composed cell.
+    __import__('native_certificates').prepare_source_visual_member_index(module_api(),db)
     db.execute('INSERT OR IGNORE INTO cell_queue(dim,x,y,z) SELECT dim,x,y,z FROM fragments')
     db.execute('INSERT OR IGNORE INTO cell_queue(dim,x,y,z) SELECT dim,x,y,z FROM whole_cells')
+    compose_native_tail(db,plan,scope,len(conflicts))
+
+
+def compose_native_tail(db,plan,scope,local_overlap_objects):
+    """The original native-transfer/finalization tail, shared with resume."""
     source_cache=collections.OrderedDict()
     exports=sqlite3.connect('file:'+Path(meta(db,'poseFragments')['path']).as_posix()+'?mode=ro',uri=True)
+    visual_reservations=__import__('native_certificates').SourceVisualReservations(module_api(),db,exports)
     @lru_cache(maxsize=512)
     def native_export(state):
         saved=exports.execute('SELECT data FROM native WHERE state=?',(state,)).fetchone()
@@ -513,40 +533,56 @@ def compose(a):
     while True:
         pending=db.execute('SELECT dim,x,y,z FROM cell_queue WHERE processed=0 ORDER BY dim,(x>>4),(z>>4),y,x,z LIMIT 1024').fetchall()
         if not pending:break
-        for dim,x,y,z in pending:
-            actual=actual_and_bridge(dim,(x,y,z));state_key=canonical(actual);native=native_export(state_key)
-            if native and native.get('nativeVisualComplete',True) and any(v[axis]<-1e-6 or v[axis]>1.000001 for q in native.get('quads',[]) for v in q['vertices'] for axis in range(3)):
-                if not db.execute('SELECT 1 FROM native_visual_roots WHERE dim=? AND x=? AND y=? AND z=?',(dim,x,y,z)).fetchone():
-                    cells=exports.execute('SELECT x,y,z FROM native_fragments WHERE state=?',(state_key,)).fetchall()
-                    require(cells,'A wide native model has no proven clipped native visual fragments: '+state_key)
-                    db.execute('INSERT INTO native_visual_roots VALUES(?,?,?,?,?)',(dim,x,y,z,state_key))
+        try:
+            for dim,x,y,z in pending:
+                actual=actual_and_bridge(dim,(x,y,z));state_key=canonical(actual);native=native_export(state_key)
+                if (native and native.get('nativeVisualComplete',True)) or visual_reservations.local_native_domains() or visual_reservations.local_native_cells() or visual_reservations.original_zones():
+                    __import__('native_certificates').check_retained_native_member(visual_reservations,dim,(x,y,z),actual)
+                if native and native.get('nativeVisualComplete',True) and any(v[axis]<-1e-6 or v[axis]>1.000001 for q in native.get('quads',[]) for v in q['vertices'] for axis in range(3)):
+                    if not db.execute('SELECT 1 FROM native_visual_roots WHERE dim=? AND x=? AND y=? AND z=?',(dim,x,y,z)).fetchone():
+                        cells=exports.execute('SELECT x,y,z FROM native_fragments WHERE state=?',(state_key,)).fetchall()
+                        require(cells,'A wide native model has no proven clipped native visual fragments: '+state_key)
+                        db.execute('INSERT INTO native_visual_roots VALUES(?,?,?,?,?)',(dim,x,y,z,state_key))
+                        for dx,dy,dz in cells:
+                            at=(x+dx,y+dy,z+dz)
+                            actual_and_bridge(dim,at)
+                            visual_reservations.clearance(dim,at,{'kind':'wide_native','root':[x,y,z],'state':actual})
+                            __import__('native_certificates').check_whole_native_contact(visual_reservations,dim,at,{'kind':'wide_native','root':[x,y,z],'state':actual})
+                            db.execute('INSERT INTO native_visual_fragments VALUES(?,?,?,?,?,?,?,?,?,?,?)',(dim,*at,x,y,z,state_key,dx,dy,dz))
+                            db.execute('INSERT OR IGNORE INTO cell_queue(dim,x,y,z) VALUES(?,?,?,?)',(dim,*at))
+                for uid,pose,rx,ry,rz in __import__('native_certificates').pending_native_roots(visual_reservations,dim,(x,y,z),actual,native):
+                    if (dim,uid) in visual_reservations.local_native_domains():continue
+                    native_resume.check_native_activation(module_api(),db,dim,uid)
+                    if db.execute('SELECT 1 FROM activated_native WHERE dim=? AND uuid=?',(dim,uid)).fetchone():continue
+                    db.execute('INSERT INTO activated_native VALUES(?,?)',(dim,uid))
+                    # Even a visually empty root slot must cease drawing the old
+                    # whole model after any of its helpers becomes a breakable cell.
+                    db.execute('INSERT OR IGNORE INTO cell_queue(dim,x,y,z) VALUES(?,?,?,?)',(dim,rx,ry,rz))
+                    cells=db.execute('SELECT dx,dy,dz FROM pose_cells WHERE pose=?',(pose,)).fetchall()
+                    if not cells:
+                        issue(db,'missing_substrate_visual',dim,(x,y,z),{'pose':pose,'uuid':uid});db.commit()
+                        raise RuntimeError('Native root visual was not exported; no native carrier may be replaced: '+str((dim,uid,pose)))
                     for dx,dy,dz in cells:
-                        at=(x+dx,y+dy,z+dz)
+                        at=(rx+dx,ry+dy,rz+dz)
                         actual_and_bridge(dim,at)
-                        require(not db.execute("SELECT 1 FROM protected_cells p WHERE dim=? AND x=? AND y=? AND z=? AND reason!='openable_both_states_local_helpers' AND NOT EXISTS(SELECT 1 FROM bridge_cells b WHERE b.dim=p.dim AND b.x=p.x AND b.y=p.y AND b.z=p.z) LIMIT 1",(dim,*at)).fetchone(),'Wide native visual transfer meets a protected local object: '+str((dim,at,actual)))
-                        require(not db.execute('SELECT 1 FROM whole_cells WHERE dim=? AND x=? AND y=? AND z=? LIMIT 1',(dim,*at)).fetchone(),'Wide native transfer meets a dedicated statue role')
-                        db.execute('INSERT INTO native_visual_fragments VALUES(?,?,?,?,?,?,?,?,?,?,?)',(dim,*at,x,y,z,state_key,dx,dy,dz))
+                        visual_reservations.clearance(dim,at,{'kind':'legacy_native','uuid':uid,'pose':pose,'root':[rx,ry,rz]})
+                        __import__('native_certificates').check_whole_native_contact(visual_reservations,dim,at,{'kind':'legacy_native','uuid':uid,'pose':pose,'root':[rx,ry,rz]})
+                        db.execute('INSERT OR IGNORE INTO substrate_fragments VALUES(?,?,?,?,?,?,?,?,?)',(dim,*at,uid,pose,dx,dy,dz))
                         db.execute('INSERT OR IGNORE INTO cell_queue(dim,x,y,z) VALUES(?,?,?,?)',(dim,*at))
-            for uid,pose,rx,ry,rz in native_roots_at(db,dim,(x,y,z),actual,native):
-                if db.execute('SELECT 1 FROM activated_native WHERE dim=? AND uuid=?',(dim,uid)).fetchone():continue
-                db.execute('INSERT INTO activated_native VALUES(?,?)',(dim,uid))
-                # Even a visually empty root slot must cease drawing the old
-                # whole model after any of its helpers becomes a breakable cell.
-                db.execute('INSERT OR IGNORE INTO cell_queue(dim,x,y,z) VALUES(?,?,?,?)',(dim,rx,ry,rz))
-                cells=db.execute('SELECT dx,dy,dz FROM pose_cells WHERE pose=?',(pose,)).fetchall()
-                if not cells:
-                    issue(db,'missing_substrate_visual',dim,(x,y,z),{'pose':pose,'uuid':uid});db.commit()
-                    raise RuntimeError('Native root visual was not exported; no native carrier may be replaced: '+str((dim,uid,pose)))
-                for dx,dy,dz in cells:
-                    at=(rx+dx,ry+dy,rz+dz)
-                    actual_and_bridge(dim,at)
-                    require(not db.execute("SELECT 1 FROM protected_cells p WHERE dim=? AND x=? AND y=? AND z=? AND reason!='openable_both_states_local_helpers' AND NOT EXISTS(SELECT 1 FROM bridge_cells b WHERE b.dim=p.dim AND b.x=p.x AND b.y=p.y AND b.z=p.z) LIMIT 1",(dim,*at)).fetchone(),'Required native visual overhang meets a protected local object; retain that particular source root: '+str((dim,uid,at)))
-                    require(not db.execute('SELECT 1 FROM whole_cells WHERE dim=? AND x=? AND y=? AND z=? LIMIT 1',(dim,*at)).fetchone(),'Native overhang would overlap a dedicated whole-object role')
-                    db.execute('INSERT OR IGNORE INTO substrate_fragments VALUES(?,?,?,?,?,?,?,?,?)',(dim,*at,uid,pose,dx,dy,dz))
-                    db.execute('INSERT OR IGNORE INTO cell_queue(dim,x,y,z) VALUES(?,?,?,?)',(dim,*at))
-            db.execute('UPDATE cell_queue SET processed=1 WHERE dim=? AND x=? AND y=? AND z=?',(dim,x,y,z))
-        rounds+=1;db.commit()
+                db.execute('UPDATE cell_queue SET processed=1 WHERE dim=? AND x=? AND y=? AND z=?',(dim,x,y,z))
+            rounds+=1;native_resume.checkpoint(module_api(),db,'NATIVE_TRANSFER',len(pending));db.commit()
+        except RuntimeError as error:
+            db.rollback()
+            visual_reservations=__import__('native_certificates').SourceVisualReservations(module_api(),db,exports)
+            if __import__('native_certificates').automatic_source_zone_retention(module_api(),db,visual_reservations,dim,(x,y,z),actual,error):
+                visual_reservations=__import__('native_certificates').SourceVisualReservations(module_api(),db,exports)
+                continue
+            raise
         if rounds%8==0:progress(plan,db,'TRANSFERRING_NATIVE_VISUALS',nativeRootsActivated=db.execute('SELECT count(*) FROM activated_native').fetchone()[0],replacementCells=db.execute('SELECT count(*) FROM cell_queue').fetchone()[0])
+    if meta(db,'nativeLocalRetention') and meta(db,'nativeComposeCursor')['phase']=='NATIVE_TRANSFER':
+        db.execute('BEGIN IMMEDIATE')
+        __import__('native_certificates').stage_reserved_source_domain_queues(module_api(),db,visual_reservations)
+    native_resume.checkpoint(module_api(),db,'FINALIZING');db.commit()
     last_chunk=None;sections={};root=None;rel=None;before=None
     needed_native={};protected_ids=set(read(PROJECT/'tools'/'native-grid'/'classification.json').get('protectedRegistryIds',[]))
     for dim,x,y,z in db.execute('SELECT dim,x,y,z FROM cell_queue q WHERE NOT EXISTS(SELECT 1 FROM whole_cells w WHERE w.dim=q.dim AND w.x=q.x AND w.y=q.y AND w.z=q.z) ORDER BY dim,(x>>4),(z>>4),y,x,z'):
@@ -616,6 +652,9 @@ def compose(a):
     db.commit()
     verify_planned_be_safety(db,plan)
     context_stage.check_complete(module_api(),db)
+    if not scope and meta(db,'fullNativeFunctionGateRequired'):
+        import assembly_components
+        assembly_components.require_bound(db)
     db.execute('DELETE FROM bridge_cells WHERE NOT EXISTS(SELECT 1 FROM placements p WHERE p.dim=bridge_cells.dim AND p.x=bridge_cells.x AND p.y=bridge_cells.y AND p.z=bridge_cells.z)')
     bridge_ids=sorted({json.loads(r[0])['registryId'] for r in db.execute('SELECT DISTINCT host_state FROM bridge_cells')})
     bridge_doc={'schemaVersion':1,'nbtKey':'NativeGridBase','registryIds':bridge_ids}
@@ -626,12 +665,13 @@ def compose(a):
         for key,data in db.execute('SELECT key,data FROM compositions ORDER BY key'):stream.write(canonical({'key':key,**json.loads(data)})+'\n')
         stream.flush();os.fsync(stream.fileno())
     os.replace(temp,output);meta(db,'compositionsSha256',sha(output));db.commit()
+    atomic_json(plan/'native-states-needed.json',{'schemaVersion':1,'nativeStates':[needed_native[k] for k in sorted(needed_native)]})
     meta(db,'compositionGeneration',{'compositionsSha256':sha(output),'doorFootprintGuard':meta(db,'doorFootprintGuard'),
                                     'functionalGuestPreflight':meta(db,'functionalGuestPreflight'),'plannedBeSafety':meta(db,'plannedBeSafety'),
-                                    'sourceFragments':meta(db,'poseFragments'),'plannerSha256':sha(__file__)})
+                                    'sourceFragments':meta(db,'poseFragments'),'plannerSha256':sha(__file__),
+                                    **({'nativeLocalRetention':meta(db,'nativeLocalRetention')} if meta(db,'nativeLocalRetention') else {})})
     db.commit()
-    atomic_json(plan/'native-states-needed.json',{'schemaVersion':1,'nativeStates':[needed_native[k] for k in sorted(needed_native)]})
-    progress(plan,db,'COMPOSITIONS_READY',scope=scope,compositionFile=str(output),localOverlapObjects=len(conflicts))
+    progress(plan,db,'COMPOSITIONS_READY',scope=scope,compositionFile=str(output),localOverlapObjects=local_overlap_objects)
 
 def import_types(a):
     db=connect(a.plan);require(not meta(db,'applyStarted'),'Applied plan is frozen')
@@ -919,7 +959,23 @@ def freeze_inputs(db,plan):
     if meta(db,'scope') and meta(db,'pilotMetadataBinding'):gate_names.append('pilotMetadataBinding')
     if meta(db,'runtimeStorageTransition'):gate_names.append('runtimeStorageTransition')
     if meta(db,'contextExtension'):gate_names.extend(('contextExtension','contextRegionBinding','contextNativeFunctionGate'))
-    if meta(db,'fullNativeFunctionGateRequired'):gate_names.extend(('fullNativeFunctionGate','fullNativeInputCoverageGate'))
+    if meta(db,'fullNativeFunctionGateRequired'):gate_names.extend(('fullNativeFunctionGate','fullNativeInputCoverageGate','preservedAssemblyGate'))
+    if meta(db,'nativeLocalRetention'):gate_names.append('nativeLocalRetention')
+    if meta(db,'nativeResumeSourceTransition'):gate_names.append('nativeResumeSourceTransition')
+    if meta(db,'nativeVisualProtectionCorrection'):
+        __import__('native_certificates').validate_visual_protection_corrections(module_api(),db,finalized=True)
+        gate_names.append('nativeVisualProtectionCorrection')
+    if meta(db,'nativeWholeTemplateFallback'):
+        __import__('native_certificates').validate_whole_template_fallbacks(module_api(),db,finalized=True)
+        gate_names.append('nativeWholeTemplateFallback')
+    if meta(db,'nativeRetainedFunctionalVisualCorrection'):
+        __import__('native_certificates').validate_retained_functional_visual_corrections(module_api(),db,finalized=True)
+        gate_names.append('nativeRetainedFunctionalVisualCorrection')
+    if meta(db,'sourceVisualReservationJournal'):
+        __import__('native_certificates').validate_source_visual_reservations(module_api(),db,finalized=True)
+        gates_journal=meta(db,'sourceVisualReservationJournal')
+    if meta(db,'sourceLocalRetentionJournal'):
+        __import__('native_certificates').validate_source_local_retentions(module_api(),db,finalized=True)
     gates={key:meta(db,key) for key in gate_names}
     for name,gate in gates.items():require(gate and sha(gate['path'])==gate['sha256'],'Missing or changed pre-apply evidence: '+name)
     require(gates['plannedBeSafety'].get('status')=='PASS','Functional BlockEntity planning gate did not pass')
@@ -931,7 +987,15 @@ def freeze_inputs(db,plan):
              'semanticGates':gates,
              'counts':{t:db.execute('SELECT count(*) FROM '+t).fetchone()[0] for t in ('selected_objects','placements','cleanup_owners','regions')}}
     previous=meta(db,'frozenInputs')
+    if meta(db,'nativeResumeSourceBinding'):
+        certificates=__import__('native_certificates');certificates.active_binding(module_api(),db)
+        current['nativeConsumerSourceFiles']=certificates.source_files(module_api())
+    if meta(db,'sourceVisualReservationJournal'):current['sourceVisualReservationJournal']=gates_journal
+    if meta(db,'sourceLocalRetentionJournal'):current['sourceLocalRetentionJournal']=meta(db,'sourceLocalRetentionJournal')
     if meta(db,'contextExtension'):current['contextStageSha256']=sha(Path(__file__).with_name('context_stage.py'))
+    if meta(db,'fullNativeFunctionGateRequired'):
+        current['assemblyOverridesSha256']=sha(Path(__file__).with_name('assembly_overrides.py'))
+        current['assemblyComponentsSha256']=sha(Path(__file__).with_name('assembly_components.py'))
     require(previous is None or previous==current,'Planner/classification/catalogue/counts changed after first apply; preserve the existing cursor')
     if previous is None:meta(db,'frozenInputs',current);atomic_json(plan/'frozen-inputs.json',current)
 
@@ -944,6 +1008,8 @@ def apply(a):
         else:
             copy_binding=meta(db,'pilotRegionBinding');require(copy_binding and copy_binding.get('target')==str(target),'Bind the committed cropped pilot source copy after import-types before apply')
     if not meta(db,'scope'):
+        import assembly_overrides,assembly_components
+        assembly_overrides.require_bound(db);assembly_components.require_bound(db,compiled=True)
         context_stage.full_apply_gate(module_api(),db,plan)
         gate_path=a.pilot_gate or meta(db,'successfulPilotGate')
         gate=read(gate_path) if gate_path else {}
@@ -996,6 +1062,9 @@ def apply(a):
     # Invalidate the complete durable debt set, including existing neighbors,
     # while the world is still offline. The native loader then recomputes from
     # uncached data; no stale neighbor nibble arrays can seed false light.
+    if not meta(db,'scope') and meta(db,'fullNativeFunctionGateRequired'):
+        import assembly_components
+        assembly_components.prepare_full_light(db,plan)
     invalidate_debt(db,plan,target)
     meta(db,'offlineApplied',True);db.commit();export_relight(db,plan)
     progress(plan,db,'OFFLINE_APPLIED_RELIGHT_PENDING')
@@ -1013,6 +1082,7 @@ def export_relight(db,plan):
         restart=meta(db,'contextNativeLightRestart');light_binding.update(engineReceipt=restart['freshReceipt'],engineDoneCursor=restart['freshDoneCursor'],savedPrefixReused=False,dependencyRepair=restart['repair'])
     elif not meta(db,'scope') and meta(db,'fullNativeFunctionGateRequired'):
         fresh=plan/'full-city-relight-engine.json';light_binding.update(engineReceipt=str(fresh),engineDoneCursor=str(fresh.with_name(fresh.name+'.done.tsv')),savedPrefixReused=False,fullCityFreshLight=True)
+        request=meta(db,'fullAssemblyLightRequest');require(request and sha(request['path'])==request['sha256'],'Full native light requires its finite four-assembly request');light_binding.update(assemblyRequest=request,assemblyPhaseReceipt=str(fresh.with_name(fresh.name+'.assemblies.json')))
     atomic_json(plan/'relight-binding.json',light_binding)
     if meta(db,'contextExtension'):context_stage.adopt_light(module_api(),db,plan)
 
@@ -1045,6 +1115,9 @@ def accept_relight(a):
     require(receipt.get('runtimeSha256')==binding['runtime']['sha256'] and receipt.get('catalogSha256')==binding['catalog']['sha256'],'Native relight runtime/catalogue differ')
     require(receipt.get('queued')==receipt.get('processed')==binding['queued'],'Native engine receipt does not cover the exact queued chunk count')
     require(receipt.get('pending',-1)==0 and receipt.get('saveFlushed') is True,'Relight save/debt not complete')
+    if not meta(db,'scope') and meta(db,'fullNativeFunctionGateRequired'):
+        import assembly_components
+        assembly_components.accept_full_light(db,binding,receipt)
     db.execute("UPDATE relight SET status='done',receipt=?",(sha(a.receipt),));meta(db,'relightComplete',True);db.commit()
     target=checked(meta(db,'target'));marker=target/'NATIVE-GRID-INCOMPLETE.json'
     if marker.exists():marker.unlink()
@@ -1583,6 +1656,15 @@ def parser():
     p=sub.add_parser('classify');p.add_argument('--classification',type=Path,required=True);p.set_defaults(run=classify)
     p=sub.add_parser('import-fragments');p.add_argument('--fragments',type=Path,required=True);p.set_defaults(run=import_fragments)
     p=sub.add_parser('compose');p.add_argument('--dimension',default='.');p.add_argument('--bounds',type=int,nargs=4,metavar=('MIN_X','MAX_X','MIN_Z','MAX_Z'));p.add_argument('--additional-owners',type=Path);p.set_defaults(run=compose)
+    p=sub.add_parser('retain-native-local');p.add_argument('--scope',type=Path,required=True);p.add_argument('--scope-sha256',required=True);p.add_argument('--preview',type=Path,required=True);p.add_argument('--execute',action='store_true');p.add_argument('--expected-preview-sha256');p.set_defaults(run=lambda a:native_resume.retain(a,module_api()))
+    p=sub.add_parser('resume-native-compose');p.set_defaults(run=lambda a:native_resume.resume(a,module_api()))
+    p=sub.add_parser('upgrade-native-resume-binding');p.add_argument('--failed-run',type=Path,required=True);p.add_argument('--source-proof',type=Path,required=True);p.add_argument('--source-proof-sha256',required=True);p.add_argument('--preview',type=Path,required=True);p.add_argument('--execute',action='store_true');p.add_argument('--expected-preview-sha256');p.set_defaults(run=lambda a:__import__('native_certificates').upgrade(a,module_api()))
+    p=sub.add_parser('retain-native-certificate');p.add_argument('--certificate',type=Path,required=True);p.add_argument('--certificate-sha256',required=True);p.add_argument('--preview',type=Path,required=True);p.add_argument('--execute',action='store_true');p.add_argument('--expected-preview-sha256');p.set_defaults(run=lambda a:__import__('native_certificates').retain(a,module_api()))
+    p=sub.add_parser('retain-native-retraction-certificate');p.add_argument('--certificate',type=Path,required=True);p.add_argument('--certificate-sha256',required=True);p.add_argument('--preview',type=Path,required=True);p.add_argument('--execute',action='store_true');p.add_argument('--expected-preview-sha256');p.set_defaults(run=lambda a:__import__('native_certificates').retract(a,module_api()))
+    p=sub.add_parser('retain-preserved-native-whole-certificate');p.add_argument('--certificate',type=Path,required=True);p.add_argument('--certificate-sha256',required=True);p.add_argument('--preview',type=Path,required=True);p.add_argument('--execute',action='store_true');p.add_argument('--expected-preview-sha256');p.set_defaults(run=lambda a:__import__('native_certificates').retain_preserved_whole(a,module_api()))
+    p=sub.add_parser('correct-native-visual-protection');p.add_argument('--certificate',type=Path,required=True);p.add_argument('--certificate-sha256',required=True);p.add_argument('--preview',type=Path,required=True);p.add_argument('--execute',action='store_true');p.add_argument('--expected-preview-sha256');p.set_defaults(run=lambda a:__import__('native_certificates').correct_visual_protection(a,module_api()))
+    p=sub.add_parser('fallback-native-whole-template');p.add_argument('--certificate',type=Path,required=True);p.add_argument('--certificate-sha256',required=True);p.add_argument('--preview',type=Path,required=True);p.add_argument('--execute',action='store_true');p.add_argument('--expected-preview-sha256');p.set_defaults(run=lambda a:__import__('native_certificates').fallback_whole_template(a,module_api()))
+    p=sub.add_parser('correct-retained-functional-visual-protection');p.add_argument('--certificate',type=Path,required=True);p.add_argument('--certificate-sha256',required=True);p.add_argument('--preview',type=Path,required=True);p.add_argument('--execute',action='store_true');p.add_argument('--expected-preview-sha256');p.set_defaults(run=lambda a:__import__('native_certificates').correct_retained_functional_visual(a,module_api()))
     p=sub.add_parser('import-types');p.add_argument('--mapping',type=Path,required=True);p.add_argument('--catalog',type=Path,required=True);p.set_defaults(run=import_types)
     p=sub.add_parser('apply');p.add_argument('--target',type=Path,required=True);p.add_argument('--runtime-jar',type=Path,required=True);p.add_argument('--pilot-gate',type=Path);p.set_defaults(run=apply)
     p=sub.add_parser('accept-relight');p.add_argument('--receipt',type=Path,required=True);p.set_defaults(run=accept_relight)

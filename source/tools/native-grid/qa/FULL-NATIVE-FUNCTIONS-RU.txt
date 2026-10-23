@@ -1,0 +1,81 @@
+FULL native-function gate: подготовленный producer, не выполненный полный проход
+
+full_native_functions.py читает только готовые JSON/JAR/текстовые доказательства.
+Он не открывает SQLite, исходную или рабочую карту, не запускает JVM/сборку,
+не меняет план, каталог и profiles. Текущие QA/prod остаются заморожены.
+
+Порядок после принятого пилота и штатного full promotion (все процессы root
+запускает через Guard Operation):
+
+1. Существующий full_native_inputs.py создаёт НОВЫЙ scope FULL_CITY census из
+   сохранённых данных. Его здесь не запускали. Пример будущей команды из source:
+
+   python tools/native-grid/qa/full_native_inputs.py --plan ../research/native-grid-plan --out ../research/full-native-functions/full-needed.json
+
+2. Подготовить исходный function gate и конечный запрос недостающих свойств:
+
+   python tools/native-grid/qa/full_native_functions.py --input ../research/full-native-functions/full-needed.json --out ../research/full-native-functions/function-gate-initial.json --requests-out ../research/full-native-functions/state-properties-request.json
+
+   PASS возможен только при покрытии ВСЕХ exact nativeBaseCandidates и
+   blockEntityHostCandidates свежего census. candidateObjects/sourceBinding/
+   coverage берутся из него; importer City повторно сверяет их с actual DB.
+   Старые 194/232/260 состояний не становятся FULL coverage. Default policy260
+   используется только для ранее подтверждённых совпавших exact tuples.
+   Новый --policy разрешает дополнительные точные решения с тем же verified
+   sourceBinding и sourceJarSha25640ce; каждый state требует reason. Классы
+   primaryClassHashes/primaryCode повторно сверяются с immutable JAR.
+
+   Unknown function / missing actual host flags =>
+   BLOCKED_MISSING_EXACT_FUNCTION_OR_HOST_FLAGS, exit2. В states неизвестный
+   tuple помечен provisional retain_local; импорт BLOCKED запрещён. reason
+   не утверждает придуманную игровую функцию. source-capabilities доказывает
+   только registry/class/BE-факты, не отсутствие callbacks/climbing/redstone.
+   Никаких решений по слову в ID, prefix или исходному имени carrier.
+
+3. Если реально нужны свойства, root позднее собирает новый exporter helper
+   с properties-only веткой NativeGridPhysicsExport и выполняет ОДИН имеющийся
+   authoring driver на неизменяемом40ce. Пример, НЕ запускать до actual need:
+
+   python tools/native-grid/run_native_physics.py --request ../research/full-native-functions/state-properties-request.json --out ../research/full-native-functions/properties-query
+
+   Контракт API: research/native-state-properties-api-RU.txt. stateProperties
+   содержит exact requested sparse tuple; output.state — actual canonical
+   resolved properties. Запрашиваются только className/hasBlockEntity,
+   opaque/sidedTransparency/luminance/fluidEmpty. Ни world/shape/renderer,
+   ни BE instance, ни NativeGridBridge.validate не вызываются этой веткой.
+   Это отдельный запрос свойств в существующем disposable empty authoring
+   сервере, не gameplay и не чтение города. Новая ветка пока исходная:
+   старый exporter JAR её не содержит до root-сборки.
+
+4. Новый report создаётся под новым именем; прежние BLOCKED/FAIL сохраняются:
+
+   python tools/native-grid/qa/full_native_functions.py --input ../research/full-native-functions/full-needed.json --state-properties ../research/full-native-functions/properties-query/state-properties.json --query-request ../research/full-native-functions/state-properties-request.json --properties-helper ../research/full-native-functions/native-grid-export-query-helper.jar --out ../research/full-native-functions/function-gate-final.json --requests-out ../research/full-native-functions/still-needed-properties.json --carrier-audit-dir ../research/full-native-functions/normalizer-observations
+
+   Producer проверяет query output + binding.json + launch-receipt.json,
+   actual runtime40ce/request/helper bindings и полное соответствие requested
+   tuples. --properties-helper задаёт immutable копию именно того exporter JAR,
+   который root перед будущим запуском сохраняет с SHA из binding.helperSha256;
+   текущий mutable build/libs не служит долгосрочным доказательством.
+   Измеренные flags НЕ заменяют отдельное доказательство функций.
+   Новые exact function proofs добавляются через --policy после адресного
+   source/class анализа. При недостатке фактов gate остаётся BLOCKED.
+
+   Ранее измеренные TARGET flags можно переиспользовать через --target-audit,
+   --target-jar (immutable3477) либо доказанный adapter-only99 через также
+   --target-runtime-patch. Проверяется реальный all-entry class-only diff.
+   Sparse/full properties не уравниваются по предположенным default flags.
+
+5. Optional normalizer-observations содержит derived observed-flags audit для
+   предварительного compiler normalizer: kind явно NORMALIZATION_ONLY,
+   nativeGridBridgeValidated=false, catalogSha256=null, actual runtime SHA и
+   query binding. В нём только exact bridge_host_only dry/lum0 состояния;
+   retained wet/emitting hosts не передаются в normalizer. Это не
+   bridgeCarrierGate, acceptance или gameplay PASS.
+   Окончательный compiled catalog ОБЯЗАТЕЛЬНО проходит actual TARGET
+   NativeGridBridge.validate; несовпадение предикатов => честный FAIL/точечное
+   исправление. Источник40ce не подменяет эту финальную target-проверку.
+
+Producer также не заменяет exact existing BE/owner admission, preserved assembly
+route, финальную проверку native activation, экспорт геометрии/физики, relight
+или функциональную/клиентскую приёмку. Unknown function states не разрешают
+удалять игровые данные или распространять сохранение по owner-графу района.

@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:dreamwalker:full-native-grid-delivery-acceptance-input:1",
+  "title": "Explicit final FULL delivery input; missing evidence is BLOCKED",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "kind", "artifacts"],
+  "properties": {
+    "schemaVersion": {"const": 1},
+    "kind": {"const": "FULL_NATIVE_GRID_DELIVERY_ACCEPTANCE_INPUT"},
+    "artifacts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "production", "raw", "functions", "coverage", "catalogFreeze", "jarCompatibility",
+        "targetAudit", "frozenApply", "marker", "lightBinding", "light", "lightLaunch",
+        "preservedCoverage", "pilotAcceptance", "pairComparison", "profile", "recorder",
+        "foreignInstall", "foreignInstallPlan", "foreignReopen", "foreignReopenPlan",
+        "finalRoute", "finalRoutePlan", "reopenRoute", "reopenRoutePlan", "visualReview", "deliveryReview"
+      ],
+      "properties": {
+        "production": {"$ref": "#/$defs/file"},
+        "raw": {"$ref": "#/$defs/file"},
+        "functions": {"$ref": "#/$defs/file"},
+        "coverage": {"$ref": "#/$defs/file"},
+        "catalogFreeze": {"$ref": "#/$defs/file"},
+        "jarCompatibility": {"$ref": "#/$defs/file"},
+        "targetAudit": {"$ref": "#/$defs/file"},
+        "frozenApply": {"$ref": "#/$defs/file"},
+        "marker": {"$ref": "#/$defs/file"},
+        "lightBinding": {"$ref": "#/$defs/file"},
+        "light": {"$ref": "#/$defs/file"},
+        "lightLaunch": {"$ref": "#/$defs/file"},
+        "preservedCoverage": {"$ref": "#/$defs/file"},
+        "pilotAcceptance": {"$ref": "#/$defs/file"},
+        "pairComparison": {"$ref": "#/$defs/file"},
+        "profile": {"$ref": "#/$defs/file"},
+        "recorder": {"$ref": "#/$defs/file"},
+        "foreignInstall": {"$ref": "#/$defs/file"},
+        "foreignInstallPlan": {"$ref": "#/$defs/file"},
+        "foreignReopen": {"$ref": "#/$defs/file"},
+        "foreignReopenPlan": {"$ref": "#/$defs/file"},
+        "finalRoute": {"$ref": "#/$defs/file"},
+        "finalRoutePlan": {"$ref": "#/$defs/file"},
+        "reopenRoute": {"$ref": "#/$defs/file"},
+        "reopenRoutePlan": {"$ref": "#/$defs/file"},
+        "visualReview": {"$ref": "#/$defs/file"},
+        "deliveryReview": {"$ref": "#/$defs/file"}
+      }
+    }
+  },
+  "$defs": {
+    "file": {
+      "type": "object", "additionalProperties": false, "required": ["path", "sha256"],
+      "properties": {"path": {"type": "string", "minLength": 1}, "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}}
+    },
+    "visualReviewReceipt": {
+      "description": "Independent explicit root image/movement observation, never inferred from route counters.",
+      "type": "object",
+      "required": ["status", "kind", "runtimeSha256", "catalogSha256", "reviewer", "finalRouteReceipt", "reopenRouteReceipt", "actualImagesInspected", "noNewVisibleDefects", "movementUsable", "noFrequentMultiSecondStalls", "optimizationSupportedWithinReportedLimits", "views"],
+      "properties": {
+        "status": {"const": "PASS_ACTUAL_RENDERED_VIEWS"},
+        "kind": {"const": "ACTUAL_FULL_ROUTE_AND_REOPEN_OBSERVATION"},
+        "runtimeSha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "catalogSha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "reviewer": {"type": "string", "minLength": 1},
+        "finalRouteReceipt": {"$ref": "#/$defs/file"},
+        "reopenRouteReceipt": {"$ref": "#/$defs/file"},
+        "actualImagesInspected": {"const": true}, "noNewVisibleDefects": {"const": true},
+        "movementUsable": {"const": true}, "noFrequentMultiSecondStalls": {"const": true},
+        "optimizationSupportedWithinReportedLimits": {"const": true},
+        "views": {
+          "type": "array", "minItems": 12, "maxItems": 12,
+          "items": {"type": "object", "required": ["phase", "path", "sha256", "observations"],
+                    "properties": {"phase": {"type": "string", "minLength": 1}, "path": {"type": "string", "minLength": 1},
+                                   "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}, "observations": {"type": "string", "minLength": 1}}}
+        }
+      }
+    },
+    "deliveryReviewReceipt": {
+      "description": "Explicit final map/mod/source/install review. Source patch approval alone remains NOT_DELIVERY.",
+      "type": "object",
+      "required": ["status", "runtimeSha256", "catalogSha256", "mapRoot", "sourceRoot", "runtimePatch", "runtimeSourceReview", "reviewer", "observations", "blockingDefects", "unresolvedRequiredFunctionalGaps", "sourceTreeVerifiedCurrent", "mapFolderVerifiedCurrent", "matchingModMapAndSources", "noCheckpointPresentedAsFinal", "knownFailuresAndPerformanceLimitsDisclosed", "oneItemAndWholeObjectBehaviorResolved", "files"],
+      "properties": {
+        "status": {"const": "PASS_FINAL_DOCUMENT_AND_ARTIFACT_BINDING"},
+        "runtimeSha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "catalogSha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "mapRoot": {"type": "string", "minLength": 1}, "sourceRoot": {"type": "string", "minLength": 1},
+        "runtimePatch": {"$ref": "#/$defs/file"}, "runtimeSourceReview": {"$ref": "#/$defs/file"},
+        "reviewer": {"type": "string", "minLength": 1}, "observations": {"type": "string", "minLength": 1},
+        "blockingDefects": {"const": []}, "unresolvedRequiredFunctionalGaps": {"const": []},
+        "sourceTreeVerifiedCurrent": {"const": true}, "mapFolderVerifiedCurrent": {"const": true},
+        "matchingModMapAndSources": {"const": true}, "noCheckpointPresentedAsFinal": {"const": true},
+        "knownFailuresAndPerformanceLimitsDisclosed": {"const": true}, "oneItemAndWholeObjectBehaviorResolved": {"const": true},
+        "files": {
+          "type": "array", "minItems": 3,
+          "allOf": [
+            {"contains": {"properties": {"role": {"const": "productionJar"}}, "required": ["role"]}},
+            {"contains": {"properties": {"role": {"const": "installInstructions"}}, "required": ["role"]}},
+            {"contains": {"properties": {"role": {"const": "sourceHandoff"}}, "required": ["role"]}}
+          ],
+          "items": {"type": "object", "additionalProperties": false, "required": ["role", "binding"],
+                    "properties": {"role": {"type": "string", "minLength": 1}, "binding": {"$ref": "#/$defs/file"}}}
+        }
+      }
+    }
+  }
+}

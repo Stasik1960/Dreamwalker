@@ -1,0 +1,72 @@
+GitHub delta continuation — только подготовленные исходники, запусков ещё нет
+
+Новые инструменты: github_delta_pack.py и standalone github_delta_restore.py.
+Работа выполняется root через Guard Operation после завершения writers. Старые
+8 ZIP/manifest/transfer directory остаются неизменными. Никаких build/MC/SQL,
+upload, автоматического удаления или запуска восстановленного проекта.
+
+Authoritative overlay: ВСЁ текущее DW-native-grid-city-20261022 + оригинальный
+DW/audits/Dreamwalker-BB/2026-10-21-native-grid-city. Остальные файлы из старого
+manifest остаются неизменными external inputs. Удалённые overlay paths записаны
+как tombstones и отсутствуют в новом manifest. Git/cache/auth/reparse exclusions
+явно перечисляются. Свои github_delta_pack run_task logs/receipts/latest.json
+исключены детерминированно; старые handoff/transfer документы сохраняются.
+
+Будущие команды из source (только root, не запускать до freeze):
+
+python tools/native-grid/github_delta_pack.py inventory --source-user-root C:/Users/vakir --root C:/Users/vakir/.codex/worktrees/3f07/DW-native-grid-city-20261022 --audit C:/Users/vakir/.codex/worktrees/3f07/DW/audits/Dreamwalker-BB/2026-10-21-native-grid-city --out C:/Users/vakir/.codex/worktrees/3f07/DW-native-grid-delta-freeze-20261023/inventory.json
+
+Inventory — предложенный список stat seals, НЕ подтверждение quiescence/READY.
+Root останавливает writers и отдельно создаёт freeze.json рядом с inventory:
+
+{
+  "schemaVersion": 1,
+  "kind": "EXPLICIT_QUIESCENT_GITHUB_DELTA_FREEZE",
+  "status": "PASS",
+  "quiescent": true,
+  "projectWritersStopped": true,
+  "inventory": {"path": "<absolute inventory.json>", "sha256": "<actual SHA>"},
+  "deliveryStatus": "CHECKPOINT",
+  "acceptance": null
+}
+
+Freeze/inventory должны находиться ВНЕ двух overlay roots, но внутри того же
+C:/Users/vakir: оба автоматически включаются в payload как exact metadata.
+Для READY_FOR_DELIVERY нужен настоящий acceptance внутри ROOT, уже включённый
+в inventory. У него обязательны kind FULL_NATIVE_GRID_CITY_DELIVERY_ACCEPTANCE,
+status PASS и readyForDelivery true; freeze.acceptance — {path,sha256}. Root
+создаёт этот aggregate только после actual FULL/light/route/reopen. Любой иной
+PASS/report не превращает checkpoint в READY.
+
+python tools/native-grid/github_delta_pack.py pack --source-user-root C:/Users/vakir --root C:/Users/vakir/.codex/worktrees/3f07/DW-native-grid-city-20261022 --audit C:/Users/vakir/.codex/worktrees/3f07/DW/audits/Dreamwalker-BB/2026-10-21-native-grid-city --base-manifest C:/Users/vakir/.codex/worktrees/3f07/DW-native-grid-github-transfer-20261022/release-assets/bundle-manifest.json --base-manifest-sha256 ba4168e7ad24670f718ed47e1fe5c97625570b52a2e04bc3ab971e548cbf393d --base-snapshot C:/Users/vakir/.codex/worktrees/3f07/DW-native-grid-github-transfer-20261022/SNAPSHOT.json --base-snapshot-sha256 381f7be00a594e8f7a3d8ef3dfae4758ba193419a44d09253a5dbcaf1da59d50 --freeze-binding C:/Users/vakir/.codex/worktrees/3f07/DW-native-grid-delta-freeze-20261023/freeze.json --freeze-sha256 <ACTUAL_FREEZE_SHA> --new-release-url https://github.com/Stasik1960/Dreamwalker/releases/download/<FRESH_TAG>/ --prefix delta-20261023-final --out C:/Users/vakir/.codex/worktrees/3f07/DW-native-grid-github-delta-20261023-final
+
+Fresh output обязателен и не может находиться внутри overlay/старых release-assets.
+Каждый файл проверяется по seal до/после чтения; inventory повторно сравнивается
+целиком после capture. WAL/SHM/journal блокируют захват. Live lock блокирует;
+закрытые session/build locks исключаются после read-only exclusive-open probe.
+Непустые реальные accessToken/credential patterns блокируют без вывода значения.
+Новые chunks <=32MiB; только неизвестные SHA добавляются в ZIP <=768MiB с точной
+проверкой размера после закрытия. Старые chunks/volumes не читаются/перепаковываются;
+их SHA/size/персональный public URL берутся из pinned SNAPSHOT. Manifest v2 содержит
+старые URLs + новые URLs будущего fresh release. Новый checksum/receipt не заменяет
+старый. При сбое оставшийся fresh output не считается принятым; автоматического
+удаления/перезаписи/продолжения упаковки нет.
+
+После root review/meaningful delta+restore fixture публикуются только NEW ZIPs,
+bundle-manifest.json, SHA256SUMS.txt и нужные Git docs/scripts. Upload выполняет
+root отдельно; старые ~4.95GB повторно не загружаются. README должен указывать
+точный новый manifest SHA и оба набора URLs через manifest.
+
+На новом ПК сначала получить standalone github_delta_restore.py и manifest:
+
+python github_delta_restore.py --manifest bundle-manifest.json --manifest-sha256 <PINNED_NEW_SHA> --assets C:/DW-delta-assets --download --verify-only --receipt C:/DW-delta-assets/verified-new-manifest.json
+
+python github_delta_restore.py --manifest bundle-manifest.json --manifest-sha256 <PINNED_NEW_SHA> --assets C:/DW-delta-assets --download --target C:/Users/vakir --receipt C:/DW-delta-assets/restored-new-manifest.json
+
+Без --download сети нет. Все volumes/chunks/files проверяются. Target — новый
+пустой workspace либо точно совпадающие файлы повторного восстановления. Разные
+existing files, tombstones, symlink/junction/hardlink destination или .delta-part
+дают отказ; данные автоматически не удаляются и не заменяются. Точные mtimeNs
+восстанавливаются и проверяются. Содержимое/исторические absolute paths не меняются;
+перед любым проектным процессом прочитать восстановленные START/handoff/storage
+instructions. Transfer PASS — это только целостность передачи, не gameplay PASS.

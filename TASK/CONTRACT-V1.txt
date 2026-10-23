@@ -1,0 +1,67 @@
+Native grid data contract v1 — locked 2026-10-22
+
+SourcePose -> CellFragment -> CellSignature -> CompiledCellType.
+Protected original v12/openable doors/sprite trees: preserve local whole objects.
+Statues: SourcePose -> WholeObjectTemplate (finite footprint, base offsets), never architectural composition.
+
+Ownership:
+export_cells: source/tools/native-grid exporter/compiler/schema; src/nativegridexport.
+native_runtime: NativeGrid*.java, native-grid.mixins.json.
+city_migration: source/tools/native-grid-city; src/nativegridrelight.
+root: classification.py/protected-v12-ids.json/statue-ids.json, build.gradle, entrypoints,
+profiles, integration, all builds, all map copying/writes and Minecraft processes.
+
+Resources: assets/bloodborne_dw/native_grid/catalog.json and meshes.bin.
+Registry bloodborne_dw:native_grid_<bank>, bankSize 128, part integer property.
+No PROFILE/WATERLOGGED products. Observed fluid/alt incorporated into final types.
+No owner/UUID/world-coordinate/source-pose dependency in compiled runtime types.
+JSON fields schemaVersion, bankSize, materials, shapes, optics, meshes, cells, wholeObjects.
+Cells: key,mesh,collision,outline,culling,climbing,optics,fluid,localFunction,baseState(provenance).
+Visual substrate is baked into shared mesh; exact physics and optics compiled separately.
+NGQ1 meshes binary big-endian: magic, int meshCount; each int quadCount;
+quad int material, byte cull(-1 none), byte face, int tint, byte flags(shade1/AO2/emissive4),
+four vertices(float x,y,z,u,v,int color,light,normal). UV sprite-local 0..16.
+Exporter and runtime coordinate minor field refinements directly and notify root.
+
+Plan SQLite owns coordinate/provenance/cleanup/journal/light debt. Runtime never loads it.
+Only observed cells are interned; no variant/wholeRemoval/subset closure.
+All writes atomic with before/after hashes. Full map apply is gated on successful dense pilot.
+Lighting equality requires full optical/fluid/heightmap proof, otherwise durable native relight queue.
+READY requires completed queue and actual separate-server client route/save/reopen acceptance.
+
+Finite local carrier addition — agreed 2026-10-22 03:00 local:
+An existing required CompositeBlockEntity may retain its own independent
+protected/out-of-scope object and an outer NativeGridBase:int catalogue index.
+The index describes only ordinary background plus selected static decoration.
+Retained-object meshes, root data and physics are not baked into that background.
+No static UUID, owner record, new BlockEntity type or coordinate registry is added.
+The existing resident ID/payload and retained contributions/root/helper links stay
+independent; only selected old decorative contributions are removed.
+Background geometry uses shared catalogue quads through the normal chunk model,
+not per-frame block-entity rendering. An existing retained root may use its old
+BER fallback solely when the new background reference is present.
+Last-guest removal restores the plain catalogue background through the existing
+transaction. No-field legacy behavior stays unchanged. Background shape and
+climbing are queried from shared catalogue data, with no per-instance static cache.
+Authoring and native registry gates require dry/non-emitting background and exact
+worldless carrier predicates before map writes. Real containers are never carriers.
+Whole statue roles are excluded from this bridge. A statue with incompatible
+independent background remains its original whole object with a concrete local
+reason; compatible statues use prepared whole templates without UUID/BE.
+The pilot whole witness is isolated source_hold_statue at[-108,50,75],
+UUID39badbad-ecc3-52b2-a839-060b14f32838; test root[1024,225,111] crosses chunks.
+
+Resume amendment — explicitly requested 2026-10-22 after GitHub checkpoint:
+All previously agreed whole assemblies follow the same independent whole-object
+priority as statues, with original v12 protection taking precedence. This applies
+only to confirmed recipes/installation poses and compatible legacy components,
+not to every variant of a family or to a connected district owner graph.
+export_cells owns research/preserved-assemblies.json and read-only addressed
+coverage evidence from existing manifests/plan/cache. It coordinates the exact
+machine schema with city_migration. native_runtime owns the affected QA code and
+fresh continuation plan; one already chosen confirmed assembly witness is reused
+when possible. city_migration owns narrow pose-specific authoring overrides and
+any required bounded pilot correction tools. Root alone executes active plan/world
+mutations, builds and Minecraft. No new discovery database or full world scan.
+Frozen production3477/catalog638 and successful existing checks remain valid
+unless a concrete affected change requires a new binding or addressed check.

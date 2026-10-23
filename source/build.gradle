@@ -186,3 +186,6 @@ if (providers.gradleProperty('dh_pilot_jar').isPresent()) {
   addNestedDependencies = false
  }
 }
+
+// The full city catalogue exceeds the classic ZIP entry limit.
+tasks.withType(Jar).configureEach { zip64 = true }

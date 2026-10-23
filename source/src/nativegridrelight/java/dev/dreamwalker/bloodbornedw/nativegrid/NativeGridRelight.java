@@ -75,6 +75,7 @@ public final class NativeGridRelight implements ModInitializer {
         final Path queue, output, doneFile, worldPath;
         final String queueHash, runtimeHash, catalogHash;
         final List<Work> work;
+        final NativeGridAssemblyRelight assemblies;
         final Set<String> done = new HashSet<>();
         final List<Work> batch = new ArrayList<>();
         final List<CompletableFuture<Chunk>> light = new ArrayList<>();
@@ -120,6 +121,8 @@ public final class NativeGridRelight implements ModInitializer {
                 Files.createDirectories(doneFile.getParent());
                 append(doneFile, "# " + queueHash + " " + runtimeHash + "\n");
             }
+            assemblies=binding.has("fullCityFreshLight") && binding.get("fullCityFreshLight").getAsBoolean()
+                    ? new NativeGridAssemblyRelight(server,binding,work.stream().map(Work::line).collect(java.util.stream.Collectors.toSet()),!done.isEmpty(),worldPath,runtimeHash,catalogHash,output) : null;
             checkpoint("RUNNING", false, null);
             LOG.info("Native relight: {} queued, {} already saved, batch {}", work.size(), done.size(), batchSize);
         }
@@ -127,6 +130,7 @@ public final class NativeGridRelight implements ModInitializer {
         void tick() throws Exception {
             if (finished) return;
             ticks++;
+            if(assemblies!=null && !assemblies.tick())return;
             for (ServerWorld value : server.getWorlds()) peakLoaded = Math.max(peakLoaded, value.getChunkManager().getLoadedChunkCount());
             require(state == 0 || ticks - startTick < 20 * 900, "Native light batch timed out");
             if (state == 0) {
@@ -199,6 +203,7 @@ public final class NativeGridRelight implements ModInitializer {
             if (finished) return;
             finished = true;
             LOG.error("Native relight failed; saved cursor is resumable", error);
+            if(assemblies!=null)assemblies.release();
             try { checkpoint("FAIL", false, error.toString()); } catch (Exception secondary) { LOG.error("Could not write relight failure receipt", secondary); }
             server.stop(false);
         }
@@ -211,6 +216,7 @@ public final class NativeGridRelight implements ModInitializer {
             report.addProperty("queued", work.size()); report.addProperty("processed", done.size()); report.addProperty("pending", work.size()-done.size());
             report.addProperty("saveFlushed", saved); report.addProperty("batchSize", batchSize); report.addProperty("peakLoadedChunksPerDimension", peakLoaded);
             report.addProperty("seconds", (System.nanoTime()-started)/1e9); report.addProperty("error", error);
+            if(assemblies!=null && (status.equals("PASS") || saved))report.add("assemblyPhase",assemblies.reference());
             Path temporary = output.resolveSibling(output.getFileName()+".writing");
             Files.createDirectories(output.getParent());
             try (FileChannel channel = FileChannel.open(temporary, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING, StandardOpenOption.WRITE)) {

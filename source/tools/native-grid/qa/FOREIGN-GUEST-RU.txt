@@ -1,0 +1,100 @@
+Один дополнительный QA-case: живой retained ImportedRoot + обычный NativeGrid
+
+Состояние подготовки: SOURCE ONLY, НЕ СОБРАНО, НЕ ЗАПУСКАЛОСЬ.
+223 + 83/5/17 принятых проверок не повторяются и не переименовываются.
+Production/runtime/renderer/мигратор этим helper не меняются.
+
+Точный источник:
+  research/native-grid-plan/full/gold-pose-native-and-owner-runtime-proof.json
+  SHA6261a58cd23120f0fc5ae6b9210919f18e385482d03464da0b8366e720eee268
+  owner [-1182530740,-1421322098,-1822126450,163509195]
+  pose sp_e70009f84997fbb5b6ede9de, root источника [-243,32,-213]
+  source_stairs_exposed_cut_copper_stairs_bottom variant0/rotation4
+  payload {ImportedTypeVersion:1,SourceShift:[0,-1,0]}, четыре runtime members.
+Смешанный carrier policy:
+  gold-member-overlay-source-proof.json
+  SHA79392979f165ef447666f947b49d539c6cb262ce126e6b217cdcaf8bf6556afe
+  [0,-1,-1]: plain FOREIGN, исходный native compact без BE;
+  [0,-1,0]: существующий nonresident composite_cell BE, его сохраняем,
+             добавляем только NativeGridBase; это НЕ второй plain carrier.
+  Два остальных members и root D остаются исходными.
+
+Используется тот же NativeGridFunctionChecks, sourceSet nativegridqa, существующий
+run_functions.py, полный профиль 4G, тот же disposable stand root[1024,225,111]
+и его полностью проверяемый AIR/no-BE/no-owner объём. Никаких новых tickets,
+профилей, benchmarks или оригинальных city mutations. План содержит только новый
+case; прежние windows/door/tree/statue actions в него не копируются.
+
+До подготовки исполнимого плана ОБЯЗАТЕЛЬНЫ:
+1. Законченные FULL compositions/mapping/catalog и immutable production JAR.
+2. Exact point/type certificate от exporter/root, без подстановки pilot type:
+   status PASS_SOURCE_COMPOSITION_AND_TYPE_BINDING_NOT_GAMEPLAY;
+   kind EXACT_D_E_NONROOT_NATIVE_GRID_OVERLAY; scope FULL_CITY;
+   sourceBinding, sourceOwnerUuid, sourcePose;
+   sourceProof и memberPolicyProof = {path,sha256} указанных выше файлов;
+   catalog/mapping = {path,sha256}, catalogSha256/mappingSha256;
+   targetBridgePlanSha256;
+   overlays ровно две строки:
+     {sourcePosition,offset,cell,compositionKey,baseExcludesD:true,
+      carrierMode:'plain_foreign'|'existing_helper_bridge',collision,outline}.
+   Shapes относятся только к фактическому compiled E/native background, без D.
+3. Реальный PASS all-target bridge audit нового FULL JAR/catalog/matrix:
+   nativeRegistryQueries:true, runtimeSha256, catalogSha256, bridgePlanSha256.
+   Source-only flags query или старый pilot audit не заменяют этот audit.
+
+План authoring выполняет только root через Guard Operation:
+  python tools/native-grid/qa/prepare_foreign_guest_plan.py
+    --base-plan <research/function-qa/candidate-terminal-bridge-frozen-plan.json>
+    --production <immutable-FULL.jar> --point-proof <exact-point-proof.json>
+    --target-audit <actual-FULL-bridge-carrier-gate.json>
+    --world <existing-disposable-candidate> --output <fresh-install-output>
+    --plan <fresh-install-plan.json> --phase install_save
+Ни helper, ни authoring tool не открывают discovery DB; authoring не читает карту.
+После source review root собирает remapNativeGridQaJar; без нового production.
+Реальный запуск root: run_functions.py --plan <fresh-install-plan.json>.
+Никакого --authoring-reference.
+
+Фаза install_save:
+  - Все четыре места и весь старый stand подтверждены AIR/no-BE/no-owner.
+  - Новый UUID D ставится через существующий public CompositeRuntime.place с
+    точным source payload. Это test fixture, не обещание обычной item placement.
+  - Только свежий helper [0,-1,-1] заменяется через setBlockState обычным
+    фактическим NativeGrid type. Ledger не создаётся и не ремонтируется.
+  - На втором свежем helper используется существующий nativeGridBase setter.
+    Его typed NBT после удаления поля NativeGridBase должен совпасть полностью.
+  - Все четыре original fresh-D ledger refs + root/resident/payload неизменны.
+  - Следующий настоящий world tick выполняет queued callbacks; потеря refs FAIL.
+  - Принудительный отказ после FOREIGN detach и удаления root проверяет rollback
+    всех четырёх точных states/typed payload/ledger. Никакого silent repair.
+  - Нормальный stop/save оставляет только этот явно записанный owned fixture.
+    report.status=PASS означает только фазу SETUP_AND_SAVE_ONLY_PENDING_REAL_REOPEN;
+    foreignGuestFixture.gameplayComplete=false, standRetainedForReopen=true,
+    standRestored=false. Это НЕ завершённый gameplay PASS.
+
+Затем root создаёт второй новый план той же командой/теми же bindings, но:
+  --phase reopen_finish --previous-report <install-output/functions.json>
+  --output <fresh-reopen-output> --plan <fresh-reopen-plan.json>.
+Обязательны первый PASS и normalServerThreadFinished:true, тот же production и
+точно те же inputs. Реальный повторный запуск того же мира через run_functions.
+
+Фаза reopen_finish:
+  - Полные четыре snapshots реально открытого мира равны normally saved report;
+    все остальные клетки stand AIR/no-BE/no-owner.
+  - Collision/outline union равен D + двум точным backgrounds.
+  - Обычный server interaction break plain background при живом D; если точный
+    background outline EMPTY, это явно API-only, без фиктивного ray PASS.
+  - D root/payload и все четыре refs остаются точными, shape union пересчитывается.
+  - Реальный ray к открывшейся D части на бывшем plain carrier, pick одного main
+    item и whole-break D. Return false от Fabric BEFORE не считается отказом:
+    обязательны новый COMMITTED transaction и полные postconditions.
+  - На втором бывшем helper terminal detach оставляет только plain background,
+    без BE и старого D ledger. ДО уборки явно проверяются его exact BlockState,
+    cold-adapter FOREIGN и сохранение фона; остальные три members обязаны AIR.
+    Все четыре snapshots записываются до этих проверок. Только затем его
+    отдельное обычное разрушение возвращает AIR. Потерянный вместе с D фон FAIL.
+  - Stand целиком AIR/no-BE/no-owner, gameplayComplete=true/realReopenVerified=true.
+
+Только обе новые фазы с нормальным server save/exit завершают этот addressed case.
+Ни старые FAIL, ни старый фактический PASS223 не переписываются.
+Если нет независимого луча к непустому фону или к D части, report честно FAIL;
+подмена фонового типа/физики ради доступности запрещена.
