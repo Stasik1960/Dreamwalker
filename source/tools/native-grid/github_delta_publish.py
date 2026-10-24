@@ -179,6 +179,13 @@ def main():
     api = Github(); base = '/repos/' + REPOSITORY
     state_path = assets / 'publication-state.json'
     release = api.api('GET', base + '/releases/tags/' + urllib.parse.quote(config['tag']), allow_missing=True)
+    if release is None and state_path.exists():
+        prior = read(state_path)
+        require(prior.get('config') == {'path': str(args.config.resolve()), 'sha256': args.config_sha256}
+                and prior.get('tag') == config['tag'] and prior.get('branch') == config['branch']
+                and type(prior.get('releaseId')) is int, 'Draft recovery requires this exact publication state')
+        release = api.api('GET', base + '/releases/' + str(prior['releaseId']))
+        require(release['id'] == prior['releaseId'], 'Recovered draft release ID differs')
     remote_head = git(directory, 'ls-remote', '--heads', 'origin', 'refs/heads/' + config['branch'])
     if remote_head:
         require(remote_head.split()[0] == commit, 'Remote branch already names another commit; never force push')
