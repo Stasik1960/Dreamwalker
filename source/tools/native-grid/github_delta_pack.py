@@ -2,7 +2,7 @@
 
 inventory only proposes stat seals; it does NOT approve quiescence or READY.
 pack requires a separate explicit root-supplied freeze binding and never runs
-builds, games, SQL, network or upload. All outputs must be outside both overlays.
+builds, games, SQL, network or upload. All outputs must be outside every overlay.
 """
 import argparse
 import copy
@@ -59,9 +59,10 @@ def lock_is_closed(path):
 
 def roots(a):
     user = no_reparse(a.source_user_root)
-    values = [no_reparse(a.root), no_reparse(a.audit)]
+    values = [no_reparse(path) for path in (a.root, a.audit, *getattr(a, 'extra_overlay', []))]
     require(all(path.is_dir() and path.is_relative_to(user) and path != user for path in values), 'Overlay roots must be concrete directories below the user root')
-    require(not values[0].is_relative_to(values[1]) and not values[1].is_relative_to(values[0]), 'Overlay roots overlap')
+    require(all(not path.is_relative_to(other) and not other.is_relative_to(path)
+                for index, path in enumerate(values) for other in values[:index]), 'Overlay roots overlap')
     return user, values
 
 
@@ -265,6 +266,8 @@ def main():
     for command in ('inventory', 'pack'):
         child = sub.add_parser(command)
         for name in ('root', 'audit', 'source-user-root', 'out'):child.add_argument('--' + name, type=Path, required=True)
+        child.add_argument('--extra-overlay', type=Path, action='append', default=[],
+                           help='Additional authoritative overlay directory; repeat for disjoint roots')
     child = sub.choices['pack']
     for name in ('base-manifest', 'base-snapshot', 'freeze-binding'):child.add_argument('--' + name, type=Path, required=True)
     for name in ('base-manifest-sha256', 'base-snapshot-sha256', 'freeze-sha256', 'new-release-url', 'prefix'):

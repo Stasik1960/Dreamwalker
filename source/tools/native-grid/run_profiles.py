@@ -15,6 +15,8 @@ class Memory(ctypes.Structure):
     _fields_=[('length',ctypes.c_ulong),('load',ctypes.c_ulong),('total',ctypes.c_ulonglong),('available',ctypes.c_ulonglong),('totalPage',ctypes.c_ulonglong),('availablePage',ctypes.c_ulonglong),('virtual',ctypes.c_ulonglong),('availableVirtual',ctypes.c_ulonglong),('extended',ctypes.c_ulonglong)]
 def available():
     m=Memory();m.length=ctypes.sizeof(m);ctypes.windll.kernel32.GlobalMemoryStatusEx(ctypes.byref(m));return m.available
+def available_commit():
+    m=Memory();m.length=ctypes.sizeof(m);ctypes.windll.kernel32.GlobalMemoryStatusEx(ctypes.byref(m));return m.availablePage
 def reject_runtime_failure(out):
     for role in ('server','client'):
         path=out/(role+'-console.log')
@@ -35,7 +37,9 @@ def filtered(prior,profile,heap,role,out,world,route):
     if role=='client':args.extend(['--quickPlayMultiplayer','127.0.0.1:25579'])
     return args
 def main():
-    ap=argparse.ArgumentParser();ap.add_argument('--variant',choices=['baseline','candidate'],required=True);ap.add_argument('--production',type=Path,required=True);ap.add_argument('--world',type=Path,required=True);ap.add_argument('--route',type=Path,required=True);ap.add_argument('--out',type=Path,required=True);ap.add_argument('--timeout',type=int,default=1800);a=ap.parse_args()
+    ap=argparse.ArgumentParser();ap.add_argument('--variant',choices=['baseline','candidate'],required=True);ap.add_argument('--production',type=Path,required=True);ap.add_argument('--world',type=Path,required=True);ap.add_argument('--route',type=Path,required=True);ap.add_argument('--out',type=Path,required=True);ap.add_argument('--timeout',type=int,default=1800)
+    ap.add_argument('--functional-memory-reserve-gib',type=float,choices=[7.5],help='Saved FULL final route/reopen only; unchanged4G/3G heaps and recorder, plus9GiB available commit')
+    a=ap.parse_args()
     world=a.world.resolve();out=a.out.resolve();route=a.route.resolve();prod=a.production.resolve()
     assert out.is_relative_to(ROOT) and world.is_relative_to(ROOT) and (world/'level.dat').is_file()
     assert not (world/'NATIVE-GRID-INCOMPLETE.json').exists(),'Offline migration/light debt is incomplete; gameplay launch refused'
@@ -46,7 +50,15 @@ def main():
         with zipfile.ZipFile(prod) as jar:assert hashlib.sha256(jar.read('assets/bloodborne_dw/native_grid/catalog.json')).hexdigest()==marker['catalog']['sha256']
     assert not out.exists(),'Fresh evidence output required'
     lock=json.loads((PROFILES/'profile-lock.json').read_text(encoding='utf-8'))
-    free=available();assert free>=lock['minimumAvailableGiBBeforePair']*1024**3, f'Available RAM {free/1024**3:.2f}GiB is below pinned launch reserve; no JVM launched'
+    reserve=lock['minimumAvailableGiBBeforePair'];commit=None
+    if a.functional_memory_reserve_gib is not None:
+        assert a.variant=='candidate' and route in {(ROOT/'research/final-route/route.json').resolve(),(ROOT/'research/final-route/reopen-route.json').resolve()},'Functional memory admission cannot change an original matched-pair run'
+        full_light=json.loads((Path(marker['plan'])/'relight-binding.json').read_text(encoding='utf-8'))
+        assert full_light.get('fullCityFreshLight') is True and Path(full_light['target']).resolve()==world and full_light['runtime']['sha256']==sha(prod),'Functional admission requires the accepted full-city light binding'
+        assert lock['serverHeap']=='4G' and lock['clientHeap']=='3G','Keep both recorded heaps unchanged'
+        reserve=a.functional_memory_reserve_gib;commit=available_commit()
+        assert commit>=9*1024**3,'Functional pair needs9GiB available Windows commit; no JVM launched'
+    free=available();assert free>=reserve*1024**3, f'Available RAM {free/1024**3:.2f}GiB is below the explicit launch reserve {reserve}GiB; no JVM launched'
     qa=P/'build/libs/dreamwalker-native-route-qa-0.1.0-v12.7.4-native-grid.1.jar'
     recorder_path=PROFILES/'benchmark-helper.json';recorder=json.loads(recorder_path.read_text(encoding='utf-8'))
     assert recorder['status']=='FROZEN_BEFORE_FIRST_PAIR' and recorder['sameHelperForBaselineAndCandidate'] and recorder['measurementPhasesUnchanged']
@@ -61,7 +73,7 @@ def main():
     c_prior=json.loads((BASE/'research/graphical-streaming-20261019/after/prepared.json').read_text(encoding='utf-8'))['clientArgs']
     argfile(out/'server.args',filtered(s_prior,server,lock['serverHeap'],'server',out/'server',world,route))
     argfile(out/'client.args',filtered(c_prior,client,lock['clientHeap'],'client',out/'client',world,route))
-    binding={'variant':a.variant,'productionSha256':sha(prod),'qaSha256':sha(qa),'recorderLockSha256':sha(recorder_path),'profileLockSha256':sha(PROFILES/'profile-lock.json'),'routeSha256':sha(route),'world':str(world),'initialAvailableRAM':free,'separateJVMs':True}
+    binding={'variant':a.variant,'productionSha256':sha(prod),'qaSha256':sha(qa),'recorderLockSha256':sha(recorder_path),'profileLockSha256':sha(PROFILES/'profile-lock.json'),'routeSha256':sha(route),'world':str(world),'initialAvailableRAM':free,'separateJVMs':True,'admissionMinimumAvailableGiB':reserve,'frozenMinimumAvailableGiB':lock['minimumAvailableGiBBeforePair'],'functionalAdmissionOverride':a.functional_memory_reserve_gib is not None,'initialAvailableCommit':commit}
     write(out/'binding.json',binding);started=time.monotonic();sp=cp=None;runtime_failed=False
     with (out/'server-console.log').open('w',encoding='utf-8') as slog,(out/'client-console.log').open('w',encoding='utf-8') as clog:
         try:

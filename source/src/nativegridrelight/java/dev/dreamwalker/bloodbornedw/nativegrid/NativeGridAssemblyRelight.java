@@ -36,7 +36,7 @@ final class NativeGridAssemblyRelight {
     private final String requestHash, runtimeHash, catalogHash;
     private final List<JsonObject> groups = new ArrayList<>();
     private final List<JsonObject> outcomes = new ArrayList<>();
-    private final List<ChunkPos> tickets = new ArrayList<>();
+    private final Set<ChunkPos> tickets = new LinkedHashSet<>();
     private final List<CompletableFuture<Chunk>> loading = new ArrayList<>();
     private final boolean resumedSavedRows;
     private ServerWorld world;
@@ -74,7 +74,7 @@ final class NativeGridAssemblyRelight {
             Set<BlockPos> cells=cells(group);require(!cells.isEmpty() && cells.size()<=256 && cells.contains(pos(group.getAsJsonArray("root"))),"Unbounded/empty assembly own footprint");
             Set<Long> chunks=new HashSet<>();for(BlockPos at:cells)chunks.add(new ChunkPos(at).toLong());
             Set<Long> declared=new HashSet<>();for(JsonElement part:group.getAsJsonArray("ownedChunks")){JsonArray at=part.getAsJsonArray();require(at.size()==2,"Malformed assembly chunk");require(declared.add(ChunkPos.toLong(at.get(0).getAsInt(),at.get(1).getAsInt())),"Repeated assembly chunk");}
-            require(chunks.equals(declared) && chunks.size()<=16,"Assembly tickets must equal its finite declared own chunks");
+            require(chunks.equals(declared) && chunks.size()<=16,"Declared own chunks must equal the finite assembly footprint");
             groups.add(group);
         }
         for(JsonElement value:request.getAsJsonArray("requiredLightChunks")) {
@@ -96,7 +96,17 @@ final class NativeGridAssemblyRelight {
         JsonObject group=groups.get(cursor);
         if(state==0) {
             world=server.getWorld(RegistryKey.of(RegistryKeys.WORLD,new Identifier(group.get("worldDimension").getAsString())));require(world!=null,"Assembly dimension is absent");
-            for(JsonElement value:group.getAsJsonArray("ownedChunks")){JsonArray at=value.getAsJsonArray();ChunkPos chunk=new ChunkPos(at.get(0).getAsInt(),at.get(1).getAsInt());tickets.add(chunk);world.getChunkManager().addTicket(TICKET,chunk,0,chunk);}
+            // The unchanged matcher reads a one-cell physical border. Keep a
+            // bounded chunk halo loaded for those reads; writes remain limited
+            // to the exact, source-bound ownedCells verified by observe().
+            for(JsonElement value:group.getAsJsonArray("ownedChunks")) {
+                JsonArray at=value.getAsJsonArray();
+                for(int dx=-1;dx<=1;dx++)for(int dz=-1;dz<=1;dz++) {
+                    ChunkPos chunk=new ChunkPos(at.get(0).getAsInt()+dx,at.get(1).getAsInt()+dz);
+                    if(tickets.add(chunk))world.getChunkManager().addTicket(TICKET,chunk,0,chunk);
+                }
+            }
+            require(tickets.size()<=16*9,"Assembly read-neighbor tickets exceeded the finite halo");
             started=ticks;state=1;return false;
         }
         require(ticks-started<20*120,"Assembly merge deferred/timed out at "+group.get("groupKey")+": "+lastResult);

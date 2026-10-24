@@ -1,27 +1,33 @@
-# Dreamwalker — продолжить полную карту с чекпоинта перед записью
+# Dreamwalker — полная карта и свет: CHECKPOINT
 
-Это сохранение от 24 октября 2026 года перед первой записью полной карты. Полный план, каталог, совместимый FULL JAR и адресные проверки завершены; точные результаты закреплены в HANDOFF. Запись полной карты, её освещение и итоговый игровой маршрут выполняются после опубликованного PRE-MAP checkpoint. Чекпоинт не является готовой поставкой.
+**Это сохранение незавершённой работы, не готовая поставка. READY не заявлен.** Полная карта записана, освещена, сохранена; конечный игровой маршрут и итоговая приёмка ещё не выполнены. После сохранения работа продолжается при достаточной памяти, без повторения принятых этапов.
 
-Новому чату: полностью прочитать [HANDOFF-RU.md](HANDOFF-RU.md), [START-RU.txt](TASK/START-RU.txt), [приоритетные уточнения](TASK/USER-PRIORITIES-CURRENT-RU.txt), затем восстановить снимок по текущему manifest. После восстановления читать `research/RESUME-CURRENT-RU.txt` и `research/current-operation.json` проекта `DW-native-grid-city-20261022`.
+Ветка: `codex/native-grid-city-full-20261024`. Tag этого checkpoint: `native-grid-city-full-light-20261024`. [Релиз checkpoint](https://github.com/Stasik1960/Dreamwalker/releases/tag/native-grid-city-full-light-20261024), [bundle-manifest.json](https://github.com/Stasik1960/Dreamwalker/releases/download/native-grid-city-full-light-20261024/bundle-manifest.json). **Manifest SHA256: `75e1ddf017d7ec04733e047c42ed55239be641755d518040074e4db99491565a`.** Итоговый tag `native-grid-city-full-20261024` ещё не создан.
 
-**Точный manifest SHA256:** `79acd3fca57285fe15dcc062d575f2dd9dfb594ba67602076857f80d2d0a29c0`.
+## Восстановить на новом ПК
 
-Фактическая публикация: [релиз](https://github.com/Stasik1960/Dreamwalker/releases/tag/native-grid-city-pre-map-20261024). В нём находятся новый manifest и дополнительные тома. Manifest также ссылается на восемь сохранённых томов предыдущего релиза. [github_delta_restore.py](github_delta_restore.py) скачивает нужные тома, проверяет их и восстанавливает точные байты и времена файлов. Требуются все тома, перечисленные в текущем manifest.
-
-Авторитетный комплект исходников, SQLite-план, исходная карта, кэши, совместимые JAR, отчёты и зависимости входят в снимок релиза. Каталог GitHub служит точкой входа; полный снимок восстанавливается из данных релиза.
-
-Скачать [bundle-manifest.json](https://github.com/Stasik1960/Dreamwalker/releases/download/native-grid-city-pre-map-20261024/bundle-manifest.json), а из репозитория — `github_delta_restore.py`. На новом ПК восстановить снимок в исходный user root (предпочтительно `C:/Users/vakir`; нужны Python 3 и свободное место для распаковки):
+Скачать текущий manifest как `bundle-manifest.json` и существующий `github_delta_restore.py` из репозитория. Нужны ВСЕ тома по URL/SHA из этого manifest, включая переиспользуемую базу PRE-MAP; одного Git checkout или только новых ZIP недостаточно.
 
 ```powershell
-python github_delta_restore.py --manifest bundle-manifest.json --manifest-sha256 79acd3fca57285fe15dcc062d575f2dd9dfb594ba67602076857f80d2d0a29c0 --assets downloaded-volumes --download --target C:/Users/vakir --receipt restore-receipt.json
+python github_delta_restore.py --manifest bundle-manifest.json --manifest-sha256 75e1ddf017d7ec04733e047c42ed55239be641755d518040074e4db99491565a --assets downloaded-volumes --download --target C:/Users/vakir --receipt restore-full-light-receipt.json
 ```
 
-Restore сам скачает все тома по ссылкам manifest и проверит SHA. Существующие отличающиеся файлы он не перезаписывает. Если имя пользователя на новом ПК другое, сначала прочитать раздел об абсолютных bindings в HANDOFF; произвольная замена путей внутри SQLite и доказательств не требуется.
+Restore проверяет точные байты/времена файлов и не перезаписывает отличающиеся существующие файлы. Предпочтительный user root — `C:/Users/vakir`, поскольку защищённые absolute bindings автоматически не переписываются. Авторитетный полный проект — восстановленный `DW-native-grid-city-20261022`; Git code mirror не заменяет его generated assets, кэши и SQLite-план.
 
-Текст для нового чата:
+Прочитать [HANDOFF-RU](HANDOFF-RU.md), [START](TASK/START-RU.txt), [приоритеты](TASK/USER-PRIORITIES-CURRENT-RU.txt), затем восстановленные `research/RESUME-CURRENT-RU.txt` и `research/current-operation.json`.
 
-> Продолжи работу из этого чекпоинта. Прочитай README, HANDOFF, TASK/START-RU.txt и все актуальные приоритеты; восстанови и проверь текущий manifest. Создай трёх указанных субагентов и продолжай существующий план с первого полного clone/apply до готовой карты, света, совместимого мода, исходников и финальной игровой приёмки. Принятые census, compose, пилот и незатронутые проверки сохраняются. Позднейшие указания пользователя приоритетнее оригинального задания.
+## Уже завершено
 
-Финальный freeze: `research/native-grid-plan/full/frozen-catalog.whole-retained-final.json`, SHA256 `16493e1a3e79554f72e68c192c4834600e8d152b98ec970d6c556d5eef69c71b`. План содержит 2153693 размещения и 167511 актуальных композиций. FULL JAR ac56c864, совместимость e03a049d, TARGET audit fd5ed636 и адресный install/save/reopen23ab/52916444 приняты по реальным отчётам.
+FULL apply: 2153693 placements. Native light: 4370/4370; четыре исходные сборки объединены и сохранены; accept-relight прошёл. Финальная preserved coverage с retention members: 28 entries,76 poses,3801 objects — 277 compiled whole,3520 local original и4 merged runtime groups;4 actual groups/8 source owners.
 
-Два конфликтующих цельных бюста [223,71,-925] и [-62,113,-733] сохранены в исходном формате с полными необходимыми частями и данными; новые whole templates для них не разрабатываются. V12, двери и остальные согласованные цельные сборки сохраняются. Разрешено удалить только четыре точных fragment records / десять декоративных visual quads, сохранив коллизии, излучение и данные. Пять vanilla bakes — сухой невидимый свет уровней 1,2,4,5 и сухая нижняя andesite slab; их вид/коллизии/излучение сохраняются, перечисленные взаимодействия могут быть потеряны. Authority и ограничения — в HANDOFF и актуальном TASK/USER-PRIORITIES-CURRENT-RU.txt. Принятые этапы и незатронутые QA не повторять.
+Карта: `research/city/bloodborne-native-grid-city`. Мод Minecraft1.20.1 Fabric: `research/runtime-history/production-full-ac56c8643cf46c245793191c0e5c099d95f755160b0a7109b2d6d6f5091ed0aa.jar`, SHA256 `ac56c8643cf46c245793191c0e5c099d95f755160b0a7109b2d6d6f5091ed0aa`; зависимости — из сохранённого рабочего профиля.
+
+Актуальные исходники: `research/delivery/full-current-sources.final.zip`, SHA256 `f49a7c4947414159d3507f78b65bcbd730bea03abfdaaa96badd6987bf122d97`. Архив принят: 170277 файлов,238066951 bytes.
+
+## Продолжить только оставшееся
+
+После достаточной RAM выполнить готовый final route11, дождаться нормального save/exit клиента и отдельного сервера, затем запустить отдельный reopen сохранённого мира. Root должен посмотреть все12 actual PNG, оценить движение, оформить visual/delivery review и final aggregate, затем опубликовать финальный delta. Сейчас route/reopen/PNG/aggregate отсутствуют. Clone, apply, light, coverage, принятый пилот и незатронутые QA заново не запускать.
+
+Default reserve перед парой — 9GiB свободной физической RAM. Допустим отдельный functional admission: минимум7.5GiB physical available И9GiB Windows available commit при прежних server4G/client3G и frozen recorder/profile. Текущие6.2GiB не удовлетворяют этому допуску. Heap budget и heap snapshots не равны process RSS. Полный before/after baseline не завершён: FPS и процент ускорения не доказаны.
+
+Сохранены исходные v12, данные, двери и согласованные цельные объекты; два бюста оставлены original-format. По точным разрешениям удалены10 decorative visual quads /4 fragment records, запечены5 vanilla states: сухой свет1/2/4/5 и сухая нижняя andesite slab. Вид/коллизии/излучение сохраняются, перечисленные взаимодействия могут быть потеряны. Первоначальные наложения коллизий допустимы; восстановить их вручную после break может быть невозможно. Подробности и authority — в HANDOFF/USER-PRIORITIES.

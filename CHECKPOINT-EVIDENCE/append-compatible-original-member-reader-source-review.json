@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "status": "SOURCE_ONLY",
+  "verdict": "PASS_SOURCE_REVIEW_NOT_EXECUTION",
+  "kind": "APPEND_COMPATIBLE_ORIGINAL_MEMBER_REPORT_READER_REVIEW",
+  "source": {
+    "path": "C:/Users/vakir/.codex/worktrees/3f07/DW-native-grid-city-20261022/source/tools/native-grid/qa/preserved_assembly_final_coverage.py",
+    "sha256": "1c92651fb2b958af443fc683ab8ada7100692864f1a23f6ab0642455e054e3f0"
+  },
+  "baseline": {
+    "path": "C:/Users/vakir/.codex/worktrees/3f07/DW-native-grid-city-20261022/research/compiler-history/before-append-compatible-original-member-reader/preserved_assembly_final_coverage.py",
+    "sha256": "c9bccaf88acc7ccba25620f7f2c069c53997f6bd2e76f018f8041424b37ea2d0"
+  },
+  "findings": [],
+  "reviewedDelta": [
+    "The report-local helper preserves the existing consumer's journal head, event digest, source lineage, exact owner/member/domain, explicitly retired point, no-demand, no-replacement-work, protection, source state and owner-specific stored-ledger predicates.",
+    "Only domain equality uses the existing SourceVisualReservations.domain_equal comparator: all fields remain exact after replacing only the historical poseFragments binding with the current same-path binding, authorized by explicit bound strict-additive lineage, all four unchanged flags and the actual current export SHA.",
+    "Context close runs in finally; the caller still restores row_factory in finally.",
+    "The branch remains limited to the two historical projected policies with absent placement. Existing completed-placement and original-member guards are unchanged.",
+    "The same complete local-retention validator remains mandatory before PASS in the same query_only BEGIN snapshot. No core, cache framework, data mutation or gate skip was introduced."
+  ],
+  "verification": "File-only source comparison with archived c9bcc and the existing consumer/comparator methods; actual coverage is a separate root execution.",
+  "sourceFilesEdited": 0,
+  "projectProcessesStarted": 0,
+  "testsRun": 0,
+  "sqlReads": 0,
+  "gameplayPassClaimed": false
+}

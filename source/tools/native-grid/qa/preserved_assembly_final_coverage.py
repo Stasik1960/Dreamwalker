@@ -126,7 +126,7 @@ def whole_template_fallback_chain(db, binding):
 
 
 def source_local_originals(db, binding, frozen):
-    """Consume the composer's committed snapshots with its existing RO validator."""
+    """Read committed snapshots; run the full RO validator after finite guards."""
     journal = m.meta(db, 'sourceLocalRetentionJournal')
     if not journal:
         require(not frozen.get('sourceLocalRetentionJournal'), 'Frozen original journal disappeared')
@@ -146,7 +146,6 @@ def source_local_originals(db, binding, frozen):
     if 'nativeConsumerSourceFiles' in frozen:
         require(frozen['nativeConsumerSourceFiles'] == certificates.source_files(m),
                 'Final coverage uses different admitted native consumer sources')
-    certificates.validate_source_local_retentions(m, db, finalized=True)
     owners, events = {}, []
     for sequence, encoded, digest in db.execute('SELECT sequence,data,digest FROM source_local_retentions ORDER BY sequence'):
         event = json.loads(encoded)
@@ -163,6 +162,60 @@ def source_local_originals(db, binding, frozen):
             'events': events, 'originalOwners': len(owners)}, owners
 
 
+def projected_original_with_bound_append(db, owner, at, policy):
+    """Existing consumer predicate with its admitted strict-append comparator.
+
+    Keep the frozen writer untouched. Only the historical export binding may
+    differ through SourceVisualReservations.domain_equal's existing proof.
+    """
+    journal = m.meta(db, 'sourceLocalRetentionJournal')
+    if not journal or policy['policy'] not in ('nonroot_guest_overlay', 'root_existing_be_background'):
+        return False
+    head = db.execute('SELECT digest FROM source_local_retentions WHERE sequence=?', (journal['events'],)).fetchone()
+    require(journal.get('schemaVersion') == 1 and journal['sourceBinding'] == m.meta(db, 'binding')
+            and head == (journal['head'],), 'Original section journal head changed')
+    for sequence, encoded, digest in db.execute('SELECT sequence,data,digest FROM source_local_retentions WHERE instr(data,?)>0 ORDER BY sequence DESC', (m.canonical(owner['uuid']),)):
+        event = json.loads(encoded); zone = event.get('sourceZone')
+        if not zone or zone['dimension'] != owner['dimension']:
+            continue
+        domains = [row for row in event['originalDomains'] if row['object'] == owner['object']
+                   and row['mechanism'] == 'source_original_snapshot' and any(point['position'] == list(at) for point in row['domain'])]
+        if not domains:
+            continue
+        require(len(domains) == 1 and 1 <= sequence <= journal['events'] and m.digest(event) == digest
+                and event['sourceBinding'] == journal['sourceBinding']
+                and event['kind'] == 'AUTOMATIC_DIRECT_ORIGINAL_NATIVE_MEMBER_RETENTION'
+                and event['processedRowsReset'] == 0 and event['ownerGraphTraversal'] is False,
+                'Projected original section authority changed')
+        plans = [row for row in event['pointPlan'] if row['position'] == list(at)]
+        require(len(plans) == 1 and plans[0]['retire'] is True
+                and plans[0]['before']['queue'] in ([{'processed': 0}], [{'processed': 1}])
+                and not any(plans[0]['remainingDemands'].values()),
+                'Projected background was not explicitly retired as undemanded original work')
+        certificates.require_source_files(m, db, event['sourceFiles'])
+        domain = domains[0]; context = certificates.SourceVisualReservations(m, db)
+        try:
+            if domain.get('runtimeFootprintEnvelope'):
+                context.__dict__.setdefault('_saved_envelopes', {})[owner['object']['pose']] = domain['runtimeFootprintEnvelope']
+            require(context.domain_equal(context.original_domain(owner['dimension'], owner['uuid']), domain),
+                    'Projected member original source/data domain changed')
+            current = certificates.point(m, db, owner['dimension'], at)
+            require(not any(current[key] for key in ('queue', 'fragments', 'substrate_fragments', 'native_visual_fragments', 'whole_cells', 'native_visual_roots', 'bridge_cells', 'placements')),
+                    'Original projected member acquired replacement work/carrier')
+            args = (owner['dimension'], *at)
+            require(db.execute('SELECT 1 FROM protected_cells WHERE dim=? AND x=? AND y=? AND z=? AND uuid=? AND reason=?',
+                               (*args, owner['uuid'], certificates.LOCAL_ORIGINAL_REASON)).fetchone(),
+                    'Original projected member protection disappeared')
+            state, _, _ = context.source_point(owner['dimension'], at)
+            stored = certificates.n.row_dict(db, 'SELECT * FROM old.stored_contributions WHERE dim=? AND x=? AND y=? AND z=? AND uuid=?', (*args, owner['uuid']))
+            require(state == policy['sourceState'] and sorted(stored, key=m.canonical) == sorted(policy['storedContributions'], key=m.canonical),
+                    'Historical projected source state/ledger changed')
+            return True
+        finally:
+            context.close()
+    return False
+
+
 def check_members(db, owner, catalog, bridge_gate):
     identity = (owner['dimension'], owner['uuid'])
     require(not present(db, 'selected_objects', identity) and not present(db, 'cleanup_owners', identity)
@@ -174,6 +227,19 @@ def check_members(db, owner, catalog, bridge_gate):
         mode = policy['policy']
         placement, bridge = one(db, 'placements', identity[0], at), one(db, 'bridge_cells', identity[0], at)
         queue = one(db, 'cell_queue', identity[0], at)
+        if placement is None and mode in ('nonroot_guest_overlay', 'root_existing_be_background'):
+            # The existing consumer proves when a later committed source
+            # section retired this historical projected background. Its SQL
+            # contracts use tuples; this report otherwise reads sqlite Rows.
+            factory = db.row_factory
+            try:
+                db.row_factory = None
+                original = projected_original_with_bound_append(db, owner, at, policy)
+            finally:
+                db.row_factory = factory
+            if original:
+                counts['original_source_section'] += 1
+                continue
         counts[mode] += 1
         if mode == 'original':
             require(placement is None and bridge is None and queue is None,
@@ -281,11 +347,25 @@ def run(args):
                 'A W-only fallback duplicates a separately retained original owner')
         retained_owners.update(fallback_owners)
         source_local_journal, source_local_owners = source_local_originals(db, binding, frozen)
+        preflight = bound(frozen['semanticGates']['functionalGuestPreflight'])
+        require(preflight['status'] == 'PASS' and preflight['graphClosure'] is False,
+                'Functional local preservation lost its committed finite preflight')
+        functional_decisions = {m.canonical(detail) for detail in preflight['conflicts']}
         issue_rows = collections.defaultdict(list)
         for row in db.execute("SELECT * FROM issues WHERE kind IN ('native_local_retention','whole_local_overlap','protected_local_overlap','missing_exported_footprint','functional_guest')"):
             detail = json.loads(row['detail'])
+            owners = detail.get('directlyConflictingOwners', [])
+            require(isinstance(owners, list) and all(isinstance(uid, str) and uid for uid in owners),
+                    'Functional preservation owner list has invalid identities')
+            if owners:
+                require(row['kind'] == 'functional_guest' and detail.get('dimension') == row['dim']
+                        and m.canonical(detail) in functional_decisions,
+                        'Functional owner-list decision differs from its frozen preflight')
+            identities = set(owners)
             if detail.get('uuid'):
-                issue_rows[(row['dim'], detail['uuid'])].append({'kind': row['kind'], 'detail': detail})
+                identities.add(detail['uuid'])
+            for uid in identities:
+                issue_rows[(row['dim'], uid)].append({'kind': row['kind'], 'detail': detail})
         objects, fingerprint, actual_by_pose = {}, hashlib.sha256(), collections.Counter()
         for pose in sorted(matches):
             data = db.execute('SELECT data FROM poses WHERE key=?', (pose,)).fetchone()[0]
@@ -398,6 +478,13 @@ def run(args):
             for item in retained_owners.values():
                 policy_counts.update(check_members(db, item['row'], catalog, bridge_gate))
             retention_members = {'nativeComponents': len(retained_native), 'originalOwners': len(retained_owners), 'memberPolicyCounts': dict(policy_counts)}
+        if source_local_journal:
+            # Fail fast on finite report/schema errors. The same mandatory
+            # complete source/data validator still runs before any PASS in
+            # this unchanged query-only BEGIN transaction.
+            print(json.dumps({'status': 'FINITE_COVERAGE_GUARDS_COMPLETE_VALIDATING_ORIGINAL_JOURNAL',
+                              'knownObjects': len(results), 'journalEvents': source_local_journal['head']['events']}), flush=True)
+            certificates.validate_source_local_retentions(m, db, finalized=True)
         covered_entries = {key for result in results for key in result['assemblyKeys']}
         entry_coverage = [{'assemblyKey': key, 'knownObjects': sum(key in row['assemblyKeys'] for row in results),
                            'boundDecisionSources': entry['decisionSources'], 'preservation': entry['preservation']}
