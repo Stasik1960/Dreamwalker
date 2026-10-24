@@ -37,7 +37,7 @@ public final class NativeGridClient implements ClientModInitializer {
     private static final class SharedMesh {
         final List<BakedQuad>[] faces;
         final List<Quad> quads;
-        final Mesh fixedMesh;
+        private volatile Mesh fixedMesh; private final boolean fixedMeshEligible;
         final boolean vanilla, ambient;
         @SuppressWarnings("unchecked")
         SharedMesh(List<Quad> quads, boolean vanilla, boolean ambient) {
@@ -49,14 +49,14 @@ public final class NativeGridClient implements ClientModInitializer {
             for (int i = 0; i < 7; i++) groups.add(new ArrayList<>());
             for (Quad quad : quads) groups.get(quad.cull() == null ? 6 : quad.cull().ordinal()).add(quad.baked());
             for (int i = 0; i < 7; i++) faces[i] = List.copyOf(groups.get(i));
-            // Immutable FRAPI mesh can be submitted directly when no world tint is needed.
-            if (!vanilla && quads.stream().noneMatch(quad -> quad.tintSource() != null)) {
-                var builder = requireRenderer().meshBuilder();
-                var emitter = builder.getEmitter();
-                for (Quad quad : quads) { emitter.fromVanilla(quad.baked(), quad.material(), quad.cull()); emitter.emit(); }
-                fixedMesh = builder.build();
-            } else fixedMesh = null;
+            fixedMeshEligible = !vanilla && quads.stream().noneMatch(quad -> quad.tintSource() != null);
         }
+        Mesh fixedMesh() {
+            Mesh result = fixedMesh; if (result != null || !fixedMeshEligible) return result;
+            synchronized (this) { if (fixedMesh != null) return fixedMesh;
+                var builder = requireRenderer().meshBuilder(); var emitter = builder.getEmitter();
+                for (Quad quad : quads) { emitter.fromVanilla(quad.baked(), quad.material(), quad.cull()); emitter.emit(); }
+                fixedMesh = builder.build(); return fixedMesh; } }
     }
     private static net.fabricmc.fabric.api.renderer.v1.Renderer requireRenderer() {
         var renderer = RendererAccess.INSTANCE.getRenderer();
@@ -245,7 +245,7 @@ public final class NativeGridClient implements ClientModInitializer {
         Session current=session;
         SharedMesh mesh=current==null?null:current.baked[NativeGridCatalog.cell(index).mesh()];
         if(mesh==null)throw new IllegalStateException("Native bridge shared mesh was not prepared during baking");
-        if(mesh.fixedMesh!=null)context.meshConsumer().accept(mesh.fixedMesh);
+        Mesh fixed=mesh.fixedMesh(); if(fixed!=null)context.meshConsumer().accept(fixed);
         else emit(mesh,world,pos,context,false);
     }
     private static String mergeLayer(String a, String b) {
@@ -276,7 +276,7 @@ public final class NativeGridClient implements ClientModInitializer {
         @Override public List<BakedQuad> getQuads(BlockState state, Direction side, Random random) { return mesh.faces[side == null ? 6 : side.ordinal()]; }
         @Override public void emitBlockQuads(BlockRenderView world, BlockState state, BlockPos pos, Supplier<Random> random, RenderContext context) {
             if (mesh.vanilla) { context.bakedModelConsumer().accept(this, state); return; }
-            if (mesh.fixedMesh != null) { context.meshConsumer().accept(mesh.fixedMesh); return; }
+            Mesh fixed = mesh.fixedMesh(); if (fixed != null) { context.meshConsumer().accept(fixed); return; }
             emit(mesh, world, pos, context, false);
         }
         @Override public void emitItemQuads(ItemStack stack, Supplier<Random> random, RenderContext context) {
@@ -291,7 +291,7 @@ public final class NativeGridClient implements ClientModInitializer {
             SharedMesh itemMesh = membership == null ? loading.baked[NativeGridCatalog.cell(selected).mesh()]
                     : loading.wholeItems.get(membership.object().baseCell());
             if (itemMesh == null) throw new IllegalStateException("Native grid item mesh was not prepared by model baking");
-            if (membership != null && itemMesh.fixedMesh != null) { context.meshConsumer().accept(itemMesh.fixedMesh); return; }
+            Mesh fixed = membership == null ? null : itemMesh.fixedMesh(); if (fixed != null) { context.meshConsumer().accept(fixed); return; }
             emit(itemMesh, null, null, context, true);
         }
         @Override public boolean useAmbientOcclusion() { return mesh.ambient; }

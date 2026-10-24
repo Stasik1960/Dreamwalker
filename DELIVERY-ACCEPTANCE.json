@@ -1,0 +1,2095 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "kind": "FULL_NATIVE_GRID_CITY_DELIVERY_ACCEPTANCE",
+  "readyForDelivery": true,
+  "runtimeSha256": "9b2edaa041331ff510df87ad1abd51b1de9a535f5768396bc04b6b5cf24d7d33",
+  "catalogSha256": "c2f9e74e54c0298c68b0c8d765a1c595baed949b3d99e1a42d686535c55c07ff",
+  "mapRoot": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\city\\bloodborne-native-grid-city",
+  "sourceRoot": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\source",
+  "functionalRendererOverride": {
+    "backend": "fabric-indigo",
+    "excludedClientMods": [
+      {
+        "file": "indium-1.0.36+mc1.20.1.jar",
+        "id": "indium",
+        "sha256": "8434d0abc8826e2540c26741fea45a1ab9d48f650746de282b36850fa1d01999"
+      },
+      {
+        "file": "sodium-fabric-0.5.11+mc1.20.1.jar",
+        "id": "sodium",
+        "sha256": "5413baaa260a2eadcee4221b8e7105a8e2a9b5b2c84b73f704f2740319aab7df"
+      }
+    ]
+  },
+  "acceptedPredecessorProduction": {
+    "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\runtime-history\\production-full-ac56c8643cf46c245793191c0e5c099d95f755160b0a7109b2d6d6f5091ed0aa.jar",
+    "sha256": "ac56c8643cf46c245793191c0e5c099d95f755160b0a7109b2d6d6f5091ed0aa"
+  },
+  "oldServerEvidenceRuntimeSha256": "ac56c8643cf46c245793191c0e5c099d95f755160b0a7109b2d6d6f5091ed0aa",
+  "newDeliveredRuntimeSha256": "9b2edaa041331ff510df87ad1abd51b1de9a535f5768396bc04b6b5cf24d7d33",
+  "clientOnlyRuntimeLineage": {
+    "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\native-client-cache\\runtime-lineage.json",
+    "sha256": "1064213edab85b28ac315a04b30504aea4509a1c69a450ee7dd396833392c0d8"
+  },
+  "sourceBinding": {
+    "copyManifest": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-ordinary-city-pilot-20261020\\research\\city-pilot\\full-city-copy.ordinary-migration\\copy.json",
+    "copyManifestSha256": "f922f5804c89bcba1ac8f7a22e82fd3c7deb8e844bc5e924778312b2b5ce7fcc",
+    "oldDatabaseBytes": 6793261056,
+    "oldDatabaseMtimeNs": 1792532766177907600,
+    "oldPlan": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-ordinary-city-pilot-20261020\\research\\city-pilot\\full-city-copy.ordinary-migration",
+    "originalPlanReadOnly": true,
+    "plannerBindingSha256": "9795c6e0b168d4a5b0af1dd0b939b7bde3c362b12fc8c458bdef454bd5116f3b",
+    "schemaVersion": 1,
+    "source": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-city-mesh-20261018\\deliverables\\block-fixes-2-20261020\\map\\bloodborne-blocks-fixed-2",
+    "sourceBytes": 437197194,
+    "sourceFileCount": 3887,
+    "sourceHashesVerified": true
+  },
+  "reviewedRuntimePatch": {
+    "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\native-grid-plan\\full\\retained-whole-runtime-class-patch.final.json",
+    "sha256": "880595343cf47747b89409ec0ca0395af1c46719e7f2c73e163d239e74ea6c16"
+  },
+  "runtimeSourceReview": {
+    "sha256": "707149fb841e5ea8a028e267ae43fc4759169b04878ff7bd518977c53036ed57",
+    "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\retained-whole-items-runtime\\root-source-review.json"
+  },
+  "retainedWholeItemResource": {
+    "sha256": "19ba78c6a1ebef73649a7d0d4c4be6d135bd6c5b26d34d94cd0d6da3ac91cb2b",
+    "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\source\\src\\architecture\\resources\\assets\\bloodborne_dw\\native_grid\\retained_whole_items.json"
+  },
+  "retainedWholeItemResourceProof": {
+    "sha256": "7882e56f88445baa554c8ab600971a9f5a301d3a9916f8995885bb1f57fa1cfb",
+    "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\native-grid-plan\\full\\retained-whole-items-final-after-visual-amendment.json"
+  },
+  "baselineCompleted": false,
+  "pairedSpeedupPercent": null,
+  "practicalPerformanceLimits": "One attempted local separate-server pair on16GiB PC, fixed3G client/4G server. Baseline did not complete; no paired timing, FPS percentage or remote-hosting guarantee. Candidate statistics describe only its actual delivered and rendered scenes. Snapshot heap is not peak process RSS.",
+  "performanceScope": "Accepted dense-pilot pair on99f4 plus actual FULL final-route/reopen observations; no complete FULL before/after speedup, FPS percentage or remote-hosting guarantee. FULL functional client heap is explicitly 4G versus the frozen base 3G; these observations are not matched-pair performance evidence. FULL functional renderer is Fabric Indigo with the exact frozen Sodium/Indium pair retained outside client mods; this different backend is not a matched-pair comparison or an FPS percentage.",
+  "finalViews": 11,
+  "reopenViews": 1,
+  "finalActualRoute": {
+    "receipt": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\final-route\\actual-full-route-indigo\\receipt.json",
+      "sha256": "440d74ef3dfa8b4791d96f980fd4248919656909a590008acd53011e3fa858ac"
+    },
+    "binding": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\final-route\\actual-full-route-indigo\\binding.json",
+      "sha256": "99b5b8497d87f0c0c139355764b1e1ec93580555bfe2822b0ea2c5357c84270c"
+    },
+    "client": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\final-route\\actual-full-route-indigo\\client\\client-route.json",
+      "sha256": "c8df07ed5f723144bbb7f565b2aeb7fc12202212385f4b0b6fcb418f152ee8e9"
+    },
+    "server": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\final-route\\actual-full-route-indigo\\server\\server-route.json",
+      "sha256": "fb4e152feba3b50f773e8f7593f52796a39f6f631a34054b523404645fb9de78"
+    },
+    "plan": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\final-route\\route.json",
+      "sha256": "db664f2989323a49f52287c09ed9f855621a6028e65e15f51c73a2eb56627989"
+    },
+    "phases": [
+      {
+        "phase": "final-brick-wide",
+        "startEpochNs": 1792831704468605250,
+        "endEpochNs": 1792831716301711550,
+        "clockAnchorUncertaintyNs": 5150,
+        "durationNs": 11833106300,
+        "frames": 493,
+        "requiredFullChunks": 2,
+        "loads": 0,
+        "uniqueDeliveredChunks": 0,
+        "unloads": 0,
+        "residentChunks": 201,
+        "nativeMovementTicks": 0,
+        "chunkWaitTicks": 0,
+        "nativeDistance": 0.0,
+        "maxStep": 0.0,
+        "serverPositionAcknowledged": true,
+        "terrainRenderComplete": true,
+        "renderedAtTarget": true,
+        "heapUsed": 3551830632,
+        "camera": [
+          980.0,
+          100.0,
+          95.0,
+          44.36,
+          35.0
+        ],
+        "probe": [
+          940,
+          28,
+          129
+        ],
+        "probeState": "Block{bloodborne_dw:static_architecture_14}[part=112,waterlogged=false]",
+        "requiredChunkEvidence": [
+          {
+            "cx": 61,
+            "cz": 5,
+            "full": true,
+            "deliveryObserved": true
+          },
+          {
+            "cx": 58,
+            "cz": 8,
+            "full": true,
+            "deliveryObserved": true
+          }
+        ],
+        "countersAtStart": {
+          "ownerPackets": 2,
+          "ownerPayloadBytes": 23938,
+          "terrainUpdates": {
+            "overhangVisibilityAdditions": 0,
+            "overhangNeighbourSectionRadius": 4,
+            "pendingWholeView": false,
+            "compiledNoOpHelperExclusions": 0,
+            "overhangVisibilitySectionScans": 8,
+            "pendingSectionUpdates": 0,
+            "visibleOverhangSectionsLast": 0,
+            "overhangRebuilds": 274
+          },
+          "terrain": {
+            "ownedTerrainCpuMeshBytes": 0,
+            "sectionBuiltOwnedRoots": 0,
+            "regionRejectedSnapshots": 0,
+            "ownedTerrainSeparateGpuBytes": 0,
+            "scope": "ALL_IMMOBILE_SOURCE_ROOTS",
+            "bypassedBerFrames": 0,
+            "sectionBuiltOwnedParts": 0,
+            "missingRenderSnapshots": 0,
+            "fallbackFrames": 0,
+            "updates": {
+              "overhangVisibilityAdditions": 0,
+              "overhangNeighbourSectionRadius": 4,
+              "pendingWholeView": false,
+              "compiledNoOpHelperExclusions": 0,
+              "overhangVisibilitySectionScans": 8,
+              "pendingSectionUpdates": 0,
+              "visibleOverhangSectionsLast": 0,
+              "overhangRebuilds": 274
+            }
+          },
+          "snapshots": {
+            "shapeSnapshotChunks": 2,
+            "shapeSnapshotCells": 86,
+            "shapeSnapshotPendingCells": 0,
+            "shapeSnapshotBatchDepth": 0,
+            "sourceCarrierLightChecks": 0,
+            "shapeSnapshotPublications": 4,
+            "shapeSnapshotPublishedCells": 87,
+            "shapeSnapshotCopiedChunks": 4,
+            "shapeSnapshotUnchangedPublications": 0
+          }
+        },
+        "counters": {
+          "ownerPackets": 2,
+          "ownerPayloadBytes": 23938,
+          "terrainUpdates": {
+            "overhangVisibilityAdditions": 1250,
+            "overhangNeighbourSectionRadius": 4,
+            "pendingWholeView": false,
+            "compiledNoOpHelperExclusions": 0,
+            "overhangVisibilitySectionScans": 384952,
+            "pendingSectionUpdates": 0,
+            "visibleOverhangSectionsLast": 11,
+            "overhangRebuilds": 4474
+          },
+          "terrain": {
+            "ownedTerrainCpuMeshBytes": 0,
+            "sectionBuiltOwnedRoots": 0,
+            "regionRejectedSnapshots": 0,
+            "ownedTerrainSeparateGpuBytes": 0,
+            "scope": "ALL_IMMOBILE_SOURCE_ROOTS",
+            "bypassedBerFrames": 0,
+            "sectionBuiltOwnedParts": 0,
+            "missingRenderSnapshots": 0,
+            "fallbackFrames": 0,
+            "updates": {
+              "overhangVisibilityAdditions": 1250,
+              "overhangNeighbourSectionRadius": 4,
+              "pendingWholeView": false,
+              "compiledNoOpHelperExclusions": 0,
+              "overhangVisibilitySectionScans": 384952,
+              "pendingSectionUpdates": 0,
+              "visibleOverhangSectionsLast": 11,
+              "overhangRebuilds": 4474
+            }
+          },
+          "snapshots": {
+            "shapeSnapshotChunks": 2,
+            "shapeSnapshotCells": 86,
+            "shapeSnapshotPendingCells": 0,
+            "shapeSnapshotBatchDepth": 0,
+            "sourceCarrierLightChecks": 0,
+            "shapeSnapshotPublications": 4,
+            "shapeSnapshotPublishedCells": 87,
+            "shapeSnapshotCopiedChunks": 4,
+            "shapeSnapshotUnchangedPublications": 0
+          }
+        },
+        "glRenderer": "NVIDIA GeForce RTX 3070 Laptop GPU/PCIe/SSE2",
+        "glVendor": "NVIDIA Corporation"
+      },
+      {
+        "phase": "final-brick-cornice",
+        "startEpochNs": 1792831716410748600,
+        "endEpochNs": 1792831730811462900,
+        "clockAnchorUncertaintyNs": 4500,
+        "durationNs": 14400714300,
+        "frames": 747,
+        "requiredFullChunks": 2,
+        "loads": 60,
+        "uniqueDeliveredChunks": 59,
+        "unloads": 60,
+        "residentChunks": 201,
+        "nativeMovementTicks": 93,
+        "chunkWaitTicks": 0,
+        "nativeDistance": 69.46221994724907,
+        "maxStep": 0.7500000000000262,
+        "serverPositionAcknowledged": true,
+        "terrainRenderComplete": true,
+        "renderedAtTarget": true,
+        "heapUsed": 3477381736,
+        "camera": [
+          952.0,
+          40.0,
+          116.0,
+          40.426079,
+          36.494615
+        ],
+        "probe": [
+          940,
+          28,
+          129
+        ],
+        "probeState": "Block{bloodborne_dw:static_architecture_14}[part=112,waterlogged=false]",
+        "requiredChunkEvidence": [
+          {
+            "cx": 59,
+            "cz": 7,
+            "full": true,
+            "deliveryObserved": true
+          },
+          {
+            "cx": 58,
+            "cz": 8,
+            "full": true,
+            "deliveryObserved": true
+          }
+        ],
+        "countersAtStart": {
+          "ownerPackets": 2,
+          "ownerPayloadBytes": 23938,
+          "terrainUpdates": {
+            "overhangVisibilityAdditions": 1250,
+            "overhangNeighbourSectionRadius": 4,
+            "pendingWholeView": false,
+            "compiledNoOpHelperExclusions": 0,
+            "overhangVisibilitySectionScans": 384952,
+            "pendingSectionUpdates": 0,
+            "visibleOverhangSectionsLast": 11,
+            "overhangRebuilds": 4474
+          },
+          "terrain": {
+            "ownedTerrainCpuMeshBytes": 0,
+            "sectionBuiltOwnedRoots": 0,
+            "regionRejectedSnapshots": 0,
+            "ownedTerrainSeparateGpuBytes": 0,
+            "scope": "ALL_IMMOBILE_SOURCE_ROOTS",
+            "bypassedBerFrames": 0,
+            "sectionBuiltOwnedParts": 0,
+            "missingRenderSnapshots": 0,
+            "fallbackFrames": 0,
+            "updates": {
+              "overhangVisibilityAdditions": 1250,
+              "overhangNeighbourSectionRadius": 4,
+              "pendingWholeView": false,
+              "compiledNoOpHelperExclusions": 0,
+              "overhangVisibilitySectionScans": 384952,
+              "pendingSectionUpdates": 0,
+              "visibleOverhangSectionsLast": 11,
+              "overhangRebuilds": 4474
+            }
+          },
+          "snapshots": {
+            "shapeSnapshotChunks": 2,
+            "shapeSnapshotCells": 86,
+            "shapeSnapshotPendingCells": 0,
+            "shapeSnapshotBatchDepth": 0,
+            "sourceCarrierLightChecks": 0,
+            "shapeSnapshotPublications": 4,
+            "shapeSnapshotPublishedCells": 87,
+            "shapeSnapshotCopiedChunks": 4,
+            "shapeSnapshotUnchangedPublications": 0
+          }
+        },
+        "counters": {
+          "ownerPackets": 5,
+          "ownerPayloadBytes": 35229,
+          "terrainUpdates": {
+            "overhangVisibilityAdditions": 6180,
+            "overhangNeighbourSectionRadius": 4,
+            "pendingWholeView": false,
+            "compiledNoOpHelperExclusions": 13,
+            "overhangVisibilitySectionScans": 1524273,
+            "pendingSectionUpdates": 0,
+            "visibleOverhangSectionsLast": 0,
+            "overhangRebuilds": 6193
+          },
+          "terrain": {
+            "ownedTerrainCpuMeshBytes": 0,
+            "sectionBuiltOwnedRoots": 0,
+            "regionRejectedSnapshots": 0,
+            "ownedTerrainSeparateGpuBytes": 0,
+            "scope": "ALL_IMMOBILE_SOURCE_ROOTS",
+            "bypassedBerFrames": 0,
+            "sectionBuiltOwnedParts": 0,
+            "missingRenderSnapshots": 0,
+            "fallbackFrames": 0,
+            "updates": {
+              "overhangVisibilityAdditions": 6180,
+              "overhangNeighbourSectionRadius": 4,
+              "pendingWholeView": false,
+              "compiledNoOpHelperExclusions": 13,
+              "overhangVisibilitySectionScans": 1524273,
+              "pendingSectionUpdates": 0,
+              "visibleOverhangSectionsLast": 0,
+              "overhangRebuilds": 6193
+            }
+          },
+          "snapshots": {
+            "shapeSnapshotChunks": 5,
+            "shapeSnapshotCells": 199,
+            "shapeSnapshotPendingCells": 0,
+            "shapeSnapshotBatchDepth": 0,
+            "sourceCarrierLightChecks": 0,
+            "shapeSnapshotPublications": 10,
+            "shapeSnapshotPublishedCells": 203,
+            "shapeSnapshotCopiedChunks": 10,
+            "shapeSnapshotUnchangedPublications": 0
+          }
+        },
+        "glRenderer": "NVIDIA GeForce RTX 3070 Laptop GPU/PCIe/SSE2",
+        "glVendor": "NVIDIA Corporation"
+      },
+      {
+        "phase": "final-brick-chunkborder",
+        "startEpochNs": 1792831730951582750,
+        "endEpochNs": 1792831745114720450,
+        "clockAnchorUncertaintyNs": 6450,
+        "durationNs": 14163137700,
+        "frames": 816,
+        "requiredFullChunks": 2,
+        "loads": 75,
+        "uniqueDeliveredChunks": 71,
+        "unloads": 75,
+        "residentChunks": 201,
+        "nativeMovementTicks": 144,
+        "chunkWaitTicks": 0,
+        "nativeDistance": 107.89810007595146,
+        "maxStep": 0.7500000000000303,
+        "serverPositionAcknowledged": true,
+        "terrainRenderComplete": true,
+        "renderedAtTarget": true,
+        "heapUsed": 3535242856,
+        "camera": [
+          999.0,
+          -53.0,
+          144.0,
+          154.290046,
+          28.45485
+        ],
+        "probe": [
+          992,
+          -60,
+          130
+        ],
+        "probeState": "Block{bloodborne_dw:native_grid_5}[part=71]",
+        "requiredChunkEvidence": [
+          {
+            "cx": 62,
+            "cz": 9,
+            "full": true,
+            "deliveryObserved": true
+          },
+          {
+            "cx": 62,
+            "cz": 8,
+            "full": true,
+            "deliveryObserved": true
+          }
+        ],
+        "countersAtStart": {
+          "ownerPackets": 5,
+          "ownerPayloadBytes": 35229,
+          "terrainUpdates": {
+            "overhangVisibilityAdditions": 6180,
+            "overhangNeighbourSectionRadius": 4,
+            "pendingWholeView": false,
+            "compiledNoOpHelperExclusions": 13,
+            "overhangVisibilitySectionScans": 1524273,
+            "pendingSectionUpdates": 0,
+            "visibleOverhangSectionsLast": 0,
+            "overhangRebuilds": 6193
+          },
+          "terrain": {
+            "ownedTerrainCpuMeshBytes": 0,
+            "sectionBuiltOwnedRoots": 0,
+            "regionRejectedSnapshots": 0,
+            "ownedTerrainSeparateGpuBytes": 0,
+            "scope": "ALL_IMMOBILE_SOURCE_ROOTS",
+            "bypassedBerFrames": 0,
+            "sectionBuiltOwnedParts": 0,
+            "missingRenderSnapshots": 0,
+            "fallbackFrames": 0,
+            "updates": {
+              "overhangVisibilityAdditions": 6180,
+              "overhangNeighbourSectionRadius": 4,
+              "pendingWholeView": false,
+              "compiledNoOpHelperExclusions": 13,
+              "overhangVisibilitySectionScans": 1524273,
+              "pendingSectionUpdates": 0,
+              "visibleOverhangSectionsLast": 0,
+              "overhangRebuilds": 6193
+            }
+          },
+          "snapshots": {
+            "shapeSnapshotChunks": 5,
+            "shapeSnapshotCells": 199,
+            "shapeSnapshotPendingCells": 0,
+            "shapeSnapshotBatchDepth": 0,
+            "sourceCarrierLightChecks": 0,
+            "shapeSnapshotPublications": 10,
+            "shapeSnapshotPublishedCells": 203,
+            "shapeSnapshotCopiedChunks": 10,
+            "shapeSnapshotUnchangedPublications": 0
+          }
+        },
+        "counters": {
+          "ownerPackets": 5,
+          "ownerPayloadBytes": 35229,
+          "terrainUpdates": {
+            "overhangVisibilityAdditions": 6796,
+            "overhangNeighbourSectionRadius": 4,
+            "pendingWholeView": false,
+            "compiledNoOpHelperExclusions": 51,
+            "overhangVisibilitySectionScans": 2736059,
+            "pendingSectionUpdates": 0,
+            "visibleOverhangSectionsLast": 0,
+            "overhangRebuilds": 8097
+          },
+          "terrain": {
+            "ownedTerrainCpuMeshBytes": 0,
+            "sectionBuiltOwnedRoots": 2,
+            "regionRejectedSnapshots": 0,
+            "ownedTerrainSeparateGpuBytes": 0,
+            "scope": "ALL_IMMOBILE_SOURCE_ROOTS",
+            "bypassedBerFrames": 0,
+            "sectionBuiltOwnedParts": 2,
+            "missingRenderSnapshots": 0,
+            "fallbackFrames": 0,
+            "updates": {
+              "overhangVisibilityAdditions": 6796,
+              "overhangNeighbourSectionRadius": 4,
+              "pendingWholeView": false,
+              "compiledNoOpHelperExclusions": 51,
+              "overhangVisibilitySectionScans": 2736059,
+              "pendingSectionUpdates": 0,
+              "visibleOverhangSectionsLast": 0,
+              "overhangRebuilds": 8097
+            }
+          },
+          "snapshots": {
+            "shapeSnapshotChunks": 2,
+            "shapeSnapshotCells": 86,
+            "shapeSnapshotPendingCells": 0,
+            "shapeSnapshotBatchDepth": 0,
+            "sourceCarrierLightChecks": 0,
+            "shapeSnapshotPublications": 10,
+            "shapeSnapshotPublishedCells": 203,
+            "shapeSnapshotCopiedChunks": 10,
+            "shapeSnapshotUnchangedPublications": 0
+          }
+        },
+        "glRenderer": "NVIDIA GeForce RTX 3070 Laptop GPU/PCIe/SSE2",
+        "glVendor": "NVIDIA Corporation"
+      },
+      {
+        "phase": "final-door-whole",
+        "startEpochNs": 1792831745214321250,
+        "endEpochNs": 1792831752299421950,
+        "clockAnchorUncertaintyNs": 3250,
+        "durationNs": 7085100700,
+        "frames": 410,
+        "requiredFullChunks": 1,
+        "loads": 30,
+        "uniqueDeliveredChunks": 30,
+        "unloads": 30,
+        "residentChunks": 201,
+        "nativeMovementTicks": 22,
+        "chunkWaitTicks": 0,
+        "nativeDistance": 15.88238017426859,
+        "maxStep": 0.7500000000000467,
+        "serverPositionAcknowledged": true,
+        "terrainRenderComplete": true,
+        "renderedAtTarget": true,
+        "heapUsed": 3765929576,
+        "camera": [
+          985.0,
+          -59.0,
+          139.5,
+          -90.0,
+          1.235852
+        ],
+        "probe": [
+          990,
+          -58,
+          139
+        ],
+        "probeState": "Block{bloodborne_dw:source_dark_arch_door}[open=false,profile=base,rotation=2,variant=2]",
+        "requiredChunkEvidence": [
+          {
+            "cx": 61,
+            "cz": 8,
+            "full": true,
+            "deliveryObserved": true
+          }
+        ],
+        "countersAtStart": {
+          "ownerPackets": 5,
+          "ownerPayloadBytes": 35229,
+          "terrainUpdates": {
+            "overhangVisibilityAdditions": 6796,
+            "overhangNeighbourSectionRadius": 4,
+            "pendingWholeView": false,
+            "compiledNoOpHelperExclusions": 51,
+            "overhangVisibilitySectionScans": 2736059,
+            "pendingSectionUpdates": 0,
+            "visibleOverhangSectionsLast": 0,
+            "overhangRebuilds": 8097
+          },
+          "terrain": {
+            "ownedTerrainCpuMeshBytes": 0,
+            "sectionBuiltOwnedRoots": 2,
+            "regionRejectedSnapshots": 0,
+            "ownedTerrainSeparateGpuBytes": 0,
+            "scope": "ALL_IMMOBILE_SOURCE_ROOTS",
+            "bypassedBerFrames": 0,
+            "sectionBuiltOwnedParts": 2,
+            "missingRenderSnapshots": 0,
+            "fallbackFrames": 0,
+            "updates": {
+              "overhangVisibilityAdditions": 6796,
+              "overhangNeighbourSectionRadius": 4,
+              "pendingWholeView": false,
+              "compiledNoOpHelperExclusions": 51,
+              "overhangVisibilitySectionScans": 2736059,
+              "pendingSectionUpdates": 0,
+              "visibleOverhangSectionsLast": 0,
+              "overhangRebuilds": 8097
+            }
+          },
+          "snapshots": {
+            "shapeSnapshotChunks": 2,
+            "shapeSnapshotCells": 86,
+            "shapeSnapshotPendingCells": 0,
+            "shapeSnapshotBatchDepth": 0,
+            "sourceCarrierLightChecks": 0,
+            "shapeSnapshotPublications": 10,
+            "shapeSnapshotPublishedCells": 203,
+            "shapeSnapshotCopiedChunks": 10,
+            "shapeSnapshotUnchangedPublications": 0
+          }
+        },
+        "counters": {
+          "ownerPackets": 5,
+          "ownerPayloadBytes": 35229,
+          "terrainUpdates": {
+            "overhangVisibilityAdditions": 7900,
+            "overhangNeighbourSectionRadius": 4,
+            "pendingWholeView": false,
+            "compiledNoOpHelperExclusions": 86,
+            "overhangVisibilitySectionScans": 3171188,
+            "pendingSectionUpdates": 0,
+            "visibleOverhangSectionsLast": 0,
+            "overhangRebuilds": 8901
+          },
+          "terrain": {
+            "ownedTerrainCpuMeshBytes": 0,
+            "sectionBuiltOwnedRoots": 3,
+            "regionRejectedSnapshots": 0,
+            "ownedTerrainSeparateGpuBytes": 0,
+            "scope": "ALL_IMMOBILE_SOURCE_ROOTS",
+            "bypassedBerFrames": 0,
+            "sectionBuiltOwnedParts": 3,
+            "missingRenderSnapshots": 0,
+            "fallbackFrames": 0,
+            "updates": {
+              "overhangVisibilityAdditions": 7900,
+              "overhangNeighbourSectionRadius": 4,
+              "pendingWholeView": false,
+              "compiledNoOpHelperExclusions": 86,
+              "overhangVisibilitySectionScans": 3171188,
+              "pendingSectionUpdates": 0,
+              "visibleOverhangSectionsLast": 0,
+              "overhangRebuilds": 8901
+            }
+          },
+          "snapshots": {
+            "shapeSnapshotChunks": 2,
+            "shapeSnapshotCells": 86,
+            "shapeSnapshotPendingCells": 0,
+            "shapeSnapshotBatchDepth": 0,
+            "sourceCarrierLightChecks": 0,
+            "shapeSnapshotPublications": 10,
+            "shapeSnapshotPublishedCells": 203,
+            "shapeSnapshotCopiedChunks": 10,
+            "shapeSnapshotUnchangedPublications": 0
+          }
+        },
+        "glRenderer": "NVIDIA GeForce RTX 3070 Laptop GPU/PCIe/SSE2",
+        "glVendor": "NVIDIA Corporation"
+      },
+      {
+        "phase": "final-tower-wide",
+        "startEpochNs": 1792831752398624800,
+        "endEpochNs": 1792831788046879100,
+        "clockAnchorUncertaintyNs": 3800,
+        "durationNs": 35648254300,
+        "frames": 2097,
+        "requiredFullChunks": 2,
+        "loads": 578,
+        "uniqueDeliveredChunks": 479,
+        "unloads": 578,
+        "residentChunks": 201,
+        "nativeMovementTicks": 632,
+        "chunkWaitTicks": 0,
+        "nativeDistance": 473.915868060983,
+        "maxStep": 0.7500000000000452,
+        "serverPositionAcknowledged": true,
+        "terrainRenderComplete": true,
+        "renderedAtTarget": true,
+        "heapUsed": 3468717000,
+        "camera": [
+          650.0,
+          110.0,
+          -150.0,
+          43.23,
+          35.0
+        ],
+        "probe": [
+          603,
+          70,
+          -100
+        ],
+        "probeState": "Block{bloodborne_dw:static_architecture_9}[part=108,waterlogged=false]",
+        "requiredChunkEvidence": [
+          {
+            "cx": 40,
+            "cz": -10,
+            "full": true,
+            "deliveryObserved": true
+          },
+          {
+            "cx": 37,
+            "cz": -7,
+            "full": true,
+            "deliveryObserved": true
+          }
+        ],
+        "countersAtStart": {
+          "ownerPackets": 5,
+          "ownerPayloadBytes": 35229,
+          "terrainUpdates": {
+            "overhangVisibilityAdditions": 7900,
+            "overhangNeighbourSectionRadius": 4,
+            "pendingWholeView": false,
+            "compiledNoOpHelperExclusions": 86,
+            "overhangVisibilitySectionScans": 3171188,
+            "pendingSectionUpdates": 0,
+            "visibleOverhangSectionsLast": 0,
+            "overhangRebuilds": 8901
+          },
+          "terrain": {
+            "ownedTerrainCpuMeshBytes": 0,
+            "sectionBuiltOwnedRoots": 3,
+            "regionRejectedSnapshots": 0,
+            "ownedTerrainSeparateGpuBytes": 0,
+            "scope": "ALL_IMMOBILE_SOURCE_ROOTS",
+            "bypassedBerFrames": 0,
+            "sectionBuiltOwnedParts": 3,
+            "missingRenderSnapshots": 0,
+            "fallbackFrames": 0,
+            "updates": {
+              "overhangVisibilityAdditions": 7900,
+              "overhangNeighbourSectionRadius": 4,
+              "pendingWholeView": false,
+              "compiledNoOpHelperExclusions": 86,
+              "overhangVisibilitySectionScans": 3171188,
+              "pendingSectionUpdates": 0,
+              "visibleOverhangSectionsLast": 0,
+              "overhangRebuilds": 8901
+            }
+          },
+          "snapshots": {
+            "shapeSnapshotChunks": 2,
+            "shapeSnapshotCells": 86,
+            "shapeSnapshotPendingCells": 0,
+            "shapeSnapshotBatchDepth": 0,
+            "sourceCarrierLightChecks": 0,
+            "shapeSnapshotPublications": 10,
+            "shapeSnapshotPublishedCells": 203,
+            "shapeSnapshotCopiedChunks": 10,
+            "shapeSnapshotUnchangedPublications": 0
+          }
+        },
+        "counters": {
+          "ownerPackets": 39,
+          "ownerPayloadBytes": 628000,
+          "terrainUpdates": {
+            "overhangVisibilityAdditions": 13656,
+            "overhangNeighbourSectionRadius": 4,
+            "pendingWholeView": false,
+            "compiledNoOpHelperExclusions": 818,
+            "overhangVisibilitySectionScans": 7110310,
+            "pendingSectionUpdates": 0,
+            "visibleOverhangSectionsLast": 3,
+            "overhangRebuilds": 17432
+          },
+          "terrain": {
+            "ownedTerrainCpuMeshBytes": 0,
+            "sectionBuiltOwnedRoots": 21,
+            "regionRejectedSnapshots": 0,
+            "ownedTerrainSeparateGpuBytes": 0,
+            "scope": "ALL_IMMOBILE_SOURCE_ROOTS",
+            "bypassedBerFrames": 0,
+            "sectionBuiltOwnedParts": 25,
+            "missingRenderSnapshots": 0,
+            "fallbackFrames": 0,
+            "updates": {
+              "overhangVisibilityAdditions": 13656,
+              "overhangNeighbourSectionRadius": 4,
+              "pendingWholeView": false,
+              "compiledNoOpHelperExclusions": 818,
+              "overhangVisibilitySectionScans": 7110310,
+              "pendingSectionUpdates": 0,
+              "visibleOverhangSectionsLast": 3,
+              "overhangRebuilds": 17432
+            }
+          },
+          "snapshots": {
+            "shapeSnapshotChunks": 27,
+            "shapeSnapshotCells": 1183,
+            "shapeSnapshotPendingCells": 0,
+            "shapeSnapshotBatchDepth": 0,
+            "sourceCarrierLightChecks": 0,
+            "shapeSnapshotPublications": 76,
+            "shapeSnapshotPublishedCells": 1716,
+            "shapeSnapshotCopiedChunks": 76,
+            "shapeSnapshotUnchangedPublications": 0
+          }
+        },
+        "glRenderer": "NVIDIA GeForce RTX 3070 Laptop GPU/PCIe/SSE2",
+        "glVendor": "NVIDIA Corporation"
+      },
+      {
+        "phase": "final-tower-facade-close",
+        "startEpochNs": 1792831788147546000,
+        "endEpochNs": 1792831796047372600,
+        "clockAnchorUncertaintyNs": 4600,
+        "durationNs": 7899826600,
+        "frames": 465,
+        "requiredFullChunks": 2,
+        "loads": 60,
+        "uniqueDeliveredChunks": 59,
+        "unloads": 60,
+        "residentChunks": 201,
+        "nativeMovementTicks": 62,
+        "chunkWaitTicks": 0,
+        "nativeDistance": 45.96737973824486,
+        "maxStep": 0.750000000000044,
+        "serverPositionAcknowledged": true,
+        "terrainRenderComplete": true,
+        "renderedAtTarget": true,
+        "heapUsed": 3626258376,
+        "camera": [
+          623.0,
+          80.0,
+          -128.0,
+          34.380345,
+          17.849318
+        ],
+        "probe": [
+          603,
+          70,
+          -100
+        ],
+        "probeState": "Block{bloodborne_dw:static_architecture_9}[part=108,waterlogged=false]",
+        "requiredChunkEvidence": [
+          {
+            "cx": 38,
+            "cz": -8,
+            "full": true,
+            "deliveryObserved": true
+          },
+          {
+            "cx": 37,
+            "cz": -7,
+            "full": true,
+            "deliveryObserved": true
+          }
+        ],
+        "countersAtStart": {
+          "ownerPackets": 39,
+          "ownerPayloadBytes": 628000,
+          "terrainUpdates": {
+            "overhangVisibilityAdditions": 13656,
+            "overhangNeighbourSectionRadius": 4,
+            "pendingWholeView": false,
+            "compiledNoOpHelperExclusions": 818,
+            "overhangVisibilitySectionScans": 7110310,
+            "pendingSectionUpdates": 0,
+            "visibleOverhangSectionsLast": 3,
+            "overhangRebuilds": 17432
+          },
+          "terrain": {
+            "ownedTerrainCpuMeshBytes": 0,
+            "sectionBuiltOwnedRoots": 21,
+            "regionRejectedSnapshots": 0,
+            "ownedTerrainSeparateGpuBytes": 0,
+            "scope": "ALL_IMMOBILE_SOURCE_ROOTS",
+            "bypassedBerFrames": 0,
+            "sectionBuiltOwnedParts": 25,
+            "missingRenderSnapshots": 0,
+            "fallbackFrames": 0,
+            "updates": {
+              "overhangVisibilityAdditions": 13656,
+              "overhangNeighbourSectionRadius": 4,
+              "pendingWholeView": false,
+              "compiledNoOpHelperExclusions": 818,
+              "overhangVisibilitySectionScans": 7110310,
+              "pendingSectionUpdates": 0,
+              "visibleOverhangSectionsLast": 3,
+              "overhangRebuilds": 17432
+            }
+          },
+          "snapshots": {
+            "shapeSnapshotChunks": 27,
+            "shapeSnapshotCells": 1183,
+            "shapeSnapshotPendingCells": 0,
+            "shapeSnapshotBatchDepth": 0,
+            "sourceCarrierLightChecks": 0,
+            "shapeSnapshotPublications": 76,
+            "shapeSnapshotPublishedCells": 1716,
+            "shapeSnapshotCopiedChunks": 76,
+            "shapeSnapshotUnchangedPublications": 0
+          }
+        },
+        "counters": {
+          "ownerPackets": 42,
+          "ownerPayloadBytes": 763545,
+          "terrainUpdates": {
+            "overhangVisibilityAdditions": 14604,
+            "overhangNeighbourSectionRadius": 4,
+            "pendingWholeView": false,
+            "compiledNoOpHelperExclusions": 1975,
+            "overhangVisibilitySectionScans": 7448781,
+            "pendingSectionUpdates": 0,
+            "visibleOverhangSectionsLast": 6,
+            "overhangRebuilds": 18838
+          },
+          "terrain": {
+            "ownedTerrainCpuMeshBytes": 0,
+            "sectionBuiltOwnedRoots": 227,
+            "regionRejectedSnapshots": 0,
+            "ownedTerrainSeparateGpuBytes": 0,
+            "scope": "ALL_IMMOBILE_SOURCE_ROOTS",
+            "bypassedBerFrames": 0,
+            "sectionBuiltOwnedParts": 232,
+            "missingRenderSnapshots": 0,
+            "fallbackFrames": 38359,
+            "updates": {
+              "overhangVisibilityAdditions": 14604,
+              "overhangNeighbourSectionRadius": 4,
+              "pendingWholeView": false,
+              "compiledNoOpHelperExclusions": 1975,
+              "overhangVisibilitySectionScans": 7448781,
+              "pendingSectionUpdates": 0,
+              "visibleOverhangSectionsLast": 6,
+              "overhangRebuilds": 18838
+            }
+          },
+          "snapshots": {
+            "shapeSnapshotChunks": 22,
+            "shapeSnapshotCells": 1328,
+            "shapeSnapshotPendingCells": 0,
+            "shapeSnapshotBatchDepth": 0,
+            "sourceCarrierLightChecks": 0,
+            "shapeSnapshotPublications": 82,
+            "shapeSnapshotPublishedCells": 2076,
+            "shapeSnapshotCopiedChunks": 82,
+            "shapeSnapshotUnchangedPublications": 0
+          }
+        },
+        "glRenderer": "NVIDIA GeForce RTX 3070 Laptop GPU/PCIe/SSE2",
+        "glVendor": "NVIDIA Corporation"
+      },
+      {
+        "phase": "final-statue-whole-front",
+        "startEpochNs": 1792831796147609400,
+        "endEpochNs": 1792831862456917600,
+        "clockAnchorUncertaintyNs": 4200,
+        "durationNs": 66309308200,
+        "frames": 3320,
+        "requiredFullChunks": 1,
+        "loads": 854,
+        "uniqueDeliveredChunks": 788,
+        "unloads": 854,
+        "residentChunks": 201,
+        "nativeMovementTicks": 1078,
+        "chunkWaitTicks": 0,
+        "nativeDistance": 807.975977780345,
+        "maxStep": 0.750000000000005,
+        "serverPositionAcknowledged": true,
+        "terrainRenderComplete": true,
+        "renderedAtTarget": true,
+        "heapUsed": 3700105160,
+        "camera": [
+          -107.751889,
+          49.131391,
+          69.983492,
+          -4e-06,
+          6.225831
+        ],
+        "probe": [
+          -108,
+          50,
+          75
+        ],
+        "probeState": "Block{bloodborne_dw:source_hold_statue}[open=false,profile=base,rotation=0,variant=1]",
+        "requiredChunkEvidence": [
+          {
+            "cx": -7,
+            "cz": 4,
+            "full": true,
+            "deliveryObserved": true
+          }
+        ],
+        "countersAtStart": {
+          "ownerPackets": 42,
+          "ownerPayloadBytes": 763545,
+          "terrainUpdates": {
+            "overhangVisibilityAdditions": 14604,
+            "overhangNeighbourSectionRadius": 4,
+            "pendingWholeView": false,
+            "compiledNoOpHelperExclusions": 1975,
+            "overhangVisibilitySectionScans": 7448781,
+            "pendingSectionUpdates": 0,
+            "visibleOverhangSectionsLast": 6,
+            "overhangRebuilds": 18838
+          },
+          "terrain": {
+            "ownedTerrainCpuMeshBytes": 0,
+            "sectionBuiltOwnedRoots": 227,
+            "regionRejectedSnapshots": 0,
+            "ownedTerrainSeparateGpuBytes": 0,
+            "scope": "ALL_IMMOBILE_SOURCE_ROOTS",
+            "bypassedBerFrames": 0,
+            "sectionBuiltOwnedParts": 232,
+            "missingRenderSnapshots": 0,
+            "fallbackFrames": 38941,
+            "updates": {
+              "overhangVisibilityAdditions": 14604,
+              "overhangNeighbourSectionRadius": 4,
+              "pendingWholeView": false,
+              "compiledNoOpHelperExclusions": 1975,
+              "overhangVisibilitySectionScans": 7448781,
+              "pendingSectionUpdates": 0,
+              "visibleOverhangSectionsLast": 6,
+              "overhangRebuilds": 18838
+            }
+          },
+          "snapshots": {
+            "shapeSnapshotChunks": 22,
+            "shapeSnapshotCells": 1328,
+            "shapeSnapshotPendingCells": 0,
+            "shapeSnapshotBatchDepth": 0,
+            "sourceCarrierLightChecks": 0,
+            "shapeSnapshotPublications": 82,
+            "shapeSnapshotPublishedCells": 2076,
+            "shapeSnapshotCopiedChunks": 82,
+            "shapeSnapshotUnchangedPublications": 0
+          }
+        },
+        "counters": {
+          "ownerPackets": 342,
+          "ownerPayloadBytes": 8189624,
+          "terrainUpdates": {
+            "overhangVisibilityAdditions": 48476,
+            "overhangNeighbourSectionRadius": 4,
+            "pendingWholeView": false,
+            "compiledNoOpHelperExclusions": 10810,
+            "overhangVisibilitySectionScans": 13135774,
+            "pendingSectionUpdates": 0,
+            "visibleOverhangSectionsLast": 8,
+            "overhangRebuilds": 83842
+          },
+          "terrain": {
+            "ownedTerrainCpuMeshBytes": 0,
+            "sectionBuiltOwnedRoots": 3409,
+            "regionRejectedSnapshots": 0,
+            "ownedTerrainSeparateGpuBytes": 0,
+            "scope": "ALL_IMMOBILE_SOURCE_ROOTS",
+            "bypassedBerFrames": 0,
+            "sectionBuiltOwnedParts": 3639,
+            "missingRenderSnapshots": 0,
+            "fallbackFrames": 387221,
+            "updates": {
+              "overhangVisibilityAdditions": 48476,
+              "overhangNeighbourSectionRadius": 4,
+              "pendingWholeView": false,
+              "compiledNoOpHelperExclusions": 10810,
+              "overhangVisibilitySectionScans": 13135774,
+              "pendingSectionUpdates": 0,
+              "visibleOverhangSectionsLast": 8,
+              "overhangRebuilds": 83842
+            }
+          },
+          "snapshots": {
+            "shapeSnapshotChunks": 70,
+            "shapeSnapshotCells": 5486,
+            "shapeSnapshotPendingCells": 0,
+            "shapeSnapshotBatchDepth": 0,
+            "sourceCarrierLightChecks": 0,
+            "shapeSnapshotPublications": 631,
+            "shapeSnapshotPublishedCells": 21297,
+            "shapeSnapshotCopiedChunks": 631,
+            "shapeSnapshotUnchangedPublications": 0
+          }
+        },
+        "glRenderer": "NVIDIA GeForce RTX 3070 Laptop GPU/PCIe/SSE2",
+        "glVendor": "NVIDIA Corporation"
+      },
+      {
+        "phase": "final-statue-whole-side",
+        "startEpochNs": 1792831862557402050,
+        "endEpochNs": 1792831867156247450,
+        "clockAnchorUncertaintyNs": 3750,
+        "durationNs": 4598845400,
+        "frames": 273,
+        "requiredFullChunks": 1,
+        "loads": 0,
+        "uniqueDeliveredChunks": 0,
+        "unloads": 0,
+        "residentChunks": 201,
+        "nativeMovementTicks": 5,
+        "chunkWaitTicks": 0,
+        "nativeDistance": 3.1726115635736125,
+        "maxStep": 0.7499999999999967,
+        "serverPositionAcknowledged": true,
+        "terrainRenderComplete": true,
+        "renderedAtTarget": true,
+        "heapUsed": 3443875928,
+        "camera": [
+          -110.501889,
+          50.531391,
+          70.720353,
+          -30.000005,
+          19.983109
+        ],
+        "probe": [
+          -108,
+          50,
+          75
+        ],
+        "probeState": "Block{bloodborne_dw:source_hold_statue}[open=false,profile=base,rotation=0,variant=1]",
+        "requiredChunkEvidence": [
+          {
+            "cx": -7,
+            "cz": 4,
+            "full": true,
+            "deliveryObserved": true
+          }
+        ],
+        "countersAtStart": {
+          "ownerPackets": 342,
+          "ownerPayloadBytes": 8189624,
+          "terrainUpdates": {
+            "overhangVisibilityAdditions": 48476,
+            "overhangNeighbourSectionRadius": 4,
+            "pendingWholeView": false,
+            "compiledNoOpHelperExclusions": 10810,
+            "overhangVisibilitySectionScans": 13135774,
+            "pendingSectionUpdates": 0,
+            "visibleOverhangSectionsLast": 8,
+            "overhangRebuilds": 83842
+          },
+          "terrain": {
+            "ownedTerrainCpuMeshBytes": 0,
+            "sectionBuiltOwnedRoots": 3409,
+            "regionRejectedSnapshots": 0,
+            "ownedTerrainSeparateGpuBytes": 0,
+            "scope": "ALL_IMMOBILE_SOURCE_ROOTS",
+            "bypassedBerFrames": 0,
+            "sectionBuiltOwnedParts": 3639,
+            "missingRenderSnapshots": 0,
+            "fallbackFrames": 387881,
+            "updates": {
+              "overhangVisibilityAdditions": 48476,
+              "overhangNeighbourSectionRadius": 4,
+              "pendingWholeView": false,
+              "compiledNoOpHelperExclusions": 10810,
+              "overhangVisibilitySectionScans": 13135774,
+              "pendingSectionUpdates": 0,
+              "visibleOverhangSectionsLast": 8,
+              "overhangRebuilds": 83842
+            }
+          },
+          "snapshots": {
+            "shapeSnapshotChunks": 70,
+            "shapeSnapshotCells": 5486,
+            "shapeSnapshotPendingCells": 0,
+            "shapeSnapshotBatchDepth": 0,
+            "sourceCarrierLightChecks": 0,
+            "shapeSnapshotPublications": 631,
+            "shapeSnapshotPublishedCells": 21297,
+            "shapeSnapshotCopiedChunks": 631,
+            "shapeSnapshotUnchangedPublications": 0
+          }
+        },
+        "counters": {
+          "ownerPackets": 342,
+          "ownerPayloadBytes": 8189624,
+          "terrainUpdates": {
+            "overhangVisibilityAdditions": 48669,
+            "overhangNeighbourSectionRadius": 4,
+            "pendingWholeView": false,
+            "compiledNoOpHelperExclusions": 10823,
+            "overhangVisibilitySectionScans": 13213893,
+            "pendingSectionUpdates": 0,
+            "visibleOverhangSectionsLast": 8,
+            "overhangRebuilds": 83842
+          },
+          "terrain": {
+            "ownedTerrainCpuMeshBytes": 0,
+            "sectionBuiltOwnedRoots": 3409,
+            "regionRejectedSnapshots": 0,
+            "ownedTerrainSeparateGpuBytes": 0,
+            "scope": "ALL_IMMOBILE_SOURCE_ROOTS",
+            "bypassedBerFrames": 0,
+            "sectionBuiltOwnedParts": 3639,
+            "missingRenderSnapshots": 0,
+            "fallbackFrames": 418569,
+            "updates": {
+              "overhangVisibilityAdditions": 48669,
+              "overhangNeighbourSectionRadius": 4,
+              "pendingWholeView": false,
+              "compiledNoOpHelperExclusions": 10823,
+              "overhangVisibilitySectionScans": 13213893,
+              "pendingSectionUpdates": 0,
+              "visibleOverhangSectionsLast": 8,
+              "overhangRebuilds": 83842
+            }
+          },
+          "snapshots": {
+            "shapeSnapshotChunks": 70,
+            "shapeSnapshotCells": 5486,
+            "shapeSnapshotPendingCells": 0,
+            "shapeSnapshotBatchDepth": 0,
+            "sourceCarrierLightChecks": 0,
+            "shapeSnapshotPublications": 631,
+            "shapeSnapshotPublishedCells": 21297,
+            "shapeSnapshotCopiedChunks": 631,
+            "shapeSnapshotUnchangedPublications": 0
+          }
+        },
+        "glRenderer": "NVIDIA GeForce RTX 3070 Laptop GPU/PCIe/SSE2",
+        "glVendor": "NVIDIA Corporation"
+      },
+      {
+        "phase": "final-sprite-tree-front",
+        "startEpochNs": 1792831867261834900,
+        "endEpochNs": 1792831900102165800,
+        "clockAnchorUncertaintyNs": 4600,
+        "durationNs": 32840330900,
+        "frames": 1548,
+        "requiredFullChunks": 2,
+        "loads": 360,
+        "uniqueDeliveredChunks": 341,
+        "unloads": 360,
+        "residentChunks": 201,
+        "nativeMovementTicks": 444,
+        "chunkWaitTicks": 0,
+        "nativeDistance": 332.8797576300611,
+        "maxStep": 0.7500000000000069,
+        "serverPositionAcknowledged": true,
+        "terrainRenderComplete": true,
+        "renderedAtTarget": true,
+        "heapUsed": 3653074888,
+        "camera": [
+          217.5,
+          53.08,
+          14.0,
+          -0.0,
+          12.308016
+        ],
+        "probe": [
+          217,
+          53,
+          19
+        ],
+        "probeState": "Block{bloodborne_dw:source_original_tree}[open=false,profile=base,rotation=6,variant=6]",
+        "requiredChunkEvidence": [
+          {
+            "cx": 13,
+            "cz": 0,
+            "full": true,
+            "deliveryObserved": true
+          },
+          {
+            "cx": 13,
+            "cz": 1,
+            "full": true,
+            "deliveryObserved": true
+          }
+        ],
+        "countersAtStart": {
+          "ownerPackets": 342,
+          "ownerPayloadBytes": 8189624,
+          "terrainUpdates": {
+            "overhangVisibilityAdditions": 48669,
+            "overhangNeighbourSectionRadius": 4,
+            "pendingWholeView": false,
+            "compiledNoOpHelperExclusions": 10823,
+            "overhangVisibilitySectionScans": 13213893,
+            "pendingSectionUpdates": 0,
+            "visibleOverhangSectionsLast": 8,
+            "overhangRebuilds": 83842
+          },
+          "terrain": {
+            "ownedTerrainCpuMeshBytes": 0,
+            "sectionBuiltOwnedRoots": 3409,
+            "regionRejectedSnapshots": 0,
+            "ownedTerrainSeparateGpuBytes": 0,
+            "scope": "ALL_IMMOBILE_SOURCE_ROOTS",
+            "bypassedBerFrames": 0,
+            "sectionBuiltOwnedParts": 3639,
+            "missingRenderSnapshots": 0,
+            "fallbackFrames": 419241,
+            "updates": {
+              "overhangVisibilityAdditions": 48669,
+              "overhangNeighbourSectionRadius": 4,
+              "pendingWholeView": false,
+              "compiledNoOpHelperExclusions": 10823,
+              "overhangVisibilitySectionScans": 13213893,
+              "pendingSectionUpdates": 0,
+              "visibleOverhangSectionsLast": 8,
+              "overhangRebuilds": 83842
+            }
+          },
+          "snapshots": {
+            "shapeSnapshotChunks": 70,
+            "shapeSnapshotCells": 5486,
+            "shapeSnapshotPendingCells": 0,
+            "shapeSnapshotBatchDepth": 0,
+            "sourceCarrierLightChecks": 0,
+            "shapeSnapshotPublications": 631,
+            "shapeSnapshotPublishedCells": 21297,
+            "shapeSnapshotCopiedChunks": 631,
+            "shapeSnapshotUnchangedPublications": 0
+          }
+        },
+        "counters": {
+          "ownerPackets": 520,
+          "ownerPayloadBytes": 12810217,
+          "terrainUpdates": {
+            "overhangVisibilityAdditions": 60443,
+            "overhangNeighbourSectionRadius": 4,
+            "pendingWholeView": false,
+            "compiledNoOpHelperExclusions": 16966,
+            "overhangVisibilitySectionScans": 15529158,
+            "pendingSectionUpdates": 0,
+            "visibleOverhangSectionsLast": 0,
+            "overhangRebuilds": 127510
+          },
+          "terrain": {
+            "ownedTerrainCpuMeshBytes": 0,
+            "sectionBuiltOwnedRoots": 8560,
+            "regionRejectedSnapshots": 0,
+            "ownedTerrainSeparateGpuBytes": 0,
+            "scope": "ALL_IMMOBILE_SOURCE_ROOTS",
+            "bypassedBerFrames": 0,
+            "sectionBuiltOwnedParts": 8934,
+            "missingRenderSnapshots": 0,
+            "fallbackFrames": 599093,
+            "updates": {
+              "overhangVisibilityAdditions": 60443,
+              "overhangNeighbourSectionRadius": 4,
+              "pendingWholeView": false,
+              "compiledNoOpHelperExclusions": 16966,
+              "overhangVisibilitySectionScans": 15529158,
+              "pendingSectionUpdates": 0,
+              "visibleOverhangSectionsLast": 0,
+              "overhangRebuilds": 127510
+            }
+          },
+          "snapshots": {
+            "shapeSnapshotChunks": 94,
+            "shapeSnapshotCells": 8240,
+            "shapeSnapshotPendingCells": 0,
+            "shapeSnapshotBatchDepth": 0,
+            "sourceCarrierLightChecks": 0,
+            "shapeSnapshotPublications": 961,
+            "shapeSnapshotPublishedCells": 32971,
+            "shapeSnapshotCopiedChunks": 961,
+            "shapeSnapshotUnchangedPublications": 0
+          }
+        },
+        "glRenderer": "NVIDIA GeForce RTX 3070 Laptop GPU/PCIe/SSE2",
+        "glVendor": "NVIDIA Corporation"
+      },
+      {
+        "phase": "final-sprite-tree-reverse",
+        "startEpochNs": 1792831900202083400,
+        "endEpochNs": 1792831909911639500,
+        "clockAnchorUncertaintyNs": 4500,
+        "durationNs": 9709556100,
+        "frames": 565,
+        "requiredFullChunks": 1,
+        "loads": 15,
+        "uniqueDeliveredChunks": 15,
+        "unloads": 15,
+        "residentChunks": 201,
+        "nativeMovementTicks": 15,
+        "chunkWaitTicks": 0,
+        "nativeDistance": 11.06526095489844,
+        "maxStep": 0.7500000000000008,
+        "serverPositionAcknowledged": true,
+        "terrainRenderComplete": true,
+        "renderedAtTarget": true,
+        "heapUsed": 3706362312,
+        "camera": [
+          217.5,
+          51.88,
+          25.0,
+          -180.0,
+          -0.0
+        ],
+        "probe": [
+          217,
+          53,
+          19
+        ],
+        "probeState": "Block{bloodborne_dw:source_original_tree}[open=false,profile=base,rotation=6,variant=6]",
+        "requiredChunkEvidence": [
+          {
+            "cx": 13,
+            "cz": 1,
+            "full": true,
+            "deliveryObserved": true
+          }
+        ],
+        "countersAtStart": {
+          "ownerPackets": 520,
+          "ownerPayloadBytes": 12810217,
+          "terrainUpdates": {
+            "overhangVisibilityAdditions": 60443,
+            "overhangNeighbourSectionRadius": 4,
+            "pendingWholeView": false,
+            "compiledNoOpHelperExclusions": 16966,
+            "overhangVisibilitySectionScans": 15529158,
+            "pendingSectionUpdates": 0,
+            "visibleOverhangSectionsLast": 0,
+            "overhangRebuilds": 127510
+          },
+          "terrain": {
+            "ownedTerrainCpuMeshBytes": 0,
+            "sectionBuiltOwnedRoots": 8560,
+            "regionRejectedSnapshots": 0,
+            "ownedTerrainSeparateGpuBytes": 0,
+            "scope": "ALL_IMMOBILE_SOURCE_ROOTS",
+            "bypassedBerFrames": 0,
+            "sectionBuiltOwnedParts": 8934,
+            "missingRenderSnapshots": 0,
+            "fallbackFrames": 599807,
+            "updates": {
+              "overhangVisibilityAdditions": 60443,
+              "overhangNeighbourSectionRadius": 4,
+              "pendingWholeView": false,
+              "compiledNoOpHelperExclusions": 16966,
+              "overhangVisibilitySectionScans": 15529158,
+              "pendingSectionUpdates": 0,
+              "visibleOverhangSectionsLast": 0,
+              "overhangRebuilds": 127510
+            }
+          },
+          "snapshots": {
+            "shapeSnapshotChunks": 94,
+            "shapeSnapshotCells": 8240,
+            "shapeSnapshotPendingCells": 0,
+            "shapeSnapshotBatchDepth": 0,
+            "sourceCarrierLightChecks": 0,
+            "shapeSnapshotPublications": 961,
+            "shapeSnapshotPublishedCells": 32971,
+            "shapeSnapshotCopiedChunks": 961,
+            "shapeSnapshotUnchangedPublications": 0
+          }
+        },
+        "counters": {
+          "ownerPackets": 523,
+          "ownerPayloadBytes": 12959530,
+          "terrainUpdates": {
+            "overhangVisibilityAdditions": 67917,
+            "overhangNeighbourSectionRadius": 4,
+            "pendingWholeView": false,
+            "compiledNoOpHelperExclusions": 18266,
+            "overhangVisibilitySectionScans": 16270118,
+            "pendingSectionUpdates": 0,
+            "visibleOverhangSectionsLast": 12,
+            "overhangRebuilds": 128749
+          },
+          "terrain": {
+            "ownedTerrainCpuMeshBytes": 0,
+            "sectionBuiltOwnedRoots": 9199,
+            "regionRejectedSnapshots": 0,
+            "ownedTerrainSeparateGpuBytes": 0,
+            "scope": "ALL_IMMOBILE_SOURCE_ROOTS",
+            "bypassedBerFrames": 0,
+            "sectionBuiltOwnedParts": 9702,
+            "missingRenderSnapshots": 0,
+            "fallbackFrames": 670890,
+            "updates": {
+              "overhangVisibilityAdditions": 67917,
+              "overhangNeighbourSectionRadius": 4,
+              "pendingWholeView": false,
+              "compiledNoOpHelperExclusions": 18266,
+              "overhangVisibilitySectionScans": 16270118,
+              "pendingSectionUpdates": 0,
+              "visibleOverhangSectionsLast": 12,
+              "overhangRebuilds": 128749
+            }
+          },
+          "snapshots": {
+            "shapeSnapshotChunks": 90,
+            "shapeSnapshotCells": 7717,
+            "shapeSnapshotPendingCells": 0,
+            "shapeSnapshotBatchDepth": 0,
+            "sourceCarrierLightChecks": 0,
+            "shapeSnapshotPublications": 966,
+            "shapeSnapshotPublishedCells": 33216,
+            "shapeSnapshotCopiedChunks": 966,
+            "shapeSnapshotUnchangedPublications": 0
+          }
+        },
+        "glRenderer": "NVIDIA GeForce RTX 3070 Laptop GPU/PCIe/SSE2",
+        "glVendor": "NVIDIA Corporation"
+      },
+      {
+        "phase": "final-remote-facade",
+        "startEpochNs": 1792831910013565500,
+        "endEpochNs": 1792831986597526100,
+        "clockAnchorUncertaintyNs": 5000,
+        "durationNs": 76583960600,
+        "frames": 3685,
+        "requiredFullChunks": 2,
+        "loads": 927,
+        "uniqueDeliveredChunks": 908,
+        "unloads": 927,
+        "residentChunks": 201,
+        "nativeMovementTicks": 1318,
+        "chunkWaitTicks": 0,
+        "nativeDistance": 987.7997154094421,
+        "maxStep": 0.7500000000000017,
+        "serverPositionAcknowledged": true,
+        "terrainRenderComplete": true,
+        "renderedAtTarget": true,
+        "heapUsed": 3591844808,
+        "camera": [
+          272.848,
+          63.6296,
+          -903.327,
+          120.3,
+          -3.5
+        ],
+        "probe": [
+          253,
+          66,
+          -915
+        ],
+        "probeState": "Block{bloodborne_dw:native_grid_1192}[part=19]",
+        "requiredChunkEvidence": [
+          {
+            "cx": 17,
+            "cz": -57,
+            "full": true,
+            "deliveryObserved": true
+          },
+          {
+            "cx": 15,
+            "cz": -58,
+            "full": true,
+            "deliveryObserved": true
+          }
+        ],
+        "countersAtStart": {
+          "ownerPackets": 523,
+          "ownerPayloadBytes": 12959530,
+          "terrainUpdates": {
+            "overhangVisibilityAdditions": 67917,
+            "overhangNeighbourSectionRadius": 4,
+            "pendingWholeView": false,
+            "compiledNoOpHelperExclusions": 18266,
+            "overhangVisibilitySectionScans": 16270118,
+            "pendingSectionUpdates": 0,
+            "visibleOverhangSectionsLast": 12,
+            "overhangRebuilds": 128749
+          },
+          "terrain": {
+            "ownedTerrainCpuMeshBytes": 0,
+            "sectionBuiltOwnedRoots": 9199,
+            "regionRejectedSnapshots": 0,
+            "ownedTerrainSeparateGpuBytes": 0,
+            "scope": "ALL_IMMOBILE_SOURCE_ROOTS",
+            "bypassedBerFrames": 0,
+            "sectionBuiltOwnedParts": 9702,
+            "missingRenderSnapshots": 0,
+            "fallbackFrames": 671640,
+            "updates": {
+              "overhangVisibilityAdditions": 67917,
+              "overhangNeighbourSectionRadius": 4,
+              "pendingWholeView": false,
+              "compiledNoOpHelperExclusions": 18266,
+              "overhangVisibilitySectionScans": 16270118,
+              "pendingSectionUpdates": 0,
+              "visibleOverhangSectionsLast": 12,
+              "overhangRebuilds": 128749
+            }
+          },
+          "snapshots": {
+            "shapeSnapshotChunks": 90,
+            "shapeSnapshotCells": 7717,
+            "shapeSnapshotPendingCells": 0,
+            "shapeSnapshotBatchDepth": 0,
+            "sourceCarrierLightChecks": 0,
+            "shapeSnapshotPublications": 966,
+            "shapeSnapshotPublishedCells": 33216,
+            "shapeSnapshotCopiedChunks": 966,
+            "shapeSnapshotUnchangedPublications": 0
+          }
+        },
+        "counters": {
+          "ownerPackets": 1141,
+          "ownerPayloadBytes": 27104665,
+          "terrainUpdates": {
+            "overhangVisibilityAdditions": 99255,
+            "overhangNeighbourSectionRadius": 4,
+            "pendingWholeView": false,
+            "compiledNoOpHelperExclusions": 41679,
+            "overhangVisibilitySectionScans": 23414064,
+            "pendingSectionUpdates": 0,
+            "visibleOverhangSectionsLast": 0,
+            "overhangRebuilds": 212091
+          },
+          "terrain": {
+            "ownedTerrainCpuMeshBytes": 0,
+            "sectionBuiltOwnedRoots": 18338,
+            "regionRejectedSnapshots": 0,
+            "ownedTerrainSeparateGpuBytes": 0,
+            "scope": "ALL_IMMOBILE_SOURCE_ROOTS",
+            "bypassedBerFrames": 0,
+            "sectionBuiltOwnedParts": 19579,
+            "missingRenderSnapshots": 0,
+            "fallbackFrames": 1191256,
+            "updates": {
+              "overhangVisibilityAdditions": 99255,
+              "overhangNeighbourSectionRadius": 4,
+              "pendingWholeView": false,
+              "compiledNoOpHelperExclusions": 41679,
+              "overhangVisibilitySectionScans": 23414064,
+              "pendingSectionUpdates": 0,
+              "visibleOverhangSectionsLast": 0,
+              "overhangRebuilds": 212091
+            }
+          },
+          "snapshots": {
+            "shapeSnapshotChunks": 142,
+            "shapeSnapshotCells": 14624,
+            "shapeSnapshotPendingCells": 0,
+            "shapeSnapshotBatchDepth": 0,
+            "sourceCarrierLightChecks": 0,
+            "shapeSnapshotPublications": 2082,
+            "shapeSnapshotPublishedCells": 92131,
+            "shapeSnapshotCopiedChunks": 2082,
+            "shapeSnapshotUnchangedPublications": 0
+          }
+        },
+        "glRenderer": "NVIDIA GeForce RTX 3070 Laptop GPU/PCIe/SSE2",
+        "glVendor": "NVIDIA Corporation"
+      }
+    ],
+    "initialUtc": "2026-10-24T08:48:23.945244100Z",
+    "functionalHeapOverride": {
+      "clientHeap": "4G",
+      "baseClientHeap": "3G",
+      "serverHeap": "4G"
+    },
+    "functionalRendererOverride": {
+      "backend": "fabric-indigo",
+      "excludedClientMods": [
+        {
+          "file": "indium-1.0.36+mc1.20.1.jar",
+          "id": "indium",
+          "sha256": "8434d0abc8826e2540c26741fea45a1ab9d48f650746de282b36850fa1d01999"
+        },
+        {
+          "file": "sodium-fabric-0.5.11+mc1.20.1.jar",
+          "id": "sodium",
+          "sha256": "5413baaa260a2eadcee4221b8e7105a8e2a9b5b2c84b73f704f2740319aab7df"
+        }
+      ]
+    },
+    "gameDir": "C:/Users/vakir/.codex/worktrees/3f07/DW-native-grid-city-20261022/research/profiles/candidate/client",
+    "clientMeasurements": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\final-route\\actual-full-route-indigo\\client\\client-frames.csv",
+      "sha256": "767e6c66aaf6db0b658a5f27143a71241d7eb167a54898f9c89a7091844e1728"
+    },
+    "serverMeasurements": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\final-route\\actual-full-route-indigo\\server\\server-ticks.csv",
+      "sha256": "db223556311e659608dd946b291dfc9f04f32a48f0dfee56222e48c3ef871ea0"
+    }
+  },
+  "actualReopenRoute": {
+    "receipt": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\final-route\\actual-full-reopen-indigo\\receipt.json",
+      "sha256": "625d3aca57cc93b91359893e967da14174b179209ed000d74e4eab2020d1045c"
+    },
+    "binding": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\final-route\\actual-full-reopen-indigo\\binding.json",
+      "sha256": "ad6ccea5a5ecad29bad8f1221a9779868d8b82b38581c213043c9b5eb87e6d9f"
+    },
+    "client": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\final-route\\actual-full-reopen-indigo\\client\\client-route.json",
+      "sha256": "dd0e363b263bd05464146f152e3d08ac55a2d3c4e50644153e9c86d42a36b4df"
+    },
+    "server": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\final-route\\actual-full-reopen-indigo\\server\\server-route.json",
+      "sha256": "bae469bd9c7dc05775aec8c4058d1a712329eb024f8f26a9886174e60f7a09a8"
+    },
+    "plan": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\final-route\\reopen-route.json",
+      "sha256": "a2738fa03d83c24d4f48f623968929075908dbcee3b1818928e2b801c4e83752"
+    },
+    "phases": [
+      {
+        "phase": "reopen-brick-wide",
+        "startEpochNs": 1792832602728454500,
+        "endEpochNs": 1792832613406109500,
+        "clockAnchorUncertaintyNs": 4500,
+        "durationNs": 10677655000,
+        "frames": 492,
+        "requiredFullChunks": 2,
+        "loads": 201,
+        "uniqueDeliveredChunks": 201,
+        "unloads": 91,
+        "residentChunks": 311,
+        "nativeMovementTicks": 0,
+        "chunkWaitTicks": 0,
+        "nativeDistance": 0.0,
+        "maxStep": 0.0,
+        "serverPositionAcknowledged": true,
+        "terrainRenderComplete": true,
+        "renderedAtTarget": true,
+        "heapUsed": 3548989680,
+        "camera": [
+          980.0,
+          100.0,
+          95.0,
+          44.36,
+          35.0
+        ],
+        "probe": [
+          940,
+          28,
+          129
+        ],
+        "probeState": "Block{bloodborne_dw:static_architecture_14}[part=112,waterlogged=false]",
+        "requiredChunkEvidence": [
+          {
+            "cx": 61,
+            "cz": 5,
+            "full": true,
+            "deliveryObserved": true
+          },
+          {
+            "cx": 58,
+            "cz": 8,
+            "full": true,
+            "deliveryObserved": true
+          }
+        ],
+        "countersAtStart": {
+          "ownerPackets": 171,
+          "ownerPayloadBytes": 3721984,
+          "terrainUpdates": {
+            "overhangVisibilityAdditions": 0,
+            "overhangRebuilds": 5357,
+            "visibleOverhangSectionsLast": 0,
+            "pendingSectionUpdates": 0,
+            "overhangVisibilitySectionScans": 32,
+            "compiledNoOpHelperExclusions": 0,
+            "pendingWholeView": false,
+            "overhangNeighbourSectionRadius": 4
+          },
+          "terrain": {
+            "updates": {
+              "overhangVisibilityAdditions": 0,
+              "overhangRebuilds": 5357,
+              "visibleOverhangSectionsLast": 0,
+              "pendingSectionUpdates": 0,
+              "overhangVisibilitySectionScans": 32,
+              "compiledNoOpHelperExclusions": 0,
+              "pendingWholeView": false,
+              "overhangNeighbourSectionRadius": 4
+            },
+            "fallbackFrames": 0,
+            "missingRenderSnapshots": 0,
+            "sectionBuiltOwnedParts": 0,
+            "bypassedBerFrames": 0,
+            "scope": "ALL_IMMOBILE_SOURCE_ROOTS",
+            "ownedTerrainSeparateGpuBytes": 0,
+            "regionRejectedSnapshots": 0,
+            "sectionBuiltOwnedRoots": 0,
+            "ownedTerrainCpuMeshBytes": 0
+          },
+          "snapshots": {
+            "shapeSnapshotChunks": 142,
+            "shapeSnapshotCells": 14624,
+            "shapeSnapshotPendingCells": 0,
+            "shapeSnapshotBatchDepth": 0,
+            "sourceCarrierLightChecks": 0,
+            "shapeSnapshotPublications": 311,
+            "shapeSnapshotPublishedCells": 16280,
+            "shapeSnapshotCopiedChunks": 311,
+            "shapeSnapshotUnchangedPublications": 0
+          }
+        },
+        "counters": {
+          "ownerPackets": 171,
+          "ownerPayloadBytes": 3721984,
+          "terrainUpdates": {
+            "overhangVisibilityAdditions": 1088,
+            "overhangRebuilds": 9763,
+            "visibleOverhangSectionsLast": 11,
+            "pendingSectionUpdates": 0,
+            "overhangVisibilitySectionScans": 320154,
+            "compiledNoOpHelperExclusions": 0,
+            "pendingWholeView": false,
+            "overhangNeighbourSectionRadius": 4
+          },
+          "terrain": {
+            "updates": {
+              "overhangVisibilityAdditions": 1088,
+              "overhangRebuilds": 9763,
+              "visibleOverhangSectionsLast": 11,
+              "pendingSectionUpdates": 0,
+              "overhangVisibilitySectionScans": 320154,
+              "compiledNoOpHelperExclusions": 0,
+              "pendingWholeView": false,
+              "overhangNeighbourSectionRadius": 4
+            },
+            "fallbackFrames": 0,
+            "missingRenderSnapshots": 0,
+            "sectionBuiltOwnedParts": 0,
+            "bypassedBerFrames": 0,
+            "scope": "ALL_IMMOBILE_SOURCE_ROOTS",
+            "ownedTerrainSeparateGpuBytes": 0,
+            "regionRejectedSnapshots": 0,
+            "sectionBuiltOwnedRoots": 0,
+            "ownedTerrainCpuMeshBytes": 0
+          },
+          "snapshots": {
+            "shapeSnapshotChunks": 84,
+            "shapeSnapshotCells": 8734,
+            "shapeSnapshotPendingCells": 0,
+            "shapeSnapshotBatchDepth": 0,
+            "sourceCarrierLightChecks": 0,
+            "shapeSnapshotPublications": 315,
+            "shapeSnapshotPublishedCells": 16367,
+            "shapeSnapshotCopiedChunks": 315,
+            "shapeSnapshotUnchangedPublications": 0
+          }
+        },
+        "glRenderer": "NVIDIA GeForce RTX 3070 Laptop GPU/PCIe/SSE2",
+        "glVendor": "NVIDIA Corporation"
+      }
+    ],
+    "initialUtc": "2026-10-24T09:03:21.743186Z",
+    "functionalHeapOverride": {
+      "clientHeap": "4G",
+      "baseClientHeap": "3G",
+      "serverHeap": "4G"
+    },
+    "functionalRendererOverride": {
+      "backend": "fabric-indigo",
+      "excludedClientMods": [
+        {
+          "file": "indium-1.0.36+mc1.20.1.jar",
+          "id": "indium",
+          "sha256": "8434d0abc8826e2540c26741fea45a1ab9d48f650746de282b36850fa1d01999"
+        },
+        {
+          "file": "sodium-fabric-0.5.11+mc1.20.1.jar",
+          "id": "sodium",
+          "sha256": "5413baaa260a2eadcee4221b8e7105a8e2a9b5b2c84b73f704f2740319aab7df"
+        }
+      ]
+    },
+    "gameDir": "C:/Users/vakir/.codex/worktrees/3f07/DW-native-grid-city-20261022/research/profiles/candidate/client",
+    "clientMeasurements": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\final-route\\actual-full-reopen-indigo\\client\\client-frames.csv",
+      "sha256": "64653b524d51966fe076fafe7329ba9677abebc0f66fc3800738fcce2ba6e429"
+    },
+    "serverMeasurements": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\final-route\\actual-full-reopen-indigo\\server\\server-ticks.csv",
+      "sha256": "9b7cc99b29e9765cc1486a07d871454685fd0f72962a8b09fe6265ff86f380a3"
+    }
+  },
+  "evidence": {
+    "production": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\runtime-history\\production-lazy-frapi-9b2edaa041331ff510df87ad1abd51b1de9a535f5768396bc04b6b5cf24d7d33.jar",
+      "sha256": "9b2edaa041331ff510df87ad1abd51b1de9a535f5768396bc04b6b5cf24d7d33"
+    },
+    "raw": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\native-grid-plan\\compositions.jsonl",
+      "sha256": "a36c2c4867323dfe82cc10c3233b8243771055714fa4371f5ccb6d28c1b124f7"
+    },
+    "functions": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\native-grid-plan\\full\\native-functions-post-local-final.json",
+      "sha256": "13d2b7aa057bff9f371df69c6688c49640ab72a21614829cd91f53d20fd2cc4a"
+    },
+    "coverage": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\native-grid-plan\\full-native-input-coverage.json",
+      "sha256": "d991cc03557ad8f8b8b0dfe555205d337b87a2dff437e9fed00bd7de98119579"
+    },
+    "catalogFreeze": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\native-grid-plan\\full\\frozen-catalog.whole-retained-final.json",
+      "sha256": "16493e1a3e79554f72e68c192c4834600e8d152b98ec970d6c556d5eef69c71b"
+    },
+    "jarCompatibility": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\native-grid-plan\\full\\full-jar-compatibility.windows-markers.final.json",
+      "sha256": "e03a049d1d19ccf71c112d5fd2d93c3721bedd8732965574a12911743d9bd1e1"
+    },
+    "targetAudit": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\native-grid-plan\\full\\target-bridge-audit.final\\bridge-carrier-gate.json",
+      "sha256": "fd5ed6369d2871c380a811e3f85cd9cbaeb0e43845a7813f494dc473ea7edb62"
+    },
+    "frozenApply": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\native-grid-plan\\frozen-inputs.json",
+      "sha256": "bffd160851dc04587a923e151dc355cd136ea729cf322b08b0377235591d8a94"
+    },
+    "marker": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\city\\bloodborne-native-grid-city\\NATIVE-GRID-MIGRATION.json",
+      "sha256": "86ec8fa22e9793f3b3075c0b5e143b40e5542ca2fe08225cc0e0d48555d2fe74"
+    },
+    "lightBinding": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\native-grid-plan\\relight-binding.json",
+      "sha256": "ba3ad4e6c832768b35f397497aab78ad902549fb660630618ef5613da6276fed"
+    },
+    "light": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\native-grid-plan\\full-city-relight-engine.json",
+      "sha256": "f3a6d038d70e7a7fc24af48e40b309ec188d2ffc9ffb3091a0d4df172e1bff5f"
+    },
+    "lightLaunch": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\native-grid-plan\\relight-launch-receipt.json",
+      "sha256": "0c467cebbf07ed461eb5654af55b2c19a867210350d1a03122311f923930aac6"
+    },
+    "preservedCoverage": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\native-grid-plan\\full\\preserved-assembly-final-coverage.json",
+      "sha256": "142f79644b6c3f74ffbf9fce1e2449f9c0c1524d8c8a9c064ab7dd9d740588b8"
+    },
+    "pilotAcceptance": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\pilot-gate.json",
+      "sha256": "18b059b33f64f23c7bee97268b6fed30731f547299f23d8d002f242aedf6168a"
+    },
+    "pairComparison": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\pilot\\comparison.json",
+      "sha256": "a01642c34bf3ad24d53f5b9d30055b97387ed746d996dd246a973b1583c29e8e"
+    },
+    "profile": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\profiles\\profile-lock.json",
+      "sha256": "285757deaeafd752468dc50a79b0bc4e78fa7ce23b444cf8089d69539fa161d0"
+    },
+    "recorder": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\profiles\\benchmark-helper.json",
+      "sha256": "29a5e45fea19ee201e82bf2ffc5922d7db1d3e8b104cb227760c64017fc237d0"
+    },
+    "foreignInstall": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\native-grid-plan\\full\\foreign-guest-install.final\\functions.json",
+      "sha256": "23ab42446342b6e2d12b28c96ca6e385b5e88d260cae4ff5b04c124ac1a2cb82"
+    },
+    "foreignInstallPlan": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\native-grid-plan\\full\\foreign-guest-install.plan.final.json",
+      "sha256": "d16af8f31631c1c40cfd2c4e6d71bf3d3ba5f8a1be2b2f0c81080f7f78524eb6"
+    },
+    "foreignReopen": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\native-grid-plan\\full\\foreign-guest-reopen.transport-restored.final\\functions.json",
+      "sha256": "529164442d36913bcc3fe597802d36b0fdb268327bce3ad6f77c34d21bcfa0d7"
+    },
+    "foreignReopenPlan": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\native-grid-plan\\full\\foreign-guest-reopen.plan.transport-restored.final.json",
+      "sha256": "a37fa5287aff05562473060b75a30275b609fed2f111053792e679ce915fc20d"
+    },
+    "finalRoute": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\final-route\\actual-full-route-indigo\\receipt.json",
+      "sha256": "440d74ef3dfa8b4791d96f980fd4248919656909a590008acd53011e3fa858ac"
+    },
+    "finalRoutePlan": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\final-route\\route.json",
+      "sha256": "db664f2989323a49f52287c09ed9f855621a6028e65e15f51c73a2eb56627989"
+    },
+    "reopenRoute": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\final-route\\actual-full-reopen-indigo\\receipt.json",
+      "sha256": "625d3aca57cc93b91359893e967da14174b179209ed000d74e4eab2020d1045c"
+    },
+    "reopenRoutePlan": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\final-route\\reopen-route.json",
+      "sha256": "a2738fa03d83c24d4f48f623968929075908dbcee3b1818928e2b801c4e83752"
+    },
+    "visualReview": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\delivery\\full-route-visual-review.json",
+      "sha256": "4819cac4dc543a9b6e9032310a6aabbadc4d122cbe15bced12153c701a1ef0a2"
+    },
+    "deliveryReview": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\delivery\\final-delivery-review.json",
+      "sha256": "b84a12276c12b7a603ac01485e69a22590fb50bb87d99f22c6f1a5c4569a94fc"
+    }
+  },
+  "checkedFiles": {
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\runtime-history\\production-lazy-frapi-9b2edaa041331ff510df87ad1abd51b1de9a535f5768396bc04b6b5cf24d7d33.jar": "9b2edaa041331ff510df87ad1abd51b1de9a535f5768396bc04b6b5cf24d7d33",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\native-client-cache\\runtime-lineage.json": "1064213edab85b28ac315a04b30504aea4509a1c69a450ee7dd396833392c0d8",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\runtime-history\\production-full-ac56c8643cf46c245793191c0e5c099d95f755160b0a7109b2d6d6f5091ed0aa.jar": "ac56c8643cf46c245793191c0e5c099d95f755160b0a7109b2d6d6f5091ed0aa",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\source\\tools\\native-grid\\qa\\client_runtime_lineage.py": "d6dcf8233750e7ce3135e76f8d6b969fe896ef998e56f79f1975dd2384bc9132",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\source\\src\\architecture\\java\\dev\\dreamwalker\\bloodbornedw\\composite\\NativeGridClient.java": "82f35d53f38b25c80702ceba14772d31ea667cf0f753dad70df1cf4a35199e89",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\native-client-cache\\root-source-review.json": "5b47ff2eb458a7467a99f6c978b01162ebb6be6ffeec131b0c993dcf653cdf25",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\native-client-cache\\NativeGridClient.before.java": "72b08c63b81c9fa409641a574f1e2797fac38bdb0664ebd28b0dc675bfc4822d",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\native-grid-plan\\full\\frozen-catalog.whole-retained-final.json": "16493e1a3e79554f72e68c192c4834600e8d152b98ec970d6c556d5eef69c71b",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\native-grid-plan\\full\\full-jar-compatibility.windows-markers.final.json": "e03a049d1d19ccf71c112d5fd2d93c3721bedd8732965574a12911743d9bd1e1",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\native-grid-plan\\full-native-input-coverage.json": "d991cc03557ad8f8b8b0dfe555205d337b87a2dff437e9fed00bd7de98119579",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\native-grid-plan\\full\\native-functions-post-local-final.json": "13d2b7aa057bff9f371df69c6688c49640ab72a21614829cd91f53d20fd2cc4a",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\source\\src\\architecture\\resources\\assets\\bloodborne_dw\\native_grid\\catalog.json": "c2f9e74e54c0298c68b0c8d765a1c595baed949b3d99e1a42d686535c55c07ff",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\source\\src\\architecture\\resources\\assets\\bloodborne_dw\\native_grid\\meshes.bin": "4042514fdecaafa5291086c106004841859fa21ccea15b1ced638532465cd608",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\native-grid-plan\\full\\prefix-after-append.qualified-final.json": "65afb0c709d64deab76193664d035c9f2759c9496d4964d2ad0daeae4a9a5285",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\native-grid-plan\\full\\append-input-binding.whole-retained-final.json": "37b09868056727e88d2ce78e98a1e1c3d64657af1c8349831f409edbbda19f89",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\type-mapping.jsonl": "4f9451da785efe8d5a8c5b637bda9dd109acde7fbd89dda90de4accd530c1a88",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\source\\src\\architecture\\resources\\assets\\bloodborne_dw\\native_grid\\compiler-receipt.json": "bf62e6f4cc3e1c4b4f44d0c16aeb6706d99b26e2f1d8f90c34793c68c97d28f7",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\native-grid-plan\\full\\catalog-bridge-proof.whole-retained-final.json": "b4ed44463a4c9ec2bd702c408bec7d91ef22e2d6a1104424f313338c9cdab2b0",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\native-grid-plan\\full\\catalog-stats.qualified-final.json": "c2cf39017f515e9a5f319e246e8caf98933202db9515799e50758357adc0d3d1",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\runtime-history\\production-99f4-bridge-detach.jar": "99f450f814d187cf089a7fe523a5db5928cfafcb273c4ac1c4479f2df50bbde3",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\native-grid-plan\\full\\retained-whole-runtime-class-patch.final.json": "880595343cf47747b89409ec0ca0395af1c46719e7f2c73e163d239e74ea6c16",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\retained-whole-items-runtime\\root-source-review.json": "707149fb841e5ea8a028e267ae43fc4759169b04878ff7bd518977c53036ed57",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\retained-whole-items-runtime\\source-delta-proof.json": "55cb87a32c8adc9cf204bff3fe6f97ead64fe89bc376f161da769749b488437e",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\source\\src\\architecture\\java\\dev\\dreamwalker\\bloodbornedw\\composite\\NativeGridRetainedWholeItems.java": "220ab534a1eea0388bd3467518e2d2ed3ad6176010c7e2e7cd0bbdffe85f93ae",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\source\\src\\architecture\\java\\dev\\dreamwalker\\bloodbornedw\\composite\\StaticArchitectureRuntime.java": "520e480f9eba42109ed997480f5af196ce4d4e8cc27aec1e7135e2a29398d88a",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\source\\src\\architecture\\java\\dev\\dreamwalker\\bloodbornedw\\composite\\CompositeClient.java": "d76f65f2ef13024fd647cd55db64de003df3dd7c98a8a9f4e3758865f37f5d30",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\source\\src\\architecture\\java\\dev\\dreamwalker\\bloodbornedw\\composite\\mixin\\StaticArchitectureBreakMixin.java": "d09d52e1026cb2f673a08920c0f223171fadf46eb3e8215cb6e2d91920f84391",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\retained-whole-items-runtime\\before\\StaticArchitectureRuntime.java": "73572e0d6d4d2ba5e56439b330e259ace343c56a7999fe0fa3d4c782b5bcd51d",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\retained-whole-items-runtime\\before\\CompositeClient.java": "aef8d30ab48c1efba609ce292da20e8431b1b886ba64e7c918c6acad03351f18",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\retained-whole-items-runtime\\before\\StaticArchitectureBreakMixin.java": "c01120ab2c8ac44f8dfb66b9482c7607e94ed48ae9e7bbcd8e1a68c13febd628",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\source\\src\\architecture\\resources\\assets\\bloodborne_dw\\native_grid\\retained_whole_items.json": "19ba78c6a1ebef73649a7d0d4c4be6d135bd6c5b26d34d94cd0d6da3ac91cb2b",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\native-grid-plan\\full\\retained-whole-items-final-after-visual-amendment.json": "7882e56f88445baa554c8ab600971a9f5a301d3a9916f8995885bb1f57fa1cfb",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\native-grid-plan\\compositions.jsonl": "a36c2c4867323dfe82cc10c3233b8243771055714fa4371f5ccb6d28c1b124f7",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\native-grid-plan\\full\\post-local-function-inputs.json": "13026ef4569e8d825ad0e16943fa57bc557c4f0d8ef94821fe9a509c437aa91e",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\native-grid-plan\\full\\postfinal-carrier-predicate-split-preview.artifacts\\receipt.json": "6133ff0b903af1efe9784d22bb299b0579419f79a8426b6947fd58f12329dfe5",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\native-grid-plan\\full\\postfinal-qualified-carrier-predicates-preview.artifacts\\receipt.json": "7db664701f4a67a13c20581c6c094a584460b9d19bb26ad99ed76bba61e83ed9",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\native-grid-plan\\full\\postfinal-whole-original-retention-preview.artifacts\\receipt.json": "ca999cffbca42f2a0fbee65084ffe7707d4398f0a2d21b46975ffb9e53d62a4c",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\native-grid-plan\\full\\target-bridge-audit.final\\bridge-carrier-gate.json": "fd5ed6369d2871c380a811e3f85cd9cbaeb0e43845a7813f494dc473ea7edb62",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\native-grid-plan\\full\\target-bridge-audit.final\\launch-receipt.json": "a81f5f7f1e89e03baf73d2c5679528434d8b1b836624110c00df09f27ace6454",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\native-grid-plan\\full\\target-bridge-audit.final\\binding.json": "7d48c334fbfaa1b729dcc2d1d39973a02a14ba5f6bf0421d842232e09b98efc2",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\native-grid-plan\\frozen-inputs.json": "bffd160851dc04587a923e151dc355cd136ea729cf322b08b0377235591d8a94",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\city\\bloodborne-native-grid-city\\NATIVE-GRID-MIGRATION.json": "86ec8fa22e9793f3b3075c0b5e143b40e5542ca2fe08225cc0e0d48555d2fe74",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\native-grid-plan\\relight-binding.json": "ba3ad4e6c832768b35f397497aab78ad902549fb660630618ef5613da6276fed",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\native-grid-plan\\full-city-relight-engine.json": "f3a6d038d70e7a7fc24af48e40b309ec188d2ffc9ffb3091a0d4df172e1bff5f",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\native-grid-plan\\planned-be-safety.json": "554b30d4141109a34c557562239f7fd5839708f0bbf8656e11048947685e0044",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\native-grid-plan\\cleanup-be-audit.json": "880481f6ce7a1ba512e39e353bb43e8a75305a0c5a040e6f89d893eba78cf60f",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\preserved-assembly-components-applied.json": "d0d95774c7194b5cfd82c6b6864aaf1cba4e7d94f515fb9795879caca0bc0df3",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\native-grid-plan\\bridge-host-states.json": "9f851e4d417c7ccceca4cebd7bb545aa14fa1ef53177902bd1a5c9eb53f1b88a",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\native-grid-plan\\relight-launch-receipt.json": "0c467cebbf07ed461eb5654af55b2c19a867210350d1a03122311f923930aac6",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\native-grid-plan\\full\\preserved-assembly-final-coverage.json": "142f79644b6c3f74ffbf9fce1e2449f9c0c1524d8c8a9c064ab7dd9d740588b8",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\preserved-assemblies.json": "affb003bfdb9a417e76707af9b25e74164fc257c06d5d11375bc78953f229229",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\preserved-assembly-overrides-applied.json": "a2710896cdc91c2cb936942d114e185c0b51d5933e9d7b03b56ae1a24633b454",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\preserved-assembly-plan-preview.json": "65ae5e1ee652fd211845a14cece49088393e0ce551ba33c227d2c75a063f3f8d",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\historic-v12-gallery-manifest.json": "c74e8323d6b7106e78b2ae6853750a80497e91af83256bf2460ed6406c605710",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\source\\tools\\native-grid\\protected-v12-ids.json": "78d4cfafbb201e737c6d2cab05f91cc2d1b5b54acb64d36b426e26f900c2347f",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\source\\tools\\native-grid\\classification.json": "f3747d977c576b233ffa7345d2cdafade63cd30dab6ee48feb278617b18583b2",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\native-grid-plan\\full\\foreign-guest-install.final\\functions.json": "23ab42446342b6e2d12b28c96ca6e385b5e88d260cae4ff5b04c124ac1a2cb82",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\native-grid-plan\\full\\foreign-guest-install.plan.final.json": "d16af8f31631c1c40cfd2c4e6d71bf3d3ba5f8a1be2b2f0c81080f7f78524eb6",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\native-grid-plan\\full\\foreign-guest-install.final\\launch-receipt.json": "e4bcb728ef0b31948ab9744dcc83a69b7e71df7ee1a2469cb6d679118f089c59",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\native-grid-plan\\full\\foreign-guest-install.final\\binding.json": "9c08d60d9b1d3f1e4925cc3a76a224ad3b6d87d51d58d8c9d25226dfa367f41a",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\native-grid-plan\\full\\foreign-guest-point-proof.final.json": "3a42b68b6f1a8d869c3ad382abfe82ea6e80e63535ba4594baf76be0c9af656d",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\native-grid-plan\\full\\foreign-guest-reopen.transport-restored.final\\functions.json": "529164442d36913bcc3fe597802d36b0fdb268327bce3ad6f77c34d21bcfa0d7",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\native-grid-plan\\full\\foreign-guest-reopen.plan.transport-restored.final.json": "a37fa5287aff05562473060b75a30275b609fed2f111053792e679ce915fc20d",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\native-grid-plan\\full\\foreign-guest-reopen.transport-restored.final\\launch-receipt.json": "e78105b43b9d1b6f7e767f2e5535be9f978333e6671645b119c10bed90e288c2",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\native-grid-plan\\full\\foreign-guest-reopen.transport-restored.final\\binding.json": "3e94b7767f754b95ee3ba71a63732c2425f35a18c48b8769d0e99b67e31bb053",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\native-grid-plan\\full\\foreign-guest-reopen.plan.transport-restored.final.previous-install.transport-view.json": "dacffaa9aebda410788a6b3fa75d0dd6dbd8bf41520072725ae04ce2ea5632c8",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\profiles\\profile-lock.json": "285757deaeafd752468dc50a79b0bc4e78fa7ce23b444cf8089d69539fa161d0",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\profiles\\benchmark-helper.json": "29a5e45fea19ee201e82bf2ffc5922d7db1d3e8b104cb227760c64017fc237d0",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\final-route\\actual-full-route-indigo\\receipt.json": "440d74ef3dfa8b4791d96f980fd4248919656909a590008acd53011e3fa858ac",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\final-route\\route.json": "db664f2989323a49f52287c09ed9f855621a6028e65e15f51c73a2eb56627989",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\final-route\\actual-full-route-indigo\\binding.json": "99b5b8497d87f0c0c139355764b1e1ec93580555bfe2822b0ea2c5357c84270c",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\final-route\\actual-full-route-indigo\\client\\client-route.json": "c8df07ed5f723144bbb7f565b2aeb7fc12202212385f4b0b6fcb418f152ee8e9",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\final-route\\actual-full-route-indigo\\server\\server-route.json": "fb4e152feba3b50f773e8f7593f52796a39f6f631a34054b523404645fb9de78",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\final-route\\actual-full-route-indigo\\client.args": "63b9fe072e1060c27bacf61647c483445adceb5f76babb97962bae5b66ed2b85",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\final-route\\actual-full-route-indigo\\client-console.log": "45e9ec6079045c984f85808a3840ac25742b17d3154c970c76966579e565c5ed",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\profiles\\candidate\\disabled-functional-indigo\\indium-1.0.36+mc1.20.1.jar": "8434d0abc8826e2540c26741fea45a1ab9d48f650746de282b36850fa1d01999",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\profiles\\candidate\\disabled-functional-indigo\\sodium-fabric-0.5.11+mc1.20.1.jar": "5413baaa260a2eadcee4221b8e7105a8e2a9b5b2c84b73f704f2740319aab7df",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\final-route\\actual-full-route-indigo\\client\\client-frames.csv": "767e6c66aaf6db0b658a5f27143a71241d7eb167a54898f9c89a7091844e1728",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\final-route\\actual-full-route-indigo\\server.args": "f50e82e2400c641f2be84a1e1b4f1c061de0cd5916839dd852044dd687e91094",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\final-route\\actual-full-route-indigo\\server-console.log": "9544ae54f53f8bfe9b183af35500c9ab2161df4ee6da3704d906461043828c10",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\final-route\\actual-full-route-indigo\\server\\server-ticks.csv": "db223556311e659608dd946b291dfc9f04f32a48f0dfee56222e48c3ef871ea0",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\final-route\\actual-full-reopen-indigo\\receipt.json": "625d3aca57cc93b91359893e967da14174b179209ed000d74e4eab2020d1045c",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\final-route\\reopen-route.json": "a2738fa03d83c24d4f48f623968929075908dbcee3b1818928e2b801c4e83752",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\final-route\\actual-full-reopen-indigo\\binding.json": "ad6ccea5a5ecad29bad8f1221a9779868d8b82b38581c213043c9b5eb87e6d9f",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\final-route\\actual-full-reopen-indigo\\client\\client-route.json": "dd0e363b263bd05464146f152e3d08ac55a2d3c4e50644153e9c86d42a36b4df",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\final-route\\actual-full-reopen-indigo\\server\\server-route.json": "bae469bd9c7dc05775aec8c4058d1a712329eb024f8f26a9886174e60f7a09a8",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\final-route\\actual-full-reopen-indigo\\client.args": "6ef6beaf4c17b08a34968b2f67b530d7c794d3e31bab6d2f532130b39c6041c5",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\final-route\\actual-full-reopen-indigo\\client-console.log": "9a84c44d51777e32971c5f75e3fd26e6b5dca1856fda3b102b159c909681c294",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\final-route\\actual-full-reopen-indigo\\client\\client-frames.csv": "64653b524d51966fe076fafe7329ba9677abebc0f66fc3800738fcce2ba6e429",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\final-route\\actual-full-reopen-indigo\\server.args": "857dacf11edc8b3db02fa4aec254367a2079b97ec8ac63da47f5495b78818907",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\final-route\\actual-full-reopen-indigo\\server-console.log": "f66c83ee15f1851ecd015bb6880f194346f953a9983a04c0ab5e208f4fe04066",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\final-route\\actual-full-reopen-indigo\\server\\server-ticks.csv": "9b7cc99b29e9765cc1486a07d871454685fd0f72962a8b09fe6265ff86f380a3",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\delivery\\full-route-visual-review.json": "4819cac4dc543a9b6e9032310a6aabbadc4d122cbe15bced12153c701a1ef0a2",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\profiles\\candidate\\client\\screenshots\\route-final-brick-wide.png": "c07eb405ac7d050e0c66582baa32c694dcfe56e4df1903de6f8f16e4fea531b2",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\profiles\\candidate\\client\\screenshots\\route-final-brick-cornice.png": "9e391f062a5486b62c0f1af6ddef567b08f904350403d7a378c026cbea8f87c5",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\profiles\\candidate\\client\\screenshots\\route-final-brick-chunkborder.png": "78316327c3ef9bfb09e5c83cb2693aa5a7cb8f7d59b344cd678b9f6f64ab90e0",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\profiles\\candidate\\client\\screenshots\\route-final-door-whole.png": "9faf000021b037b662bffaa77cc0709d144b39ec42512e69c024d7f7882f820e",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\profiles\\candidate\\client\\screenshots\\route-final-tower-wide.png": "e133f3fca9c71632eddc67f5aeebcc13807b40422dd05519f2d72cf56149bfec",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\profiles\\candidate\\client\\screenshots\\route-final-tower-facade-close.png": "06c0505b63d2cba64f4fcb9d927492932f50b97c88034f6a9d394e3b24ff40f1",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\profiles\\candidate\\client\\screenshots\\route-final-statue-whole-front.png": "e7d8f7367d0d0d99cd10fe9cffa2fe875323d917ac20dc8ad0258c2daf62b171",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\profiles\\candidate\\client\\screenshots\\route-final-statue-whole-side.png": "966a44275a2b36b3caf44195019a7894985a6a45b2b614df3fda4ff4697c1a9f",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\profiles\\candidate\\client\\screenshots\\route-final-sprite-tree-front.png": "f7922bea54463e242a72edbf49247156522e8ba5bd1f7ee8283f098a1a59462c",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\profiles\\candidate\\client\\screenshots\\route-final-sprite-tree-reverse.png": "fddcc83bf8292b600fbf3ef10f51bc0cedaa1312697c3040a360a76a93b61bd5",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\profiles\\candidate\\client\\screenshots\\route-final-remote-facade.png": "3eedbff57335e9a294867d4b7777b489cc650c4b803ef9785ddf75a0005a8a8e",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\profiles\\candidate\\client\\screenshots\\route-reopen-brick-wide.png": "8efc964faacebeb2ae2affd2f6d4eec2785e3a575ed746b8643b989a195be208",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\pilot-gate.json": "18b059b33f64f23c7bee97268b6fed30731f547299f23d8d002f242aedf6168a",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\pilot\\comparison.json": "a01642c34bf3ad24d53f5b9d30055b97387ed746d996dd246a973b1583c29e8e",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\delivery\\final-delivery-review.json": "b84a12276c12b7a603ac01485e69a22590fb50bb87d99f22c6f1a5c4569a94fc",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\delivery\\INSTALL-RU.txt": "a7a953a7b33abd6971d8ede448d0f744bd45528ddaa37de204c484e299164feb",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\delivery\\full-current-sources.delivery.json": "b0746225dc3b9827f060945c96fc54d10f0fa505493473bd5f8c42de1d1b47bf",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\delivery\\full-current-sources.delivery.zip": "6bda26166864d142aef6fe770e664ba91c796f94e48e965ac7d7b17cf3eac063",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\delivery\\original-independent-git-bootstrap.zip": "db489dfd7442149f55330b63f61706f93dabd234953d71379537493fd52f0955",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\delivery\\original-independent-git-bootstrap.json": "b4ee5fb7714ff4bb60e5e38e839c56e5852c3cc345a159586ae08d3083cd05ac",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\delivery\\USER-MODPACK-FINAL-REPORT-RU.txt": "26a1104143fcda7105ce506b1ad77f70d504d01f4d1b8a447d31a9055f290e22",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\delivery\\user-modpack-final-acceptance.json": "7adbd488cf9764cb08e8532af86fd83b8ff4b5ec932e1ef6b09741b5039dd300"
+  },
+  "sourceInput": {
+    "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-native-grid-city-20261022\\research\\delivery\\FULL-DELIVERY-INPUT.final.json",
+    "sha256": "d276e124ab5f07e2a00bead407165a5f6d4a0dcf9d2d5511150059e157f4c850"
+  },
+  "projectProcessesStarted": 0,
+  "sqlReads": 0,
+  "worldScans": 0,
+  "gameplayChecksRepeated": 0,
+  "generatorSha256": "f1e18d1f14747e113f8d01f349c0362af2dfa2de59717c4d857b11d43c63acff"
+}

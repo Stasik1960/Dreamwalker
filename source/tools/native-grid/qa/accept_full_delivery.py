@@ -12,8 +12,10 @@ import hashlib
 import json
 import math
 import os
+import re
 from pathlib import Path
 from prepare_foreign_guest_plan import derived_install_transport_view
+from client_runtime_lineage import read_lineage
 
 PROFILE = '285757deaeafd752468dc50a79b0bc4e78fa7ce23b444cf8089d69539fa161d0'
 RECORDER = '24ea32ff3b9d2b83011fe207ce58eb4a86c47df63ecf9327c756f7f9fcf8e676'
@@ -59,7 +61,8 @@ def gson_transport(value):
 
 
 class Evidence:
-    def __init__(self, artifacts):self.artifacts = artifacts;self.seen = {}
+    def __init__(self, artifacts, client_lineage=None):
+        self.artifacts = artifacts;self.seen = {};self.client_lineage_ref = client_lineage
 
     def file(self, reference):
         require(set(reference) >= {'path', 'sha256'}, 'Evidence requires path and explicit SHA')
@@ -82,6 +85,79 @@ class Evidence:
 
     def finish(self):
         for path, digest in self.seen.items():require(sha(path) == digest, 'Evidence changed during aggregation: ' + path)
+
+
+def accepted_function_generation_lineage(e, snapshot, coverage):
+    """Only the three already committed, SHA-pinned carrier/whole stages."""
+    stages = (
+        ('postfinal-carrier-predicate-split-preview.artifacts/receipt.json',
+         '6133ff0b903af1efe9784d22bb299b0579419f79a8426b6947fd58f12329dfe5', 'postfinalCarrierPredicateSplit'),
+        ('postfinal-qualified-carrier-predicates-preview.artifacts/receipt.json',
+         '7db664701f4a67a13c20581c6c094a584460b9d19bb26ad99ed76bba61e83ed9', 'postfinalCarrierPredicateSplit'),
+        ('postfinal-whole-original-retention-preview.artifacts/receipt.json',
+         'ca999cffbca42f2a0fbee65084ffe7707d4398f0a2d21b46975ffb9e53d62a4c', 'postfinalWholeOriginalRetention'),
+    )
+    raw = e.artifacts['raw'];raw_path = Path(raw['path']).resolve()
+    needed = snapshot['nativeStatesNeeded'];needed_path = Path(needed['path']).resolve()
+    generation = snapshot['compositionGeneration'];prior_split = None;seen_points = set()
+    require(Path(snapshot['compositions']['path']).resolve() == raw_path and
+            snapshot['compositions']['sha256'] == generation['compositionsSha256'] and
+            snapshot['sourceBinding'] == coverage['sourceBinding'] and
+            needed['sha256'] == coverage['nativeStatesNeededSha256'], 'Function generation lineage starts with different source/raw/needed inputs')
+    for name, digest, metadata_key in stages:
+        reference = {'path': str(raw_path.parent / 'full' / name), 'sha256': digest}
+        receipt = e.bound(reference);before = receipt['beforeGeneration'];after = receipt['afterGeneration']
+        require(receipt['status'] == 'PASS' and receipt['sourceBinding'] == coverage['sourceBinding'] and
+                before == generation and receipt.get('priorCarrierPredicateSplit') == prior_split and
+                receipt['processedRowsReset'] == receipt['worldReads'] == receipt['mapWrites'] == 0 and
+                receipt['nativeQueueReplayed'] is False, 'Committed function-generation stage/source/order differs')
+        require({key: value for key, value in before.items() if key not in ('compositionsSha256', metadata_key)} ==
+                {key: value for key, value in after.items() if key not in ('compositionsSha256', metadata_key)} and
+                after[metadata_key]['previousCompositionsSha256'] == before['compositionsSha256'] and
+                receipt['beforeRaw']['sha256'] == before['compositionsSha256'], 'Function-generation stage changed other semantic bindings')
+        derived = receipt['derivedFiles']
+        require(len(derived) == 2 and {Path(row['target']).resolve() for row in derived} == {raw_path, needed_path},
+                'Function-generation stage has unexpected derived outputs')
+        outputs = {Path(row['target']).resolve(): row for row in derived}
+        require(outputs[raw_path]['beforeSha256'] == before['compositionsSha256'] and
+                outputs[raw_path]['proposed']['sha256'] == after['compositionsSha256'] and
+                outputs[needed_path]['beforeSha256'] == outputs[needed_path]['proposed']['sha256'] == needed['sha256'],
+                'Function-generation raw/needed hash continuity differs')
+        if metadata_key == 'postfinalCarrierPredicateSplit':
+            require(receipt['kind'] == 'COMMITTED_POSTFINAL_CARRIER_PREDICATE_SPLIT' and
+                    all(receipt[key] is True for key in ('geometryPhysicalDataUnchanged',
+                        'onlyObservedOpaqueAndSidedTransparencyChanged', 'nativeFunctionStatesUnchanged')) and
+                    receipt['affectedPlacements'] == len(receipt['changes']) and
+                    receipt['cloneKeys'] == len(receipt['compositionChanges']) > 0,
+                    'Carrier split did not preserve function/physical inputs')
+            clones = {}
+            for row in receipt['compositionChanges']:
+                predicates = row['carrierPredicates']
+                require(set(predicates) == {'opaque', 'sidedTransparency'} and
+                        all(type(value) is bool for value in predicates.values()) and
+                        row['before'].get('carrierPredicates') is None and row['after']['carrierPredicates'] == predicates and
+                        {key: value for key, value in row['before'].items() if key != 'carrierPredicates'} ==
+                        {key: value for key, value in row['after'].items() if key != 'carrierPredicates'},
+                        'Carrier split changed more than the two observed predicates')
+                pair = (row['oldKey'], row['newKey'])
+                require(pair not in clones, 'Duplicate carrier clone mapping')
+                clones[pair] = predicates
+            for row in receipt['changes']:
+                point = (row['dimension'], tuple(row['position']))
+                require(point not in seen_points and clones.get((row['oldComposition'], row['newComposition'])) == row['carrierPredicates'],
+                        'Carrier split placement mapping overlaps or differs from its clone')
+                seen_points.add(point)
+            prior_split = reference
+        else:
+            require(receipt['kind'] == 'COMMITTED_POSTFINAL_WHOLE_ORIGINAL_RETENTION' and
+                    before['compositionsSha256'] == after['compositionsSha256'] and
+                    all(receipt[key] is True for key in ('objectsKindsUnchanged', 'allSourceDataUnchanged',
+                        'onlyCompleteUndemandedDerivedWorkRetired', 'rawAndNativeNeededBytesUnchanged',
+                        'ordinaryCompositionKeysUnchanged')), 'Whole original retention changed function/raw/needed inputs')
+        generation = after
+    require(generation == coverage['compositionGeneration'] and generation['compositionsSha256'] == raw['sha256'],
+            'Committed function-generation chain does not reach the current coverage/raw')
+    return True
 
 
 def native_audit(e, reference, runtime, catalog):
@@ -155,7 +231,7 @@ def foreign(e, report_key, plan_key, runtime, catalog, audit, item_proof, previo
     return binding
 
 
-def route(e, key, plan_key, runtime, world, reopened=False):
+def route(e, key, plan_key, runtime, world, reopened=False, client_lineage=None):
     receipt, plan = e.get(key), e.get(plan_key)
     binding, binding_ref = e.sibling(e.artifacts[key], 'binding.json')
     client, client_ref = e.sibling(e.artifacts[key], 'client/client-route.json')
@@ -168,6 +244,28 @@ def route(e, key, plan_key, runtime, world, reopened=False):
             binding['recorderLockSha256'] == e.artifacts['recorder']['sha256'] and
             binding['routeSha256'] == e.artifacts[plan_key]['sha256'] == client['routePlanSha256'] and
             all(receipt.get(name) == value for name, value in binding.items()), 'Route runtime/world/profile/recorder/input differs')
+    if client_lineage is not None:
+        require(binding.get('clientOnlyRuntimeLineage') == e.client_lineage_ref and
+                binding.get('acceptedPredecessorProduction') == client_lineage['predecessor'],
+                'Actual candidate route lacks the exact client-only lineage')
+    else:require('clientOnlyRuntimeLineage' not in binding, 'Unexpected route lineage without its explicit acceptance input')
+    heap_override = binding.get('functionalHeapOverride')
+    if heap_override is not None:
+        require(heap_override == {'clientHeap': '4G', 'baseClientHeap': '3G', 'serverHeap': '4G'} and client_lineage is not None and
+                e.file(e.artifacts[plan_key]) in {(ROOT / 'research/final-route/route.json').resolve(), (ROOT / 'research/final-route/reopen-route.json').resolve()} and
+                binding.get('functionalAdmissionOverride') is True and binding.get('admissionMinimumAvailableGiB') == 7.0 and
+                binding.get('frozenMinimumAvailableGiB') == 9 and binding.get('initialAvailableRAM', 0) >= 7 * 1024 ** 3 and
+                binding.get('initialAvailableCommit', 0) >= 9 * 1024 ** 3,
+                'Functional 4G client lacks its exact FULL lineage/base-profile/memory admission')
+    renderer_override = binding.get('functionalRendererOverride')
+    if renderer_override is not None:
+        profile = e.get('profile')
+        excluded = sorted(({name: row[name] for name in ('file', 'id', 'sha256')} for row in profile['mods']['client']
+                           if row['variant'] == 'candidate' and row['id'] in ('sodium', 'indium')), key=lambda row: row['file'])
+        require(len(excluded) == 2 and {row['id'] for row in excluded} == {'sodium', 'indium'} and
+                renderer_override == {'backend': 'fabric-indigo', 'excludedClientMods': excluded} and
+                heap_override is not None and client_lineage is not None,
+                'Indigo override must name exactly the two frozen candidate mods and existing functional guards')
     names = plan['names'];phases = client['phases']
     require(len(names) == (1 if reopened else 11) and len(set(names)) == len(names) and
             [row['phase'] for row in phases] == names == [row['phase'] for row in server['phases']] and
@@ -183,8 +281,9 @@ def route(e, key, plan_key, runtime, world, reopened=False):
             distance = math.dist(plan['cameras'][index - 1][:3], plan['cameras'][index][:3])
             require(distance <= 4096 * .75 and phase['nativeMovementTicks'] > 0 and phase['maxStep'] <= .7501 and
                     phase['nativeDistance'] >= distance - .15, 'Ordinary between-camera movement not evidenced')
-    extra = {}
-    for role, heap in (('client', '3G'), ('server', '4G')):
+    extra = {'functionalHeapOverride': heap_override} if heap_override is not None else {}
+    if renderer_override is not None:extra['functionalRendererOverride'] = renderer_override
+    for role, heap in (('client', '4G' if heap_override is not None else '3G'), ('server', '4G')):
         path = e.file(e.artifacts[key]).parent / (role + '.args');ref = {'path': str(path), 'sha256': sha(path)};e.file(ref)
         args = [json.loads(line) for line in path.read_text(encoding='utf-8-sig').splitlines() if line.strip()]
         require([arg for arg in args if arg.startswith('-Xmx')] == ['-Xmx' + heap], 'Actual route heap widened')
@@ -194,6 +293,16 @@ def route(e, key, plan_key, runtime, world, reopened=False):
         if role == 'server':require('All dimensions are saved' in console, 'Server save was not confirmed')
         if role == 'client':
             require('--gameDir' in args, 'Actual screenshot gameDir is missing');extra['gameDir'] = args[args.index('--gameDir') + 1]
+            if renderer_override is not None:
+                game_dir = (ROOT / 'research/profiles/candidate/client').resolve()
+                require(Path(extra['gameDir']).resolve() == game_dir and '[Indigo] Registering Indigo renderer!' in console and
+                        '[Indigo] Different rendering plugin detected; not applying Indigo.' not in console and
+                        not re.search(r'(?m)^\s*-\s+(?:sodium|indium)\s', console),
+                        'Actual final client backend is not Indigo without loaded Sodium/Indium')
+                for row in renderer_override['excludedClientMods']:
+                    require(Path(row['file']).name == row['file'] and not (game_dir / 'mods' / row['file']).exists(),
+                            'Excluded renderer mod is present in actual gameDir')
+                    e.file({'path': str(game_dir.parent / 'disabled-functional-indigo' / row['file']), 'sha256': row['sha256']})
         csv = e.file(e.artifacts[key]).parent / role / ('client-frames.csv' if role == 'client' else 'server-ticks.csv')
         csv_ref = {'path': str(csv), 'sha256': sha(csv)};require(e.file(csv_ref).stat().st_size > 60, 'Actual frame/tick evidence missing')
         extra[role + 'Measurements'] = csv_ref
@@ -202,7 +311,15 @@ def route(e, key, plan_key, runtime, world, reopened=False):
 
 
 def aggregate(e):
-    runtime = e.artifacts['production']['sha256'];e.file(e.artifacts['production'])
+    delivered_runtime = e.artifacts['production']['sha256'];e.file(e.artifacts['production'])
+    client_lineage = None;runtime = delivered_runtime
+    if e.client_lineage_ref is not None:
+        client_lineage = read_lineage(e.client_lineage_ref, e.artifacts['production'],
+                                     SOURCE / 'src/architecture/java/dev/dreamwalker/bloodbornedw/composite/NativeGridClient.java')
+        for reference in (e.client_lineage_ref, client_lineage['predecessor'], client_lineage['producer'],
+                          client_lineage['source'], client_lineage['rootSourceReviewRef']):e.file(reference)
+        e.file(e.bound(client_lineage['rootSourceReviewRef'])['predecessorSource'])
+        runtime = client_lineage['predecessor']['sha256']
     freeze, compat, coverage, functions = (e.get(key) for key in ('catalogFreeze', 'jarCompatibility', 'coverage', 'functions'))
     require(freeze['status'] == 'FROZEN_RESOURCES_READY' and freeze['kind'] == 'COMPLETED_FULL_CATALOG_AUTHORING_HANDOFF', 'No actual FULL catalog freeze')
     catalog = freeze['catalog']['sha256'];e.bound(freeze['catalog']);e.file(freeze['meshes'])
@@ -223,6 +340,9 @@ def aggregate(e):
             compat['allRuntimeClassesByteExact'] is False and
             all(compat[key] is True for key in ('runtimeCompatibilityPassed', 'allUnchangedRuntimeClassesByteExact', 'allOldNonGeneratedResourcesByteExact', 'allTexturesByteExact', 'allOtherAcceptedEntriesByteExact')),
             'Actual FULL JAR compatibility not proved')
+    e.file(compat['full'])
+    if client_lineage is not None:
+        require(compat['full'] == client_lineage['predecessor'], 'Predecessor FULL compatibility/JAR differs from client lineage')
     e.file(compat['accepted'])
     patch_ref = compat['reviewedRuntimePatch'];patch = e.bound(patch_ref)
     require(patch['status'] == 'ROOT_SOURCE_APPROVED_FOR_AFFECTED_QA_NOT_DELIVERY' and
@@ -265,7 +385,8 @@ def aggregate(e):
             not functions.get('postActivationRoleConflicts'), 'Fresh FULL function decisions incomplete')
     if 'postActivationInputEvidence' in functions:
         snapshot = e.bound(functions['postActivationInputEvidence'])
-        require(snapshot['compositions'] == e.artifacts['raw'] and snapshot['compositionGeneration'] == coverage['compositionGeneration'] and
+        require(((snapshot['compositions'] == e.artifacts['raw'] and snapshot['compositionGeneration'] == coverage['compositionGeneration']) or
+                 accepted_function_generation_lineage(e, snapshot, coverage)) and
                 snapshot['sourceBinding'] == coverage['sourceBinding'] and snapshot['nativeStatesNeeded']['sha256'] == coverage['nativeStatesNeededSha256'],
                 'Postactivation function supplement used another composition generation')
     audit = native_audit(e, e.artifacts['targetAudit'], runtime, catalog)
@@ -308,14 +429,16 @@ def aggregate(e):
     require(e.artifacts['profile']['sha256'] == PROFILE and profile['clientHeap'] == '3G' and profile['serverHeap'] == '4G' and
             recorder['status'] == 'FROZEN_BEFORE_FIRST_PAIR' and recorder['helper']['sha256'] == RECORDER and
             recorder['profileLockSha256'] == PROFILE and recorder['sameHelperForBaselineAndCandidate'] and recorder['measurementPhasesUnchanged'], 'Pinned profile/recorder changed')
-    final = route(e, 'finalRoute', 'finalRoutePlan', runtime, world)
-    reopen = route(e, 'reopenRoute', 'reopenRoutePlan', runtime, world, reopened=True)
+    final = route(e, 'finalRoute', 'finalRoutePlan', delivered_runtime, world, client_lineage=client_lineage)
+    reopen = route(e, 'reopenRoute', 'reopenRoutePlan', delivered_runtime, world, reopened=True, client_lineage=client_lineage)
+    require(final.get('functionalRendererOverride') == reopen.get('functionalRendererOverride'),
+            'FULL route and reopen used different renderer backends')
     require(e.artifacts['finalRoute']['path'] != e.artifacts['reopenRoute']['path'] and
             datetime.datetime.fromisoformat(reopen['initialUtc'].replace('Z', '+00:00')).timestamp() * 1e9 > e.file(final['server']).stat().st_mtime_ns,
             'Reopen must start after the previous server completed its normal save/exit')
     visual = e.get('visualReview')
     require(visual['status'] == 'PASS_ACTUAL_RENDERED_VIEWS' and visual['kind'] == 'ACTUAL_FULL_ROUTE_AND_REOPEN_OBSERVATION' and
-            visual['runtimeSha256'] == runtime and visual['catalogSha256'] == catalog and visual['reviewer'] and
+            visual['runtimeSha256'] == delivered_runtime and visual['catalogSha256'] == catalog and visual['reviewer'] and
             visual['finalRouteReceipt'] == e.artifacts['finalRoute'] and visual['reopenRouteReceipt'] == e.artifacts['reopenRoute'] and
             all(visual[key] is True for key in ('actualImagesInspected', 'noNewVisibleDefects', 'movementUsable', 'noFrequentMultiSecondStalls', 'optimizationSupportedWithinReportedLimits')),
             'Separate actual rendered-image/movement observation missing')
@@ -334,23 +457,39 @@ def aggregate(e):
             pair['status'] in ('BASELINE_INCOMPLETE_CANDIDATE_ANALYZED_NOT_READINESS', 'ONE_PAIR_ANALYZED_NOT_READINESS') and pair['limitations'], 'Actual accepted practical pair provenance differs')
     incomplete = pair['status'].startswith('BASELINE_INCOMPLETE')
     if incomplete:require(pair['measuredDurationChangePercent'] is None and pair['baseline']['receipt']['status'] == 'FAIL', 'Incomplete baseline cannot provide a speedup percentage')
+    functional_heap_changed = bool(final.get('functionalHeapOverride') or reopen.get('functionalHeapOverride'))
+    functional_renderer_changed = final.get('functionalRendererOverride') is not None
+    if functional_heap_changed:
+        require(incomplete and pair['measuredDurationChangePercent'] is None,
+                'Functional 4G client observations cannot be presented as a matched baseline speedup')
+    if functional_renderer_changed:
+        require(incomplete and pair['measuredDurationChangePercent'] is None,
+                'Indigo functional observations cannot relabel the accepted Sodium pilot as a matched pair')
     delivery = e.get('deliveryReview')
-    require(delivery['status'] == 'PASS_FINAL_DOCUMENT_AND_ARTIFACT_BINDING' and delivery['runtimeSha256'] == runtime and delivery['catalogSha256'] == catalog and
+    require(delivery['status'] == 'PASS_FINAL_DOCUMENT_AND_ARTIFACT_BINDING' and delivery['runtimeSha256'] == delivered_runtime and delivery['catalogSha256'] == catalog and
             delivery['reviewer'] and delivery['observations'] and delivery['mapRoot'] == world and
             delivery['runtimePatch'] == patch_ref and delivery['runtimeSourceReview'] == patch['rootReview'] and
             Path(delivery['sourceRoot']).resolve() == SOURCE and SOURCE.is_dir() and delivery['sourceTreeVerifiedCurrent'] is True and
             delivery['blockingDefects'] == [] and delivery['unresolvedRequiredFunctionalGaps'] == [] and
             all(delivery[key] is True for key in ('mapFolderVerifiedCurrent', 'matchingModMapAndSources', 'noCheckpointPresentedAsFinal', 'knownFailuresAndPerformanceLimitsDisclosed', 'oneItemAndWholeObjectBehaviorResolved')),
             'Practical map/mod/source/install handoff has not been explicitly reviewed')
+    if client_lineage is not None:
+        require(delivery.get('clientOnlyRuntimeLineage') == e.client_lineage_ref and
+                delivery.get('acceptedPredecessorProduction') == client_lineage['predecessor'],
+                'Delivery review lacks the exact client-only successor/predecessor binding')
     docs = {row['role']: row['binding'] for row in delivery['files']}
     require(len(docs) == len(delivery['files']) and {'productionJar', 'installInstructions', 'sourceHandoff'} <= set(docs) and
-            docs['productionJar']['sha256'] == runtime, 'Delivery mod/install/source documents incomplete')
+            docs['productionJar']['sha256'] == delivered_runtime, 'Delivery mod/install/source documents incomplete')
     for ref in docs.values():require(e.file(ref).stat().st_size > 0, 'Empty delivery artifact/document')
-    return {'runtimeSha256': runtime, 'catalogSha256': catalog, 'mapRoot': world, 'sourceRoot': delivery['sourceRoot'],
+    return {'runtimeSha256': delivered_runtime, 'catalogSha256': catalog, 'mapRoot': world, 'sourceRoot': delivery['sourceRoot'],
+            **({'functionalRendererOverride': final['functionalRendererOverride']} if functional_renderer_changed else {}),
+            **({'acceptedPredecessorProduction': client_lineage['predecessor'],
+                'oldServerEvidenceRuntimeSha256': runtime, 'newDeliveredRuntimeSha256': delivered_runtime,
+                'clientOnlyRuntimeLineage': e.client_lineage_ref} if client_lineage is not None else {}),
             'sourceBinding': coverage['sourceBinding'], 'reviewedRuntimePatch': patch_ref, 'runtimeSourceReview': patch['rootReview'],
             'retainedWholeItemResource': patch['resource'], 'retainedWholeItemResourceProof': patch['resourceProof'], 'baselineCompleted': not incomplete,
             'pairedSpeedupPercent': None if incomplete else pair['measuredDurationChangePercent'],
-            'practicalPerformanceLimits': pair['limitations'], 'performanceScope': 'Accepted dense-pilot pair on99f4 plus actual FULL final-route/reopen observations; no complete FULL before/after speedup, FPS percentage or remote-hosting guarantee.',
+            'practicalPerformanceLimits': pair['limitations'], 'performanceScope': 'Accepted dense-pilot pair on99f4 plus actual FULL final-route/reopen observations; no complete FULL before/after speedup, FPS percentage or remote-hosting guarantee.' + (' FULL functional client heap is explicitly 4G versus the frozen base 3G; these observations are not matched-pair performance evidence.' if functional_heap_changed else '') + (' FULL functional renderer is Fabric Indigo with the exact frozen Sodium/Indium pair retained outside client mods; this different backend is not a matched-pair comparison or an FPS percentage.' if functional_renderer_changed else ''),
             'finalViews': len(final['phases']), 'reopenViews': len(reopen['phases']), 'finalActualRoute': final, 'actualReopenRoute': reopen}
 
 
@@ -362,7 +501,10 @@ def main():
     try:
         require(sha(a.input) == a.input_sha256, 'Acceptance input SHA changed');doc = read(a.input)
         require(doc['schemaVersion'] == 1 and doc['kind'] == 'FULL_NATIVE_GRID_DELIVERY_ACCEPTANCE_INPUT' and set(doc['artifacts']) == set(KEYS), 'Exact final acceptance input schema required')
-        e = Evidence(doc['artifacts']);details = aggregate(e);e.finish();require(sha(a.input) == a.input_sha256, 'Acceptance input changed during reading')
+        require(set(doc) <= {'schemaVersion', 'kind', 'artifacts', 'clientOnlyRuntimeLineage'}, 'Unexpected acceptance top-level field')
+        require('clientOnlyRuntimeLineage' not in doc or isinstance(doc['clientOnlyRuntimeLineage'], dict),
+                'An explicit client lineage field must contain its bound reference')
+        e = Evidence(doc['artifacts'], doc.get('clientOnlyRuntimeLineage'));details = aggregate(e);e.finish();require(sha(a.input) == a.input_sha256, 'Acceptance input changed during reading')
         result = {'schemaVersion': 1, 'status': 'PASS', 'kind': 'FULL_NATIVE_GRID_CITY_DELIVERY_ACCEPTANCE', 'readyForDelivery': True, **details,
                   'evidence': doc['artifacts'], 'checkedFiles': e.seen, 'sourceInput': {'path': str(a.input.resolve()), 'sha256': a.input_sha256}}
     except (KeyError, ValueError, OSError, TypeError) as error:
