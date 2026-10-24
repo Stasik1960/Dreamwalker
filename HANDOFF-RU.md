@@ -4,7 +4,7 @@
 
 ## Восстановление и источники
 
-Ветка `codex/native-grid-city-full-20261024`, tag `native-grid-city-full-20261024`. Manifest релиза: https://github.com/Stasik1960/Dreamwalker/releases/download/native-grid-city-full-20261024/bundle-manifest.json ; SHA256 `290a6891c9e83c70e63bba37e5da555da09a01bccb4b7383dcb74cc88ebea2d2`. Published `FINAL-SNAPSHOT.json` SHA256 `{{FINAL_PUBLISHED_SNAPSHOT_SHA256}}`.
+Ветка `codex/native-grid-city-full-20261024`, tag `native-grid-city-full-20261024`. Manifest релиза: https://github.com/Stasik1960/Dreamwalker/releases/download/native-grid-city-full-20261024/bundle-manifest.json ; SHA256 `290a6891c9e83c70e63bba37e5da555da09a01bccb4b7383dcb74cc88ebea2d2`. Published `FINAL-SNAPSHOT.json` SHA256 `4b72fef49a69aa5da4a3116575675bb2fcfed425e2e2fd756974861d1ff3f547`.
 
 Прямая база FINAL delta — опубликованный FULL-LIGHT checkpoint: manifest SHA256 `75e1ddf017d7ec04733e047c42ed55239be641755d518040074e4db99491565a`, snapshot SHA256 `fbd5284aa8212ec91c4671cb7b6532e8ee2abffc480fb7ab493518c62e1f8e1b`, follow-up Git `57d04c71fc77024eb50cb186f89a32bf5e2a7e45`. Восстановить все тома по URL/SHA текущего manifest существующим `github_delta_restore.py`; PRE-MAP не подставлять как непосредственную базу.
 
@@ -81,3 +81,6 @@ JFR CPU: Средняя загрузка всей системы в запися
 Исторические F proof/build helpers и шесть малых candidate-папок сохранены с relativeF layout в research/delivery/final-workbench/. Проверить каждую SHA по capture.json и восстановить необходимые пути в DW-native-grid-final-freeze-20261024 только если они отсутствуют либо уже совпадают по SHA. Не перезаписывать неизвестные файлы. Отвергнутый legacy-carrier-render-candidate не применять. Это восстановление доказательств, не повод повторять игровые проверки.
 
 Финальный file-only проверяющий код уточнён: исходные function gate13d2 и snapshot13026 остались неизменными, допустимая цепочка из трёх уже принятых carrier/whole квитанций проверяется по точным SHA, before/after generations и неизменности функций/физических данных. Старый BLOCKED и прежний исходный архив сохранены с relocation.json в research/delivery/reports/aggregate-before-lineage-fix/. Мод, карта и игровые проверки ради этой правки не менялись.
+
+Фактически опубликованная полная поставка: https://github.com/Stasik1960/Dreamwalker/releases/tag/native-grid-city-full-20261024
+Snapshot всех томов: FINAL-SNAPSHOT.json, SHA256 4b72fef49a69aa5da4a3116575675bb2fcfed425e2e2fd756974861d1ff3f547. Manifest SHA256 290a6891c9e83c70e63bba37e5da555da09a01bccb4b7383dcb74cc88ebea2d2.
