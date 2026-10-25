@@ -7,9 +7,10 @@ def git(*args):
  if r.returncode:raise RuntimeError('Git '+args[0]+': '+r.stderr[-800:])
  return r.stdout.strip()
 out=R/'diagnostics/2026-10-25-city-restoration';out.mkdir(parents=True,exist_ok=True);paths=[]
-for f in D.iterdir():
- if f.is_file() and f.suffix in ('.json','.txt','.md','.gz') and f.stat().st_size<3000000:
-  shutil.copy2(f,out/f.name);paths.append(str((out/f.name).relative_to(R)))
+for f in D.rglob('*'):
+ if any(part in ('final-artifacts','installed-backups') for part in f.relative_to(D).parts):continue
+ if f.is_file() and f.suffix in ('.json','.txt','.md','.gz','.log','.png') and f.stat().st_size<3000000:
+  target=out/f.relative_to(D);target.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(f,target);paths.append(str(target.relative_to(R)))
 owned=['gradle.properties','build.gradle','src/architecture/java/dev/dreamwalker/bloodbornedw/composite/NativePlayerBreak.java','src/architecture/java/dev/dreamwalker/bloodbornedw/composite/CompositeRuntime.java','src/rp/java/dev/dreamwalker/bloodbornerp/object/RpObjectSelection.java']
 if (D/'source-files.json').exists():owned+=json.loads((D/'source-files.json').read_text(encoding='utf-8'))
 owned+=[str(f.relative_to(P)).replace('\\','/') for f in (P/'src/restorationqa').rglob('*') if f.is_file()]

@@ -1,0 +1,105 @@
+{
+  "status": "FAIL",
+  "checks": [
+    {
+      "ok": true,
+      "name": "compact state intentionally has no BE"
+    },
+    {
+      "ok": true,
+      "name": "creative compact cube removed"
+    },
+    {
+      "ok": true,
+      "name": "survival compact cube removed"
+    },
+    {
+      "ok": true,
+      "name": "BEFORE cancellation preserves compact cube"
+    },
+    {
+      "ok": true,
+      "name": "real WE setBlocks writes source_andesite (actual Block{bloodborne_dw:source_andesite}[compact\u003dfalse,open\u003dfalse,profile\u003dbase,rotation\u003d0,variant\u003d0])"
+    },
+    {
+      "ok": true,
+      "name": "WE creates complete owner source_andesite"
+    },
+    {
+      "ok": true,
+      "name": "WE undo source_andesite"
+    },
+    {
+      "ok": true,
+      "name": "WE redo source_andesite"
+    },
+    {
+      "ok": true,
+      "name": "real WE setBlocks writes source_hold_bench (actual Block{bloodborne_dw:source_hold_bench}[open\u003dfalse,profile\u003dbase,rotation\u003d0,variant\u003d0])"
+    },
+    {
+      "ok": true,
+      "name": "WE creates complete owner source_hold_bench"
+    },
+    {
+      "ok": true,
+      "name": "WE undo source_hold_bench"
+    },
+    {
+      "ok": true,
+      "name": "WE redo source_hold_bench"
+    },
+    {
+      "ok": true,
+      "name": "real WE setBlocks writes dw_darkness (actual Block{bloodborne_dw:dw_darkness}[profile\u003dbase])"
+    },
+    {
+      "ok": true,
+      "name": "WE undo dw_darkness"
+    },
+    {
+      "ok": true,
+      "name": "WE redo dw_darkness"
+    },
+    {
+      "ok": true,
+      "name": "coarse RP entity AABB cannot survive precise ray miss"
+    },
+    {
+      "ok": false,
+      "name": "WorldEdit hand: com.sk89q.worldedit.extension.input.InputParseException: Исполнитель отсутствует"
+    },
+    {
+      "ok": true,
+      "name": "all RP/v12 physical and visual bounds audited"
+    },
+    {
+      "ok": true,
+      "name": "whole street post places as one owner"
+    },
+    {
+      "ok": true,
+      "name": "breaking the post tip removes its whole shaft"
+    },
+    {
+      "ok": true,
+      "name": "standalone single lantern installs"
+    },
+    {
+      "ok": true,
+      "name": "lantern contact emits sound/sway event"
+    },
+    {
+      "ok": true,
+      "name": "lantern contact cooldown prevents sound spam"
+    },
+    {
+      "ok": true,
+      "name": "nonempty owner shard persists"
+    },
+    {
+      "ok": true,
+      "name": "emptied owner shard and index are retired"
+    }
+  ]
+}

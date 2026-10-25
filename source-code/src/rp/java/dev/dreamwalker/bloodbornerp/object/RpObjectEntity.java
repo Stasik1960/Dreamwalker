@@ -130,9 +130,21 @@ private record GeometrySnapshot(GeometryKey key,net.minecraft.util.math.Box visu
  private boolean legacyCollidable(){return !isRemoved()&&!NON_COLLIDING.contains(assetId)&&(!PASSAGES.contains(assetId)||!isOpen());}
  private GeometrySnapshot geometry(){
         GeometryKey key=new GeometryKey(getX(),getY(),getZ(),getYaw(),getPitch(),objectScale(),isOpen(),dataTracker.get(LADDER_DEPLOY_TICKS),selectionMotionActive());
-        if(geometrySnapshot==null||!geometrySnapshot.key.equals(key))geometrySnapshot=new GeometrySnapshot(key,RpObjectGeometry.visualBounds(this),hasReviewedWorkingGeometry()?RpObjectGeometry.physicalBoxes(this):legacyCollidable()?List.of(closedCollider()):List.of(),RpObjectGeometry.selectionBoxes(this),RpObjectGeometry.climbingBoxes(this),RpObjectGeometry.ordinaryVisualBoxes(this));
+        if(geometrySnapshot==null||!geometrySnapshot.key.equals(key)){
+            var visual=RpObjectGeometry.visualBounds(this);
+            geometrySnapshot=new GeometrySnapshot(key,visual,hasReviewedWorkingGeometry()?RpObjectGeometry.physicalBoxes(this):legacyCollidable()?legacyPhysical(visual):List.of(),RpObjectGeometry.selectionBoxes(this),RpObjectGeometry.climbingBoxes(this),RpObjectGeometry.ordinaryVisualBoxes(this));
+        }
         return geometrySnapshot;
     }
+
+ /** Only the generic collider of passive static props is bounded. Reviewed
+  * shapes, animation/motion envelopes and mechanism working areas stay intact. */
+ private List<net.minecraft.util.math.Box> legacyPhysical(net.minecraft.util.math.Box visual){
+  var box=closedCollider();
+  if(canBeLinked()||isMechanism()||isPulseOnlyMechanism()||supportsDogVisibility()||!asset().clips().isEmpty())return List.of(box);
+  if(!box.intersects(visual))return List.of(box);
+  return List.of(box.intersection(visual));
+ }
 
 
  public List<net.minecraft.util.math.Box> activePhysicalBoxes(){return geometry().physical;}

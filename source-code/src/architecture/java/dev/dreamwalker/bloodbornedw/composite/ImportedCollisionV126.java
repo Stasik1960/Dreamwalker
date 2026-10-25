@@ -43,6 +43,7 @@ public final class ImportedCollisionV126 {
             throw new IllegalArgumentException("Unsupported NEW inner-collision defaults");
         Set<String> registered = new HashSet<>();
         for (JsonElement value : document("/bloodborne_dw/remaining-catalogue.json").getAsJsonArray("objects")) {
+            if(ImportedCollisionV125.authoredExact(value.getAsJsonObject()))continue;
             String path = value.getAsJsonObject().get("path").getAsString();
             if (!path.matches("source_[a-z0-9_]+") || !registered.add("bloodborne_dw:"+path))
                 throw new IllegalArgumentException("Invalid registered NEW collision cohort");

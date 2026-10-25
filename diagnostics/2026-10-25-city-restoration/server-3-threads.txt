@@ -1,0 +1,130 @@
+2952:
+2026-10-25 19:35:09
+Full thread dump OpenJDK 64-Bit Server VM (17.0.20.1+1 mixed mode, sharing):
+
+Threads class SMR info:
+_java_thread_list=0x00000249567375c0, length=14, elements={
+0x000002496d415560, 0x000002490f16d6a0, 0x000002490f16e520, 0x000002490f1840c0,
+0x000002490f184c80, 0x000002490f187650, 0x000002490f188010, 0x000002490f18b120,
+0x000002490f197030, 0x000002490f199a40, 0x000002490f3ee3f0, 0x000002490f3f82f0,
+0x000002495502cb60, 0x000002495770cd10
+}
+
+"main" #1 prio=5 os_prio=0 cpu=226265.62ms elapsed=246.05s tid=0x000002496d415560 nid=0x95a0 runnable  [0x000000afaf7fd000]
+   java.lang.Thread.State: RUNNABLE
+	at java.util.AbstractCollection.containsAll(java.base@17.0.20.1/AbstractCollection.java:308)
+	at com.google.common.collect.Sets.equalsImpl(Sets.java:1772)
+	at com.google.common.collect.ImmutableSet.equals(ImmutableSet.java:325)
+	at net.minecraft.class_2758.equals(class_2758.java:47)
+	at java.util.HashMap.putVal(java.base@17.0.20.1/HashMap.java:633)
+	at java.util.HashMap.put(java.base@17.0.20.1/HashMap.java:610)
+	at dev.dreamwalker.bloodbornedw.composite.CompactStateTransitions.<init>(CompactStateTransitions.java:105)
+	at dev.dreamwalker.bloodbornedw.composite.CompactStateTransitions.createOwned(CompactStateTransitions.java:134)
+	at net.minecraft.class_2688.handler$zim000$bloodborne_dw$createOwnedTransitions(class_2688.java:521)
+	at net.minecraft.class_2688.method_28496(class_2688.java)
+	at net.minecraft.class_2689.<init>(class_2689.java:68)
+	at net.minecraft.class_2689$class_2690.method_11668(class_2689.java:157)
+	at net.minecraft.class_2248.<init>(class_2248.java:183)
+	at dev.dreamwalker.bloodbornedw.composite.NativePhysicsBlock.<init>(NativePhysicsBlock.java:28)
+	at dev.dreamwalker.bloodbornedw.composite.NativePhysicsBlock.initialize(NativePhysicsBlock.java:35)
+	at dev.dreamwalker.bloodbornedw.composite.NativeGridCatalog.initialize(NativeGridCatalog.java:143)
+	- locked <0x000000077d0b9068> (a java.lang.Class for dev.dreamwalker.bloodbornedw.composite.NativeGridCatalog)
+	at dev.dreamwalker.bloodbornedw.DreamwalkerBb.onInitialize(DreamwalkerBb.java:52)
+	at net.fabricmc.loader.impl.game.minecraft.Hooks$$Lambda$2997/0x00000249113dd1f8.accept(Unknown Source)
+	at net.fabricmc.loader.impl.FabricLoaderImpl.invokeEntrypoints(FabricLoaderImpl.java:409)
+	at net.fabricmc.loader.impl.game.minecraft.Hooks.startServer(Hooks.java:63)
+	at net.minecraft.server.Main.main(Main.java:112)
+	at java.lang.invoke.LambdaForm$DMH/0x000002491101c400.invokeStaticInit(java.base@17.0.20.1/LambdaForm$DMH)
+	at java.lang.invoke.LambdaForm$MH/0x00000249112c0400.invokeExact_MT(java.base@17.0.20.1/LambdaForm$MH)
+	at net.fabricmc.loader.impl.game.minecraft.MinecraftGameProvider.launch(MinecraftGameProvider.java:514)
+	at net.fabricmc.loader.impl.launch.knot.Knot.launch(Knot.java:72)
+	at net.fabricmc.loader.impl.launch.knot.KnotServer.main(KnotServer.java:23)
+
+"Reference Handler" #2 daemon prio=10 os_prio=2 cpu=0.00ms elapsed=246.03s tid=0x000002490f16d6a0 nid=0x49ec waiting on condition  [0x000000afafeff000]
+   java.lang.Thread.State: RUNNABLE
+	at java.lang.ref.Reference.waitForReferencePendingList(java.base@17.0.20.1/Native Method)
+	at java.lang.ref.Reference.processPendingReferences(java.base@17.0.20.1/Reference.java:253)
+	at java.lang.ref.Reference$ReferenceHandler.run(java.base@17.0.20.1/Reference.java:215)
+
+"Finalizer" #3 daemon prio=8 os_prio=1 cpu=0.00ms elapsed=246.03s tid=0x000002490f16e520 nid=0x16b4 in Object.wait()  [0x000000afaffff000]
+   java.lang.Thread.State: WAITING (on object monitor)
+	at java.lang.Object.wait(java.base@17.0.20.1/Native Method)
+	- waiting on <0x0000000740400be0> (a java.lang.ref.ReferenceQueue$Lock)
+	at java.lang.ref.ReferenceQueue.remove(java.base@17.0.20.1/ReferenceQueue.java:155)
+	- locked <0x0000000740400be0> (a java.lang.ref.ReferenceQueue$Lock)
+	at java.lang.ref.ReferenceQueue.remove(java.base@17.0.20.1/ReferenceQueue.java:176)
+	at java.lang.ref.Finalizer$FinalizerThread.run(java.base@17.0.20.1/Finalizer.java:172)
+
+"Signal Dispatcher" #4 daemon prio=9 os_prio=2 cpu=0.00ms elapsed=246.02s tid=0x000002490f1840c0 nid=0x8fec waiting on condition  [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+"Attach Listener" #5 daemon prio=5 os_prio=2 cpu=0.00ms elapsed=246.02s tid=0x000002490f184c80 nid=0x975c waiting on condition  [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+"Service Thread" #6 daemon prio=9 os_prio=0 cpu=15.62ms elapsed=246.02s tid=0x000002490f187650 nid=0x262c runnable  [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+"Monitor Deflation Thread" #7 daemon prio=9 os_prio=0 cpu=15.62ms elapsed=246.02s tid=0x000002490f188010 nid=0x8838 runnable  [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+"C2 CompilerThread0" #8 daemon prio=9 os_prio=2 cpu=33812.50ms elapsed=246.02s tid=0x000002490f18b120 nid=0x8898 waiting on condition  [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+   No compile task
+
+"C1 CompilerThread0" #9 daemon prio=9 os_prio=2 cpu=4421.88ms elapsed=246.02s tid=0x000002490f197030 nid=0x5780 waiting on condition  [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+   No compile task
+
+"Sweeper thread" #10 daemon prio=9 os_prio=2 cpu=171.88ms elapsed=246.02s tid=0x000002490f199a40 nid=0x8d84 runnable  [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+"Notification Thread" #11 daemon prio=9 os_prio=0 cpu=0.00ms elapsed=245.96s tid=0x000002490f3ee3f0 nid=0x76a4 runnable  [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+"Common-Cleaner" #12 daemon prio=8 os_prio=1 cpu=15.62ms elapsed=245.96s tid=0x000002490f3f82f0 nid=0x4e54 in Object.wait()  [0x000000afb09ff000]
+   java.lang.Thread.State: TIMED_WAITING (on object monitor)
+	at java.lang.Object.wait(java.base@17.0.20.1/Native Method)
+	- waiting on <0x0000000740400f50> (a java.lang.ref.ReferenceQueue$Lock)
+	at java.lang.ref.ReferenceQueue.remove(java.base@17.0.20.1/ReferenceQueue.java:155)
+	- locked <0x0000000740400f50> (a java.lang.ref.ReferenceQueue$Lock)
+	at jdk.internal.ref.CleanerImpl.run(java.base@17.0.20.1/CleanerImpl.java:140)
+	at java.lang.Thread.run(java.base@17.0.20.1/Thread.java:840)
+	at jdk.internal.misc.InnocuousThread.run(java.base@17.0.20.1/InnocuousThread.java:162)
+
+"JNA Cleaner" #21 daemon prio=5 os_prio=0 cpu=0.00ms elapsed=226.09s tid=0x000002495502cb60 nid=0x15b0 in Object.wait()  [0x000000afb0cff000]
+   java.lang.Thread.State: WAITING (on object monitor)
+	at java.lang.Object.wait(java.base@17.0.20.1/Native Method)
+	- waiting on <0x000000074202c1e0> (a java.lang.ref.ReferenceQueue$Lock)
+	at java.lang.ref.ReferenceQueue.remove(java.base@17.0.20.1/ReferenceQueue.java:155)
+	- locked <0x000000074202c1e0> (a java.lang.ref.ReferenceQueue$Lock)
+	at java.lang.ref.ReferenceQueue.remove(java.base@17.0.20.1/ReferenceQueue.java:176)
+	at com.sun.jna.internal.Cleaner$1.run(Cleaner.java:58)
+
+"WorldEdit Session Manager" #22 prio=5 os_prio=0 cpu=0.00ms elapsed=21.17s tid=0x000002495770cd10 nid=0x93a4 in Object.wait()  [0x000000afb0dff000]
+   java.lang.Thread.State: TIMED_WAITING (on object monitor)
+	at java.lang.Object.wait(java.base@17.0.20.1/Native Method)
+	- waiting on <0x000000077d1b9178> (a java.util.TaskQueue)
+	at java.util.TimerThread.mainLoop(java.base@17.0.20.1/Timer.java:563)
+	- locked <0x000000077d1b9178> (a java.util.TaskQueue)
+	at java.util.TimerThread.run(java.base@17.0.20.1/Timer.java:516)
+
+"G1 Refine#1" os_prio=2 cpu=62.50ms elapsed=245.43s tid=0x000002490fdc6940 nid=0x5eb8 runnable  
+
+"GC Thread#1" os_prio=2 cpu=6734.38ms elapsed=245.82s tid=0x000002490f58dac0 nid=0x5cac runnable  
+
+"VM Periodic Task Thread" os_prio=2 cpu=0.00ms elapsed=245.96s tid=0x000002490f3f08e0 nid=0x9688 waiting on condition  
+
+"VM Thread" os_prio=2 cpu=140.62ms elapsed=246.04s tid=0x000002490f167df0 nid=0x94bc runnable  
+
+"G1 Service" os_prio=2 cpu=15.62ms elapsed=246.05s tid=0x000002496d4b2000 nid=0x7df8 runnable  
+
+"G1 Refine#0" os_prio=2 cpu=796.88ms elapsed=246.05s tid=0x000002490f0424b0 nid=0x8a78 runnable  
+
+"G1 Conc#0" os_prio=2 cpu=4546.88ms elapsed=246.05s tid=0x000002496d47b960 nid=0x43d8 runnable  
+
+"G1 Main Marker" os_prio=2 cpu=0.00ms elapsed=246.05s tid=0x000002496d47a7a0 nid=0x93ec runnable  
+
+"GC Thread#0" os_prio=2 cpu=6718.75ms elapsed=246.05s tid=0x000002496d46d850 nid=0x1490 runnable  
+
+JNI global refs: 19, weak refs: 45
+

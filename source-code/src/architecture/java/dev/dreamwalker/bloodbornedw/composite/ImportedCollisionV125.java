@@ -40,6 +40,19 @@ public final class ImportedCollisionV125 {
         } catch (Exception failure) { throw new IllegalStateException("Invalid NEW default collision resource", failure); }
     }
 
+    /** New authored assemblies carry exact geometry in their own descriptor;
+     * they must not mutate or silently enlarge the historic fitted cohort. */
+    static boolean authoredExact(JsonObject row) {
+        if(!row.has("collisionPolicy"))return false;
+        if(!row.get("collisionPolicy").getAsString().equals("authored-exact"))throw new IllegalArgumentException("Unknown authored collision policy");
+        String path=row.get("path").getAsString();
+        if(!path.matches("source_[a-z0-9_]+"))throw new IllegalArgumentException("Invalid authored assembly path");
+        var spec=document("/bloodborne_dw/composite/"+path+".json");
+        if(!spec.get("id").getAsString().equals("bloodborne_dw:"+path)||!spec.get("simplePhysicalCollision").getAsBoolean())throw new IllegalArgumentException("Authored assembly descriptor mismatch");
+        for(var v:spec.getAsJsonArray("variants"))if(v.getAsJsonObject().getAsJsonObject("poses").getAsJsonObject("closed").getAsJsonArray("collision").isEmpty())throw new IllegalArgumentException("Empty authored assembly collision");
+        return true;
+    }
+
     private static Tables load() {
         JsonObject document = document("/bloodborne_dw/imported-collision-v125.json");
         if (document.get("schemaVersion").getAsInt()!=1 || document.get("unitsPerBlock").getAsInt()!=16
@@ -47,6 +60,7 @@ public final class ImportedCollisionV125 {
             throw new IllegalArgumentException("Unsupported NEW inner-collision defaults");
         Set<String> registered = new HashSet<>();
         for (JsonElement value : document("/bloodborne_dw/remaining-catalogue.json").getAsJsonArray("objects")) {
+            if(authoredExact(value.getAsJsonObject()))continue;
             String path = value.getAsJsonObject().get("path").getAsString();
             if (!path.matches("source_[a-z0-9_]+") || !registered.add("bloodborne_dw:"+path))
                 throw new IllegalArgumentException("Invalid registered NEW collision cohort");

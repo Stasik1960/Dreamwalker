@@ -33,9 +33,9 @@ public final class RestorationQa implements ModInitializer {
     @Override public void onInitialize(){String dir=System.getProperty("dw.restore.qa.output");if(dir==null||!Boolean.getBoolean("dw.restore.qa.server"))return;out=Path.of(dir);
         ServerWorldEvents.LOAD.register((s,w)->{if(w.getRegistryKey()==World.OVERWORLD){w.setSpawnPos(BASE,0);w.getGameRules().get(GameRules.DO_MOB_SPAWNING).set(false,s);}});
         ServerTickEvents.END_SERVER_TICK.register(s->{if(done||++age<30)return;done=true;var w=s.getOverworld();var p=actor(s,w);
-            stage("compact",()->compact(w,p));stage("worldedit",()->worldedit(w,p));stage("tree targeting",()->tree(w,p));
+            if(!Boolean.getBoolean("dw.restore.qa.followup")){stage("compact",()->compact(w,p));stage("worldedit",()->worldedit(w,p));stage("tree targeting",()->tree(w,p));}
             stage("WorldEdit hand",()->hands(w,p));stage("v12 bounds audit",()->bounds(w));
-            stage("whole post and lantern contact",()->objects(w,p));
+            if(!Boolean.getBoolean("dw.restore.qa.followup"))stage("whole post and lantern contact",()->objects(w,p));
             var result=new JsonObject();boolean pass=true;for(var c:checks)pass&=c.getAsJsonObject().get("ok").getAsBoolean();result.addProperty("status",pass?"PASS":"FAIL");result.add("checks",checks);
             try{Files.writeString(out.resolve("checks.json"),new GsonBuilder().setPrettyPrinting().create().toJson(result));}catch(Exception e){throw new RuntimeException(e);}s.stop(false);
         });
@@ -73,7 +73,8 @@ public final class RestorationQa implements ModInitializer {
         if(players==null)throw new IllegalStateException("QA player registry map not found");players.put(p.getUuid(),p);
         try{
             var context=new com.sk89q.worldedit.extension.input.ParserContext();var a=adapter(w);context.setWorld(a);
-            for(var m:Class.forName("com.sk89q.worldedit.fabric.FabricAdapter").getMethods())if(m.getName().equals("adapt")&&m.getParameterCount()==1&&m.getParameterTypes()[0].isInstance(p)&&com.sk89q.worldedit.extension.platform.Actor.class.isAssignableFrom(m.getReturnType())){context.setActor((com.sk89q.worldedit.extension.platform.Actor)m.invoke(null,p));break;}
+            for(var m:Class.forName("com.sk89q.worldedit.fabric.FabricAdapter").getMethods())if(m.getName().equals("adaptPlayer")&&m.getParameterCount()==1&&m.getParameterTypes()[0].isInstance(p)&&com.sk89q.worldedit.extension.platform.Actor.class.isAssignableFrom(m.getReturnType())){context.setActor((com.sk89q.worldedit.extension.platform.Actor)m.invoke(null,p));break;}
+            if(context.getActor()==null)throw new IllegalStateException("Actual FabricPlayer adapter missing");
             var at=BASE.add(20,0,0);var v=BlockVector3.at(at.getX(),at.getY(),at.getZ());
             for(int visual:new int[]{14,25636}){
                 p.getInventory().setStack(p.getInventory().selectedSlot,NativePhysicsBlock.item(visual));
@@ -96,6 +97,8 @@ public final class RestorationQa implements ModInitializer {
             e.setPosition(BASE.getX()+100,BASE.getY(),BASE.getZ());var r=new JsonObject();r.addProperty("id",id);r.addProperty("physicalBoxes",e.activePhysicalBoxes().size());var visual=e.visualBounds();double outside=0,span=0;
             for(var box:e.activePhysicalBoxes()){outside=Math.max(outside,Math.max(Math.max(visual.minX-box.minX,box.maxX-visual.maxX),Math.max(Math.max(visual.minY-box.minY,box.maxY-visual.maxY),Math.max(visual.minZ-box.minZ,box.maxZ-visual.maxZ))));span=Math.max(span,Math.max(box.getXLength(),Math.max(box.getYLength(),box.getZLength())));}
             r.addProperty("physicalOutsideVisual",outside);r.addProperty("maxPhysicalSpan",span);rows.add(r);
+            if(Set.of("dog_cage","furniture_4","cross_beast","statue_1").contains(id))check(outside<1e-7&&!e.activePhysicalBoxes().isEmpty(),"static fallback collider bounded without disabling physics: "+id);
+            if(id.equals("elevator"))check(span==45&&outside>30,"elevator mechanism working volume preserved");
         }
         Files.writeString(out.resolve("v12-bounds.json"),new GsonBuilder().setPrettyPrinting().create().toJson(rows));check(!rows.isEmpty(),"all RP/v12 physical and visual bounds audited");
     }

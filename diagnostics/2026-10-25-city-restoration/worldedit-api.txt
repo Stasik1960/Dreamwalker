@@ -1,0 +1,53 @@
+Compiled from "FabricAdapter.java"
+public final class com.sk89q.worldedit.fabric.FabricAdapter {
+  public static com.sk89q.worldedit.world.World adapt(net.minecraft.class_1937);
+  public static net.minecraft.class_1937 adapt(com.sk89q.worldedit.world.World);
+  public static net.minecraft.class_1959 adapt(com.sk89q.worldedit.world.biome.BiomeType);
+  public static com.sk89q.worldedit.world.biome.BiomeType adapt(net.minecraft.class_1959);
+  public static com.sk89q.worldedit.math.Vector3 adapt(net.minecraft.class_243);
+  public static com.sk89q.worldedit.math.BlockVector3 adapt(net.minecraft.class_2338);
+  public static net.minecraft.class_243 toVec3(com.sk89q.worldedit.math.BlockVector3);
+  public static net.minecraft.class_2350 adapt(com.sk89q.worldedit.util.Direction);
+  public static com.sk89q.worldedit.util.Direction adaptEnumFacing(net.minecraft.class_2350);
+  public static net.minecraft.class_2338 toBlockPos(com.sk89q.worldedit.math.BlockVector3);
+  public static com.sk89q.worldedit.registry.state.Property<?> adaptProperty(net.minecraft.class_2769<?>);
+  public static java.util.Map<com.sk89q.worldedit.registry.state.Property<?>, java.lang.Object> adaptProperties(com.sk89q.worldedit.world.block.BlockType, java.util.Map<net.minecraft.class_2769<?>, java.lang.Comparable<?>>);
+  public static net.minecraft.class_2680 adapt(com.sk89q.worldedit.world.block.BlockState);
+  public static com.sk89q.worldedit.world.block.BlockState adapt(net.minecraft.class_2680);
+  public static net.minecraft.class_2248 adapt(com.sk89q.worldedit.world.block.BlockType);
+  public static com.sk89q.worldedit.world.block.BlockType adapt(net.minecraft.class_2248);
+  public static net.minecraft.class_1792 adapt(com.sk89q.worldedit.world.item.ItemType);
+  public static com.sk89q.worldedit.world.item.ItemType adapt(net.minecraft.class_1792);
+  public static net.minecraft.class_1799 adapt(com.sk89q.worldedit.blocks.BaseItemStack);
+  public static com.sk89q.worldedit.blocks.BaseItemStack adapt(net.minecraft.class_1799);
+  public static com.sk89q.worldedit.fabric.FabricPlayer adaptPlayer(net.minecraft.class_3222);
+  public static com.sk89q.worldedit.extension.platform.Actor adaptCommandSource(net.minecraft.class_2168);
+}
+Compiled from "FabricPlayer.java"
+public class com.sk89q.worldedit.fabric.FabricPlayer extends com.sk89q.worldedit.extension.platform.AbstractPlayerActor {
+  protected com.sk89q.worldedit.fabric.FabricPlayer(net.minecraft.class_3222);
+  public java.util.UUID getUniqueId();
+  public com.sk89q.worldedit.blocks.BaseItemStack getItemInHand(com.sk89q.worldedit.util.HandSide);
+  public java.lang.String getName();
+  public com.sk89q.worldedit.entity.BaseEntity getState();
+  public com.sk89q.worldedit.util.Location getLocation();
+  public boolean setLocation(com.sk89q.worldedit.util.Location);
+  public com.sk89q.worldedit.world.World getWorld();
+  public void giveItem(com.sk89q.worldedit.blocks.BaseItemStack);
+  public void dispatchCUIEvent(com.sk89q.worldedit.internal.cui.CUIEvent);
+  public java.util.Locale getLocale();
+  public void printRaw(java.lang.String);
+  public void printDebug(java.lang.String);
+  public void print(java.lang.String);
+  public void printError(java.lang.String);
+  public void print(com.sk89q.worldedit.util.formatting.text.Component);
+  public boolean trySetPosition(com.sk89q.worldedit.math.Vector3, float, float);
+  public java.lang.String[] getGroups();
+  public com.sk89q.worldedit.extent.inventory.BlockBag getInventoryBlockBag();
+  public boolean hasPermission(java.lang.String);
+  public <T> T getFacet(java.lang.Class<? extends T>);
+  public boolean isAllowedToFly();
+  public void setFlying(boolean);
+  public <B extends com.sk89q.worldedit.world.block.BlockStateHolder<B>> void sendFakeBlock(com.sk89q.worldedit.math.BlockVector3, B);
+  public com.sk89q.worldedit.session.SessionKey getSessionKey();
+}
