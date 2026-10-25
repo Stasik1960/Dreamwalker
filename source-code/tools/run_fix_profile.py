@@ -5,7 +5,10 @@ heap='3G' if role=='server' else '4G'
 cp=[G/'0.19.3.jar',Path('C:/Users/vakir/.gradle/caches/fabric-loom/1.20.1/minecraft-extracted_server.jar') if role=='server' else G/'1.20.1.jar',*sorted((G/'libraries').rglob('*.jar'))];assert all(p.is_file() for p in cp)
 args=['-Xms128M','-Xmx'+heap,'-XX:ActiveProcessorCount=2','-Dfabric.modsFolder='+str(profile/'mods'),'-Ddw.fix.qa.output='+str(D)]
 if role=='server':args+=['-Ddw.fix.qa.server.stop=true','-Ddw.fix.qa.only.we=true']
-else:args+=['-Ddw.fix.qa.skip.we=true','-Djava.library.path='+str(G/'natives'),'-Dorg.lwjgl.librarypath='+str(G/'natives'),'-Ddw.source.light.output='+str(D/'light-trace.jsonl')]
+else:
+ args+=['-Ddw.fix.qa.skip.we=true','-Djava.library.path='+str(G/'natives'),'-Dorg.lwjgl.librarypath='+str(G/'natives'),'-Ddw.source.light.output='+str(D/'light-trace.jsonl')]
+ if attempt in ('3','4'):args+=['-Ddw.fix.qa.followup=true']
+ if attempt=='4':args+=['-Ddw.fix.qa.stairs.only=true','-Ddw.native.ao.output='+str(D/'indium-ao.jsonl')]
 args+=['-cp',os.pathsep.join(map(str,cp)),'net.fabricmc.loader.impl.launch.knot.KnotServer' if role=='server' else 'net.fabricmc.loader.impl.launch.knot.KnotClient']
 if role=='server':args+=['nogui']
 else:args+=['--username','DWFixQA','--version','1.20.1','--gameDir',str(profile),'--assetsDir',str(G/'assets'),'--assetIndex','5','--uuid','52cb9ccf410e3fe69e39564ec8344c55','--accessToken','0','--userType','legacy','--versionType','release','--width','1280','--height','720','--quickPlaySingleplayer','dw-fix-city']

@@ -151,6 +151,17 @@ public final class StaticArchitectureClient {
         private void flatLighting(StaticArchitectureRenderView view,BlockState carrier,BakedModel raw){flatView=view;flatCarrier=carrier;rootQuads=view==null?Set.of():SourceFlatLight.rootQuads(raw,carrier);}
         @Override public void quad(MatrixStack.Entry matrix,BakedQuad quad,float[] brightness,float r,float g,float b,int[] lights,int overlay,boolean useColor){
             if(flatView!=null&&rootQuads.contains(quad)){int light=flatView.flatLight(quad,flatCarrier);if(light>=0)lights=new int[]{light,light,light,light};}
+            // Vanilla AO interpolates unit-cell weights. Preserved source faces
+            // can extend beyond that cell and extrapolate above 1 (or below 0).
+            // VertexConsumer then casts RGB*255 to bytes without saturation,
+            // wrapping a sunlit value such as 1.1 into a nearly black channel.
+            // Keep ordinary AO and the stored light field; bound only its
+            // normalized output before any backend performs byte packing.
+            for(float value:brightness)if(value<0||value>1){
+                brightness=brightness.clone();
+                for(int i=0;i<brightness.length;i++)brightness[i]=MathHelper.clamp(brightness[i],0,1);
+                break;
+            }
             if(diagnosticWorld!=null)SourceLightingDiagnostics.record(diagnosticWorld,diagnosticRoot,diagnosticModel,diagnosticCarrier,diagnosticTransform,quad,brightness,lights);
             delegate.quad(matrix,quad,brightness,quad.hasColor()?red:r,quad.hasColor()?green:g,quad.hasColor()?blue:b,lights,overlay,useColor);
         }

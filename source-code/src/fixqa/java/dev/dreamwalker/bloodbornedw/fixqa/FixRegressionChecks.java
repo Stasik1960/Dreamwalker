@@ -56,7 +56,7 @@ public final class FixRegressionChecks implements ModInitializer {
             boolean drops=world.getGameRules().getBoolean(GameRules.DO_TILE_DROPS);world.getGameRules().get(GameRules.DO_TILE_DROPS).set(true,server);
             try{
                 if(Boolean.getBoolean("dw.fix.qa.only.we")){for(var p:List.of(A,B,C)){check(world.getBlockState(p).isAir()||world.getBlockState(p).getBlock() instanceof NativePhysicsBlock,"only known QA palette cells reset");world.setBlockState(p,Blocks.AIR.getDefaultState(),Block.NOTIFY_ALL);}}
-                else{preview(world);noCollide(world,actor);reach(actor);wholeBreaks(world,actor);compositeBreak(world,actor);fallback(world,actor);}
+                else if(!Boolean.getBoolean("dw.fix.qa.followup")){preview(world);noCollide(world,actor);reach(actor);wholeBreaks(world,actor);compositeBreak(world,actor);fallback(world,actor);}
                 if(!Boolean.getBoolean("dw.fix.qa.skip.we"))new FixWorldEditChecks(out,this::check).run(world);else report.addProperty("worldEdit","SKIPPED_IN_THIS_PROFILE");
             }finally{world.getGameRules().get(GameRules.DO_TILE_DROPS).set(drops,server);}
             actor.getTextStream().onDisconnect();report.addProperty("status","PASS");

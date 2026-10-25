@@ -2,6 +2,7 @@ package dev.dreamwalker.bloodbornedw.fixqa;
 
 import com.google.gson.*;
 import dev.dreamwalker.bloodbornedw.composite.*;
+import dev.dreamwalker.bloodbornedw.fixqa.mixin.FixClientAccess;
 import java.nio.file.*;
 import java.util.*;
 import net.fabricmc.api.ClientModInitializer;
@@ -20,7 +21,7 @@ import net.minecraft.world.GameMode;
 
 /** App-internal functional driver: real pick action, Stats UI and frame output. */
 public final class FixQaClient implements ClientModInitializer {
-    private final JsonObject report=new JsonObject();private final JsonArray checks=new JsonArray();private Path out;private int stage,age,scene;private boolean off,done;
+    private final JsonObject report=new JsonObject();private final JsonArray checks=new JsonArray();private Path out;private int stage,age,scene;private boolean off,done;private final boolean followup=Boolean.getBoolean("dw.fix.qa.followup");
     private final double[][] cameras={
         {169.619,66.26819,-831.425,40.6,29.1,166,65,-829},
         {139.946,76.76834,-937.482,-115.9,55.7,142,74,-939},
@@ -42,26 +43,34 @@ public final class FixQaClient implements ClientModInitializer {
     private void screenshot(MinecraftClient client,String name){ScreenshotRecorder.saveScreenshot(client.runDirectory,name,client.getFramebuffer(),message->{});checks.add("frame "+name);save();}
     private void pick(MinecraftClient client){
         double[] c=cameras[scene];var pos=new BlockPos((int)c[5],(int)c[6],(int)c[7]);var state=client.world.getBlockState(pos);check(!state.isAir(),"pick target loaded at "+pos);
-        client.crosshairTarget=new BlockHitResult(Vec3d.ofCenter(pos),Direction.NORTH,pos,false);((FixClientAccess)client).dw$pick();var held=client.player.getMainHandStack();
+        client.player.getInventory().setStack(client.player.getInventory().selectedSlot,ItemStack.EMPTY);
+        client.interactionManager.clickCreativeStack(ItemStack.EMPTY,36+client.player.getInventory().selectedSlot);
+        client.crosshairTarget=new BlockHitResult(Vec3d.ofCenter(pos),Direction.NORTH,pos,false);((FixClientAccess)client).dw$pick();
+    }
+    private void verifyPick(MinecraftClient client){
+        double[] c=cameras[scene];var pos=new BlockPos((int)c[5],(int)c[6],(int)c[7]);var state=client.world.getBlockState(pos);var held=client.player.getMainHandStack();
         check(!held.isEmpty(),"actual middle-button action returns item at "+pos);
         if(scene<2)check(held.getNbt()!=null&&held.getNbt().getInt(NativeVisuals.ITEM_KEY)==(scene==0?40837:23514),"middle-button preserves repaired native visual index");
         if(scene==2)check(state.equals(SourceFallbackCarrierV1271.itemState(held)),"middle-button preserves fallback source/bank/profile");
-        if(scene==3)check(!(held.getItem() instanceof net.minecraft.item.BlockItem item&&item.getBlock() instanceof StaticArchitectureBlock),"old static carrier picks its authored object");
+        if(scene==3){check(Registries.ITEM.getId(held.getItem()).toString().equals("bloodborne_dw:source_assembly_gray_stained_glass_pane"),"old static carrier picks exact authored item after server reply");check(held.getNbt()!=null,"old static authored item preserves pose NBT");}
     }
     private void tick(MinecraftClient client)throws Exception{
         if(client.world==null||client.player==null||client.getServer()==null||client.getOverlay()!=null)return;
         age++;
         if(stage==0){
             var serverReport=out.resolve("server-checks.json");if(!Files.exists(serverReport))return;check(JsonParser.parseString(Files.readString(serverReport)).getAsJsonObject().get("status").getAsString().equals("PASS"),"integrated server regression checks passed");
-            client.options.getAo().setValue(true);camera(client);stage=1;report.addProperty("status","SCENES");save();return;
+            client.options.getAo().setValue(true);if(followup)scene=Boolean.getBoolean("dw.fix.qa.stairs.only")?6:3;camera(client);stage=1;report.addProperty("status","SCENES");save();return;
         }
         if(stage==1){
             if(age<120)return;
-            if(!off&&scene<4)pick(client);
+            if(!off&&scene<4){pick(client);stage=7;age=0;return;}
             screenshot(client,(off?"ao-off-":"fixed-")+scene+".png");stage=2;age=0;return;
         }
+        if(stage==7&&age>=25){verifyPick(client);screenshot(client,"fixed-"+scene+".png");stage=2;age=0;return;}
         if(stage==2){
-            if(age<25)return;scene++;
+            if(age<25)return;
+            if(followup){if(scene==3){scene=6;camera(client);stage=1;return;}report.addProperty("status","PASS");save();done=true;client.scheduleStop();return;}
+            scene++;
             if(scene<cameras.length){camera(client);stage=1;return;}
             if(!off){off=true;scene=3;client.options.getAo().setValue(false);client.worldRenderer.reload();camera(client);stage=1;return;}
             client.options.getAo().setValue(true);client.worldRenderer.reload();

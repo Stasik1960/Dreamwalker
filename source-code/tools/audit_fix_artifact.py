@@ -1,4 +1,4 @@
-import hashlib,json,zipfile
+import hashlib,json,zipfile,subprocess
 from pathlib import Path
 P=Path(__file__).resolve().parents[1];old=Path('C:/Users/vakir/AppData/Local/Limacina/project/DreamWalker/mods/dreamwalker-bb-0.1.0-v12.7.4-visual-physics.1.jar');new=P/'build-native-visual/libs/dreamwalker-bb-fabric-1.20.1-0.1.0-v12.7.4-visual-physics.2.jar';sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
 assert sha(old)=='337ad3113ea02fd9e59b0646167d1ed51c769f048277e3a0858b4c89d2cfceb5';changed=[];preserved=0;proof={}
@@ -13,3 +13,16 @@ with zipfile.ZipFile(old) as a,zipfile.ZipFile(new) as b:
  assert '40837' in repair['visuals'] and '23514' in repair['visuals'];assert not changed
  nested=[n for n in b.namelist() if n.startswith('META-INF/jars/')]
 out={'status':'PASS','jar':str(new),'sha256':sha(new),'baselineSha256':sha(old),'unchangedExistingAssetFiles':preserved,'changedExistingAssets':changed,'physicalAndWholeResources':proof,'renderOnlyRepairedVisuals':len(repair['visuals']),'nestedJars':nested,'mapRewriteRequired':False};(P/'fix-evidence/artifact-integrity.json').write_text(json.dumps(out,ensure_ascii=False,indent=2),encoding='utf-8');print('Frozen assets preserved',preserved)
+accepted=P/'fix-profiles/server/mods/dreamwalker-bb-fabric-1.20.1-0.1.0-v12.7.4-visual-physics.2.jar'
+assert sha(accepted)=='389f79835bd57131547becd2832a54da6271506109fda7bdcafc8234e26fffe4'
+with zipfile.ZipFile(accepted) as a,zipfile.ZipFile(new) as b:
+ additions=set(b.namelist())-set(a.namelist());assert additions=={'dev/dreamwalker/bloodbornedw/composite/NativeAoDiagnostics.class'}
+ assert not set(a.namelist())-set(b.namelist())
+ changes=[n for n in a.namelist() if a.read(n)!=b.read(n)]
+ assert set(changes)=={'dev/dreamwalker/bloodbornedw/composite/StaticArchitectureClient$SourceTintConsumer.class','dev/dreamwalker/bloodbornedw/composite/StaticArchitectureClient$MarkerModel.class','dev/dreamwalker/bloodbornedw/composite/SourceLightingDiagnostics.class','dev/dreamwalker/bloodbornedw/composite/mixin/StaticArchitectureIndiumLightingMixin.class'},changes
+ assert not any('/fixqa/' in n for n in b.namelist())
+code=[]
+for jar in (accepted,new):
+ result=subprocess.run([str(P/'build-tools/jdk/bin/javap.exe'),'-J-Xmx64m','-p','-c','-classpath',str(jar),'dev.dreamwalker.bloodbornedw.composite.StaticArchitectureClient$MarkerModel'],capture_output=True,text=True,encoding='utf-8',check=True);code.append(result.stdout)
+assert code[0]==code[1],'MarkerModel executable bytecode changed'
+out.update({'acceptedCoreJarSha256':sha(accepted),'changedEntriesAfterCoreAcceptance':changes,'addedClientDiagnosticEntries':sorted(additions),'markerModelOnlyDebugLineNumbersChanged':True,'markerModelJavapSha256':hashlib.sha256(code[0].encode()).hexdigest()});(P/'fix-evidence/artifact-integrity.json').write_text(json.dumps(out,ensure_ascii=False,indent=2),encoding='utf-8')

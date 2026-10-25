@@ -19,6 +19,7 @@ public final class SourceLightingDiagnostics {
     private static final Set<String> SEEN=new HashSet<>();
     private static String phase="AO_ON";
     public static synchronized void phase(String value){phase=value;SEEN.clear();}
+    public static synchronized String currentPhase(){return phase;}
     private SourceLightingDiagnostics(){}
     private static boolean near(BlockPos p,int x,int y,int z,int radius){return java.lang.Math.abs(p.getX()-x)<=radius&&java.lang.Math.abs(p.getY()-y)<=radius&&java.lang.Math.abs(p.getZ()-z)<=radius;}
     public static boolean enabled(BlockPos root){return OUTPUT!=null&&(near(root,75,26,-851,3)||near(root,30,0,-961,4)||near(root,6,23,-864,12)||near(root,85,48,-1011,5));}
