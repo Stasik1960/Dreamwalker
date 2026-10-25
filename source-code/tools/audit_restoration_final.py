@@ -63,10 +63,11 @@ with zipfile.ZipFile(D/'bloodborne-before-restoration.zip') as z:
       if pos not in allowed:report['unauthorizedCells'].append({'pos':pos,'before':ka[x],'after':kb[y]})
   dump()
 index=n.read_nbt(W/'data/bloodborne_dw_composite_owners.dat').root.value['data'].value['OwnerShardChunks'].value
-shards=list((W/'data').rglob('owners-*.nbt'));known={}
+shards=list((W/'data').rglob('owners-*.nbt'));known={};empty=[]
 for p in shards:
  root=n.read_nbt(p).root.value;cx=root['ChunkX'].value;cz=root['ChunkZ'].value;key=(cx&0xffffffff)|((cz&0xffffffff)<<32);known[key-(1<<64) if key>=1<<63 else key]=p
+ if not any(root.get(k,n.Tag(9,[],10)).value for k in ('cells','ownerMembership','ownerTable','dataTable','shapeTable')):empty.append(str(p.relative_to(W)))
 report['danglingShardReferences']=[key for key in index if key not in known]
-report['remainingEmptyOwnerShards']=[str(p.relative_to(W)) for p in shards if not any(n.read_nbt(p).root.value.get(k,n.Tag(9,[],10)).value for k in ('cells','ownerMembership','ownerTable','dataTable','shapeTable'))]
+report['remainingEmptyOwnerShards']=empty
 report['status']='PASS' if not any(report[k] for k in ('unauthorizedCells','blockEntityDifferences','nativeVisualDifferences','missingChunks','rpEntityDifferences','danglingShardReferences','remainingEmptyOwnerShards')) else 'REVIEW_REQUIRED';dump()
 print(json.dumps({k:v for k,v in report.items() if not isinstance(v,list)},ensure_ascii=False))

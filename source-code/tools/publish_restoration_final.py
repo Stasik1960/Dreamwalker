@@ -5,7 +5,7 @@ P=Path(__file__).resolve().parents[1];D=P/'restoration-evidence';O=D/'final-arti
 manifest=json.loads((D/'artifacts.json').read_text());assert manifest['status']=='PREPARED'
 assert json.loads((D/'ready-to-release.json').read_text())['status']=='READY'
 env={**os.environ,'GIT_TERMINAL_PROMPT':'0','GCM_INTERACTIVE':'never'}
-r=subprocess.run([sys.executable,'-X','utf8','-B',str(P/'tools/publish_restoration_checkpoint.py')],env=env,cwd=P,capture_output=True,timeout=240);assert r.returncode==0,'Source checkpoint failed'
+r=subprocess.run([sys.executable,'-X','utf8','-B',str(P/'tools/publish_restoration_checkpoint.py'),'--final'],env=env,cwd=P,capture_output=True,timeout=240);assert r.returncode==0,'Source checkpoint failed'
 commit=json.loads((D/'publication.json').read_text())['commit']
 filled=subprocess.run(['git','credential','fill'],input='protocol=https\nhost=github.com\n\n',capture_output=True,text=True,env=env,timeout=30);token=dict(s.split('=',1) for s in filled.stdout.splitlines() if '=' in s).get('password');assert token
 class NoRedirect(urllib.request.HTTPRedirectHandler):

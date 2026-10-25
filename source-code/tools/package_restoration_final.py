@@ -40,8 +40,8 @@ for name in ('build.gradle','settings.gradle','gradle.properties','gradlew','gra
 for f in files(D):
  if 'final-artifacts' in f.parts or 'installed-backups' in f.parts or f.suffix in ('.zip','.jar','.args') or f.stat().st_size>3_000_000:continue
  sources.append((f,'DW/restoration-evidence/'+f.relative_to(D).as_posix()))
-original=Path('C:/Users/vakir/.codex/worktrees/3f07/DW/audits/Dreamwalker-BB/2026-10-21-native-grid-city/START-RU.txt')
-if original.is_file():sources.append((original,'DW/history/START-RU.txt'))
+history=Path('C:/Users/vakir/.codex/worktrees/3f07/DW/audits/Dreamwalker-BB/2026-10-25-visual-diagnostics/github-publication/TASK')
+for f in files(history):sources.append((f,'DW/history/TASK/'+f.relative_to(history).as_posix()))
 archive(O/'dreamwalker-restoration-full-sources-20261025.zip',sources);shutil.copy2(J,O/J.name)
 for name in ('REPORT-RU.md','TASK-RU.md','DECISIONS-RU.md','HANDOFF-RU.md'):shutil.copy2(D/name,O/name)
 artifacts=[{'name':f.name,'bytes':f.stat().st_size,'sha256':sha(f)} for f in O.iterdir() if f.is_file() and f.name!='SHA256SUMS.txt']

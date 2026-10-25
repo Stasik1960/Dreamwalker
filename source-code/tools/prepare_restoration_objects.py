@@ -1,9 +1,9 @@
 """Reuse the existing authored poses and cached map inventory, never reconvert."""
-import collections,copy,json,math,re,sys
+import collections,copy,gzip,json,math,re,sys
 from pathlib import Path
 import world_io as w
 P=Path(__file__).resolve().parents[1];D=P/'restoration-evidence';W=Path('C:/Users/vakir/Desktop/bloodborne');R=P/'src/architecture/resources';B=R/'bloodborne_dw';read=lambda p:json.loads(p.read_text(encoding='utf-8-sig'))
-audit=read(D/'world-audit.json');static=read(B/'static-architecture-v1274.json');poses={p['key']:p for p in static['poses']};compact={p['registryId']:p for p in read(B/'imported-compact-v127.json')['types']};specs={};regions=collections.OrderedDict();chunks=collections.OrderedDict();newAliases=set()
+audit=read(D/'world-audit.json') if (D/'world-audit.json').exists() else json.loads(gzip.decompress((D/'world-audit.json.gz').read_bytes()));static=read(B/'static-architecture-v1274.json');poses={p['key']:p for p in static['poses']};compact={p['registryId']:p for p in read(B/'imported-compact-v127.json')['types']};specs={};regions=collections.OrderedDict();chunks=collections.OrderedDict();newAliases=set()
 native=read(R/'assets/bloodborne_dw/native_grid/catalog.json')
 def spec(id):
  if id not in specs:specs[id]=read(B/'composite'/(id.split(':')[1]+'.json'))

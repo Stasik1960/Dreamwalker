@@ -18,10 +18,17 @@ owned+=[str(f.relative_to(P)).replace('\\','/') for f in (P/'tools').glob('*rest
 for rel in sorted(set(owned)):
  f=P/rel;assert f.is_file() and f.stat().st_size<99000000
  target=R/'source-code'/rel;target.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(f,target);paths.append(str(target.relative_to(R)))
+if '--final' in sys.argv:
+ assert json.loads((D/'ready-to-release.json').read_text())['status']=='READY'
+ shutil.copy2(D/'HANDOFF-RU.md',R/'HANDOFF-RU.txt');paths.append('HANDOFF-RU.txt')
+ readme=R/'README.md';old=readme.read_text(encoding='utf-8') if readme.exists() else ''
+ marker='<!-- CURRENT_RESTORATION_END -->';old=old.split(marker,1)[-1].lstrip() if marker in old else old
+ prefix='# Dreamwalker — visual-physics.6\n\nТекущая карта пользователя bloodborne, исправленный мод, полные исходники и отчёт: [релиз restoration-20261025](https://github.com/Stasik1960/Dreamwalker/releases/tag/native-grid-city-restoration-20261025). Инструкция установки и продолжения: [HANDOFF-RU.txt](HANDOFF-RU.txt). Доказательства: [city-restoration](diagnostics/2026-10-25-city-restoration).\n\n'+marker+'\n\n'
+ readme.write_text(prefix+old,encoding='utf-8');paths.append('README.md')
 git('add','--',*paths)
 if git('diff','--cached','--name-only'):git('commit','-m','Checkpoint user map restoration work and targeted regression QA')
 commit=git('rev-parse','HEAD');git('push','origin','HEAD:refs/heads/'+BR);assert git('ls-remote','--heads','origin',BR).split()[0]==commit
-(D/'publication.json').write_text(json.dumps({'status':'WORK_IN_PROGRESS','branch':BR,'commit':commit},indent=2),encoding='utf-8')
+(D/'publication.json').write_text(json.dumps({'status':'VERIFIED' if '--final' in sys.argv else 'WORK_IN_PROGRESS','branch':BR,'commit':commit},indent=2),encoding='utf-8')
 if '--backup' not in sys.argv:sys.exit(0)
 filled=subprocess.run(['git','credential','fill'],input='protocol=https\nhost=github.com\n\n',capture_output=True,text=True,env=env,timeout=30);token=dict(s.split('=',1) for s in filled.stdout.splitlines() if '=' in s).get('password');assert token
 class NoRedirect(urllib.request.HTTPRedirectHandler):
