@@ -48,6 +48,7 @@ import net.minecraft.util.math.*;
 public final class WorldEditBridge {
     private static final String SNAPSHOT="DreamwalkerWorldEditSnapshot";
     private static final String RP_REQUEST="DreamwalkerWorldEditRpType";
+    private static final String ITEM_ART="DreamwalkerWorldEditItemArt";
     private static final String SELECTION="DreamwalkerWorldEditSelection";
     private static final Set<String> RP_TYPES=new LinkedHashSet<>();
     private record Match(ServerWorld world,BlockPos pos,Set<Owner> owners,Set<UUID> entities,boolean nativeMatch) {}
@@ -167,6 +168,35 @@ public final class WorldEditBridge {
     public static final class NumericBlocks extends InputParser<BaseBlock> {
         public NumericBlocks(WorldEdit we){super(we);}
         public BaseBlock parseFromInput(String input,ParserContext context)throws InputParseException {
+            if(input.equalsIgnoreCase("hand")||input.equalsIgnoreCase("offhand")){
+                ServerWorld world=nativeWorld(context.getWorld());
+                if(world!=null&&context.getActor() instanceof com.sk89q.worldedit.entity.Player actor){
+                    var player=world.getServer().getPlayerManager().getPlayer(actor.getUniqueId());
+                    if(player!=null){var item=input.equalsIgnoreCase("offhand")?player.getOffHandStack():player.getMainHandStack();
+                        if(item.getItem() instanceof BlockItem held&&held.getBlock() instanceof NativePhysicsBlock){
+                            if(!item.hasNbt()||!item.getNbt().contains(NativeVisuals.ITEM_KEY,3))throw new InputParseException("City fragment has no visual data; pick an intact block first");
+                            int visual=item.getNbt().getInt(NativeVisuals.ITEM_KEY);
+                            if(visual<0||visual>=NativeGridCatalog.cells().size()||NativeVisualLayout.physics(visual)<0)throw new InputParseException("Invalid city fragment visual index");
+                            BlockState state=NativeGridCatalog.state(visual);var payload=new NbtCompound();payload.putInt(NativeVisuals.ITEM_KEY,visual);
+                            var snapshot=new NbtCompound();snapshot.putIntArray("Anchor",new int[]{0,0,0});snapshot.put("NativeData",CompositeData.data(CompositeData.data(state,payload)));
+                            return parsed(stateToken(state),context).toBaseBlock(tag(snapshot));
+                        }
+                        if(item.getItem() instanceof BlockItem held&&own(Registries.BLOCK.getId(held.getBlock()).toString())){
+                            ItemStack canonical=ImportedAssemblyV126.canonicalStack(ImportedTypeAliases.canonicalStack(item));
+                            var nativeItem=(BlockItem)canonical.getItem();BlockState state=nativeItem.getBlock().getDefaultState();var art=canonical.getSubNbt("BlockStateTag");
+                            if(art!=null)for(String key:art.getKeys()){var property=state.getBlock().getStateManager().getProperty(key);if(property!=null)state=with(state,property,art.getString(key));}
+                            var payload=ImportedTypeAliases.markPayload(null);
+                            ImportedTypeAliases.readLegacyStairArt(canonical.getNbt()).ifPresent(key->payload.putString(ImportedStairLegacyArt.KEY,key));
+                            if(canonical.hasNbt()&&canonical.getNbt().contains(ImportedTypeAliases.SHIFT_ART_KEY,9))payload.put("SourceShift",canonical.getNbt().get(ImportedTypeAliases.SHIFT_ART_KEY).copy());
+                            var metadata=new CompoundTag(Map.of(ITEM_ART,new StringTag(Base64.getEncoder().encodeToString(CompositeData.bytes(payload)))));
+                            return parsed(stateToken(state),context).toBaseBlock(metadata);
+                        }
+                        String itemId=Registries.ITEM.getId(item.getItem()).toString();String rp=itemId.endsWith("_placer")?itemId.substring(0,itemId.length()-7):"";
+                        if(RP_TYPES.contains(rp))return defaultBlock(DebugCatalogue.entry(new Identifier(rp)),context);
+                    }
+                }
+            }
+            if(input.matches("bloodborne_dw:native_physics_[0-9]+(\\[[^]]*\\])?"))throw new InputParseException("A physical city state does not identify its artwork; use //set hand with the picked fragment");
             String first=input.split("\\[",2)[0];if(!first.matches("[0-9]{5}")&&!RP_TYPES.contains(first))return null;
             var entry=tokenEntry(input);if(entry==null)throw new InputParseException("Unknown/reserved BB ID "+first);
             BaseBlock value=defaultBlock(entry,context);
@@ -310,7 +340,7 @@ public final class WorldEditBridge {
                 NbtCompound data=new NbtCompound();data.putString("id",requestedRp);data.putUuid("UUID",UUID.randomUUID());NbtList location=new NbtList();location.add(NbtDouble.of(p.getX()));location.add(NbtDouble.of(p.getY()));location.add(NbtDouble.of(p.getZ()));data.put("Pos",location);rpAdd.add(data);nativeChanges.put(p,CompositeData.data(Blocks.AIR.getDefaultState(),new NbtCompound()));
             } else if(own(id)&&Registries.BLOCK.containsId(new Identifier(id))) {
                 BlockState state=Registries.BLOCK.get(new Identifier(id)).getDefaultState();for(var entry:value.getStates().entrySet())state=with(state,state.getBlock().getStateManager().getProperty(entry.getKey().getName()),entry.getValue().toString());
-                if(VerticalMount.isArchitecture(state)&&!ImportedCompactBlock.compact(state)){NbtCompound payload=new NbtCompound();if(id.startsWith("bloodborne_dw:source_"))payload.putInt("ImportedTypeVersion",1);add.add(CompositeRuntime.instance(world,p,state,UUID.randomUUID(),payload));}
+                if(VerticalMount.isArchitecture(state)&&!ImportedCompactBlock.compact(state)){NbtCompound payload=new NbtCompound();if(block.getNbtData()!=null&&block.getNbtData().getValue().get(ITEM_ART) instanceof StringTag art)payload=CompositeData.nbt(Base64.getDecoder().decode(art.getValue()));else if(id.startsWith("bloodborne_dw:source_"))payload.putInt("ImportedTypeVersion",1);add.add(CompositeRuntime.instance(world,p,state,UUID.randomUUID(),payload));}
                 else {for(Owner owner:remove)if(CompositeRuntime.remove(world,owner,null,false).outcome()!=TransactionCore.Outcome.COMMITTED)throw new InputParseException("Cannot remove BB owner");for(RpObjectEntity e:rp)e.removeObject();return super.setBlock(v,value);}
             }
             List<MechanismLinks.TargetRef> removedRefs=new ArrayList<>();remove.forEach(o->removedRefs.add(CompositeMechanismBridge.reference(world,o)));rp.forEach(e->removedRefs.add(MechanismLinks.TargetRef.rp(e)));List<ToolTarget> nativeRefs=new ArrayList<>();var nativeState=world.getBlockState(p);if(ImportedCompactBlock.compact(nativeState)||dev.dreamwalker.bloodbornedw.architecture.DwUtilityBlocks.marker(nativeState))nativeRefs.add(new ToolTarget(ToolTarget.Kind.BLOCK,world.getRegistryKey().getValue().toString(),null,p.asLong(),Registries.BLOCK.getId(nativeState.getBlock()).toString()));

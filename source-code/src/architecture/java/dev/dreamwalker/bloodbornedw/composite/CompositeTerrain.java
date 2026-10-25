@@ -31,6 +31,7 @@ public final class CompositeTerrain {
         if(!ENABLED||!(state.getBlock() instanceof CompositeRootBlock block))return false;
         if(ImportedCompactBlock.compact(state))return false;
         var spec=block.spec;
+        if(LanternMotion.lantern(spec.id.toString()))return false;
         return spec.id.getNamespace().equals("bloodborne_dw")&&spec.id.getPath().startsWith("source_")
             &&!(block instanceof ImportedLadderBlock)&&!(block instanceof ThinWindowRootBlock)
             &&!spec.openable&&!spec.functionalDoorPhysics&&spec.importedClimbingBounds==null&&!spec.requiredSupport;

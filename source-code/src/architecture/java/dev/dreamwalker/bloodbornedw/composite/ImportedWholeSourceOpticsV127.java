@@ -89,7 +89,7 @@ public final class ImportedWholeSourceOpticsV127 {
     /** Called only while immutable snapshots are published, never on a light
      * worker query. Root payload decoding is finite work for two opted-in types. */
     public static int publishedOpacity(Cell cell,List<CompositeData.Contribution> entries){
-        int opacity=0;
+        int opacity=StreetLampPostOptics.published(cell,entries);
         for(var entry:entries){String id=entry.owner().registryId();if(!RULES.containsKey(id))continue;var props=entry.rootData().properties();int variant=Integer.parseInt(props.getOrDefault("variant","0"))+16*Integer.parseInt(props.getOrDefault("art_bank","0"));int rotation=Integer.parseInt(props.getOrDefault("rotation","0"));
             var relative=cell.subtract(entry.owner().root());opacity=Math.max(opacity,carriers(id,variant,rotation,CompositeData.nbt(entry.rootData().blockEntityNbt())).getOrDefault(relative,0));
         }

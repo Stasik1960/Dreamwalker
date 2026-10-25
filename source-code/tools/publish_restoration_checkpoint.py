@@ -8,7 +8,7 @@ def git(*args):
  return r.stdout.strip()
 out=R/'diagnostics/2026-10-25-city-restoration';out.mkdir(parents=True,exist_ok=True);paths=[]
 for f in D.iterdir():
- if f.is_file() and f.suffix in ('.json','.txt','.md'):
+ if f.is_file() and f.suffix in ('.json','.txt','.md','.gz') and f.stat().st_size<3000000:
   shutil.copy2(f,out/f.name);paths.append(str((out/f.name).relative_to(R)))
 owned=['gradle.properties','build.gradle','src/architecture/java/dev/dreamwalker/bloodbornedw/composite/NativePlayerBreak.java','src/architecture/java/dev/dreamwalker/bloodbornedw/composite/CompositeRuntime.java','src/rp/java/dev/dreamwalker/bloodbornerp/object/RpObjectSelection.java']
 if (D/'source-files.json').exists():owned+=json.loads((D/'source-files.json').read_text(encoding='utf-8'))

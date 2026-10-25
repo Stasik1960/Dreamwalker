@@ -31,6 +31,9 @@ import net.minecraft.world.BlockRenderView;
 @Environment(EnvType.CLIENT)
 public final class NativeGridClient implements ClientModInitializer {
     private static volatile Session session;
+    private static String materialLayer(NativeGridCatalog.Material material){
+        return NativeMaterialLayers.layer(material);
+    }
     private record RawQuad(int material, int cull, int face, int tint, int flags, int[] vertices) {}
     private record Quad(BakedQuad baked, RenderMaterial material, Direction cull, BlockState tintSource,
                         boolean remainingGrass, BlockPos tintOffset) {}
@@ -73,6 +76,7 @@ public final class NativeGridClient implements ClientModInitializer {
         final Map<Integer, SharedMesh> wholeItems = new HashMap<>();
         Function<SpriteIdentifier,Sprite> textureGetter;
         Session() throws IOException {
+            NativeMaterialLayers.reload();
             int count = NativeGridCatalog.quadCounts().size();
             raw = new byte[count+NativeVisualRepairs.groups().size()][];
             baked = new SharedMesh[raw.length];
@@ -96,7 +100,7 @@ public final class NativeGridClient implements ClientModInitializer {
                             int tint = metadata.getInt(), flags = Byte.toUnsignedInt(metadata.get());
                             if (material < 0 || material >= sprites.length || cull < -1 || cull > 5 || face < 0 || face > 5 || (flags & ~7) != 0)
                                 throw new IOException("Invalid compiled native grid quad metadata");
-                            layer = mergeLayer(layer, NativeGridCatalog.materials().get(material).layer());
+                            layer = mergeLayer(layer, materialLayer(NativeGridCatalog.materials().get(material)));
                         }
                         layers[mesh] = renderLayer(layer);
                     }
@@ -107,7 +111,7 @@ public final class NativeGridClient implements ClientModInitializer {
                 var group=NativeVisualRepairs.groups().get(i);byte[] original=raw[group.originalMesh()],extra=group.extra();
                 byte[] combined=Arrays.copyOf(original,original.length+extra.length);System.arraycopy(extra,0,combined,original.length,extra.length);raw[count+i]=combined;
                 var metadata=java.nio.ByteBuffer.wrap(combined);String layer="solid";
-                for(int q=0;q<combined.length/139;q++){int material=metadata.getInt(q*139);if(material<0||material>=sprites.length)throw new IOException("Visual repair material bounds");layer=mergeLayer(layer,NativeGridCatalog.materials().get(material).layer());}
+                for(int q=0;q<combined.length/139;q++){int material=metadata.getInt(q*139);if(material<0||material>=sprites.length)throw new IOException("Visual repair material bounds");layer=mergeLayer(layer,materialLayer(NativeGridCatalog.materials().get(material)));}
                 layers[count+i]=renderLayer(layer);
             }
         }
@@ -128,10 +132,10 @@ public final class NativeGridClient implements ClientModInitializer {
             List<Quad> output = new ArrayList<>(source.length);
             boolean vanilla = true;
             boolean ambient = source.length == 0 || (source[0].flags() & 2) != 0;
-            String firstLayer = source.length == 0 ? "solid" : NativeGridCatalog.materials().get(source[0].material()).layer();
+            String firstLayer = source.length == 0 ? "solid" : materialLayer(NativeGridCatalog.materials().get(source[0].material()));
             for (RawQuad quad : source) {
                 var material = NativeGridCatalog.materials().get(quad.material());
-                if (!firstLayer.equals(material.layer()) || (quad.flags() & 4) != 0
+                if (!firstLayer.equals(materialLayer(material)) || (quad.flags() & 4) != 0
                         || ((quad.flags() & 2) != 0) != ambient || quad.tint() >= 0)
                     vanilla = false;
             }
@@ -153,7 +157,7 @@ public final class NativeGridClient implements ClientModInitializer {
                 BakedQuad bakedQuad = new BakedQuad(data, quad.tint(), Direction.values()[quad.face()], sprite, (quad.flags() & 1) != 0);
                 int key = quad.material() * 8 + quad.flags();
                 RenderMaterial renderMaterial = materials.computeIfAbsent(key, ignored -> requireRenderer().materialFinder()
-                        .blendMode(blend(material.layer())).emissive((quad.flags() & 4) != 0)
+                        .blendMode(blend(materialLayer(material))).emissive((quad.flags() & 4) != 0)
                         .disableColorIndex(true).disableDiffuse((quad.flags() & 4) != 0 || (quad.flags() & 1) == 0)
                         .ambientOcclusion((quad.flags() & 4) != 0 || (quad.flags() & 2) == 0 ? TriState.FALSE : TriState.DEFAULT).find());
                 BlockState tintSource = null;
@@ -232,6 +236,10 @@ public final class NativeGridClient implements ClientModInitializer {
             try { loading = new Session(); } catch (IOException failure) { throw new IllegalStateException("Cannot read native city geometry", failure); }
             session = loading;
             plugin.modifyModelAfterBake().register(ModelModifier.WRAP_PHASE, (marker, context) -> {
+                if(context.id().getNamespace().equals("bloodborne_dw")&&context.id().getPath().startsWith("restoration/native_")){
+                    int index=Integer.parseInt(context.id().getPath().substring("restoration/native_".length()));loading.textureGetter=context.textureGetter();
+                    return new Model(marker,loading,index,loading.mesh(index),false);
+                }
                 if (!(context.id() instanceof ModelIdentifier id) || !id.getNamespace().equals("bloodborne_dw")) return marker;
                 if(id.getPath().startsWith("native_physics_")){
                     loading.textureGetter=context.textureGetter();int bank=Integer.parseInt(id.getPath().substring("native_physics_".length()));int part=0;

@@ -44,6 +44,7 @@ public final class CompositeArchitecture {
         CompositeNetworking.initialize();
         ImportedStairBlock.initialize();
         BenchSeating.initialize();
+        LanternMotion.initialize();
         dev.dreamwalker.bloodbornedw.link.MechanismLinks.initialize();
         dev.dreamwalker.bloodbornedw.link.CompositeMechanismBridge.initialize();
     }

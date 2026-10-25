@@ -20,7 +20,7 @@ public class ImportedArtworkBlock extends CompositeRootBlock implements NewState
             return java.util.Set.copyOf(result);
         }catch(java.io.IOException failure){throw new IllegalStateException("Cannot read NEW art banks",failure);}
     }
-    public static boolean isBankedPath(String path){return BANKED.contains(path);}
+    public static boolean isBankedPath(String path){return path.equals("source_street_lamp_post")||BANKED.contains(path);}
     public static int variantBudget(String path){return path.equals("source_assembly_brick_wall")?480:path.equals("source_assembly_deepslate_brick_wall")?160:128;}
     public static ImportedArtworkBlock create(CompositeSpec spec){return spec.id.getPath().equals("source_assembly_brick_wall")?new Expanded(spec):spec.id.getPath().equals("source_assembly_deepslate_brick_wall")?new ExpandedDeepslate(spec):new ImportedArtworkBlock(spec);}
     public static IntProperty bankProperty(BlockState state){return (IntProperty)state.getBlock().getStateManager().getProperty("art_bank");}

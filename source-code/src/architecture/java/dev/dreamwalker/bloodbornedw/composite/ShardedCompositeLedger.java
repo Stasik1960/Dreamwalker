@@ -202,7 +202,13 @@ public final class ShardedCompositeLedger {
         return Map.copyOf(result);
     }
     private void flush(long key,Shard shard) {
-        if(!shard.dirty)return;mainThread();var n=new NbtCompound();n.putInt("Schema",SCHEMA);
+        if(!shard.dirty)return;mainThread();
+        if(shard.cells.isEmpty()&&shard.membership.isEmpty()){
+            try{Files.deleteIfExists(file(key));}catch(IOException failure){throw new IllegalStateException("Cannot retire empty owner shard "+file(key),failure);}
+            if(known.remove(key))indexChanged.run();
+            shard.dirty=false;return;
+        }
+        var n=new NbtCompound();n.putInt("Schema",SCHEMA);
         n.putInt("ChunkX",ChunkPos.getPackedX(key));n.putInt("ChunkZ",ChunkPos.getPackedZ(key));n.putBoolean("Dictionary",true);var entries=new NbtList();
         Map<Owner,Integer> ownerIds=new LinkedHashMap<>();Map<BlockData,Integer> dataIds=new LinkedHashMap<>();Map<Footprint,Integer> shapeIds=new LinkedHashMap<>();
         for(var entry:shard.cells.entrySet()) {

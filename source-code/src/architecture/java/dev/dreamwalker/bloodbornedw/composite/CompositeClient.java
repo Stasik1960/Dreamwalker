@@ -25,6 +25,7 @@ public final class CompositeClient {
     public static void initialize() {
         if(initialized)return; initialized=true;
         BenchSeatingClient.initialize();
+        LanternMotionClient.initialize();
         dev.dreamwalker.bloodbornedw.architecture.FauxWaterClient.initialize();
         dev.dreamwalker.bloodbornedw.architecture.FaerieVeilClient.initialize();
         CompositeVisualBoundsV127.initialize();
@@ -48,6 +49,7 @@ public final class CompositeClient {
             @Override public void render(CompositeBlockEntity entity,float tickDelta,MatrixStack matrices,VertexConsumerProvider consumers,int light,int overlay){
                 if(dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.isNative(entity.getCachedState())){dev.dreamwalker.bloodbornedw.architecture.mount.NativeMountClient.render(entity,matrices,consumers,light,overlay);return;}
                 if(entity.resident()==null||!(entity.getCachedState().getBlock() instanceof CompositeRootBlock block))return;
+                if(LanternMotionClient.render(entity,tickDelta,matrices,consumers,overlay))return;
                 if(CompositeTerrain.at(entity.getCachedState(),entity.getPos())){boolean terrain=entity.terrainMeshed();StaticArchitectureClient.ownerFrame(terrain);if(terrain)return;}
                 BlockState renderedState=entity.getCachedState();NbtCompound renderedPayload=entity.sourceRenderPayload();
                 if(CompositeWorldMesh.tryRenderRetained(entity,renderedState,renderedPayload,matrices,consumers,overlay))return;
