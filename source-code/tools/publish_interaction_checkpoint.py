@@ -20,6 +20,7 @@ owned += [str(p.relative_to(P)).replace('\\','/') for p in (P/'tools').glob('*in
 for pattern in ('bloodborne_dw/composite/source_shutter*.json','assets/bloodborne_dw/models/interactions/*.json','assets/bloodborne_dw/models/block/source_shutter*.json','assets/bloodborne_dw/models/item/source_shutter*.json','assets/bloodborne_dw/blockstates/source_shutter*.json','assets/bloodborne_dw/textures/interactions/*.png'):
  owned += [str(p.relative_to(P)).replace('\\','/') for p in (P/'src/architecture/resources').glob(pattern)]
 paths=[]
+(D/'source-files.json').write_text(json.dumps(sorted(set(owned)),ensure_ascii=False,indent=2),encoding='utf-8')
 for rel in sorted(set(owned)):
  source=P/rel;assert source.is_file() and source.stat().st_size<99000000;target=R/'source-code'/rel;target.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(source,target);paths.append(target.relative_to(R).as_posix())
 for source in D.rglob('*'):
