@@ -24,6 +24,10 @@ dependencies {
  implementation 'com.eliotlash.mclib:mclib:20'
 }
 sourceSets {
+ benchqa {
+  compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
+  runtimeClasspath += sourceSets.main.output + sourceSets.main.runtimeClasspath
+ }
  fixqa {
   compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
   runtimeClasspath += sourceSets.main.output + sourceSets.main.runtimeClasspath
@@ -73,6 +77,8 @@ sourceSets {
  }
 }
 configurations {
+ benchqaImplementation.extendsFrom implementation
+ benchqaRuntimeOnly.extendsFrom runtimeOnly
  fixqaImplementation.extendsFrom implementation
  fixqaRuntimeOnly.extendsFrom runtimeOnly
  nativegridqaImplementation.extendsFrom implementation
@@ -99,6 +105,20 @@ tasks.register('remapFixQaJar', net.fabricmc.loom.task.RemapJarTask) {
  inputFile.set(tasks.named('fixQaJar', Jar).flatMap { it.archiveFile })
  classpath.from(sourceSets.fixqa.compileClasspath)
  archiveBaseName = 'dreamwalker-fix-qa'
+ archiveClassifier = ''
+ addNestedDependencies = false
+}
+tasks.register('benchQaJar', Jar) {
+ dependsOn benchqaClasses
+ from sourceSets.benchqa.output
+ archiveBaseName = 'dreamwalker-bench-qa'
+ archiveClassifier = 'dev'
+}
+tasks.register('remapBenchQaJar', net.fabricmc.loom.task.RemapJarTask) {
+ dependsOn benchQaJar
+ inputFile.set(tasks.named('benchQaJar', Jar).flatMap { it.archiveFile })
+ classpath.from(sourceSets.benchqa.compileClasspath)
+ archiveBaseName = 'dreamwalker-bench-qa'
  archiveClassifier = ''
  addNestedDependencies = false
 }

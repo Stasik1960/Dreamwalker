@@ -42,6 +42,7 @@ public final class CompositeArchitecture {
         net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents.UNLOAD.register((server,world)->{CompositeRuntime.forget(world);CompositeShapeSnapshots.forget(world);});
         CompositeNetworking.initialize();
         ImportedStairBlock.initialize();
+        BenchSeating.initialize();
         dev.dreamwalker.bloodbornedw.link.MechanismLinks.initialize();
         dev.dreamwalker.bloodbornedw.link.CompositeMechanismBridge.initialize();
     }
