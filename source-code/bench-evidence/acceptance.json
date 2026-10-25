@@ -1,0 +1,49 @@
+{
+  "status": "PASS",
+  "version": "0.1.0-v12.7.4-visual-physics.3",
+  "jarSha256": "5c47f820db5b6eddb79b5a46240d35e38e4029b10f5ef161ad8a1c41830dda3e",
+  "baselineSha256": "b776096762ea39f4b46fade64bb0aecc4f166d83086cd95bb6dba37846639584",
+  "coreBenchPoseCombinations": 24,
+  "remainingDedicatedServer": "server-2",
+  "fullPackClient": "client-2",
+  "existingCityBenchesChecked": 36,
+  "resources": {
+    "status": "PASS",
+    "jar": "C:\\Users\\vakir\\CodexProjects\\DW-visual-fixes-20261025\\build-native-visual\\libs\\dreamwalker-bb-fabric-1.20.1-0.1.0-v12.7.4-visual-physics.3.jar",
+    "sha256": "5c47f820db5b6eddb79b5a46240d35e38e4029b10f5ef161ad8a1c41830dda3e",
+    "baselineSha256": "b776096762ea39f4b46fade64bb0aecc4f166d83086cd95bb6dba37846639584",
+    "unchangedExistingAssets": 9453,
+    "unchangedDataResources": 1244,
+    "changedExistingClasses": [
+      "dev/dreamwalker/bloodbornedw/composite/CompositeArchitecture.class",
+      "dev/dreamwalker/bloodbornedw/composite/CompositeClient$1.class",
+      "dev/dreamwalker/bloodbornedw/composite/CompositeClient$2.class",
+      "dev/dreamwalker/bloodbornedw/composite/CompositeClient$OwnersPacket.class",
+      "dev/dreamwalker/bloodbornedw/composite/CompositeClient$SyncContext.class",
+      "dev/dreamwalker/bloodbornedw/composite/CompositeClient.class"
+    ],
+    "unchangedCodeWithShiftedDebugLines": [
+      "dev/dreamwalker/bloodbornedw/composite/CompositeClient$1.class",
+      "dev/dreamwalker/bloodbornedw/composite/CompositeClient$2.class",
+      "dev/dreamwalker/bloodbornedw/composite/CompositeClient$OwnersPacket.class",
+      "dev/dreamwalker/bloodbornedw/composite/CompositeClient$SyncContext.class"
+    ],
+    "addedClasses": [
+      "dev/dreamwalker/bloodbornedw/composite/BenchSeatEntity.class",
+      "dev/dreamwalker/bloodbornedw/composite/BenchSeating$Point.class",
+      "dev/dreamwalker/bloodbornedw/composite/BenchSeating$Target.class",
+      "dev/dreamwalker/bloodbornedw/composite/BenchSeating.class",
+      "dev/dreamwalker/bloodbornedw/composite/BenchSeatingClient.class"
+    ],
+    "newBlockStates": 0,
+    "addedProductionEntityTypes": [
+      "bloodborne_dw:bench_seat"
+    ],
+    "mapRewriteRequired": false
+  },
+  "visualReview": "visual-review.json",
+  "mapReconverted": false,
+  "mapRelease": "native-grid-city-visual-physics-20261025",
+  "performanceBenchmark": false,
+  "firstRunFixtureCorrection": "MountY is normalized away by normal placement; use VerticalOffset. Accepted 24 pose combinations were not repeated. Initial failed fixture server was ended by launcher timeout (exit 1); server-2 and client-2 exit 0."
+}

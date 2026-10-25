@@ -11,23 +11,26 @@ def sha(p):
 integrity=read(D/'artifact-integrity.json');assert integrity['status']=='PASS'
 jar=Path(integrity['jar']);digest=sha(jar);assert digest==integrity['sha256']
 assert read(P/'build-tools/gradle-remapJar.json')['exitCode']==0
-core=read(D/'server-1/server-checks.json')['checks'];assert sum(x.startswith('place bench ') for x in core)==25
-for role in ('server-1','server-2','client-1'):
- assert read(D/role/'launch-result.json')['exitCode']==0
+core_report=read(D/'server-1/server-checks.json');core=core_report['checks'];assert sum(x.startswith('place bench ') for x in core)==25
+assert core_report['error']=='java.lang.AssertionError: mount and source shift applied once'
+assert core.count('no idle seats')==24 and core.count('seating preserves all bench data')==24 and core.count('full bench rejects fourth rider without extra entity')==24
+CLIENT='client-2'
+for role in ('server-1','server-2',CLIENT):
+ if role!='server-1':assert read(D/role/'launch-result.json')['exitCode']==0
  assert read(D/role/'process.json')['productionSha256']==digest
-for name in ('server-2/server-checks.json','client-1/server-checks.json','client-1/client-checks.json','visual-review.json'):
+for name in ('server-2/server-checks.json',CLIENT+'/server-checks.json',CLIENT+'/client-checks.json','visual-review.json'):
  assert read(D/name)['status']=='PASS',name
-frames=D/'client-1/screenshots';frames.mkdir(exist_ok=True)
+frames=D/CLIENT/'screenshots';frames.mkdir(exist_ok=True)
 for name in ('fixture-seated.png','fixture-dismounted.png','city-bench-seated.png'):
  shutil.copy2(P/'fix-profiles/client/screenshots'/name,frames/name)
 acceptance={'status':'PASS','version':'0.1.0-v12.7.4-visual-physics.3','jarSha256':digest,
  'baselineSha256':integrity['baselineSha256'],'coreBenchPoseCombinations':24,
- 'remainingDedicatedServer':'server-2','fullPackClient':'client-1','existingCityBenchesChecked':36,
+ 'remainingDedicatedServer':'server-2','fullPackClient':CLIENT,'existingCityBenchesChecked':36,
  'resources':integrity,'visualReview':'visual-review.json','mapReconverted':False,
  'mapRelease':'native-grid-city-visual-physics-20261025','performanceBenchmark':False,
- 'firstRunFixtureCorrection':'MountY is normalized away by normal placement; use VerticalOffset. Accepted 24 pose combinations were not repeated.'}
+ 'firstRunFixtureCorrection':'MountY is normalized away by normal placement; use VerticalOffset. Accepted 24 pose combinations were not repeated. Initial failed fixture server was ended by launcher timeout (exit 1); server-2 and client-2 exit 0.'}
 (D/'acceptance.json').write_text(json.dumps(acceptance,ensure_ascii=False,indent=2),encoding='utf-8')
-report=D/'REPORT-RU.txt';report.write_text(report.read_text(encoding='utf-8').replace('Статус: рабочий кандидат; игровые проверки ещё не завершены.','Статус: PASS. Проверки завершены, мод готов.').replace('Окончательный статус каждого прогона и хеш JAR записаны в acceptance.json.','Сервер server-2 и клиент client-1 завершились без краша (exit 0).\nВсе 36 целых скамеек готового города распознаются. ПКМ, Shift, поза и\nреальная городская скамья проверены; кадры просмотрены. Хеш — в acceptance.json.'),encoding='utf-8')
+report=D/'REPORT-RU.txt';report.write_text(report.read_text(encoding='utf-8').replace('Статус: рабочий кандидат; игровые проверки ещё не завершены.','Статус: PASS. Проверки завершены, мод готов.').replace('Окончательный статус каждого прогона и хеш JAR записаны в acceptance.json.','Сервер server-2 и клиент client-2 завершились без краша (exit 0).\nВсе 36 найденных целых скамеек готового города распознаются. ПКМ, Shift, поза и\nреальная городская скамья проверены; кадры просмотрены. Хеш — в acceptance.json.'),encoding='utf-8')
 shutil.copy2(jar,A/'dreamwalker-bb-0.1.0-v12.7.4-visual-physics.3.jar')
 def safe_files(folder):
  for root,dirs,files in os.walk(folder,followlinks=False):

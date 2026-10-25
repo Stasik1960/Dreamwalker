@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "run": "client-2",
+  "productionSha256": "5c47f820db5b6eddb79b5a46240d35e38e4029b10f5ef161ad8a1c41830dda3e",
+  "reviewedFrames": [
+    {"name": "fixture-seated.png", "observed": "Player is visibly seated, hips meet the plank, legs face forward, backrest is behind the player; no visible seat entity."},
+    {"name": "fixture-dismounted.png", "observed": "Player returns to standing pose adjacent to the unchanged bench."},
+    {"name": "city-bench-seated.png", "observed": "Actual retained static city bench supports the same correctly aligned seated pose; bench and surroundings remain rendered."}
+  ],
+  "gameplayEvidence": "client-2/client-checks.json; dedicated server-2/server-checks.json",
+  "scope": "Targeted sitting and dismount checks, no performance benchmark. Three intact models in eight rotations are covered by server-1 accepted core cases."
+}
