@@ -28,6 +28,8 @@ for evidence in (D,P/'interaction-evidence',P/'restoration-evidence'):
   if 'final-artifacts' in f.parts or 'installed-backups' in f.parts or f.suffix in ('.zip','.jar','.args') or f.stat().st_size>3_000_000:continue
   sources.append((f,'DW/'+evidence.name+'/'+f.relative_to(evidence).as_posix()))
 archive=O/'dreamwalker-npc-full-sources-20261026.zip';assert not archive.exists()
+history=Path('C:/Users/vakir/.codex/worktrees/3f07/DW/audits/Dreamwalker-BB/2026-10-25-visual-diagnostics/github-publication/TASK')
+for f in files(history):sources.append((f,'DW/history/TASK/'+f.relative_to(history).as_posix()))
 with zipfile.ZipFile(archive,'w',zipfile.ZIP_DEFLATED,compresslevel=1,allowZip64=True) as z:
  for f,rel in sources:z.write(f,rel)
 shutil.copy2(J,O/J.name)

@@ -80,11 +80,12 @@ public final class RpMobEntity extends PathAwareEntity implements GeoEntity, Ass
  public boolean isVisualCorpse(){return npcVisualSource!=null?npcKilled||npcVisualSource.deathTime>0||!npcVisualSource.isAlive():isCorpse();}
  public boolean getFrozen(){return dataTracker.get(FROZEN);}
  public boolean isFrozen(){return getFrozen();}
- private void stopOrder(){destination=null;resumeDestination=false;getNavigation().stop();setVelocity(new Vec3d(0,getVelocity().y,0));}
+ private int destinationFinishingTicks;
+ private void stopOrder(){destination=null;resumeDestination=false;destinationFinishingTicks=0;getNavigation().stop();setVelocity(new Vec3d(0,getVelocity().y,0));}
  public void setFrozen(boolean value){dataTracker.set(FROZEN,value);if(value)stopOrder();}
  @Override public boolean isAiDisabled(){return isCorpse()||isFrozen()||super.isAiDisabled();}
  @Override public boolean canMoveVoluntarily(){return !isCorpse()&&!isFrozen()&&super.canMoveVoluntarily();}
- public boolean reviveActor(){if(getWorld().isClient||!isCorpse())return false;dataTracker.set(CORPSE,false);setFrozen(false);setHealth(2);deathTime=0;hurtTime=0;dataTracker.set(ATTACK_VARIANT,0);dataTracker.set(POSE_SEQUENCE,dataTracker.get(POSE_SEQUENCE)+1);stopOrder();return true;}
+ public boolean reviveActor(){if(getWorld().isClient||!isCorpse())return false;dataTracker.set(CORPSE,false);setFrozen(false);setAiDisabled(false);setHealth(2);deathTime=0;hurtTime=0;dataTracker.set(ATTACK_VARIANT,0);dataTracker.set(POSE_SEQUENCE,dataTracker.get(POSE_SEQUENCE)+1);stopOrder();return true;}
  @Override public boolean damage(DamageSource source,float amount){
   if(getWorld().isClient||isRemoved()||!(source.getAttacker() instanceof PlayerEntity player)||!player.isCreative())return false;
   if(isCorpse()){discard();return true;}
@@ -95,10 +96,10 @@ public final class RpMobEntity extends PathAwareEntity implements GeoEntity, Ass
   var shape=getWorld().getBlockState(block).getCollisionShape(getWorld(),block,net.minecraft.block.ShapeContext.absent());
   double top=shape.isEmpty()?0:shape.getMax(Direction.Axis.Y);var target=new Vec3d(block.getX()+.5,block.getY()+top,block.getZ()+.5);
   if(!getWorld().getWorldBorder().contains(BlockPos.ofFloored(target)))return false;
-  setFrozen(false);dataTracker.set(ATTACK_VARIANT,0);animationTicks=0;
+  setFrozen(false);setAiDisabled(false);dataTracker.set(ATTACK_VARIANT,0);animationTicks=0;
   if(horizontalDistanceSquared(target)<.05&&Math.abs(getY()-target.y)<1){stopOrder();return true;}
   if(!getNavigation().startMovingTo(target.x,target.y,target.z,1))return false;
-  destination=target;resumeDestination=false;return true;
+  destination=target;resumeDestination=false;destinationFinishingTicks=0;return true;
  }
  private double horizontalDistanceSquared(Vec3d p){double x=getX()-p.x,z=getZ()-p.z;return x*x+z*z;}
  public Optional<Vec3d> orderedDestination(){return Optional.ofNullable(destination);}
@@ -117,7 +118,9 @@ public final class RpMobEntity extends PathAwareEntity implements GeoEntity, Ass
   if(horizontalDistanceSquared(destination)<.05&&Math.abs(getY()-destination.y)<1){stopOrder();return;}
   if(resumeDestination){resumeDestination=false;if(!getNavigation().startMovingTo(destination.x,destination.y,destination.z,1))stopOrder();}
   else if(getNavigation().isIdle()){
-   if(horizontalDistanceSquared(destination)<2.25&&Math.abs(getY()-destination.y)<1)getMoveControl().moveTo(destination.x,destination.y,destination.z,1);
+   // Vanilla navigation finishes early for wide actors. Complete its reached path to the requested centre.
+   var path=getNavigation().getCurrentPath();double radius=Math.max(1.5,getWidth()+2);
+   if(path!=null&&path.reachesTarget()&&horizontalDistanceSquared(destination)<radius*radius&&Math.abs(getY()-destination.y)<1&&++destinationFinishingTicks<200)getMoveControl().moveTo(destination.x,destination.y,destination.z,1);
    else stopOrder();
   }
  }
@@ -127,7 +130,7 @@ public final class RpMobEntity extends PathAwareEntity implements GeoEntity, Ass
  @Override public void playSound(SoundEvent sound,float volume,float pitch){super.playSound(sound,volume/3f,pitch);}
  @Override public net.minecraft.sound.SoundCategory getSoundCategory(){return net.minecraft.sound.SoundCategory.HOSTILE;}
  @Override public void playAmbientSound(){ambientAlternate=!ambientAlternate;if(ambientAlternate&&!isCorpse())super.playAmbientSound();}
- @Override public void writeCustomDataToNbt(NbtCompound nbt){super.writeCustomDataToNbt(nbt);nbt.putBoolean(FROZEN_NBT,isFrozen());nbt.putBoolean(CORPSE_NBT,isCorpse());if(destination!=null){var a=new NbtList();a.add(NbtDouble.of(destination.x));a.add(NbtDouble.of(destination.y));a.add(NbtDouble.of(destination.z));nbt.put(DESTINATION_NBT,a);}SourceLegacyPayload.write(nbt,sourceLegacyPayload,this);}
+ @Override public void writeCustomDataToNbt(NbtCompound nbt){super.writeCustomDataToNbt(nbt);nbt.putBoolean("NoAI",super.isAiDisabled());nbt.putBoolean(FROZEN_NBT,isFrozen());nbt.putBoolean(CORPSE_NBT,isCorpse());if(destination!=null){var a=new NbtList();a.add(NbtDouble.of(destination.x));a.add(NbtDouble.of(destination.y));a.add(NbtDouble.of(destination.z));nbt.put(DESTINATION_NBT,a);}SourceLegacyPayload.write(nbt,sourceLegacyPayload,this);}
  @Override public void readCustomDataFromNbt(NbtCompound nbt){sourceLegacyPayload=SourceLegacyPayload.read(nbt,this);super.readCustomDataFromNbt(nbt);normalizeAttributes();dataTracker.set(CORPSE,nbt.getBoolean(CORPSE_NBT));setFrozen(nbt.getBoolean(FROZEN_NBT));setHealth(isCorpse()?1:2);deathTime=0;hurtTime=0;var goal=nbt.getList(DESTINATION_NBT,NbtElement.DOUBLE_TYPE);if(goal.size()==3&&!isCorpse()&&!isFrozen()){var p=new Vec3d(goal.getDouble(0),goal.getDouble(1),goal.getDouble(2));if(Double.isFinite(p.x)&&Double.isFinite(p.y)&&Double.isFinite(p.z)){destination=p;resumeDestination=true;}}}
 
  /** A Custom NPC's model proxy is never ticked as a world mob. Borrow visual state only. */
