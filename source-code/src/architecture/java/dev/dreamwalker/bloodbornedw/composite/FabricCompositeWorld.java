@@ -1,0 +1,156 @@
+package dev.dreamwalker.bloodbornedw.composite;
+
+import dev.dreamwalker.bloodbornedw.runtime.*;
+import dev.dreamwalker.bloodbornedw.runtime.CellSnapshot.*;
+import dev.dreamwalker.bloodbornedw.runtime.ObjectGeometry.*;
+import dev.dreamwalker.bloodbornedw.runtime.ObjectInstance.Owner;
+import java.util.*;
+import net.minecraft.block.*;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.shape.VoxelShapes;
+
+/** Fresh logical reads; full world/BE rollback snapshots are staged only for a validated write set. */
+public class FabricCompositeWorld implements TransactionCore.WorldAccess {
+    private record Original(BlockState state,NbtCompound fullNbt,List<CompositeData.Contribution> contributions,CellSnapshot snapshot){}
+    public final ServerWorld world;
+    private final Map<Owner,ObjectInstance> incoming;
+    private final Map<Cell,Original> originals=new TreeMap<>();
+    // The core's AIR describes the removed owner layer. A final bridge detach
+    // physically exposes its original plain background, which is FOREIGN on
+    // every ordinary read. Keep this projection only until this transaction's
+    // exact write verification completes; it is never a world/instance cache.
+    private final Map<Cell,CellSnapshot> terminalBridgeReadbacks=new TreeMap<>();
+    public FabricCompositeWorld(ServerWorld world,Map<Owner,ObjectInstance> incoming){this.world=world;this.incoming=Map.copyOf(incoming);}
+    @Override public void assertMutationThread(){if(!world.getServer().isOnThread())throw new IllegalStateException("Composite mutation requires the server thread");}
+    @Override public String dimensionKey(){return world.getRegistryKey().getValue().toString();}
+    @Override public boolean isLoaded(Cell cell){return world.getChunkManager().getWorldChunk(cell.x()>>4,cell.z()>>4)!=null;}
+    @Override public boolean inBounds(Cell cell){BlockPos pos=CompositeData.pos(cell);return world.isInBuildLimit(pos)&&world.getWorldBorder().contains(pos);}
+    @Override public CellSnapshot read(Cell cell){
+        if(!isLoaded(cell))throw new IllegalStateException("Read would load a composite chunk: "+cell);
+        BlockPos pos=CompositeData.pos(cell);BlockState state=world.getBlockState(pos);BlockEntity entity=world.getBlockEntity(pos);
+        List<CompositeData.Contribution> contributions=CompositeLedger.get(world).at(cell);
+        if(contributions.isEmpty()&&entity instanceof CompositeBlockEntity cached)contributions=cached.contributions();
+        CellSnapshot terminal=terminalBridgeReadbacks.get(cell);Original original=originals.get(cell);
+        if(terminal!=null&&terminal.kind()==Kind.AIR&&terminal.resident()==null&&terminal.guests().isEmpty()
+                &&original!=null&&original.fullNbt.contains(NativeGridBridge.KEY,3)
+                &&entity==null&&contributions.isEmpty()
+                &&state.equals(NativeGridCatalog.state(original.fullNbt.getInt(NativeGridBridge.KEY)))
+                &&(!(state.getBlock() instanceof NativePhysicsBlock)||NativeVisuals.index(world,pos)==original.fullNbt.getInt(NativeGridBridge.KEY)))return terminal;
+        Owner resident=dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.isArchitecture(state)&&entity instanceof CompositeBlockEntity cached?cached.resident():null;
+        List<Owner> guests=new ArrayList<>();for(var entry:contributions)if(!entry.owner().equals(resident))guests.add(entry.owner());
+        // Custom technical AirBlocks may carry source lighting or another mod's data.
+        // Only the three vanilla empty states are free cells for helper replacement.
+        boolean markerRoot=dev.dreamwalker.bloodbornedw.architecture.DwUtilityBlocks.marker(state)&&incoming.keySet().stream().anyMatch(owner->owner.root().equals(cell));
+        boolean free=state.isOf(Blocks.AIR)||state.isOf(Blocks.CAVE_AIR)||state.isOf(Blocks.VOID_AIR)||markerRoot;
+        Kind kind=resident!=null?Kind.ROOT:state.isOf(CompositeArchitecture.CELL)||free&&!guests.isEmpty()?Kind.HELPER:free?Kind.AIR:Kind.FOREIGN;
+        // Foreign BE contents are still part of every fresh precondition read. Composite carriers
+        // expose only their public functional payload here; their full owner NBT is rollback data.
+        NbtCompound payload=entity instanceof CompositeBlockEntity cached&&(resident!=null||state.isOf(CompositeArchitecture.CELL))?cached.payload():entity==null?new NbtCompound():entity.createNbt();
+        if(state.getBlock() instanceof NativePhysicsBlock){payload=payload.copy();payload.putInt(NativeVisuals.ITEM_KEY,NativeVisuals.required(world,pos));}
+        return new CellSnapshot(kind,CompositeData.data(state,payload),resident,guests);
+    }
+    @Override public void prepareRollback(Map<Cell,CellSnapshot> expectedWrites){
+        terminalBridgeReadbacks.clear();
+        originals.clear();
+        for(var entry:expectedWrites.entrySet()){
+            Cell cell=entry.getKey();
+            if(!isLoaded(cell)||!inBounds(cell)||!entry.getValue().equals(read(cell)))throw new IllegalStateException("Rollback state changed: "+cell);
+            BlockPos pos=CompositeData.pos(cell);BlockState state=world.getBlockState(pos);BlockEntity entity=world.getBlockEntity(pos);
+            // createNbt owns the complete typed compound. Keep it once until commit/rollback ends;
+            // restoration receives a copy so an adapter cannot mutate the saved original.
+            NbtCompound full=entity==null?new NbtCompound():entity.createNbt();
+            if(state.getBlock() instanceof NativePhysicsBlock)full.putInt(NativeVisuals.ITEM_KEY,NativeVisuals.required(world,pos));
+            List<CompositeData.Contribution> contributions=CompositeLedger.get(world).at(cell);
+            if(contributions.isEmpty()&&entity instanceof CompositeBlockEntity cached)contributions=cached.contributions();
+            originals.put(cell,new Original(state,full,List.copyOf(contributions),entry.getValue()));
+        }
+    }
+    @Override public void releaseRollback(){terminalBridgeReadbacks.clear();originals.clear();}
+    @Override public Optional<ObjectInstance> describeRoot(Owner owner,CellSnapshot root){
+        if(!owner.equals(root.resident()))return Optional.empty();BlockState state=CompositeData.state(root.data());
+        if(!dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.isArchitecture(state)||!net.minecraft.registry.Registries.BLOCK.getId(state.getBlock()).toString().equals(owner.registryId()))return Optional.empty();
+        var object=CompositeRuntime.instance(world,CompositeData.pos(owner.root()),state,owner.instanceId(),CompositeData.nbt(root.data().blockEntityNbt()));
+        // Native V9 palettes had no extra owner cells. Their newly persistent
+        // UUID starts with the existing root only; first height edit creates
+        // the complete clipped ledger atomically instead of pretending it existed.
+        if(dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.isNative(state)&&CompositeLedger.get(world).at(owner.root()).stream().noneMatch(entry->entry.owner().equals(owner))&&world.getBlockEntity(CompositeData.pos(owner.root())) instanceof CompositeBlockEntity cached&&cached.contributions().isEmpty())object=new ObjectInstance(owner,object.rootData(),Map.of(Cell.ORIGIN,object.cells().get(Cell.ORIGIN)));
+        return Optional.of(object);
+    }
+    @Override public boolean supportsGuestBindings(CellSnapshot carrier){return carrier.kind()!=Kind.AIR;}
+    @Override public boolean allowsReviewedOverlap(ObjectInstance incoming,ObjectInstance existing,Cell cell){
+        if(dev.dreamwalker.bloodbornedw.architecture.NoCollidePlacement.owner(incoming.owner().instanceId()))return true;
+        if(existing.owner().registryId().equals("bloodborne_dw:prototype_roof")&&!cell.equals(existing.owner().root()))return true;
+        if(dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.heightEdit())return true;
+        if(dev.dreamwalker.bloodbornedw.architecture.SourceConversionScope.initialInstance(incoming.owner().instanceId()))return true;
+        CellSnapshot previous=read(incoming.owner().root());
+        if(incoming.owner().equals(previous.resident())) {
+            ObjectInstance original=describeRoot(incoming.owner(),previous).orElse(null);
+            if(original!=null&&original.at(cell)!=null){
+                var old=original.at(cell).collision().stream().map(b->new net.minecraft.util.math.Box(b.minX(),b.minY(),b.minZ(),b.maxX(),b.maxY(),b.maxZ())).toList();
+                boolean retained=true;
+                for(var a:incoming.at(cell).collision())for(var b:existing.at(cell).collision())retained&=dev.dreamwalker.bloodbornedw.architecture.PlacementPhysics.retainedIntersection(
+                    new net.minecraft.util.math.Box(a.minX(),a.minY(),a.minZ(),a.maxX(),a.maxY(),a.maxZ()),new net.minecraft.util.math.Box(b.minX(),b.minY(),b.minZ(),b.maxX(),b.maxY(),b.maxZ()),old);
+                if(retained)return true;
+            }
+        }
+        // Negligible penetration is contact. Active volume overlap otherwise needs explicit initial migration.
+        return !incoming.at(cell).collides(existing.at(cell));
+    }
+    @Override public boolean intersectsEntities(Cell cell,Footprint proposed){
+        var pos=CompositeData.pos(cell);var physical=incoming.size()==1&&ImportedPhysicalShapes.isImported(incoming.keySet().iterator().next())?ImportedPhysicalShapes.exact(proposed.collision()):CompositeRuntime.shape(proposed.collision());var boxes=physical.getBoundingBoxes().stream().map(box->box.offset(pos)).toList();
+        boolean initial=incoming.keySet().stream().anyMatch(owner->dev.dreamwalker.bloodbornedw.architecture.SourceConversionScope.initialInstance(owner.instanceId()));
+        return dev.dreamwalker.bloodbornedw.architecture.PlacementPhysics.entityConflict(world,boxes,null,initial)!=null;
+    }
+    @Override public boolean needsRefresh(Cell cell,CellSnapshot before,CellSnapshot next){return incoming.keySet().stream().anyMatch(owner->owner.equals(next.resident())||next.guests().contains(owner));}
+    @Override public boolean restoreSilently(Cell cell,CellSnapshot previous){terminalBridgeReadbacks.remove(cell);Original original=originals.get(cell);if(original==null||!original.snapshot.equals(previous))throw new IllegalStateException("Missing rollback snapshot "+cell);BlockPos pos=CompositeData.pos(cell);if(original.state.getBlock() instanceof NativePhysicsBlock)NativeVisuals.stage(world,pos,original.fullNbt.getInt(NativeVisuals.ITEM_KEY));world.setBlockState(pos,original.state,Block.FORCE_STATE|Block.SKIP_DROPS);BlockEntity entity=world.getBlockEntity(pos);if(entity!=null){entity.readNbt(original.fullNbt.copy());entity.markDirty();}CompositeLedger.get(world).put(cell,original.contributions);return true;}
+    @Override public boolean writeSilently(Cell cell,CellSnapshot next){
+        terminalBridgeReadbacks.remove(cell);
+        BlockPos pos=CompositeData.pos(cell);Original original=originals.get(cell);
+        BlockState nextState=CompositeData.state(next.data());
+        int nativeGridBase=original==null?-1:original.fullNbt.getInt(NativeGridBridge.KEY);
+        if(original==null||!original.fullNbt.contains(NativeGridBridge.KEY,3))nativeGridBase=-1;
+        if(nativeGridBase>=0&&next.kind()!=Kind.FOREIGN){
+            // The background belongs to this cell, not to the moving door or
+            // other retained owner. Emptying its final binding exposes the
+            // same ordinary state again; rotations never move the background.
+            if(next.resident()==null&&next.guests().isEmpty())nextState=NativeGridCatalog.state(nativeGridBase);
+            else NativeGridBridge.validate(nativeGridBase,nextState);
+        }
+        if(next.kind()==Kind.FOREIGN){
+            // Foreign walls/inventories stay the same native block and native block entity.
+            if(!world.getBlockState(pos).equals(nextState))return false;
+            BlockEntity foreign=world.getBlockEntity(pos);NbtCompound actual=foreign==null?new NbtCompound():foreign.createNbt();
+            if(nextState.getBlock() instanceof NativePhysicsBlock)actual.putInt(NativeVisuals.ITEM_KEY,NativeVisuals.required(world,pos));
+            if(!actual.equals(CompositeData.nbt(next.data().blockEntityNbt())))return false;
+        }else {if(nextState.getBlock() instanceof NativePhysicsBlock&&nativeGridBase>=0)NativeVisuals.stage(world,pos,nativeGridBase);world.setBlockState(pos,nextState,Block.FORCE_STATE|Block.SKIP_DROPS);}
+        List<Owner> owners=new ArrayList<>(next.guests());if(next.resident()!=null)owners.add(next.resident());
+        List<CompositeData.Contribution> entries=new ArrayList<>();
+        for(Owner owner:owners){ObjectInstance instance=incoming.get(owner);
+            if(instance==null&&isLoaded(owner.root()))instance=describeRoot(owner,read(owner.root())).orElse(null);
+            if(instance!=null){Footprint footprint=instance.at(cell);if(footprint==null)throw new IllegalStateException("Owner has no contribution at "+cell);entries.add(new CompositeData.Contribution(owner,instance.rootData(),footprint));}
+            else {var cached=CompositeLedger.get(world).at(cell).stream().filter(entry->entry.owner().equals(owner)).findFirst().orElseThrow(()->new IllegalStateException("Missing deferred owner cache "+owner));entries.add(cached);}
+        }
+        CompositeLedger.get(world).put(cell,entries);
+        BlockEntity entity=world.getBlockEntity(pos);
+        if(next.kind()!=Kind.FOREIGN&&entity instanceof CompositeBlockEntity cached){
+            // A source ladder's private UUID/root/backing and opaque Original
+            // provenance belong to its existing installation, never to an item.
+            // Transaction detach/recreate must restore that typed role before
+            // replacing the public owner contribution payload.
+            if(entity instanceof dev.dreamwalker.bloodbornedw.architecture.ladder_source.SourceLadderBlockEntity&&original!=null&&next.resident()!=null&&next.resident().equals(original.snapshot.resident()))cached.readNbt(original.fullNbt.copy());
+            cached.nativeGridBase(nativeGridBase);
+            cached.set(next.resident(),entries,CompositeData.nbt(next.data().blockEntityNbt()));
+        }
+        if(nativeGridBase>=0&&next.kind()==Kind.AIR&&next.resident()==null&&next.guests().isEmpty())terminalBridgeReadbacks.put(cell,next);
+        return true;
+    }
+    @Override public void publishCommitted(List<Cell> cells){
+        for(Cell cell:cells){BlockPos pos=CompositeData.pos(cell);BlockState state=world.getBlockState(pos);Original original=originals.get(cell);world.updateListeners(pos,original==null?state:original.state,state,Block.NOTIFY_LISTENERS);if(world.getBlockEntity(pos) instanceof CompositeBlockEntity)world.getChunkManager().markForUpdate(pos);}
+        CompositeNetworking.publish(world,cells);
+        for(Cell cell:cells)NativeVisuals.publish(world,CompositeData.pos(cell));
+        for(Cell cell:cells){BlockPos pos=CompositeData.pos(cell);world.updateNeighbors(pos,world.getBlockState(pos).getBlock());}
+    }
+}

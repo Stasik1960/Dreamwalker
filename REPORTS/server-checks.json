@@ -1,0 +1,66 @@
+{
+  "status": "PASS_TWO_REAL_SERVER_VMS_SAVE_REOPEN",
+  "productionSha256": "5ad7cda65c62c6682d34746fb40534b5647f678306739660103fbe7fc0a779f1",
+  "qaSha256": "fa524b7c4e8a69d7b8f29c91f1e3f8868c208ef10a53ae9e9da4baf511be6659",
+  "world": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-visual-physics-20261024\\qa-world",
+  "sourceWorldUnchanged": true,
+  "inheritedExactPhysicsProof": {
+    "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-visual-physics-20261024\\checks-create\\report.json",
+    "sha256": "edab5dbd0e58fdc3f320a581083c06cb6dcf83a71bb9cc36db6aa9a04708fa02"
+  },
+  "phases": [
+    {
+      "phase": "resume-create",
+      "exitCode": 0,
+      "seconds": 149.20300000000134,
+      "report": {
+        "exactCellPhysicsCheckedThisRun": 0,
+        "inheritedExactPhysicsReport": "C:/Users/vakir/.codex/worktrees/3f07/DW-visual-physics-20261024/checks-create/report.json",
+        "observedDropCount": 1,
+        "standSavedForReopen": true,
+        "visual": 5,
+        "status": "PASS",
+        "checks": [
+          "explicit finite test phase",
+          "test stand is empty at class_2338{x=15, y=200, z=15}",
+          "test stand is empty at class_2338{x=16, y=200, z=15}",
+          "test stand is empty at class_2338{x=15, y=199, z=15}",
+          "two different visual meshes share one exact physical state",
+          "place first visual",
+          "same-state visual replacement updates metadata",
+          "render snapshot remains immutable after same-state update",
+          "pick returns exact finite visual item",
+          "old ordinary item migrates on read without mutating saved caller NBT",
+          "real survival player break removes physical state",
+          "afterBreak drops exact former visual despite cleared chunk entry",
+          "original map drop rule restored after isolated drop test",
+          "ordinary dropped item reinstalls exact visual and physics",
+          "second chunk stores visual independently",
+          "vanilla initial chunk packet contains matching visual table"
+        ],
+        "phase": "resume-create",
+        "normalServerThreadFinished": true
+      },
+      "log": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-visual-physics-20261024\\checks-resume-create\\server-console.log"
+    },
+    {
+      "phase": "reopen",
+      "exitCode": 0,
+      "seconds": 156.23500000000058,
+      "report": {
+        "standRestored": true,
+        "status": "PASS",
+        "checks": [
+          "physical states survive real VM restart on both sides of chunk boundary",
+          "chunk visual indices survive save and cold reopen",
+          "reopened pick item keeps exact visual variant",
+          "removal clears both chunk tables",
+          "test stand cleanup restores original visual table counts"
+        ],
+        "phase": "reopen",
+        "normalServerThreadFinished": true
+      },
+      "log": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-visual-physics-20261024\\checks-reopen\\server-console.log"
+    }
+  ]
+}

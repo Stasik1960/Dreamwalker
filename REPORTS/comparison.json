@@ -1,0 +1,679 @@
+{
+  "status": "ONE_MATCHED_PAIR_COMPLETE_NOT_FULL_CITY_ACCEPTANCE",
+  "runs": {
+    "baseline": {
+      "productionSha256": "9b2edaa041331ff510df87ad1abd51b1de9a535f5768396bc04b6b5cf24d7d33",
+      "corePhases": [
+        "north-facade",
+        "userpack-r1-statue-whole-front",
+        "userpack-r1-statue-whole-side",
+        "userpack-r1-sprite-tree-front",
+        "userpack-r1-sprite-tree-reverse",
+        "userpack-r2-statue-whole-front",
+        "userpack-r2-statue-whole-side",
+        "userpack-r2-sprite-tree-front",
+        "userpack-r2-sprite-tree-reverse"
+      ],
+      "steadyCity": {
+        "samples": 65279,
+        "p50Ms": 1.110001,
+        "p95Ms": 2.7129499999999993,
+        "p99Ms": 5.627442780000002,
+        "maxMs": 31.0952,
+        "over250ms": 0,
+        "over1s": 0,
+        "over3s": 0,
+        "averageFps": 729.7199002820693,
+        "onePercentLowFps": 112.36806765800226,
+        "over50ms": 0,
+        "over100ms": 0,
+        "over250msPerMinute": 0.0
+      },
+      "cityFramesIncludingMovement": {
+        "samples": 81526,
+        "p50Ms": 1.0987,
+        "p95Ms": 5.01295,
+        "p99Ms": 25.537300000000002,
+        "maxMs": 801.4075,
+        "over250ms": 128,
+        "over1s": 0,
+        "over3s": 0,
+        "averageFps": 329.9243956997187,
+        "onePercentLowFps": 6.77985805282788,
+        "over50ms": 657,
+        "over100ms": 499,
+        "over250msPerMinute": 31.07989302767018
+      },
+      "metrics": {
+        "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-visual-physics-20261024\\baseline-metrics.json",
+        "sha256": "034b84062698a8021dd106de2577ba7a7da208c804248dc2b2dfb416ac728541"
+      },
+      "resources": {
+        "schemaVersion": 1,
+        "status": "ACTUAL_FULL_HOST_RESOURCE_OBSERVATIONS_NOT_FPS_NORMALIZATION",
+        "samplerReceipt": {
+          "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-visual-physics-20261024\\runs\\baseline-1\\host-samples\\receipt.json",
+          "sha256": "d456bc31a7bb2541180420666b57ac4c1a83b3b2f91d41bad8875d04237463b5"
+        },
+        "csv": {
+          "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-visual-physics-20261024\\runs\\baseline-1\\host-samples\\host-resources.csv",
+          "sha256": "82acc0b604b7c3a1b27bbc81eec3c83d19b705f342a2e9cc3926dfc5a912cbe3"
+        },
+        "rows": 713,
+        "simultaneousRows": 689,
+        "machineBusyCpuPercent": {
+          "samples": 689,
+          "mean": 35.18528826446825,
+          "min": 6.926829268292683,
+          "p95": 84.90384615384616,
+          "max": 100.0
+        },
+        "availablePhysicalBytes": {
+          "samples": 689,
+          "mean": 1535806227.6923077,
+          "min": 279990272,
+          "p95": 5063745536,
+          "max": 6306074624
+        },
+        "availableCommitBytes": {
+          "samples": 689,
+          "mean": 13800613361.880987,
+          "min": 11244216320,
+          "p95": 18886492160,
+          "max": 20097572864
+        },
+        "summedSimultaneousWorkingSetBytes": {
+          "samples": 689,
+          "mean": 9728315076.923077,
+          "min": 4951998464,
+          "p95": 10937139200,
+          "max": 11016830976
+        },
+        "processes": {
+          "client": {
+            "coreEquivalent": {
+              "samples": 689,
+              "mean": 4.089359020963817,
+              "min": 0.0,
+              "p95": 10.66982212621985,
+              "max": 14.994421388712013
+            },
+            "hostCpuPercent": {
+              "samples": 689,
+              "mean": 25.558493881023864,
+              "min": 0.0,
+              "p95": 66.68638828887407,
+              "max": 93.71513367945008
+            },
+            "workingSetBytes": {
+              "samples": 689,
+              "mean": 4915282966.293179,
+              "min": 164212736.0,
+              "p95": 6154473472.0,
+              "max": 6186037248.0
+            },
+            "privateUsageBytes": {
+              "samples": 689,
+              "mean": 6272831975.477504,
+              "min": 276803584.0,
+              "p95": 8603914240.0,
+              "max": 8621166592.0
+            },
+            "lifetimePeakWorkingSetBytes": 6186045440
+          },
+          "server": {
+            "coreEquivalent": {
+              "samples": 712,
+              "mean": 0.770366526254519,
+              "min": 0.0,
+              "p95": 3.905502877300082,
+              "max": 11.15434372735025
+            },
+            "hostCpuPercent": {
+              "samples": 712,
+              "mean": 4.814790789090743,
+              "min": 0.0,
+              "p95": 24.409392983125514,
+              "max": 69.71464829593906
+            },
+            "workingSetBytes": {
+              "samples": 712,
+              "mean": 4809073571.955056,
+              "min": 4379430912.0,
+              "p95": 4922675200.0,
+              "max": 4974960640.0
+            },
+            "privateUsageBytes": {
+              "samples": 712,
+              "mean": 4986566540.94382,
+              "min": 4837019648.0,
+              "p95": 5032357888.0,
+              "max": 5078839296.0
+            },
+            "lifetimePeakWorkingSetBytes": 4979679232
+          }
+        },
+        "limits": [
+          "OneHz sampled RSS/private commit; short unsampled spikes may be missed.",
+          "Windows API peak working set is since process creation. Summed working sets may double-count shared pages.",
+          "PrivateUsage means private committed bytes, not resident RAM or Java heap. CPU host percentage uses16logicalprocessors.",
+          "Concurrent local client/server on16GiB host; no numeric correction of FPS for other hardware or remote hosting.",
+          "Nearest-sample association with long frames does not prove that host pressure caused them."
+        ],
+        "producer": {
+          "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-userpack-optimization-20261024\\summarize_resources.py",
+          "sha256": "47bee373daa818ef0082a2fd29fc84f3ceeca8e5707bb29c3cd564a33a7504d0"
+        },
+        "longFrameCountOver250ms": 161,
+        "largestFrameSampleAssociations": [
+          {
+            "phase": "paving-overhead-1",
+            "endEpochNs": 1792874149612580600,
+            "frameMs": 1303.7255,
+            "sampleDistanceSeconds": 0.1972145,
+            "availablePhysicalBytes": 584507392,
+            "machineBusyCpuPercent": 88.57965451055662
+          },
+          {
+            "phase": "paving-overhead-1",
+            "endEpochNs": 1792874147332827800,
+            "frameMs": 1225.193,
+            "sampleDistanceSeconds": 0.0569487,
+            "availablePhysicalBytes": 506314752,
+            "machineBusyCpuPercent": 88.78968253968254
+          },
+          {
+            "phase": "north-facade",
+            "endEpochNs": 1792874117274467200,
+            "frameMs": 801.4075,
+            "sampleDistanceSeconds": 0.120189,
+            "availablePhysicalBytes": 537493504,
+            "machineBusyCpuPercent": 97.090203685742
+          },
+          {
+            "phase": "north-facade",
+            "endEpochNs": 1792874116473059700,
+            "frameMs": 794.0496,
+            "sampleDistanceSeconds": 0.0828565,
+            "availablePhysicalBytes": 575438848,
+            "machineBusyCpuPercent": 98.4375
+          },
+          {
+            "phase": "paving-overhead-1",
+            "endEpochNs": 1792874147850871600,
+            "frameMs": 518.0438,
+            "sampleDistanceSeconds": 0.4610951,
+            "availablePhysicalBytes": 506314752,
+            "machineBusyCpuPercent": 88.78968253968254
+          },
+          {
+            "phase": "paving-overhead-1",
+            "endEpochNs": 1792874138433832200,
+            "frameMs": 510.5143,
+            "sampleDistanceSeconds": 0.0167293,
+            "availablePhysicalBytes": 406724608,
+            "machineBusyCpuPercent": 81.17760617760618
+          },
+          {
+            "phase": "paving-overhead-1",
+            "endEpochNs": 1792874136761333100,
+            "frameMs": 495.6284,
+            "sampleDistanceSeconds": 0.3688626,
+            "availablePhysicalBytes": 403165184,
+            "machineBusyCpuPercent": 96.484375
+          },
+          {
+            "phase": "userpack-r1-statue-whole-front",
+            "endEpochNs": 1792874228877298200,
+            "frameMs": 485.6295,
+            "sampleDistanceSeconds": 0.4667057,
+            "availablePhysicalBytes": 406765568,
+            "machineBusyCpuPercent": 83.20610687022901
+          },
+          {
+            "phase": "paving-overhead-1",
+            "endEpochNs": 1792874135356087500,
+            "frameMs": 477.4575,
+            "sampleDistanceSeconds": 0.0382411,
+            "availablePhysicalBytes": 436236288,
+            "machineBusyCpuPercent": 76.5625
+          },
+          {
+            "phase": "userpack-r1-sprite-tree-front",
+            "endEpochNs": 1792874312162342500,
+            "frameMs": 454.1087,
+            "sampleDistanceSeconds": 0.2270344,
+            "availablePhysicalBytes": 442814464,
+            "machineBusyCpuPercent": 65.72265625
+          },
+          {
+            "phase": "userpack-r1-statue-whole-front",
+            "endEpochNs": 1792874229606264300,
+            "frameMs": 449.8411,
+            "sampleDistanceSeconds": 0.1468317,
+            "availablePhysicalBytes": 420962304,
+            "machineBusyCpuPercent": 96.57089898053754
+          },
+          {
+            "phase": "userpack-r2-sprite-tree-front",
+            "endEpochNs": 1792874400720590900,
+            "frameMs": 432.9434,
+            "sampleDistanceSeconds": 0.331398,
+            "availablePhysicalBytes": 732762112,
+            "machineBusyCpuPercent": 82.28962818003914
+          },
+          {
+            "phase": "userpack-r1-statue-whole-front",
+            "endEpochNs": 1792874261388579900,
+            "frameMs": 429.8789,
+            "sampleDistanceSeconds": 0.0026559,
+            "availablePhysicalBytes": 477360128,
+            "machineBusyCpuPercent": 49.4140625
+          },
+          {
+            "phase": "userpack-r1-statue-whole-front",
+            "endEpochNs": 1792874260712386599,
+            "frameMs": 427.1721,
+            "sampleDistanceSeconds": 0.322713399,
+            "availablePhysicalBytes": 463171584,
+            "machineBusyCpuPercent": 54.58984375
+          },
+          {
+            "phase": "paving-overhead-1",
+            "endEpochNs": 1792874136025443500,
+            "frameMs": 425.7074,
+            "sampleDistanceSeconds": 0.367027,
+            "availablePhysicalBytes": 403165184,
+            "machineBusyCpuPercent": 96.484375
+          },
+          {
+            "phase": "paving-overhead-1",
+            "endEpochNs": 1792874134770081500,
+            "frameMs": 425.5182,
+            "sampleDistanceSeconds": 0.3806109,
+            "availablePhysicalBytes": 432037888,
+            "machineBusyCpuPercent": 25.390625
+          },
+          {
+            "phase": "userpack-r1-statue-whole-front",
+            "endEpochNs": 1792874262127047100,
+            "frameMs": 424.8338,
+            "sampleDistanceSeconds": 0.282475,
+            "availablePhysicalBytes": 486293504,
+            "machineBusyCpuPercent": 74.1097208854668
+          },
+          {
+            "phase": "paving-overhead-1",
+            "endEpochNs": 1792874137574696000,
+            "frameMs": 419.7441,
+            "sampleDistanceSeconds": 0.1852552,
+            "availablePhysicalBytes": 420122624,
+            "machineBusyCpuPercent": 90.91796875
+          },
+          {
+            "phase": "north-facade",
+            "endEpochNs": 1792874117693119600,
+            "frameMs": 418.6524,
+            "sampleDistanceSeconds": 0.2984634,
+            "availablePhysicalBytes": 537493504,
+            "machineBusyCpuPercent": 97.090203685742
+          },
+          {
+            "phase": "north-facade",
+            "endEpochNs": 1792874119266490500,
+            "frameMs": 415.5796,
+            "sampleDistanceSeconds": 0.122706,
+            "availablePhysicalBytes": 547737600,
+            "machineBusyCpuPercent": 99.21259842519684
+          }
+        ]
+      },
+      "startup": {
+        "serverStartToClientPidSeconds": 136.37769746780396,
+        "clientPidToInitialPositionAcknowledgedSeconds": 290.4641172885895
+      }
+    },
+    "candidate": {
+      "productionSha256": "103f7f584a5f48d1a1aa5d66cf02ab654939f1fcdf187eeb56176c7840914896",
+      "corePhases": [
+        "north-facade",
+        "userpack-r1-statue-whole-front",
+        "userpack-r1-statue-whole-side",
+        "userpack-r1-sprite-tree-front",
+        "userpack-r1-sprite-tree-reverse",
+        "userpack-r2-statue-whole-front",
+        "userpack-r2-statue-whole-side",
+        "userpack-r2-sprite-tree-front",
+        "userpack-r2-sprite-tree-reverse"
+      ],
+      "steadyCity": {
+        "samples": 65624,
+        "p50Ms": 1.1314,
+        "p95Ms": 2.8585849999999997,
+        "p99Ms": 5.518138999999998,
+        "maxMs": 23.5408,
+        "over250ms": 0,
+        "over1s": 0,
+        "over3s": 0,
+        "averageFps": 733.3967818107996,
+        "onePercentLowFps": 126.35710803544275,
+        "over50ms": 0,
+        "over100ms": 0,
+        "over250msPerMinute": 0.0
+      },
+      "cityFramesIncludingMovement": {
+        "samples": 82840,
+        "p50Ms": 1.1149,
+        "p95Ms": 5.571700000000006,
+        "p99Ms": 28.54259000000001,
+        "maxMs": 544.4201,
+        "over250ms": 77,
+        "over1s": 0,
+        "over3s": 0,
+        "averageFps": 340.93479084630087,
+        "onePercentLowFps": 7.493683349223256,
+        "over50ms": 646,
+        "over100ms": 491,
+        "over250msPerMinute": 19.01398761117709
+      },
+      "metrics": {
+        "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-visual-physics-20261024\\candidate-metrics.json",
+        "sha256": "f157b606c2b82d63887430c9ac9a61aa64b9c06b5c682ce5908f24b04fd7ab60"
+      },
+      "resources": {
+        "schemaVersion": 1,
+        "status": "ACTUAL_FULL_HOST_RESOURCE_OBSERVATIONS_NOT_FPS_NORMALIZATION",
+        "samplerReceipt": {
+          "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-visual-physics-20261024\\runs\\candidate-1\\host-samples\\receipt.json",
+          "sha256": "ae857b4cc91a3d9820c30b4b03c68dc9fa75ed40e16f611cfa75d0637714c2dc"
+        },
+        "csv": {
+          "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-visual-physics-20261024\\runs\\candidate-1\\host-samples\\host-resources.csv",
+          "sha256": "0ba49630844aabab7159b1e20b3ec43417d7e32e9f612c9a27ae536b53e2b04a"
+        },
+        "rows": 684,
+        "simultaneousRows": 660,
+        "machineBusyCpuPercent": {
+          "samples": 660,
+          "mean": 33.48550215010729,
+          "min": 6.906614785992218,
+          "p95": 85.546875,
+          "max": 100.0
+        },
+        "availablePhysicalBytes": {
+          "samples": 660,
+          "mean": 1515800371.2,
+          "min": 390365184,
+          "p95": 5127278592,
+          "max": 6726074368
+        },
+        "availableCommitBytes": {
+          "samples": 660,
+          "mean": 13626470344.145454,
+          "min": 11160768512,
+          "p95": 18773495808,
+          "max": 20308852736
+        },
+        "summedSimultaneousWorkingSetBytes": {
+          "samples": 660,
+          "mean": 9836599655.951515,
+          "min": 4494327808,
+          "p95": 11015499776,
+          "max": 11047870464
+        },
+        "processes": {
+          "client": {
+            "coreEquivalent": {
+              "samples": 660,
+              "mean": 4.002181638250161,
+              "min": 0.0,
+              "p95": 10.843143868257693,
+              "max": 14.598289509682033
+            },
+            "hostCpuPercent": {
+              "samples": 660,
+              "mean": 25.013635239063507,
+              "min": 0.0,
+              "p95": 67.76964917661059,
+              "max": 91.23930943551271
+            },
+            "workingSetBytes": {
+              "samples": 660,
+              "mean": 5002042212.848485,
+              "min": 180674560.0,
+              "p95": 6196572160.0,
+              "max": 6215540736.0
+            },
+            "privateUsageBytes": {
+              "samples": 660,
+              "mean": 6369971994.375757,
+              "min": 294354944.0,
+              "p95": 8693374976.0,
+              "max": 8713555968.0
+            },
+            "lifetimePeakWorkingSetBytes": 6227759104
+          },
+          "server": {
+            "coreEquivalent": {
+              "samples": 683,
+              "mean": 0.6750041902495546,
+              "min": 0.0,
+              "p95": 3.609946815574472,
+              "max": 9.675635919684476
+            },
+            "hostCpuPercent": {
+              "samples": 683,
+              "mean": 4.218776189059716,
+              "min": 0.0,
+              "p95": 22.562167597340448,
+              "max": 60.47272449802797
+            },
+            "workingSetBytes": {
+              "samples": 683,
+              "mean": 4832859569.288433,
+              "min": 4313653248.0,
+              "p95": 4915445760.0,
+              "max": 4975960064.0
+            },
+            "privateUsageBytes": {
+              "samples": 683,
+              "mean": 4992438493.891654,
+              "min": 4367761408.0,
+              "p95": 5031014400.0,
+              "max": 5034590208.0
+            },
+            "lifetimePeakWorkingSetBytes": 4981657600
+          }
+        },
+        "limits": [
+          "OneHz sampled RSS/private commit; short unsampled spikes may be missed.",
+          "Windows API peak working set is since process creation. Summed working sets may double-count shared pages.",
+          "PrivateUsage means private committed bytes, not resident RAM or Java heap. CPU host percentage uses16logicalprocessors.",
+          "Concurrent local client/server on16GiB host; no numeric correction of FPS for other hardware or remote hosting.",
+          "Nearest-sample association with long frames does not prove that host pressure caused them."
+        ],
+        "producer": {
+          "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW-userpack-optimization-20261024\\summarize_resources.py",
+          "sha256": "47bee373daa818ef0082a2fd29fc84f3ceeca8e5707bb29c3cd564a33a7504d0"
+        },
+        "longFrameCountOver250ms": 94,
+        "largestFrameSampleAssociations": [
+          {
+            "phase": "userpack-r1-statue-whole-front",
+            "endEpochNs": 1792875317422426050,
+            "frameMs": 544.4201,
+            "sampleDistanceSeconds": 0.18576325,
+            "availablePhysicalBytes": 573599744,
+            "machineBusyCpuPercent": 69.7265625
+          },
+          {
+            "phase": "userpack-r1-statue-whole-front",
+            "endEpochNs": 1792875325777776650,
+            "frameMs": 488.9071,
+            "sampleDistanceSeconds": 0.45859815,
+            "availablePhysicalBytes": 630120448,
+            "machineBusyCpuPercent": 66.30859375
+          },
+          {
+            "phase": "userpack-r1-statue-whole-front",
+            "endEpochNs": 1792875312570274150,
+            "frameMs": 425.7072,
+            "sampleDistanceSeconds": 0.33384365,
+            "availablePhysicalBytes": 619614208,
+            "machineBusyCpuPercent": 72.75390625
+          },
+          {
+            "phase": "north-facade",
+            "endEpochNs": 1792875220984915650,
+            "frameMs": 424.8253,
+            "sampleDistanceSeconds": 0.25214675,
+            "availablePhysicalBytes": 698511360,
+            "machineBusyCpuPercent": 98.01587301587301
+          },
+          {
+            "phase": "userpack-r1-sprite-tree-front",
+            "endEpochNs": 1792875409588694350,
+            "frameMs": 417.9394,
+            "sampleDistanceSeconds": 0.35233575,
+            "availablePhysicalBytes": 441667584,
+            "machineBusyCpuPercent": 88.8671875
+          },
+          {
+            "phase": "userpack-r1-statue-whole-front",
+            "endEpochNs": 1792875359490604950,
+            "frameMs": 412.9722,
+            "sampleDistanceSeconds": 0.25429105,
+            "availablePhysicalBytes": 545169408,
+            "machineBusyCpuPercent": 57.8125
+          },
+          {
+            "phase": "north-facade",
+            "endEpochNs": 1792875220560090350,
+            "frameMs": 411.5078,
+            "sampleDistanceSeconds": 0.31156575,
+            "availablePhysicalBytes": 661549056,
+            "machineBusyCpuPercent": 99.51171875
+          },
+          {
+            "phase": "userpack-r1-statue-whole-front",
+            "endEpochNs": 1792875359892369250,
+            "frameMs": 401.7643,
+            "sampleDistanceSeconds": 0.34405585,
+            "availablePhysicalBytes": 535261184,
+            "machineBusyCpuPercent": 58.59375
+          },
+          {
+            "phase": "paving-overhead-1",
+            "endEpochNs": 1792875239830707950,
+            "frameMs": 398.5145,
+            "sampleDistanceSeconds": 0.40617555,
+            "availablePhysicalBytes": 534310912,
+            "machineBusyCpuPercent": 88.6113886113886
+          },
+          {
+            "phase": "userpack-r2-sprite-tree-front",
+            "endEpochNs": 1792875497739272100,
+            "frameMs": 394.8429,
+            "sampleDistanceSeconds": 0.4978984,
+            "availablePhysicalBytes": 472698880,
+            "machineBusyCpuPercent": 49.55925563173359
+          },
+          {
+            "phase": "userpack-r1-statue-whole-front",
+            "endEpochNs": 1792875313636821550,
+            "frameMs": 392.8995,
+            "sampleDistanceSeconds": 0.37680295,
+            "availablePhysicalBytes": 600772608,
+            "machineBusyCpuPercent": 79.64015151515152
+          },
+          {
+            "phase": "paving-overhead-1",
+            "endEpochNs": 1792875241532350350,
+            "frameMs": 386.0117,
+            "sampleDistanceSeconds": 0.29122265,
+            "availablePhysicalBytes": 514535424,
+            "machineBusyCpuPercent": 85.38461538461539
+          },
+          {
+            "phase": "paving-overhead-3",
+            "endEpochNs": 1792875288304811000,
+            "frameMs": 382.6142,
+            "sampleDistanceSeconds": 0.0684856,
+            "availablePhysicalBytes": 968298496,
+            "machineBusyCpuPercent": 87.72277227722772
+          },
+          {
+            "phase": "userpack-r1-statue-whole-front",
+            "endEpochNs": 1792875358583608350,
+            "frameMs": 380.7455,
+            "sampleDistanceSeconds": 0.34646965,
+            "availablePhysicalBytes": 550227968,
+            "machineBusyCpuPercent": 60.3515625
+          },
+          {
+            "phase": "paving-overhead-1",
+            "endEpochNs": 1792875236495548450,
+            "frameMs": 374.4101,
+            "sampleDistanceSeconds": 0.25892115,
+            "availablePhysicalBytes": 559898624,
+            "machineBusyCpuPercent": 41.52046783625731
+          },
+          {
+            "phase": "north-facade",
+            "endEpochNs": 1792875221357301350,
+            "frameMs": 372.3857,
+            "sampleDistanceSeconds": 0.12023895,
+            "availablePhysicalBytes": 698511360,
+            "machineBusyCpuPercent": 98.01587301587301
+          },
+          {
+            "phase": "userpack-r1-statue-whole-front",
+            "endEpochNs": 1792875361856803650,
+            "frameMs": 367.4035,
+            "sampleDistanceSeconds": 0.38012085,
+            "availablePhysicalBytes": 517484544,
+            "machineBusyCpuPercent": 54.78515625
+          },
+          {
+            "phase": "userpack-r1-statue-whole-front",
+            "endEpochNs": 1792875360847459250,
+            "frameMs": 363.498,
+            "sampleDistanceSeconds": 0.38893195,
+            "availablePhysicalBytes": 522362880,
+            "machineBusyCpuPercent": 57.71484375
+          },
+          {
+            "phase": "north-facade",
+            "endEpochNs": 1792875220148582550,
+            "frameMs": 357.37,
+            "sampleDistanceSeconds": 0.09994205,
+            "availablePhysicalBytes": 661549056,
+            "machineBusyCpuPercent": 99.51171875
+          },
+          {
+            "phase": "userpack-r1-statue-whole-front",
+            "endEpochNs": 1792875364052815350,
+            "frameMs": 354.2387,
+            "sampleDistanceSeconds": 0.18425955,
+            "availablePhysicalBytes": 519663616,
+            "machineBusyCpuPercent": 50.19417475728155
+          }
+        ]
+      },
+      "startup": {
+        "serverStartToClientPidSeconds": 140.3985447883606,
+        "clientPidToInitialPositionAcknowledgedSeconds": 267.4234344959259
+      }
+    }
+  },
+  "deltaPercent": {
+    "cityAverageFps": 0.5038757374314473,
+    "cityOnePercentLowFps": 12.449302251967897
+  },
+  "limitations": [
+    "One paired observation, same16GiB Ryzen5800H/RTX3070Laptop host running both JVMs.",
+    "Nine established city witnesses form headline FPS. Other five views remain separate in raw metrics.",
+    "Process RSS differs from heap. Low free RAM/shared CPU may affect loading tails; no numerical hardware correction.",
+    "City geometry, protected objects and full-route readiness require separate visual/offline acceptance."
+  ]
+}

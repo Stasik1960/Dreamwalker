@@ -1,0 +1,34 @@
+ПЕРЕДАЧА ГОТОВОЙ VISUAL-PHYSICS.1 НА ДРУГОЙ ПК
+Игровая приёмка завершена. Фактическая локальная установка и архивы подтверждаются READY/desktop-install/ASSETS.
+
+Текущий runtime SHA256:337ad3113ea02fd9e59b0646167d1ed51c769f048277e3a0858b4c89d2cfceb5.
+Новая карта и этот мод используются парой. Новая физическая палитра не совместима с прямым открытием старой ordinary-native_grid карты без её преобразования. Поставленную новую карту повторно НЕ конвертировать.
+
+Развёртывание
+Открыть README ветки codex/native-visual-physics-20261025 или релиз native-grid-city-visual-physics-20261025 в Stasik1960/Dreamwalker. ASSETS.json/SHA256SUMS задают точные файлы; download_release.py загружает и проверяет их. В новом релизе одна текущая карта. Полный sourceZIP с ресурсами — авторитетные исходники; source-code в Git предназначен для просмотра кода и не заменяет архив.
+Распаковать worldZIP в отдельную папку bloodborne-native-grid-city. Не сливать её со старым миром. В модпаке уже есть matching Dreamwalker, в клиентском наборе также Sodium0.5.13/Indium1.0.36/Iris1.7.6. Эти три мода серверу не нужны. QA JAR не ставить в обычную игру. config/shaderpacks из client-settings перенести в корень клиентского профиля рядом с mods; серверный config — в корень сервера. Личные options/клавиши/порты/ops не заменяются.
+MakeUp9.6 NoEffects+Cocoa установлен как опция, шейдер defaultOFF из-за существенной цены FPS. Подробные наблюдения и ограничения — REPORT-RU.txt и REPORTS.
+
+Исходники и сборка
+Распаковать sourceZIP так, чтобы рабочий проект был workspace/DW-native-grid-city-20261022/source. Это P. Соседние результаты/fixtures могут находиться в workspace/DW-visual-physics-20261024 (T), sampler/лаунчерные шаблоны — в workspace/DW-userpack-optimization-20261024 (O). Старые абсолютные C:/Users/vakir/... в исторических receipts являются provenance; не переписывать их под новый ПК.
+На новой машине следовать её реальным AGENTS/storage правилам. Старые CodexControl/Guard и запрет E относятся к прежнему ПК; не создавать fake .git/HEAD/дисковые binding ради прохождения старого Guard. На прежнем ПК LocalC и остановленная миграция E остаются обязательными. Держать рабочие исходники в независимом Git либо в рабочей папке, защищённой от автоматической очистки.
+Нужны Java17 и сеть для первой загрузки Gradle/Maven. Команда в P: gradlew.bat --no-daemon --max-workers=2 -Dorg.gradle.jvmargs=-Xmx1G remapJar. Если Maven WorldEdit недоступен: -Pworldedit_api_jar=полный_путь_к_WorldEdit7.2.15.jar. Готовые каталоги, meshes.bin, текстуры и physical/whole markers включены; compile_layout.py/convert_ready_world.py для обычной сборки не запускать.
+Эффективные production roots и правила ресурсов заданы build.gradle и SOURCE-MANIFEST.json. Фактический frozen recorder лежит в validation/frozen-recorder, его готовый QA JAR и отдельный functional QA JAR — в evidence. Не пересобирать старую копию src/routeqa молча вместо frozen recorder.
+
+Состояние формата
+2140585 обычных ячеек/3643 чанка уже перенесены;4146 whole-role размещений сохранены. Native registered states156288→26912. Структуры v12, механика/служебные данные, точные collision/outline/optics и согласованные whole templates не требуют нового экспорта.
+Chunk root DreamwalkerVisuals:Schema1,Catalog SHA256c2f9e74e54c0298c68b0c8d765a1c595baed949b3d99e1a42d686535c55c07ff,Sections(Y,Entries int[]). entry=(visualIndex<<12)|((y&15)<<8)|((z&15)<<4)|(x&15). Обычная physical bank-state задаёт точную физику; visual metadata — внешний вид. Whole/native роли сохраняют собственные прежние ID/данные. Подробности tools/native-visual/FORMAT-RU.md.
+На клиенте данные попадают в immutable-снимки секций Sodium и передаются до публикации чанка. Не заменять это глобальной таблицей координат, не читать live world на worker-thread. Сохранение/пакеты/предметы и visual identity при helper rollback уже реализованы.
+
+Как продолжать разработку
+Прочитать TASK/CURRENT-CONTRACT-RU.txt (поздние указания выше START), затем START-RU, preserved-assemblies, native-functions-final и DECISIONS. Основные server/integration/full/reopen проверки уже приняты и сохранены в evidence; выполнять заново только затронутые изменением проверки. Канонический T/world напрямую не открывать: игровые тесты используют отдельные копии.
+Готовый worldZIP заменяет T/world для новой работы. Для воспроизведения старых run_route/run_checks нужны локальные Minecraft/Fabric1.20.1 assets/libraries и заново созданные безопасные client/server.args от вашего лаунчера. Старые аргументы/аккаунты не публикуются. PORTABLE-QA-INPUTS-RU.txt перечисляет fixtures; некоторые исторические драйверы требуют локальной адаптации путей. Это не повод повторять миграцию.
+
+Оставленные ограничения
+Средний FPS основной пары практически прежний; RSS клиента не уменьшилась, хотя native-состояний существенно меньше. Паузы подгрузки сохраняются. Анализ CHUNK-LOADING-ANALYSIS-RU.txt выполнен без изменения загрузчика. Дальнейшая работа с очередями/time-budget/prefetch требует отдельного решения. Не обещать рост FPS/снижение RAM вне измеренного профиля16ГиБ/4G+4G/720p/view6.
+Задача удаления старых пустых служебных shard-файлов отменена; не возобновлять её. Точное исходное проявление прозрачной мостовой отдельно не доказано; общий opaque-layer fix и контрольные ракурсы документированы.
+Старая native-grid поставка и объёмные исходные кэши доступны в прежних релизах, включая native-grid-city-resume-20261022 и native-grid-city-full-20261024. Это исторические материалы, не текущая рекомендуемая карта.
+
+ИТОГОВАЯ ПРИЁМКА: mainserver/integration/full1/reopen1 PASS;337full2shader+full3default PASS106/3712,normalexits/save;sun2coldreopen/API PASS,sun3dynamicshadows3000/9000 визуальноPASS. Установка/архивы подтверждаются READY иdesktop-install; релиз доступен по указанному tag после завершения публикации.
+
+ФАКТИЧЕСКАЯ ЛОКАЛЬНАЯ ВЫДАЧА: Desktopкарта/client_mods/server_mods/client-settings/server-settings установлены, exactfileSHAverified; backup C:\Users\vakir\Desktop\Dreamwalker-backup-before-visual-physics-20261025-035517. Source11966files/121143747B/SHA8b166f107abf4f754104be4b35b53c7c3aca61c09c2de8f9e40c74b179099c51. GitHubпубликуетсялишьпослепроверкикаждогоasset.
