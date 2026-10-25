@@ -1,0 +1,1451 @@
+{
+  "status": "PASS",
+  "mobs": 18,
+  "missingDeath": [
+    "vicar_amelia",
+    "blood_starved_beast"
+  ],
+  "missingIdle": [],
+  "assets": [
+    {
+      "id": "cleric_beast",
+      "scale": 1.5,
+      "clips": {
+        "idle": {
+          "name": "animation.cleric_beast.idle",
+          "seconds": 5.54167,
+          "loop": true,
+          "loopMode": "loop"
+        },
+        "walk": {
+          "name": "animation.cleric_beast.walk",
+          "seconds": 1.83333,
+          "loop": true,
+          "loopMode": "loop"
+        },
+        "attack1": {
+          "name": "animation.cleric_beast.attack1",
+          "seconds": 4.33333,
+          "loop": false,
+          "loopMode": "hold_on_last_frame"
+        },
+        "attack2": {
+          "name": "animation.cleric_beast.attack2",
+          "seconds": 2.95833,
+          "loop": false,
+          "loopMode": "hold_on_last_frame"
+        },
+        "attack3": {
+          "name": "animation.cleric_beast.attack3",
+          "seconds": 2.83333,
+          "loop": false,
+          "loopMode": "hold_on_last_frame"
+        },
+        "hit": {
+          "name": "animation.cleric_beast.hit",
+          "seconds": 0.625,
+          "loop": false,
+          "loopMode": "once"
+        },
+        "new": {
+          "name": "animation.cleric_beast.new",
+          "seconds": 1,
+          "loop": true,
+          "loopMode": "loop"
+        },
+        "death": {
+          "name": "animation.cleric_beast.death",
+          "seconds": 5,
+          "loop": false,
+          "loopMode": "hold_on_last_frame"
+        }
+      },
+      "resources": {
+        "model": {
+          "path": "assets\\bloodborne_rp\\geo\\cleric_beast.geo.json",
+          "sha256": "7b465ec9d48debde26f8a56a3f3ef1c85d40ebdaf44d17cb29493c2c1925f190"
+        },
+        "texture": {
+          "path": "assets\\bloodborne_rp\\textures\\entities\\beast\\cleric_beast.png",
+          "sha256": "95d50cb409eb616c290249fd1c7b93ca10920c2bcb303c003f5adbbf608103c6"
+        },
+        "animation": {
+          "path": "assets\\bloodborne_rp\\animations\\cleric_beast.animation.json",
+          "sha256": "b6d167f22b2bbfeeb3208eacd98edb73a3cf28a27a8f9c153b51583486fe316c"
+        }
+      }
+    },
+    {
+      "id": "vicar_amelia",
+      "scale": 1.2,
+      "clips": {
+        "idle": {
+          "name": "animation.vicar_amelia.idle",
+          "seconds": 4,
+          "loop": true,
+          "loopMode": "loop"
+        },
+        "walk": {
+          "name": "animation.vicar_amelia.walk",
+          "seconds": 1.5,
+          "loop": true,
+          "loopMode": "loop"
+        },
+        "run": {
+          "name": "animation.vicar_amelia.run",
+          "seconds": 0.95,
+          "loop": true,
+          "loopMode": "loop"
+        },
+        "hit": {
+          "name": "animation.vicar_amelia.hit",
+          "seconds": 0.5,
+          "loop": false,
+          "loopMode": "once"
+        },
+        "attack1": {
+          "name": "animation.vicar_amelia.attack1",
+          "seconds": 4.25,
+          "loop": true,
+          "loopMode": "hold_on_last_frame"
+        },
+        "attack2": {
+          "name": "animation.vicar_amelia.attack2",
+          "seconds": 3.6,
+          "loop": false,
+          "loopMode": "hold_on_last_frame"
+        },
+        "static": {
+          "name": "animation.vicar_amelia.static",
+          "seconds": 1,
+          "loop": true,
+          "loopMode": "loop"
+        },
+        "walkie2": {
+          "name": "animation.vicar_amelia.walkie2",
+          "seconds": 1.5,
+          "loop": true,
+          "loopMode": "loop"
+        },
+        "runrun": {
+          "name": "animation.vicar_amelia.runrun",
+          "seconds": 0.95,
+          "loop": true,
+          "loopMode": "loop"
+        },
+        "new": {
+          "name": "animation.vicar_amelia.new",
+          "seconds": 1,
+          "loop": true,
+          "loopMode": "loop"
+        }
+      },
+      "resources": {
+        "model": {
+          "path": "assets\\bloodborne_rp\\geo\\vicar_amelia.geo.json",
+          "sha256": "0022157ff82e2407cec1846cfa2cc693a73baecb5a1cca480ad9cb2ea60224a9"
+        },
+        "texture": {
+          "path": "assets\\bloodborne_rp\\textures\\entities\\beast\\vicar_amelia.png",
+          "sha256": "264555a71f1b3e4fece428abf344cc3c35735f91656097abf6aa5e689ba20790"
+        },
+        "animation": {
+          "path": "assets\\bloodborne_rp\\animations\\vicar_amelia.animation.json",
+          "sha256": "c634d2c98d36ae5ed3ca7d1c12a12fd41b1e428851ab6f03337653403d7f3521"
+        }
+      }
+    },
+    {
+      "id": "blood_starved_beast",
+      "scale": 1.2,
+      "clips": {
+        "idle": {
+          "name": "animation.blood_starved_beast.idle",
+          "seconds": 7.25,
+          "loop": true,
+          "loopMode": "loop"
+        },
+        "walk": {
+          "name": "animation.blood_starved_beast.walk",
+          "seconds": 2,
+          "loop": true,
+          "loopMode": "loop"
+        },
+        "attack1": {
+          "name": "animation.blood_starved_beast.attack1",
+          "seconds": 3,
+          "loop": false,
+          "loopMode": "hold_on_last_frame"
+        },
+        "attack1_positioning": {
+          "name": "animation.blood_starved_beast.attack1_positioning",
+          "seconds": 3,
+          "loop": false,
+          "loopMode": "hold_on_last_frame"
+        },
+        "attack2": {
+          "name": "animation.blood_starved_beast.attack2",
+          "seconds": 2.0417,
+          "loop": false,
+          "loopMode": "hold_on_last_frame"
+        },
+        "attack2_positioning": {
+          "name": "animation.blood_starved_beast.attack2_positioning",
+          "seconds": 2.0417,
+          "loop": false,
+          "loopMode": "hold_on_last_frame"
+        },
+        "run": {
+          "name": "animation.blood_starved_beast.run",
+          "seconds": 0.875,
+          "loop": true,
+          "loopMode": "loop"
+        },
+        "new": {
+          "name": "animation.blood_starved_beast.new",
+          "seconds": 1,
+          "loop": true,
+          "loopMode": "loop"
+        }
+      },
+      "resources": {
+        "model": {
+          "path": "assets\\bloodborne_rp\\geo\\blood_starved_beast.geo.json",
+          "sha256": "3e564c2729e560b8409d9e8040527c5c796e610ca6b1559dc4a1bd0f0b0663fd"
+        },
+        "texture": {
+          "path": "assets\\bloodborne_rp\\textures\\entities\\beast\\blood_starved_beast.png",
+          "sha256": "bc62490adc2594294584d9fef0bb4d0fb924f23bde08673c3e9e339f86ecbb8d"
+        },
+        "animation": {
+          "path": "assets\\bloodborne_rp\\animations\\blood_starved_beast.animation.json",
+          "sha256": "22b81fe248834a6fa397b27499771933c067759811c2aa0a0c24ba6f94c1dbbd"
+        }
+      }
+    },
+    {
+      "id": "scourge_beast",
+      "scale": 1.2,
+      "clips": {
+        "idle": {
+          "name": "animation.scourge_beast.idle",
+          "seconds": 5.41667,
+          "loop": true,
+          "loopMode": "loop"
+        },
+        "walk": {
+          "name": "animation.scourge_beast.walk",
+          "seconds": 2,
+          "loop": true,
+          "loopMode": "loop"
+        },
+        "run": {
+          "name": "animation.scourge_beast.run",
+          "seconds": 0.5417,
+          "loop": true,
+          "loopMode": "loop"
+        },
+        "attack1": {
+          "name": "animation.scourge_beast.attack1",
+          "seconds": 2.20833,
+          "loop": true,
+          "loopMode": "hold_on_last_frame"
+        },
+        "attack2": {
+          "name": "animation.scourge_beast.attack2",
+          "seconds": 3,
+          "loop": false,
+          "loopMode": "hold_on_last_frame"
+        },
+        "hit": {
+          "name": "animation.scourge_beast.hit",
+          "seconds": 0.5,
+          "loop": false,
+          "loopMode": "once"
+        },
+        "left_turn": {
+          "name": "animation.scourge_beast.left_turn",
+          "seconds": 1,
+          "loop": false,
+          "loopMode": "once"
+        },
+        "right_turn": {
+          "name": "animation.scourge_beast.right_turn",
+          "seconds": 1,
+          "loop": false,
+          "loopMode": "once"
+        },
+        "death": {
+          "name": "animation.scourge_beast.death",
+          "seconds": 5,
+          "loop": false,
+          "loopMode": "hold_on_last_frame"
+        },
+        "new": {
+          "name": "animation.scourge_beast.new",
+          "seconds": 1,
+          "loop": true,
+          "loopMode": "loop"
+        }
+      },
+      "resources": {
+        "model": {
+          "path": "assets\\bloodborne_rp\\geo\\scourge_beast.geo.json",
+          "sha256": "40bdff3bb22744eac4b205ec6bafbd285fb6d785fad06a971518723b414fdfe0"
+        },
+        "texture": {
+          "path": "assets\\bloodborne_rp\\textures\\entities\\beast\\scourge_beast.png",
+          "sha256": "28d723e1f36714b425e0feb6d888849d185a537cfd7dc4471fd1e3940a2eaa4c"
+        },
+        "animation": {
+          "path": "assets\\bloodborne_rp\\animations\\scourge_beast.animation.json",
+          "sha256": "da0be15534c82c8bd9411d5a6605e4390977a7f2a5a2a040e5ba237d0fd41334"
+        }
+      }
+    },
+    {
+      "id": "executioner",
+      "scale": 1.75,
+      "clips": {
+        "idle": {
+          "name": "animation.executioner.idle",
+          "seconds": 2.75,
+          "loop": true,
+          "loopMode": "loop"
+        },
+        "walk": {
+          "name": "animation.executioner.walk",
+          "seconds": 1.75,
+          "loop": true,
+          "loopMode": "loop"
+        },
+        "static": {
+          "name": "animation.executioner.static",
+          "seconds": 1,
+          "loop": true,
+          "loopMode": "loop"
+        },
+        "attack1": {
+          "name": "animation.executioner.attack1",
+          "seconds": 3.5,
+          "loop": false,
+          "loopMode": "hold_on_last_frame"
+        },
+        "attack2": {
+          "name": "animation.executioner.attack2",
+          "seconds": 3.58333,
+          "loop": false,
+          "loopMode": "hold_on_last_frame"
+        },
+        "attack3": {
+          "name": "animation.executioner.attack3",
+          "seconds": 4.45833,
+          "loop": false,
+          "loopMode": "hold_on_last_frame"
+        },
+        "hit": {
+          "name": "animation.executioner.hit",
+          "seconds": 0.5417,
+          "loop": false,
+          "loopMode": "once"
+        },
+        "attack2_movetest": {
+          "name": "animation.executioner.attack2_movetest",
+          "seconds": 3,
+          "loop": false,
+          "loopMode": "once"
+        },
+        "walkmovecombinetest": {
+          "name": "animation.executioner.walkmovecombinetest",
+          "seconds": 1.75,
+          "loop": false,
+          "loopMode": "once"
+        },
+        "new": {
+          "name": "animation.executioner.new",
+          "seconds": 1,
+          "loop": true,
+          "loopMode": "loop"
+        },
+        "left_turn": {
+          "name": "animation.executioner.left_turn",
+          "seconds": 1.0833,
+          "loop": false,
+          "loopMode": "once"
+        },
+        "right_turn": {
+          "name": "animation.executioner.right_turn",
+          "seconds": 1.0833,
+          "loop": false,
+          "loopMode": "once"
+        },
+        "death": {
+          "name": "animation.executioner.death",
+          "seconds": 5,
+          "loop": false,
+          "loopMode": "hold_on_last_frame"
+        }
+      },
+      "resources": {
+        "model": {
+          "path": "assets\\bloodborne_rp\\geo\\executioner.geo.json",
+          "sha256": "e9fc658dadfbfef880144b5c77318d1e76a9e7085513e2258bc5837e876be34d"
+        },
+        "texture": {
+          "path": "assets\\bloodborne_rp\\textures\\entities\\church\\executioner.png",
+          "sha256": "1846e6dfa1951402b6278a9bfd94a0c21ee234db0493c7e9a674988206f86bc1"
+        },
+        "animation": {
+          "path": "assets\\bloodborne_rp\\animations\\executioner.animation.json",
+          "sha256": "01b46a96701ac72572d1afabffe0a1ef06f4aeea2494ff4a007e5f3ebce914b9"
+        }
+      }
+    },
+    {
+      "id": "huntsman_a",
+      "scale": 1.2,
+      "clips": {
+        "idle": {
+          "name": "animation.huntsman_a.idle",
+          "seconds": 4,
+          "loop": false,
+          "loopMode": "loop"
+        },
+        "walk": {
+          "name": "animation.huntsman_a.walk",
+          "seconds": 1,
+          "loop": true,
+          "loopMode": "loop"
+        },
+        "run": {
+          "name": "animation.huntsman_a.run",
+          "seconds": 0.75,
+          "loop": false,
+          "loopMode": "loop"
+        },
+        "attack1": {
+          "name": "animation.huntsman_a.attack1",
+          "seconds": 3,
+          "loop": false,
+          "loopMode": "hold_on_last_frame"
+        },
+        "attack2": {
+          "name": "animation.huntsman_a.attack2",
+          "seconds": 2.25,
+          "loop": false,
+          "loopMode": "hold_on_last_frame"
+        },
+        "hit": {
+          "name": "animation.huntsman_a.hit",
+          "seconds": 0.5417,
+          "loop": false,
+          "loopMode": "once"
+        },
+        "left_turn": {
+          "name": "animation.huntsman_a.left_turn",
+          "seconds": 1,
+          "loop": false,
+          "loopMode": "once"
+        },
+        "right_turn": {
+          "name": "animation.huntsman_a.right_turn",
+          "seconds": 1,
+          "loop": false,
+          "loopMode": "once"
+        },
+        "death": {
+          "name": "animation.huntsman_a.death",
+          "seconds": 5,
+          "loop": false,
+          "loopMode": "hold_on_last_frame"
+        },
+        "new": {
+          "name": "animation.huntsman_a.new",
+          "seconds": 1,
+          "loop": true,
+          "loopMode": "loop"
+        }
+      },
+      "resources": {
+        "model": {
+          "path": "assets\\bloodborne_rp\\geo\\huntsman_a.geo.json",
+          "sha256": "15db291c6353272944126d9be75f6de16c45daab7db9b1e70a89104ba80617c1"
+        },
+        "texture": {
+          "path": "assets\\bloodborne_rp\\textures\\entities\\church\\huntsman_a.png",
+          "sha256": "0011c32479911e15af9a3903e5bd6e3c82b90ef2f890bc33984301fb66f8cc08"
+        },
+        "animation": {
+          "path": "assets\\bloodborne_rp\\animations\\huntsman_a.animation.json",
+          "sha256": "3d3491973aff2b6b774f434840235321dad14f22b94f9a5139c19e09441206b9"
+        }
+      }
+    },
+    {
+      "id": "huntsman_b",
+      "scale": 1.2,
+      "clips": {
+        "walk": {
+          "name": "animation.huntsman_b.walk",
+          "seconds": 1.25,
+          "loop": true,
+          "loopMode": "loop"
+        },
+        "idle": {
+          "name": "animation.huntsman_b.idle",
+          "seconds": 2.625,
+          "loop": true,
+          "loopMode": "loop"
+        },
+        "hit": {
+          "name": "animation.huntsman_b.hit",
+          "seconds": 0.4167,
+          "loop": false,
+          "loopMode": "once"
+        },
+        "attack1": {
+          "name": "animation.huntsman_b.attack1",
+          "seconds": 3,
+          "loop": false,
+          "loopMode": "hold_on_last_frame"
+        },
+        "attack2": {
+          "name": "animation.huntsman_b.attack2",
+          "seconds": 3.29167,
+          "loop": false,
+          "loopMode": "hold_on_last_frame"
+        },
+        "attack1_movetest": {
+          "name": "animation.huntsman_b.attack1_movetest",
+          "seconds": 2.33333,
+          "loop": false,
+          "loopMode": "once"
+        },
+        "attack2_movetest": {
+          "name": "animation.huntsman_b.attack2_movetest",
+          "seconds": 2.41667,
+          "loop": false,
+          "loopMode": "once"
+        },
+        "new": {
+          "name": "animation.huntsman_b.new",
+          "seconds": 1,
+          "loop": true,
+          "loopMode": "loop"
+        },
+        "death": {
+          "name": "animation.huntsman_b.death",
+          "seconds": 5,
+          "loop": false,
+          "loopMode": "hold_on_last_frame"
+        }
+      },
+      "resources": {
+        "model": {
+          "path": "assets\\bloodborne_rp\\geo\\huntsman_b.geo.json",
+          "sha256": "27d076d1dde152c0abe159ad2120126ae3c0f51850428ceb21e37f605c0186b3"
+        },
+        "texture": {
+          "path": "assets\\bloodborne_rp\\textures\\entities\\church\\huntsman_b.png",
+          "sha256": "b450d81a074a37c2cf4c73357879eec072a06af5274d139bea59bbeb590753c6"
+        },
+        "animation": {
+          "path": "assets\\bloodborne_rp\\animations\\huntsman_b.animation.json",
+          "sha256": "74f892058d4fbd14e90ed8a699d331a8ca5b0ad0c4b2ebd3d8b5c088329d1852"
+        }
+      }
+    },
+    {
+      "id": "huntsman_c",
+      "scale": 1.2,
+      "clips": {
+        "idle": {
+          "name": "animation.huntsman_c.idle",
+          "seconds": 2.5,
+          "loop": true,
+          "loopMode": "loop"
+        },
+        "walk": {
+          "name": "animation.huntsman_c.walk",
+          "seconds": 1.5,
+          "loop": true,
+          "loopMode": "loop"
+        },
+        "run": {
+          "name": "animation.huntsman_c.run",
+          "seconds": 0.83333,
+          "loop": true,
+          "loopMode": "loop"
+        },
+        "hit": {
+          "name": "animation.huntsman_c.hit",
+          "seconds": 0.58333,
+          "loop": false,
+          "loopMode": "once"
+        },
+        "defend": {
+          "name": "animation.huntsman_c.defend",
+          "seconds": 2.5,
+          "loop": true,
+          "loopMode": "loop"
+        },
+        "attack1": {
+          "name": "animation.huntsman_c.attack1",
+          "seconds": 2.25,
+          "loop": false,
+          "loopMode": "hold_on_last_frame"
+        },
+        "attack2": {
+          "name": "animation.huntsman_c.attack2",
+          "seconds": 1.95833,
+          "loop": true,
+          "loopMode": "hold_on_last_frame"
+        },
+        "new": {
+          "name": "animation.huntsman_c.new",
+          "seconds": 1,
+          "loop": true,
+          "loopMode": "loop"
+        },
+        "left_turn": {
+          "name": "animation.huntsman_c.left_turn",
+          "seconds": 1,
+          "loop": false,
+          "loopMode": "once"
+        },
+        "right_turn": {
+          "name": "animation.huntsman_c.right_turn",
+          "seconds": 1,
+          "loop": false,
+          "loopMode": "once"
+        },
+        "death": {
+          "name": "animation.huntsman_c.death",
+          "seconds": 5,
+          "loop": false,
+          "loopMode": "hold_on_last_frame"
+        }
+      },
+      "resources": {
+        "model": {
+          "path": "assets\\bloodborne_rp\\geo\\huntsman_c.geo.json",
+          "sha256": "1441b2ce61f2b7f5c0fc13754b0508a2d988f4eeba8047f92625f472f628ff8e"
+        },
+        "texture": {
+          "path": "assets\\bloodborne_rp\\textures\\entities\\church\\huntsman_c.png",
+          "sha256": "956d940c10d02f67952e66a9b99feffa6b6f837e1ce8c3ab517493e16ea016bc"
+        },
+        "animation": {
+          "path": "assets\\bloodborne_rp\\animations\\huntsman_c.animation.json",
+          "sha256": "93d2f63df91e1620b2fb081988e1473d95379c38c22b295fa01f9f5af1c77943"
+        }
+      }
+    },
+    {
+      "id": "huntsman_d",
+      "scale": 1.2,
+      "clips": {
+        "attack2": {
+          "name": "animation.huntsman_d.attack2",
+          "seconds": 3.0833,
+          "loop": false,
+          "loopMode": "hold_on_last_frame"
+        },
+        "attack1": {
+          "name": "animation.huntsman_d.attack1",
+          "seconds": 4.375,
+          "loop": false,
+          "loopMode": "hold_on_last_frame"
+        },
+        "walk": {
+          "name": "animation.huntsman_d.walk",
+          "seconds": 1.5,
+          "loop": true,
+          "loopMode": "loop"
+        },
+        "run": {
+          "name": "animation.huntsman_d.run",
+          "seconds": 0.8333,
+          "loop": true,
+          "loopMode": "loop"
+        },
+        "attack_sword2": {
+          "name": "animation.huntsman_d.attack_sword2",
+          "seconds": 14.5,
+          "loop": false,
+          "loopMode": "hold_on_last_frame"
+        },
+        "attack_sword1": {
+          "name": "animation.huntsman_d.attack_sword1",
+          "seconds": 3.08333,
+          "loop": false,
+          "loopMode": "hold_on_last_frame"
+        },
+        "change_weapon2": {
+          "name": "animation.huntsman_d.change_weapon2",
+          "seconds": 1.0833,
+          "loop": false,
+          "loopMode": "hold_on_last_frame"
+        },
+        "change_weapon1": {
+          "name": "animation.huntsman_d.change_weapon1",
+          "seconds": 1.0833,
+          "loop": false,
+          "loopMode": "hold_on_last_frame"
+        },
+        "idle1": {
+          "name": "animation.huntsman_d.idle1",
+          "seconds": 1,
+          "loop": true,
+          "loopMode": "loop"
+        },
+        "idle2": {
+          "name": "animation.huntsman_d.idle2",
+          "seconds": 2.5,
+          "loop": true,
+          "loopMode": "loop"
+        },
+        "hit": {
+          "name": "animation.huntsman_d.hit",
+          "seconds": 0.5833,
+          "loop": false,
+          "loopMode": "once"
+        },
+        "new": {
+          "name": "animation.huntsman_d.new",
+          "seconds": 1,
+          "loop": true,
+          "loopMode": "loop"
+        },
+        "death_rifle": {
+          "name": "animation.huntsman_d.death_rifle",
+          "seconds": 5,
+          "loop": false,
+          "loopMode": "hold_on_last_frame"
+        },
+        "death_saber": {
+          "name": "animation.huntsman_d.death_saber",
+          "seconds": 5,
+          "loop": false,
+          "loopMode": "hold_on_last_frame"
+        }
+      },
+      "resources": {
+        "model": {
+          "path": "assets\\bloodborne_rp\\geo\\huntsman_d.geo.json",
+          "sha256": "d19f11b108b1aa71d94ad3bf0280e01c83d1dc3b25a61e7f29dde4230cdbb21c"
+        },
+        "texture": {
+          "path": "assets\\bloodborne_rp\\textures\\entities\\church\\huntsman_d.png",
+          "sha256": "17599c8eae52c421d27b090e0b0bc5d531c4d6130bb1953fed6a0cd670ddd387"
+        },
+        "animation": {
+          "path": "assets\\bloodborne_rp\\animations\\huntsman_d.animation.json",
+          "sha256": "08f06576fa67cac76743b5159bbf52ff53370cc028557dd2a56fbacc32363437"
+        }
+      }
+    },
+    {
+      "id": "huntsman_wheelchair",
+      "scale": 0.9,
+      "clips": {
+        "idle": {
+          "name": "animation.wheelchair.idle",
+          "seconds": 6,
+          "loop": true,
+          "loopMode": "loop"
+        },
+        "walk": {
+          "name": "animation.wheelchair.walk",
+          "seconds": 3.25,
+          "loop": true,
+          "loopMode": "loop"
+        },
+        "run": {
+          "name": "animation.wheelchair.run",
+          "seconds": 2.29167,
+          "loop": true,
+          "loopMode": "loop"
+        },
+        "hit": {
+          "name": "animation.wheelchair.hit",
+          "seconds": 0.5,
+          "loop": false,
+          "loopMode": "once"
+        },
+        "attack1": {
+          "name": "animation.wheelchair.attack1",
+          "seconds": 6.25,
+          "loop": true,
+          "loopMode": "hold_on_last_frame"
+        },
+        "attack2": {
+          "name": "animation.wheelchair.attack2",
+          "seconds": 7.20833,
+          "loop": false,
+          "loopMode": "hold_on_last_frame"
+        },
+        "new": {
+          "name": "animation.wheelchair.new",
+          "seconds": 1,
+          "loop": true,
+          "loopMode": "loop"
+        },
+        "left_turn": {
+          "name": "animation.wheelchair.left_turn",
+          "seconds": 1.75,
+          "loop": false,
+          "loopMode": "once"
+        },
+        "right_turn": {
+          "name": "animation.wheelchair.right_turn",
+          "seconds": 1.75,
+          "loop": false,
+          "loopMode": "once"
+        },
+        "death": {
+          "name": "animation.wheelchair.death",
+          "seconds": 5,
+          "loop": false,
+          "loopMode": "hold_on_last_frame"
+        }
+      },
+      "resources": {
+        "model": {
+          "path": "assets\\bloodborne_rp\\geo\\huntsman_wheelchair.geo.json",
+          "sha256": "49e2aa79c8528d9003ad0c5ca00e84519c1f971fe6b26a0c14a91d62733d764b"
+        },
+        "texture": {
+          "path": "assets\\bloodborne_rp\\textures\\entities\\church\\wheelchair_huntsmen.png",
+          "sha256": "d32693e6814bdecae04650c726126fef68774e4517869ef5fa76e30274f9197e"
+        },
+        "animation": {
+          "path": "assets\\bloodborne_rp\\animations\\wheelchair.animation.json",
+          "sha256": "c5ad477637769833c3363147b07d604c04e73b63e163c6ef3f6229ca7e57cb83"
+        }
+      }
+    },
+    {
+      "id": "large_huntsman",
+      "scale": 1.2,
+      "clips": {
+        "idle": {
+          "name": "animation.large_huntsman.idle",
+          "seconds": 2.375,
+          "loop": true,
+          "loopMode": "loop"
+        },
+        "run": {
+          "name": "animation.large_huntsman.run",
+          "seconds": 0.66667,
+          "loop": true,
+          "loopMode": "loop"
+        },
+        "hit": {
+          "name": "animation.large_huntsman.hit",
+          "seconds": 1.54167,
+          "loop": false,
+          "loopMode": "once"
+        },
+        "attack1": {
+          "name": "animation.large_huntsman.attack1",
+          "seconds": 3.83333,
+          "loop": false,
+          "loopMode": "hold_on_last_frame"
+        },
+        "attack2": {
+          "name": "animation.large_huntsman.attack2",
+          "seconds": 3.83333,
+          "loop": false,
+          "loopMode": "hold_on_last_frame"
+        },
+        "attack3": {
+          "name": "animation.large_huntsman.attack3",
+          "seconds": 3.83333,
+          "loop": false,
+          "loopMode": "once"
+        },
+        "walk": {
+          "name": "animation.large_huntsman.walk",
+          "seconds": 1.5,
+          "loop": true,
+          "loopMode": "loop"
+        },
+        "new": {
+          "name": "animation.large_huntsman.new",
+          "seconds": 1,
+          "loop": true,
+          "loopMode": "loop"
+        },
+        "static2": {
+          "name": "animation.large_huntsman.static2",
+          "seconds": 1,
+          "loop": true,
+          "loopMode": "loop"
+        },
+        "death": {
+          "name": "animation.large_huntsman.death",
+          "seconds": 5,
+          "loop": false,
+          "loopMode": "hold_on_last_frame"
+        }
+      },
+      "resources": {
+        "model": {
+          "path": "assets\\bloodborne_rp\\geo\\large_huntsman.geo.json",
+          "sha256": "8f78749241a73db8f90842c76153118d1ffe4580a97e5d6760d3b1718e0d46d5"
+        },
+        "texture": {
+          "path": "assets\\bloodborne_rp\\textures\\entities\\church\\large_huntsman.png",
+          "sha256": "660add7aa4cd4ddfdb269ca8b03c514cac7e201a0d603ae50eaedaa85b72066a"
+        },
+        "animation": {
+          "path": "assets\\bloodborne_rp\\animations\\large_huntsman.animation.json",
+          "sha256": "63ef6c8734c7d97b76c1a21204cf7ac0bcdaee221cf3227beee8d8216da109f4"
+        }
+      }
+    },
+    {
+      "id": "carrion_crow",
+      "scale": 1.4,
+      "clips": {
+        "walk": {
+          "name": "animation.carrion_crow.walk",
+          "seconds": 3,
+          "loop": true,
+          "loopMode": "loop"
+        },
+        "idle": {
+          "name": "animation.carrion_crow.idle",
+          "seconds": 4.79167,
+          "loop": true,
+          "loopMode": "loop"
+        },
+        "attack1": {
+          "name": "animation.carrion_crow.attack1",
+          "seconds": 2.79167,
+          "loop": false,
+          "loopMode": "hold_on_last_frame"
+        },
+        "attack2": {
+          "name": "animation.carrion_crow.attack2",
+          "seconds": 2.33333,
+          "loop": false,
+          "loopMode": "hold_on_last_frame"
+        },
+        "hit": {
+          "name": "animation.carrion_crow.hit",
+          "seconds": 0.4583,
+          "loop": false,
+          "loopMode": "loop"
+        },
+        "left_turn": {
+          "name": "animation.carrion_crow.left_turn",
+          "seconds": 1.9167,
+          "loop": false,
+          "loopMode": "once"
+        },
+        "right_turn": {
+          "name": "animation.carrion_crow.right_turn",
+          "seconds": 1.9167,
+          "loop": false,
+          "loopMode": "once"
+        },
+        "death": {
+          "name": "animation.carrion_crow.death",
+          "seconds": 5,
+          "loop": false,
+          "loopMode": "hold_on_last_frame"
+        },
+        "new": {
+          "name": "animation.carrion_crow.new",
+          "seconds": 1,
+          "loop": true,
+          "loopMode": "loop"
+        }
+      },
+      "resources": {
+        "model": {
+          "path": "assets\\bloodborne_rp\\geo\\carrion_crow.geo.json",
+          "sha256": "8d60d061c41212d9af80491f2f6c796a61f2bf01e3e787a031946455a2f10f91"
+        },
+        "texture": {
+          "path": "assets\\bloodborne_rp\\textures\\entities\\carrion_crow.png",
+          "sha256": "ae216fa3b8e613a5afe7d466341940cda9b70f6765202240bacbaa8ab9aed2e3"
+        },
+        "animation": {
+          "path": "assets\\bloodborne_rp\\animations\\carrion_crow.animation.json",
+          "sha256": "ebb52da625871c6918cef0aeeadc5f6912d8a826c4397a5e9c063076e3830b2e"
+        }
+      }
+    },
+    {
+      "id": "giant_rat",
+      "scale": 1.6,
+      "clips": {
+        "idle": {
+          "name": "animation.giant_rat.idle",
+          "seconds": 4.5,
+          "loop": true,
+          "loopMode": "loop"
+        },
+        "walk": {
+          "name": "animation.giant_rat.walk",
+          "seconds": 1.25,
+          "loop": true,
+          "loopMode": "loop"
+        },
+        "attack1": {
+          "name": "animation.giant_rat.attack1",
+          "seconds": 1.5,
+          "loop": false,
+          "loopMode": "hold_on_last_frame"
+        },
+        "attack2": {
+          "name": "animation.giant_rat.attack2",
+          "seconds": 1.625,
+          "loop": false,
+          "loopMode": "hold_on_last_frame"
+        },
+        "left_turn": {
+          "name": "animation.giant_rat.left_turn",
+          "seconds": 0.5,
+          "loop": false,
+          "loopMode": "once"
+        },
+        "right_turn": {
+          "name": "animation.giant_rat.right_turn",
+          "seconds": 0.5,
+          "loop": false,
+          "loopMode": "once"
+        },
+        "death": {
+          "name": "animation.giant_rat.death",
+          "seconds": 5,
+          "loop": false,
+          "loopMode": "hold_on_last_frame"
+        },
+        "new": {
+          "name": "animation.giant_rat.new",
+          "seconds": 1,
+          "loop": true,
+          "loopMode": "loop"
+        }
+      },
+      "resources": {
+        "model": {
+          "path": "assets\\bloodborne_rp\\geo\\giant_rat.geo.json",
+          "sha256": "2bc69473fee64488c3764edbec6bdc40cdcac7a83521f0b14a1e78918e25d075"
+        },
+        "texture": {
+          "path": "assets\\bloodborne_rp\\textures\\entities\\giant_rat.png",
+          "sha256": "b9c0db7e2fc729653df06276731ba26d96b5b2d58cf0ee831deb040f725e80f8"
+        },
+        "animation": {
+          "path": "assets\\bloodborne_rp\\animations\\giant_rat.animation.json",
+          "sha256": "f417ed7d5639a9edbe34d4149688d64c00065dc8e128b6fabd50b281dba5cb0f"
+        }
+      }
+    },
+    {
+      "id": "small_rat",
+      "scale": 1.1,
+      "clips": {
+        "idle": {
+          "name": "animation.giant_rat.idle",
+          "seconds": 4.5,
+          "loop": true,
+          "loopMode": "loop"
+        },
+        "walk": {
+          "name": "animation.giant_rat.walk",
+          "seconds": 1.25,
+          "loop": true,
+          "loopMode": "loop"
+        },
+        "attack1": {
+          "name": "animation.giant_rat.attack1",
+          "seconds": 1.5,
+          "loop": false,
+          "loopMode": "hold_on_last_frame"
+        },
+        "attack2": {
+          "name": "animation.giant_rat.attack2",
+          "seconds": 1.625,
+          "loop": false,
+          "loopMode": "hold_on_last_frame"
+        },
+        "left_turn": {
+          "name": "animation.giant_rat.left_turn",
+          "seconds": 0.5,
+          "loop": false,
+          "loopMode": "once"
+        },
+        "right_turn": {
+          "name": "animation.giant_rat.right_turn",
+          "seconds": 0.5,
+          "loop": false,
+          "loopMode": "once"
+        },
+        "death": {
+          "name": "animation.giant_rat.death",
+          "seconds": 5,
+          "loop": false,
+          "loopMode": "hold_on_last_frame"
+        },
+        "new": {
+          "name": "animation.giant_rat.new",
+          "seconds": 1,
+          "loop": true,
+          "loopMode": "loop"
+        }
+      },
+      "resources": {
+        "model": {
+          "path": "assets\\bloodborne_rp\\geo\\giant_rat.geo.json",
+          "sha256": "2bc69473fee64488c3764edbec6bdc40cdcac7a83521f0b14a1e78918e25d075"
+        },
+        "texture": {
+          "path": "assets\\bloodborne_rp\\textures\\entities\\giant_rat.png",
+          "sha256": "b9c0db7e2fc729653df06276731ba26d96b5b2d58cf0ee831deb040f725e80f8"
+        },
+        "animation": {
+          "path": "assets\\bloodborne_rp\\animations\\giant_rat.animation.json",
+          "sha256": "f417ed7d5639a9edbe34d4149688d64c00065dc8e128b6fabd50b281dba5cb0f"
+        }
+      }
+    },
+    {
+      "id": "rabid_dog",
+      "scale": 0.6,
+      "clips": {
+        "idle": {
+          "name": "animation.rabid_dog.idle",
+          "seconds": 3,
+          "loop": true,
+          "loopMode": "loop"
+        },
+        "walk": {
+          "name": "animation.rabid_dog.walk",
+          "seconds": 1.5417,
+          "loop": true,
+          "loopMode": "loop"
+        },
+        "hit": {
+          "name": "animation.rabid_dog.hit",
+          "seconds": 0.5417,
+          "loop": false,
+          "loopMode": "once"
+        },
+        "run": {
+          "name": "animation.rabid_dog.run",
+          "seconds": 0.6667,
+          "loop": true,
+          "loopMode": "loop"
+        },
+        "attack1": {
+          "name": "animation.rabid_dog.attack1",
+          "seconds": 2.0833,
+          "loop": false,
+          "loopMode": "hold_on_last_frame"
+        },
+        "attack2": {
+          "name": "animation.rabid_dog.attack2",
+          "seconds": 2.25,
+          "loop": false,
+          "loopMode": "hold_on_last_frame"
+        },
+        "left_turn": {
+          "name": "animation.rabid_dog.left_turn",
+          "seconds": 1.375,
+          "loop": false,
+          "loopMode": "once"
+        },
+        "right_turn": {
+          "name": "animation.rabid_dog.right_turn",
+          "seconds": 1.375,
+          "loop": false,
+          "loopMode": "once"
+        },
+        "death": {
+          "name": "animation.rabid_dog.death",
+          "seconds": 5,
+          "loop": false,
+          "loopMode": "hold_on_last_frame"
+        },
+        "new": {
+          "name": "animation.rabid_dog.new",
+          "seconds": 1,
+          "loop": true,
+          "loopMode": "loop"
+        }
+      },
+      "resources": {
+        "model": {
+          "path": "assets\\bloodborne_rp\\geo\\rabid_dog.geo.json",
+          "sha256": "06050fbdd09e804ba62a475d0ba64f96feb69a9b61c9c1fee830205579da7de0"
+        },
+        "texture": {
+          "path": "assets\\bloodborne_rp\\textures\\entities\\rabid_dog.png",
+          "sha256": "442068eb4246cb924a93b8d6c453353e0fb63d2d55f56da7ded4787ffbfcf64c"
+        },
+        "animation": {
+          "path": "assets\\bloodborne_rp\\animations\\rabid_dog.animation.json",
+          "sha256": "c0248e9ae37215ffb402c2cd669a9e34845c0d2af7154cb0df9006ea8501a55a"
+        }
+      }
+    },
+    {
+      "id": "maneater_boar",
+      "scale": 1.4,
+      "clips": {
+        "idle": {
+          "name": "animation.maneater_boar.idle",
+          "seconds": 3,
+          "loop": true,
+          "loopMode": "loop"
+        },
+        "walk": {
+          "name": "animation.maneater_boar.walk",
+          "seconds": 1,
+          "loop": true,
+          "loopMode": "loop"
+        },
+        "run": {
+          "name": "animation.maneater_boar.run",
+          "seconds": 0.6667,
+          "loop": true,
+          "loopMode": "loop"
+        },
+        "hit": {
+          "name": "animation.maneater_boar.hit",
+          "seconds": 0.66667,
+          "loop": false,
+          "loopMode": "once"
+        },
+        "attack1": {
+          "name": "animation.maneater_boar.attack1",
+          "seconds": 5,
+          "loop": false,
+          "loopMode": "hold_on_last_frame"
+        },
+        "attack2": {
+          "name": "animation.maneater_boar.attack2",
+          "seconds": 5.5,
+          "loop": false,
+          "loopMode": "hold_on_last_frame"
+        },
+        "new": {
+          "name": "animation.maneater_boar.new",
+          "seconds": 1,
+          "loop": true,
+          "loopMode": "loop"
+        },
+        "left_turn": {
+          "name": "animation.maneater_boar.left_turn",
+          "seconds": 1.375,
+          "loop": false,
+          "loopMode": "once"
+        },
+        "right_turn": {
+          "name": "animation.maneater_boar.right_turn",
+          "seconds": 1.375,
+          "loop": false,
+          "loopMode": "once"
+        },
+        "death": {
+          "name": "animation.maneater_boar.death",
+          "seconds": 5,
+          "loop": false,
+          "loopMode": "hold_on_last_frame"
+        }
+      },
+      "resources": {
+        "model": {
+          "path": "assets\\bloodborne_rp\\geo\\maneater_boar.geo.json",
+          "sha256": "96fe8c014b271dd891e0963c2bb056bd8ea7df63a191037f1923b47778becd76"
+        },
+        "texture": {
+          "path": "assets\\bloodborne_rp\\textures\\entities\\maneater_boar.png",
+          "sha256": "93f294605ba6e51f360192366f250898b1e657f41c0a83b7ee485b3beaf1a133"
+        },
+        "animation": {
+          "path": "assets\\bloodborne_rp\\animations\\maneater_boar.animation.json",
+          "sha256": "8f7b448026e5230f1c0f7eb565d04b58edd6ed908e3d36ee60c57506bfadc33c"
+        }
+      }
+    },
+    {
+      "id": "brick_troll",
+      "scale": 1.2,
+      "clips": {
+        "idle": {
+          "name": "animation.brick_troll.idle",
+          "seconds": 2.375,
+          "loop": true,
+          "loopMode": "loop"
+        },
+        "walk": {
+          "name": "animation.brick_troll.walk",
+          "seconds": 1.41667,
+          "loop": true,
+          "loopMode": "loop"
+        },
+        "attack1": {
+          "name": "animation.brick_troll.attack1",
+          "seconds": 6.70833,
+          "loop": false,
+          "loopMode": "hold_on_last_frame"
+        },
+        "attack2_old": {
+          "name": "animation.brick_troll.attack2_old",
+          "seconds": 5.625,
+          "loop": false,
+          "loopMode": "hold_on_last_frame"
+        },
+        "attack2": {
+          "name": "animation.brick_troll.attack2",
+          "seconds": 5.625,
+          "loop": false,
+          "loopMode": "hold_on_last_frame"
+        },
+        "attack2_rotation": {
+          "name": "animation.brick_troll.attack2_rotation",
+          "seconds": 6.375,
+          "loop": false,
+          "loopMode": "hold_on_last_frame"
+        },
+        "attack2_continuation": {
+          "name": "animation.brick_troll.attack2_continuation",
+          "seconds": 2.25,
+          "loop": false,
+          "loopMode": "hold_on_last_frame"
+        },
+        "attack2_continuation_rotation": {
+          "name": "animation.brick_troll.attack2_continuation_rotation",
+          "seconds": 3.5,
+          "loop": false,
+          "loopMode": "hold_on_last_frame"
+        },
+        "hit": {
+          "name": "animation.brick_troll.hit",
+          "seconds": 0.625,
+          "loop": false,
+          "loopMode": "once"
+        },
+        "new": {
+          "name": "animation.brick_troll.new",
+          "seconds": 1,
+          "loop": true,
+          "loopMode": "loop"
+        },
+        "left_turn": {
+          "name": "animation.brick_troll.left_turn",
+          "seconds": 1,
+          "loop": false,
+          "loopMode": "once"
+        },
+        "right_turn": {
+          "name": "animation.brick_troll.right_turn",
+          "seconds": 1,
+          "loop": false,
+          "loopMode": "once"
+        },
+        "death": {
+          "name": "animation.brick_troll.death",
+          "seconds": 5,
+          "loop": false,
+          "loopMode": "hold_on_last_frame"
+        }
+      },
+      "resources": {
+        "model": {
+          "path": "assets\\bloodborne_rp\\geo\\brick_troll.geo.json",
+          "sha256": "d092e077093defa222a79effe464b5ca25ca412b489eafff9349dfe6f17df1ef"
+        },
+        "texture": {
+          "path": "assets\\bloodborne_rp\\textures\\entities\\brick_troll.png",
+          "sha256": "bbcb8370754f28e58e4670f50ce331681d37737ede1a92a84049b642189b9824"
+        },
+        "animation": {
+          "path": "assets\\bloodborne_rp\\animations\\brick_troll.animation.json",
+          "sha256": "6ca421144d54dcec3e7ea512ad0c2a8718b01c8eac6bfb111d0fcb0a770815eb"
+        }
+      }
+    },
+    {
+      "id": "rotted_corpse",
+      "scale": 1.2,
+      "clips": {
+        "idle": {
+          "name": "animation.rotted_corpse.idle",
+          "seconds": 2,
+          "loop": true,
+          "loopMode": "loop"
+        },
+        "walk": {
+          "name": "animation.rotted_corpse.walk",
+          "seconds": 4,
+          "loop": true,
+          "loopMode": "loop"
+        },
+        "hit": {
+          "name": "animation.rotted_corpse.hit",
+          "seconds": 0.33333,
+          "loop": false,
+          "loopMode": "once"
+        },
+        "attack1": {
+          "name": "animation.rotted_corpse.attack1",
+          "seconds": 7.125,
+          "loop": false,
+          "loopMode": "hold_on_last_frame"
+        },
+        "attack2": {
+          "name": "animation.rotted_corpse.attack2",
+          "seconds": 2,
+          "loop": false,
+          "loopMode": "hold_on_last_frame"
+        },
+        "new": {
+          "name": "animation.rotted_corpse.new",
+          "seconds": 1,
+          "loop": true,
+          "loopMode": "loop"
+        },
+        "left_turn": {
+          "name": "animation.rotted_corpse.left_turn",
+          "seconds": 2,
+          "loop": false,
+          "loopMode": "once"
+        },
+        "right_turn": {
+          "name": "animation.rotted_corpse.right_turn",
+          "seconds": 2,
+          "loop": false,
+          "loopMode": "once"
+        },
+        "death": {
+          "name": "animation.rotted_corpse.death",
+          "seconds": 5,
+          "loop": false,
+          "loopMode": "hold_on_last_frame"
+        }
+      },
+      "resources": {
+        "model": {
+          "path": "assets\\bloodborne_rp\\geo\\rotted_corpse.geo.json",
+          "sha256": "cda8a718f22ccf1b4bed2cdd7f87ec27582fb897565b07e37bf5486ba152d283"
+        },
+        "texture": {
+          "path": "assets\\bloodborne_rp\\textures\\entities\\rotted_corpse.png",
+          "sha256": "2778d0e42ce455ee97eadfb8c6499530f36cad2d79383f4e2cac0a3719bd6c03"
+        },
+        "animation": {
+          "path": "assets\\bloodborne_rp\\animations\\rotted_corpse.animation.json",
+          "sha256": "5824d7fb3aa65bcdb1c2311461e8f73cae7b9a920aa8417b002280aa504fd973"
+        }
+      }
+    }
+  ]
+}

@@ -17,6 +17,7 @@ public final class OptionalMixinContract implements IMixinConfigPlugin {
     @Override public void onLoad(String mixinPackage){}
     @Override public String getRefMapperConfig(){return null;}
     @Override public boolean shouldApplyMixin(String target,String mixin){
+        if(target.startsWith("noppes.npcs."))return FabricLoader.getInstance().isModLoaded("customnpcs");
         if(target.startsWith("me.jellysquid.mods.sodium."))return checked("sodium","0.5.13");
         if(target.startsWith("link.infra.indium."))return checked("indium","1.0.36");
         if(mixin.endsWith("LithiumPaletteAllocationMixin"))return checked("lithium","0.11.4");

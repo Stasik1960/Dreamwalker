@@ -1,0 +1,25 @@
+Compiled from "RenderNpcSlime.java"
+public class noppes.npcs.client.renderer.RenderNpcSlime<T extends noppes.npcs.entity.EntityNpcSlime, M extends noppes.npcs.client.model.ModelNpcSlime<T>> extends noppes.npcs.client.renderer.RenderNPCInterface<T, M> {
+  private net.minecraft.class_3879 scaleAmount;
+    descriptor: Lnet/minecraft/class_3879;
+
+  public noppes.npcs.client.renderer.RenderNpcSlime(net.minecraft.class_5617$class_5618, M, net.minecraft.class_3879, float);
+    descriptor: (Lnet/minecraft/class_5617$class_5618;Lnoppes/npcs/client/model/ModelNpcSlime;Lnet/minecraft/class_3879;F)V
+    Code:
+       0: aload_0
+       1: aload_1
+       2: aload_2
+       3: fload         4
+       5: invokespecial #23                 // Method noppes/npcs/client/renderer/RenderNPCInterface."<init>":(Lnet/minecraft/class_5617$class_5618;Lnet/minecraft/class_583;F)V
+       8: aload_0
+       9: aload_3
+      10: putfield      #25                 // Field scaleAmount:Lnet/minecraft/class_3879;
+      13: aload_0
+      14: new           #27                 // class noppes/npcs/client/layer/LayerSlimeNpc
+      17: dup
+      18: aload_0
+      19: invokespecial #30                 // Method noppes/npcs/client/layer/LayerSlimeNpc."<init>":(Lnet/minecraft/class_922;)V
+      22: invokevirtual #34                 // Method method_4046:(Lnet/minecraft/class_3887;)Z
+      25: pop
+      26: return
+}

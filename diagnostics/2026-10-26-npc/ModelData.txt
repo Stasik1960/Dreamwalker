@@ -1,0 +1,241 @@
+Compiled from "ModelData.java"
+public class noppes.npcs.ModelData extends noppes.npcs.ModelDataShared {
+  public boolean simpleRender;
+    descriptor: Z
+
+  public noppes.npcs.entity.EntityCustomNpc npc;
+    descriptor: Lnoppes/npcs/entity/EntityCustomNpc;
+
+  public noppes.npcs.ModelData(noppes.npcs.entity.EntityCustomNpc);
+    descriptor: (Lnoppes/npcs/entity/EntityCustomNpc;)V
+    Code:
+       0: aload_0
+       1: invokespecial #14                 // Method noppes/npcs/ModelDataShared."<init>":()V
+       4: aload_0
+       5: iconst_0
+       6: putfield      #16                 // Field simpleRender:Z
+       9: aload_0
+      10: aload_1
+      11: putfield      #18                 // Field npc:Lnoppes/npcs/entity/EntityCustomNpc;
+      14: return
+
+  public net.minecraft.class_1309 getEntity(noppes.npcs.entity.EntityNPCInterface);
+    descriptor: (Lnoppes/npcs/entity/EntityNPCInterface;)Lnet/minecraft/class_1309;
+    Code:
+       0: aload_0
+       1: invokevirtual #28                 // Method hasEntity:()Z
+       4: ifne          9
+       7: aconst_null
+       8: areturn
+       9: aload_0
+      10: getfield      #32                 // Field entity:Lnet/minecraft/class_1309;
+      13: ifnonnull     257
+      16: aload_0
+      17: getstatic     #38                 // Field net/minecraft/class_7923.field_41177:Lnet/minecraft/class_7922;
+      20: aload_0
+      21: invokevirtual #42                 // Method getEntityName:()Lnet/minecraft/class_2960;
+      24: invokeinterface #48,  2           // InterfaceMethod net/minecraft/class_7922.method_10223:(Lnet/minecraft/class_2960;)Ljava/lang/Object;
+      29: checkcast     #50                 // class net/minecraft/class_1299
+      32: aload_1
+      33: invokevirtual #56                 // Method noppes/npcs/entity/EntityNPCInterface.method_37908:()Lnet/minecraft/class_1937;
+      36: invokevirtual #60                 // Method net/minecraft/class_1299.method_5883:(Lnet/minecraft/class_1937;)Lnet/minecraft/class_1297;
+      39: checkcast     #62                 // class net/minecraft/class_1309
+      42: putfield      #32                 // Field entity:Lnet/minecraft/class_1309;
+      45: new           #64                 // class net/minecraft/class_2487
+      48: dup
+      49: invokespecial #65                 // Method net/minecraft/class_2487."<init>":()V
+      52: astore_2
+      53: aload_0
+      54: getfield      #32                 // Field entity:Lnet/minecraft/class_1309;
+      57: aload_2
+      58: invokevirtual #69                 // Method net/minecraft/class_1309.method_5652:(Lnet/minecraft/class_2487;)V
+      61: aload_0
+      62: getfield      #32                 // Field entity:Lnet/minecraft/class_1309;
+      65: invokestatic  #75                 // Method noppes/npcs/controllers/PixelmonHelper.isPixelmon:(Lnet/minecraft/class_1297;)Z
+      68: ifeq          94
+      71: aload_0
+      72: getfield      #79                 // Field extra:Lnet/minecraft/class_2487;
+      75: ldc           #81                 // String Name
+      77: invokevirtual #85                 // Method net/minecraft/class_2487.method_10545:(Ljava/lang/String;)Z
+      80: ifne          94
+      83: aload_0
+      84: getfield      #79                 // Field extra:Lnet/minecraft/class_2487;
+      87: ldc           #81                 // String Name
+      89: ldc           #87                 // String abra
+      91: invokevirtual #91                 // Method net/minecraft/class_2487.method_10582:(Ljava/lang/String;Ljava/lang/String;)V
+      94: aload_2
+      95: aload_0
+      96: getfield      #79                 // Field extra:Lnet/minecraft/class_2487;
+      99: invokevirtual #95                 // Method net/minecraft/class_2487.method_10543:(Lnet/minecraft/class_2487;)Lnet/minecraft/class_2487;
+     102: astore_2
+     103: aload_0
+     104: getfield      #32                 // Field entity:Lnet/minecraft/class_1309;
+     107: aload_2
+     108: invokevirtual #98                 // Method net/minecraft/class_1309.method_5749:(Lnet/minecraft/class_2487;)V
+     111: aload_0
+     112: getfield      #32                 // Field entity:Lnet/minecraft/class_1309;
+     115: invokestatic  #75                 // Method noppes/npcs/controllers/PixelmonHelper.isPixelmon:(Lnet/minecraft/class_1297;)Z
+     118: ifeq          137
+     121: aload_0
+     122: getfield      #32                 // Field entity:Lnet/minecraft/class_1309;
+     125: aload_0
+     126: getfield      #79                 // Field extra:Lnet/minecraft/class_2487;
+     129: ldc           #81                 // String Name
+     131: invokevirtual #102                // Method net/minecraft/class_2487.method_10558:(Ljava/lang/String;)Ljava/lang/String;
+     134: invokestatic  #106                // Method noppes/npcs/controllers/PixelmonHelper.initEntity:(Lnet/minecraft/class_1309;Ljava/lang/String;)V
+     137: aload_0
+     138: getfield      #32                 // Field entity:Lnet/minecraft/class_1309;
+     141: invokestatic  #111                // Method noppes/npcs/controllers/CobblemonHelper.isPokemon:(Lnet/minecraft/class_1297;)Z
+     144: ifeq          170
+     147: aload_0
+     148: getfield      #32                 // Field entity:Lnet/minecraft/class_1309;
+     151: new           #113                // class net/minecraft/class_2960
+     154: dup
+     155: aload_0
+     156: getfield      #79                 // Field extra:Lnet/minecraft/class_2487;
+     159: ldc           #115                // String CobblemonModel
+     161: invokevirtual #102                // Method net/minecraft/class_2487.method_10558:(Ljava/lang/String;)Ljava/lang/String;
+     164: invokespecial #118                // Method net/minecraft/class_2960."<init>":(Ljava/lang/String;)V
+     167: invokestatic  #122                // Method noppes/npcs/controllers/CobblemonHelper.setType:(Lnet/minecraft/class_1297;Lnet/minecraft/class_2960;)V
+     170: goto          178
+     173: astore_3
+     174: aload_3
+     175: invokestatic  #128                // Method noppes/npcs/shared/common/util/LogWriter.except:(Ljava/lang/Throwable;)V
+     178: aload_0
+     179: getfield      #32                 // Field entity:Lnet/minecraft/class_1309;
+     182: iconst_1
+     183: invokevirtual #132                // Method net/minecraft/class_1309.method_5684:(Z)V
+     186: aload_0
+     187: getfield      #32                 // Field entity:Lnet/minecraft/class_1309;
+     190: getstatic     #138                // Field net/minecraft/class_5134.field_23716:Lnet/minecraft/class_1320;
+     193: invokevirtual #142                // Method net/minecraft/class_1309.method_5996:(Lnet/minecraft/class_1320;)Lnet/minecraft/class_1324;
+     196: aload_1
+     197: invokevirtual #146                // Method noppes/npcs/entity/EntityNPCInterface.method_6063:()F
+     200: f2d
+     201: invokevirtual #152                // Method net/minecraft/class_1324.method_6192:(D)V
+     204: invokestatic  #158                // Method net/minecraft/class_1304.values:()[Lnet/minecraft/class_1304;
+     207: astore_3
+     208: aload_3
+     209: arraylength
+     210: istore        4
+     212: iconst_0
+     213: istore        5
+     215: iload         5
+     217: iload         4
+     219: if_icmpge     249
+     222: aload_3
+     223: iload         5
+     225: aaload
+     226: astore        6
+     228: aload_0
+     229: getfield      #32                 // Field entity:Lnet/minecraft/class_1309;
+     232: aload         6
+     234: aload_1
+     235: aload         6
+     237: invokevirtual #164                // Method noppes/npcs/entity/EntityNPCInterface.method_6118:(Lnet/minecraft/class_1304;)Lnet/minecraft/class_1799;
+     240: invokevirtual #168                // Method net/minecraft/class_1309.method_5673:(Lnet/minecraft/class_1304;Lnet/minecraft/class_1799;)V
+     243: iinc          5, 1
+     246: goto          215
+     249: goto          257
+     252: astore_2
+     253: aload_2
+     254: invokestatic  #128                // Method noppes/npcs/shared/common/util/LogWriter.except:(Ljava/lang/Throwable;)V
+     257: aload_0
+     258: getfield      #32                 // Field entity:Lnet/minecraft/class_1309;
+     261: areturn
+    Exception table:
+       from    to  target type
+         103   170   173   Class java/lang/Exception
+          16   249   252   Class java/lang/Exception
+
+  public noppes.npcs.ModelData copy();
+    descriptor: ()Lnoppes/npcs/ModelData;
+    Code:
+       0: new           #2                  // class noppes/npcs/ModelData
+       3: dup
+       4: aload_0
+       5: getfield      #18                 // Field npc:Lnoppes/npcs/entity/EntityCustomNpc;
+       8: invokespecial #178                // Method "<init>":(Lnoppes/npcs/entity/EntityCustomNpc;)V
+      11: astore_1
+      12: aload_1
+      13: aload_0
+      14: invokevirtual #182                // Method save:()Lnet/minecraft/class_2487;
+      17: invokevirtual #185                // Method load:(Lnet/minecraft/class_2487;)V
+      20: aload_1
+      21: areturn
+
+  public net.minecraft.class_2487 save();
+    descriptor: ()Lnet/minecraft/class_2487;
+    Code:
+       0: aload_0
+       1: invokespecial #187                // Method noppes/npcs/ModelDataShared.save:()Lnet/minecraft/class_2487;
+       4: astore_1
+       5: aload_1
+       6: ldc           #189                // String SimpleRender
+       8: aload_0
+       9: getfield      #16                 // Field simpleRender:Z
+      12: invokevirtual #193                // Method net/minecraft/class_2487.method_10556:(Ljava/lang/String;Z)V
+      15: aload_1
+      16: areturn
+
+  public void load(net.minecraft.class_2487);
+    descriptor: (Lnet/minecraft/class_2487;)V
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokespecial #195                // Method noppes/npcs/ModelDataShared.load:(Lnet/minecraft/class_2487;)V
+       5: aload_0
+       6: aload_1
+       7: ldc           #189                // String SimpleRender
+       9: invokevirtual #198                // Method net/minecraft/class_2487.method_10577:(Ljava/lang/String;)Z
+      12: putfield      #16                 // Field simpleRender:Z
+      15: return
+
+  public void setExtra(net.minecraft.class_1309, java.lang.String, java.lang.String);
+    descriptor: (Lnet/minecraft/class_1309;Ljava/lang/String;Ljava/lang/String;)V
+    Code:
+       0: aload_2
+       1: invokevirtual #208                // Method java/lang/String.toLowerCase:()Ljava/lang/String;
+       4: astore_2
+       5: aload_2
+       6: ldc           #210                // String name
+       8: invokevirtual #213                // Method java/lang/String.equalsIgnoreCase:(Ljava/lang/String;)Z
+      11: ifeq          31
+      14: aload_1
+      15: invokestatic  #75                 // Method noppes/npcs/controllers/PixelmonHelper.isPixelmon:(Lnet/minecraft/class_1297;)Z
+      18: ifeq          31
+      21: aload_0
+      22: getfield      #79                 // Field extra:Lnet/minecraft/class_2487;
+      25: ldc           #81                 // String Name
+      27: aload_3
+      28: invokevirtual #91                 // Method net/minecraft/class_2487.method_10582:(Ljava/lang/String;Ljava/lang/String;)V
+      31: aload_2
+      32: ldc           #215                // String cobblemonmodel
+      34: invokevirtual #213                // Method java/lang/String.equalsIgnoreCase:(Ljava/lang/String;)Z
+      37: ifeq          57
+      40: aload_1
+      41: invokestatic  #111                // Method noppes/npcs/controllers/CobblemonHelper.isPokemon:(Lnet/minecraft/class_1297;)Z
+      44: ifeq          57
+      47: aload_0
+      48: getfield      #79                 // Field extra:Lnet/minecraft/class_2487;
+      51: ldc           #115                // String CobblemonModel
+      53: aload_3
+      54: invokevirtual #91                 // Method net/minecraft/class_2487.method_10582:(Ljava/lang/String;Ljava/lang/String;)V
+      57: aload_0
+      58: invokevirtual #218                // Method clearEntity:()V
+      61: return
+
+  public net.minecraft.class_1309 getOwner();
+    descriptor: ()Lnet/minecraft/class_1309;
+    Code:
+       0: aload_0
+       1: getfield      #18                 // Field npc:Lnoppes/npcs/entity/EntityCustomNpc;
+       4: areturn
+
+  public static noppes.npcs.ModelData get(noppes.npcs.entity.EntityCustomNpc);
+    descriptor: (Lnoppes/npcs/entity/EntityCustomNpc;)Lnoppes/npcs/ModelData;
+    Code:
+       0: aload_0
+       1: getfield      #228                // Field noppes/npcs/entity/EntityCustomNpc.modelData:Lnoppes/npcs/ModelData;
+       4: areturn
+}

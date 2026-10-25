@@ -1,0 +1,292 @@
+Compiled from "EntityCustomNpc.java"
+public class noppes.npcs.entity.EntityCustomNpc extends noppes.npcs.entity.EntityNPCFlying {
+  public noppes.npcs.ModelData modelData;
+    descriptor: Lnoppes/npcs/ModelData;
+
+  public noppes.npcs.entity.EntityCustomNpc(net.minecraft.class_1299<? extends net.minecraft.class_1314>, net.minecraft.class_1937);
+    descriptor: (Lnet/minecraft/class_1299;Lnet/minecraft/class_1937;)V
+    Code:
+       0: aload_0
+       1: aload_1
+       2: aload_2
+       3: invokespecial #14                 // Method noppes/npcs/entity/EntityNPCFlying."<init>":(Lnet/minecraft/class_1299;Lnet/minecraft/class_1937;)V
+       6: aload_0
+       7: new           #16                 // class noppes/npcs/ModelData
+      10: dup
+      11: aload_0
+      12: invokespecial #19                 // Method noppes/npcs/ModelData."<init>":(Lnoppes/npcs/entity/EntityCustomNpc;)V
+      15: putfield      #21                 // Field modelData:Lnoppes/npcs/ModelData;
+      18: return
+
+  public void method_5749(net.minecraft.class_2487);
+    descriptor: (Lnet/minecraft/class_2487;)V
+    Code:
+       0: aload_1
+       1: ldc           #31                 // String NpcModelData
+       3: invokevirtual #37                 // Method net/minecraft/class_2487.method_10545:(Ljava/lang/String;)Z
+       6: ifeq          22
+       9: aload_0
+      10: getfield      #21                 // Field modelData:Lnoppes/npcs/ModelData;
+      13: aload_1
+      14: ldc           #31                 // String NpcModelData
+      16: invokevirtual #41                 // Method net/minecraft/class_2487.method_10562:(Ljava/lang/String;)Lnet/minecraft/class_2487;
+      19: invokevirtual #44                 // Method noppes/npcs/ModelData.load:(Lnet/minecraft/class_2487;)V
+      22: aload_0
+      23: aload_1
+      24: invokespecial #46                 // Method noppes/npcs/entity/EntityNPCFlying.method_5749:(Lnet/minecraft/class_2487;)V
+      27: return
+
+  public void method_5652(net.minecraft.class_2487);
+    descriptor: (Lnet/minecraft/class_2487;)V
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokespecial #50                 // Method noppes/npcs/entity/EntityNPCFlying.method_5652:(Lnet/minecraft/class_2487;)V
+       5: aload_1
+       6: ldc           #31                 // String NpcModelData
+       8: aload_0
+       9: getfield      #21                 // Field modelData:Lnoppes/npcs/ModelData;
+      12: invokevirtual #54                 // Method noppes/npcs/ModelData.save:()Lnet/minecraft/class_2487;
+      15: invokevirtual #58                 // Method net/minecraft/class_2487.method_10566:(Ljava/lang/String;Lnet/minecraft/class_2520;)Lnet/minecraft/class_2520;
+      18: pop
+      19: return
+
+  public boolean method_5786(net.minecraft.class_2487);
+    descriptor: (Lnet/minecraft/class_2487;)Z
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokespecial #62                 // Method noppes/npcs/entity/EntityNPCFlying.method_5786:(Lnet/minecraft/class_2487;)Z
+       5: istore_2
+       6: iload_2
+       7: ifeq          32
+      10: aload_0
+      11: invokevirtual #66                 // Method method_5653:()Ljava/lang/String;
+      14: astore_3
+      15: aload_3
+      16: ldc           #68                 // String minecraft:customnpcs.customnpc
+      18: invokevirtual #74                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+      21: ifeq          32
+      24: aload_1
+      25: ldc           #76                 // String id
+      27: ldc           #78                 // String customnpcs:customnpc
+      29: invokevirtual #82                 // Method net/minecraft/class_2487.method_10582:(Ljava/lang/String;Ljava/lang/String;)V
+      32: iload_2
+      33: ireturn
+
+  public void method_5773();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #92                 // Method noppes/npcs/entity/EntityNPCFlying.method_5773:()V
+       4: aload_0
+       5: invokevirtual #96                 // Method isClientSide:()Z
+       8: ifeq          37
+      11: aload_0
+      12: getfield      #21                 // Field modelData:Lnoppes/npcs/ModelData;
+      15: aload_0
+      16: invokevirtual #100                // Method noppes/npcs/ModelData.getEntity:(Lnoppes/npcs/entity/EntityNPCInterface;)Lnet/minecraft/class_1309;
+      19: astore_1
+      20: aload_1
+      21: ifnull        37
+      24: aload_1
+      25: invokevirtual #103                // Method net/minecraft/class_1309.method_5773:()V
+      28: goto          32
+      31: astore_2
+      32: aload_0
+      33: aload_1
+      34: invokestatic  #109                // Method noppes/npcs/client/EntityUtil.Copy:(Lnet/minecraft/class_1309;Lnet/minecraft/class_1309;)V
+      37: aload_0
+      38: getfield      #21                 // Field modelData:Lnoppes/npcs/ModelData;
+      41: getfield      #113                // Field noppes/npcs/ModelData.mpmParts:Ljava/util/List;
+      44: invokeinterface #119,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+      49: astore_1
+      50: aload_1
+      51: invokeinterface #124,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+      56: ifeq          87
+      59: aload_1
+      60: invokeinterface #128,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      65: checkcast     #130                // class noppes/npcs/client/parts/MpmPartData
+      68: astore_2
+      69: aload_2
+      70: instanceof    #132                // class noppes/npcs/ModelEyeData
+      73: ifeq          84
+      76: aload_2
+      77: checkcast     #132                // class noppes/npcs/ModelEyeData
+      80: aload_0
+      81: invokevirtual #136                // Method noppes/npcs/ModelEyeData.update:(Lnet/minecraft/class_1309;)V
+      84: goto          50
+      87: return
+    Exception table:
+       from    to  target type
+          24    28    31   Class java/lang/Exception
+
+  public boolean method_5873(net.minecraft.class_1297, boolean);
+    descriptor: (Lnet/minecraft/class_1297;Z)Z
+    Code:
+       0: aload_0
+       1: aload_1
+       2: iload_2
+       3: invokespecial #146                // Method noppes/npcs/entity/EntityNPCFlying.method_5873:(Lnet/minecraft/class_1297;Z)Z
+       6: istore_3
+       7: aload_0
+       8: invokevirtual #149                // Method method_18382:()V
+      11: iload_3
+      12: ireturn
+
+  public void method_18382();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: getfield      #21                 // Field modelData:Lnoppes/npcs/ModelData;
+       4: aload_0
+       5: invokevirtual #100                // Method noppes/npcs/ModelData.getEntity:(Lnoppes/npcs/entity/EntityNPCInterface;)Lnet/minecraft/class_1309;
+       8: astore_1
+       9: aload_1
+      10: ifnull        17
+      13: aload_1
+      14: invokevirtual #154                // Method net/minecraft/class_1297.method_18382:()V
+      17: aload_0
+      18: invokespecial #155                // Method noppes/npcs/entity/EntityNPCFlying.method_18382:()V
+      21: return
+
+  public net.minecraft.class_4048 method_18377(net.minecraft.class_4050);
+    descriptor: (Lnet/minecraft/class_4050;)Lnet/minecraft/class_4048;
+    Code:
+       0: aload_0
+       1: getfield      #21                 // Field modelData:Lnoppes/npcs/ModelData;
+       4: aload_0
+       5: invokevirtual #100                // Method noppes/npcs/ModelData.getEntity:(Lnoppes/npcs/entity/EntityNPCInterface;)Lnet/minecraft/class_1309;
+       8: astore_2
+       9: aload_2
+      10: ifnonnull     80
+      13: ldc           #159                // float 1.9f
+      15: aload_0
+      16: getfield      #21                 // Field modelData:Lnoppes/npcs/ModelData;
+      19: invokevirtual #163                // Method noppes/npcs/ModelData.getBodyY:()F
+      22: fsub
+      23: aload_0
+      24: getfield      #21                 // Field modelData:Lnoppes/npcs/ModelData;
+      27: getstatic     #169                // Field noppes/npcs/constants/EnumParts.HEAD:Lnoppes/npcs/constants/EnumParts;
+      30: invokevirtual #173                // Method noppes/npcs/ModelData.getPartConfig:(Lnoppes/npcs/constants/EnumParts;)Lnoppes/npcs/ModelPartConfig;
+      33: getfield      #179                // Field noppes/npcs/ModelPartConfig.scaleY:F
+      36: fconst_1
+      37: fsub
+      38: fconst_2
+      39: fdiv
+      40: fadd
+      41: fstore_3
+      42: aload_0
+      43: getfield      #183                // Field baseSize:Lnet/minecraft/class_4048;
+      46: getfield      #188                // Field net/minecraft/class_4048.field_18068:F
+      49: fload_3
+      50: fcmpl
+      51: ifeq          74
+      54: aload_0
+      55: new           #185                // class net/minecraft/class_4048
+      58: dup
+      59: aload_0
+      60: getfield      #183                // Field baseSize:Lnet/minecraft/class_4048;
+      63: getfield      #191                // Field net/minecraft/class_4048.field_18067:F
+      66: fload_3
+      67: iconst_0
+      68: invokespecial #194                // Method net/minecraft/class_4048."<init>":(FFZ)V
+      71: putfield      #183                // Field baseSize:Lnet/minecraft/class_4048;
+      74: aload_0
+      75: aload_1
+      76: invokespecial #196                // Method noppes/npcs/entity/EntityNPCFlying.method_18377:(Lnet/minecraft/class_4050;)Lnet/minecraft/class_4048;
+      79: areturn
+      80: aload_2
+      81: aload_1
+      82: invokevirtual #197                // Method net/minecraft/class_1297.method_18377:(Lnet/minecraft/class_4050;)Lnet/minecraft/class_4048;
+      85: astore_3
+      86: aload_2
+      87: instanceof    #199                // class noppes/npcs/entity/EntityNPCInterface
+      90: ifeq          109
+      93: aload_3
+      94: aload_0
+      95: getfield      #203                // Field display:Lnoppes/npcs/entity/data/DataDisplay;
+      98: invokevirtual #209                // Method noppes/npcs/entity/data/DataDisplay.getSize:()I
+     101: i2f
+     102: ldc           #210                // float 0.2f
+     104: fmul
+     105: invokevirtual #214                // Method net/minecraft/class_4048.method_18383:(F)Lnet/minecraft/class_4048;
+     108: areturn
+     109: aload_3
+     110: getfield      #191                // Field net/minecraft/class_4048.field_18067:F
+     113: ldc           #215                // float 5.0f
+     115: fdiv
+     116: aload_0
+     117: getfield      #203                // Field display:Lnoppes/npcs/entity/data/DataDisplay;
+     120: invokevirtual #209                // Method noppes/npcs/entity/data/DataDisplay.getSize:()I
+     123: i2f
+     124: fmul
+     125: fstore        4
+     127: aload_3
+     128: getfield      #188                // Field net/minecraft/class_4048.field_18068:F
+     131: ldc           #215                // float 5.0f
+     133: fdiv
+     134: aload_0
+     135: getfield      #203                // Field display:Lnoppes/npcs/entity/data/DataDisplay;
+     138: invokevirtual #209                // Method noppes/npcs/entity/data/DataDisplay.getSize:()I
+     141: i2f
+     142: fmul
+     143: fstore        5
+     145: fload         4
+     147: ldc           #216                // float 0.1f
+     149: fcmpg
+     150: ifge          157
+     153: ldc           #216                // float 0.1f
+     155: fstore        4
+     157: fload         5
+     159: ldc           #216                // float 0.1f
+     161: fcmpg
+     162: ifge          169
+     165: ldc           #216                // float 0.1f
+     167: fstore        5
+     169: aload_0
+     170: getfield      #203                // Field display:Lnoppes/npcs/entity/data/DataDisplay;
+     173: invokevirtual #220                // Method noppes/npcs/entity/data/DataDisplay.getHitboxState:()B
+     176: iconst_1
+     177: if_icmpeq     197
+     180: aload_0
+     181: invokevirtual #223                // Method isKilled:()Z
+     184: ifeq          201
+     187: aload_0
+     188: getfield      #227                // Field stats:Lnoppes/npcs/entity/data/DataStats;
+     191: getfield      #232                // Field noppes/npcs/entity/data/DataStats.hideKilledBody:Z
+     194: ifeq          201
+     197: ldc           #233                // float 1.0E-5f
+     199: fstore        4
+     201: new           #185                // class net/minecraft/class_4048
+     204: dup
+     205: fload         4
+     207: fload         5
+     209: iconst_0
+     210: invokespecial #194                // Method net/minecraft/class_4048."<init>":(FFZ)V
+     213: areturn
+
+  public double method_5621();
+    descriptor: ()D
+    Code:
+       0: aload_0
+       1: getfield      #21                 // Field modelData:Lnoppes/npcs/ModelData;
+       4: aload_0
+       5: invokevirtual #100                // Method noppes/npcs/ModelData.getEntity:(Lnoppes/npcs/entity/EntityNPCInterface;)Lnet/minecraft/class_1309;
+       8: astore_1
+       9: aload_1
+      10: ifnull        31
+      13: aload_1
+      14: invokevirtual #241                // Method net/minecraft/class_1297.method_5621:()D
+      17: ldc2_w        #242                // double 5.0d
+      20: ddiv
+      21: aload_0
+      22: getfield      #203                // Field display:Lnoppes/npcs/entity/data/DataDisplay;
+      25: invokevirtual #209                // Method noppes/npcs/entity/data/DataDisplay.getSize:()I
+      28: i2d
+      29: dmul
+      30: dreturn
+      31: aload_0
+      32: invokespecial #244                // Method noppes/npcs/entity/EntityNPCFlying.method_5621:()D
+      35: dreturn
+}

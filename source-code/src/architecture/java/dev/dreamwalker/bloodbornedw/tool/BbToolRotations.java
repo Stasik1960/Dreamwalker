@@ -17,6 +17,7 @@ public final class BbToolRotations {
     private BbToolRotations(){}
     public static boolean rotate(ServerPlayerEntity player,ToolTarget target){
         if(!BbToolService.canEdit(player)||target==null||!target.valid(player.getServer()))return false;
+        if(target.entity(player.getServer()) instanceof dev.dreamwalker.bloodbornerp.mob.RpMobEntity mob){mob.rotateActor45();return true;}
         if(target.kind()==ToolTarget.Kind.RP&&target.entity(player.getServer()) instanceof RpObjectEntity rp)return rp.rotateObject(player,rp.getYaw()+45);
         if(target.kind()!=ToolTarget.Kind.BLOCK&&target.kind()!=ToolTarget.Kind.ARCHITECTURE)return false;
         var world=target.world(player.getServer());var pos=BlockPos.fromLong(target.root());

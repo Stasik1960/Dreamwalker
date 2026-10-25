@@ -9,7 +9,7 @@
  "environment": "*",
  "accessWidener": "native-visual.accesswidener",
  "provides": ["bloodborne_rp"],
- "mixins": ["bloodborne_dw.composite.mixins.json", "bloodborne_dw.worldedit.mixins.json", "native-grid.mixins.json"],
+ "mixins": ["bloodborne_dw.composite.mixins.json", "bloodborne_dw.worldedit.mixins.json", "native-grid.mixins.json", "bloodborne_dw.npc.mixins.json"],
  "entrypoints": {
   "preLaunch": ["dev.dreamwalker.bloodbornedw.DreamwalkerBb"],
   "main": ["dev.dreamwalker.bloodbornedw.DreamwalkerBb", "dev.dreamwalker.bloodbornerp.BloodborneRp"],

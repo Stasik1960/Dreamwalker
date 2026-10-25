@@ -1,0 +1,11 @@
+# Текущее состояние NPC
+
+Реализованы изменения RpMobEntity для всех18 типов: PathAwareEntity без целей/агрессии, max2HP, Creative-only двухэтапная смерть с сохраняемым трупом, revive, косметическая атака, путь к верхней поверхности блока, поворот45, звук /3, каждый второй ambient attempt. Имеющаяся SourceLegacyPayload сохраняется. BB special выбирает моба/оживляет/повторяет атаку; AttackBlockCallback отдельно принимает обычные ванильные клетки при выборе моба. Старые режимы BB не перенумерованы.
+
+CNPC причина подтверждена javap: RenderCustomNpc normal path принимает LivingEntityRenderer; GeoEntityRenderer его не наследует. Для RpMobEntity proxy принудительно включается существующий full/simple-render branch (без изменения modelData.simpleRender в сохранении), связывается визуальное состояние NPC и размер display.getSize/5. Добавлены optional client mixin и NpcMobVisualBridge; рефлексия методов CNPC кеширована ClassValue. AI/статы самого CNPC не переписываются.
+
+Asset audit: ресурсы18 типов существуют, idle у всех. Нет исходной death-анимации у vicar_amelia и blood_starved_beast: статичная лежачая fallback-поза в CatalogMobRenderer. Остальные death hold-on-last-frame. Контроллер proxy берёт движение/удар/атаку/смерть от CNPC; обычный mob использует свои DataTracker.
+
+Версия .8. Первый remapJar собран PASS; после него добавлен fallback renderer. Идёт restorationBuild с новым NpcServerQa. Compile errors/runtime/mixin ещё предстоит проверить. Server QA покрывает18 мобов, реальные звуковые пакеты, здоровье/защиту/труп/revive/rotation, pathfinding240ticks. Только что добавлены forced chunks стенда: после завершения текущей сборки проверить, что QA обновлён, при необходимости remapRestorationQaJar. Не запускать старые QA без dw.npc.qa.server/output.
+
+Надо: сделать NPC runner с минимальным сервером/полным клиентом, NpcClientQa с18 настоящими CNPC modelData.setEntity(Identifier) и фактическим RenderCustomNpc; анимации/скриншоты. Дальше пройти новые тесты, исправить фактические ошибки, установить проверенный .8 во все3 папки и новый GitHub-релиз с полными исходниками. Карту .7 не конвертировать и не менять. Пользователь уточнил: «клетка» = место/блок под прицелом. Предыдущий .7 stable/исходники полностью сохранены.

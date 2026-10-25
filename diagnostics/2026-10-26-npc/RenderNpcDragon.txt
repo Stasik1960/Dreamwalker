@@ -1,0 +1,43 @@
+Compiled from "RenderNpcDragon.java"
+public class noppes.npcs.client.renderer.RenderNpcDragon<T extends noppes.npcs.entity.EntityNPCInterface, M extends net.minecraft.class_583<T>> extends noppes.npcs.client.renderer.RenderNPCInterface<T, M> {
+  public noppes.npcs.client.renderer.RenderNpcDragon(net.minecraft.class_5617$class_5618, M, float);
+    descriptor: (Lnet/minecraft/class_5617$class_5618;Lnet/minecraft/class_583;F)V
+    Code:
+       0: aload_0
+       1: aload_1
+       2: aload_2
+       3: fload_3
+       4: invokespecial #19                 // Method noppes/npcs/client/renderer/RenderNPCInterface."<init>":(Lnet/minecraft/class_5617$class_5618;Lnet/minecraft/class_583;F)V
+       7: return
+
+  protected void scale(T, net.minecraft.class_4587, float);
+    descriptor: (Lnoppes/npcs/entity/EntityNPCInterface;Lnet/minecraft/class_4587;F)V
+    Code:
+       0: aload_2
+       1: fconst_0
+       2: fconst_0
+       3: ldc           #32                 // float 0.120000005f
+       5: aload_1
+       6: getfield      #38                 // Field noppes/npcs/entity/EntityNPCInterface.display:Lnoppes/npcs/entity/data/DataDisplay;
+       9: invokevirtual #44                 // Method noppes/npcs/entity/data/DataDisplay.getSize:()I
+      12: i2f
+      13: fmul
+      14: invokevirtual #50                 // Method net/minecraft/class_4587.method_46416:(FFF)V
+      17: aload_0
+      18: aload_1
+      19: aload_2
+      20: fload_3
+      21: invokespecial #52                 // Method noppes/npcs/client/renderer/RenderNPCInterface.scale:(Lnoppes/npcs/entity/EntityNPCInterface;Lnet/minecraft/class_4587;F)V
+      24: return
+
+  protected void method_4042(net.minecraft.class_1309, net.minecraft.class_4587, float);
+    descriptor: (Lnet/minecraft/class_1309;Lnet/minecraft/class_4587;F)V
+    Code:
+       0: aload_0
+       1: aload_1
+       2: checkcast     #34                 // class noppes/npcs/entity/EntityNPCInterface
+       5: aload_2
+       6: fload_3
+       7: invokevirtual #58                 // Method scale:(Lnoppes/npcs/entity/EntityNPCInterface;Lnet/minecraft/class_4587;F)V
+      10: return
+}

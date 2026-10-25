@@ -1,0 +1,18 @@
+Compiled from "RenderNpcCrystal.java"
+public class noppes.npcs.client.renderer.RenderNpcCrystal extends noppes.npcs.client.renderer.RenderNPCInterface {
+  noppes.npcs.client.model.ModelNpcCrystal mainmodel;
+    descriptor: Lnoppes/npcs/client/model/ModelNpcCrystal;
+
+  public noppes.npcs.client.renderer.RenderNpcCrystal(net.minecraft.class_5617$class_5618, noppes.npcs.client.model.ModelNpcCrystal);
+    descriptor: (Lnet/minecraft/class_5617$class_5618;Lnoppes/npcs/client/model/ModelNpcCrystal;)V
+    Code:
+       0: aload_0
+       1: aload_1
+       2: aload_2
+       3: fconst_0
+       4: invokespecial #19                 // Method noppes/npcs/client/renderer/RenderNPCInterface."<init>":(Lnet/minecraft/class_5617$class_5618;Lnet/minecraft/class_583;F)V
+       7: aload_0
+       8: aload_2
+       9: putfield      #21                 // Field mainmodel:Lnoppes/npcs/client/model/ModelNpcCrystal;
+      12: return
+}

@@ -34,7 +34,7 @@ public final class BbToolService {
     public static final Identifier ID=new Identifier("bloodborne_dw","bb_tool");
     public static final Identifier OPEN=new Identifier("bloodborne_dw","tool_commands_open"),SAVE=new Identifier("bloodborne_dw","tool_commands_save");
     public static BbToolItem ITEM;
-    private static final class Selection {final List<UUID> levers=new ArrayList<>();ToolTarget lamp;int radius;}
+    private static final class Selection {final List<UUID> levers=new ArrayList<>();ToolTarget lamp,mob;int radius;}
     private record Pending(UUID token,ToolTarget target,int expires) {}
     private static final Map<MinecraftServer,Map<UUID,Selection>> SELECTED=new WeakHashMap<>();
     private static final Map<MinecraftServer,Map<UUID,Pending>> EDITS=new WeakHashMap<>();
@@ -42,7 +42,7 @@ public final class BbToolService {
     public static boolean holding(PlayerEntity player){return player.getMainHandStack().getItem() instanceof BbToolItem;}
     public static boolean canEdit(PlayerEntity player){return BuildPermissions.canEdit(player);}
     private static Selection selection(ServerPlayerEntity player){return SELECTED.computeIfAbsent(player.getServer(),s->new HashMap<>()).computeIfAbsent(player.getUuid(),s->new Selection());}
-    public static void clearSelection(ServerPlayerEntity player){var s=selection(player);s.levers.clear();s.lamp=null;}
+    public static void clearSelection(ServerPlayerEntity player){var s=selection(player);s.levers.clear();s.lamp=null;s.mob=null;}
     public static void initialize(){
         if(ITEM!=null)return;ITEM=Registry.register(Registries.ITEM,ID,new BbToolItem());BbAlternateService.initialize();
         // Register before composite callbacks: tool RMB always changes mode rather than using a target.
@@ -62,7 +62,10 @@ public final class BbToolService {
         });
         AttackBlockCallback.EVENT.register((player,world,hand,pos,direction)->{
             if(!holding(player))return ActionResult.PASS;
-            if(player instanceof ServerPlayerEntity server)apply(server,ToolTarget.block(server.getServerWorld(),pos,player));
+            if(player instanceof ServerPlayerEntity server){
+                if(BbToolItem.mode(server.getMainHandStack())==BbToolItem.Mode.SPECIAL&&selection(server).mob!=null)commandSelectedMob(server,pos);
+                else apply(server,ToolTarget.block(server.getServerWorld(),pos,player));
+            }
             return ActionResult.SUCCESS;
         });
         AttackEntityCallback.EVENT.register((player,world,hand,entity,hit)->{
@@ -117,6 +120,12 @@ public final class BbToolService {
     }
     public static boolean special(ServerPlayerEntity player,ToolTarget target){
         if(!canEdit(player)||!target.valid(player.getServer()))return false;
+        if(target.entity(player.getServer()) instanceof dev.dreamwalker.bloodbornerp.mob.RpMobEntity mob){
+            var selected=selection(player);boolean same=selected.mob!=null&&selected.mob.key().equals(target.key());
+            if(mob.isCorpse()){mob.reviveActor();selected.levers.clear();selected.lamp=null;selected.mob=target;player.sendMessage(Text.literal("Моб восстановлен и выбран."),true);return true;}
+            if(same)return mob.playToolAttack();
+            clearSelection(player);selection(player).mob=target;player.sendMessage(Text.literal("Моб выбран. Укажите место инструментом."),true);return true;
+        }
         if(target.kind()==ToolTarget.Kind.BLOCK){var world=target.world(player.getServer());var pos=BlockPos.fromLong(target.root());if(DwUtilityBlocks.collisionSwitch(world.getBlockState(pos)))return DwUtilityBlocks.togglePlayerCollision(world,pos,player);}
         var select=selection(player);
         if(target.kind()==ToolTarget.Kind.RP&&target.entity(player.getServer()) instanceof RpObjectEntity rp){
@@ -139,6 +148,15 @@ public final class BbToolService {
             clearSelection(player);boolean only=!ObjectPolicies.leversOnly(player.getServer(),ref);boolean changed=ObjectPolicies.setManual(player,ref,only);if(changed)player.sendMessage(Text.literal(only?"Объект открывается только рычагом.":"Объект открывается и закрывается на ПКМ."),false);return changed;
         }
         return false;
+    }
+    public static boolean commandSelectedMob(ServerPlayerEntity player,BlockPos block){
+        if(!holding(player)||!canEdit(player)||!BuildPermissions.canEdit(player.getServerWorld(),player,block))return false;
+        var state=selection(player);var target=state.mob;
+        if(target==null)return false;
+        if(!target.dimension().equals(player.getServerWorld().getRegistryKey().getValue().toString())||!target.valid(player.getServer())||!(target.entity(player.getServer()) instanceof dev.dreamwalker.bloodbornerp.mob.RpMobEntity mob)){
+            state.mob=null;player.sendMessage(Text.literal("Выбранный моб недоступен."),true);return false;
+        }
+        boolean accepted=mob.orderTo(block);player.sendMessage(Text.literal(accepted?"Моб идёт к выбранному месту.":"Не удалось найти путь к выбранному месту."),true);return accepted;
     }
     private static String catalogueId(BlockState state){var entry=dev.dreamwalker.bloodbornedw.debug.DebugCatalogue.entry(state);return entry==null?Registries.BLOCK.getId(state.getBlock()).toString():entry.temporaryId();}
     public static boolean alternate(ServerPlayerEntity player,ToolTarget target,int radius){

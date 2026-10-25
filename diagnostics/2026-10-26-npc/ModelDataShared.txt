@@ -1,0 +1,1008 @@
+Compiled from "ModelDataShared.java"
+public abstract class noppes.npcs.ModelDataShared {
+  public noppes.npcs.ModelPartConfig arm1;
+    descriptor: Lnoppes/npcs/ModelPartConfig;
+
+  public noppes.npcs.ModelPartConfig arm2;
+    descriptor: Lnoppes/npcs/ModelPartConfig;
+
+  public noppes.npcs.ModelPartConfig body;
+    descriptor: Lnoppes/npcs/ModelPartConfig;
+
+  public noppes.npcs.ModelPartConfig leg1;
+    descriptor: Lnoppes/npcs/ModelPartConfig;
+
+  public noppes.npcs.ModelPartConfig leg2;
+    descriptor: Lnoppes/npcs/ModelPartConfig;
+
+  public noppes.npcs.ModelPartConfig head;
+    descriptor: Lnoppes/npcs/ModelPartConfig;
+
+  protected net.minecraft.class_2960 entityName;
+    descriptor: Lnet/minecraft/class_2960;
+
+  protected net.minecraft.class_1309 entity;
+    descriptor: Lnet/minecraft/class_1309;
+
+  public net.minecraft.class_2487 extra;
+    descriptor: Lnet/minecraft/class_2487;
+
+  public net.minecraft.class_2499 oldPartData;
+    descriptor: Lnet/minecraft/class_2499;
+
+  public java.util.List<noppes.npcs.client.parts.MpmPartData> mpmParts;
+    descriptor: Ljava/util/List;
+
+  public java.util.List<noppes.npcs.constants.BodyPart> hiddenParts;
+    descriptor: Ljava/util/List;
+
+  public int wingMode;
+    descriptor: I
+
+  public java.lang.String url;
+    descriptor: Ljava/lang/String;
+
+  public java.lang.String displayName;
+    descriptor: Ljava/lang/String;
+
+  public long lastEdited;
+    descriptor: J
+
+  public int inLove;
+    descriptor: I
+
+  public int animationTime;
+    descriptor: I
+
+  public int modelType;
+    descriptor: I
+
+  public int moveAnimation;
+    descriptor: I
+
+  public int prevMoveAnimation;
+    descriptor: I
+
+  public boolean startMoveAnimation;
+    descriptor: Z
+
+  public int animation;
+    descriptor: I
+
+  public int prevAnimation;
+    descriptor: I
+
+  public boolean startAnimation;
+    descriptor: Z
+
+  public int animationStart;
+    descriptor: I
+
+  public float sleepRotation;
+    descriptor: F
+
+  public noppes.npcs.ModelDataShared();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #54                 // Method java/lang/Object."<init>":()V
+       4: aload_0
+       5: new           #56                 // class noppes/npcs/ModelPartConfig
+       8: dup
+       9: invokespecial #57                 // Method noppes/npcs/ModelPartConfig."<init>":()V
+      12: putfield      #59                 // Field arm1:Lnoppes/npcs/ModelPartConfig;
+      15: aload_0
+      16: new           #56                 // class noppes/npcs/ModelPartConfig
+      19: dup
+      20: invokespecial #57                 // Method noppes/npcs/ModelPartConfig."<init>":()V
+      23: putfield      #61                 // Field arm2:Lnoppes/npcs/ModelPartConfig;
+      26: aload_0
+      27: new           #56                 // class noppes/npcs/ModelPartConfig
+      30: dup
+      31: invokespecial #57                 // Method noppes/npcs/ModelPartConfig."<init>":()V
+      34: putfield      #63                 // Field body:Lnoppes/npcs/ModelPartConfig;
+      37: aload_0
+      38: new           #56                 // class noppes/npcs/ModelPartConfig
+      41: dup
+      42: invokespecial #57                 // Method noppes/npcs/ModelPartConfig."<init>":()V
+      45: putfield      #65                 // Field leg1:Lnoppes/npcs/ModelPartConfig;
+      48: aload_0
+      49: new           #56                 // class noppes/npcs/ModelPartConfig
+      52: dup
+      53: invokespecial #57                 // Method noppes/npcs/ModelPartConfig."<init>":()V
+      56: putfield      #67                 // Field leg2:Lnoppes/npcs/ModelPartConfig;
+      59: aload_0
+      60: new           #56                 // class noppes/npcs/ModelPartConfig
+      63: dup
+      64: invokespecial #57                 // Method noppes/npcs/ModelPartConfig."<init>":()V
+      67: putfield      #69                 // Field head:Lnoppes/npcs/ModelPartConfig;
+      70: aload_0
+      71: aconst_null
+      72: putfield      #71                 // Field entityName:Lnet/minecraft/class_2960;
+      75: aload_0
+      76: new           #73                 // class net/minecraft/class_2487
+      79: dup
+      80: invokespecial #74                 // Method net/minecraft/class_2487."<init>":()V
+      83: putfield      #76                 // Field extra:Lnet/minecraft/class_2487;
+      86: aload_0
+      87: new           #78                 // class net/minecraft/class_2499
+      90: dup
+      91: invokespecial #79                 // Method net/minecraft/class_2499."<init>":()V
+      94: putfield      #81                 // Field oldPartData:Lnet/minecraft/class_2499;
+      97: aload_0
+      98: new           #83                 // class java/util/ArrayList
+     101: dup
+     102: invokespecial #84                 // Method java/util/ArrayList."<init>":()V
+     105: putfield      #86                 // Field mpmParts:Ljava/util/List;
+     108: aload_0
+     109: new           #83                 // class java/util/ArrayList
+     112: dup
+     113: invokespecial #84                 // Method java/util/ArrayList."<init>":()V
+     116: putfield      #88                 // Field hiddenParts:Ljava/util/List;
+     119: aload_0
+     120: iconst_0
+     121: putfield      #90                 // Field wingMode:I
+     124: aload_0
+     125: ldc           #92                 // String
+     127: putfield      #94                 // Field url:Ljava/lang/String;
+     130: aload_0
+     131: ldc           #92                 // String
+     133: putfield      #96                 // Field displayName:Ljava/lang/String;
+     136: aload_0
+     137: invokestatic  #102                // Method java/lang/System.currentTimeMillis:()J
+     140: putfield      #104                // Field lastEdited:J
+     143: aload_0
+     144: iconst_0
+     145: putfield      #106                // Field inLove:I
+     148: aload_0
+     149: iconst_m1
+     150: putfield      #108                // Field animationTime:I
+     153: aload_0
+     154: iconst_0
+     155: putfield      #110                // Field modelType:I
+     158: aload_0
+     159: bipush        16
+     161: putfield      #112                // Field moveAnimation:I
+     164: aload_0
+     165: bipush        16
+     167: putfield      #114                // Field prevMoveAnimation:I
+     170: aload_0
+     171: iconst_0
+     172: putfield      #116                // Field startMoveAnimation:Z
+     175: aload_0
+     176: iconst_0
+     177: putfield      #118                // Field animation:I
+     180: aload_0
+     181: iconst_0
+     182: putfield      #120                // Field prevAnimation:I
+     185: aload_0
+     186: iconst_0
+     187: putfield      #122                // Field startAnimation:Z
+     190: aload_0
+     191: iconst_0
+     192: putfield      #124                // Field animationStart:I
+     195: return
+
+  public net.minecraft.class_2487 save();
+    descriptor: ()Lnet/minecraft/class_2487;
+    Code:
+       0: new           #73                 // class net/minecraft/class_2487
+       3: dup
+       4: invokespecial #74                 // Method net/minecraft/class_2487."<init>":()V
+       7: astore_1
+       8: aload_0
+       9: getfield      #71                 // Field entityName:Lnet/minecraft/class_2960;
+      12: ifnull        28
+      15: aload_1
+      16: ldc           #130                // String EntityName
+      18: aload_0
+      19: getfield      #71                 // Field entityName:Lnet/minecraft/class_2960;
+      22: invokevirtual #136                // Method net/minecraft/class_2960.toString:()Ljava/lang/String;
+      25: invokevirtual #140                // Method net/minecraft/class_2487.method_10582:(Ljava/lang/String;Ljava/lang/String;)V
+      28: aload_1
+      29: ldc           #142                // String ArmsConfig
+      31: aload_0
+      32: getfield      #59                 // Field arm1:Lnoppes/npcs/ModelPartConfig;
+      35: invokevirtual #145                // Method noppes/npcs/ModelPartConfig.writeToNBT:()Lnet/minecraft/class_2487;
+      38: invokevirtual #149                // Method net/minecraft/class_2487.method_10566:(Ljava/lang/String;Lnet/minecraft/class_2520;)Lnet/minecraft/class_2520;
+      41: pop
+      42: aload_1
+      43: ldc           #151                // String Arms2Config
+      45: aload_0
+      46: getfield      #61                 // Field arm2:Lnoppes/npcs/ModelPartConfig;
+      49: invokevirtual #145                // Method noppes/npcs/ModelPartConfig.writeToNBT:()Lnet/minecraft/class_2487;
+      52: invokevirtual #149                // Method net/minecraft/class_2487.method_10566:(Ljava/lang/String;Lnet/minecraft/class_2520;)Lnet/minecraft/class_2520;
+      55: pop
+      56: aload_1
+      57: ldc           #153                // String BodyConfig
+      59: aload_0
+      60: getfield      #63                 // Field body:Lnoppes/npcs/ModelPartConfig;
+      63: invokevirtual #145                // Method noppes/npcs/ModelPartConfig.writeToNBT:()Lnet/minecraft/class_2487;
+      66: invokevirtual #149                // Method net/minecraft/class_2487.method_10566:(Ljava/lang/String;Lnet/minecraft/class_2520;)Lnet/minecraft/class_2520;
+      69: pop
+      70: aload_1
+      71: ldc           #155                // String LegsConfig
+      73: aload_0
+      74: getfield      #65                 // Field leg1:Lnoppes/npcs/ModelPartConfig;
+      77: invokevirtual #145                // Method noppes/npcs/ModelPartConfig.writeToNBT:()Lnet/minecraft/class_2487;
+      80: invokevirtual #149                // Method net/minecraft/class_2487.method_10566:(Ljava/lang/String;Lnet/minecraft/class_2520;)Lnet/minecraft/class_2520;
+      83: pop
+      84: aload_1
+      85: ldc           #157                // String Legs2Config
+      87: aload_0
+      88: getfield      #67                 // Field leg2:Lnoppes/npcs/ModelPartConfig;
+      91: invokevirtual #145                // Method noppes/npcs/ModelPartConfig.writeToNBT:()Lnet/minecraft/class_2487;
+      94: invokevirtual #149                // Method net/minecraft/class_2487.method_10566:(Ljava/lang/String;Lnet/minecraft/class_2520;)Lnet/minecraft/class_2520;
+      97: pop
+      98: aload_1
+      99: ldc           #159                // String HeadConfig
+     101: aload_0
+     102: getfield      #69                 // Field head:Lnoppes/npcs/ModelPartConfig;
+     105: invokevirtual #145                // Method noppes/npcs/ModelPartConfig.writeToNBT:()Lnet/minecraft/class_2487;
+     108: invokevirtual #149                // Method net/minecraft/class_2487.method_10566:(Ljava/lang/String;Lnet/minecraft/class_2520;)Lnet/minecraft/class_2520;
+     111: pop
+     112: aload_1
+     113: ldc           #161                // String ExtraData
+     115: aload_0
+     116: getfield      #76                 // Field extra:Lnet/minecraft/class_2487;
+     119: invokevirtual #149                // Method net/minecraft/class_2487.method_10566:(Ljava/lang/String;Lnet/minecraft/class_2520;)Lnet/minecraft/class_2520;
+     122: pop
+     123: aload_1
+     124: ldc           #163                // String WingMode
+     126: aload_0
+     127: getfield      #90                 // Field wingMode:I
+     130: invokevirtual #167                // Method net/minecraft/class_2487.method_10569:(Ljava/lang/String;I)V
+     133: aload_1
+     134: ldc           #169                // String CustomSkinUrl
+     136: aload_0
+     137: getfield      #94                 // Field url:Ljava/lang/String;
+     140: invokevirtual #140                // Method net/minecraft/class_2487.method_10582:(Ljava/lang/String;Ljava/lang/String;)V
+     143: aload_1
+     144: ldc           #171                // String DisplayName
+     146: aload_0
+     147: getfield      #96                 // Field displayName:Ljava/lang/String;
+     150: invokevirtual #140                // Method net/minecraft/class_2487.method_10582:(Ljava/lang/String;Ljava/lang/String;)V
+     153: aload_1
+     154: ldc           #173                // String Animation
+     156: aload_0
+     157: getfield      #118                // Field animation:I
+     160: invokevirtual #167                // Method net/minecraft/class_2487.method_10569:(Ljava/lang/String;I)V
+     163: aload_1
+     164: ldc           #175                // String MoveAnimation
+     166: aload_0
+     167: getfield      #112                // Field moveAnimation:I
+     170: invokevirtual #167                // Method net/minecraft/class_2487.method_10569:(Ljava/lang/String;I)V
+     173: aload_1
+     174: ldc           #177                // String ModelType
+     176: aload_0
+     177: getfield      #110                // Field modelType:I
+     180: invokevirtual #167                // Method net/minecraft/class_2487.method_10569:(Ljava/lang/String;I)V
+     183: aload_1
+     184: ldc           #179                // String LastEdited
+     186: aload_0
+     187: getfield      #104                // Field lastEdited:J
+     190: invokevirtual #183                // Method net/minecraft/class_2487.method_10544:(Ljava/lang/String;J)V
+     193: aload_1
+     194: ldc           #185                // String Parts
+     196: aload_0
+     197: getfield      #81                 // Field oldPartData:Lnet/minecraft/class_2499;
+     200: invokevirtual #149                // Method net/minecraft/class_2487.method_10566:(Ljava/lang/String;Lnet/minecraft/class_2520;)Lnet/minecraft/class_2520;
+     203: pop
+     204: new           #78                 // class net/minecraft/class_2499
+     207: dup
+     208: invokespecial #79                 // Method net/minecraft/class_2499."<init>":()V
+     211: astore_2
+     212: aload_0
+     213: getfield      #86                 // Field mpmParts:Ljava/util/List;
+     216: invokeinterface #191,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+     221: astore_3
+     222: aload_3
+     223: invokeinterface #197,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+     228: ifeq          255
+     231: aload_3
+     232: invokeinterface #201,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     237: checkcast     #203                // class noppes/npcs/client/parts/MpmPartData
+     240: astore        4
+     242: aload_2
+     243: aload         4
+     245: invokevirtual #206                // Method noppes/npcs/client/parts/MpmPartData.getNbt:()Lnet/minecraft/class_2487;
+     248: invokevirtual #210                // Method net/minecraft/class_2499.add:(Ljava/lang/Object;)Z
+     251: pop
+     252: goto          222
+     255: aload_1
+     256: ldc           #212                // String NewParts
+     258: aload_2
+     259: invokevirtual #149                // Method net/minecraft/class_2487.method_10566:(Ljava/lang/String;Lnet/minecraft/class_2520;)Lnet/minecraft/class_2520;
+     262: pop
+     263: aload_1
+     264: areturn
+
+  public void load(net.minecraft.class_2487);
+    descriptor: (Lnet/minecraft/class_2487;)V
+    Code:
+       0: aload_1
+       1: ldc           #130                // String EntityName
+       3: invokevirtual #222                // Method net/minecraft/class_2487.method_10558:(Ljava/lang/String;)Ljava/lang/String;
+       6: astore_2
+       7: aload_0
+       8: aload_2
+       9: invokevirtual #227                // Method java/lang/String.isEmpty:()Z
+      12: ifeq          19
+      15: aconst_null
+      16: goto          27
+      19: new           #132                // class net/minecraft/class_2960
+      22: dup
+      23: aload_2
+      24: invokespecial #230                // Method net/minecraft/class_2960."<init>":(Ljava/lang/String;)V
+      27: invokevirtual #234                // Method setEntity:(Lnet/minecraft/class_2960;)V
+      30: aload_0
+      31: getfield      #59                 // Field arm1:Lnoppes/npcs/ModelPartConfig;
+      34: aload_1
+      35: ldc           #142                // String ArmsConfig
+      37: invokevirtual #238                // Method net/minecraft/class_2487.method_10562:(Ljava/lang/String;)Lnet/minecraft/class_2487;
+      40: invokevirtual #241                // Method noppes/npcs/ModelPartConfig.readFromNBT:(Lnet/minecraft/class_2487;)V
+      43: aload_0
+      44: getfield      #61                 // Field arm2:Lnoppes/npcs/ModelPartConfig;
+      47: aload_1
+      48: ldc           #151                // String Arms2Config
+      50: invokevirtual #238                // Method net/minecraft/class_2487.method_10562:(Ljava/lang/String;)Lnet/minecraft/class_2487;
+      53: invokevirtual #241                // Method noppes/npcs/ModelPartConfig.readFromNBT:(Lnet/minecraft/class_2487;)V
+      56: aload_0
+      57: getfield      #63                 // Field body:Lnoppes/npcs/ModelPartConfig;
+      60: aload_1
+      61: ldc           #153                // String BodyConfig
+      63: invokevirtual #238                // Method net/minecraft/class_2487.method_10562:(Ljava/lang/String;)Lnet/minecraft/class_2487;
+      66: invokevirtual #241                // Method noppes/npcs/ModelPartConfig.readFromNBT:(Lnet/minecraft/class_2487;)V
+      69: aload_0
+      70: getfield      #65                 // Field leg1:Lnoppes/npcs/ModelPartConfig;
+      73: aload_1
+      74: ldc           #155                // String LegsConfig
+      76: invokevirtual #238                // Method net/minecraft/class_2487.method_10562:(Ljava/lang/String;)Lnet/minecraft/class_2487;
+      79: invokevirtual #241                // Method noppes/npcs/ModelPartConfig.readFromNBT:(Lnet/minecraft/class_2487;)V
+      82: aload_0
+      83: getfield      #67                 // Field leg2:Lnoppes/npcs/ModelPartConfig;
+      86: aload_1
+      87: ldc           #157                // String Legs2Config
+      89: invokevirtual #238                // Method net/minecraft/class_2487.method_10562:(Ljava/lang/String;)Lnet/minecraft/class_2487;
+      92: invokevirtual #241                // Method noppes/npcs/ModelPartConfig.readFromNBT:(Lnet/minecraft/class_2487;)V
+      95: aload_0
+      96: getfield      #69                 // Field head:Lnoppes/npcs/ModelPartConfig;
+      99: aload_1
+     100: ldc           #159                // String HeadConfig
+     102: invokevirtual #238                // Method net/minecraft/class_2487.method_10562:(Ljava/lang/String;)Lnet/minecraft/class_2487;
+     105: invokevirtual #241                // Method noppes/npcs/ModelPartConfig.readFromNBT:(Lnet/minecraft/class_2487;)V
+     108: aload_0
+     109: aload_1
+     110: ldc           #161                // String ExtraData
+     112: invokevirtual #238                // Method net/minecraft/class_2487.method_10562:(Ljava/lang/String;)Lnet/minecraft/class_2487;
+     115: putfield      #76                 // Field extra:Lnet/minecraft/class_2487;
+     118: aload_0
+     119: aload_1
+     120: ldc           #163                // String WingMode
+     122: invokevirtual #245                // Method net/minecraft/class_2487.method_10550:(Ljava/lang/String;)I
+     125: putfield      #90                 // Field wingMode:I
+     128: aload_0
+     129: aload_1
+     130: ldc           #169                // String CustomSkinUrl
+     132: invokevirtual #222                // Method net/minecraft/class_2487.method_10558:(Ljava/lang/String;)Ljava/lang/String;
+     135: putfield      #94                 // Field url:Ljava/lang/String;
+     138: aload_0
+     139: aload_1
+     140: ldc           #171                // String DisplayName
+     142: invokevirtual #222                // Method net/minecraft/class_2487.method_10558:(Ljava/lang/String;)Ljava/lang/String;
+     145: putfield      #96                 // Field displayName:Ljava/lang/String;
+     148: aload_0
+     149: aload_1
+     150: ldc           #173                // String Animation
+     152: invokevirtual #245                // Method net/minecraft/class_2487.method_10550:(Ljava/lang/String;)I
+     155: putfield      #118                // Field animation:I
+     158: aload_0
+     159: aload_1
+     160: ldc           #175                // String MoveAnimation
+     162: invokevirtual #245                // Method net/minecraft/class_2487.method_10550:(Ljava/lang/String;)I
+     165: putfield      #112                // Field moveAnimation:I
+     168: aload_0
+     169: aload_1
+     170: ldc           #177                // String ModelType
+     172: invokevirtual #245                // Method net/minecraft/class_2487.method_10550:(Ljava/lang/String;)I
+     175: putfield      #110                // Field modelType:I
+     178: aload_0
+     179: aload_1
+     180: ldc           #179                // String LastEdited
+     182: invokevirtual #249                // Method net/minecraft/class_2487.method_10537:(Ljava/lang/String;)J
+     185: putfield      #104                // Field lastEdited:J
+     188: new           #83                 // class java/util/ArrayList
+     191: dup
+     192: invokespecial #84                 // Method java/util/ArrayList."<init>":()V
+     195: astore_3
+     196: aload_1
+     197: ldc           #212                // String NewParts
+     199: bipush        10
+     201: invokevirtual #253                // Method net/minecraft/class_2487.method_10554:(Ljava/lang/String;I)Lnet/minecraft/class_2499;
+     204: astore        4
+     206: iconst_0
+     207: istore        5
+     209: iload         5
+     211: aload         4
+     213: invokevirtual #257                // Method net/minecraft/class_2499.size:()I
+     216: if_icmpge     318
+     219: new           #203                // class noppes/npcs/client/parts/MpmPartData
+     222: dup
+     223: invokespecial #258                // Method noppes/npcs/client/parts/MpmPartData."<init>":()V
+     226: astore        6
+     228: aload         6
+     230: aload         4
+     232: iload         5
+     234: invokevirtual #262                // Method net/minecraft/class_2499.method_10602:(I)Lnet/minecraft/class_2487;
+     237: invokevirtual #265                // Method noppes/npcs/client/parts/MpmPartData.setNbt:(Lnet/minecraft/class_2487;)V
+     240: aload         6
+     242: getfield      #268                // Field noppes/npcs/client/parts/MpmPartData.partId:Lnet/minecraft/class_2960;
+     245: getstatic     #273                // Field noppes/npcs/ModelEyeData.RESOURCE:Lnet/minecraft/class_2960;
+     248: invokevirtual #276                // Method net/minecraft/class_2960.equals:(Ljava/lang/Object;)Z
+     251: ifne          282
+     254: aload         6
+     256: getfield      #268                // Field noppes/npcs/client/parts/MpmPartData.partId:Lnet/minecraft/class_2960;
+     259: getstatic     #279                // Field noppes/npcs/ModelEyeData.RESOURCE_RIGHT:Lnet/minecraft/class_2960;
+     262: invokevirtual #276                // Method net/minecraft/class_2960.equals:(Ljava/lang/Object;)Z
+     265: ifne          282
+     268: aload         6
+     270: getfield      #268                // Field noppes/npcs/client/parts/MpmPartData.partId:Lnet/minecraft/class_2960;
+     273: getstatic     #282                // Field noppes/npcs/ModelEyeData.RESOURCE_LEFT:Lnet/minecraft/class_2960;
+     276: invokevirtual #276                // Method net/minecraft/class_2960.equals:(Ljava/lang/Object;)Z
+     279: ifeq          303
+     282: new           #270                // class noppes/npcs/ModelEyeData
+     285: dup
+     286: invokespecial #283                // Method noppes/npcs/ModelEyeData."<init>":()V
+     289: astore        6
+     291: aload         6
+     293: aload         4
+     295: iload         5
+     297: invokevirtual #262                // Method net/minecraft/class_2499.method_10602:(I)Lnet/minecraft/class_2487;
+     300: invokevirtual #265                // Method noppes/npcs/client/parts/MpmPartData.setNbt:(Lnet/minecraft/class_2487;)V
+     303: aload_3
+     304: aload         6
+     306: invokeinterface #284,  2          // InterfaceMethod java/util/List.add:(Ljava/lang/Object;)Z
+     311: pop
+     312: iinc          5, 1
+     315: goto          209
+     318: aload_0
+     319: aload_3
+     320: putfield      #86                 // Field mpmParts:Ljava/util/List;
+     323: aload_0
+     324: aload_1
+     325: ldc           #185                // String Parts
+     327: bipush        10
+     329: invokevirtual #253                // Method net/minecraft/class_2487.method_10554:(Ljava/lang/String;I)Lnet/minecraft/class_2499;
+     332: putfield      #81                 // Field oldPartData:Lnet/minecraft/class_2499;
+     335: aload_0
+     336: getfield      #86                 // Field mpmParts:Ljava/util/List;
+     339: invokeinterface #285,  1          // InterfaceMethod java/util/List.isEmpty:()Z
+     344: ifeq          386
+     347: iconst_0
+     348: istore        5
+     350: iload         5
+     352: aload         4
+     354: invokevirtual #257                // Method net/minecraft/class_2499.size:()I
+     357: if_icmpge     386
+     360: aload_0
+     361: getfield      #86                 // Field mpmParts:Ljava/util/List;
+     364: aload         4
+     366: iload         5
+     368: invokevirtual #262                // Method net/minecraft/class_2499.method_10602:(I)Lnet/minecraft/class_2487;
+     371: invokestatic  #291                // Method noppes/npcs/constants/EnumParts.convertOldPart:(Lnet/minecraft/class_2487;)Lnoppes/npcs/client/parts/MpmPartData;
+     374: invokeinterface #284,  2          // InterfaceMethod java/util/List.add:(Ljava/lang/Object;)Z
+     379: pop
+     380: iinc          5, 1
+     383: goto          350
+     386: aload_0
+     387: invokevirtual #294                // Method refreshParts:()V
+     390: aload_0
+     391: invokevirtual #297                // Method updateTransate:()V
+     394: return
+
+  public void setMoveAnimation(int);
+    descriptor: (I)V
+    Code:
+       0: aload_0
+       1: aload_0
+       2: getfield      #112                // Field moveAnimation:I
+       5: iload_1
+       6: if_icmpeq     13
+       9: iconst_1
+      10: goto          14
+      13: iconst_0
+      14: putfield      #116                // Field startMoveAnimation:Z
+      17: aload_0
+      18: iload_1
+      19: putfield      #112                // Field moveAnimation:I
+      22: return
+
+  public int getMoveAnimtion(net.minecraft.class_1309);
+    descriptor: (Lnet/minecraft/class_1309;)I
+    Code:
+       0: aload_1
+       1: invokevirtual #311                // Method net/minecraft/class_1309.method_5765:()Z
+       4: ifeq          9
+       7: iconst_1
+       8: ireturn
+       9: aload_1
+      10: invokevirtual #314                // Method net/minecraft/class_1309.method_6113:()Z
+      13: ifeq          18
+      16: iconst_2
+      17: ireturn
+      18: aload_0
+      19: getfield      #112                // Field moveAnimation:I
+      22: bipush        16
+      24: if_icmpne     36
+      27: aload_1
+      28: invokevirtual #317                // Method net/minecraft/class_1309.method_18276:()Z
+      31: ifeq          36
+      34: iconst_4
+      35: ireturn
+      36: aload_0
+      37: getfield      #112                // Field moveAnimation:I
+      40: ireturn
+
+  public boolean isMovementAnimation(int);
+    descriptor: (I)Z
+    Code:
+       0: iload_1
+       1: iconst_2
+       2: if_icmpeq     51
+       5: iload_1
+       6: bipush        7
+       8: if_icmpeq     51
+      11: iload_1
+      12: iconst_4
+      13: if_icmpeq     51
+      16: iload_1
+      17: iconst_1
+      18: if_icmpeq     51
+      21: iload_1
+      22: bipush        14
+      24: if_icmpeq     51
+      27: iload_1
+      28: bipush        15
+      30: if_icmpeq     51
+      33: iload_1
+      34: bipush        16
+      36: if_icmpeq     51
+      39: iload_1
+      40: bipush        18
+      42: if_icmpeq     51
+      45: iload_1
+      46: bipush        17
+      48: if_icmpne     55
+      51: iconst_1
+      52: goto          56
+      55: iconst_0
+      56: ireturn
+
+  public void setAnimation(int);
+    descriptor: (I)V
+    Code:
+       0: aload_0
+       1: iload_1
+       2: invokevirtual #322                // Method isMovementAnimation:(I)Z
+       5: ifeq          14
+       8: aload_0
+       9: iload_1
+      10: invokevirtual #324                // Method setMoveAnimation:(I)V
+      13: return
+      14: aload_0
+      15: iconst_m1
+      16: putfield      #108                // Field animationTime:I
+      19: aload_0
+      20: iload_1
+      21: putfield      #118                // Field animation:I
+      24: aload_0
+      25: invokestatic  #102                // Method java/lang/System.currentTimeMillis:()J
+      28: putfield      #104                // Field lastEdited:J
+      31: aload_0
+      32: aload_0
+      33: getfield      #118                // Field animation:I
+      36: iload_1
+      37: if_icmpeq     44
+      40: iconst_1
+      41: goto          45
+      44: iconst_0
+      45: putfield      #122                // Field startAnimation:Z
+      48: aload_0
+      49: getfield      #118                // Field animation:I
+      52: bipush        10
+      54: if_icmpne     63
+      57: aload_0
+      58: bipush        80
+      60: putfield      #108                // Field animationTime:I
+      63: aload_0
+      64: getfield      #118                // Field animation:I
+      67: bipush        13
+      69: if_icmpeq     81
+      72: aload_0
+      73: getfield      #118                // Field animation:I
+      76: bipush        12
+      78: if_icmpne     87
+      81: aload_0
+      82: bipush        60
+      84: putfield      #108                // Field animationTime:I
+      87: aload_0
+      88: invokevirtual #328                // Method getOwner:()Lnet/minecraft/class_1309;
+      91: ifnull        98
+      94: iload_1
+      95: ifne          106
+      98: aload_0
+      99: iconst_m1
+     100: putfield      #124                // Field animationStart:I
+     103: goto          117
+     106: aload_0
+     107: aload_0
+     108: invokevirtual #328                // Method getOwner:()Lnet/minecraft/class_1309;
+     111: getfield      #331                // Field net/minecraft/class_1309.field_6012:I
+     114: putfield      #124                // Field animationStart:I
+     117: return
+
+  public void updateTransate();
+    descriptor: ()V
+    Code:
+       0: invokestatic  #335                // Method noppes/npcs/constants/EnumParts.values:()[Lnoppes/npcs/constants/EnumParts;
+       3: astore_1
+       4: aload_1
+       5: arraylength
+       6: istore_2
+       7: iconst_0
+       8: istore_3
+       9: iload_3
+      10: iload_2
+      11: if_icmpge     364
+      14: aload_1
+      15: iload_3
+      16: aaload
+      17: astore        4
+      19: aload_0
+      20: aload         4
+      22: invokevirtual #341                // Method getPartConfig:(Lnoppes/npcs/constants/EnumParts;)Lnoppes/npcs/ModelPartConfig;
+      25: astore        5
+      27: aload         5
+      29: ifnonnull     35
+      32: goto          358
+      35: aload         4
+      37: getstatic     #345                // Field noppes/npcs/constants/EnumParts.HEAD:Lnoppes/npcs/constants/EnumParts;
+      40: if_acmpne     57
+      43: aload         5
+      45: fconst_0
+      46: aload_0
+      47: invokevirtual #349                // Method getBodyY:()F
+      50: fconst_0
+      51: invokevirtual #353                // Method noppes/npcs/ModelPartConfig.setTranslate:(FFF)V
+      54: goto          358
+      57: aload         4
+      59: getstatic     #356                // Field noppes/npcs/constants/EnumParts.ARM_LEFT:Lnoppes/npcs/constants/EnumParts;
+      62: if_acmpne     155
+      65: aload_0
+      66: getstatic     #359                // Field noppes/npcs/constants/EnumParts.BODY:Lnoppes/npcs/constants/EnumParts;
+      69: invokevirtual #341                // Method getPartConfig:(Lnoppes/npcs/constants/EnumParts;)Lnoppes/npcs/ModelPartConfig;
+      72: astore        6
+      74: fconst_1
+      75: aload         6
+      77: getfield      #362                // Field noppes/npcs/ModelPartConfig.scaleX:F
+      80: fsub
+      81: ldc_w         #363                // float 0.25f
+      84: fmul
+      85: fconst_1
+      86: aload         5
+      88: getfield      #362                // Field noppes/npcs/ModelPartConfig.scaleX:F
+      91: fsub
+      92: ldc_w         #364                // float 0.0625f
+      95: fmul
+      96: fadd
+      97: fstore        7
+      99: aload_0
+     100: invokevirtual #349                // Method getBodyY:()F
+     103: fconst_1
+     104: aload         5
+     106: getfield      #367                // Field noppes/npcs/ModelPartConfig.scaleY:F
+     109: fsub
+     110: ldc_w         #368                // float -0.125f
+     113: fmul
+     114: fadd
+     115: fstore        8
+     117: aload         5
+     119: fload         7
+     121: fneg
+     122: fload         8
+     124: fconst_0
+     125: invokevirtual #353                // Method noppes/npcs/ModelPartConfig.setTranslate:(FFF)V
+     128: aload         5
+     130: getfield      #371                // Field noppes/npcs/ModelPartConfig.notShared:Z
+     133: ifne          152
+     136: aload_0
+     137: getstatic     #374                // Field noppes/npcs/constants/EnumParts.ARM_RIGHT:Lnoppes/npcs/constants/EnumParts;
+     140: invokevirtual #341                // Method getPartConfig:(Lnoppes/npcs/constants/EnumParts;)Lnoppes/npcs/ModelPartConfig;
+     143: astore        9
+     145: aload         9
+     147: aload         5
+     149: invokevirtual #378                // Method noppes/npcs/ModelPartConfig.copyValues:(Lnoppes/npcs/ModelPartConfig;)V
+     152: goto          358
+     155: aload         4
+     157: getstatic     #374                // Field noppes/npcs/constants/EnumParts.ARM_RIGHT:Lnoppes/npcs/constants/EnumParts;
+     160: if_acmpne     228
+     163: aload_0
+     164: getstatic     #359                // Field noppes/npcs/constants/EnumParts.BODY:Lnoppes/npcs/constants/EnumParts;
+     167: invokevirtual #341                // Method getPartConfig:(Lnoppes/npcs/constants/EnumParts;)Lnoppes/npcs/ModelPartConfig;
+     170: astore        6
+     172: fconst_1
+     173: aload         6
+     175: getfield      #362                // Field noppes/npcs/ModelPartConfig.scaleX:F
+     178: fsub
+     179: ldc_w         #363                // float 0.25f
+     182: fmul
+     183: fconst_1
+     184: aload         5
+     186: getfield      #362                // Field noppes/npcs/ModelPartConfig.scaleX:F
+     189: fsub
+     190: ldc_w         #364                // float 0.0625f
+     193: fmul
+     194: fadd
+     195: fstore        7
+     197: aload_0
+     198: invokevirtual #349                // Method getBodyY:()F
+     201: fconst_1
+     202: aload         5
+     204: getfield      #367                // Field noppes/npcs/ModelPartConfig.scaleY:F
+     207: fsub
+     208: ldc_w         #368                // float -0.125f
+     211: fmul
+     212: fadd
+     213: fstore        8
+     215: aload         5
+     217: fload         7
+     219: fload         8
+     221: fconst_0
+     222: invokevirtual #353                // Method noppes/npcs/ModelPartConfig.setTranslate:(FFF)V
+     225: goto          358
+     228: aload         4
+     230: getstatic     #381                // Field noppes/npcs/constants/EnumParts.LEG_LEFT:Lnoppes/npcs/constants/EnumParts;
+     233: if_acmpne     296
+     236: aload         5
+     238: fconst_1
+     239: aload         5
+     241: getfield      #362                // Field noppes/npcs/ModelPartConfig.scaleX:F
+     244: fsub
+     245: fneg
+     246: ldc_w         #382                // float 0.118f
+     249: fmul
+     250: aload_0
+     251: invokevirtual #385                // Method getLegsY:()F
+     254: fconst_1
+     255: aload         5
+     257: getfield      #388                // Field noppes/npcs/ModelPartConfig.scaleZ:F
+     260: fsub
+     261: fneg
+     262: ldc_w         #389                // float 0.00625f
+     265: fmul
+     266: invokevirtual #353                // Method noppes/npcs/ModelPartConfig.setTranslate:(FFF)V
+     269: aload         5
+     271: getfield      #371                // Field noppes/npcs/ModelPartConfig.notShared:Z
+     274: ifne          358
+     277: aload_0
+     278: getstatic     #392                // Field noppes/npcs/constants/EnumParts.LEG_RIGHT:Lnoppes/npcs/constants/EnumParts;
+     281: invokevirtual #341                // Method getPartConfig:(Lnoppes/npcs/constants/EnumParts;)Lnoppes/npcs/ModelPartConfig;
+     284: astore        6
+     286: aload         6
+     288: aload         5
+     290: invokevirtual #378                // Method noppes/npcs/ModelPartConfig.copyValues:(Lnoppes/npcs/ModelPartConfig;)V
+     293: goto          358
+     296: aload         4
+     298: getstatic     #392                // Field noppes/npcs/constants/EnumParts.LEG_RIGHT:Lnoppes/npcs/constants/EnumParts;
+     301: if_acmpne     339
+     304: aload         5
+     306: fconst_1
+     307: aload         5
+     309: getfield      #362                // Field noppes/npcs/ModelPartConfig.scaleX:F
+     312: fsub
+     313: ldc_w         #382                // float 0.118f
+     316: fmul
+     317: aload_0
+     318: invokevirtual #385                // Method getLegsY:()F
+     321: fconst_1
+     322: aload         5
+     324: getfield      #388                // Field noppes/npcs/ModelPartConfig.scaleZ:F
+     327: fsub
+     328: fneg
+     329: ldc_w         #389                // float 0.00625f
+     332: fmul
+     333: invokevirtual #353                // Method noppes/npcs/ModelPartConfig.setTranslate:(FFF)V
+     336: goto          358
+     339: aload         4
+     341: getstatic     #359                // Field noppes/npcs/constants/EnumParts.BODY:Lnoppes/npcs/constants/EnumParts;
+     344: if_acmpne     358
+     347: aload         5
+     349: fconst_0
+     350: aload_0
+     351: invokevirtual #349                // Method getBodyY:()F
+     354: fconst_0
+     355: invokevirtual #353                // Method noppes/npcs/ModelPartConfig.setTranslate:(FFF)V
+     358: iinc          3, 1
+     361: goto          9
+     364: return
+
+  public void setEntity(net.minecraft.class_2960);
+    descriptor: (Lnet/minecraft/class_2960;)V
+    Code:
+       0: aload_0
+       1: aload_1
+       2: putfield      #71                 // Field entityName:Lnet/minecraft/class_2960;
+       5: aload_0
+       6: invokevirtual #401                // Method clearEntity:()V
+       9: aload_0
+      10: new           #73                 // class net/minecraft/class_2487
+      13: dup
+      14: invokespecial #74                 // Method net/minecraft/class_2487."<init>":()V
+      17: putfield      #76                 // Field extra:Lnet/minecraft/class_2487;
+      20: return
+
+  public net.minecraft.class_2960 getEntityName();
+    descriptor: ()Lnet/minecraft/class_2960;
+    Code:
+       0: aload_0
+       1: getfield      #71                 // Field entityName:Lnet/minecraft/class_2960;
+       4: areturn
+
+  public boolean hasEntity();
+    descriptor: ()Z
+    Code:
+       0: aload_0
+       1: getfield      #71                 // Field entityName:Lnet/minecraft/class_2960;
+       4: ifnull        11
+       7: iconst_1
+       8: goto          12
+      11: iconst_0
+      12: ireturn
+
+  public float offsetY();
+    descriptor: ()F
+    Code:
+       0: aload_0
+       1: getfield      #407                // Field entity:Lnet/minecraft/class_1309;
+       4: ifnonnull     13
+       7: aload_0
+       8: invokevirtual #349                // Method getBodyY:()F
+      11: fneg
+      12: freturn
+      13: aload_0
+      14: getfield      #407                // Field entity:Lnet/minecraft/class_1309;
+      17: invokevirtual #410                // Method net/minecraft/class_1309.method_17682:()F
+      20: ldc_w         #411                // float 1.8f
+      23: fsub
+      24: freturn
+
+  public void clearEntity();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: aconst_null
+       2: putfield      #407                // Field entity:Lnet/minecraft/class_1309;
+       5: return
+
+  public noppes.npcs.ModelPartConfig getPartConfig(noppes.npcs.constants.EnumParts);
+    descriptor: (Lnoppes/npcs/constants/EnumParts;)Lnoppes/npcs/ModelPartConfig;
+    Code:
+       0: aload_1
+       1: getstatic     #359                // Field noppes/npcs/constants/EnumParts.BODY:Lnoppes/npcs/constants/EnumParts;
+       4: if_acmpne     12
+       7: aload_0
+       8: getfield      #63                 // Field body:Lnoppes/npcs/ModelPartConfig;
+      11: areturn
+      12: aload_1
+      13: getstatic     #356                // Field noppes/npcs/constants/EnumParts.ARM_LEFT:Lnoppes/npcs/constants/EnumParts;
+      16: if_acmpne     24
+      19: aload_0
+      20: getfield      #59                 // Field arm1:Lnoppes/npcs/ModelPartConfig;
+      23: areturn
+      24: aload_1
+      25: getstatic     #374                // Field noppes/npcs/constants/EnumParts.ARM_RIGHT:Lnoppes/npcs/constants/EnumParts;
+      28: if_acmpne     36
+      31: aload_0
+      32: getfield      #61                 // Field arm2:Lnoppes/npcs/ModelPartConfig;
+      35: areturn
+      36: aload_1
+      37: getstatic     #381                // Field noppes/npcs/constants/EnumParts.LEG_LEFT:Lnoppes/npcs/constants/EnumParts;
+      40: if_acmpne     48
+      43: aload_0
+      44: getfield      #65                 // Field leg1:Lnoppes/npcs/ModelPartConfig;
+      47: areturn
+      48: aload_1
+      49: getstatic     #392                // Field noppes/npcs/constants/EnumParts.LEG_RIGHT:Lnoppes/npcs/constants/EnumParts;
+      52: if_acmpne     60
+      55: aload_0
+      56: getfield      #67                 // Field leg2:Lnoppes/npcs/ModelPartConfig;
+      59: areturn
+      60: aload_0
+      61: getfield      #69                 // Field head:Lnoppes/npcs/ModelPartConfig;
+      64: areturn
+
+  public abstract net.minecraft.class_1309 getOwner();
+    descriptor: ()Lnet/minecraft/class_1309;
+
+  public float getBodyY();
+    descriptor: ()F
+    Code:
+       0: aload_0
+       1: getfield      #407                // Field entity:Lnet/minecraft/class_1309;
+       4: ifnull        15
+       7: aload_0
+       8: getfield      #407                // Field entity:Lnet/minecraft/class_1309;
+      11: invokevirtual #410                // Method net/minecraft/class_1309.method_17682:()F
+      14: freturn
+      15: fconst_1
+      16: aload_0
+      17: getfield      #63                 // Field body:Lnoppes/npcs/ModelPartConfig;
+      20: getfield      #367                // Field noppes/npcs/ModelPartConfig.scaleY:F
+      23: fsub
+      24: ldc_w         #413                // float 0.75f
+      27: fmul
+      28: aload_0
+      29: invokevirtual #385                // Method getLegsY:()F
+      32: fadd
+      33: freturn
+
+  public float getLegsY();
+    descriptor: ()F
+    Code:
+       0: aload_0
+       1: getfield      #65                 // Field leg1:Lnoppes/npcs/ModelPartConfig;
+       4: astore_1
+       5: aload_0
+       6: getfield      #65                 // Field leg1:Lnoppes/npcs/ModelPartConfig;
+       9: getfield      #371                // Field noppes/npcs/ModelPartConfig.notShared:Z
+      12: ifeq          38
+      15: aload_0
+      16: getfield      #67                 // Field leg2:Lnoppes/npcs/ModelPartConfig;
+      19: getfield      #367                // Field noppes/npcs/ModelPartConfig.scaleY:F
+      22: aload_0
+      23: getfield      #65                 // Field leg1:Lnoppes/npcs/ModelPartConfig;
+      26: getfield      #367                // Field noppes/npcs/ModelPartConfig.scaleY:F
+      29: fcmpl
+      30: ifle          38
+      33: aload_0
+      34: getfield      #67                 // Field leg2:Lnoppes/npcs/ModelPartConfig;
+      37: astore_1
+      38: fconst_1
+      39: aload_1
+      40: getfield      #367                // Field noppes/npcs/ModelPartConfig.scaleY:F
+      43: fsub
+      44: ldc_w         #413                // float 0.75f
+      47: fmul
+      48: freturn
+
+  public void refreshParts();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: aload_0
+       2: getfield      #86                 // Field mpmParts:Ljava/util/List;
+       5: invokeinterface #418,  1          // InterfaceMethod java/util/List.stream:()Ljava/util/stream/Stream;
+      10: invokedynamic #437,  0            // InvokeDynamic #0:apply:()Ljava/util/function/Function;
+      15: invokeinterface #443,  2          // InterfaceMethod java/util/stream/Stream.flatMap:(Ljava/util/function/Function;)Ljava/util/stream/Stream;
+      20: invokeinterface #446,  1          // InterfaceMethod java/util/stream/Stream.distinct:()Ljava/util/stream/Stream;
+      25: invokestatic  #452                // Method java/util/stream/Collectors.toList:()Ljava/util/stream/Collector;
+      28: invokeinterface #456,  2          // InterfaceMethod java/util/stream/Stream.collect:(Ljava/util/stream/Collector;)Ljava/lang/Object;
+      33: checkcast     #187                // class java/util/List
+      36: putfield      #88                 // Field hiddenParts:Ljava/util/List;
+      39: return
+
+  private static java.util.stream.Stream lambda$refreshParts$0(noppes.npcs.client.parts.MpmPartData);
+    descriptor: (Lnoppes/npcs/client/parts/MpmPartData;)Ljava/util/stream/Stream;
+    Code:
+       0: aload_0
+       1: invokevirtual #460                // Method noppes/npcs/client/parts/MpmPartData.getPart:()Lnoppes/npcs/client/parts/MpmPart;
+       4: astore_1
+       5: aload_1
+       6: ifnull        19
+       9: aload_1
+      10: getfield      #463                // Field noppes/npcs/client/parts/MpmPart.hiddenParts:Ljava/util/List;
+      13: invokeinterface #418,  1          // InterfaceMethod java/util/List.stream:()Ljava/util/stream/Stream;
+      18: areturn
+      19: invokestatic  #466                // InterfaceMethod java/util/stream/Stream.empty:()Ljava/util/stream/Stream;
+      22: areturn
+}
