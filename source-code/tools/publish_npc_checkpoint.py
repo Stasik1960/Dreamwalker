@@ -21,6 +21,10 @@ owned=['gradle.properties','src/architecture/resources/fabric.mod.json','src/arc
 owned += [p.relative_to(P).as_posix() for p in (P/'src/restorationqa').rglob('*') if p.is_file()]
 owned += [p.relative_to(P).as_posix() for p in (P/'tools').glob('*npc*.py')]
 paths=[]
+readme=R/'README.md'
+if readme.exists():
+ text=readme.read_text(encoding='utf-8')
+ if 'CURRENT-NPC-RU.md' not in text:readme.write_text('NPC и Custom NPC, visual-physics.8: [текущее состояние и восстановление](CURRENT-NPC-RU.md).\n\n'+text,encoding='utf-8');paths.append('README.md')
 current=R/'CURRENT-NPC-RU.md';shutil.copy2(D/('HANDOFF-RU.md' if (D/'acceptance.json').exists() else 'NOTES-RU.md'),current);paths.append(current.relative_to(R).as_posix())
 (D/'source-files.json').write_text(json.dumps(sorted(set(owned)),ensure_ascii=False,indent=2),encoding='utf-8')
 for rel in sorted(set(owned)):

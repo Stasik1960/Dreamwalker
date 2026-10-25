@@ -27,7 +27,7 @@ public final class NpcServerQa implements ModInitializer {
  public static final BlockPos BASE=new BlockPos(15200,200,15200);
  private final JsonArray checks=new JsonArray();private final List<RpMobEntity> moving=new ArrayList<>();private final List<Float> sounds=new ArrayList<>();private ServerPlayerEntity actor;private int ticks,phase;private boolean done;
  private void check(boolean value,String text){if(!value)throw new AssertionError(text);checks.add(text);}
- @Override public void onInitialize(){ServerTickEvents.END_SERVER_TICK.register(s->{if(done)return;try{if(++ticks<30)return;if(phase==0){setup(s);phase=1;ticks=0;return;}if(phase==1&&ticks>=240){finish(s);save("PASS",null);done=true;s.stop(false);}}catch(Throwable error){error.printStackTrace();save("FAIL",error);done=true;s.stop(false);}});}
+ @Override public void onInitialize(){ServerTickEvents.END_SERVER_TICK.register(s->{if(done)return;try{if(++ticks<30)return;if(phase==0){setup(s);phase=1;ticks=0;return;}if(phase==1&&ticks>=40){validate(s);phase=2;ticks=0;return;}if(phase==2&&ticks>=240){finish(s);save("PASS",null);done=true;s.stop(false);}}catch(Throwable error){error.printStackTrace();save("FAIL",error);done=true;s.stop(false);}});}
  private ServerPlayerEntity actor(MinecraftServer s,ServerWorld w){
   var p=new ServerPlayerEntity(s,w,new GameProfile(UUID.randomUUID(),"NpcPuppetQA")){@Override public boolean hasPermissionLevel(int level){return true;}@Override public void sendMessage(Text text,boolean overlay){}};
   new ServerPlayNetworkHandler(s,new ClientConnection(NetworkSide.SERVERBOUND),p){@Override public void sendPacket(Packet<?> packet){if(packet instanceof PlaySoundS2CPacket sound)sounds.add(sound.getVolume());}};
@@ -39,7 +39,12 @@ public final class NpcServerQa implements ModInitializer {
   var held=new ItemStack(BbToolService.ITEM);held.getOrCreateNbt().putInt("BBMode",BbToolItem.Mode.SPECIAL.ordinal());actor.getInventory().setStack(0,held);
   int lane=0;
   for(var entry:MobRegistry.TYPES.entrySet()){
-   String id=entry.getKey();var mob=entry.getValue().create(w);mob.refreshPositionAndAngles(BASE.getX()+2.5,BASE.getY(),BASE.getZ()+lane*10+.5,0,0);w.setChunkForced(mob.getChunkPos().x,mob.getChunkPos().z,true);w.spawnEntity(mob);
+   String id=entry.getKey();var mob=entry.getValue().create(w);mob.refreshPositionAndAngles(BASE.getX()+2.5,BASE.getY(),BASE.getZ()+lane*10+.5,0,0);mob.setOnGround(true);w.setChunkForced(mob.getChunkPos().x,mob.getChunkPos().z,true);w.spawnEntity(mob);
+   moving.add(mob);lane++;
+  }
+ }
+ private void validate(MinecraftServer s){var w=s.getOverworld();int lane=0;
+  for(var mob:moving){String id=mob.assetId();var type=MobRegistry.TYPES.get(id);
    check(mob.getMaxHealth()==2&&mob.getHealth()==2,"one heart "+id);
    mob.setTarget(actor);check(mob.getTarget()==null&&!mob.tryAttack(actor),"no targeting or actual combat "+id);
    for(var mode:List.of(GameMode.SURVIVAL,GameMode.ADVENTURE)){actor.changeGameMode(mode);check(!mob.damage(w.getDamageSources().playerAttack(actor),1000)&&mob.getHealth()==2,"protected from "+mode+" "+id);}
@@ -47,13 +52,14 @@ public final class NpcServerQa implements ModInitializer {
    actor.changeGameMode(GameMode.CREATIVE);
    if(lane==0){int n=sounds.size();for(int k=0;k<4;k++)mob.playAmbientSound();check(sounds.size()==n+2,"half of ambient attempts play");check(Math.abs(sounds.get(n)-1f/3)<.0001,"actual sound packet volume divided by three");}
    check(mob.damage(w.getDamageSources().playerAttack(actor),1000)&&mob.isCorpse()&&mob.getHealth()==1&&!mob.isRemoved(),"first arbitrary-strength creative hit leaves corpse "+id);
-   var saved=new NbtCompound();mob.writeNbt(saved);saved.putString("NpcQaProvenance","preserved");var restored=entry.getValue().create(w);restored.readNbt(saved);check(restored.isCorpse()&&restored.getHealth()==1&&restored.getMaxHealth()==2,"corpse round trip "+id);restored.discard();
+   var saved=new NbtCompound();mob.writeNbt(saved);var restored=type.create(w);restored.readNbt(saved);check(restored.isCorpse()&&restored.getHealth()==1&&restored.getMaxHealth()==2,"corpse round trip "+id);restored.discard();
+   if(lane==0){var legacy=saved.copy();legacy.putBoolean("bloodborne_rp_corpse",false);legacy.putFloat("Health",80);legacy.putInt("AnimationId",7);legacy.putString("UnmanagedNpcData","keep exactly");for(var tag:legacy.getList("Attributes",10)){var attribute=(NbtCompound)tag;if(attribute.getString("Name").equals("minecraft:generic.max_health"))attribute.putDouble("Base",80);}var loaded=type.create(w);loaded.readNbt(legacy);check(loaded.getHealth()==2&&loaded.getMaxHealth()==2&&!loaded.isCorpse(),"old80HP mob normalizes to one heart");var round=new NbtCompound();loaded.writeNbt(round);check(round.getString("UnmanagedNpcData").equals("keep exactly")&&round.getCompound("SourceLegacyPayload").getCompound("Original").getInt("AnimationId")==7,"typed legacy provenance and unmanaged data preserved");loaded.discard();}
    BbToolService.apply(actor,ToolTarget.entity(mob));check(!mob.isCorpse()&&mob.getHealth()==2,"tool revives and selects "+id);
    check(BbToolService.special(actor,ToolTarget.entity(mob)),"selected actor accepts cosmetic attack "+id);
    String clip=mob.currentAnimationSuffix();check(MobAnimationSelector.attacks(id).contains(clip),"valid attack animation "+id);
    check(BbToolRotations.rotate(actor,ToolTarget.entity(mob))&&mob.getYaw()==45&&mob.bodyYaw==45&&mob.headYaw==45,"tool rotates all facing angles45 "+id);
    check(BbToolService.commandSelectedMob(actor,BASE.add(8,-1,lane*10)),"vanilla target cell path accepted "+id);
-   check(mob.orderedDestination().isPresent(),"destination recorded "+id);moving.add(mob);lane++;
+   check(mob.orderedDestination().isPresent(),"destination recorded "+id);lane++;
   }
   check(MobRegistry.TYPES.size()==18,"all18 mob types covered");
  }

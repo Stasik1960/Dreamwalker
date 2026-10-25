@@ -1,3 +1,5 @@
+NPC и Custom NPC, visual-physics.8: [текущее состояние и восстановление](CURRENT-NPC-RU.md).
+
 Последние интерактивные исправления .7: [текущее состояние и восстановление](CURRENT-INTERACTIONS-RU.md).
 
 # Dreamwalker — visual-physics.6

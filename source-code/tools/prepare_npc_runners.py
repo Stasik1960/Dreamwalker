@@ -2,6 +2,7 @@ from pathlib import Path
 P=Path(__file__).resolve().parents[1]
 s=(P/'tools/run_interaction_checks.py').read_text(encoding='utf-8')
 s=s.replace("'interaction-evidence'","'npc-evidence'").replace("'interaction-profiles'","'npc-profiles'").replace('visual-physics.7','visual-physics.8').replace('dw.interaction.qa.','dw.npc.qa.').replace('DW_INTERACTION_QA_HEAP','DW_NPC_QA_HEAP').replace("'interaction-profiles/server-1/world'","'npc-profiles/server-1/world'").replace('DWInteractionQA','DWNpcQA')
+s=s.replace("fullMap='--map' in sys.argv;sourceMods=", "client=role=='client';fullMap='--map' in sys.argv;sourceMods=")
 # Private full-pack client, not the city map: keep the minimal server's QA world.
 s=s.replace("elif client:shutil.copytree(P/('interaction-profiles/preview-2/world' if fullMap else 'npc-profiles/server-1/world'),profile/'saves/interactions')","elif client:shutil.copytree(P/'npc-profiles/server-1/world',profile/'saves/interactions')")
 s=s.replace("if (role in ('preview','apply')", "if (client and mid!='bloodborne_dw') or (role in ('preview','apply')")
