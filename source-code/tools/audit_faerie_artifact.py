@@ -19,8 +19,9 @@ with zipfile.ZipFile(old) as a,zipfile.ZipFile(new) as b:
  assert b.read('assets/bloodborne_dw/textures/block/faerie_veil.png')==source.read_bytes()
  assert not any('/faerie_veil/tile_' in n for n in b.namelist())
 receipt={'status':'PASS','jar':str(new),'sha256':sha(new),'baselineSha256':sha(old),'unchangedExistingAssets':len(assets)-len(changed),'changedExistingAssets':changed,'unchangedDataResources':len(data),'approvedStudyReconstructedExactly':True,'wrapMeanPixelDelta':wrap,'maxOtherMeanPixelDelta':float(steps.max()),'newStates':1,'blockEntities':0,'particles':0,'blockTickers':0,'mapReconverted':False,'qaExcluded':True}
-core=D/'core-accepted.jar'
+core=P/'faerie-profiles/server/mods/dreamwalker-bb-fabric-1.20.1-0.1.0-v12.7.4-visual-physics.5.jar'
 if core.exists():
+ assert sha(core)==json.loads((D/'server-1/process.json').read_text())['productionSha256']
  with zipfile.ZipFile(core) as a,zipfile.ZipFile(new) as b:
   changes=sorted(n for n in set(a.namelist())&set(b.namelist()) if not n.endswith('/') and a.read(n)!=b.read(n))
   removed=sorted(set(a.namelist())-set(b.namelist()));added=sorted(set(b.namelist())-set(a.namelist()))

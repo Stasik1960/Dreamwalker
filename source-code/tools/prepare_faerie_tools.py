@@ -21,8 +21,9 @@ extra="""files +=list((P/'src/architecture/java/dev/dreamwalker/bloodbornedw/arc
 files +=[p for p in (P/'src/faerieqa').rglob('*') if p.is_file()]
 files +=list((P/'tools').glob('*faerie*.py'))
 files +=[assets/'blockstates/dw_faerie_veil.json',assets/'models/block/dw_faerie_veil.json',assets/'models/item/dw_faerie_veil.json']
-files +=[p for folder in (assets/'textures/block/faerie_veil',assets/'models/block/faerie_veil') for p in folder.rglob('*') if p.is_file()]
+files +=[assets/'textures/block/faerie_veil.png',assets/'textures/block/faerie_veil.png.mcmeta']
 """
-assert anchor in s;s=s.replace(anchor,extra+anchor);(T/'publish_faerie_checkpoint.py').write_text(s,encoding='utf-8')
+assert anchor in s;s=s.replace(anchor,extra+anchor)
+if not (T/'publish_faerie_checkpoint.py').exists():(T/'publish_faerie_checkpoint.py').write_text(s,encoding='utf-8')
 s=(T/'run_utility_task.py').read_text().replace('utility-evidence','faerie-evidence').replace('publish_utility','publish_faerie').replace('package_utility','package_faerie').replace('install_utility','install_faerie')
 (T/'run_faerie_task.py').write_text(s,encoding='utf-8')

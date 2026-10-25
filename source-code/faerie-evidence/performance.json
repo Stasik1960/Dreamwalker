@@ -1,0 +1,67 @@
+{
+  "status": "MEASURED",
+  "method": "One JVM, one fixed 512-block wall, same camera/resources, ABBA, 4x20s with first 5s excluded",
+  "conditions": {
+    "resolution": [
+      1280,
+      720
+    ],
+    "heapGiB": 4,
+    "activeProcessorCount": 2,
+    "sodium": "0.5.13",
+    "indium": "1.0.36",
+    "shaders": false,
+    "vsync": false,
+    "fpsSetting": 260
+  },
+  "groups": {
+    "static": {
+      "fps": 2328.1751154312806,
+      "individualFps": [
+        2168.2821540548643,
+        2488.1384875026315
+      ],
+      "p95FrameMsRange": [
+        0.5351,
+        0.755301
+      ],
+      "worstP99FrameMs": 1.494101,
+      "over50ms": 0,
+      "over100ms": 0,
+      "heapUsedMiBRange": [
+        3171.2576904296875,
+        3561.9275665283203
+      ],
+      "cpuPercentRange": [
+        102.92791119787199,
+        127.04127420215414
+      ]
+    },
+    "animated": {
+      "fps": 2476.4405940155725,
+      "individualFps": [
+        2344.729166912666,
+        2608.151668093278
+      ],
+      "p95FrameMsRange": [
+        0.4442,
+        0.626099
+      ],
+      "worstP99FrameMs": 1.3644,
+      "over50ms": 0,
+      "over100ms": 0,
+      "heapUsedMiBRange": [
+        2855.72354888916,
+        2899.12451171875
+      ],
+      "cpuPercentRange": [
+        108.97024087478786,
+        109.07471127750989
+      ]
+    }
+  },
+  "animationFpsChangePercent": 6.368313001955039,
+  "spriteCount": 1,
+  "noPerBlockEntitiesOrTickers": true,
+  "scope": "Incremental animation cost on this hardware/test scene; not city FPS, not proof of zero cost on every PC."
+}
