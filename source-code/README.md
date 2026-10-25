@@ -1,4 +1,17 @@
-# Dreamwalker BB — visual-physics.2
+# Dreamwalker BB — visual-physics.3
+
+Текущая версия: `0.1.0-v12.7.4-visual-physics.3`. Восстановлена посадка на
+целые скамейки раннего Bloodborne-Blocks: ПКМ свободной рукой — сесть,
+Shift — встать, три места. Старые объекты и статические скамьи готовой карты
+поддерживаются без конвертации и изменений моделей/коллизий.
+Статус приёмки: `bench-evidence/acceptance.json`; описание и продолжение работы:
+`bench-evidence/REPORT-RU.txt`, `bench-evidence/HANDOFF-RU.txt`.
+Сборка игрового JAR: `gradlew.bat --no-daemon remapJar` (JDK 17).
+Отдельный тестовый мод: `gradlew.bat remapBenchQaJar`; в игровой JAR не входит.
+Карта из `native-grid-city-visual-physics-20261025` остаётся совместимой.
+Ветка исходников: `codex/bench-seating-20261025`.
+
+## База visual-physics.2
 
 Текущая версия: `0.1.0-v12.7.4-visual-physics.2`, Minecraft 1.20.1 Fabric.
 Статус проверки и изменения описаны в `fix-evidence/REPORT-RU.txt` и

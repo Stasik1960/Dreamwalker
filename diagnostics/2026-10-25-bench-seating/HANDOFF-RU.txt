@@ -1,0 +1,25 @@
+Продолжение работы над скамьями visual-physics.3
+Финальный статус определяется bench-evidence/acceptance.json, а не этим файлом.
+
+Проект: C:\Users\vakir\CodexProjects\DW-visual-fixes-20261025
+База: visual-physics.2, commit 740523183e6b544db55aa37ba80657e839511245.
+Ветка: codex/bench-seating-20261025.
+Старая реализация: Bloodborne-Blocks/FunctionalFurniture.java и
+ArchitectureSeatEntity.java; их копии и исходные точки посадки сохранены в
+bench-evidence. Старый checkout DW очищался; не сбрасывать его массовые удаления.
+Рабочее хранилище C:, перенос на E: приостановлен пользователем.
+
+Новая функциональность: BenchSeating, BenchSeatEntity, BenchSeatingClient.
+Подключение — CompositeArchitecture и CompositeClient. Геометрия не меняется.
+Отдельный QA sourceSet benchqa собирается задачей remapBenchQaJar.
+Игровой мод собирается remapJar, JDK17; см. README.
+run_bench_profile.py запускает выделенный сервер и клиент последовательно;
+его пути нужно адаптировать на другом ПК. QA-мод не является частью выдачи.
+Клиент использует копию готовой карты из fix-profiles/client/saves/dw-fix-city.
+Фикстуры находятся далеко от города, около [4096,220,4096].
+
+map-benches.json: адресный список 37 объектов, из них один — обломок bench_2.
+artifact-integrity.json: все старые ресурсы совпадают с visual-physics.2.
+Не переконвертировать карту, не менять физику, v12 и цельные конструкции.
+Не повторять принятые незатронутые тесты. Хранить результаты и исходники на
+GitHub: пользователь регулярно очищает локальные файлы.

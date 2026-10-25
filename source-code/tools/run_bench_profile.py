@@ -13,6 +13,7 @@ if role=='server':
 else:game=P/'fix-profiles/client';heap='4G'
 cp=[G/'0.19.3.jar',Path('C:/Users/vakir/.gradle/caches/fabric-loom/1.20.1/minecraft-extracted_server.jar') if role=='server' else G/'1.20.1.jar',*sorted((G/'libraries').rglob('*.jar'))]
 args=['-Xms128M','-Xmx'+heap,'-XX:ActiveProcessorCount=2','-Dfabric.modsFolder='+str(mods),'-Ddw.bench.qa.output='+str(D)]
+if attempt!='1' or role=='client':args+=['-Ddw.bench.qa.remaining=true']
 if role=='server':args+=['-Ddw.bench.qa.stop=true']
 else:args+=['-Djava.library.path='+str(G/'natives'),'-Dorg.lwjgl.librarypath='+str(G/'natives'),'-Ddw.bench.qa.roots='+str(P/'bench-evidence/map-benches.json')]
 args+=['-cp',os.pathsep.join(map(str,cp)),'net.fabricmc.loader.impl.launch.knot.KnotServer' if role=='server' else 'net.fabricmc.loader.impl.launch.knot.KnotClient']

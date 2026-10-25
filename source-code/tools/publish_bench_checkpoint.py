@@ -11,7 +11,7 @@ else:git('switch','--detach','740523183e6b544db55aa37ba80657e839511245')
 files=list((P/'src/architecture/java/dev/dreamwalker/bloodbornedw/composite').glob('Bench*.java'))
 files +=[P/'src/architecture/java/dev/dreamwalker/bloodbornedw/composite'/n for n in ('CompositeArchitecture.java','CompositeClient.java')]
 files +=[p for p in (P/'src/benchqa').rglob('*') if p.is_file()]
-files +=[P/'build.gradle',P/'gradle.properties']+[p for p in (P/'tools').glob('*bench*.py')]
+files +=[P/'README.md',P/'build.gradle',P/'gradle.properties']+[p for p in (P/'tools').glob('*bench*.py')]
 files +=[p for p in (P/'bench-evidence').rglob('*') if p.is_file() and p.suffix in ('.json','.java','.txt') and p.stat().st_size<10_000_000]
 for p in files:
  dst=R/'source-code'/p.relative_to(P);dst.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(p,dst)
