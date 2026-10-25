@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "productionSha256": "be12bdb812d405899389570d48264e193564aae4c7c36ab97d4b7882db5797ac",
+  "reviewedImages": [
+    "client-2/window-closed-front.png",
+    "client-2/window-open-front.png",
+    "client-2/window-open-back.png",
+    "client-2/inside-darkness.png",
+    "client-2/inside-faerie.png",
+    "client-3/city-window-initial.png",
+    "client-3/city-window-open.png"
+  ],
+  "findings": [
+    "No missing texture in final glass; red background visible through front pane, sky and platform through rear pane.",
+    "Closed/open shutters retain one common arch frame and separate wall.",
+    "Darkness interior is opaque black; faerie interior shows only opaque animated texture.",
+    "Migrated window at user's city location opens without visible changes to adjacent masonry or other windows.",
+    "Full client shortcut uses an unoccupied test key; F8 was confirmed occupied by ModelProps debug. Production binding remains unassigned by default."
+  ],
+  "clientFunctionalReceipt": "client-3/client-checks.json"
+}
