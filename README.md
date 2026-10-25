@@ -1,3 +1,5 @@
+Последние интерактивные исправления .7: [текущее состояние и восстановление](CURRENT-INTERACTIONS-RU.md).
+
 # Dreamwalker — visual-physics.6
 
 Текущая карта пользователя bloodborne, исправленный мод, полные исходники и отчёт: [релиз restoration-20261025](https://github.com/Stasik1960/Dreamwalker/releases/tag/native-grid-city-restoration-20261025). Инструкция установки и продолжения: [HANDOFF-RU.txt](HANDOFF-RU.txt). Доказательства: [city-restoration](diagnostics/2026-10-25-city-restoration).

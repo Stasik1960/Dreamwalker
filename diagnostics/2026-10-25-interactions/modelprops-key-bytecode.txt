@@ -1,0 +1,909 @@
+Compiled from "ModelPropsClient.java"
+public final class ru.modelprops.client.ModelPropsClient implements net.fabricmc.api.ClientModInitializer {
+  private net.minecraft.class_304 debugKey;
+
+  private net.minecraft.class_304 uploadKey;
+
+  private net.minecraft.class_304 customActionKey;
+
+  public ru.modelprops.client.ModelPropsClient();
+    Code:
+       0: aload_0
+       1: invokespecial #55                 // Method java/lang/Object."<init>":()V
+       4: return
+
+  public void onInitializeClient();
+    Code:
+       0: getstatic     #60                 // Field net/fabricmc/fabric/api/client/rendering/v1/BuiltinItemRendererRegistry.INSTANCE:Lnet/fabricmc/fabric/api/client/rendering/v1/BuiltinItemRendererRegistry;
+       3: getstatic     #66                 // Field ru/modelprops/ModelProps.MODEL_PROP:Lnet/minecraft/class_1792;
+       6: getstatic     #71                 // Field ru/modelprops/client/render/DynamicModelRenderer.INSTANCE:Lru/modelprops/client/render/DynamicModelRenderer;
+       9: dup
+      10: invokestatic  #77                 // Method java/util/Objects.requireNonNull:(Ljava/lang/Object;)Ljava/lang/Object;
+      13: pop
+      14: invokedynamic #93,  0             // InvokeDynamic #0:render:(Lru/modelprops/client/render/DynamicModelRenderer;)Lnet/fabricmc/fabric/api/client/rendering/v1/BuiltinItemRendererRegistry$DynamicItemRenderer;
+      19: invokeinterface #97,  3           // InterfaceMethod net/fabricmc/fabric/api/client/rendering/v1/BuiltinItemRendererRegistry.register:(Lnet/minecraft/class_1935;Lnet/fabricmc/fabric/api/client/rendering/v1/BuiltinItemRendererRegistry$DynamicItemRenderer;)V
+      24: getstatic     #101                // Field ru/modelprops/ModelProps.GROUP_KEY:Lnet/minecraft/class_5321;
+      27: invokestatic  #105                // Method net/fabricmc/fabric/api/itemgroup/v1/ItemGroupEvents.modifyEntriesEvent:(Lnet/minecraft/class_5321;)Lnet/fabricmc/fabric/api/event/Event;
+      30: invokedynamic #115,  0            // InvokeDynamic #1:modifyEntries:()Lnet/fabricmc/fabric/api/itemgroup/v1/ItemGroupEvents$ModifyEntries;
+      35: invokevirtual #120                // Method net/fabricmc/fabric/api/event/Event.register:(Ljava/lang/Object;)V
+      38: invokestatic  #123                // Method registerNetworkReceivers:()V
+      41: invokestatic  #128                // Method ru/modelprops/client/ClientAnimationController.initialize:()V
+      44: aload_0
+      45: new           #130                // class net/minecraft/class_304
+      48: dup
+      49: ldc           #132                // String key.modelprops.debug
+      51: getstatic     #136                // Field net/minecraft/class_3675$class_307.field_1668:Lnet/minecraft/class_3675$class_307;
+      54: sipush        297
+      57: ldc           #138                // String category.modelprops
+      59: invokespecial #141                // Method net/minecraft/class_304."<init>":(Ljava/lang/String;Lnet/minecraft/class_3675$class_307;ILjava/lang/String;)V
+      62: invokestatic  #147                // Method net/fabricmc/fabric/api/client/keybinding/v1/KeyBindingHelper.registerKeyBinding:(Lnet/minecraft/class_304;)Lnet/minecraft/class_304;
+      65: putfield      #149                // Field debugKey:Lnet/minecraft/class_304;
+      68: aload_0
+      69: new           #130                // class net/minecraft/class_304
+      72: dup
+      73: ldc           #151                // String key.modelprops.upload
+      75: getstatic     #136                // Field net/minecraft/class_3675$class_307.field_1668:Lnet/minecraft/class_3675$class_307;
+      78: sipush        296
+      81: ldc           #138                // String category.modelprops
+      83: invokespecial #141                // Method net/minecraft/class_304."<init>":(Ljava/lang/String;Lnet/minecraft/class_3675$class_307;ILjava/lang/String;)V
+      86: invokestatic  #147                // Method net/fabricmc/fabric/api/client/keybinding/v1/KeyBindingHelper.registerKeyBinding:(Lnet/minecraft/class_304;)Lnet/minecraft/class_304;
+      89: putfield      #153                // Field uploadKey:Lnet/minecraft/class_304;
+      92: aload_0
+      93: new           #130                // class net/minecraft/class_304
+      96: dup
+      97: ldc           #155                // String key.modelprops.custom_action
+      99: getstatic     #136                // Field net/minecraft/class_3675$class_307.field_1668:Lnet/minecraft/class_3675$class_307;
+     102: sipush        295
+     105: ldc           #138                // String category.modelprops
+     107: invokespecial #141                // Method net/minecraft/class_304."<init>":(Ljava/lang/String;Lnet/minecraft/class_3675$class_307;ILjava/lang/String;)V
+     110: invokestatic  #147                // Method net/fabricmc/fabric/api/client/keybinding/v1/KeyBindingHelper.registerKeyBinding:(Lnet/minecraft/class_304;)Lnet/minecraft/class_304;
+     113: putfield      #157                // Field customActionKey:Lnet/minecraft/class_304;
+     116: getstatic     #161                // Field net/fabricmc/fabric/api/client/event/lifecycle/v1/ClientTickEvents.END_CLIENT_TICK:Lnet/fabricmc/fabric/api/event/Event;
+     119: aload_0
+     120: invokedynamic #171,  0            // InvokeDynamic #2:onEndTick:(Lru/modelprops/client/ModelPropsClient;)Lnet/fabricmc/fabric/api/client/event/lifecycle/v1/ClientTickEvents$EndTick;
+     125: invokevirtual #120                // Method net/fabricmc/fabric/api/event/Event.register:(Ljava/lang/Object;)V
+     128: getstatic     #174                // Field net/fabricmc/fabric/api/client/networking/v1/ClientPlayConnectionEvents.DISCONNECT:Lnet/fabricmc/fabric/api/event/Event;
+     131: invokedynamic #184,  0            // InvokeDynamic #3:onPlayDisconnect:()Lnet/fabricmc/fabric/api/client/networking/v1/ClientPlayConnectionEvents$Disconnect;
+     136: invokevirtual #120                // Method net/fabricmc/fabric/api/event/Event.register:(Ljava/lang/Object;)V
+     139: return
+
+  private static void registerNetworkReceivers();
+    Code:
+       0: getstatic     #190                // Field ru/modelprops/net/ModelPropsNetworking.SYNC_BEGIN:Lnet/minecraft/class_2960;
+       3: invokedynamic #200,  0            // InvokeDynamic #4:receive:()Lnet/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking$PlayChannelHandler;
+       8: invokestatic  #204                // Method net/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking.registerGlobalReceiver:(Lnet/minecraft/class_2960;Lnet/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking$PlayChannelHandler;)Z
+      11: pop
+      12: getstatic     #207                // Field ru/modelprops/net/ModelPropsNetworking.SYNC_MODEL:Lnet/minecraft/class_2960;
+      15: invokedynamic #212,  0            // InvokeDynamic #5:receive:()Lnet/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking$PlayChannelHandler;
+      20: invokestatic  #204                // Method net/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking.registerGlobalReceiver:(Lnet/minecraft/class_2960;Lnet/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking$PlayChannelHandler;)Z
+      23: pop
+      24: getstatic     #215                // Field ru/modelprops/net/ModelPropsNetworking.TEXTURE_BEGIN:Lnet/minecraft/class_2960;
+      27: invokedynamic #220,  0            // InvokeDynamic #6:receive:()Lnet/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking$PlayChannelHandler;
+      32: invokestatic  #204                // Method net/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking.registerGlobalReceiver:(Lnet/minecraft/class_2960;Lnet/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking$PlayChannelHandler;)Z
+      35: pop
+      36: getstatic     #223                // Field ru/modelprops/net/ModelPropsNetworking.TEXTURE_CHUNK:Lnet/minecraft/class_2960;
+      39: invokedynamic #228,  0            // InvokeDynamic #7:receive:()Lnet/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking$PlayChannelHandler;
+      44: invokestatic  #204                // Method net/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking.registerGlobalReceiver:(Lnet/minecraft/class_2960;Lnet/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking$PlayChannelHandler;)Z
+      47: pop
+      48: getstatic     #231                // Field ru/modelprops/net/ModelPropsNetworking.TEXTURE_END:Lnet/minecraft/class_2960;
+      51: invokedynamic #236,  0            // InvokeDynamic #8:receive:()Lnet/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking$PlayChannelHandler;
+      56: invokestatic  #204                // Method net/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking.registerGlobalReceiver:(Lnet/minecraft/class_2960;Lnet/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking$PlayChannelHandler;)Z
+      59: pop
+      60: getstatic     #241                // Field ru/modelprops/net/ModelPropsAssetProtocol.ANIMATION_BEGIN:Lnet/minecraft/class_2960;
+      63: invokedynamic #246,  0            // InvokeDynamic #9:receive:()Lnet/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking$PlayChannelHandler;
+      68: invokestatic  #204                // Method net/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking.registerGlobalReceiver:(Lnet/minecraft/class_2960;Lnet/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking$PlayChannelHandler;)Z
+      71: pop
+      72: getstatic     #249                // Field ru/modelprops/net/ModelPropsAssetProtocol.ANIMATION_CHUNK:Lnet/minecraft/class_2960;
+      75: invokedynamic #254,  0            // InvokeDynamic #10:receive:()Lnet/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking$PlayChannelHandler;
+      80: invokestatic  #204                // Method net/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking.registerGlobalReceiver:(Lnet/minecraft/class_2960;Lnet/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking$PlayChannelHandler;)Z
+      83: pop
+      84: getstatic     #257                // Field ru/modelprops/net/ModelPropsAssetProtocol.ANIMATION_END:Lnet/minecraft/class_2960;
+      87: invokedynamic #262,  0            // InvokeDynamic #11:receive:()Lnet/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking$PlayChannelHandler;
+      92: invokestatic  #204                // Method net/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking.registerGlobalReceiver:(Lnet/minecraft/class_2960;Lnet/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking$PlayChannelHandler;)Z
+      95: pop
+      96: getstatic     #265                // Field ru/modelprops/net/ModelPropsAssetProtocol.SOUND_BEGIN:Lnet/minecraft/class_2960;
+      99: invokedynamic #270,  0            // InvokeDynamic #12:receive:()Lnet/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking$PlayChannelHandler;
+     104: invokestatic  #204                // Method net/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking.registerGlobalReceiver:(Lnet/minecraft/class_2960;Lnet/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking$PlayChannelHandler;)Z
+     107: pop
+     108: getstatic     #273                // Field ru/modelprops/net/ModelPropsAssetProtocol.SOUND_CHUNK:Lnet/minecraft/class_2960;
+     111: invokedynamic #278,  0            // InvokeDynamic #13:receive:()Lnet/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking$PlayChannelHandler;
+     116: invokestatic  #204                // Method net/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking.registerGlobalReceiver:(Lnet/minecraft/class_2960;Lnet/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking$PlayChannelHandler;)Z
+     119: pop
+     120: getstatic     #281                // Field ru/modelprops/net/ModelPropsAssetProtocol.SOUND_END:Lnet/minecraft/class_2960;
+     123: invokedynamic #286,  0            // InvokeDynamic #14:receive:()Lnet/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking$PlayChannelHandler;
+     128: invokestatic  #204                // Method net/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking.registerGlobalReceiver:(Lnet/minecraft/class_2960;Lnet/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking$PlayChannelHandler;)Z
+     131: pop
+     132: getstatic     #289                // Field ru/modelprops/net/ModelPropsAssetProtocol.SOUND_V2_BEGIN:Lnet/minecraft/class_2960;
+     135: invokedynamic #294,  0            // InvokeDynamic #15:receive:()Lnet/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking$PlayChannelHandler;
+     140: invokestatic  #204                // Method net/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking.registerGlobalReceiver:(Lnet/minecraft/class_2960;Lnet/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking$PlayChannelHandler;)Z
+     143: pop
+     144: getstatic     #297                // Field ru/modelprops/net/ModelPropsAssetProtocol.SOUND_V2_CHUNK:Lnet/minecraft/class_2960;
+     147: invokedynamic #302,  0            // InvokeDynamic #16:receive:()Lnet/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking$PlayChannelHandler;
+     152: invokestatic  #204                // Method net/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking.registerGlobalReceiver:(Lnet/minecraft/class_2960;Lnet/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking$PlayChannelHandler;)Z
+     155: pop
+     156: getstatic     #305                // Field ru/modelprops/net/ModelPropsAssetProtocol.SOUND_V2_END:Lnet/minecraft/class_2960;
+     159: invokedynamic #310,  0            // InvokeDynamic #17:receive:()Lnet/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking$PlayChannelHandler;
+     164: invokestatic  #204                // Method net/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking.registerGlobalReceiver:(Lnet/minecraft/class_2960;Lnet/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking$PlayChannelHandler;)Z
+     167: pop
+     168: getstatic     #313                // Field ru/modelprops/net/ModelPropsNetworking.SYNC_TRANSFORM:Lnet/minecraft/class_2960;
+     171: invokedynamic #318,  0            // InvokeDynamic #18:receive:()Lnet/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking$PlayChannelHandler;
+     176: invokestatic  #204                // Method net/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking.registerGlobalReceiver:(Lnet/minecraft/class_2960;Lnet/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking$PlayChannelHandler;)Z
+     179: pop
+     180: getstatic     #321                // Field ru/modelprops/net/ModelPropsNetworking.SYNC_END:Lnet/minecraft/class_2960;
+     183: invokedynamic #326,  0            // InvokeDynamic #19:receive:()Lnet/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking$PlayChannelHandler;
+     188: invokestatic  #204                // Method net/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking.registerGlobalReceiver:(Lnet/minecraft/class_2960;Lnet/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking$PlayChannelHandler;)Z
+     191: pop
+     192: getstatic     #329                // Field ru/modelprops/net/ModelPropsNetworking.SERVER_MESSAGE:Lnet/minecraft/class_2960;
+     195: invokedynamic #334,  0            // InvokeDynamic #20:receive:()Lnet/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking$PlayChannelHandler;
+     200: invokestatic  #204                // Method net/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking.registerGlobalReceiver:(Lnet/minecraft/class_2960;Lnet/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking$PlayChannelHandler;)Z
+     203: pop
+     204: getstatic     #337                // Field ru/modelprops/net/ModelPropsNetworking.UPLOAD_STATUS:Lnet/minecraft/class_2960;
+     207: invokedynamic #342,  0            // InvokeDynamic #21:receive:()Lnet/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking$PlayChannelHandler;
+     212: invokestatic  #204                // Method net/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking.registerGlobalReceiver:(Lnet/minecraft/class_2960;Lnet/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking$PlayChannelHandler;)Z
+     215: pop
+     216: getstatic     #347                // Field ru/modelprops/net/ModelActionNetworking.ACTION_PLAY:Lnet/minecraft/class_2960;
+     219: invokedynamic #352,  0            // InvokeDynamic #22:receive:()Lnet/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking$PlayChannelHandler;
+     224: invokestatic  #204                // Method net/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking.registerGlobalReceiver:(Lnet/minecraft/class_2960;Lnet/fabricmc/fabric/api/client/networking/v1/ClientPlayNetworking$PlayChannelHandler;)Z
+     227: pop
+     228: return
+
+  private static void lambda$registerNetworkReceivers$40(net.minecraft.class_310, net.minecraft.class_634, net.minecraft.class_2540, net.fabricmc.fabric.api.networking.v1.PacketSender);
+    Code:
+       0: aload_2
+       1: invokevirtual #358                // Method net/minecraft/class_2540.method_10816:()I
+       4: istore        4
+       6: aload_2
+       7: invokevirtual #362                // Method net/minecraft/class_2540.readByte:()B
+      10: iconst_1
+      11: if_icmpne     20
+      14: getstatic     #368                // Field net/minecraft/class_1268.field_5810:Lnet/minecraft/class_1268;
+      17: goto          23
+      20: getstatic     #371                // Field net/minecraft/class_1268.field_5808:Lnet/minecraft/class_1268;
+      23: astore        5
+      25: aload_2
+      26: sipush        128
+      29: invokevirtual #375                // Method net/minecraft/class_2540.method_10800:(I)Ljava/lang/String;
+      32: astore        6
+      34: aload_2
+      35: bipush        16
+      37: invokevirtual #375                // Method net/minecraft/class_2540.method_10800:(I)Ljava/lang/String;
+      40: astore        7
+      42: aload_2
+      43: invokevirtual #379                // Method net/minecraft/class_2540.readLong:()J
+      46: lstore        8
+      48: aload_0
+      49: aload_0
+      50: iload         4
+      52: aload         5
+      54: aload         6
+      56: aload         7
+      58: lload         8
+      60: invokedynamic #389,  0            // InvokeDynamic #23:run:(Lnet/minecraft/class_310;ILnet/minecraft/class_1268;Ljava/lang/String;Ljava/lang/String;J)Ljava/lang/Runnable;
+      65: invokevirtual #395                // Method net/minecraft/class_310.execute:(Ljava/lang/Runnable;)V
+      68: return
+
+  private static void lambda$registerNetworkReceivers$39(net.minecraft.class_310, int, net.minecraft.class_1268, java.lang.String, java.lang.String, long);
+    Code:
+       0: aload_0
+       1: iload_1
+       2: aload_2
+       3: aload_3
+       4: aload         4
+       6: lload         5
+       8: invokestatic  #398                // Method ru/modelprops/client/ClientAnimationController.play:(Lnet/minecraft/class_310;ILnet/minecraft/class_1268;Ljava/lang/String;Ljava/lang/String;J)V
+      11: return
+
+  private static void lambda$registerNetworkReceivers$38(net.minecraft.class_310, net.minecraft.class_634, net.minecraft.class_2540, net.fabricmc.fabric.api.networking.v1.PacketSender);
+    Code:
+       0: aload_2
+       1: invokevirtual #402                // Method net/minecraft/class_2540.method_10790:()Ljava/util/UUID;
+       4: astore        4
+       6: aload_2
+       7: invokevirtual #362                // Method net/minecraft/class_2540.readByte:()B
+      10: istore        5
+      12: aload_2
+      13: sipush        128
+      16: invokevirtual #375                // Method net/minecraft/class_2540.method_10800:(I)Ljava/lang/String;
+      19: astore        6
+      21: aload_2
+      22: sipush        512
+      25: invokevirtual #375                // Method net/minecraft/class_2540.method_10800:(I)Ljava/lang/String;
+      28: astore        7
+      30: aload_0
+      31: aload_0
+      32: aload         4
+      34: iload         5
+      36: aload         6
+      38: aload         7
+      40: invokedynamic #410,  0            // InvokeDynamic #24:run:(Lnet/minecraft/class_310;Ljava/util/UUID;BLjava/lang/String;Ljava/lang/String;)Ljava/lang/Runnable;
+      45: invokevirtual #395                // Method net/minecraft/class_310.execute:(Ljava/lang/Runnable;)V
+      48: return
+
+  private static void lambda$registerNetworkReceivers$37(net.minecraft.class_310, java.util.UUID, byte, java.lang.String, java.lang.String);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: iload_2
+       3: aload_3
+       4: aload         4
+       6: invokestatic  #415                // Method ru/modelprops/client/upload/ClientUploadManager.handleStatus:(Lnet/minecraft/class_310;Ljava/util/UUID;BLjava/lang/String;Ljava/lang/String;)V
+       9: return
+
+  private static void lambda$registerNetworkReceivers$36(net.minecraft.class_310, net.minecraft.class_634, net.minecraft.class_2540, net.fabricmc.fabric.api.networking.v1.PacketSender);
+    Code:
+       0: aload_2
+       1: sipush        512
+       4: invokevirtual #375                // Method net/minecraft/class_2540.method_10800:(I)Ljava/lang/String;
+       7: astore        4
+       9: aload_0
+      10: aload_0
+      11: aload         4
+      13: invokedynamic #423,  0            // InvokeDynamic #25:run:(Lnet/minecraft/class_310;Ljava/lang/String;)Ljava/lang/Runnable;
+      18: invokevirtual #395                // Method net/minecraft/class_310.execute:(Ljava/lang/Runnable;)V
+      21: return
+
+  private static void lambda$registerNetworkReceivers$35(net.minecraft.class_310, java.lang.String);
+    Code:
+       0: aload_0
+       1: getfield      #427                // Field net/minecraft/class_310.field_1724:Lnet/minecraft/class_746;
+       4: ifnull        19
+       7: aload_0
+       8: getfield      #427                // Field net/minecraft/class_310.field_1724:Lnet/minecraft/class_746;
+      11: aload_1
+      12: invokestatic  #433                // InterfaceMethod net/minecraft/class_2561.method_43470:(Ljava/lang/String;)Lnet/minecraft/class_5250;
+      15: iconst_0
+      16: invokevirtual #439                // Method net/minecraft/class_746.method_7353:(Lnet/minecraft/class_2561;Z)V
+      19: return
+
+  private static void lambda$registerNetworkReceivers$34(net.minecraft.class_310, net.minecraft.class_634, net.minecraft.class_2540, net.fabricmc.fabric.api.networking.v1.PacketSender);
+    Code:
+       0: aload_2
+       1: invokevirtual #358                // Method net/minecraft/class_2540.method_10816:()I
+       4: istore        4
+       6: aload_0
+       7: iload         4
+       9: invokedynamic #447,  0            // InvokeDynamic #26:run:(I)Ljava/lang/Runnable;
+      14: invokevirtual #395                // Method net/minecraft/class_310.execute:(Ljava/lang/Runnable;)V
+      17: return
+
+  private static void lambda$registerNetworkReceivers$33(int);
+    Code:
+       0: getstatic     #452                // Field ru/modelprops/client/ClientModelCatalog.INSTANCE:Lru/modelprops/client/ClientModelCatalog;
+       3: iload_0
+       4: invokevirtual #455                // Method ru/modelprops/client/ClientModelCatalog.finish:(I)V
+       7: return
+
+  private static void lambda$registerNetworkReceivers$32(net.minecraft.class_310, net.minecraft.class_634, net.minecraft.class_2540, net.fabricmc.fabric.api.networking.v1.PacketSender);
+    Code:
+       0: aload_2
+       1: sipush        128
+       4: invokevirtual #375                // Method net/minecraft/class_2540.method_10800:(I)Ljava/lang/String;
+       7: astore        4
+       9: aload_2
+      10: invokestatic  #459                // Method ru/modelprops/net/ModelPropsNetworking.readTransform:(Lnet/minecraft/class_2540;)Lru/modelprops/model/ModelTransform;
+      13: astore        5
+      15: aload_0
+      16: aload         4
+      18: aload         5
+      20: invokedynamic #467,  0            // InvokeDynamic #27:run:(Ljava/lang/String;Lru/modelprops/model/ModelTransform;)Ljava/lang/Runnable;
+      25: invokevirtual #395                // Method net/minecraft/class_310.execute:(Ljava/lang/Runnable;)V
+      28: return
+
+  private static void lambda$registerNetworkReceivers$31(java.lang.String, ru.modelprops.model.ModelTransform);
+    Code:
+       0: getstatic     #452                // Field ru/modelprops/client/ClientModelCatalog.INSTANCE:Lru/modelprops/client/ClientModelCatalog;
+       3: aload_0
+       4: aload_1
+       5: invokevirtual #470                // Method ru/modelprops/client/ClientModelCatalog.acceptTransform:(Ljava/lang/String;Lru/modelprops/model/ModelTransform;)V
+       8: return
+
+  private static void lambda$registerNetworkReceivers$30(net.minecraft.class_310, net.minecraft.class_634, net.minecraft.class_2540, net.fabricmc.fabric.api.networking.v1.PacketSender);
+    Code:
+       0: aload_2
+       1: invokevirtual #358                // Method net/minecraft/class_2540.method_10816:()I
+       4: istore        4
+       6: aload_2
+       7: sipush        128
+      10: invokevirtual #375                // Method net/minecraft/class_2540.method_10800:(I)Ljava/lang/String;
+      13: astore        5
+      15: aload_2
+      16: bipush        64
+      18: invokevirtual #375                // Method net/minecraft/class_2540.method_10800:(I)Ljava/lang/String;
+      21: astore        6
+      23: aload_0
+      24: iload         4
+      26: aload         5
+      28: aload         6
+      30: invokedynamic #478,  0            // InvokeDynamic #28:run:(ILjava/lang/String;Ljava/lang/String;)Ljava/lang/Runnable;
+      35: invokevirtual #395                // Method net/minecraft/class_310.execute:(Ljava/lang/Runnable;)V
+      38: return
+
+  private static void lambda$registerNetworkReceivers$29(int, java.lang.String, java.lang.String);
+    Code:
+       0: getstatic     #452                // Field ru/modelprops/client/ClientModelCatalog.INSTANCE:Lru/modelprops/client/ClientModelCatalog;
+       3: iload_0
+       4: aload_1
+       5: aload_2
+       6: invokevirtual #481                // Method ru/modelprops/client/ClientModelCatalog.endSound:(ILjava/lang/String;Ljava/lang/String;)V
+       9: return
+
+  private static void lambda$registerNetworkReceivers$28(net.minecraft.class_310, net.minecraft.class_634, net.minecraft.class_2540, net.fabricmc.fabric.api.networking.v1.PacketSender);
+    Code:
+       0: aload_2
+       1: invokevirtual #358                // Method net/minecraft/class_2540.method_10816:()I
+       4: istore        4
+       6: aload_2
+       7: sipush        128
+      10: invokevirtual #375                // Method net/minecraft/class_2540.method_10800:(I)Ljava/lang/String;
+      13: astore        5
+      15: aload_2
+      16: bipush        64
+      18: invokevirtual #375                // Method net/minecraft/class_2540.method_10800:(I)Ljava/lang/String;
+      21: astore        6
+      23: aload_2
+      24: invokevirtual #358                // Method net/minecraft/class_2540.method_10816:()I
+      27: istore        7
+      29: aload_2
+      30: sipush        24576
+      33: invokevirtual #485                // Method net/minecraft/class_2540.method_10803:(I)[B
+      36: astore        8
+      38: aload_0
+      39: iload         4
+      41: aload         5
+      43: aload         6
+      45: iload         7
+      47: aload         8
+      49: invokedynamic #493,  0            // InvokeDynamic #29:run:(ILjava/lang/String;Ljava/lang/String;I[B)Ljava/lang/Runnable;
+      54: invokevirtual #395                // Method net/minecraft/class_310.execute:(Ljava/lang/Runnable;)V
+      57: return
+
+  private static void lambda$registerNetworkReceivers$27(int, java.lang.String, java.lang.String, int, byte[]);
+    Code:
+       0: getstatic     #452                // Field ru/modelprops/client/ClientModelCatalog.INSTANCE:Lru/modelprops/client/ClientModelCatalog;
+       3: iload_0
+       4: aload_1
+       5: aload_2
+       6: iload_3
+       7: aload         4
+       9: invokevirtual #496                // Method ru/modelprops/client/ClientModelCatalog.acceptSoundChunk:(ILjava/lang/String;Ljava/lang/String;I[B)V
+      12: return
+
+  private static void lambda$registerNetworkReceivers$26(net.minecraft.class_310, net.minecraft.class_634, net.minecraft.class_2540, net.fabricmc.fabric.api.networking.v1.PacketSender);
+    Code:
+       0: aload_2
+       1: invokevirtual #358                // Method net/minecraft/class_2540.method_10816:()I
+       4: istore        4
+       6: aload_2
+       7: sipush        128
+      10: invokevirtual #375                // Method net/minecraft/class_2540.method_10800:(I)Ljava/lang/String;
+      13: astore        5
+      15: aload_2
+      16: bipush        64
+      18: invokevirtual #375                // Method net/minecraft/class_2540.method_10800:(I)Ljava/lang/String;
+      21: astore        6
+      23: aload_2
+      24: invokevirtual #358                // Method net/minecraft/class_2540.method_10816:()I
+      27: istore        7
+      29: aload_2
+      30: bipush        64
+      32: invokevirtual #375                // Method net/minecraft/class_2540.method_10800:(I)Ljava/lang/String;
+      35: astore        8
+      37: aload_0
+      38: iload         4
+      40: aload         5
+      42: aload         6
+      44: iload         7
+      46: aload         8
+      48: invokedynamic #504,  0            // InvokeDynamic #30:run:(ILjava/lang/String;Ljava/lang/String;ILjava/lang/String;)Ljava/lang/Runnable;
+      53: invokevirtual #395                // Method net/minecraft/class_310.execute:(Ljava/lang/Runnable;)V
+      56: return
+
+  private static void lambda$registerNetworkReceivers$25(int, java.lang.String, java.lang.String, int, java.lang.String);
+    Code:
+       0: getstatic     #452                // Field ru/modelprops/client/ClientModelCatalog.INSTANCE:Lru/modelprops/client/ClientModelCatalog;
+       3: iload_0
+       4: aload_1
+       5: aload_2
+       6: iload_3
+       7: aload         4
+       9: invokevirtual #507                // Method ru/modelprops/client/ClientModelCatalog.beginSound:(ILjava/lang/String;Ljava/lang/String;ILjava/lang/String;)V
+      12: return
+
+  private static void lambda$registerNetworkReceivers$24(net.minecraft.class_310, net.minecraft.class_634, net.minecraft.class_2540, net.fabricmc.fabric.api.networking.v1.PacketSender);
+    Code:
+       0: aload_2
+       1: invokevirtual #358                // Method net/minecraft/class_2540.method_10816:()I
+       4: istore        4
+       6: aload_2
+       7: sipush        128
+      10: invokevirtual #375                // Method net/minecraft/class_2540.method_10800:(I)Ljava/lang/String;
+      13: astore        5
+      15: aload_2
+      16: bipush        16
+      18: invokevirtual #375                // Method net/minecraft/class_2540.method_10800:(I)Ljava/lang/String;
+      21: astore        6
+      23: aload_0
+      24: iload         4
+      26: aload         5
+      28: aload         6
+      30: invokedynamic #512,  0            // InvokeDynamic #31:run:(ILjava/lang/String;Ljava/lang/String;)Ljava/lang/Runnable;
+      35: invokevirtual #395                // Method net/minecraft/class_310.execute:(Ljava/lang/Runnable;)V
+      38: return
+
+  private static void lambda$registerNetworkReceivers$23(int, java.lang.String, java.lang.String);
+    Code:
+       0: getstatic     #452                // Field ru/modelprops/client/ClientModelCatalog.INSTANCE:Lru/modelprops/client/ClientModelCatalog;
+       3: iload_0
+       4: aload_1
+       5: aload_2
+       6: invokevirtual #481                // Method ru/modelprops/client/ClientModelCatalog.endSound:(ILjava/lang/String;Ljava/lang/String;)V
+       9: return
+
+  private static void lambda$registerNetworkReceivers$22(net.minecraft.class_310, net.minecraft.class_634, net.minecraft.class_2540, net.fabricmc.fabric.api.networking.v1.PacketSender);
+    Code:
+       0: aload_2
+       1: invokevirtual #358                // Method net/minecraft/class_2540.method_10816:()I
+       4: istore        4
+       6: aload_2
+       7: sipush        128
+      10: invokevirtual #375                // Method net/minecraft/class_2540.method_10800:(I)Ljava/lang/String;
+      13: astore        5
+      15: aload_2
+      16: bipush        16
+      18: invokevirtual #375                // Method net/minecraft/class_2540.method_10800:(I)Ljava/lang/String;
+      21: astore        6
+      23: aload_2
+      24: invokevirtual #358                // Method net/minecraft/class_2540.method_10816:()I
+      27: istore        7
+      29: aload_2
+      30: sipush        24576
+      33: invokevirtual #485                // Method net/minecraft/class_2540.method_10803:(I)[B
+      36: astore        8
+      38: aload_0
+      39: iload         4
+      41: aload         5
+      43: aload         6
+      45: iload         7
+      47: aload         8
+      49: invokedynamic #517,  0            // InvokeDynamic #32:run:(ILjava/lang/String;Ljava/lang/String;I[B)Ljava/lang/Runnable;
+      54: invokevirtual #395                // Method net/minecraft/class_310.execute:(Ljava/lang/Runnable;)V
+      57: return
+
+  private static void lambda$registerNetworkReceivers$21(int, java.lang.String, java.lang.String, int, byte[]);
+    Code:
+       0: getstatic     #452                // Field ru/modelprops/client/ClientModelCatalog.INSTANCE:Lru/modelprops/client/ClientModelCatalog;
+       3: iload_0
+       4: aload_1
+       5: aload_2
+       6: iload_3
+       7: aload         4
+       9: invokevirtual #496                // Method ru/modelprops/client/ClientModelCatalog.acceptSoundChunk:(ILjava/lang/String;Ljava/lang/String;I[B)V
+      12: return
+
+  private static void lambda$registerNetworkReceivers$20(net.minecraft.class_310, net.minecraft.class_634, net.minecraft.class_2540, net.fabricmc.fabric.api.networking.v1.PacketSender);
+    Code:
+       0: aload_2
+       1: invokevirtual #358                // Method net/minecraft/class_2540.method_10816:()I
+       4: istore        4
+       6: aload_2
+       7: sipush        128
+      10: invokevirtual #375                // Method net/minecraft/class_2540.method_10800:(I)Ljava/lang/String;
+      13: astore        5
+      15: aload_2
+      16: bipush        16
+      18: invokevirtual #375                // Method net/minecraft/class_2540.method_10800:(I)Ljava/lang/String;
+      21: astore        6
+      23: aload_2
+      24: invokevirtual #358                // Method net/minecraft/class_2540.method_10816:()I
+      27: istore        7
+      29: aload_2
+      30: bipush        64
+      32: invokevirtual #375                // Method net/minecraft/class_2540.method_10800:(I)Ljava/lang/String;
+      35: astore        8
+      37: aload_0
+      38: iload         4
+      40: aload         5
+      42: aload         6
+      44: iload         7
+      46: aload         8
+      48: invokedynamic #522,  0            // InvokeDynamic #33:run:(ILjava/lang/String;Ljava/lang/String;ILjava/lang/String;)Ljava/lang/Runnable;
+      53: invokevirtual #395                // Method net/minecraft/class_310.execute:(Ljava/lang/Runnable;)V
+      56: return
+
+  private static void lambda$registerNetworkReceivers$19(int, java.lang.String, java.lang.String, int, java.lang.String);
+    Code:
+       0: getstatic     #452                // Field ru/modelprops/client/ClientModelCatalog.INSTANCE:Lru/modelprops/client/ClientModelCatalog;
+       3: iload_0
+       4: aload_1
+       5: aload_2
+       6: iload_3
+       7: aload         4
+       9: invokevirtual #507                // Method ru/modelprops/client/ClientModelCatalog.beginSound:(ILjava/lang/String;Ljava/lang/String;ILjava/lang/String;)V
+      12: return
+
+  private static void lambda$registerNetworkReceivers$18(net.minecraft.class_310, net.minecraft.class_634, net.minecraft.class_2540, net.fabricmc.fabric.api.networking.v1.PacketSender);
+    Code:
+       0: aload_2
+       1: invokevirtual #358                // Method net/minecraft/class_2540.method_10816:()I
+       4: istore        4
+       6: aload_2
+       7: sipush        128
+      10: invokevirtual #375                // Method net/minecraft/class_2540.method_10800:(I)Ljava/lang/String;
+      13: astore        5
+      15: aload_0
+      16: iload         4
+      18: aload         5
+      20: invokedynamic #530,  0            // InvokeDynamic #34:run:(ILjava/lang/String;)Ljava/lang/Runnable;
+      25: invokevirtual #395                // Method net/minecraft/class_310.execute:(Ljava/lang/Runnable;)V
+      28: return
+
+  private static void lambda$registerNetworkReceivers$17(int, java.lang.String);
+    Code:
+       0: getstatic     #452                // Field ru/modelprops/client/ClientModelCatalog.INSTANCE:Lru/modelprops/client/ClientModelCatalog;
+       3: iload_0
+       4: aload_1
+       5: invokevirtual #533                // Method ru/modelprops/client/ClientModelCatalog.endAnimation:(ILjava/lang/String;)V
+       8: return
+
+  private static void lambda$registerNetworkReceivers$16(net.minecraft.class_310, net.minecraft.class_634, net.minecraft.class_2540, net.fabricmc.fabric.api.networking.v1.PacketSender);
+    Code:
+       0: aload_2
+       1: invokevirtual #358                // Method net/minecraft/class_2540.method_10816:()I
+       4: istore        4
+       6: aload_2
+       7: sipush        128
+      10: invokevirtual #375                // Method net/minecraft/class_2540.method_10800:(I)Ljava/lang/String;
+      13: astore        5
+      15: aload_2
+      16: invokevirtual #358                // Method net/minecraft/class_2540.method_10816:()I
+      19: istore        6
+      21: aload_2
+      22: sipush        24576
+      25: invokevirtual #485                // Method net/minecraft/class_2540.method_10803:(I)[B
+      28: astore        7
+      30: aload_0
+      31: iload         4
+      33: aload         5
+      35: iload         6
+      37: aload         7
+      39: invokedynamic #541,  0            // InvokeDynamic #35:run:(ILjava/lang/String;I[B)Ljava/lang/Runnable;
+      44: invokevirtual #395                // Method net/minecraft/class_310.execute:(Ljava/lang/Runnable;)V
+      47: return
+
+  private static void lambda$registerNetworkReceivers$15(int, java.lang.String, int, byte[]);
+    Code:
+       0: getstatic     #452                // Field ru/modelprops/client/ClientModelCatalog.INSTANCE:Lru/modelprops/client/ClientModelCatalog;
+       3: iload_0
+       4: aload_1
+       5: iload_2
+       6: aload_3
+       7: invokevirtual #544                // Method ru/modelprops/client/ClientModelCatalog.acceptAnimationChunk:(ILjava/lang/String;I[B)V
+      10: return
+
+  private static void lambda$registerNetworkReceivers$14(net.minecraft.class_310, net.minecraft.class_634, net.minecraft.class_2540, net.fabricmc.fabric.api.networking.v1.PacketSender);
+    Code:
+       0: aload_2
+       1: invokevirtual #358                // Method net/minecraft/class_2540.method_10816:()I
+       4: istore        4
+       6: aload_2
+       7: sipush        128
+      10: invokevirtual #375                // Method net/minecraft/class_2540.method_10800:(I)Ljava/lang/String;
+      13: astore        5
+      15: aload_2
+      16: invokevirtual #358                // Method net/minecraft/class_2540.method_10816:()I
+      19: istore        6
+      21: aload_2
+      22: bipush        64
+      24: invokevirtual #375                // Method net/minecraft/class_2540.method_10800:(I)Ljava/lang/String;
+      27: astore        7
+      29: aload_0
+      30: iload         4
+      32: aload         5
+      34: iload         6
+      36: aload         7
+      38: invokedynamic #552,  0            // InvokeDynamic #36:run:(ILjava/lang/String;ILjava/lang/String;)Ljava/lang/Runnable;
+      43: invokevirtual #395                // Method net/minecraft/class_310.execute:(Ljava/lang/Runnable;)V
+      46: return
+
+  private static void lambda$registerNetworkReceivers$13(int, java.lang.String, int, java.lang.String);
+    Code:
+       0: getstatic     #452                // Field ru/modelprops/client/ClientModelCatalog.INSTANCE:Lru/modelprops/client/ClientModelCatalog;
+       3: iload_0
+       4: aload_1
+       5: iload_2
+       6: aload_3
+       7: invokevirtual #555                // Method ru/modelprops/client/ClientModelCatalog.beginAnimation:(ILjava/lang/String;ILjava/lang/String;)V
+      10: return
+
+  private static void lambda$registerNetworkReceivers$12(net.minecraft.class_310, net.minecraft.class_634, net.minecraft.class_2540, net.fabricmc.fabric.api.networking.v1.PacketSender);
+    Code:
+       0: aload_2
+       1: invokevirtual #358                // Method net/minecraft/class_2540.method_10816:()I
+       4: istore        4
+       6: aload_2
+       7: sipush        256
+      10: invokevirtual #375                // Method net/minecraft/class_2540.method_10800:(I)Ljava/lang/String;
+      13: astore        5
+      15: aload_0
+      16: iload         4
+      18: aload         5
+      20: invokedynamic #560,  0            // InvokeDynamic #37:run:(ILjava/lang/String;)Ljava/lang/Runnable;
+      25: invokevirtual #395                // Method net/minecraft/class_310.execute:(Ljava/lang/Runnable;)V
+      28: return
+
+  private static void lambda$registerNetworkReceivers$11(int, java.lang.String);
+    Code:
+       0: getstatic     #452                // Field ru/modelprops/client/ClientModelCatalog.INSTANCE:Lru/modelprops/client/ClientModelCatalog;
+       3: iload_0
+       4: aload_1
+       5: invokevirtual #563                // Method ru/modelprops/client/ClientModelCatalog.endTexture:(ILjava/lang/String;)V
+       8: return
+
+  private static void lambda$registerNetworkReceivers$10(net.minecraft.class_310, net.minecraft.class_634, net.minecraft.class_2540, net.fabricmc.fabric.api.networking.v1.PacketSender);
+    Code:
+       0: aload_2
+       1: invokevirtual #358                // Method net/minecraft/class_2540.method_10816:()I
+       4: istore        4
+       6: aload_2
+       7: sipush        256
+      10: invokevirtual #375                // Method net/minecraft/class_2540.method_10800:(I)Ljava/lang/String;
+      13: astore        5
+      15: aload_2
+      16: invokevirtual #358                // Method net/minecraft/class_2540.method_10816:()I
+      19: istore        6
+      21: aload_2
+      22: sipush        24576
+      25: invokevirtual #485                // Method net/minecraft/class_2540.method_10803:(I)[B
+      28: astore        7
+      30: aload_0
+      31: iload         4
+      33: aload         5
+      35: iload         6
+      37: aload         7
+      39: invokedynamic #568,  0            // InvokeDynamic #38:run:(ILjava/lang/String;I[B)Ljava/lang/Runnable;
+      44: invokevirtual #395                // Method net/minecraft/class_310.execute:(Ljava/lang/Runnable;)V
+      47: return
+
+  private static void lambda$registerNetworkReceivers$9(int, java.lang.String, int, byte[]);
+    Code:
+       0: getstatic     #452                // Field ru/modelprops/client/ClientModelCatalog.INSTANCE:Lru/modelprops/client/ClientModelCatalog;
+       3: iload_0
+       4: aload_1
+       5: iload_2
+       6: aload_3
+       7: invokevirtual #571                // Method ru/modelprops/client/ClientModelCatalog.acceptTextureChunk:(ILjava/lang/String;I[B)V
+      10: return
+
+  private static void lambda$registerNetworkReceivers$8(net.minecraft.class_310, net.minecraft.class_634, net.minecraft.class_2540, net.fabricmc.fabric.api.networking.v1.PacketSender);
+    Code:
+       0: aload_2
+       1: invokevirtual #358                // Method net/minecraft/class_2540.method_10816:()I
+       4: istore        4
+       6: aload_2
+       7: sipush        256
+      10: invokevirtual #375                // Method net/minecraft/class_2540.method_10800:(I)Ljava/lang/String;
+      13: astore        5
+      15: aload_2
+      16: invokevirtual #358                // Method net/minecraft/class_2540.method_10816:()I
+      19: istore        6
+      21: aload_2
+      22: bipush        64
+      24: invokevirtual #375                // Method net/minecraft/class_2540.method_10800:(I)Ljava/lang/String;
+      27: astore        7
+      29: aload_0
+      30: iload         4
+      32: aload         5
+      34: iload         6
+      36: aload         7
+      38: invokedynamic #576,  0            // InvokeDynamic #39:run:(ILjava/lang/String;ILjava/lang/String;)Ljava/lang/Runnable;
+      43: invokevirtual #395                // Method net/minecraft/class_310.execute:(Ljava/lang/Runnable;)V
+      46: return
+
+  private static void lambda$registerNetworkReceivers$7(int, java.lang.String, int, java.lang.String);
+    Code:
+       0: getstatic     #452                // Field ru/modelprops/client/ClientModelCatalog.INSTANCE:Lru/modelprops/client/ClientModelCatalog;
+       3: iload_0
+       4: aload_1
+       5: iload_2
+       6: aload_3
+       7: invokevirtual #579                // Method ru/modelprops/client/ClientModelCatalog.beginTexture:(ILjava/lang/String;ILjava/lang/String;)V
+      10: return
+
+  private static void lambda$registerNetworkReceivers$6(net.minecraft.class_310, net.minecraft.class_634, net.minecraft.class_2540, net.fabricmc.fabric.api.networking.v1.PacketSender);
+    Code:
+       0: aload_2
+       1: invokevirtual #358                // Method net/minecraft/class_2540.method_10816:()I
+       4: istore        4
+       6: aload_2
+       7: sipush        128
+      10: invokevirtual #375                // Method net/minecraft/class_2540.method_10800:(I)Ljava/lang/String;
+      13: astore        5
+      15: aload_2
+      16: sipush        128
+      19: invokevirtual #375                // Method net/minecraft/class_2540.method_10800:(I)Ljava/lang/String;
+      22: astore        6
+      24: aload_2
+      25: ldc_w         #580                // int 262144
+      28: invokevirtual #375                // Method net/minecraft/class_2540.method_10800:(I)Ljava/lang/String;
+      31: astore        7
+      33: aload_0
+      34: iload         4
+      36: aload         5
+      38: aload         6
+      40: aload         7
+      42: invokedynamic #588,  0            // InvokeDynamic #40:run:(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/Runnable;
+      47: invokevirtual #395                // Method net/minecraft/class_310.execute:(Ljava/lang/Runnable;)V
+      50: return
+
+  private static void lambda$registerNetworkReceivers$5(int, java.lang.String, java.lang.String, java.lang.String);
+    Code:
+       0: getstatic     #452                // Field ru/modelprops/client/ClientModelCatalog.INSTANCE:Lru/modelprops/client/ClientModelCatalog;
+       3: iload_0
+       4: aload_1
+       5: aload_2
+       6: aload_3
+       7: invokevirtual #591                // Method ru/modelprops/client/ClientModelCatalog.acceptModel:(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+      10: return
+
+  private static void lambda$registerNetworkReceivers$4(net.minecraft.class_310, net.minecraft.class_634, net.minecraft.class_2540, net.fabricmc.fabric.api.networking.v1.PacketSender);
+    Code:
+       0: aload_2
+       1: invokevirtual #358                // Method net/minecraft/class_2540.method_10816:()I
+       4: istore        4
+       6: aload_2
+       7: invokevirtual #358                // Method net/minecraft/class_2540.method_10816:()I
+      10: istore        5
+      12: aload_2
+      13: invokevirtual #595                // Method net/minecraft/class_2540.readBoolean:()Z
+      16: istore        6
+      18: aload_2
+      19: invokevirtual #358                // Method net/minecraft/class_2540.method_10816:()I
+      22: istore        7
+      24: aload_0
+      25: iload         4
+      27: aload_0
+      28: iload         5
+      30: iload         6
+      32: iload         7
+      34: invokedynamic #603,  0            // InvokeDynamic #41:run:(ILnet/minecraft/class_310;IZI)Ljava/lang/Runnable;
+      39: invokevirtual #395                // Method net/minecraft/class_310.execute:(Ljava/lang/Runnable;)V
+      42: return
+
+  private static void lambda$registerNetworkReceivers$3(int, net.minecraft.class_310, int, boolean, int);
+    Code:
+       0: iload_0
+       1: iconst_1
+       2: if_icmpeq     38
+       5: getstatic     #452                // Field ru/modelprops/client/ClientModelCatalog.INSTANCE:Lru/modelprops/client/ClientModelCatalog;
+       8: invokevirtual #606                // Method ru/modelprops/client/ClientModelCatalog.clear:()V
+      11: aload_1
+      12: getfield      #427                // Field net/minecraft/class_310.field_1724:Lnet/minecraft/class_746;
+      15: ifnull        48
+      18: aload_1
+      19: getfield      #427                // Field net/minecraft/class_310.field_1724:Lnet/minecraft/class_746;
+      22: iload_0
+      23: invokedynamic #617,  0            // InvokeDynamic #42:makeConcatWithConstants:(I)Ljava/lang/String;
+      28: invokestatic  #433                // InterfaceMethod net/minecraft/class_2561.method_43470:(Ljava/lang/String;)Lnet/minecraft/class_5250;
+      31: iconst_0
+      32: invokevirtual #439                // Method net/minecraft/class_746.method_7353:(Lnet/minecraft/class_2561;Z)V
+      35: goto          48
+      38: getstatic     #452                // Field ru/modelprops/client/ClientModelCatalog.INSTANCE:Lru/modelprops/client/ClientModelCatalog;
+      41: iload_2
+      42: iload_3
+      43: iload         4
+      45: invokevirtual #621                // Method ru/modelprops/client/ClientModelCatalog.begin:(IZI)V
+      48: return
+
+  private static void lambda$onInitializeClient$2(net.minecraft.class_634, net.minecraft.class_310);
+    Code:
+       0: getstatic     #452                // Field ru/modelprops/client/ClientModelCatalog.INSTANCE:Lru/modelprops/client/ClientModelCatalog;
+       3: invokevirtual #606                // Method ru/modelprops/client/ClientModelCatalog.clear:()V
+       6: invokestatic  #622                // Method ru/modelprops/client/ClientAnimationController.clear:()V
+       9: invokestatic  #625                // Method ru/modelprops/client/upload/ClientUploadManager.reset:()V
+      12: return
+
+  private void lambda$onInitializeClient$1(net.minecraft.class_310);
+    Code:
+       0: aload_1
+       1: invokestatic  #628                // Method ru/modelprops/client/upload/ClientUploadManager.tick:(Lnet/minecraft/class_310;)V
+       4: aload_1
+       5: invokestatic  #629                // Method ru/modelprops/client/ClientAnimationController.tick:(Lnet/minecraft/class_310;)V
+       8: aload_0
+       9: getfield      #153                // Field uploadKey:Lnet/minecraft/class_304;
+      12: invokevirtual #632                // Method net/minecraft/class_304.method_1436:()Z
+      15: ifeq          39
+      18: aload_1
+      19: getfield      #427                // Field net/minecraft/class_310.field_1724:Lnet/minecraft/class_746;
+      22: ifnull        8
+      25: aload_1
+      26: new           #634                // class ru/modelprops/client/ModelUploadScreen
+      29: dup
+      30: invokespecial #635                // Method ru/modelprops/client/ModelUploadScreen."<init>":()V
+      33: invokevirtual #639                // Method net/minecraft/class_310.method_1507:(Lnet/minecraft/class_437;)V
+      36: goto          8
+      39: aload_0
+      40: getfield      #149                // Field debugKey:Lnet/minecraft/class_304;
+      43: invokevirtual #632                // Method net/minecraft/class_304.method_1436:()Z
+      46: ifeq          173
+      49: aload_1
+      50: getfield      #427                // Field net/minecraft/class_310.field_1724:Lnet/minecraft/class_746;
+      53: ifnonnull     59
+      56: goto          39
+      59: aload_1
+      60: getfield      #427                // Field net/minecraft/class_310.field_1724:Lnet/minecraft/class_746;
+      63: invokevirtual #643                // Method net/minecraft/class_746.method_6047:()Lnet/minecraft/class_1799;
+      66: astore_2
+      67: aload_2
+      68: invokevirtual #649                // Method net/minecraft/class_1799.method_7909:()Lnet/minecraft/class_1792;
+      71: instanceof    #651                // class ru/modelprops/ModelPropItem
+      74: ifne          85
+      77: aload_1
+      78: getfield      #427                // Field net/minecraft/class_310.field_1724:Lnet/minecraft/class_746;
+      81: invokevirtual #654                // Method net/minecraft/class_746.method_6079:()Lnet/minecraft/class_1799;
+      84: astore_2
+      85: aload_2
+      86: invokevirtual #649                // Method net/minecraft/class_1799.method_7909:()Lnet/minecraft/class_1792;
+      89: instanceof    #651                // class ru/modelprops/ModelPropItem
+      92: ifeq          105
+      95: aload_2
+      96: invokestatic  #658                // Method ru/modelprops/ModelPropItem.getModelId:(Lnet/minecraft/class_1799;)Ljava/lang/String;
+      99: invokevirtual #663                // Method java/lang/String.isBlank:()Z
+     102: ifeq          122
+     105: aload_1
+     106: getfield      #427                // Field net/minecraft/class_310.field_1724:Lnet/minecraft/class_746;
+     109: ldc_w         #665                // String message.modelprops.hold_item
+     112: invokestatic  #668                // InterfaceMethod net/minecraft/class_2561.method_43471:(Ljava/lang/String;)Lnet/minecraft/class_5250;
+     115: iconst_1
+     116: invokevirtual #439                // Method net/minecraft/class_746.method_7353:(Lnet/minecraft/class_2561;Z)V
+     119: goto          170
+     122: getstatic     #452                // Field ru/modelprops/client/ClientModelCatalog.INSTANCE:Lru/modelprops/client/ClientModelCatalog;
+     125: aload_2
+     126: invokestatic  #658                // Method ru/modelprops/ModelPropItem.getModelId:(Lnet/minecraft/class_1799;)Ljava/lang/String;
+     129: invokevirtual #672                // Method ru/modelprops/client/ClientModelCatalog.get:(Ljava/lang/String;)Lru/modelprops/client/ClientModelEntry;
+     132: ifnonnull     158
+     135: aload_1
+     136: getfield      #427                // Field net/minecraft/class_310.field_1724:Lnet/minecraft/class_746;
+     139: aload_2
+     140: invokestatic  #658                // Method ru/modelprops/ModelPropItem.getModelId:(Lnet/minecraft/class_1799;)Ljava/lang/String;
+     143: invokedynamic #677,  0            // InvokeDynamic #43:makeConcatWithConstants:(Ljava/lang/String;)Ljava/lang/String;
+     148: invokestatic  #433                // InterfaceMethod net/minecraft/class_2561.method_43470:(Ljava/lang/String;)Lnet/minecraft/class_5250;
+     151: iconst_1
+     152: invokevirtual #439                // Method net/minecraft/class_746.method_7353:(Lnet/minecraft/class_2561;Z)V
+     155: goto          170
+     158: aload_1
+     159: new           #679                // class ru/modelprops/client/DebugTransformScreen
+     162: dup
+     163: aload_2
+     164: invokespecial #682                // Method ru/modelprops/client/DebugTransformScreen."<init>":(Lnet/minecraft/class_1799;)V
+     167: invokevirtual #639                // Method net/minecraft/class_310.method_1507:(Lnet/minecraft/class_437;)V
+     170: goto          39
+     173: aload_0
+     174: getfield      #157                // Field customActionKey:Lnet/minecraft/class_304;
+     177: invokevirtual #632                // Method net/minecraft/class_304.method_1436:()Z
+     180: ifeq          190
+     183: aload_1
+     184: invokestatic  #685                // Method ru/modelprops/client/ClientAnimationController.handleAnimationKey:(Lnet/minecraft/class_310;)V
+     187: goto          173
+     190: return
+
+  private static void lambda$onInitializeClient$0(net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries);
+    Code:
+       0: aload_0
+       1: astore_1
+       2: getstatic     #452                // Field ru/modelprops/client/ClientModelCatalog.INSTANCE:Lru/modelprops/client/ClientModelCatalog;
+       5: invokevirtual #689                // Method ru/modelprops/client/ClientModelCatalog.creativeStacks:()Ljava/util/List;
+       8: invokeinterface #695,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+      13: astore_2
+      14: aload_2
+      15: invokeinterface #700,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+      20: ifeq          43
+      23: aload_2
+      24: invokeinterface #704,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      29: checkcast     #645                // class net/minecraft/class_1799
+      32: astore_3
+      33: aload_1
+      34: aload_3
+      35: invokeinterface #707,  2          // InterfaceMethod net/minecraft/class_1761$class_7704.method_45420:(Lnet/minecraft/class_1799;)V
+      40: goto          14
+      43: return
+}

@@ -22,6 +22,11 @@ owned += [str(p.relative_to(P)).replace('\\','/') for p in (P/'tools').glob('*in
 for pattern in ('bloodborne_dw/composite/source_shutter*.json','assets/bloodborne_dw/models/interactions/*.json','assets/bloodborne_dw/models/block/source_shutter*.json','assets/bloodborne_dw/models/item/source_shutter*.json','assets/bloodborne_dw/blockstates/source_shutter*.json','assets/bloodborne_dw/textures/block/interactions/*.png'):
  owned += [str(p.relative_to(P)).replace('\\','/') for p in (P/'src/architecture/resources').glob(pattern)]
 paths=[]
+current=R/'CURRENT-INTERACTIONS-RU.md';shutil.copy2(D/('HANDOFF-RU.md' if (D/'acceptance.json').exists() else 'PROGRESS-LATEST.md'),current);paths.append(current.relative_to(R).as_posix())
+readme=R/'README.md'
+if readme.exists():
+ text=readme.read_text(encoding='utf-8')
+ if 'CURRENT-INTERACTIONS-RU.md' not in text:readme.write_text('Последние интерактивные исправления .7: [текущее состояние и восстановление](CURRENT-INTERACTIONS-RU.md).\n\n'+text,encoding='utf-8');paths.append('README.md')
 (D/'source-files.json').write_text(json.dumps(sorted(set(owned)),ensure_ascii=False,indent=2),encoding='utf-8')
 for rel in sorted(set(owned)):
  source=P/rel;assert source.is_file() and source.stat().st_size<99000000;target=R/'source-code'/rel;target.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(source,target);paths.append(target.relative_to(R).as_posix())

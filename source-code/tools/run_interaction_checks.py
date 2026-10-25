@@ -2,6 +2,8 @@ import hashlib,json,os,shutil,subprocess,sys,time,zipfile
 from pathlib import Path
 P=Path(__file__).resolve().parents[1];G=Path('C:/Users/vakir/AppData/Local/Limacina/project/DreamWalker');D=P/'interaction-evidence';role=sys.argv[1];attempt=sys.argv[2];out=D/(role+'-'+attempt);out.mkdir(parents=True,exist_ok=False);profile=P/'interaction-profiles'/(role+'-'+attempt);mods=profile/'mods';mods.mkdir(parents=True);version='0.1.0-v12.7.4-visual-physics.7'
 production=P/f'build-native-visual/libs/dreamwalker-bb-fabric-1.20.1-{version}.jar';qa=P/f'build-native-visual/libs/dreamwalker-restoration-qa-{version}.jar';assert production.is_file() and qa.is_file();assert json.loads((D/'build.json').read_text())['exitCode']==0
+if role=='apply':
+ preflight=json.loads((D/'real-apply-preflight.json').read_text());assert preflight['status']=='PASS' and preflight['productionSha256']==hashlib.sha256(production.read_bytes()).hexdigest()
 fullMap='--map' in sys.argv;sourceMods=Path('C:/Users/vakir/Desktop/server_mods') if role in ('preview','apply') else G/'mods'
 for f in sourceMods.glob('*.jar'):
  with zipfile.ZipFile(f) as z:mid=json.loads(z.read('fabric.mod.json')).get('id') if 'fabric.mod.json' in z.namelist() else ''
@@ -18,6 +20,7 @@ heap=os.environ.get('DW_INTERACTION_QA_HEAP','3584M' if client else '3G');args=[
 if apply:args+=['-Ddw.interaction.apply.plan='+str(D)]
 elif not client:args+=['-Ddw.interaction.qa.server=true']
 if fullMap:args+=['-Ddw.interaction.qa.map='+str(D/'preview-2/map-apply.json')]
+if '--resume' in sys.argv:args+=['-Ddw.interaction.qa.resume=true']
 if client:
  if fullMap:shutil.copytree(G/'config',profile/'config')
  else:(profile/'config').mkdir()
