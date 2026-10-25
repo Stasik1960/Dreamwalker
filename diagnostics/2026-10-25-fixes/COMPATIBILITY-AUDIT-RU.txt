@@ -1,0 +1,248 @@
+Аудит совместимости Dreamwalker BB — 25 октября 2026
+
+РЕЗУЛЬТАТ И ГРАНИЦЫ ПРОВЕРКИ
+
+Обнаружены пять дополнительных проблем на границах взаимодействия с другими
+модами и два риска, которым нужна интеграционная проверка. Они перечислены
+ниже отдельно от уже известного NPE в NativeVisualStackMigrationMixin.
+Подтверждение по коду означает прослеженный путь выполнения и проверенные
+предпосылки, а не воспроизведённый запуск конкретной сборки Minecraft.
+
+Проверена опубликованная версия 0.1.0-v12.7.4-visual-physics.1.
+Исходники рабочего проекта в checkout отсутствуют; использована существующая
+восстановленная диагностическая копия опубликованного source ZIP.
+SHA-256 ZIP: 8b166f107abf4f754104be4b35b53c7c3aca61c09c2de8f9e40c74b179099c51.
+По manifest архив относится к production JAR с SHA-256
+337ad3113ea02fd9e59b0646167d1ed51c769f048277e3a0858b4c89d2cfceb5.
+Сам production JAR в этом аудите не запускался и не проверялся побайтно.
+
+Инвентаризация учитывает production-source-excludes.txt и build.gradle:
+282 активных Java-файла, хеш каждого совпал с source manifest;
+78 подключённых mixin/accessor-классов в трёх конфигурациях.
+Детально просмотрены подключённые перехваты и связанный код NBT, визуальных
+данных, предметов, коллизий, выбора целей, WorldEdit и событий разрушения.
+Это статический аудит, не исчерпывающая матрица совместимости всех модов.
+Код мода, миры, установленные моды и Git-состояние не менялись.
+Новые файлы созданы только в каталоге этого аудита. E: не использовался.
+
+Обозначения путей ниже:
+A = ../2026-10-25-visual-diagnostics/recovered/source/src/architecture/java/
+    dev/dreamwalker/bloodbornedw/
+R = ../2026-10-25-visual-diagnostics/recovered/source/src/rp/java/
+    dev/dreamwalker/bloodbornerp/
+Номера строк относятся к восстановленным файлам этой опубликованной версии.
+
+ПОДТВЕРЖДЁННЫЕ ПО КОДУ ПРОБЛЕМЫ
+
+1. P1 — Разрушение внутри BEFORE обходит последующие проверки и AFTER.
+
+Файлы: A/composite/CompositeArchitecture.java:35
+       A/composite/NativeGridRuntime.java:20
+       A/composite/CompositeRuntime.java:201,244
+
+Наш listener PlayerBlockBreakEvents.BEFORE сразу удаляет составной объект,
+маркер либо whole native-grid и возвращает false. Fabric прекращает обход
+BEFORE на первом false, вызывает CANCELED и не вызывает AFTER.
+Если другой мод проверяет доступ в более позднем BEFORE listener, до этой
+проверки выполнение не дойдёт. Моды журналирования, наград или статистики,
+которые следят за AFTER, не увидят успешное пользовательское удаление.
+Проверки allowModifyWorld/world.canPlayerModifyAt у нас присутствуют, но они
+не заменяют отдельные обработчики событий стороннего мода.
+
+Условие: защита реализована через BEFORE и зарегистрирована после нашего
+listener; либо интеграция рассчитывает на стандартный AFTER. Конкретный
+мод приватов из присланного crash report не установлен и не обвиняется.
+При прямой интеграции сторонней защиты в canPlayerModifyAt её проверка
+может сработать независимо от описанного события.
+
+Исправление: разделить разрешение операции и её выполнение. Перед изменением
+всего footprint получить решения защиты по затронутым клеткам; выполнить
+изменение только после разрешения и согласовать событие успешного удаления.
+Простой перенос регистрации в конец не является надёжным общим решением.
+Нельзя повторно вызвать тот же BEFORE без защиты от рекурсии.
+
+2. P1 — WorldEdit не переносит визуальный ID новых native_physics-блоков.
+
+Файлы: A/compat/worldedit/WorldEditBridge.java:123,146
+       A/composite/NativeVisuals.java:40
+       A/composite/NativePhysicsBlock.java:41
+       A/composite/mixin/NativeVisualWorldChunkMixin.java:15
+
+Внешность обычного native_physics-блока хранится в отдельной таблице чанка
+DreamwalkerVisuals, а не в BlockState или BlockEntity. WorldEdit logicalRead
+сохраняет специальный snapshot для старых owners/RP/settings, но для обычного
+native_physics без них возвращает исходный BaseBlock. В snapshot нет чтения
+NativeVisuals, NativeVisualIndex или DreamwalkerVisuals. При стандартной
+записи блока reconcile назначает representative соответствующей physics-
+группы, а при совпадающем уже установленном состоянии может остаться
+визуальный ID назначения. Undo/redo также не располагает исходным ID.
+
+Проверка реальных данных релиза: 155103 обычных визуальных варианта используют
+25714 physics-групп. Для 129389 вариантов representative отличается от
+исходного индекса. Пример: visual 14 (mesh 14, source_bricks) и visual 9
+(mesh 9, source_andesite) имеют один physics ID 8 и одинаковый BlockState
+bloodborne_dw:native_physics_0[part=8]. При копировании одного BlockState
+невозможно восстановить, какой из этих вариантов был выбран.
+Это проверка данных и пути кода, не игровой прогон //copy / //paste.
+
+Исправление: включить NativeVisualIndex в логическое представление WorldEdit,
+переносить его в clipboard/history и записывать вместе с состоянием через
+подходящий атомарный путь NativeVisuals. Проверять paste поверх такого же
+physics-state, undo/redo, сохранение и загрузку schematic.
+Общий риск относится и к другим инструментам, копирующим только BlockState/BE;
+конкретные Litematica/Create/другие инструменты отдельно не тестировались.
+
+3. P1 — Чужой BlockView/BlockRenderView может вызвать аварийный выход.
+
+Файлы: A/composite/NativeVisuals.java:24,31
+       A/composite/NativePhysicsBlock.java:53
+       A/composite/NativeGridClient.java:278,291
+
+NativeVisuals.index распознаёт NativeVisualView, наш ProjectedBlockView,
+Chunk и World. Для другого допустимого BlockView возвращается -1;
+required сразу бросает IllegalStateException. getPickStack и рендеринг
+NativePhysicsBlock используют именно required.
+
+Условие: другой мод вызывает pick/render нашего блока с собственным
+временным миром, обёрткой или snapshot, который не реализует NativeVisualView.
+Ошибка следует непосредственно из кода. Не утверждается, что каждый мод
+с предпросмотром использует такой путь или что Jade из отчёта уже падает.
+
+Исправление: явный интерфейс переноса визуальных данных для snapshot и
+адаптеры нужных инструментов. Для сторонних неполных представлений нужен
+безопасный путь отображения/подбора с диагностикой вместо завершения клиента.
+При этом нельзя молча подменять реальные сохранённые данные мира:
+потерю visual ID в настоящем чанке следует отдельно диагностировать.
+
+4. P1 — Sodium 0.5.x без Indium допускается метаданными, но рендерер требует FRAPI.
+
+Файлы: A/composite/NativeGridClient.java:62,148
+       fabric.mod.json:20
+
+requireRenderer бросает IllegalStateException, если RendererAccess возвращает
+null. Этот путь вызывается при создании материалов во время baking моделей.
+У Sodium 0.5.13 отсутствует реализация FRAPI; Indigo отключается, нужен Indium.
+В depends/breaks нашего мода это условие не выражено и раннего понятного
+контроля комбинации нет. Набор Sodium + Fabric API без Indium может пройти
+проверку зависимостей и упасть уже на ресурсах.
+
+В присланной сборке Indium 1.0.36 есть: этот пункт НЕ причина её краша Statistics.
+Исправление: проверка условной зависимости Sodium 0.5.x -> совместимый Indium
+до baking, понятное сообщение и зафиксированная поддерживаемая комбинация.
+Не следует делать Indium обязательным для клиента без Sodium или сервера.
+
+5. P2 — Проверки дальности RP-объектов игнорируют модифицированный reach.
+
+Файлы: R/object/RpObjectSelection.java:15,35
+       A/composite/mixin/RpServerInteractionMixin.java:25
+       A/architecture/RpCreativeAttackReach.java:24
+       A/composite/mixin/RpReachAttributesCompatibilityMixin.java:27
+       A/composite/CompositeRuntime.java:326
+       A/composite/NativeGridBridge.java:81
+
+entityReach возвращает фиксированные 6 блоков для Creative и 3 для остальных.
+RpServerInteractionMixin и RpObjectEntity повторно проверяют цель этим лучом.
+ReachEntityAttributes adapter использует атрибутный предел только после
+editablePartHit, а этот метод уже ограничил луч шестью блоками. Для составной
+архитектуры и backgroundHit также есть фиксированные 5/4.5.
+
+Условие: мод/атрибут реально увеличивает дистанцию выбора и взаимодействия.
+Клиент сможет выбрать цель дальше нашего предела, но сервер отклонит действие
+с RP-объектом. ReachEntityAttributes 2.4.0 установлен в присланной сборке;
+наличие библиотеки само по себе не означает, что атрибут сейчас увеличен.
+Эффекты конкретных предметов Simply Swords и масштабов Pehkui не проверялись.
+
+Исправление: общий расчёт эффективной дистанции с учётом установленного API,
+типа действия, режима и масштаба; согласовать клиентский луч и серверную
+проверку. Сохранить проверки препятствий, прав и точной геометрии частей.
+
+ДОПОЛНИТЕЛЬНЫЕ РИСКИ, БЕЗ ПОДТВЕРЖДЁННОГО КОНФЛИКТА КОНКРЕТНОЙ СБОРКИ
+
+6. P2 — No-collide scope не закрывается при исключении чужого кода.
+Файлы: A/composite/mixin/NoCollideBlockItemMixin.java:18
+       A/architecture/NoCollidePlacement.java:81
+begin на HEAD увеличивает DEPTH, end существует только на RETURN. Если
+вызов place завершится исключением, end не выполнится; если внешний код
+перехватит исключение и продолжит работу на том же потоке, scope останется
+открытым, последующие проверки DW смогут ошибочно игнорировать блоки.
+Это условный сценарий автоматизации/перехвата ошибок, не найденный факт
+утечки в текущем игровом сеансе. В текущем коде есть безопасный helper
+NoCollidePlacement.place с finally, но глобальный mixin его не использует.
+Исправление: WrapMethod + try/finally либо эквивалентная обёртка; отдельно
+проверить отменяющие HEAD-inject другого мода и вложенные вызовы place.
+
+7. P2 — Жёсткая привязка optional mixin к внутренним API без контроля версии.
+Файлы: A/composite/mixin/NativeVisualSodiumSectionMixin.java:10
+       A/composite/NativeVisualSodiumSnapshot.java:17
+       A/composite/mixin/LithiumPaletteAllocationMixin.java:20
+       A/compat/worldedit/mixin/WorldEditMixinPlugin.java:12
+Конфигурации required=true/defaultRequire=1; используются конкретные
+конструкторы, внутренние имена, локальный slot 4, reflection getOrigin/getSections.
+@Pseudo позволяет отсутствие класса, но не гарантирует совместимость при
+изменении существующего класса. WorldEdit plugin проверяет только наличие
+мода, не API/версию. Есть и глобальные @Redirect в chunk publication,
+raycast и multipart baking; конфликтующая инъекция другого мода в то же место
+может сорвать применение mixin или выключить часть поведения.
+Не обнаружен и не заявляется уже воспроизведённый конфликт с Sodium 0.5.13,
+Lithium 0.11.4, Indium 1.0.36, GeckoLib 4.8.4 или WorldEdit конкретной версии.
+Исправление: обозначить проверенные диапазоны/адаптеры, диагностировать
+несовместимый API до загрузки мира. Для совместного оборачивания вызовов
+использовать цепочечные WrapOperation вместо эксклюзивных Redirect, где возможно.
+
+ИЗВЕСТНЫЙ NPE И ЧТО НЕ НАДО ИСПРАВЛЯТЬ ВСЛЕПУЮ
+
+NativeVisualStackMigrationMixin.java:13 не проверяет nullable tag в fromNbt.
+Этот обработчик глобальный: Farmer's Delight лишь проявил ошибку, аналогичный
+вызов ItemStack.fromNbt(null) из другого мода попадёт в то же место.
+Нужна ранняя проверка null с сохранением исходного контракта vanilla.
+Не найден второй независимый столь же прямой глобальный NPE на nullable NBT
+в подключённых обработчиках ItemStack. Canonical migration отсекает пустые
+и чужие типы предметов; найденные вызовы getNbt().copy() там защищены созданием
+NBT ранее в том же пути. Массовая замена getNbt на getOrCreateNbt не нужна.
+Нельзя отключать все render/shape mixin: они обеспечивают текущую геометрию
+и физику мода. Отсутствие нового crash log не доказывает совместимость.
+
+РЕКОМЕНДУЕМЫЙ ПОРЯДОК И ПРОВЕРКИ ПОСЛЕ ИСПРАВЛЕНИЙ
+
+1) Nullable NBT; изолированный регрессионный вызов fromNbt(null), Statistics
+   и рендер skillet с Farmer's Delight 1.20.1-2.5.7+refabricated.
+2) WorldEdit: visual 14 -> пустая клетка и клетка с visual 9 того же physics;
+   copy/paste, replace, undo, redo, schematic save/load, повторный вход.
+3) Защита/аудит: запрещающий BEFORE зарегистрирован до и после DW; убедиться,
+   что при запрете мир/дропы не меняются и весь footprint проверяется.
+   Проверить AFTER/CANCELED для успешного и запрещённого удаления.
+4) BlockView: временный view с состоянием нашего блока; pick/render с visual
+   attachment и без него; отсутствие падения при явно неполном preview.
+5) Три клиентских профиля: Fabric API без Sodium; Sodium 0.5.13 + Indium 1.0.36;
+   Sodium без Indium с ранним понятным отказом. Проверить dedicated server.
+6) ReachEntityAttributes 2.4.0: обычная и увеличенная дальность, Creative и
+   Survival, RP и составной блок, заслонение обычным блоком, клиент/сервер.
+7) Исключение внутри place с перехватом снаружи; после него DEPTH=0.
+   Проверить соседние mixin/cancel при наличии и отсутствии no-collide lease.
+
+ВЫПОЛНЕННАЯ ВЕРИФИКАЦИЯ
+
+inspect_release.py выполнен через Guard.ps1 -Mode Operation.
+Проверены хеш ZIP и 282 активных локальных исходников, списки mixin из релиза,
+исключения source set и реальные cellToPhysics/representatives каталога.
+Результаты: release-inspection.json и inspection.log.
+Сборка Gradle, Minecraft, GUI и полная модовая сборка не запускались.
+Имеющееся удалённое состояние файлов checkout не исправлялось и не сбрасывалось.
+
+ПЕРВИЧНЫЕ ВНЕШНИЕ ИСТОЧНИКИ
+
+Fabric API 1.20.1, PlayerBlockBreakEvents (порядок listeners, AFTER/CANCELED,
+контракт запрета изменения мира внутри Before):
+https://github.com/FabricMC/fabric/blob/1.20.1/fabric-events-interaction-v0/src/main/java/net/fabricmc/fabric/api/event/player/PlayerBlockBreakEvents.java
+
+ReachEntityAttributes 2.4.0 (getAttackRange/getReachDistance):
+https://github.com/JamiesWhiteShirt/reach-entity-attributes/blob/2.4.0/src/main/java/com/jamieswhiteshirt/reachentityattributes/ReachEntityAttributes.java
+
+Indium 1.0.36+mc1.20.1 (FRAPI и отключение Indigo при Sodium):
+https://github.com/comp500/Indium/blob/1.0.36%2Bmc1.20.1/README.md
+
+Mixin @Pseudo (опциональное наличие target, не обещание совместимости API):
+https://github.com/SpongePowered/Mixin/blob/master/src/main/java/org/spongepowered/asm/mixin/Pseudo.java
+
+MixinExtras WrapOperation (цепочечное взаимодействие нескольких модов):
+https://github.com/LlamaLad7/MixinExtras/wiki/WrapOperation

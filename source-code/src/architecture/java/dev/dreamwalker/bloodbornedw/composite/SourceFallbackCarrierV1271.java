@@ -114,4 +114,5 @@ public final class SourceFallbackCarrierV1271 extends Block implements NewStateS
     @Override public FluidState getFluidState(BlockState state){return source(state).getFluidState();}
     @Override public long getRenderingSeed(BlockState state,BlockPos pos){return source(state).getRenderingSeed(pos);}
     public static List<BlockState> sourceStates(){return SOURCES;}
+    @Override public net.minecraft.item.ItemStack getPickStack(BlockView world,BlockPos pos,BlockState state){return dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.item(source(state),new net.minecraft.nbt.NbtCompound());}
 }

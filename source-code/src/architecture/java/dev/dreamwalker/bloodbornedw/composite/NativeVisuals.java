@@ -29,6 +29,17 @@ public final class NativeVisuals {
         return -1;
     }
     public static int required(BlockView view,BlockPos pos){int value=index(view,pos);if(value<0)throw new IllegalStateException("Missing native visual index at "+pos+" in "+view.getClass().getName());return value;}
+    private static final java.util.Set<Class<?>> PREVIEW_WARNINGS=java.util.concurrent.ConcurrentHashMap.newKeySet();
+    /** Real chunks remain strict. A foreign preview containing only a state
+     * cannot encode its material, so use its physical representative without
+     * writing that fallback to a chunk or changing authoritative metadata. */
+    public static int forView(BlockView view,BlockPos pos,BlockState state){
+        int visual=index(view,pos);if(visual>=0)return visual;
+        if(view instanceof World||view instanceof Chunk||view instanceof NativeVisualView||view instanceof ProjectedBlockView)return required(view,pos);
+        if(!(state.getBlock() instanceof NativePhysicsBlock physical))throw new IllegalArgumentException("Not a native physical preview");
+        if(PREVIEW_WARNINGS.size()<32&&PREVIEW_WARNINGS.add(view.getClass()))org.slf4j.LoggerFactory.getLogger("DreamwalkerNativeVisual").warn("Preview {} supplies no NativeVisualView attachment; using a physical representative for display only",view.getClass().getName());
+        return NativeVisualLayout.representative(physical.physics(state));
+    }
     public static void stage(World world,BlockPos pos,int index){var chunk=world.getChunk(pos);data(chunk,data(chunk).with(pos,index));chunk.setNeedsSaving(true);}
     public static void publish(World world,BlockPos pos){
         if(!(world instanceof ServerWorld server))return;

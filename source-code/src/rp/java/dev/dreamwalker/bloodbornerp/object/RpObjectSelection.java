@@ -12,7 +12,7 @@ import net.minecraft.util.math.Vec3d;
 public final class RpObjectSelection {
     private RpObjectSelection() {}
     /** Server validation ceiling: Creative entity ray 6, other modes 3. Native client caps Creative selection below 5. */
-    public static double entityReach(PlayerEntity player){return player.isCreative()?6:3;}
+    public static double entityReach(PlayerEntity player){return dev.dreamwalker.bloodbornedw.architecture.InteractionReach.attack(player);}
     public static Optional<Vec3d> hit(RpObjectEntity object,Vec3d start,Vec3d end){
         Vec3d nearest=null;double distance=Double.POSITIVE_INFINITY;
         for(Box shape:object.interactionBoxes()){

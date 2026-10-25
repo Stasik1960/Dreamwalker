@@ -10,6 +10,7 @@ import org.spongepowered.asm.mixin.injection.*;
 public abstract class NativeVisualStackMigrationMixin {
     @ModifyVariable(method="fromNbt",at=@At("HEAD"),argsOnly=true)
     private static NbtCompound dw$oldVisualStack(NbtCompound tag){
+        if(tag==null)return null;
         String id=tag.getString("id"),prefix="bloodborne_dw:native_grid_";
         if(!id.startsWith(prefix))return tag;
         int bank,part=0;try{bank=Integer.parseInt(id.substring(prefix.length()));String p=tag.getCompound("tag").getCompound("BlockStateTag").getString("part");if(!p.isEmpty())part=Integer.parseInt(p);}catch(NumberFormatException malformed){return tag;}

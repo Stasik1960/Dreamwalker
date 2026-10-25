@@ -116,7 +116,7 @@ public final class WorldEditBridge {
         var entry=DebugCatalogue.entry(new Identifier(registry));return entry!=null&&entry.temporaryId().equals(wanted.temporaryId());
     }
     private static boolean nativeSettings(ServerWorld world,BlockPos p){
-        var state=world.getBlockState(p);if(!(ImportedCompactBlock.compact(state)||dev.dreamwalker.bloodbornedw.architecture.DwUtilityBlocks.marker(state)))return false;
+        var state=world.getBlockState(p);if(state.getBlock() instanceof NativePhysicsBlock)return true;if(!(ImportedCompactBlock.compact(state)||dev.dreamwalker.bloodbornedw.architecture.DwUtilityBlocks.marker(state)))return false;
         var target=new ToolTarget(ToolTarget.Kind.BLOCK,world.getRegistryKey().getValue().toString(),null,p.asLong(),Registries.BLOCK.getId(state.getBlock()).toString());
         return !dev.dreamwalker.bloodbornedw.tool.ToolCommands.view(world.getServer(),target).text().isBlank();
     }
@@ -132,6 +132,7 @@ public final class WorldEditBridge {
         List<MechanismLinks.TargetRef> refs=new ArrayList<>();owners.forEach(o->refs.add(CompositeMechanismBridge.reference(world,o)));entities.forEach(e->refs.add(MechanismLinks.TargetRef.rp(e)));List<ToolTarget> natives=new ArrayList<>();var state=world.getBlockState(p);
         if(ImportedCompactBlock.compact(state)||dev.dreamwalker.bloodbornedw.architecture.DwUtilityBlocks.marker(state)){natives.add(new ToolTarget(ToolTarget.Kind.BLOCK,world.getRegistryKey().getValue().toString(),null,p.asLong(),Registries.BLOCK.getId(state.getBlock()).toString()));result.put("NativeData",CompositeData.data(CompositeData.data(state,new NbtCompound())));}
         else if(Boolean.TRUE.equals(HISTORY_RP_REQUEST.get())&&owners.isEmpty()){NbtCompound nativeNbt=new NbtCompound();var be=world.getBlockEntity(p);if(be!=null)nativeNbt=be.createNbtWithIdentifyingData();result.put("NativeData",CompositeData.data(CompositeData.data(state,nativeNbt)));}
+        if(state.getBlock() instanceof NativePhysicsBlock){var visual=new NbtCompound();visual.putInt(NativeVisuals.ITEM_KEY,NativeVisuals.required(world,p));result.put("NativeData",CompositeData.data(CompositeData.data(state,visual)));}
         result.put("References",WorldEditReferenceSnapshot.capture(world.getServer(),refs,natives));
         Match selection=HISTORY_SELECTION.get();if(selection!=null&&selection.world==world&&selection.pos.equals(p)){NbtList keep=new NbtList();for(Owner owner:owners(world,p))if(!selection.owners.contains(owner))keep.add(NbtHelper.fromUuid(owner.instanceId()));for(RpObjectEntity entity:entities(world,p))if(!selection.entities.contains(entity.getUuid()))keep.add(NbtHelper.fromUuid(entity.getUuid()));result.put("Preserved",keep);}
         return result;

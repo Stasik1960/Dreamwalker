@@ -18,6 +18,14 @@ public class FabricCompositeWorld implements TransactionCore.WorldAccess {
     public final ServerWorld world;
     private final Map<Owner,ObjectInstance> incoming;
     private final Map<Cell,Original> originals=new TreeMap<>();
+    private final Set<Cell> explicitNativeVisualWrites=new HashSet<>();
+    /** Narrow WorldEdit authorization; normal composite transactions must not
+     * change unrelated foreign blocks. All desired indices are prevalidated. */
+    public void authorizeNativeVisualWrite(Cell cell,int index){
+        assertMutationThread();
+        if(!(NativeGridCatalog.state(index).getBlock() instanceof NativePhysicsBlock))throw new IllegalArgumentException("Not an ordinary native visual");
+        explicitNativeVisualWrites.add(cell);
+    }
     // The core's AIR describes the removed owner layer. A final bridge detach
     // physically exposes its original plain background, which is FOREIGN on
     // every ordinary read. Keep this projection only until this transaction's
@@ -120,6 +128,13 @@ public class FabricCompositeWorld implements TransactionCore.WorldAccess {
             else NativeGridBridge.validate(nativeGridBase,nextState);
         }
         if(next.kind()==Kind.FOREIGN){
+            if(explicitNativeVisualWrites.contains(cell)&&nextState.getBlock() instanceof NativePhysicsBlock){
+                var desired=CompositeData.nbt(next.data().blockEntityNbt());
+                if(!desired.contains(NativeVisuals.ITEM_KEY,3))throw new IllegalArgumentException("Missing explicit WorldEdit visual");
+                int visual=desired.getInt(NativeVisuals.ITEM_KEY);
+                if(!NativeGridCatalog.state(visual).equals(nextState))throw new IllegalArgumentException("WorldEdit visual/physics mismatch");
+                NativeVisuals.stage(world,pos,visual);world.setBlockState(pos,nextState,Block.FORCE_STATE|Block.SKIP_DROPS);
+            }
             // Foreign walls/inventories stay the same native block and native block entity.
             if(!world.getBlockState(pos).equals(nextState))return false;
             BlockEntity foreign=world.getBlockEntity(pos);NbtCompound actual=foreign==null?new NbtCompound():foreign.createNbt();

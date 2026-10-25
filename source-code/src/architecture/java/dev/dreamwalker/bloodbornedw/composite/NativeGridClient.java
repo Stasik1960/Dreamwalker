@@ -74,9 +74,9 @@ public final class NativeGridClient implements ClientModInitializer {
         Function<SpriteIdentifier,Sprite> textureGetter;
         Session() throws IOException {
             int count = NativeGridCatalog.quadCounts().size();
-            raw = new byte[count][];
-            baked = new SharedMesh[count];
-            layers = new RenderLayer[count];
+            raw = new byte[count+NativeVisualRepairs.groups().size()][];
+            baked = new SharedMesh[raw.length];
+            layers = new RenderLayer[raw.length];
             sprites = new Sprite[NativeGridCatalog.materials().size()];
             try (InputStream stream = NativeGridClient.class.getResourceAsStream(NativeGridCatalog.DIRECTORY + "meshes.bin")) {
                 if (stream == null) throw new FileNotFoundException("Missing compiled native grid meshes");
@@ -103,10 +103,17 @@ public final class NativeGridClient implements ClientModInitializer {
                     if (input.read() != -1) throw new IOException("Trailing compiled native grid mesh data");
                 }
             }
+            for(int i=0;i<NativeVisualRepairs.groups().size();i++){
+                var group=NativeVisualRepairs.groups().get(i);byte[] original=raw[group.originalMesh()],extra=group.extra();
+                byte[] combined=Arrays.copyOf(original,original.length+extra.length);System.arraycopy(extra,0,combined,original.length,extra.length);raw[count+i]=combined;
+                var metadata=java.nio.ByteBuffer.wrap(combined);String layer="solid";
+                for(int q=0;q<combined.length/139;q++){int material=metadata.getInt(q*139);if(material<0||material>=sprites.length)throw new IOException("Visual repair material bounds");layer=mergeLayer(layer,NativeGridCatalog.materials().get(material).layer());}
+                layers[count+i]=renderLayer(layer);
+            }
         }
         private RawQuad[] decode(int mesh){
             byte[] encoded=Objects.requireNonNull(raw[mesh]);var input=java.nio.ByteBuffer.wrap(encoded);
-            RawQuad[] result=new RawQuad[NativeGridCatalog.quadCounts().get(mesh)];
+            RawQuad[] result=new RawQuad[encoded.length/139];
             for(int q=0;q<result.length;q++){
                 int material=input.getInt(),cull=input.get(),face=input.get(),tint=input.getInt(),flags=Byte.toUnsignedInt(input.get());int[] data=new int[32];
                 for(int vertex=0;vertex<4;vertex++){int at=vertex*8;for(int field=0;field<5;field++){int bits=input.getInt();float value=Float.intBitsToFloat(bits);if(!Float.isFinite(value)||field<3&&(value< -1e-6F||value>1.000001F))throw new IllegalArgumentException("Native grid vertex bounds");data[at+(field<3?field:field+1)]=bits;}data[at+3]=input.getInt();data[at+6]=input.getInt();data[at+7]=input.getInt();}
@@ -114,7 +121,7 @@ public final class NativeGridClient implements ClientModInitializer {
             }
             return result;
         }
-        synchronized SharedMesh mesh(int visual){return bake(NativeGridCatalog.cell(visual).mesh(),Objects.requireNonNull(textureGetter,"Native atlas getter"));}
+        synchronized SharedMesh mesh(int visual){return bake(NativeVisualRepairs.mesh(visual),Objects.requireNonNull(textureGetter,"Native atlas getter"));}
         synchronized SharedMesh bake(int mesh, Function<SpriteIdentifier, Sprite> textureGetter) {
             if (baked[mesh] != null) return baked[mesh];
             RawQuad[] source = decode(mesh);
@@ -277,7 +284,7 @@ public final class NativeGridClient implements ClientModInitializer {
      * Other Fabric renderers can use PhysicalModel.emitBlockQuads instead. */
     public static BakedModel terrainModel(BlockRenderView world,BlockState state,BlockPos pos,BakedModel fallback){
         if(!(state.getBlock() instanceof NativePhysicsBlock physical))return fallback;
-        int visual=NativeVisuals.required(world,pos);if(NativeVisualLayout.physics(visual)!=physical.physics(state))throw new IllegalStateException("Native terrain snapshot mismatch at "+pos);
+        int visual=NativeVisuals.forView(world,pos,state);if(NativeVisualLayout.physics(visual)!=physical.physics(state))throw new IllegalStateException("Native terrain snapshot mismatch at "+pos);
         var current=session;var mesh=current.mesh(visual);var model=mesh.adapter;
         if(model==null)synchronized(mesh){model=mesh.adapter;if(model==null){var marker=fallback instanceof PhysicalModel p?p.marker:fallback;mesh.adapter=model=new Model(marker,current,visual,mesh,false);}}
         return model;
@@ -288,7 +295,7 @@ public final class NativeGridClient implements ClientModInitializer {
         @Override public boolean isVanillaAdapter(){return false;}
         @Override public List<BakedQuad> getQuads(BlockState state,Direction side,Random random){return List.of();}
         @Override public void emitBlockQuads(BlockRenderView world,BlockState state,BlockPos pos,Supplier<Random> random,RenderContext context){
-            int visual=NativeVisuals.required(world,pos);if(NativeVisualLayout.physics(visual)!=((NativePhysicsBlock)state.getBlock()).physics(state))throw new IllegalStateException("Native render physics/index mismatch at "+pos);
+            int visual=NativeVisuals.forView(world,pos,state);if(NativeVisualLayout.physics(visual)!=((NativePhysicsBlock)state.getBlock()).physics(state))throw new IllegalStateException("Native render physics/index mismatch at "+pos);
             var mesh=loading.mesh(visual);
             if(mesh.vanilla){BakedModel adapter=mesh.adapter;if(adapter==null){synchronized(mesh){adapter=mesh.adapter;if(adapter==null)mesh.adapter=adapter=new Model(marker,loading,visual,mesh,false);}}context.bakedModelConsumer().accept(adapter,state);return;}
             Mesh fixed=mesh.fixedMesh();if(fixed!=null)context.meshConsumer().accept(fixed);else emit(mesh,world,pos,context,false);

@@ -50,7 +50,7 @@ public final class NativePhysicsBlock extends Block implements NativeCellBlock,N
     @Override public boolean isShapeFullCube(BlockState s,BlockView w,BlockPos p){return cell(s).optics().opaqueFullCube();}
     @Override public FluidState getFluidState(BlockState s){return cell(s).fluid();}
     @Override public BlockState getStateForNeighborUpdate(BlockState s,Direction d,BlockState n,WorldAccess w,BlockPos p,BlockPos q){var f=cell(s).fluid();if(!f.isEmpty())w.scheduleFluidTick(p,f.getFluid(),f.getFluid().getTickRate(w));return s;}
-    @Override public ItemStack getPickStack(BlockView w,BlockPos p,BlockState s){return item(NativeVisuals.required(w,p));}
+    @Override public ItemStack getPickStack(BlockView w,BlockPos p,BlockState s){int visual=NativeVisuals.forView(w,p,s);return NativeVisualRepairs.visible(visual)?item(visual):ItemStack.EMPTY;}
     @Override public List<ItemStack> getDroppedStacks(BlockState s,LootContextParameterSet.Builder context){var p=BlockPos.ofFloored(context.get(LootContextParameters.ORIGIN));return List.of(item(NativeVisuals.dropIndex(context.getWorld(),p)));}
     @Override public ActionResult onUse(BlockState s,World w,BlockPos p,PlayerEntity player,Hand hand,BlockHitResult hit){
         int alt=NativeGridCatalog.cell(NativeVisuals.required(w,p)).alt();if(alt<0||!player.isSneaking()||!player.getStackInHand(hand).isEmpty())return ActionResult.PASS;

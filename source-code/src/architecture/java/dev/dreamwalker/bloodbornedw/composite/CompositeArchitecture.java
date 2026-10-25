@@ -32,7 +32,7 @@ public final class CompositeArchitecture {
         StaticArchitectureCatalog.initialize();
         StaticArchitectureRuntime.initialize();
         dev.dreamwalker.bloodbornedw.debug.UnifiedCreativeCatalogue.initialize();
-        PlayerBlockBreakEvents.BEFORE.register((world,player,pos,state,entity)->{if(dev.dreamwalker.bloodbornedw.architecture.DwUtilityBlocks.marker(state)){if(world instanceof ServerWorld server)dev.dreamwalker.bloodbornedw.architecture.DwUtilityBlocks.remove(server,pos,player);return false;}var owner=CompositeRuntime.target(world,pos,player);if(owner==null&&world instanceof ServerWorld server&&NativeGridBridge.breakBackground(server,pos,player))return false;if(owner==null)owner=CompositeRuntime.soleNativeOwner(world,pos);if(owner==null)return !(state.getBlock() instanceof CompositeRootBlock||state.isOf(CELL))||CompositeRuntime.contributions(world,pos).isEmpty();if(world instanceof ServerWorld server)CompositeRuntime.remove(server,owner,player,!player.getAbilities().creativeMode);return false;});
+        // NativePlayerBreakMixin keeps vanilla/Fabric permission and success events.
         UseBlockCallback.EVENT.register((player,world,hand,hit)->{if(world.getBlockState(hit.getBlockPos()).getBlock() instanceof CompositeRootBlock||world.getBlockState(hit.getBlockPos()).isOf(CELL))return ActionResult.PASS;return CompositeRuntime.use(world,hit.getBlockPos(),player);});
         ServerTickEvents.END_WORLD_TICK.register(CompositeRuntime::drain);
         ServerChunkEvents.CHUNK_LOAD.register(CompositeRuntime::chunkLoaded);

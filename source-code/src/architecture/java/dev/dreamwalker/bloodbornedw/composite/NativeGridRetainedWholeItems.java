@@ -72,13 +72,15 @@ public final class NativeGridRetainedWholeItems {
     public static ItemStack pick(World world, BlockPos pos, PlayerEntity player) {
         if (player == null || !world.isChunkLoaded(pos) || !(world.getBlockState(pos).getBlock() instanceof StaticArchitectureBlock)) return ItemStack.EMPTY;
         var component = world instanceof ServerWorld server ? StaticArchitectureRuntime.target(server, pos, player) : clientTarget(world, pos, player);
-        if (component == null || !allowed(component.pose()) || !world.isChunkLoaded(component.root()) || !StaticArchitectureCatalog.matchesRoot(world.getBlockState(component.root()), component.pose())) return ItemStack.EMPTY;
-        return item(component.pose());
+        if (component == null || !world.isChunkLoaded(component.root()) || !StaticArchitectureCatalog.matchesRoot(world.getBlockState(component.root()), component.pose())) return ItemStack.EMPTY;
+        // Picking identifies the authored object, not the internal carrier.
+        // The drop whitelist remains unchanged for survival destruction.
+        return encode(component.pose());
     }
     private static StaticArchitectureRuntime.Component clientTarget(World world, BlockPos pos, PlayerEntity player) {
         BlockState state = world.getBlockState(pos);
         var recipe = StaticArchitectureCatalog.recipe(state);
-        Vec3d start = player.getEyePos(), end = start.add(player.getRotationVec(1).multiply(8));
+        Vec3d start = player.getEyePos(), end = start.add(player.getRotationVec(1).multiply(dev.dreamwalker.bloodbornedw.architecture.InteractionReach.block(player)));
         StaticArchitectureRuntime.Component best = null;
         double distance = Double.POSITIVE_INFINITY;
         for (var fragment : recipe.fragments()) {

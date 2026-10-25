@@ -210,7 +210,7 @@ public final class CompositeRuntime {
             if(drop&&!item.isEmpty())Block.dropStack(world,CompositeData.pos(owner.root()),item);
         }return result;
     }
-    public static TransactionCore.Result execute(FabricCompositeWorld access,TransactionCore.Preparation preparation){CompositeShapeSnapshots.beginBatch(access.world);WRITING.set(WRITING.get()+1);try{var result=core().execute(access,preparation);LAST_RESULT.set(result);if(result.outcome()==TransactionCore.Outcome.COMMITTED&&preparation.accepted()){if(!preparation.plan().writes().isEmpty())CompositeLoadWork.changed(access.world);for(CellSnapshot next:preparation.plan().writes().values())if(next.resident()!=null&&ImportedAssemblyV126.participant(next.resident().registryId())){Owner owner=next.resident();queue(access.world,"v126-assembly-installed:"+owner.instanceId(),()->ImportedAssemblyV126.installed(access.world,owner));}}return result;}finally{WRITING.set(WRITING.get()-1);CompositeShapeSnapshots.endBatch(access.world);}}
+    public static TransactionCore.Result execute(FabricCompositeWorld access,TransactionCore.Preparation preparation){if(preparation.accepted()&&!NativePlayerBreak.allowCurrent(access.world,preparation.plan().writes().keySet()))return rejected("protected_break_footprint");CompositeShapeSnapshots.beginBatch(access.world);WRITING.set(WRITING.get()+1);try{var result=core().execute(access,preparation);LAST_RESULT.set(result);if(result.outcome()==TransactionCore.Outcome.COMMITTED&&preparation.accepted()){if(!preparation.plan().writes().isEmpty())CompositeLoadWork.changed(access.world);for(CellSnapshot next:preparation.plan().writes().values())if(next.resident()!=null&&ImportedAssemblyV126.participant(next.resident().registryId())){Owner owner=next.resident();queue(access.world,"v126-assembly-installed:"+owner.instanceId(),()->ImportedAssemblyV126.installed(access.world,owner));}}return result;}finally{WRITING.set(WRITING.get()-1);CompositeShapeSnapshots.endBatch(access.world);}}
     public static TransactionCore.Result lastResult(){return LAST_RESULT.get();}
 
     private static TransactionCore.Result rejected(String reason){var result=new TransactionCore.Result(TransactionCore.Outcome.REJECTED,0,reason);LAST_RESULT.set(result);return result;}
@@ -323,7 +323,7 @@ public final class CompositeRuntime {
         return targetsInternal(world,pos,player,true);
     }
     private static List<Owner> targetsInternal(World world,BlockPos pos,PlayerEntity player,boolean cleanup){
-        if(player==null||!world.isChunkLoaded(pos))return List.of();Vec3d eye=player.getEyePos(),end=eye.add(player.getRotationVec(1).multiply(player.isCreative()?5:4.5));
+        if(player==null||!world.isChunkLoaded(pos))return List.of();Vec3d eye=player.getEyePos(),end=eye.add(player.getRotationVec(1).multiply(dev.dreamwalker.bloodbornedw.architecture.InteractionReach.block(player)));
         record Hit(Owner owner,double distance){} List<Hit> hits=new ArrayList<>();
         for(var contribution:contributions(world,pos)){if(!validOrDeferred(world,contribution.owner(),cleanup))continue;var selected=contextSelection(world,contribution,pos,ShapeContext.of(player));var outline=ImportedPhysicalShapes.isImported(contribution.owner())?ImportedPhysicalShapes.exact(selected):shape(selected);var hit=outline.raycast(eye,end,pos);if(hit!=null)hits.add(new Hit(contribution.owner(),hit.getPos().squaredDistanceTo(eye)));}
         hits.sort(Comparator.comparingDouble(Hit::distance).thenComparing(Hit::owner));

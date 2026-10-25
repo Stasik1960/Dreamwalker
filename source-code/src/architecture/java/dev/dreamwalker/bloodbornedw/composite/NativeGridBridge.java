@@ -80,7 +80,7 @@ public final class NativeGridBridge {
     public static int opacity(int index) { return index < 0 ? 0 : NativeGridCatalog.cell(index).optics().opacity(); }
     public static boolean backgroundHit(BlockView view,BlockPos pos,PlayerEntity player){
         int index=base(view,pos);if(index<0||player==null)return false;
-        var eye=player.getEyePos();var end=eye.add(player.getRotationVec(1).multiply(player.isCreative()?5:4.5));
+        var eye=player.getEyePos();var end=eye.add(player.getRotationVec(1).multiply(dev.dreamwalker.bloodbornedw.architecture.InteractionReach.block(player)));
         return NativeGridCatalog.cell(index).outline().raycast(eye,end,pos)!=null;
     }
     /** The old owner picker already excludes an owner hidden by this base. */

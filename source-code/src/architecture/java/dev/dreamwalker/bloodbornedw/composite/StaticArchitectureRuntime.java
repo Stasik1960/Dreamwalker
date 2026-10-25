@@ -24,11 +24,6 @@ public final class StaticArchitectureRuntime {
     private StaticArchitectureRuntime(){}
     public static void initialize(){
         if(initialized)return;initialized=true;
-        PlayerBlockBreakEvents.BEFORE.register((world,player,pos,state,entity)->{
-            if(!(state.getBlock() instanceof StaticArchitectureBlock))return true;
-            if(world instanceof ServerWorld server)breakAt(server,pos,player);
-            return false;
-        });
         ServerTickEvents.END_WORLD_TICK.register(StaticArchitectureRuntime::drain);
         ServerChunkEvents.CHUNK_LOAD.register(StaticArchitectureRuntime::loadedChunk);
     }
@@ -36,7 +31,7 @@ public final class StaticArchitectureRuntime {
         WorldChunk loaded=world.getChunkManager().getWorldChunk(pos.getX()>>4,pos.getZ()>>4);if(loaded==null)return null;
         BlockState state=loaded.getBlockState(pos);if(!StaticArchitectureCatalog.contains(state))return null;
         var recipe=StaticArchitectureCatalog.recipe(state);Component best=null;double distance=Double.POSITIVE_INFINITY;
-        Vec3d start=player==null?null:player.getEyePos(),end=player==null?null:start.add(player.getRotationVec(1).multiply(8));
+        Vec3d start=player==null?null:player.getEyePos(),end=player==null?null:start.add(player.getRotationVec(1).multiply(dev.dreamwalker.bloodbornedw.architecture.InteractionReach.block(player)));
         for(int i=0;i<recipe.fragments().size();i++){
             var part=recipe.fragments().get(i);Cell origin=part.origin();BlockPos root=pos.add(origin.x(),origin.y(),origin.z());
             var boxes=part.pose().outline().getOrDefault(new Cell(-origin.x(),-origin.y(),-origin.z()),List.of());
@@ -54,6 +49,7 @@ public final class StaticArchitectureRuntime {
         TreeSet<Cell> touched=new TreeSet<>();Cell rootCell=CompositeData.cell(root);for(Cell relative:pose.footprint().keySet())touched.add(rootCell.add(relative));
         if(touched.size()>4096)return rejected("static_component_cell_budget");
         for(Cell cell:touched)if(world.getChunkManager().getWorldChunk(cell.x()>>4,cell.z()>>4)==null)return rejected("static_component_chunk_unloaded:"+cell);
+        if(!NativePlayerBreak.allowCurrent(world,touched))return rejected("protected_static_component");
         StaticArchitectureWorldAccess access=new StaticArchitectureWorldAccess(world,touched,false,0);
         TreeMap<Cell,CellSnapshot> expected=new TreeMap<>(),writes=new TreeMap<>();
         try{

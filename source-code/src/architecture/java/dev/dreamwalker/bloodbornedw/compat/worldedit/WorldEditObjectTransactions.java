@@ -25,6 +25,13 @@ public final class WorldEditObjectTransactions {
         }
         for(Owner owner:remove)world.getChunk(owner.root().x()>>4,owner.root().z()>>4);
         FabricCompositeWorld access=new FabricCompositeWorld(world,incoming);
+        for(var entry:nativeChanges.entrySet())if(CompositeData.state(entry.getValue()).getBlock() instanceof NativePhysicsBlock){
+            var payload=CompositeData.nbt(entry.getValue().blockEntityNbt());
+            if(!payload.contains(NativeVisuals.ITEM_KEY,net.minecraft.nbt.NbtElement.INT_TYPE))return new TransactionCore.Result(TransactionCore.Outcome.REJECTED,0,"WorldEdit clipboard is missing NativeVisualIndex");
+            int visual=payload.getInt(NativeVisuals.ITEM_KEY);
+            if(visual<0||visual>=NativeGridCatalog.cells().size()||NativeVisualLayout.physics(visual)<0||!NativeGridCatalog.state(visual).equals(CompositeData.state(entry.getValue())))return new TransactionCore.Result(TransactionCore.Outcome.REJECTED,0,"Invalid WorldEdit native visual/physics pair");
+            access.authorizeNativeVisualWrite(CompositeData.cell(entry.getKey()),visual);
+        }
         Map<Cell,CellSnapshot> expected=new TreeMap<>(),overlay=new TreeMap<>();
         TransactionCore.WorldAccess virtual=new TransactionCore.WorldAccess() {
             public void assertMutationThread(){access.assertMutationThread();}

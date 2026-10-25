@@ -17,11 +17,7 @@ public final class NativeGridRuntime {
     private NativeGridRuntime() {}
 
     public static void initialize() {
-        PlayerBlockBreakEvents.BEFORE.register((world, player, pos, state, entity) -> {
-            if (!(state.getBlock() instanceof NativeGridBlock block) || NativeGridCatalog.membership(block.cell(state).index()) == null) return true;
-            if (!world.isClient) breakWhole(world, pos, block.cell(state).index(), player, !player.getAbilities().creativeMode);
-            return false;
-        });
+        // Player removal runs after Fabric BEFORE in NativePlayerBreakMixin.
     }
     public static boolean writing() { return WRITING.get(); }
     private static boolean mayModify(World world, PlayerEntity player, BlockPos pos) {
@@ -95,6 +91,7 @@ public final class NativeGridRuntime {
             before.put(pos, current);
             after.put(pos, current.getFluidState().isEmpty() ? Blocks.AIR.getDefaultState() : current.getFluidState().getBlockState());
         }
+        if (world instanceof net.minecraft.server.world.ServerWorld server&&!NativePlayerBreak.allow(server,player,before.keySet()))return false;
         if (!write(world, before, after)) return false;
         if (drop && (player == null || !player.getAbilities().creativeMode)) Block.dropStack(world, base, item(membership.object().baseCell()));
         return true;
