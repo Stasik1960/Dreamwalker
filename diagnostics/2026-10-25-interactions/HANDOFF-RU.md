@@ -1,3 +1,5 @@
+Публикация подтверждена: https://github.com/Stasik1960/Dreamwalker/releases/tag/native-grid-city-interactions-20261026. completion.json — COMPLETE; все3 установки проверены.
+
 # Восстановление Dreamwalker visual-physics.7
 
 Все изменения кода и карты проверены и приняты. Production SHA256 `be12bdb812d405899389570d48264e193564aae4c7c36ab97d4b7882db5797ac`. Основная карта: `C:/Users/vakir/Desktop/bloodborne`. Проверки — acceptance.json; публикацию подтверждают final-release.json со статусом PUBLISHED и completion.json в GitHub diagnostics/2026-10-25-interactions. Этот архив исходников создан перед загрузкой релиза, поэтому сам receipt публикации смотрите в репозитории.

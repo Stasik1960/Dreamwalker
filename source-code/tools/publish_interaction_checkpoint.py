@@ -6,6 +6,10 @@ def git(*a):
  if r.returncode:raise RuntimeError('Git '+a[0]+': '+r.stderr[-1000:])
  return r.stdout.strip()
 assert not git('status','--porcelain'),'Do not overwrite another checkout change'
+if (D/'completion.json').exists():
+ release=json.loads((D/'final-release.json').read_text());tag=release['tag'];refs=git('ls-remote','--tags','origin','refs/tags/'+tag,'refs/tags/'+tag+'^{}').splitlines();assert refs
+ target=next((row.split()[0] for row in refs if row.split()[1].endswith('^{}')),refs[0].split()[0]);assert target==release['commit'],'Published source tag mismatch'
+ (D/'published-tag-verified.json').write_text(json.dumps({'status':'PASS','tag':tag,'sourceCommit':target},indent=2),encoding='utf-8')
 if git('branch','--show-current')!=branch:
  if git('branch','--list',branch):git('switch',branch)
  else:git('switch','-c',branch)
