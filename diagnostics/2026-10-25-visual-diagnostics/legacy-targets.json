@@ -1,0 +1,224 @@
+{
+  "balustrade": {
+    "recipe": {
+      "key": "r3e7f5d1a8ab40ef22883",
+      "collision": [
+        [
+          0.0,
+          0.0,
+          0.3125,
+          1.0,
+          1.0,
+          0.6875
+        ]
+      ],
+      "selection": [
+        [
+          0.0,
+          0.0,
+          0.3125,
+          1.0,
+          1.0,
+          0.6875
+        ]
+      ],
+      "opacity": 0,
+      "luminance": 0,
+      "resident": 0,
+      "fragments": [
+        {
+          "pose": "pfee03837eabca021f77c",
+          "origin": [
+            0,
+            0,
+            0
+          ],
+          "member": true
+        }
+      ],
+      "remove": [
+        -1
+      ]
+    },
+    "poses": {
+      "pfee03837eabca021f77c": {
+        "key": "pfee03837eabca021f77c",
+        "registryId": "bloodborne_dw:source_assembly_gray_stained_glass_pane",
+        "properties": {
+          "open": "false",
+          "profile": "base",
+          "rotation": "4",
+          "variant": "7"
+        },
+        "shift": [
+          0,
+          0,
+          0
+        ],
+        "mountY": 0.0,
+        "reviewedVisualBounds": [
+          [
+            -1e-05,
+            -1e-05,
+            0.3124899999999998
+          ],
+          [
+            1.00001,
+            1.93751,
+            0.6875100000000002
+          ]
+        ]
+      }
+    }
+  },
+  "lowerArchitecture": {
+    "recipe": {
+      "key": "r7592b4e33ed5560f70e0",
+      "collision": [
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      ],
+      "selection": [
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      ],
+      "opacity": 0,
+      "luminance": 0,
+      "resident": 0,
+      "fragments": [
+        {
+          "pose": "pc64bf6c73e536febb2c7",
+          "origin": [
+            0,
+            0,
+            0
+          ],
+          "member": true
+        }
+      ],
+      "remove": [
+        -1
+      ]
+    },
+    "poses": {
+      "pc64bf6c73e536febb2c7": {
+        "key": "pc64bf6c73e536febb2c7",
+        "registryId": "bloodborne_dw:source_assembly_jungle_fence",
+        "properties": {
+          "open": "false",
+          "profile": "base",
+          "rotation": "0",
+          "variant": "0"
+        },
+        "shift": [
+          0,
+          0,
+          0
+        ],
+        "mountY": 0.0,
+        "reviewedVisualBounds": [
+          [
+            -0.12501,
+            -1e-05,
+            -0.12501
+          ],
+          [
+            1.12501,
+            1.00001,
+            1.12501
+          ]
+        ]
+      }
+    }
+  },
+  "(31, 65, -692)": {
+    "pos": [
+      31,
+      65,
+      -692
+    ],
+    "state": {
+      "Name": "bloodborne_dw:source_assembly_brick_wall",
+      "Properties": {
+        "variant": "1",
+        "compact": "true",
+        "open": "false",
+        "rotation": "0",
+        "art_bank": "4",
+        "profile": "base"
+      }
+    },
+    "visual": null,
+    "SkyLight": 14,
+    "BlockLight": null,
+    "catalog": "c2f9e74e54c0298c68b0c8d765a1c595baed949b3d99e1a42d686535c55c07ff"
+  },
+  "(31, 65, -694)": {
+    "pos": [
+      31,
+      65,
+      -694
+    ],
+    "state": {
+      "Name": "bloodborne_dw:native_physics_113",
+      "Properties": {
+        "part": "91"
+      }
+    },
+    "visual": 66045,
+    "SkyLight": 15,
+    "BlockLight": null,
+    "catalog": "c2f9e74e54c0298c68b0c8d765a1c595baed949b3d99e1a42d686535c55c07ff",
+    "cell": {
+      "baseState": null,
+      "climbing": 0,
+      "collision": 5590,
+      "culling": 0,
+      "fluid": null,
+      "key": "5b1bf37c2eca0eb755bf3fff6a457ad860673824ec04c621466f18077dfc293b",
+      "localFunction": null,
+      "mesh": 62184,
+      "optics": 0,
+      "outline": 5590
+    }
+  },
+  "(31, 65, -697)": {
+    "pos": [
+      31,
+      65,
+      -697
+    ],
+    "state": {
+      "Name": "bloodborne_dw:source_fallback_carrier",
+      "Properties": {
+        "source": "113",
+        "source_bank": "0",
+        "profile": "base"
+      }
+    },
+    "visual": null,
+    "SkyLight": 0,
+    "BlockLight": null,
+    "catalog": "c2f9e74e54c0298c68b0c8d765a1c595baed949b3d99e1a42d686535c55c07ff"
+  },
+  "fallback113": {
+    "sourceState": "minecraft:cut_red_sandstone",
+    "applications": [
+      {
+        "model": "minecraft:block/bricks/wallbrick_2"
+      }
+    ]
+  }
+}
