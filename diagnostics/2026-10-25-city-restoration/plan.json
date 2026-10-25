@@ -1,42 +1,43 @@
 {
-  "status": "VERIFIED_AWAITING_FINAL_PUBLICATION",
+  "status": "COMPLETE",
   "inputWorld": "C:\\Users\\vakir\\Desktop\\bloodborne",
   "preserve": "All manual changes, v12, independent component blocks and previously approved whole objects",
   "stages": [
     {
       "id": 0,
       "task": "Freeze current world with SHA256 manifest, audit and checkpoint GitHub",
-      "status": "VERIFIED"
+      "status": "COMPLETE"
     },
     {
       "id": 1,
       "task": "Fix compact block removal and actual WorldEdit //set / undo / redo",
-      "status": "VERIFIED"
+      "status": "COMPLETE"
     },
     {
       "id": 2,
       "task": "Fix window rendering and v12/tree targeting; audit collision/selection bounds",
-      "status": "VERIFIED"
+      "status": "COMPLETE"
     },
     {
       "id": 3,
       "task": "Restore lantern impact sound and sway; add standalone lantern types",
-      "status": "VERIFIED"
+      "status": "COMPLETE"
     },
     {
       "id": 4,
       "task": "Assemble lamp posts bottom to top, separate paired lamps, replace only matched originals in user world",
-      "status": "VERIFIED"
+      "status": "COMPLETE"
     },
     {
       "id": 5,
       "task": "Remove proven empty unnecessary files and stop runtime regeneration",
-      "status": "VERIFIED"
+      "status": "COMPLETE"
     },
     {
       "id": 6,
       "task": "Targeted dedicated and client tests, save/reopen, install mod, publish map/full sources/evidence",
-      "status": "VERIFIED_AWAITING_FINAL_PUBLICATION"
+      "status": "COMPLETE"
     }
-  ]
+  ],
+  "release": "https://github.com/Stasik1960/Dreamwalker/releases/tag/native-grid-city-restoration-20261025"
 }
