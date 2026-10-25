@@ -7,7 +7,7 @@ def git(*args):
  return r.stdout.strip()
 assert not git('status','--porcelain'),'Review uncommitted publication state before retrying'
 git('fetch','--depth=1','origin',BR);git('switch','--detach','FETCH_HEAD')
-files=[p for d in ('src/architecture/java','src/rp/java','src/nativegridexport','src/nativegridqa') for p in (P/d).rglob('*') if p.is_file()]
+files=[p for d in ('src/architecture/java','src/rp/java','src/nativegridexport','src/nativegridqa','src/fixqa') for p in (P/d).rglob('*') if p.is_file()]
 files += [P/'build.gradle',P/'gradle.properties',P/'src/architecture/resources/native-grid.mixins.json']
 files += [P/'src/architecture/resources/bloodborne_dw.composite.mixins.json']
 files += list((P/'src/architecture/resources/assets/bloodborne_dw/models/item').glob('source_fallback*carrier.json'))

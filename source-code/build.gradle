@@ -24,6 +24,10 @@ dependencies {
  implementation 'com.eliotlash.mclib:mclib:20'
 }
 sourceSets {
+ fixqa {
+  compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
+  runtimeClasspath += sourceSets.main.output + sourceSets.main.runtimeClasspath
+ }
  nativegridqa {
   compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
   runtimeClasspath += sourceSets.main.output + sourceSets.main.runtimeClasspath
@@ -69,6 +73,8 @@ sourceSets {
  }
 }
 configurations {
+ fixqaImplementation.extendsFrom implementation
+ fixqaRuntimeOnly.extendsFrom runtimeOnly
  nativegridqaImplementation.extendsFrom implementation
  nativegridqaRuntimeOnly.extendsFrom runtimeOnly
  routeqaImplementation.extendsFrom implementation
@@ -81,6 +87,20 @@ configurations {
  gametestRuntimeOnly.extendsFrom runtimeOnly
  galleryImplementation.extendsFrom implementation
  galleryRuntimeOnly.extendsFrom runtimeOnly
+}
+tasks.register('fixQaJar', Jar) {
+ dependsOn fixqaClasses
+ from sourceSets.fixqa.output
+ archiveBaseName = 'dreamwalker-fix-qa'
+ archiveClassifier = 'dev'
+}
+tasks.register('remapFixQaJar', net.fabricmc.loom.task.RemapJarTask) {
+ dependsOn fixQaJar
+ inputFile.set(tasks.named('fixQaJar', Jar).flatMap { it.archiveFile })
+ classpath.from(sourceSets.fixqa.compileClasspath)
+ archiveBaseName = 'dreamwalker-fix-qa'
+ archiveClassifier = ''
+ addNestedDependencies = false
 }
 ['RouteQa':'routeqa', 'NativeGridRelight':'nativegridrelight', 'NativeGridQa':'nativegridqa'].each { label, sources ->
  tasks.register(label.uncapitalize() + 'Jar', Jar) {

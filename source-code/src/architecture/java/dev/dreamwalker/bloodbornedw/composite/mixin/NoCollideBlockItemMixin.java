@@ -16,7 +16,7 @@ public abstract class NoCollideBlockItemMixin {
     @WrapMethod(method="place(Lnet/minecraft/item/ItemPlacementContext;)Lnet/minecraft/util/ActionResult;")
     private ActionResult dreamwalker$scopedPlacement(ItemPlacementContext original,Operation<ActionResult> operation){
         ItemPlacementContext context=NoCollidePlacement.surfaceContext(original);
-        boolean lease=context.getHand()==net.minecraft.util.Hand.MAIN_HAND&&NoCollidePlacement.enter(context.getPlayer());
+        boolean lease=context.getHand()==net.minecraft.util.Hand.MAIN_HAND&&context.getPlayer()!=null&&context.getStack()==context.getPlayer().getMainHandStack()&&NoCollidePlacement.enter(context.getPlayer());
         boolean accepted=false;
         try{ActionResult result=operation.call(context);accepted=result.isAccepted();return result;}
         finally{NoCollidePlacement.exit(context.getPlayer(),lease,accepted);}

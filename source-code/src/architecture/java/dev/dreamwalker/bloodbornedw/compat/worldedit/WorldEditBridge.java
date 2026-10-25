@@ -160,7 +160,7 @@ public final class WorldEditBridge {
         if(!entities(world,p).isEmpty())return BlockTypes.BARRIER.getDefaultState();return nativeState;
     }
     private static String requestedRp(BaseBlock block){CompoundTag tag=block.getNbtData();return tag!=null&&tag.getValue().get(RP_REQUEST) instanceof StringTag value?value.getValue():null;}
-    private static CompoundTag tag(NbtCompound data){return new CompoundTag(Map.of(SNAPSHOT,new StringTag(Base64.getEncoder().encodeToString(CompositeData.bytes(data)))));}
+    private static CompoundTag tag(NbtCompound data){return new CompoundTag(Map.of("id",new StringTag("bloodborne_dw:worldedit_snapshot"),SNAPSHOT,new StringTag(Base64.getEncoder().encodeToString(CompositeData.bytes(data)))));}
     private static BaseBlock selection(BaseBlock block,Match match){var data=new NbtCompound();NbtList os=new NbtList(),es=new NbtList();match.owners.forEach(o->os.add(NbtHelper.fromUuid(o.instanceId())));match.entities.forEach(id->es.add(NbtHelper.fromUuid(id)));data.put("Owners",os);data.put("Entities",es);data.putBoolean("Native",match.nativeMatch);Map<String,com.sk89q.jnbt.Tag> values=new LinkedHashMap<>();if(block.getNbtData()!=null)values.putAll(block.getNbtData().getValue());values.put(SELECTION,new StringTag(Base64.getEncoder().encodeToString(CompositeData.bytes(data))));return block.toBaseBlock(new CompoundTag(values));}
     private static NbtCompound selection(BaseBlock block){var nbt=block.getNbtData();return nbt!=null&&nbt.getValue().get(SELECTION) instanceof StringTag text?CompositeData.nbt(Base64.getDecoder().decode(text.getValue())):null;}
     private static Set<UUID> uuids(NbtList list){Set<UUID> ids=new HashSet<>();list.forEach(raw->ids.add(NbtHelper.toUuid(raw)));return ids;}

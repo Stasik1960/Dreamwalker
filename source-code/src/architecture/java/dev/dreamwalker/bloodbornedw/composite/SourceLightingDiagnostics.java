@@ -10,6 +10,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.*;
 import net.minecraft.world.*;
 import org.joml.*;
+import dev.dreamwalker.bloodbornedw.composite.mixin.StaticArchitectureSpriteAccess;
 
 /** Opt-in bounded observation of the actual prelit vertex output. No minimum
  * brightness, light changes or rendering overrides are applied by this probe. */
