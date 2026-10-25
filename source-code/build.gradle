@@ -24,6 +24,10 @@ dependencies {
  implementation 'com.eliotlash.mclib:mclib:20'
 }
 sourceSets {
+ faerieqa {
+  compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
+  runtimeClasspath += sourceSets.main.output + sourceSets.main.runtimeClasspath
+ }
  utilityqa {
   compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
   runtimeClasspath += sourceSets.main.output + sourceSets.main.runtimeClasspath
@@ -81,6 +85,8 @@ sourceSets {
  }
 }
 configurations {
+ faerieqaImplementation.extendsFrom implementation
+ faerieqaRuntimeOnly.extendsFrom runtimeOnly
  utilityqaImplementation.extendsFrom implementation
  utilityqaRuntimeOnly.extendsFrom runtimeOnly
  benchqaImplementation.extendsFrom implementation
@@ -125,6 +131,20 @@ tasks.register('utilityQaJar', Jar) {
  from sourceSets.utilityqa.output
  archiveBaseName = 'dreamwalker-utility-qa'
  archiveClassifier = 'dev'
+}
+tasks.register('faerieQaJar', Jar) {
+ dependsOn faerieqaClasses
+ from sourceSets.faerieqa.output
+ archiveBaseName = 'dreamwalker-faerie-qa'
+ archiveClassifier = 'dev'
+}
+tasks.register('remapFaerieQaJar', net.fabricmc.loom.task.RemapJarTask) {
+ dependsOn faerieQaJar
+ inputFile.set(tasks.named('faerieQaJar', Jar).flatMap { it.archiveFile })
+ classpath.from(sourceSets.faerieqa.compileClasspath)
+ archiveBaseName = 'dreamwalker-faerie-qa'
+ archiveClassifier = ''
+ addNestedDependencies = false
 }
 tasks.register('remapUtilityQaJar', net.fabricmc.loom.task.RemapJarTask) {
  dependsOn utilityQaJar

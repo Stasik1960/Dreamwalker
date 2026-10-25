@@ -1,0 +1,88 @@
+Compiled from "SpriteContents.java"
+class net.minecraft.client.texture.SpriteContents$AnimatorImpl implements net.minecraft.client.texture.Animator {
+  int frame;
+  int currentTime;
+  final net.minecraft.client.texture.SpriteContents$Animation animation;
+  private final net.minecraft.client.texture.SpriteContents$Interpolation interpolation;
+  final net.minecraft.client.texture.SpriteContents field_40543;
+  net.minecraft.client.texture.SpriteContents$AnimatorImpl(net.minecraft.client.texture.SpriteContents, net.minecraft.client.texture.SpriteContents$Animation, net.minecraft.client.texture.SpriteContents$Interpolation);
+  public void tick(int, int);
+  public void close();
+  private void method_45825(int, int);
+}
+Compiled from "SpriteContents.java"
+class net.minecraft.client.texture.SpriteContents$Animation {
+  final java.util.List<net.minecraft.client.texture.SpriteContents$AnimationFrame> frames;
+  private final int frameCount;
+  private final boolean interpolation;
+  final net.minecraft.client.texture.SpriteContents field_28469;
+  net.minecraft.client.texture.SpriteContents$Animation(java.util.List<net.minecraft.client.texture.SpriteContents$AnimationFrame>, int, boolean);
+  int getFrameX(int);
+  int getFrameY(int);
+  void upload(int, int, int);
+  public net.minecraft.client.texture.Animator createAnimator();
+  public void upload(int, int);
+  public java.util.stream.IntStream getDistinctFrameCount();
+  private static int method_33449(net.minecraft.client.texture.SpriteContents$AnimationFrame);
+}
+Compiled from "SpriteContents.java"
+public class net.minecraft.client.texture.SpriteContents implements net.minecraft.client.texture.TextureStitcher$Stitchable,java.lang.AutoCloseable {
+  private static final org.slf4j.Logger LOGGER;
+  private final net.minecraft.util.Identifier id;
+  final int width;
+  final int height;
+  private final net.minecraft.client.texture.NativeImage image;
+  net.minecraft.client.texture.NativeImage[] mipmapLevelsImages;
+  private final net.minecraft.client.texture.SpriteContents$Animation animation;
+  public net.minecraft.client.texture.SpriteContents(net.minecraft.util.Identifier, net.minecraft.client.texture.SpriteDimensions, net.minecraft.client.texture.NativeImage, net.minecraft.client.resource.metadata.AnimationResourceMetadata);
+  public void generateMipmaps(int);
+  private int getFrameCount();
+  private net.minecraft.client.texture.SpriteContents$Animation createAnimation(net.minecraft.client.texture.SpriteDimensions, int, int, net.minecraft.client.resource.metadata.AnimationResourceMetadata);
+  void upload(int, int, int, int, net.minecraft.client.texture.NativeImage[]);
+  public int getWidth();
+  public int getHeight();
+  public net.minecraft.util.Identifier getId();
+  public java.util.stream.IntStream getDistinctFrameCount();
+  public net.minecraft.client.texture.Animator createAnimator();
+  public void close();
+  public java.lang.String toString();
+  public boolean isPixelTransparent(int, int, int);
+  public void upload(int, int);
+  private static boolean method_45813(it.unimi.dsi.fastutil.ints.IntSet, int);
+  private static void method_45814(java.util.List, int, int);
+  private java.lang.String method_45820() throws java.lang.Exception;
+  private java.lang.String method_45821() throws java.lang.Exception;
+  private java.lang.String method_45822() throws java.lang.Exception;
+  static {};
+}
+Compiled from "Sprite.java"
+public class net.minecraft.client.texture.Sprite {
+  private final net.minecraft.util.Identifier atlasId;
+  private final net.minecraft.client.texture.SpriteContents contents;
+  final int x;
+  final int y;
+  private final float minU;
+  private final float maxU;
+  private final float minV;
+  private final float maxV;
+  protected net.minecraft.client.texture.Sprite(net.minecraft.util.Identifier, net.minecraft.client.texture.SpriteContents, int, int, int, int);
+  public int getX();
+  public int getY();
+  public float getMinU();
+  public float getMaxU();
+  public net.minecraft.client.texture.SpriteContents getContents();
+  public net.minecraft.client.texture.Sprite$TickableAnimation createAnimation();
+  public float getFrameU(double);
+  public float getFrameFromU(float);
+  public float getMinV();
+  public float getMaxV();
+  public float getFrameV(double);
+  public float getFrameFromV(float);
+  public net.minecraft.util.Identifier getAtlasId();
+  public java.lang.String toString();
+  public void upload();
+  private float getFrameDeltaFactor();
+  public float getAnimationFrameDelta();
+  public net.minecraft.client.render.VertexConsumer getTextureSpecificVertexConsumer(net.minecraft.client.render.VertexConsumer);
+}
+Error: class not found: net.minecraft.client.render.texture.SpriteTicker

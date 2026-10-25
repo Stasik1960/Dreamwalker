@@ -36,10 +36,11 @@ public final class DwUtilityBlocks {
         LIGHT_ITEM=Registry.register(Registries.ITEM,PrototypeArchitecture.id("dw_light"),new MarkerItem(LIGHT));
         DARKNESS_ITEM=Registry.register(Registries.ITEM,PrototypeArchitecture.id("dw_darkness"),new MarkerItem(DARKNESS));
         WATER_ITEM=Registry.register(Registries.ITEM,PrototypeArchitecture.id("dw_fake_water"),new MarkerItem(WATER));
+        FaerieVeilBlock.initialize();
         net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents.BEFORE.register((world,player,pos,state,entity)->!marker(state)||player.isCreative());
         NoCollidePlacement.initialize();
     }
-    public static boolean marker(BlockState state){return state.getBlock() instanceof MarkerBlock;}
+    public static boolean marker(BlockState state){return state.getBlock() instanceof MarkerBlock||state.getBlock() instanceof FaerieVeilBlock;}
     public static boolean barrier(BlockState state){return state.isOf(net.minecraft.block.Blocks.BARRIER)||BARRIER!=null&&state.isOf(BARRIER);}
     public static boolean light(BlockState state){return LIGHT!=null&&state.isOf(LIGHT);}
     /** A helper carrier may be swapped; an independent object's root cannot be overwritten. */
@@ -99,13 +100,14 @@ public final class DwUtilityBlocks {
             super.onStateReplaced(state,world,pos,next,moved);
         }
     }
-    public static final class MarkerItem extends BlockItem {
-        private final MarkerBlock block;
-        MarkerItem(MarkerBlock block){super(block,new Item.Settings());this.block=block;}
+    public static class MarkerItem extends BlockItem {
+        private final Block block;private final Kind kind;
+        MarkerItem(MarkerBlock block){this(block,block.kind);}
+        protected MarkerItem(Block block,Kind kind){super(block,new Item.Settings());this.block=block;this.kind=kind;}
         @Override public ActionResult place(ItemPlacementContext context){return placeMarker(context);}
         private ActionResult placeMarker(ItemPlacementContext context){
             var world=context.getWorld();var player=context.getPlayer();if(player==null)return ActionResult.FAIL;
-            if(block.kind==Kind.WATER){
+            if(kind==Kind.WATER){
                 if(!player.isCreative())return ActionResult.FAIL;
                 BlockPos clicked=context.canReplaceExisting()?context.getBlockPos():context.getBlockPos().offset(context.getSide().getOpposite());
                 var host=world.getBlockState(clicked);
@@ -121,21 +123,21 @@ public final class DwUtilityBlocks {
             if(!world.isChunkLoaded(pos)||!world.isInBuildLimit(pos)||!world.getWorldBorder().contains(pos))return ActionResult.FAIL;
             if(!(existing.isAir()||existing.isOf(CompositeArchitecture.CELL)||existing.canReplace(context)||light(existing)))return ActionResult.FAIL;
             if(barrier(existing))return ActionResult.FAIL;
-            if(block.kind==Kind.BARRIER){
+            if(kind==Kind.BARRIER){
                 // Barrier-to-barrier conflicts remain exact full cell checks even though mobs pass through.
                 if(!world.isChunkLoaded(pos)||!world.isInBuildLimit(pos)||!world.getWorldBorder().contains(pos))return ActionResult.FAIL;
                 if(world.getBlockState(pos).isOf(Blocks.BARRIER)||world.getBlockState(pos).isOf(BARRIER))return ActionResult.FAIL;
             }
             var next=block.getDefaultState();var tag=context.getStack().getSubNbt("BlockStateTag");
-            if(tag!=null&&"alt".equals(tag.getString("profile")))next=next.with(CompositeRootBlock.PROFILE,CompositeRootBlock.Profile.ALT);
+            if(next.contains(CompositeRootBlock.PROFILE)&&tag!=null&&"alt".equals(tag.getString("profile")))next=next.with(CompositeRootBlock.PROFILE,CompositeRootBlock.Profile.ALT);
             if(world.isClient)return ActionResult.SUCCESS;
             if(!replaceCarrier((ServerWorld)world,pos,next,player))return ActionResult.FAIL;
-            if(block.kind==Kind.WATER)world.playSound(null,pos,net.minecraft.sound.SoundEvents.ITEM_BUCKET_EMPTY,net.minecraft.sound.SoundCategory.BLOCKS,1,1);
+            if(kind==Kind.WATER)world.playSound(null,pos,net.minecraft.sound.SoundEvents.ITEM_BUCKET_EMPTY,net.minecraft.sound.SoundCategory.BLOCKS,1,1);
             if(!player.isCreative())context.getStack().decrement(1);return ActionResult.CONSUME;
         }
-        @Override public Text getName(ItemStack stack){return DebugCatalogue.itemName(stack,Text.literal(switch(block.kind){case LIGHT->"DW-свет";case BARRIER->"DW-барьер";case DARKNESS->"Тьма";case WATER->"Фальшивая вода";}));}
+        @Override public Text getName(ItemStack stack){return DebugCatalogue.itemName(stack,Text.literal(switch(kind){case LIGHT->"DW-свет";case BARRIER->"DW-барьер";case DARKNESS->"Тьма";case WATER->"Фальшивая вода";}));}
         @Override public void appendTooltip(ItemStack stack,World world,List<Text> lines,net.minecraft.client.item.TooltipContext context){
-            DebugCatalogue.itemTooltip(stack,lines);lines.add(Text.literal(switch(block.kind){case LIGHT->"Невидимый свет · яркость 14";case BARRIER->"Невидимая преграда только для игроков";case DARKNESS->"Абсолютно чёрный блок без собственной коллизии";case WATER->"Вода без течения, плавания и замедления";}));lines.add(Text.literal("Выделение и удаление — только в креативе"));
+            DebugCatalogue.itemTooltip(stack,lines);lines.add(Text.literal(switch(kind){case LIGHT->"Невидимый свет · яркость 14";case BARRIER->"Невидимая преграда только для игроков";case DARKNESS->"Абсолютно чёрный блок без собственной коллизии";case WATER->"Вода без течения, плавания и замедления";}));lines.add(Text.literal("Выделение и удаление — только в креативе"));
         }
     }
     private static final class WaterMarkerBlock extends MarkerBlock {
