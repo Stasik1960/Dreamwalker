@@ -1,0 +1,36 @@
+{
+  "status": "PASS",
+  "reviewedBy": "Codex visual inspection of actual Minecraft framebuffer captures",
+  "checks": [
+    {
+      "file": "client-2/screenshots/fixed-0.png",
+      "sha256": "41c4fde6cb46a5cfac5f566598ae22c25be0d735a40a8bafe1aa7b3688aed061",
+      "review": "Confirmed wall opening is covered by the reconstructed base surface."
+    },
+    {
+      "file": "client-2/screenshots/fixed-1.png",
+      "sha256": "de0339dcb8b870f2bd23cab65d2475ec8912a5caa784654e7ac6e664c4bae991",
+      "review": "Reconstructed slab uses the original half-height base, books and neighboring depressions retained."
+    },
+    {
+      "file": "client-2/screenshots/fixed-2.png",
+      "sha256": "762d8ebcfac2fc25a338432e817d226413937b25052a34564f5eec21f082fbf8",
+      "review": "Fallback wall pick renders the authored decoration and preserves its state."
+    },
+    {
+      "file": "client-2/screenshots/statistics-items-skillet.png",
+      "sha256": "1bc471236e3566ee477e95d67fee951f9e6d1de2cabd0b93b3abd72ec59df3fa",
+      "review": "Actual Statistics Items screen displays skillet without crash."
+    },
+    {
+      "file": "client-3/screenshots/fixed-3.png",
+      "sha256": "a70bba7d7c8c36e4abc807cb90bff2b6e66242ce5ea1b3e1818bd2af04f3c2eb",
+      "review": "Balustrade black gradient is gone with AO enabled; authored item visible."
+    },
+    {
+      "file": "../fix-profiles/client/screenshots/fixed-6.png",
+      "sha256": "eee8bfea0db6f6d2d074bd47267a3a75904b4f1199780c9f604614d2ae75ecb5",
+      "review": "Retained staircase black top faces are gone with AO enabled in client-5."
+    }
+  ]
+}
