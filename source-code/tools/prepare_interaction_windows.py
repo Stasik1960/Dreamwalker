@@ -11,12 +11,12 @@ source=Image.open(A/'textures/block/remaining/source/minecraft/block/addon/roof_
 pixels=image.load();before=source.crop((107,41,123,71));assert all(p[3]==255 for p in before.getdata())
 for y in range(41,71):
  for x in range(107,123):pixels[x,y]=(*pixels[x,y][:3],80)
-texture=A/'textures/interactions/shutter_glass.png';texture.parent.mkdir(exist_ok=True);image.save(texture)
+texture=A/'textures/block/interactions/shutter_glass.png';texture.parent.mkdir(parents=True,exist_ok=True);image.save(texture)
 wallvariants=[];windowposes={};wallparts=([3,5,6],[4,5,6,7]);winparts=([0,1,2,4],[0,1,2,3])
 def box(a,b):return {'from':a,'to':b}
 wallboxes=[box([-16,0,5],[-6,48,7]),box([22,0,5],[32,48,7]),box([-6,0,5],[22,2,7]),box([-6,40,5],[22,48,7])]
 glass=copy.deepcopy(models[1]['elements'][8]);glass['faces']['south']=copy.deepcopy(glass['faces']['north']);glass['faces']['south']['uv']=[15.375,5.125,13.375,8.875]
-glassmodel={'textures':{'1':'bloodborne_dw:interactions/shutter_glass','particle':'bloodborne_dw:interactions/shutter_glass'},'elements':[glass]};write(A/'models/interactions/shutter_glass.json',glassmodel)
+glassmodel={'textures':{'1':'bloodborne_dw:block/interactions/shutter_glass','particle':'bloodborne_dw:block/interactions/shutter_glass'},'elements':[glass]};write(A/'models/interactions/shutter_glass.json',glassmodel)
 frame=copy.deepcopy(models[0]['elements'][4]);frame['faces']['south']['uv']=[14.25,10.125,11.875,14]
 atlas=Image.open(A/'textures/block/remaining/source/minecraft/block/addon/roof_1.png').convert('RGBA');mask=atlas.crop((95,81,114,112));bands=[]
 for row in range(mask.height):

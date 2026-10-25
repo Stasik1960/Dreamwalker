@@ -9,7 +9,9 @@ for row in catalog['recipes']:
   rest=row['fragments'][:i]+row['fragments'][i+1:]
   assert (not rest and nextid==-1) or (nextid>=0 and sorted(json.dumps(f,sort_keys=True) for f in rest)==sorted(json.dumps(f,sort_keys=True) for f in catalog['recipes'][nextid]['fragments']))
 checks['completeStaticRemovalClosures']=True;checks['extraStaticRecipes']=len(catalog['recipes'])-resources['originalRecipeCount'];checks['extraStaticPoses']=len(catalog['poses'])-resources['originalPoseCount']
-im=Image.open(R/'assets/bloodborne_dw/textures/interactions/shutter_glass.png').convert('RGBA');checks['glassPaneAlpha']=sorted({p[3] for p in im.crop((107,41,123,71)).getdata()});assert checks['glassPaneAlpha']==[80]
+im=Image.open(R/'assets/bloodborne_dw/textures/block/interactions/shutter_glass.png').convert('RGBA');checks['glassPaneAlpha']=sorted({p[3] for p in im.crop((107,41,123,71)).getdata()});assert checks['glassPaneAlpha']==[80]
+checks['glassInBlockAtlasDirectory']=read(R/'assets/bloodborne_dw/models/interactions/shutter_glass.json')['textures']['1']=='bloodborne_dw:block/interactions/shutter_glass';assert checks['glassInBlockAtlasDirectory']
+checks['appendedBankMarkers']=all(len(read(R/f'assets/bloodborne_dw/blockstates/static_architecture_{i}.json')['variants'])==128 for i in (256,257));assert checks['appendedBankMarkers']
 for name in ('source_shutter_window','source_shutter_window_surround'):
  doc=read(R/f'bloodborne_dw/composite/{name}.json');checks[name+'Variants']=len(doc['variants']);checks[name+'Openable']=doc['openable']
  for v in doc['variants']:
