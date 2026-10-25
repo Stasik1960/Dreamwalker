@@ -25,6 +25,7 @@ public final class CompositeClient {
     public static void initialize() {
         if(initialized)return; initialized=true;
         BenchSeatingClient.initialize();
+        dev.dreamwalker.bloodbornedw.architecture.FauxWaterClient.initialize();
         CompositeVisualBoundsV127.initialize();
         net.fabricmc.fabric.api.resource.ResourceManagerHelper.get(net.minecraft.resource.ResourceType.CLIENT_RESOURCES).registerReloadListener(new net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener(){
             @Override public Identifier getFabricId(){return new Identifier("bloodborne_dw","composite_world_mesh");}

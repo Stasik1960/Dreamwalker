@@ -12,5 +12,5 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class NativeVisualChunkPacketMixin {
     @Shadow @Final private NbtCompound heightmap;
     @Inject(method="<init>(Lnet/minecraft/world/chunk/WorldChunk;)V",at=@At("RETURN"))
-    private void dw$packetVisuals(WorldChunk chunk,CallbackInfo ci){var data=NativeVisuals.data(chunk);if(!data.empty())heightmap.put(NativeVisualData.KEY,data.nbt());}
+    private void dw$packetVisuals(WorldChunk chunk,CallbackInfo ci){var data=NativeVisuals.data(chunk);if(!data.empty())heightmap.put(NativeVisualData.KEY,data.nbt());var faux=dev.dreamwalker.bloodbornedw.architecture.FauxWaterlogging.data(chunk);if(!faux.empty())heightmap.put(dev.dreamwalker.bloodbornedw.architecture.FauxWaterData.KEY,faux.nbt());}
 }

@@ -21,7 +21,7 @@ public abstract class NativeVisualSerializationMixin {
         }}
     }
     @Inject(method="deserialize",at=@At("RETURN"))
-    private static void dw$readVisuals(ServerWorld world,PointOfInterestStorage poi,ChunkPos pos,NbtCompound nbt,CallbackInfoReturnable<ProtoChunk> ci){var chunk=NativeVisuals.unwrap(ci.getReturnValue());NativeVisuals.data(chunk,NativeVisualData.read(nbt.getCompound(NativeVisualData.KEY),chunk));}
+    private static void dw$readVisuals(ServerWorld world,PointOfInterestStorage poi,ChunkPos pos,NbtCompound nbt,CallbackInfoReturnable<ProtoChunk> ci){var chunk=NativeVisuals.unwrap(ci.getReturnValue());NativeVisuals.data(chunk,NativeVisualData.read(nbt.getCompound(NativeVisualData.KEY),chunk));dev.dreamwalker.bloodbornedw.architecture.FauxWaterlogging.data(chunk,dev.dreamwalker.bloodbornedw.architecture.FauxWaterData.read(nbt.getCompound(dev.dreamwalker.bloodbornedw.architecture.FauxWaterData.KEY),chunk));}
     @Inject(method="serialize",at=@At("RETURN"))
-    private static void dw$writeVisuals(ServerWorld world,Chunk chunk,CallbackInfoReturnable<NbtCompound> ci){var data=NativeVisuals.data(chunk);if(!data.empty()){data.validate(NativeVisuals.unwrap(chunk));ci.getReturnValue().put(NativeVisualData.KEY,data.nbt());}}
+    private static void dw$writeVisuals(ServerWorld world,Chunk chunk,CallbackInfoReturnable<NbtCompound> ci){var data=NativeVisuals.data(chunk);if(!data.empty()){data.validate(NativeVisuals.unwrap(chunk));ci.getReturnValue().put(NativeVisualData.KEY,data.nbt());}var faux=dev.dreamwalker.bloodbornedw.architecture.FauxWaterlogging.data(chunk);if(!faux.empty())ci.getReturnValue().put(dev.dreamwalker.bloodbornedw.architecture.FauxWaterData.KEY,faux.nbt());}
 }

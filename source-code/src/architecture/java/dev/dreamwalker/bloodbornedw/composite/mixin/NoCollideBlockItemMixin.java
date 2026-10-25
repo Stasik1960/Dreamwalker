@@ -18,7 +18,7 @@ public abstract class NoCollideBlockItemMixin {
         ItemPlacementContext context=NoCollidePlacement.surfaceContext(original);
         boolean lease=context.getHand()==net.minecraft.util.Hand.MAIN_HAND&&context.getPlayer()!=null&&context.getStack()==context.getPlayer().getMainHandStack()&&NoCollidePlacement.enter(context.getPlayer());
         boolean accepted=false;
-        try{ActionResult result=operation.call(context);accepted=result.isAccepted();return result;}
+        try{ActionResult result=dev.dreamwalker.bloodbornedw.architecture.FauxWaterlogging.placement(()->operation.call(context));accepted=result.isAccepted();return result;}
         finally{NoCollidePlacement.exit(context.getPlayer(),lease,accepted);}
     }
 }

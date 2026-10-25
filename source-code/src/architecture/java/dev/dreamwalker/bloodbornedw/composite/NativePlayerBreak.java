@@ -48,6 +48,7 @@ public final class NativePlayerBreak {
     public static Boolean remove(ServerWorld world,BlockPos pos){
         var scope=CURRENT.get();if(scope==null||scope.world!=world||!scope.clicked.equals(pos))return null;
         var player=scope.player;var state=world.getBlockState(pos);boolean drop=!player.isCreative()&&player.canHarvest(state);
+        if(player.isCreative()&&dev.dreamwalker.bloodbornedw.architecture.FauxWaterlogging.logged(world,pos)){scope.handled=true;return dev.dreamwalker.bloodbornedw.architecture.FauxWaterlogging.remove(world,pos,player);}
         if(state.getBlock() instanceof NativeGridBlock block&&NativeGridCatalog.membership(block.cell(state).index())!=null){scope.handled=true;return NativeGridRuntime.breakWhole(world,pos,block.cell(state).index(),player,drop);}
         if(state.getBlock() instanceof StaticArchitectureBlock){scope.handled=true;return StaticArchitectureRuntime.breakAt(world,pos,player,drop).outcome()==TransactionCore.Outcome.COMMITTED;}
         if(dev.dreamwalker.bloodbornedw.architecture.DwUtilityBlocks.marker(state)){scope.handled=true;return dev.dreamwalker.bloodbornedw.architecture.DwUtilityBlocks.remove(world,pos,player);}

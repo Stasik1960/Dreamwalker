@@ -39,6 +39,7 @@ public final class UnifiedCreativeCatalogue {
         });
         // Keep already existing RP weapons/items/eggs that have no TEMP row.
         if(dev.dreamwalker.bloodbornedw.tool.BbToolService.ITEM!=null)offered.put(dev.dreamwalker.bloodbornedw.tool.BbToolService.ID,new ItemStack(dev.dreamwalker.bloodbornedw.tool.BbToolService.ITEM));
+        for(var item:java.util.List.of(dev.dreamwalker.bloodbornedw.architecture.DwUtilityBlocks.DARKNESS_ITEM,dev.dreamwalker.bloodbornedw.architecture.DwUtilityBlocks.WATER_ITEM))offered.put(Registries.ITEM.getId(item),new ItemStack(item));
         // No helper, technical architecture block or retired RP placer enters.
         Registries.ITEM.getIds().stream().filter(id->id.getNamespace().equals("bloodborne_rp")).sorted(Comparator.comparing(Identifier::toString)).forEach(id->{
             if(id.getPath().endsWith("_placer")&&!ObjectRegistry.isCanonicalPlacementItem(id.getPath().substring(0,id.getPath().length()-7)))return;
