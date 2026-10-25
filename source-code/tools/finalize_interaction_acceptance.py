@@ -3,7 +3,7 @@ from pathlib import Path
 P=Path(__file__).resolve().parents[1];D=P/'interaction-evidence';V='0.1.0-v12.7.4-visual-physics.7';J=P/f'build-native-visual/libs/dreamwalker-bb-fabric-1.20.1-{V}.jar'
 def load(name):return json.loads((D/name).read_text(encoding='utf-8'))
 H=hashlib.sha256(J.read_bytes()).hexdigest()
-for file in ('server-1/server-checks.json','client-1/client-checks.json','final-binary-delta.json','preview-2/map-audit.json','preview-2/global-data-audit.json','client-3/client-checks.json','visual-review.json','apply-1/map-audit.json','apply-1/global-data-audit.json','apply-1/global-data-finalized.json','real-apply-preflight.json'):assert load(file)['status']=='PASS',file
+for file in ('server-1/server-checks.json','client-1/client-checks.json','final-binary-delta.json','preview-2/map-audit.json','preview-2/global-data-audit.json','preview-2/window-identities.json','client-3/client-checks.json','visual-review.json','apply-1/map-audit.json','apply-1/global-data-audit.json','apply-1/global-data-finalized.json','apply-1/window-identities.json','real-apply-preflight.json'):assert load(file)['status']=='PASS',file
 for role in ('preview-2','client-3','apply-1'):assert load(role+'/process.json')['productionSha256']==H
 assert load('client-3/launch-result.json')['exitCode']==0
 assert load('apply-1/launch-result.json')['saved']
@@ -13,18 +13,18 @@ record={'status':'PASS','version':V,'productionSha256':H,'server':'server-1','fi
 audit=load('apply-1/map-audit.json');url='https://github.com/Stasik1960/Dreamwalker/releases/tag/native-grid-city-interactions-20261026'
 report=f'''# Dreamwalker — интерактивные исправления .7
 
-Готовая версия мода: `{V}`. Карта пользователя `C:/Users/vakir/Desktop/bloodborne` обновлена на месте. Заменены все203 узких окна [30952], в199 транзакционных группах; город целиком повторно не конвертировался.
+Готовая версия мода: `{V}`. Карта пользователя `C:/Users/vakir/Desktop/bloodborne` обновлена на месте. Заменены все 203 узких окна [30952], в 199 транзакционных группах; город целиком повторно не конвертировался.
 
 * Исправлен краш при ударах/разрушении феи и тьмы: движку больше не возвращается пустая форма для частиц. Изнутри блоков мир не просвечивает. Выделение и разрушение по-прежнему только Creative.
 * «Особое действие» BB переключает коллизии игроков у феи и тьмы. По умолчанию они проходимы; предметы и прочие сущности остаются без коллизий. Неподдерживаемые блоки игнорируются молча, ALT больше не переключается этим режимом.
-* Добавлен шестой режим BB «Поворот по часовой стрелке»: 45° или90° согласно схеме объекта. Прежние номера режимов сохранены.
-* Новая назначаемая клавиша применяет `bb no-collide` к блоку в основной руке. В управлении Minecraft, категория Dreamwalker BB. По умолчанию клавиша свободна. Сообщения: «Коллизии отключены», «Неподходящий блок»; при сбросе режима — «Режим без коллизий сброшен». Серверные права команды сохранены.
+* Добавлен шестой режим BB «Поворот по часовой стрелке»: 45° или 90° согласно схеме объекта. Прежние номера режимов сохранены.
+* Новая назначаемая клавиша применяет `bb no-collide` к блоку в основной руке. В управлении Minecraft, категория Dreamwalker BB. По умолчанию клавиша свободна. Сообщения: «Коллизии отключены», «Неподходящий блок»; при сбросе режима — «Режим без коллизий сброшен». Серверные права команды сохранены. F8 в этой сборке занята ModelProps, поэтому для теста использована другая клавиша.
 * Окно отделено от стены: одно окно, закрытые/открытые ставни по ПКМ, прозрачное стекло с обеих сторон. Причины прежней непрозрачности — alpha255 у стекла и сплошная стена за ним. Исправлены обе; внешняя кладка сохраняется. Старые типы остаются зарегистрированы для совместимости.
 * Информационный габарит v12 приведён к объединению реальных коллизий игроков. Физические части, рендер и его дальность не изменены. Это не срезание геометрии деревьев или клеток.
 
 Проверка: отдельный сервер, настоящий клиент с Sodium+Indium, затем полная фактическая Limacina-сборка с её настройками, сохранение и повторное открытие перенесённой копии, окно по координатам пользователя. Проверены частицы, клавиша и уведомления, режимы игры, повороты, переключение коллизий, ПКМ окна и PNG с обеих сторон. Шейдеры в функциональном прогоне выключены; производительность заново не замерялась.
 
-Итоговый аудит основной карты: {audit['changedCells']} изменённых ячеек внутри{audit['allowedCells']} разрешённых; {audit['protectedBlockEntities']} защищённых блоковых записей, {audit['checkedRpEntities']} повторно сериализованных RP-записей. Ошибок, посторонних изменений и пустых owner shards —0. Глобальные связи/правила/группы/команды сохранены. Все67 прежних UUID цельных окон перенесены новым окнам. Ранее принятые фонари и цельные конструкции v6 не переделывались.
+Итоговый аудит основной карты: {audit['changedCells']} изменённых ячеек внутри {audit['allowedCells']} разрешённых; {audit['protectedBlockEntities']} защищённых блоковых записей, {audit['checkedRpEntities']} повторно сериализованных RP-записей. Ошибок, посторонних изменений и пустых owner shards — 0. Глобальные связи/правила/группы/команды сохранены. Все 67 прежних UUID цельных окон перенесены новым окнам. Ранее принятые фонари и цельные конструкции v6 не переделывались.
 
 SHA256 JAR: `{H}`. Подробные решения — DECISIONS-RU.md. Полная карта, точные исходники, отчёты и контрольные суммы публикуются отдельным релизом: {url}. Устанавливать эту карту вместе с модом .7 на клиенте и сервере. Предыдущий стабильный релиз .6 сохранён.
 '''
