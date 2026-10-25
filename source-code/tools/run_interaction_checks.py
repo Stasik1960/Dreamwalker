@@ -1,7 +1,7 @@
 import hashlib,json,os,shutil,subprocess,sys,time,zipfile
 from pathlib import Path
 P=Path(__file__).resolve().parents[1];G=Path('C:/Users/vakir/AppData/Local/Limacina/project/DreamWalker');D=P/'interaction-evidence';role=sys.argv[1];attempt=sys.argv[2];out=D/(role+'-'+attempt);out.mkdir(parents=True,exist_ok=False);profile=P/'interaction-profiles'/(role+'-'+attempt);mods=profile/'mods';mods.mkdir(parents=True);version='0.1.0-v12.7.4-visual-physics.7'
-production=P/f'build-native-visual/libs/dreamwalker-bb-fabric-1.20.1-{version}.jar';qa=P/f'build-native-visual/libs/dreamwalker-restoration-qa-{version}.jar';assert production.is_file() and qa.is_file()
+production=P/f'build-native-visual/libs/dreamwalker-bb-fabric-1.20.1-{version}.jar';qa=P/f'build-native-visual/libs/dreamwalker-restoration-qa-{version}.jar';assert production.is_file() and qa.is_file();assert json.loads((D/'build.json').read_text())['exitCode']==0
 sourceMods=Path('C:/Users/vakir/Desktop/server_mods') if role in ('preview','apply') else G/'mods'
 for f in sourceMods.glob('*.jar'):
  with zipfile.ZipFile(f) as z:mid=json.loads(z.read('fabric.mod.json')).get('id') if 'fabric.mod.json' in z.namelist() else ''
@@ -14,7 +14,7 @@ if apply:
 elif client:shutil.copytree(P/'interaction-profiles/server-1/world',profile/'saves/interactions')
 (profile/'eula.txt').write_text('eula=true\n');(profile/'server.properties').write_text('online-mode=false\nserver-ip=127.0.0.1\nserver-port=25589\nlevel-name='+world.as_posix()+'\nlevel-type=minecraft:flat\ngenerator-settings={"layers":[{"block":"minecraft:air","height":1}],"biome":"minecraft:plains","lakes":false,"features":false}\nview-distance=2\nsimulation-distance=3\nspawn-protection=0\nmax-tick-time=180000\n',encoding='utf-8')
 cp=[G/'0.19.3.jar',G/'1.20.1.jar' if client else Path('C:/Users/vakir/.gradle/caches/fabric-loom/1.20.1/minecraft-extracted_server.jar'),*sorted((G/'libraries').rglob('*.jar'))]
-heap='3584M' if client else '3G';args=['-Xms128M','-Xmx'+heap,'-XX:ActiveProcessorCount=4','-Dfabric.modsFolder='+str(mods),'-Ddw.interaction.qa.output='+str(out)]
+heap=os.environ.get('DW_INTERACTION_QA_HEAP','3584M' if client else '3G');args=['-Xms128M','-Xmx'+heap,'-XX:ActiveProcessorCount=4','-Dfabric.modsFolder='+str(mods),'-Ddw.interaction.qa.output='+str(out)]
 if apply:args+=['-Ddw.interaction.apply.plan='+str(D)]
 elif not client:args+=['-Ddw.interaction.qa.server=true']
 if client:
@@ -34,4 +34,4 @@ with (out/'console.log').open('w',encoding='utf-8') as log:
   time.sleep(1)
  code=proc.wait(timeout=30)
 for f in (profile/'screenshots').glob('*.png'):shutil.copy2(f,out/f.name)
-(out/'launch-result.json').write_text(json.dumps({'exitCode':code,'seconds':time.time()-start,'saved':saved is not None},indent=2))
+(out/'launch-result.json').write_text(json.dumps({'exitCode':code,'seconds':time.time()-start,'saved':saved is not None or 'All dimensions are saved' in (out/'console.log').read_text(encoding='utf-8',errors='replace')},indent=2))

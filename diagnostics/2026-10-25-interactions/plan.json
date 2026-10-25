@@ -1,5 +1,5 @@
 {
-  "status": "IMPLEMENTING",
+  "status": "CLIENT_VALIDATION",
   "version": "0.1.0-v12.7.4-visual-physics.7",
   "tasks": [
     "fix hit particles and opaque in-wall view",
@@ -7,8 +7,11 @@
     "silent Special fallback",
     "clockwise rotation matching schema",
     "separate shutter windows and preserve user map",
-    "separate RP public physical bounds from rendering/query bounds"
+    "separate RP public physical bounds from rendering/query bounds",
+    "configurable no-collide key and lease reset notification"
   ],
-  "windowCount": 136,
+  "staticWindows": 136,
+  "directLegacyWindows": 67,
+  "windowCount": 203,
   "baselineBackup": "C:\\Users\\vakir\\CodexProjects\\DW-visual-fixes-20261025\\interaction-evidence\\bloodborne-before-interactions.zip"
 }
