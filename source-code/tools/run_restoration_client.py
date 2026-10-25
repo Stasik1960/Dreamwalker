@@ -6,10 +6,13 @@ for f in (G/'mods').glob('*.jar'):
  if mid not in ('bloodborne_dw','worldedit'):shutil.copy2(f,mods/f.name)
 for f in (production,qa):shutil.copy2(f,mods/f.name)
 world=game/'saves/restoration-city';world.mkdir(parents=True)
-with zipfile.ZipFile(P/'restoration-evidence/bloodborne-before-restoration.zip') as z:
- for n in z.namelist():
-  if n.endswith('/'):continue
-  rel=Path(*Path(n).parts[1:]);target=world/rel;assert target.resolve().is_relative_to(world.resolve());target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes(z.read(n))
+if '--repaired' in sys.argv:
+ shutil.copytree(Path('C:/Users/vakir/Desktop/bloodborne'),world,dirs_exist_ok=True)
+else:
+ with zipfile.ZipFile(P/'restoration-evidence/bloodborne-before-restoration.zip') as z:
+  for n in z.namelist():
+   if n.endswith('/'):continue
+   rel=Path(*Path(n).parts[1:]);target=world/rel;assert target.resolve().is_relative_to(world.resolve());target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes(z.read(n))
 (game/'config').mkdir();(game/'config/iris.properties').write_text('enableShaders=false\n');(game/'options.txt').write_text('lang:ru_ru\nrenderDistance:3\nsimulationDistance:3\nmaxFps:30\nenableVsync:false\nfullscreen:false\ngamma:0.5\npauseOnLostFocus:false\nao:true\n',encoding='utf-8')
 cp=[G/'0.19.3.jar',G/'1.20.1.jar',*sorted((G/'libraries').rglob('*.jar'))]
 args=['-Xms128M','-Xmx4G','-XX:ActiveProcessorCount=2','-Dfabric.modsFolder='+str(mods),'-Ddw.restore.qa.output='+str(D),'-Djava.library.path='+str(G/'natives'),'-Dorg.lwjgl.librarypath='+str(G/'natives'),'-cp',os.pathsep.join(map(str,cp)),'net.fabricmc.loader.impl.launch.knot.KnotClient','--username','DWRestoreQA','--version','1.20.1','--gameDir',str(game),'--assetsDir',str(G/'assets'),'--assetIndex','5','--uuid','a0fef7d5375b3ed3a1f922530ed9ca36','--accessToken','0','--userType','legacy','--width','1280','--height','720','--quickPlaySingleplayer','restoration-city']

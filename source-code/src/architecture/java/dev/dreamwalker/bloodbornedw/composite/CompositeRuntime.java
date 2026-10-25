@@ -38,6 +38,7 @@ public final class CompositeRuntime {
         if(!(state.getBlock() instanceof CompositeRootBlock block))return rejected("not_a_composite_root");
         if(block.spec.id.getPath().equals("prototype_tree"))state=state.with(CompositeRootBlock.VARIANT,0);
         NbtCompound payload=supplied==null?new NbtCompound():supplied.copy();
+        if(block.spec.id.getPath().equals("source_street_lamp_post"))payload.putInt(ImportedWholeSourceOpticsV127.CONTEXT,1);
         if(block.spec.id.getPath().startsWith("source_")){
             if(ImportedTypeAliases.needsMigration(state,payload)){
                 payload=ImportedTypeAliases.transformPayload(state,payload);state=ImportedTypeAliases.target(state);

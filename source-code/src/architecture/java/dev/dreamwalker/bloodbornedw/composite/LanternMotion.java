@@ -25,7 +25,13 @@ public final class LanternMotion {
    var previous=POSITIONS.computeIfAbsent(w,k->new HashMap<>()).put(player.getUuid(),player.getPos());
    if(player.isSpectator()||previous!=null&&player.getPos().squaredDistanceTo(previous)<.00004&&player.getVelocity().lengthSquared()<.00004)continue;var box=player.getBoundingBox().expand(.08);Set<BlockPos> touched=new HashSet<>();
    for(BlockPos cell:BlockPos.iterate(MathHelper.floor(box.minX),MathHelper.floor(box.minY),MathHelper.floor(box.minZ),MathHelper.floor(box.maxX),MathHelper.floor(box.maxY),MathHelper.floor(box.maxZ))){if(!w.isChunkLoaded(cell))continue;
-    for(var c:CompositeRuntime.contributions(w,cell))if(lantern(c.owner().registryId()))for(var b:c.shape().selection())if(box.intersects(new Box(cell.getX()+b.minX(),cell.getY()+b.minY(),cell.getZ()+b.minZ(),cell.getX()+b.maxX(),cell.getY()+b.maxY(),cell.getZ()+b.maxZ())){var root=CompositeData.pos(c.owner().root());if(touched.add(root))pulse(w,root);break;}
+    for(var contribution:CompositeRuntime.contributions(w,cell)){
+     if(!lantern(contribution.owner().registryId()))continue;
+     for(var part:contribution.shape().selection()){
+      var bounds=new Box(cell.getX()+part.minX(),cell.getY()+part.minY(),cell.getZ()+part.minZ(),cell.getX()+part.maxX(),cell.getY()+part.maxY(),cell.getZ()+part.maxZ());
+      if(box.intersects(bounds)){var root=CompositeData.pos(contribution.owner().root());if(touched.add(root))pulse(w,root);break;}
+     }
+    }
    }
   }});
  }

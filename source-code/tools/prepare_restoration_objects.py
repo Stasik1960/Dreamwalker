@@ -44,7 +44,7 @@ def cell_data(pos,offset):
  elif id.startswith('bloodborne_dw:native_physics_'):
   root=chunk(pos[0],pos[2]);key=pos[1]%16*256+pos[2]%16*16+pos[0]%16
   values=next(s.value['Entries'].value for s in root['DreamwalkerVisuals'].value['Sections'].value if s.value['Y'].value==pos[1]//16)
-  visual=next((n&0xffffffff)>>12 for n in values if n&4095==key);cell=native['cells'][visual];newAliases.add(visual)
+  visual=next((n&0xffffffff)>>12 for n in values if n&4095==key);a['nativeVisual']=visual;cell=native['cells'][visual];newAliases.add(visual)
   parts=[{'model':'bloodborne_dw:restoration/native_'+str(visual),'offset':[n*16 for n in offset]}]
   collision=[{'from':[v*16 for v in b[:3]],'to':[v*16 for v in b[3:]]} for b in native['shapes'][cell['collision']]];outline=[{'from':[v*16 for v in b[:3]],'to':[v*16 for v in b[3:]]} for b in native['shapes'][cell['outline']]];opacity=native['optics'][cell['optics']]['opacity']
  elif id=='minecraft:air':return a,[],[],[],0

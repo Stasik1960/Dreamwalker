@@ -185,7 +185,8 @@ public final class WorldEditBridge {
                             ItemStack canonical=ImportedAssemblyV126.canonicalStack(ImportedTypeAliases.canonicalStack(item));
                             var nativeItem=(BlockItem)canonical.getItem();BlockState state=nativeItem.getBlock().getDefaultState();var art=canonical.getSubNbt("BlockStateTag");
                             if(art!=null)for(String key:art.getKeys()){var property=state.getBlock().getStateManager().getProperty(key);if(property!=null)state=with(state,property,art.getString(key));}
-                            var payload=ImportedTypeAliases.markPayload(null);
+                            if(!(state.getBlock() instanceof CompositeRootBlock root))return parsed(stateToken(state),context);
+                            var payload=root.spec.simplePhysicalCollision?ImportedTypeAliases.markPayload(null):new NbtCompound();
                             ImportedTypeAliases.readLegacyStairArt(canonical.getNbt()).ifPresent(key->payload.putString(ImportedStairLegacyArt.KEY,key));
                             if(canonical.hasNbt()&&canonical.getNbt().contains(ImportedTypeAliases.SHIFT_ART_KEY,9))payload.put("SourceShift",canonical.getNbt().get(ImportedTypeAliases.SHIFT_ART_KEY).copy());
                             var metadata=new CompoundTag(Map.of(ITEM_ART,new StringTag(Base64.getEncoder().encodeToString(CompositeData.bytes(payload)))));
