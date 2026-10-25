@@ -14,7 +14,8 @@ def git(*args):
 manifest=json.loads((B/'ASSETS.json').read_text(encoding='utf-8'));assert manifest['status']=='VERIFIED_LOCAL_RELEASE_ASSETS';TAG=manifest['tag'];BR=manifest['branch'];assert json.loads((P/'fix-evidence/acceptance.json').read_text())['status']=='PASS'
 for row in manifest['assets']:
  assert Path(row['name']).name==row['name'];p=A/row['name'];assert p.stat().st_size==row['bytes'] and sha(p)==row['sha256']
-checkpoint=json.loads((P/'build-tools/checkpoint-publication.json').read_text());commit=checkpoint['commit'];assert git('rev-parse','HEAD')==commit and not git('status','--porcelain');assert git('ls-remote','--heads','origin',BR).split()[0]==commit
+checkpoint=json.loads((P/'build-tools/checkpoint-publication.json').read_text());commit=checkpoint['commit'];assert checkpoint['status']=='PUSHED_VERIFIED_READY_RELEASE';assert git('rev-parse','HEAD')==commit and not git('status','--porcelain');assert git('ls-remote','--heads','origin',BR).split()[0]==commit
+assert (R/'diagnostics/2026-10-25-fixes/ASSETS.json').read_bytes()==(B/'ASSETS.json').read_bytes()
 tag=git('ls-remote','--tags','origin','refs/tags/'+TAG)
 if not tag:git('tag',TAG,commit);git('push','origin','refs/tags/'+TAG)
 else:assert tag.split()[0]==commit,'Do not replace an existing tag'

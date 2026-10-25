@@ -8,19 +8,20 @@ def sha(path):
  with path.open('rb') as f:
   for b in iter(lambda:f.read(1<<20),b''):h.update(b)
  return h.hexdigest()
-for role in ('server-3','client-2','client-3','client-4'):
+for role in ('server-3','client-2','client-3','client-5'):
  assert read(D/role/('server-checks.json' if role.startswith('server') else 'client-checks.json'))['status']=='PASS'
  assert read(D/role/'launch-result.json')['exitCode']==0
 assert read(D/'visual-review.json')['status']=='PASS'
 integrity=read(D/'artifact-integrity.json');assert integrity['status']=='PASS' and integrity['markerModelOnlyDebugLineNumbersChanged']
 jar=Path(integrity['jar']);assert sha(jar)==integrity['sha256'];assert read(P/'build-tools/gradle-remapJar.json')['exitCode']==0
+assert read(D/'client-5/process.json')['productionSha256']==sha(jar)
 trace=[json.loads(s) for s in (D/'client-3/light-trace.jsonl').read_text(encoding='utf-8').splitlines()];assert trace and all(0<=v<=1 for r in trace for v in r['brightness'])
 O=Path('C:/Users/vakir/.codex/worktrees/3f07/DW/audits/Dreamwalker-BB/2026-10-25-visual-diagnostics');shutil.copy2(O.parent/'2026-10-25-compatibility-audit/REPORT-RU.txt',D/'COMPATIBILITY-AUDIT-RU.txt')
-dst=D/'client-4/screenshots';dst.mkdir(exist_ok=True);shutil.copy2(P/'fix-profiles/client/screenshots/fixed-6.png',dst)
-native=[json.loads(s) for s in (D/'client-4/indium-ao.jsonl').read_text().splitlines()];assert native and all(0<=r['normalizedAo']<=1 for r in native)
-acceptance={'status':'PASS','version':'0.1.0-v12.7.4-visual-physics.2','jarSha256':sha(jar),'coreAcceptedJarSha256':integrity['acceptedCoreJarSha256'],'changedAfterCoreAcceptance':integrity['changedEntriesAfterCoreAcceptance'],'finalClientFollowup':['client-3','client-4'],'worldEdit':'server-3','fullPackClient':'client-2','finalAoBrightnessSamples':len(trace),'nativeOutOfRangeSamplesSaturated':len(native),'allEffectiveBrightnessNormalized':True,'unchangedExistingAssets':9448,'mapReconverted':False,'mapRelease':'native-grid-city-visual-physics-20261025','mapZipSha256':'da6d02e3e86e1780576359033f908a0a5cb22a255348939eae1637a44423c636','performanceBenchmark':False}
+dst=D/'client-5/screenshots';dst.mkdir(exist_ok=True);shutil.copy2(P/'fix-profiles/client/screenshots/fixed-6.png',dst)
+owner=[json.loads(s) for s in (D/'client-5/light-trace.jsonl').read_text().splitlines()];assert owner and all(0<=v<=1 for r in owner for v in r['brightness']);bounded=[r for r in owner if any(v<0 or v>1 for v in r.get('rawBrightness',r['brightness']))];assert bounded
+acceptance={'status':'PASS','version':'0.1.0-v12.7.4-visual-physics.2','jarSha256':sha(jar),'coreAcceptedJarSha256':integrity['acceptedCoreJarSha256'],'changedAfterCoreAcceptance':integrity['changedEntriesAfterCoreAcceptance'],'finalClientFollowup':['client-3','client-5'],'worldEdit':'server-3','fullPackClient':'client-2','finalAoBrightnessSamples':len(trace)+len(owner),'retainedOutOfRangeQuadsSaturated':len(bounded),'allEffectiveBrightnessNormalized':True,'unchangedExistingAssets':9448,'mapReconverted':False,'mapRelease':'native-grid-city-visual-physics-20261025','mapZipSha256':'da6d02e3e86e1780576359033f908a0a5cb22a255348939eae1637a44423c636','performanceBenchmark':False}
 (D/'acceptance.json').write_text(json.dumps(acceptance,ensure_ascii=False,indent=2),encoding='utf-8')
-report=D/'REPORT-RU.txt';s=report.read_text(encoding='utf-8').replace('Статус: ожидается адресная проверка последней правки AO; не финальный релиз.','Статус: PASS. Исправленный мод готов, карта совместима без переноса.').replace('Адресная проверка лестницы в client-4 ещё ожидается.','client-4 подтвердил устранение чёрных площадок лестницы с включённым AO.').replace('Последние правки касаются только клиентского AO; их проверяют client-3/4.','client-3/4 PASS проверили оба пути AO; client-3 также проверил точный предмет\nцельного объекта после ответа сервера. После основного прогона изменены только\nклиентские классы освещения и диагностики, что проверено по всем entry JAR.');report.write_text(s,encoding='utf-8')
+report=D/'REPORT-RU.txt';s=report.read_text(encoding='utf-8').replace('Статус: ожидается адресная проверка последней правки AO; не финальный релиз.','Статус: PASS. Исправленный мод готов, карта совместима без переноса.').replace('Адресная проверка кэша сохранённых объектов в client-5 ещё ожидается.','client-5 подтвердил устранение чёрных площадок лестницы с включённым AO.').replace('Последние правки касаются только клиентского AO; их проверяют client-3/5.','client-3/5 PASS проверили оба пути AO; client-3 также проверил точный предмет\nцельного объекта после ответа сервера. После основного прогона изменены только\nклиентские классы освещения и диагностики, что проверено по всем entry JAR.');report.write_text(s,encoding='utf-8')
 name='dreamwalker-bb-0.1.0-v12.7.4-visual-physics.2.jar';shutil.copy2(jar,A/name)
 def safe_files(folder):
  for root,dirs,files in os.walk(folder,followlinks=False):

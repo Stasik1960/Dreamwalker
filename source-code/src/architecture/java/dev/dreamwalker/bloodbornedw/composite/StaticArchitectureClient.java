@@ -157,12 +157,8 @@ public final class StaticArchitectureClient {
             // wrapping a sunlit value such as 1.1 into a nearly black channel.
             // Keep ordinary AO and the stored light field; bound only its
             // normalized output before any backend performs byte packing.
-            for(float value:brightness)if(value<0||value>1){
-                brightness=brightness.clone();
-                for(int i=0;i<brightness.length;i++)brightness[i]=MathHelper.clamp(brightness[i],0,1);
-                break;
-            }
-            if(diagnosticWorld!=null)SourceLightingDiagnostics.record(diagnosticWorld,diagnosticRoot,diagnosticModel,diagnosticCarrier,diagnosticTransform,quad,brightness,lights);
+            float[] raw=brightness;brightness=SourceLightValues.normalized(brightness);
+            if(diagnosticWorld!=null)SourceLightingDiagnostics.recordAdjusted(diagnosticWorld,diagnosticRoot,diagnosticModel,diagnosticCarrier,diagnosticTransform,quad,raw,brightness,lights);
             delegate.quad(matrix,quad,brightness,quad.hasColor()?red:r,quad.hasColor()?green:g,quad.hasColor()?blue:b,lights,overlay,useColor);
         }
         @Override public void vertex(float x,float y,float z,float r,float g,float b,float a,float u,float v,int overlay,int light,float nx,float ny,float nz){delegate.vertex(x,y,z,r,g,b,a,u,v,overlay,light,nx,ny,nz);}

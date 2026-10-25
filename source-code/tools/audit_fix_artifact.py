@@ -16,10 +16,10 @@ out={'status':'PASS','jar':str(new),'sha256':sha(new),'baselineSha256':sha(old),
 accepted=P/'fix-profiles/server/mods/dreamwalker-bb-fabric-1.20.1-0.1.0-v12.7.4-visual-physics.2.jar'
 assert sha(accepted)=='389f79835bd57131547becd2832a54da6271506109fda7bdcafc8234e26fffe4'
 with zipfile.ZipFile(accepted) as a,zipfile.ZipFile(new) as b:
- additions=set(b.namelist())-set(a.namelist());assert additions=={'dev/dreamwalker/bloodbornedw/composite/NativeAoDiagnostics.class'}
+ additions=set(b.namelist())-set(a.namelist());assert additions=={'dev/dreamwalker/bloodbornedw/composite/SourceLightValues.class'}
  assert not set(a.namelist())-set(b.namelist())
  changes=[n for n in a.namelist() if a.read(n)!=b.read(n)]
- assert set(changes)=={'dev/dreamwalker/bloodbornedw/composite/StaticArchitectureClient$SourceTintConsumer.class','dev/dreamwalker/bloodbornedw/composite/StaticArchitectureClient$MarkerModel.class','dev/dreamwalker/bloodbornedw/composite/SourceLightingDiagnostics.class','dev/dreamwalker/bloodbornedw/composite/mixin/StaticArchitectureIndiumLightingMixin.class'},changes
+ assert set(changes)=={'dev/dreamwalker/bloodbornedw/composite/StaticArchitectureClient$SourceTintConsumer.class','dev/dreamwalker/bloodbornedw/composite/StaticArchitectureClient$MarkerModel.class','dev/dreamwalker/bloodbornedw/composite/SourceLightingDiagnostics.class','dev/dreamwalker/bloodbornedw/composite/CompositeWorldMesh.class','dev/dreamwalker/bloodbornedw/composite/CompositeWorldMesh$Recorder.class','dev/dreamwalker/bloodbornedw/composite/CompositeWorldMesh$PartView.class'},changes
  assert not any('/fixqa/' in n for n in b.namelist())
 code=[]
 for jar in (accepted,new):

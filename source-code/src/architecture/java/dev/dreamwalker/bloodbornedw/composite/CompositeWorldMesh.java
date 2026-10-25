@@ -158,7 +158,7 @@ public final class CompositeWorldMesh {
         return known;
     }
     private static Mesh bake(MinecraftClient client,CompositeBlockEntity entity,CompositeRootBlock block,BlockState state,NbtCompound payload,int overlay,Map<Long,Long> dependencies){
-        var recorded=new Recorder(overlay,RemainingSourceTint.color(block,client,entity.getPos()));var matrices=new MatrixStack();var shift=CompositeSourceShift.world(state,payload);
+        var recorded=new Recorder(overlay,RemainingSourceTint.color(block,client,entity.getPos()),client.world,entity.getPos());var matrices=new MatrixStack();var shift=CompositeSourceShift.world(state,payload);
         matrices.translate(shift.x(),entity.mountY()+shift.y(),shift.z());
         rotate(matrices,.5,.5,.5,-state.get(CompositeRootBlock.ROTATION)*45,false);
         if(ThinWindowRootBlock.mount(state)!=ThinWindowRootBlock.Mount.VERTICAL){
@@ -178,6 +178,7 @@ public final class CompositeWorldMesh {
                 client.getBlockRenderManager().getModelRenderer().render(matrices.peek(),recorded,state,model,((tint>>16)&255)/255f,((tint>>8)&255)/255f,(tint&255)/255f,LightmapTextureManager.MAX_LIGHT_COORDINATE,overlay);
             }else{
                 var carrier=ImportedSourceLightingV127.renderCarrier(block.spec,state);
+                recorded.diagnostic(part.model(),carrier,matrices.peek().getPositionMatrix());
                 var view=new PartView(client.world,entity.getPos(),matrices.peek(),dependencies,
                     block.spec.id.getPath().startsWith("source_")&&payload.getInt(ImportedWholeSourceOpticsV127.CONTEXT)!=1?entity.resident():null);
                 boolean smooth=MinecraftClient.isAmbientOcclusionEnabled()&&carrier.getLuminance()==0&&model.useAmbientOcclusion();
@@ -260,13 +261,18 @@ public final class CompositeWorldMesh {
     private static final class Recorder implements VertexConsumer {
         private float[] data=new float[768];private int[] light=new int[64];private int size;private final int overlay;
         private final float sourceRed,sourceGreen,sourceBlue;
+        private final BlockRenderView diagnosticWorld;private final BlockPos diagnosticRoot;
+        private net.minecraft.util.Identifier diagnosticModel;private BlockState diagnosticCarrier;private Matrix4f diagnosticTransform;
         private PartView flatView;private BlockState flatCarrier;
         private Set<BakedQuad> rootQuads=Set.of();
         private float x,y,z,r=1,g=1,b=1,a=1,u,v,nx,ny,nz;private int packed;
-        Recorder(int overlay,int tint){this.overlay=overlay;sourceRed=((tint>>16)&255)/255f;sourceGreen=((tint>>8)&255)/255f;sourceBlue=(tint&255)/255f;}
+        Recorder(int overlay,int tint,BlockRenderView world,BlockPos root){this.overlay=overlay;sourceRed=((tint>>16)&255)/255f;sourceGreen=((tint>>8)&255)/255f;sourceBlue=(tint&255)/255f;diagnosticWorld=SourceLightingDiagnostics.enabled(root)?world:null;diagnosticRoot=root.toImmutable();}
+        private void diagnostic(net.minecraft.util.Identifier model,BlockState carrier,Matrix4f matrix){if(diagnosticWorld!=null){diagnosticModel=model;diagnosticCarrier=carrier;diagnosticTransform=new Matrix4f(matrix);}}
         private void flatLighting(PartView view,BlockState carrier,net.minecraft.client.render.model.BakedModel raw){flatView=view;flatCarrier=carrier;rootQuads=view==null?Set.of():SourceFlatLight.rootQuads(raw,carrier);}
         @Override public void quad(MatrixStack.Entry entry,BakedQuad quad,float[] brightness,float r,float g,float b,int[] lights,int overlay,boolean useColor){
             if(flatView!=null&&rootQuads.contains(quad)){int light=flatView.flatLight(quad,flatCarrier);if(light>=0)lights=new int[]{light,light,light,light};}
+            float[] raw=brightness;brightness=SourceLightValues.normalized(brightness);
+            if(diagnosticWorld!=null&&diagnosticModel!=null)SourceLightingDiagnostics.recordAdjusted(diagnosticWorld,diagnosticRoot,diagnosticModel,diagnosticCarrier,diagnosticTransform,quad,raw,brightness,lights);
             VertexConsumer.super.quad(entry,quad,brightness,quad.hasColor()?sourceRed:r,quad.hasColor()?sourceGreen:g,quad.hasColor()?sourceBlue:b,lights,overlay,useColor);
         }
         Mesh finish(){return new Mesh(Arrays.copyOf(data,size*12),Arrays.copyOf(light,size),overlay);}

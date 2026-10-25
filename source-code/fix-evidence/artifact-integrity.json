@@ -1,7 +1,7 @@
 {
   "status": "PASS",
   "jar": "C:\\Users\\vakir\\CodexProjects\\DW-visual-fixes-20261025\\build-native-visual\\libs\\dreamwalker-bb-fabric-1.20.1-0.1.0-v12.7.4-visual-physics.2.jar",
-  "sha256": "cd76b78282aa8ddc23fd832f9e1d74ad0e3be5b5efd37b682dfa3083b8956728",
+  "sha256": "b776096762ea39f4b46fade64bb0aecc4f166d83086cd95bb6dba37846639584",
   "baselineSha256": "337ad3113ea02fd9e59b0646167d1ed51c769f048277e3a0858b4c89d2cfceb5",
   "unchangedExistingAssetFiles": 9448,
   "changedExistingAssets": [],
@@ -21,8 +21,15 @@
   "mapRewriteRequired": false,
   "acceptedCoreJarSha256": "389f79835bd57131547becd2832a54da6271506109fda7bdcafc8234e26fffe4",
   "changedEntriesAfterCoreAcceptance": [
+    "dev/dreamwalker/bloodbornedw/composite/CompositeWorldMesh$PartView.class",
+    "dev/dreamwalker/bloodbornedw/composite/CompositeWorldMesh$Recorder.class",
+    "dev/dreamwalker/bloodbornedw/composite/CompositeWorldMesh.class",
+    "dev/dreamwalker/bloodbornedw/composite/SourceLightingDiagnostics.class",
     "dev/dreamwalker/bloodbornedw/composite/StaticArchitectureClient$MarkerModel.class",
     "dev/dreamwalker/bloodbornedw/composite/StaticArchitectureClient$SourceTintConsumer.class"
+  ],
+  "addedClientDiagnosticEntries": [
+    "dev/dreamwalker/bloodbornedw/composite/SourceLightValues.class"
   ],
   "markerModelOnlyDebugLineNumbersChanged": true,
   "markerModelJavapSha256": "25594942bd472ff9257c831fc70569a8db506444afdabe4fbafc2237536ec6f5"
