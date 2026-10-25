@@ -20,6 +20,7 @@ import net.minecraft.world.*;
 
 /** Native invisible carriers. Their guests retain independent owner UUIDs and geometry. */
 public final class DwUtilityBlocks {
+    public static final net.minecraft.state.property.BooleanProperty PLAYER_COLLISION=net.minecraft.state.property.BooleanProperty.of("player_collision");
     public enum Kind {BARRIER,LIGHT,DARKNESS,WATER}
     public static MarkerBlock BARRIER,LIGHT,DARKNESS,WATER;
     public static MarkerItem BARRIER_ITEM,LIGHT_ITEM,DARKNESS_ITEM,WATER_ITEM;
@@ -65,16 +66,16 @@ public final class DwUtilityBlocks {
         public final boolean light;public final Kind kind;
         MarkerBlock(Kind kind){
             super(settings(kind));this.kind=kind;this.light=kind==Kind.LIGHT;
-            setDefaultState(getStateManager().getDefaultState().with(CompositeRootBlock.PROFILE,CompositeRootBlock.Profile.BASE));
+            setDefaultState(getStateManager().getDefaultState().with(CompositeRootBlock.PROFILE,CompositeRootBlock.Profile.BASE).with(PLAYER_COLLISION,false));
         }
         private static Settings settings(Kind kind){
             Settings settings=Settings.create().dynamicBounds().strength(-1,3600000).dropsNothing()
-                .solidBlock((s,w,p)->false).suffocates((s,w,p)->false).blockVision((s,w,p)->false)
+                .solidBlock((s,w,p)->false).suffocates((s,w,p)->false).blockVision((s,w,p)->kind==Kind.DARKNESS)
                 .pistonBehavior(net.minecraft.block.piston.PistonBehavior.BLOCK).luminance(state->kind==Kind.LIGHT?14:0);
             if(kind!=Kind.DARKNESS)settings.nonOpaque();
             return kind==Kind.BARRIER?settings.solid():settings.notSolid().replaceable();
         }
-        @Override protected void appendProperties(StateManager.Builder<Block,BlockState> builder){builder.add(CompositeRootBlock.PROFILE);}
+        @Override protected void appendProperties(StateManager.Builder<Block,BlockState> builder){builder.add(CompositeRootBlock.PROFILE,PLAYER_COLLISION);}
         @Override public BlockEntity createBlockEntity(BlockPos pos,BlockState state){return new CompositeBlockEntity(pos,state);}
         @Override public BlockRenderType getRenderType(BlockState state){return kind==Kind.DARKNESS?BlockRenderType.MODEL:BlockRenderType.INVISIBLE;}
         @Override public net.minecraft.fluid.FluidState getFluidState(BlockState state){return kind==Kind.WATER?net.minecraft.fluid.Fluids.WATER.getDefaultState():super.getFluidState(state);}
@@ -82,9 +83,9 @@ public final class DwUtilityBlocks {
             // Replacing a helper keeps its independently owned architecture.
             // Only the marker's own volume is player-only (or empty for light).
             var guests=CompositeRuntime.cellShape(world,pos,true,state,context);
-            return kind==Kind.BARRIER&&context instanceof EntityShapeContext entity&&entity.getEntity() instanceof PlayerEntity?VoxelShapes.union(guests,VoxelShapes.fullCube()):guests;
+            return (kind==Kind.BARRIER||kind==Kind.DARKNESS&&state.get(PLAYER_COLLISION))&&context instanceof EntityShapeContext entity&&entity.getEntity() instanceof PlayerEntity?VoxelShapes.union(guests,VoxelShapes.fullCube()):guests;
         }
-        @Override public VoxelShape getOutlineShape(BlockState state,BlockView world,BlockPos pos,ShapeContext context){return creative(context)?VoxelShapes.fullCube():VoxelShapes.empty();}
+        @Override public VoxelShape getOutlineShape(BlockState state,BlockView world,BlockPos pos,ShapeContext context){return selectionShape(context);}
         @Override public VoxelShape getSidesShape(BlockState state,BlockView world,BlockPos pos){return kind==Kind.DARKNESS||kind==Kind.BARRIER?VoxelShapes.fullCube():VoxelShapes.empty();}
         @Override public VoxelShape getCullingShape(BlockState state,BlockView world,BlockPos pos){return kind==Kind.DARKNESS?VoxelShapes.fullCube():VoxelShapes.empty();}
         @Override public int getOpacity(BlockState state,BlockView world,BlockPos pos){return kind==Kind.DARKNESS?15:kind==Kind.WATER?1:0;}
@@ -94,7 +95,7 @@ public final class DwUtilityBlocks {
                 &&!(item instanceof MarkerItem)&&!item.getBlock().equals(Blocks.BARRIER);
         }
         @Override public boolean canPathfindThrough(BlockState state,BlockView world,BlockPos pos,NavigationType type){return true;}
-        @Override public ItemStack getPickStack(BlockView world,BlockPos pos,BlockState state){var stack=new ItemStack(asItem());stack.getOrCreateSubNbt("BlockStateTag").putString("profile",state.get(CompositeRootBlock.PROFILE).asString());return stack;}
+        @Override public ItemStack getPickStack(BlockView world,BlockPos pos,BlockState state){var stack=new ItemStack(asItem());stack.getOrCreateSubNbt("BlockStateTag").putString("profile",state.get(CompositeRootBlock.PROFILE).asString());return collisionArt(state,stack);}
         @Override public void onStateReplaced(BlockState state,World world,BlockPos pos,BlockState next,boolean moved){
             if(!state.isOf(next.getBlock())&&!CompositeRuntime.writing()&&world instanceof ServerWorld server)CompositeRuntime.scheduleCleanup(server,pos);
             super.onStateReplaced(state,world,pos,next,moved);
@@ -130,6 +131,7 @@ public final class DwUtilityBlocks {
             }
             var next=block.getDefaultState();var tag=context.getStack().getSubNbt("BlockStateTag");
             if(next.contains(CompositeRootBlock.PROFILE)&&tag!=null&&"alt".equals(tag.getString("profile")))next=next.with(CompositeRootBlock.PROFILE,CompositeRootBlock.Profile.ALT);
+            if(next.contains(PLAYER_COLLISION)&&tag!=null)next=next.with(PLAYER_COLLISION,"true".equals(tag.getString("player_collision")));
             if(world.isClient)return ActionResult.SUCCESS;
             if(!replaceCarrier((ServerWorld)world,pos,next,player))return ActionResult.FAIL;
             if(kind==Kind.WATER)world.playSound(null,pos,net.minecraft.sound.SoundEvents.ITEM_BUCKET_EMPTY,net.minecraft.sound.SoundCategory.BLOCKS,1,1);
@@ -145,4 +147,13 @@ public final class DwUtilityBlocks {
         @Override public net.minecraft.fluid.FluidState getFluidState(BlockState state){return net.minecraft.fluid.Fluids.WATER.getDefaultState();}
     }
     public static boolean creative(ShapeContext context){return context instanceof EntityShapeContext entity&&entity.getEntity() instanceof PlayerEntity player&&player.isCreative();}
+    /** Engine queries such as hit particles have no actor. Only actual actors
+     * outside Creative receive an empty selection shape; physics is separate. */
+    public static VoxelShape selectionShape(ShapeContext context){return !(context instanceof EntityShapeContext entity)||entity.getEntity()==null||creative(context)?VoxelShapes.fullCube():VoxelShapes.empty();}
+    public static boolean collisionSwitch(BlockState state){return state.isOf(DARKNESS)||state.getBlock() instanceof FaerieVeilBlock;}
+    public static boolean togglePlayerCollision(ServerWorld world,BlockPos pos,PlayerEntity player){
+        var state=world.getBlockState(pos);if(!collisionSwitch(state)||!BuildPermissions.canEdit(world,player,pos))return false;
+        return world.setBlockState(pos,state.cycle(PLAYER_COLLISION),Block.NOTIFY_ALL);
+    }
+    public static ItemStack collisionArt(BlockState state,ItemStack stack){if(collisionSwitch(state))stack.getOrCreateSubNbt("BlockStateTag").putString("player_collision",Boolean.toString(state.get(PLAYER_COLLISION)));return stack;}
 }

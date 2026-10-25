@@ -28,20 +28,17 @@ public final class NoCollidePlacement {
         CommandRegistrationCallback.EVENT.register((dispatcher,access,environment)->dispatcher.register(literal("bb").requires(source->source.getEntity() instanceof ServerPlayerEntity player&&BuildPermissions.canEdit(player))
             .then(literal("no-collide").requires(source->source.hasPermissionLevel(2)).executes(context->{
                 ServerPlayerEntity player=context.getSource().getPlayerOrThrow();
-                if(player.getMainHandStack().getItem() instanceof DwUtilityBlocks.MarkerItem){
-                    invalidate(player);context.getSource().sendError(Text.literal("DW-барьер и DW-свет всегда игнорируют пересечения при установке; команда для них не используется."));return 0;
-                }
-                if(!arm(player)){context.getSource().sendError(Text.literal("Нужен размещаемый блок Dreamwalker BB в основной руке."));return 0;}
-                context.getSource().sendFeedback(()->Text.literal("Этот предмет может размещаться с пересечением блоков, пока остаётся в основной руке. Удаление из руки или смена слота сбросит разрешение."),false);return 1;
+                if(!arm(player)){context.getSource().sendError(Text.literal("Неподходящий блок"));return 0;}
+                player.sendMessage(Text.literal("Коллизии отключены"),true);return 1;
             }))));
         ServerTickEvents.END_SERVER_TICK.register(server->LEASES.entrySet().removeIf(entry->{
-            var player=server.getPlayerManager().getPlayer(entry.getKey());return player==null||!valid(player,entry.getValue());
+            var player=server.getPlayerManager().getPlayer(entry.getKey());if(player==null)return true;if(valid(player,entry.getValue()))return false;expired(player);return true;
         }));
-        ServerPlayConnectionEvents.DISCONNECT.register((handler,server)->invalidate(handler.player));
+        ServerPlayConnectionEvents.DISCONNECT.register((handler,server)->LEASES.remove(handler.player.getUuid()));
         net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents.SERVER_STOPPED.register(server->LEASES.clear());
     }
     public static boolean isModPlacement(ItemStack stack){
-        if(stack.isEmpty()||stack.getItem() instanceof DwUtilityBlocks.MarkerItem)return false;
+        if(stack.isEmpty())return false;
         var id=net.minecraft.registry.Registries.ITEM.getId(stack.getItem());
         if(!Set.of("bloodborne_dw","bloodborne_rp").contains(id.getNamespace()))return false;
         return stack.getItem() instanceof BlockItem||ObjectRegistry.isPlacementItem(stack);
@@ -60,9 +57,10 @@ public final class NoCollidePlacement {
         Lease lease=LEASES.get(player.getUuid());if(lease==null)return false;
         if(valid(player,lease))return true;
         // An old stack cannot regain its lease after being moved out and returned.
-        LEASES.remove(player.getUuid());return false;
+        LEASES.remove(player.getUuid());expired(player);return false;
     }
-    public static void invalidate(PlayerEntity player){if(player!=null)LEASES.remove(player.getUuid());}
+    public static void invalidate(PlayerEntity player){if(player!=null&&LEASES.remove(player.getUuid())!=null)expired(player);}
+    private static void expired(PlayerEntity player){player.sendMessage(Text.literal("Режим без коллизий сброшен"),true);}
     public static boolean ignoringBlocks(){return DEPTH.get()>0;}
     public static boolean owner(UUID uuid){return ignoringBlocks()&&uuid!=null&&uuid.equals(OWNER.get());}
     /** Native palettes keep a whole cell outside the actual clicked face, even when a helper says replaceable. */

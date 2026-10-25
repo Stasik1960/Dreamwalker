@@ -13,16 +13,18 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.shape.*;
 import net.minecraft.world.*;
 
-/** Opaque passable material. One state; no block entity, ticker or particles.
+/** Opaque material with a player-only collision switch; no block entity or ticker.
  * Existing composite ledger bindings remain independent and keep their physics. */
 public final class FaerieVeilBlock extends Block {
     public static final Identifier ID=new Identifier("bloodborne_dw","dw_faerie_veil");
     public static FaerieVeilBlock BLOCK;public static Item ITEM;
     private FaerieVeilBlock(){super(Settings.create().dynamicBounds().strength(-1,3600000).dropsNothing().notSolid().replaceable()
-        .solidBlock((s,w,p)->false).suffocates((s,w,p)->false).blockVision((s,w,p)->false).pistonBehavior(net.minecraft.block.piston.PistonBehavior.BLOCK));}
+        .solidBlock((s,w,p)->false).suffocates((s,w,p)->false).blockVision((s,w,p)->true).pistonBehavior(net.minecraft.block.piston.PistonBehavior.BLOCK));setDefaultState(getDefaultState().with(DwUtilityBlocks.PLAYER_COLLISION,false));}
     public static void initialize(){if(BLOCK!=null)return;BLOCK=Registry.register(Registries.BLOCK,ID,new FaerieVeilBlock());ITEM=Registry.register(Registries.ITEM,ID,new VeilItem(BLOCK));}
-    @Override public VoxelShape getCollisionShape(BlockState state,BlockView world,BlockPos pos,ShapeContext context){return VoxelShapes.empty();}
-    @Override public VoxelShape getOutlineShape(BlockState state,BlockView world,BlockPos pos,ShapeContext context){return DwUtilityBlocks.creative(context)?VoxelShapes.fullCube():VoxelShapes.empty();}
+    @Override protected void appendProperties(net.minecraft.state.StateManager.Builder<Block,BlockState> builder){builder.add(DwUtilityBlocks.PLAYER_COLLISION);}
+    @Override public VoxelShape getCollisionShape(BlockState state,BlockView world,BlockPos pos,ShapeContext context){return state.get(DwUtilityBlocks.PLAYER_COLLISION)&&context instanceof EntityShapeContext entity&&entity.getEntity() instanceof net.minecraft.entity.player.PlayerEntity?VoxelShapes.fullCube():VoxelShapes.empty();}
+    @Override public VoxelShape getOutlineShape(BlockState state,BlockView world,BlockPos pos,ShapeContext context){return DwUtilityBlocks.selectionShape(context);}
+    @Override public ItemStack getPickStack(BlockView world,BlockPos pos,BlockState state){return DwUtilityBlocks.collisionArt(state,new ItemStack(asItem()));}
     @Override public VoxelShape getCullingShape(BlockState state,BlockView world,BlockPos pos){return VoxelShapes.fullCube();}
     @Override public VoxelShape getSidesShape(BlockState state,BlockView world,BlockPos pos){return VoxelShapes.fullCube();}
     @Override public int getOpacity(BlockState state,BlockView world,BlockPos pos){return 15;}

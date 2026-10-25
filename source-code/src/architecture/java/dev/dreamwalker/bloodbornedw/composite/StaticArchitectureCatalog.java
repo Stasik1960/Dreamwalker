@@ -93,7 +93,7 @@ public final class StaticArchitectureCatalog {
         private final List<Fragment> fragments;
         private final int[] removal;
         private Recipe(int index,JsonObject row,Map<String,Pose> poses,CatalogValues shared){
-            this.index=index;key=row.get("key").getAsString();selection=shared.geometry(row.getAsJsonArray("selection"));
+            this.index=index;key=row.get("key").getAsString();Geometry selected=shared.geometry(row.getAsJsonArray("selection"));
             opacity=row.get("opacity").getAsInt();luminance=row.get("luminance").getAsInt();resident=row.get("resident").getAsInt();
             if(opacity<0||opacity>15||luminance<0||luminance>15)throw new IllegalArgumentException("Static optics range");
             List<Fragment> list=new ArrayList<>();
@@ -105,11 +105,15 @@ public final class StaticArchitectureCatalog {
                 list.add(new Fragment(pose,new Cell(x,y,z),fragment.get("member").getAsBoolean()));
             }
             fragments=shared.fragments(list);
-            if(fragments.stream().anyMatch(f->WoodFloorCollision.supports(f.pose.block.spec,f.pose.state))){
+            boolean fromPoses=row.has("physicalFromPoses")&&row.get("physicalFromPoses").getAsBoolean();
+            if(fromPoses&&!fragments.stream().anyMatch(f->f.pose.block.spec.id.getPath().equals("source_shutter_window_surround")))throw new IllegalArgumentException("Unreviewed static geometry rebuild");
+            if(fromPoses||fragments.stream().anyMatch(f->WoodFloorCollision.supports(f.pose.block.spec,f.pose.state))){
                 List<Box> physical=new ArrayList<>();
                 for(var fragment:fragments){var origin=fragment.origin();var shape=fragment.pose.footprint().get(new Cell(-origin.x(),-origin.y(),-origin.z()));if(shape!=null)physical.addAll(shape.collision());}
                 collision=shared.geometry(physical);
+                if(fromPoses){List<Box> aim=new ArrayList<>();for(var fragment:fragments){var origin=fragment.origin();aim.addAll(fragment.pose.outline().getOrDefault(new Cell(-origin.x(),-origin.y(),-origin.z()),List.of()));}selected=shared.geometry(aim);}
             }else collision=shared.geometry(row.getAsJsonArray("collision"));
+            selection=selected;
             translucent=fragments.stream().allMatch(fragment->fragment.pose().block().spec.translucent);
             if(fragments.isEmpty()||fragments.size()>32||resident< -1||resident>=fragments.size())throw new IllegalArgumentException("Static recipe budget/resident");
             if(resident>=0&&!fragments.get(resident).origin().equals(Cell.ORIGIN))throw new IllegalArgumentException("Static resident root must be this cell");
@@ -149,7 +153,7 @@ public final class StaticArchitectureCatalog {
             if(poses.isEmpty()||poses.size()>4096)throw new IllegalArgumentException("Static pose budget");
             CatalogValues shared=new CatalogValues();
             List<Recipe> recipes=new ArrayList<>();Set<String> keys=new HashSet<>();for(var value:doc.getAsJsonArray("recipes")){Recipe recipe=new Recipe(recipes.size(),value.getAsJsonObject(),poses,shared);if(!keys.add(recipe.key))throw new IllegalArgumentException("Duplicate static recipe");recipes.add(recipe);}
-            if(recipes.isEmpty()||recipes.size()>32768)throw new IllegalArgumentException("Static recipe budget");
+            if(recipes.isEmpty()||recipes.size()>65536)throw new IllegalArgumentException("Static recipe budget");
             for(Recipe recipe:recipes)for(int i=0;i<recipe.removal.length;i++){
                 int next=recipe.removal[i];List<Fragment> remaining=new ArrayList<>(recipe.fragments);remaining.remove(i);
                 if(remaining.isEmpty()){if(next!= -1)throw new IllegalArgumentException("Empty static recipe must become native air");}

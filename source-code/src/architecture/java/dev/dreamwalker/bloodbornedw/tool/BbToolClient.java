@@ -12,7 +12,7 @@ import net.minecraft.text.Text;
 @Environment(EnvType.CLIENT)
 public final class BbToolClient {
     private BbToolClient(){}
-    public static void initialize(){ClientPlayNetworking.registerGlobalReceiver(BbToolService.OPEN,(client,handler,buf,response)->{
+    public static void initialize(){NoCollideKeyClient.initialize();ClientPlayNetworking.registerGlobalReceiver(BbToolService.OPEN,(client,handler,buf,response)->{
         try{UUID token=buf.readUuid();String target=buf.readString(256),commands=buf.readString(ToolCommands.MAX_TEXT);int personal=buf.readVarInt(),global=buf.readVarInt(),used=buf.readVarInt();
             if(buf.isReadable()||personal<1||personal>ToolCommands.MAX_USES||global<1||global>ToolCommands.MAX_USES||used<0||used>global)return;
             client.execute(()->client.setScreen(new CommandScreen(token,target,commands,personal,global,used)));

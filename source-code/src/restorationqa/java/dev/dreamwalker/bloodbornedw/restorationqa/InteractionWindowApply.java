@@ -1,0 +1,67 @@
+package dev.dreamwalker.bloodbornedw.restorationqa;
+
+import com.google.gson.*;
+import dev.dreamwalker.bloodbornedw.architecture.SourceConversionScope;
+import dev.dreamwalker.bloodbornedw.compat.worldedit.WorldEditObjectTransactions;
+import dev.dreamwalker.bloodbornedw.composite.*;
+import dev.dreamwalker.bloodbornedw.runtime.*;
+import dev.dreamwalker.bloodbornedw.runtime.ObjectInstance.Owner;
+import dev.dreamwalker.bloodbornedw.runtime.CellSnapshot.BlockData;
+import dev.dreamwalker.bloodbornedw.tool.*;
+import java.nio.file.*;
+import java.util.*;
+import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
+import net.minecraft.block.*;
+import net.minecraft.nbt.*;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.math.*;
+
+/** Addressed migration of only the two legacy shutter-window poses. */
+public final class InteractionWindowApply implements ModInitializer {
+    private static final class Op {final List<ObjectInstance> add=new ArrayList<>(),old=new ArrayList<>();final Map<BlockPos,BlockData> nativeChanges=new LinkedHashMap<>();final Set<BlockPos> cells=new LinkedHashSet<>();ToolTarget oldTarget,newTarget;}
+    private Path out,planDir;private JsonObject plan;private List<List<Op>> groups;private int age,index;private boolean done;private final JsonArray results=new JsonArray();private final Map<BlockPos,BlockData> plannedNative=new LinkedHashMap<>();private final Set<BlockPos> anchors=new HashSet<>();
+    @Override public void onInitialize(){planDir=Path.of(System.getProperty("dw.interaction.apply.plan"));out=Path.of(System.getProperty("dw.interaction.qa.output"));try{plan=JsonParser.parseString(Files.readString(planDir.resolve("window-map-plan.json"))).getAsJsonObject();}catch(Exception e){throw new RuntimeException(e);}
+        ServerTickEvents.END_SERVER_TICK.register(server->{if(done||++age<30)return;try{if(groups==null)groups=prepare(server.getOverworld());if(index<groups.size()){apply(server.getOverworld(),groups.get(index++));write(false);return;}done=true;write(true);server.stop(false);}catch(Throwable t){t.printStackTrace();var row=new JsonObject();row.addProperty("status","ERROR");row.addProperty("error",t.toString());results.add(row);done=true;write(true);server.stop(false);}});
+    }
+    private static BlockPos pos(JsonArray a){return new BlockPos(a.get(0).getAsInt(),a.get(1).getAsInt(),a.get(2).getAsInt());}
+    private static BlockState state(JsonObject o){var props=new TreeMap<String,String>();o.getAsJsonObject("properties").entrySet().forEach(e->props.put(e.getKey(),e.getValue().getAsString()));return CompositeData.state(new BlockData(o.get("registryId").getAsString(),props,new byte[0]));}
+    private static String key(String pose,BlockPos root){return pose+"|"+root.asLong();}
+    private List<List<Op>> prepare(ServerWorld w){
+        Map<String,Op> statics=new LinkedHashMap<>();var ops=new ArrayList<Op>();
+        for(var raw:plan.getAsJsonArray("changes")){var r=raw.getAsJsonObject();var p=pos(r.getAsJsonArray("pos"));w.getChunk(p);var before=state(r.getAsJsonObject("before"));if(!w.getBlockState(p).equals(before))throw new IllegalStateException("Input changed "+p);int recipe=r.get("afterRecipe").getAsInt();boolean wet=before.contains(StaticArchitectureBlock.WATERLOGGED)&&before.get(StaticArchitectureBlock.WATERLOGGED);var next=recipe<0?(wet?net.minecraft.fluid.Fluids.WATER.getStill(false).getBlockState():Blocks.AIR.getDefaultState()):StaticArchitectureCatalog.state(recipe).with(StaticArchitectureBlock.WATERLOGGED,wet);plannedNative.put(p,CompositeData.data(next,new NbtCompound()));}
+        for(var raw:plan.getAsJsonArray("windows")){var r=raw.getAsJsonObject();var root=pos(r.getAsJsonArray("root"));String poseKey=r.get("pose").getAsString();var pose=StaticArchitectureCatalog.poses().stream().filter(p->p.key().equals(poseKey)).findFirst().orElseThrow();var op=new Op();var anchor=anchor(w,root);var s=CompositeArchitecture.kindBlock("source_shutter_window").getDefaultState().with(CompositeRootBlock.ROTATION,pose.state().get(CompositeRootBlock.ROTATION)).with(CompositeRootBlock.OPEN,r.get("open").getAsBoolean());var payload=shift(pose.payload(),root,anchor,s);op.add.add(CompositeRuntime.instance(w,anchor,s,UUID.randomUUID(),payload));statics.put(key(poseKey,root),op);ops.add(op);}
+        for(var entry:plannedNative.entrySet())for(var f:StaticArchitectureCatalog.recipe(w.getBlockState(entry.getKey())).fragments()){var op=statics.get(key(f.pose().key(),entry.getKey().add(f.origin().x(),f.origin().y(),f.origin().z())));if(op!=null)op.nativeChanges.put(entry.getKey(),entry.getValue());}
+        for(var raw:plan.getAsJsonArray("directUsedLegacyBlocks")){var r=raw.getAsJsonObject();var root=pos(r.getAsJsonArray("pos"));w.getChunk(root);var before=w.getBlockState(root);if(!before.equals(state(r)))throw new IllegalStateException("Legacy input changed "+root);if(!(w.getBlockEntity(root) instanceof CompositeBlockEntity be)||be.resident()==null)throw new IllegalStateException("Missing legacy owner data "+root);var op=new Op();op.old.add(CompositeRuntime.instance(w,root,before,be.resident().instanceId(),be.payload()));
+            var payload=be.payload();var rendered=before;if(ImportedTypeAliases.needsMigration(before,payload)){payload=ImportedTypeAliases.transformPayload(before,payload);rendered=ImportedTypeAliases.target(before);}var wall=CompositeArchitecture.kindBlock("source_shutter_window_surround").getDefaultState().with(CompositeRootBlock.ROTATION,rendered.get(CompositeRootBlock.ROTATION)).with(CompositeRootBlock.VARIANT,CompositeSpec.poseVariant(rendered));op.add.add(CompositeRuntime.instance(w,root,wall,UUID.randomUUID(),payload));anchors.add(root);
+            var anchor=anchor(w,root);var window=CompositeArchitecture.kindBlock("source_shutter_window").getDefaultState().with(CompositeRootBlock.ROTATION,rendered.get(CompositeRootBlock.ROTATION)).with(CompositeRootBlock.OPEN,CompositeSpec.poseVariant(rendered)==1).with(CompositeRootBlock.PROFILE,rendered.get(CompositeRootBlock.PROFILE));var obj=CompositeRuntime.instance(w,anchor,window,be.resident().instanceId(),shift(payload,root,anchor,window));op.add.add(obj);op.oldTarget=new ToolTarget(ToolTarget.Kind.ARCHITECTURE,w.getRegistryKey().getValue().toString(),be.resident().instanceId(),root.asLong(),be.resident().registryId());op.newTarget=new ToolTarget(ToolTarget.Kind.ARCHITECTURE,w.getRegistryKey().getValue().toString(),obj.owner().instanceId(),anchor.asLong(),obj.owner().registryId());ops.add(op);
+        }
+        // Connected touched cells form one transaction. One local failure cannot
+        // spread to unrelated streets or window groups.
+        int[] parent=new int[ops.size()];for(int i=0;i<parent.length;i++)parent[i]=i;var claimed=new HashMap<BlockPos,Integer>();
+        for(int i=0;i<ops.size();i++){var op=ops.get(i);op.cells.addAll(op.nativeChanges.keySet());for(var obj:op.add)for(var c:obj.cells().keySet())op.cells.add(CompositeData.pos(obj.owner().root().add(c)));for(var obj:op.old)for(var c:obj.cells().keySet())op.cells.add(CompositeData.pos(obj.owner().root().add(c)));for(var p:op.cells){Integer prev=claimed.putIfAbsent(p,i);if(prev!=null)parent[find(parent,i)]=find(parent,prev);}}
+        var sets=new LinkedHashMap<Integer,List<Op>>();for(int i=0;i<ops.size();i++)sets.computeIfAbsent(find(parent,i),k->new ArrayList<>()).add(ops.get(i));return new ArrayList<>(sets.values());
+    }
+    private static int find(int[] p,int i){while(p[i]!=i){p[i]=p[p[i]];i=p[i];}return i;}
+    private BlockPos anchor(ServerWorld w,BlockPos root){for(int radius=0;radius<=3;radius++)for(int y=-radius;y<=radius;y++)for(int x=-radius;x<=radius;x++)for(int z=-radius;z<=radius;z++){if(Math.abs(x)+Math.abs(y)+Math.abs(z)!=radius)continue;var p=root.add(x,y,z);if(anchors.contains(p)||!w.isInBuildLimit(p))continue;w.getChunk(p);var current=w.getBlockState(p);var future=plannedNative.get(p);if(!(future==null?current.isAir():CompositeData.state(future).isAir())||w.getBlockEntity(p)!=null||!CompositeRuntime.contributions(w,p).isEmpty())continue;anchors.add(p);return p;}throw new IllegalStateException("No safe local anchor "+root);}
+    private static NbtCompound shift(NbtCompound source,BlockPos oldRoot,BlockPos anchor,BlockState state){var p=source.copy();var original=CompositeSourceShift.local(p);var d=oldRoot.subtract(anchor);var extra=new CompositeSourceShift.Shift(d.getX(),d.getY(),d.getZ()).rotate(-state.get(CompositeRootBlock.ROTATION));var list=new NbtList();list.add(NbtDouble.of(original.x()+extra.x()));list.add(NbtDouble.of(original.y()+extra.y()));list.add(NbtDouble.of(original.z()+extra.z()));p.put("SourceShift",list);return p;}
+    private void apply(ServerWorld w,List<Op> ops){var remove=new ArrayList<Owner>();var add=new ArrayList<ObjectInstance>();var nativeChanges=new LinkedHashMap<BlockPos,BlockData>();var cells=new LinkedHashSet<BlockPos>();for(var op:ops){op.old.forEach(o->remove.add(o.owner()));add.addAll(op.add);nativeChanges.putAll(op.nativeChanges);cells.addAll(op.cells);}var oldRoots=new HashSet<BlockPos>();remove.forEach(o->oldRoots.add(CompositeData.pos(o.root())));var before=new LinkedHashMap<BlockPos,BlockData>();var protectedData=new LinkedHashMap<BlockPos,NbtCompound>();
+        for(var p:cells){w.getChunk(p);var be=w.getBlockEntity(p);var data=be==null?new NbtCompound():be.createNbt();if(w.getBlockState(p).getBlock() instanceof NativePhysicsBlock)data.putInt(NativeVisuals.ITEM_KEY,NativeVisuals.required(w,p));before.put(p,CompositeData.data(w.getBlockState(p),data));if(be!=null&&!oldRoots.contains(p))protectedData.put(p,be.createNbtWithIdentifyingData());for(var c:CompositeRuntime.contributions(w,p)){var r=CompositeData.pos(c.owner().root());w.getChunk(r);if(!oldRoots.contains(r)&&w.getBlockEntity(r)!=null)protectedData.put(r,w.getBlockEntity(r).createNbtWithIdentifyingData());}}
+        var commands=ToolCommands.get(w.getServer()).writeNbt(new NbtCompound());var ids=new HashSet<UUID>();add.forEach(o->ids.add(o.owner().instanceId()));var result=SourceConversionScope.initialInstances(ids,()->WorldEditObjectTransactions.replace(w,remove,add,nativeChanges));var row=new JsonObject();row.addProperty("windows",ops.size());row.addProperty("status",result.outcome().toString());row.addProperty("reason",result.reason());var points=new JsonArray();for(var p:cells){var a=new JsonArray();a.add(p.getX());a.add(p.getY());a.add(p.getZ());points.add(a);}row.add("touchedCells",points);
+        if(result.outcome()==TransactionCore.Outcome.COMMITTED){
+            String bad=null;for(var e:protectedData.entrySet())if(!protectedEqual(e.getValue(),w.getBlockEntity(e.getKey()),remove)){bad="Protected data changed "+e.getKey();break;}
+            if(bad!=null){var old=new ArrayList<ObjectInstance>();ops.forEach(o->old.addAll(o.old));var allNew=add.stream().map(ObjectInstance::owner).toList();var rollback=WorldEditObjectTransactions.replace(w,allNew,old,before);ToolCommands.restoreAssemblyMigration(w.getServer(),commands);if(rollback.outcome()!=TransactionCore.Outcome.COMMITTED)throw new IllegalStateException("Rollback failed "+bad+": "+rollback.reason());row.addProperty("status","ROLLED_BACK");row.addProperty("reason",bad);}
+            else{var updated=commands.copy();for(NbtElement raw:updated.getList("Entries",10)){var entry=(NbtCompound)raw;var target=ToolTarget.read(entry.getCompound("Target"));for(var op:ops)if(op.oldTarget!=null&&target.key().equals(op.oldTarget.key()))entry.put("Target",op.newTarget.write());}ToolCommands.restoreAssemblyMigration(w.getServer(),updated);var windows=new JsonArray();for(var op:ops){var obj=op.add.get(op.add.size()-1);var n=new JsonObject();n.addProperty("root",CompositeData.pos(obj.owner().root()).toShortString());n.addProperty("uuid",obj.owner().instanceId().toString());windows.add(n);}row.add("installed",windows);row.addProperty("protectedRecords",protectedData.size());}
+        }results.add(row);
+    }
+    private static boolean protectedEqual(NbtCompound before,net.minecraft.block.entity.BlockEntity now,List<Owner> removed){
+        if(now==null)return false;var after=now.createNbtWithIdentifyingData();if(before.equals(after))return true;
+        if(!(now instanceof CompositeBlockEntity current))return false;
+        // Adding a separate guest may extend the container's owner list. The
+        // pre-existing resident, typed payload and every old contribution stay.
+        if(!before.getCompound("resident").equals(after.getCompound("resident"))||!before.getCompound("payload").equals(current.payload()))return false;
+        var previous=CompositeData.savedContributions(before).stream().filter(c->!removed.contains(c.owner())).toList();if(!current.contributions().containsAll(previous))return false;
+        var a=before.copy();var b=after.copy();a.remove(CompositeOwnerNbt.KEY);a.remove("owners");b.remove(CompositeOwnerNbt.KEY);b.remove("owners");return a.equals(b);
+    }
+    private void write(boolean complete){try{var j=new JsonObject();j.addProperty("status",complete?"COMPLETE":"APPLYING");j.addProperty("groups",groups==null?0:groups.size());j.addProperty("cursor",index);j.add("results",results);Files.writeString(out.resolve("map-apply.json"),new GsonBuilder().setPrettyPrinting().create().toJson(j));}catch(Exception e){throw new RuntimeException(e);}}
+}

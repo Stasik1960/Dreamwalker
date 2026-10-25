@@ -29,7 +29,7 @@ import net.minecraft.util.math.Vec3d;
 import static net.minecraft.server.command.CommandManager.*;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 
-/** Five server-authoritative actions; no undo, selection overlay or input interception. */
+/** Server-authoritative object actions, preserving stored historical mode ordinals. */
 public final class BbToolService {
     public static final Identifier ID=new Identifier("bloodborne_dw","bb_tool");
     public static final Identifier OPEN=new Identifier("bloodborne_dw","tool_commands_open"),SAVE=new Identifier("bloodborne_dw","tool_commands_save");
@@ -92,7 +92,7 @@ public final class BbToolService {
         if(!holding(player)||!canEdit(player)||target==null||!target.valid(player.getServer())||!target.dimension().equals(player.getServerWorld().getRegistryKey().getValue().toString()))return;
         if(!player.getServerWorld().canPlayerModifyAt(player,BlockPos.ofFloored(target.position(player.getServer()))))return;
         var mode=BbToolItem.mode(player.getMainHandStack());boolean success=switch(mode){
-            case UP->move(player,target,1);case DOWN->move(player,target,-1);case SPECIAL->special(player,target);case COMMANDS->openCommands(player,target);case CLEAR->clear(player,target);
+            case UP->move(player,target,1);case DOWN->move(player,target,-1);case SPECIAL->special(player,target);case COMMANDS->openCommands(player,target);case CLEAR->clear(player,target);case ROTATE->BbToolRotations.rotate(player,target);
         };
         if(mode==BbToolItem.Mode.UP||mode==BbToolItem.Mode.DOWN)player.sendMessage(Text.literal(success?"Объект перемещён на "+(mode==BbToolItem.Mode.UP?"+1":"−1")+" блок.":"Не удалось переместить объект."),true);
     }
@@ -116,6 +116,8 @@ public final class BbToolService {
         return false;
     }
     public static boolean special(ServerPlayerEntity player,ToolTarget target){
+        if(!canEdit(player)||!target.valid(player.getServer()))return false;
+        if(target.kind()==ToolTarget.Kind.BLOCK){var world=target.world(player.getServer());var pos=BlockPos.fromLong(target.root());if(DwUtilityBlocks.collisionSwitch(world.getBlockState(pos)))return DwUtilityBlocks.togglePlayerCollision(world,pos,player);}
         var select=selection(player);
         if(target.kind()==ToolTarget.Kind.RP&&target.entity(player.getServer()) instanceof RpObjectEntity rp){
             if(rp.isMechanism()){
@@ -136,7 +138,7 @@ public final class BbToolService {
             if(!select.levers.isEmpty()){boolean linked=MechanismLinks.linkLevers(player,List.copyOf(select.levers),ref);if(linked){clearSelection(player);player.sendMessage(Text.literal("Связка рычагов создана."),false);}else player.sendMessage(Text.literal("Не удалось создать связку."),false);return linked;}
             clearSelection(player);boolean only=!ObjectPolicies.leversOnly(player.getServer(),ref);boolean changed=ObjectPolicies.setManual(player,ref,only);if(changed)player.sendMessage(Text.literal(only?"Объект открывается только рычагом.":"Объект открывается и закрывается на ПКМ."),false);return changed;
         }
-        clearSelection(player);return alternate(player,target,select.radius);
+        return false;
     }
     private static String catalogueId(BlockState state){var entry=dev.dreamwalker.bloodbornedw.debug.DebugCatalogue.entry(state);return entry==null?Registries.BLOCK.getId(state.getBlock()).toString():entry.temporaryId();}
     public static boolean alternate(ServerPlayerEntity player,ToolTarget target,int radius){

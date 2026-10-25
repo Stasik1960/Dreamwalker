@@ -224,7 +224,15 @@ private record GeometrySnapshot(GeometryKey key,net.minecraft.util.math.Box visu
  @Override public void setPosition(double x,double y,double z){super.setPosition(x,y,z);if(assetId!=null){refreshCollider();dev.dreamwalker.bloodbornedw.tool.BbAlternateService.rpMoved(this);}}
  @Override public void setYaw(float yaw){super.setYaw(yaw);if(assetId!=null)refreshCollider();}
  @Override public void setPitch(float pitch){super.setPitch(pitch);if(assetId!=null)refreshCollider();}
- public void refreshCollider(){if(assetId==null)return;setBoundingBox(queryBounds());}
+ /** Public entity bounds describe the active physical volume. Rendering and
+  * indexed part queries keep their independent, complete model envelopes. */
+ public net.minecraft.util.math.Box physicalBounds(){
+  net.minecraft.util.math.Box result=null;for(var part:activePhysicalBoxes())result=result==null?part:result.union(part);
+  return result==null?new net.minecraft.util.math.Box(getPos(),getPos()):result;
+ }
+ @Override public net.minecraft.util.math.Box getVisibilityBoundingBox(){return assetId==null?super.getVisibilityBoundingBox():queryBounds();}
+ @Override public boolean shouldRender(double squaredDistance){if(assetId==null)return super.shouldRender(squaredDistance);double size=queryBounds().getAverageSideLength();if(Double.isNaN(size))size=1;double range=size*64*getRenderDistanceMultiplier();return squaredDistance<range*range;}
+ public void refreshCollider(){if(assetId==null)return;setBoundingBox(physicalBounds());}
  // Forge decorations use their registered EntityDimensions, including square X/Z bounds.
  private net.minecraft.util.math.Box closedCollider(){return getDimensions(getPose()).getBoxAt(getX(),getY(),getZ());}
  @Override public void registerControllers(AnimatableManager.ControllerRegistrar controllers){var controller=new AnimationController<>(this,"main",0,state->{if(assetId.equals("wood_gate")||assetId.equals("ladder"))return PlayState.STOP;String suffix=transitionTicks>0?transition:stableSuffix();AssetSpec.Clip clip=asset().clip(suffix);if(clip==null||clip.name().isBlank())return PlayState.STOP;Animation.LoopType loop=transitionTicks>0?Animation.LoopType.PLAY_ONCE:(clip.loopType()==Animation.LoopType.PLAY_ONCE?Animation.LoopType.HOLD_ON_LAST_FRAME:clip.loopType());return state.setAndContinue(RawAnimation.begin().then(clip.name(),loop));});if(assetId.equals("wood_gate"))controller.triggerableAnim("wood_gate_once",RawAnimation.begin().then(asset().animationName("idle"),Animation.LoopType.PLAY_ONCE));controllers.add(controller);}

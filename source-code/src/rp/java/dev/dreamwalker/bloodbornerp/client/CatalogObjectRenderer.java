@@ -11,6 +11,7 @@ public final class CatalogObjectRenderer extends GeoEntityRenderer<RpObjectEntit
   super(context,new CatalogEntityModel<>()); withScale(scale); shadowRadius=0;
  }
  @Override public boolean hasLabel(RpObjectEntity entity){return false;}
+ @Override public boolean shouldRender(RpObjectEntity entity,net.minecraft.client.render.Frustum frustum,double x,double y,double z){return entity.shouldRender(x,y,z)&&(entity.ignoreCameraFrustum||frustum.isVisible(entity.getVisibilityBoundingBox().expand(.5)));}
  @Override public software.bernie.geckolib.core.object.Color getRenderColor(RpObjectEntity entity,float delta,int light){return software.bernie.geckolib.core.object.Color.WHITE;}
  @Override public void render(RpObjectEntity entity,float yaw,float delta,MatrixStack matrices,net.minecraft.client.render.VertexConsumerProvider vertices,int light){
         withScale(entity.asset().scale()*entity.objectScale());super.render(entity,yaw,delta,matrices,vertices,light);

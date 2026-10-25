@@ -11,7 +11,7 @@ import net.minecraft.client.item.TooltipContext;
 
 public final class BbToolItem extends Item {
     public enum Mode {
-        UP("Поднять на 1 блок"),DOWN("Опустить на 1 блок"),SPECIAL("Особое действие"),COMMANDS("Привязать команды"),CLEAR("Удалить связи и команды");
+        UP("Поднять на 1 блок"),DOWN("Опустить на 1 блок"),SPECIAL("Особое действие"),COMMANDS("Привязать команды"),CLEAR("Удалить связи и команды"),ROTATE("Поворот по часовой стрелке");
         public final String title;Mode(String title){this.title=title;}
     }
     public BbToolItem(){super(new Settings().maxCount(1));}
