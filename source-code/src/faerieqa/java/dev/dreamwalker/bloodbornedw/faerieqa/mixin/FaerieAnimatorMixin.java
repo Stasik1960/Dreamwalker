@@ -12,7 +12,7 @@ public abstract class FaerieAnimatorMixin {
     @Shadow int frame;
     @Shadow int currentTime;
     @Inject(method="tick",at=@At("HEAD"),cancellable=true)
-    private void dw$freeze(int x,int y,CallbackInfo ci){if(field_40543.getId().getPath().startsWith("block/faerie_veil/")&&FaerieQaClient.freeze)ci.cancel();}
+    private void dw$freeze(int x,int y,CallbackInfo ci){if(field_40543.getId().getPath().equals("block/faerie_veil")&&FaerieQaClient.freeze)ci.cancel();}
     @Inject(method="tick",at=@At("RETURN"))
-    private void dw$phase(int x,int y,CallbackInfo ci){if(field_40543.getId().getPath().startsWith("block/faerie_veil/"))FaerieQaClient.spriteTick(field_40543.getId().toString(),frame,currentTime);}
+    private void dw$phase(int x,int y,CallbackInfo ci){if(field_40543.getId().getPath().equals("block/faerie_veil"))FaerieQaClient.spriteTick(field_40543.getId().toString(),frame,currentTime);}
 }

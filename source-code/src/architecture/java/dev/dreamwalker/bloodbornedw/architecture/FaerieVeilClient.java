@@ -23,12 +23,9 @@ import net.minecraft.world.BlockRenderView;
 public final class FaerieVeilClient {
     public static final int PERIOD=8,TILES=PERIOD*PERIOD;
     private FaerieVeilClient(){}
-    public static Identifier tileModel(int tile){return new Identifier("bloodborne_dw",String.format(java.util.Locale.ROOT,"block/faerie_veil/tile_%02d",tile));}
     public static void initialize(){ModelLoadingPlugin.register(plugin->{
-        Session session=new Session();Identifier[] ids=new Identifier[TILES];for(int i=0;i<TILES;i++)ids[i]=tileModel(i);plugin.addModels(ids);
         plugin.modifyModelAfterBake().register(ModelModifier.WRAP_PHASE,(model,context)->{
-            var id=context.id();if(id.getNamespace().equals("bloodborne_dw")&&id.getPath().startsWith("block/faerie_veil/tile_")){int tile=Integer.parseInt(id.getPath().substring("block/faerie_veil/tile_".length()));session.tiles[tile]=model;return model;}
-            if(id instanceof ModelIdentifier block&&block.getNamespace().equals("bloodborne_dw")&&block.getPath().equals(FaerieVeilBlock.ID.getPath()))return new Model(model,session);
+            var id=context.id();if(id instanceof ModelIdentifier block&&block.getNamespace().equals("bloodborne_dw")&&block.getPath().equals(FaerieVeilBlock.ID.getPath()))return new Model(model,new Session(model));
             return model;
         });
     });}
@@ -49,9 +46,16 @@ public final class FaerieVeilClient {
         return new Projection(axes[0],signs[0],axes[1],signs[1]);
     }
     private static final class Session {
-        final BakedModel[] tiles=new BakedModel[TILES];final BakedQuad[][] faces=new BakedQuad[6][TILES];final Projection[] projections=new Projection[6];RenderMaterial material;boolean ready;
+        final BakedModel template;final BakedQuad[][] faces=new BakedQuad[6][TILES];final Projection[] projections=new Projection[6];RenderMaterial material;boolean ready;
+        Session(BakedModel template){this.template=template;}
         synchronized void prepare(){if(ready)return;var renderer=RendererAccess.INSTANCE.getRenderer();if(renderer==null)throw new IllegalStateException("Veil requires Fabric Rendering API / Indium with Sodium");material=renderer.materialFinder().blendMode(BlendMode.SOLID).find();
-            for(var face:Direction.values())for(int tile=0;tile<TILES;tile++){var model=Objects.requireNonNull(tiles[tile],"Missing veil tile "+tile);var quads=model.getQuads(null,face,Random.create(0));if(quads.size()!=1)throw new IllegalStateException("Veil tile must have one quad per face");faces[face.ordinal()][tile]=quads.get(0);if(tile==0)projections[face.ordinal()]=projection(quads.get(0));}
+            for(var face:Direction.values()){
+                var quads=template.getQuads(null,face,Random.create(0));if(quads.size()!=1)throw new IllegalStateException("Veil requires one cube quad per face");var original=quads.get(0);var sprite=original.getSprite();projections[face.ordinal()]=projection(original);
+                for(int tile=0;tile<TILES;tile++){int[] data=original.getVertexData().clone();for(int vertex=0;vertex<4;vertex++){
+                    float u=(Float.intBitsToFloat(data[vertex*8+4])-sprite.getMinU())/(sprite.getMaxU()-sprite.getMinU());float v=(Float.intBitsToFloat(data[vertex*8+5])-sprite.getMinV())/(sprite.getMaxV()-sprite.getMinV());
+                    data[vertex*8+4]=Float.floatToRawIntBits(sprite.getMinU()+(sprite.getMaxU()-sprite.getMinU())*((tile%PERIOD+u)/PERIOD));data[vertex*8+5]=Float.floatToRawIntBits(sprite.getMinV()+(sprite.getMaxV()-sprite.getMinV())*((tile/PERIOD+v)/PERIOD));
+                }faces[face.ordinal()][tile]=new BakedQuad(data,original.getColorIndex(),original.getFace(),sprite,original.hasShade());}
+            }
             ready=true;
         }
         void emit(BlockPos pos,RenderContext context){prepare();var emitter=context.getEmitter();for(var face:Direction.values()){int tile=projections[face.ordinal()].at(pos);emitter.fromVanilla(faces[face.ordinal()][tile],material,face);emitter.emit();}}

@@ -40,7 +40,13 @@ files +=list((P/'src/architecture/java/dev/dreamwalker/bloodbornedw/architecture
 files +=[p for p in (P/'src/faerieqa').rglob('*') if p.is_file()]
 files +=list((P/'tools').glob('*faerie*.py'))
 files +=[assets/'blockstates/dw_faerie_veil.json',assets/'models/block/dw_faerie_veil.json',assets/'models/item/dw_faerie_veil.json']
-files +=[p for folder in (assets/'textures/block/faerie_veil',assets/'models/block/faerie_veil') for p in folder.rglob('*') if p.is_file()]
+files +=[assets/'textures/block/faerie_veil.png',assets/'textures/block/faerie_veil.png.mcmeta']
+for tile in range(64):
+ for folder,ext in [('textures/block/faerie_veil','.png'),('textures/block/faerie_veil','.png.mcmeta'),('models/block/faerie_veil','.json')]:
+  obsolete=R/'source-code/src/architecture/resources/assets/bloodborne_dw'/folder/(f'tile_{tile:02d}'+ext)
+  if obsolete.exists():
+   assert obsolete.resolve().is_relative_to((R/'source-code/src/architecture/resources/assets/bloodborne_dw').resolve()) and not obsolete.is_symlink()
+   obsolete.unlink()
 files +=[P/n for n in ('README.md','build.gradle','gradle.properties')]
 files +=[p for p in D.rglob('*') if p.is_file() and p.suffix in ('.txt','.json') and p.stat().st_size<10000000]
 for p in files:
