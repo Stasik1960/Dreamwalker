@@ -31,6 +31,8 @@ public final class WorldEditObjectTransactions {
             int visual=payload.getInt(NativeVisuals.ITEM_KEY);
             if(visual<0||visual>=NativeGridCatalog.cells().size()||NativeVisualLayout.physics(visual)<0||!NativeGridCatalog.state(visual).equals(CompositeData.state(entry.getValue())))return new TransactionCore.Result(TransactionCore.Outcome.REJECTED,0,"Invalid WorldEdit native visual/physics pair");
             access.authorizeNativeVisualWrite(CompositeData.cell(entry.getKey()),visual);
+        }else if(CompositeData.state(entry.getValue()).getBlock() instanceof StaticArchitectureBlock){
+            access.authorizeStaticWrite(CompositeData.cell(entry.getKey()),CompositeData.state(entry.getValue()));
         }
         Map<Cell,CellSnapshot> expected=new TreeMap<>(),overlay=new TreeMap<>();
         TransactionCore.WorldAccess virtual=new TransactionCore.WorldAccess() {

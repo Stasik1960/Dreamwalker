@@ -11,6 +11,7 @@ if git('branch','--show-current')!=branch:
  else:git('switch','-c',branch)
 owned=[
 'gradle.properties','src/architecture/resources/fabric.mod.json',
+'src/architecture/java/dev/dreamwalker/bloodbornedw/composite/FabricCompositeWorld.java','src/architecture/java/dev/dreamwalker/bloodbornedw/compat/worldedit/WorldEditObjectTransactions.java',
 'src/architecture/resources/assets/bloodborne_dw/blockstates/static_architecture_256.json','src/architecture/resources/assets/bloodborne_dw/blockstates/static_architecture_257.json',
 'src/architecture/java/dev/dreamwalker/bloodbornedw/architecture/DwUtilityBlocks.java','src/architecture/java/dev/dreamwalker/bloodbornedw/architecture/FaerieVeilBlock.java','src/architecture/java/dev/dreamwalker/bloodbornedw/architecture/NoCollidePlacement.java',
 'src/architecture/java/dev/dreamwalker/bloodbornedw/tool/BbToolItem.java','src/architecture/java/dev/dreamwalker/bloodbornedw/tool/BbToolService.java','src/architecture/java/dev/dreamwalker/bloodbornedw/tool/BbToolRotations.java','src/architecture/java/dev/dreamwalker/bloodbornedw/tool/BbToolClient.java','src/architecture/java/dev/dreamwalker/bloodbornedw/tool/NoCollideKeyClient.java',

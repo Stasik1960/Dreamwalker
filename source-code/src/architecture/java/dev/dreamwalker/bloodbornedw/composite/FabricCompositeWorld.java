@@ -19,6 +19,16 @@ public class FabricCompositeWorld implements TransactionCore.WorldAccess {
     private final Map<Owner,ObjectInstance> incoming;
     private final Map<Cell,Original> originals=new TreeMap<>();
     private final Set<Cell> explicitNativeVisualWrites=new HashSet<>();
+    private final Set<Cell> explicitStaticWrites=new HashSet<>();
+    /** Explicit finite-recipe replacements may exchange plain static carriers;
+     * they never authorize overwriting a block entity or another block family. */
+    public void authorizeStaticWrite(Cell cell,BlockState next){
+        assertMutationThread();BlockPos pos=CompositeData.pos(cell);
+        if(!(world.getBlockState(pos).getBlock() instanceof StaticArchitectureBlock)
+                ||!(next.getBlock() instanceof StaticArchitectureBlock)
+                ||world.getBlockEntity(pos)!=null||next.hasBlockEntity())throw new IllegalArgumentException("Not a plain static replacement");
+        explicitStaticWrites.add(cell);
+    }
     /** Narrow WorldEdit authorization; normal composite transactions must not
      * change unrelated foreign blocks. All desired indices are prevalidated. */
     public void authorizeNativeVisualWrite(Cell cell,int index){
@@ -128,6 +138,13 @@ public class FabricCompositeWorld implements TransactionCore.WorldAccess {
             else NativeGridBridge.validate(nativeGridBase,nextState);
         }
         if(next.kind()==Kind.FOREIGN){
+            if(explicitStaticWrites.contains(cell)){
+                if(original==null||!(original.state.getBlock() instanceof StaticArchitectureBlock)
+                        ||!(nextState.getBlock() instanceof StaticArchitectureBlock)
+                        ||!original.fullNbt.isEmpty()||world.getBlockEntity(pos)!=null
+                        ||!CompositeData.nbt(next.data().blockEntityNbt()).isEmpty())throw new IllegalArgumentException("Static replacement contains block entity data");
+                world.setBlockState(pos,nextState,Block.FORCE_STATE|Block.SKIP_DROPS);
+            }
             if(explicitNativeVisualWrites.contains(cell)&&nextState.getBlock() instanceof NativePhysicsBlock){
                 var desired=CompositeData.nbt(next.data().blockEntityNbt());
                 if(!desired.contains(NativeVisuals.ITEM_KEY,3))throw new IllegalArgumentException("Missing explicit WorldEdit visual");

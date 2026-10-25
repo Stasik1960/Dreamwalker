@@ -1,0 +1,7 @@
+{
+  "reason": "Preview 1 rolled back baked static replacements because FOREIGN writes only supported NativePhysicsBlock changes.",
+  "change": "Explicit static recipe replacement, old and new both StaticArchitectureBlock, with no block entity or block entity payload; other foreign writes retain existing restrictions.",
+  "preservation": "Core preconditions, typed rollback snapshots, guest bindings and post-write verification remain active.",
+  "acceptedUnaffectedChecks": ["server-1/server-checks.json", "client-1/client-checks.json"],
+  "requires": ["complete preview migration", "offline preservation audit", "final client visuals on migrated map"]
+}
