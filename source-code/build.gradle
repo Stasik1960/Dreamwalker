@@ -24,6 +24,10 @@ dependencies {
  implementation 'com.eliotlash.mclib:mclib:20'
 }
 sourceSets {
+ restorationqa {
+  compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
+  runtimeClasspath += sourceSets.main.output + sourceSets.main.runtimeClasspath
+ }
  faerieqa {
   compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
   runtimeClasspath += sourceSets.main.output + sourceSets.main.runtimeClasspath
@@ -85,6 +89,8 @@ sourceSets {
  }
 }
 configurations {
+ restorationqaImplementation.extendsFrom implementation
+ restorationqaRuntimeOnly.extendsFrom runtimeOnly
  faerieqaImplementation.extendsFrom implementation
  faerieqaRuntimeOnly.extendsFrom runtimeOnly
  utilityqaImplementation.extendsFrom implementation
@@ -112,6 +118,21 @@ tasks.register('fixQaJar', Jar) {
  archiveBaseName = 'dreamwalker-fix-qa'
  archiveClassifier = 'dev'
 }
+tasks.register('restorationQaJar', Jar) {
+ dependsOn restorationqaClasses
+ from sourceSets.restorationqa.output
+ archiveBaseName = 'dreamwalker-restoration-qa'
+ archiveClassifier = 'dev'
+}
+tasks.register('remapRestorationQaJar', net.fabricmc.loom.task.RemapJarTask) {
+ dependsOn restorationQaJar
+ inputFile.set(tasks.named('restorationQaJar', Jar).flatMap { it.archiveFile })
+ classpath.from(sourceSets.restorationqa.compileClasspath)
+ archiveBaseName = 'dreamwalker-restoration-qa'
+ archiveClassifier = ''
+ addNestedDependencies = false
+}
+tasks.register('restorationBuild') { dependsOn remapJar, remapRestorationQaJar }
 tasks.register('remapFixQaJar', net.fabricmc.loom.task.RemapJarTask) {
  dependsOn fixQaJar
  inputFile.set(tasks.named('fixQaJar', Jar).flatMap { it.archiveFile })

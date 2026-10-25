@@ -23,7 +23,10 @@ public final class RpObjectSelection {
         return Optional.ofNullable(nearest);
     }
     public static EntityHitResult raycast(Entity viewer,Vec3d start,Vec3d end,Box query,Predicate<Entity> predicate,double maximumSquared,EntityHitResult nativeHit){
-        EntityHitResult selected=nativeHit;double limit=nativeHit==null?maximumSquared:Math.min(maximumSquared,start.squaredDistanceTo(nativeHit.getPos()));
+        // Vanilla intersects the entity's broad visual AABB. RP parts below
+        // must confirm that hit, otherwise empty space between branches wins.
+        EntityHitResult selected=nativeHit!=null&&nativeHit.getEntity() instanceof RpObjectEntity?null:nativeHit;
+        double limit=selected==null?maximumSquared:Math.min(maximumSquared,start.squaredDistanceTo(selected.getPos()));
         for(RpObjectEntity object:RpObjectIndex.in(viewer.getWorld(),query)){
             if(object==viewer||!object.canHit()||!predicate.test(object))continue;
             Vec3d point=hit(object,start,end).orElse(null);if(point==null)continue;double distance=start.squaredDistanceTo(point);

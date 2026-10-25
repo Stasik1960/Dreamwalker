@@ -54,6 +54,17 @@ public final class NativePlayerBreak {
         if(dev.dreamwalker.bloodbornedw.architecture.DwUtilityBlocks.marker(state)){scope.handled=true;return dev.dreamwalker.bloodbornedw.architecture.DwUtilityBlocks.remove(world,pos,player);}
         var owner=CompositeRuntime.target(world,pos,player);
         if(owner==null&&NativeGridBridge.base(world,pos)>=0&&NativeGridBridge.backgroundHit(world,pos,player)){scope.handled=true;return NativeGridBridge.breakBackground(world,pos,player);}
+        // Palette cubes deliberately have neither a resident owner nor a BE.
+        // Remove only their base, retaining separately owned protruding parts.
+        if(owner==null&&ImportedCompactBlock.compact(state)){
+            scope.handled=true;
+            var stack=drop?state.getBlock().getPickStack(world,pos,state):net.minecraft.item.ItemStack.EMPTY;
+            var next=state.getFluidState().getBlockState();
+            if(next.isAir()&&!CompositeRuntime.contributions(world,pos).isEmpty())next=CompositeArchitecture.CELL.getDefaultState();
+            boolean removed=dev.dreamwalker.bloodbornedw.architecture.DwUtilityBlocks.replaceCarrier(world,pos,next,player);
+            if(removed&&!stack.isEmpty())net.minecraft.block.Block.dropStack(world,pos,stack);
+            return removed;
+        }
         if(owner==null)owner=CompositeRuntime.soleNativeOwner(world,pos);
         if(owner!=null){scope.handled=true;return CompositeRuntime.remove(world,owner,player,drop).outcome()==TransactionCore.Outcome.COMMITTED;}
         if(state.getBlock() instanceof CompositeRootBlock||state.getBlock() instanceof CompositeCellBlock){scope.handled=true;return false;}
