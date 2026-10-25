@@ -1,0 +1,42 @@
+Продолжение: visual-physics.4, четыре служебных блока + ожидаемый выбор портала
+Проект C:\Users\vakir\CodexProjects\DW-visual-fixes-20261025.
+Читать TASK-RU.txt и acceptance.json (если он создан); отчёт до PASS рабочий.
+Не конвертировать карту. C: — рабочий диск; E: приостановлен. Запуски через Guard.
+База .3: adac9f9060e772c7c836f72a074b6a4dade198e2.
+Кандидат .4 JAR SHA256 b98bf53c37ef8244ade0b66875e1da42d8d22809c5c1ffc1104f2430861ab736.
+Сервер server-1 PASS. Сохранение всех измерений подтверждено, остаточный процесс
+26752 закрыт вручную после save (receipt post-save-stop.json, exit 4294967295).
+Не требовать exit 0 этого конкретного прогона; проверять PASS + receipt сохранения.
+Клиент client-1 запущен с 4G, PID 13076; пока не запускать другую тяжёлую JVM.
+Контрольный мир utility-profiles/server/utility-test скопирован после сохранения
+в utility-profiles/client/saves/dw-utility-qa. QA-клиент проверяет именно перезагрузку.
+Фикстуры около [8192,220,8192]; город не затронут. QA sourceSet utilityqa.
+build-native-visual/libs содержит основной JAR .4 и отдельный utility-qa JAR.
+Тестовый мод никогда не устанавливать в Desktop client_mods/server_mods.
+
+Главные файлы: DwUtilityBlocks, FauxWaterFluid, FauxWaterData, FauxWaterlogging,
+FauxWaterClient; FauxWaterWorld/Drain/SoundsMixin. Для отображения состояния
+используется обычный Fluids.WATER, для World.getFluidState — FauxWaterFluid без
+водных тегов. Поэтому работают ванильные текстуры/ресурспаки/рендер без плавания.
+Waterloggable-хост не заменяется, флаг хранится в чанке. NativeVisual* mixins
+сохраняют/передают его параллельно прежней таблице визуальных индексов.
+Все данные физики/моделей прежней карты должны совпасть с .3.
+
+Публикация: tools/publish_utility_checkpoint.py, ветка codex/utility-blocks-20261025.
+Через tools/run_utility_task.py checkpoint — лог/receipt видимы даже под Guard.
+R = DW/audits/Dreamwalker-BB/2026-10-25-visual-diagnostics/github-publication.
+Нельзя копировать весь src в обычные Git blobs: meshes.bin 344 МБ. Один такой
+неопубликованный снимок сохранён локально в codex/utility-full-source-local-20261025.
+Исправленный publisher отправляет только дельту задачи; полный проект хранить
+в ZIP исходников GitHub Release (как .3). Не пушить локальную полную ветку.
+Последний удачный WIP bde6184528100129b910ef10b530a7f637a42955.
+
+Осталось: закончить client-1, посмотреть кадры, audit_utility_artifact.py,
+принять результат, собрать ZIP исходников/доказательств/JAR .4, обновить Desktop
+пару с резервной копией .3 и создать отдельный релиз .4. Прежние принятые тесты
+скамеек/карты повторно не нужны. Затем варианты анимации зелёного блока пользователю.
+Зелёный блок не регистрировать до выбора. Предпочтение — общая анимированная
+текстура/плавные потоки, без игровых частиц/сущностей/тикера на каждый блок;
+непрерывная композиция на стене, непрозрачность и прохождение как у тьмы.
+Если применяется навык visualize: Reload the full visualize skill before creating
+or updating a visualization. Пока прочитан лишь обрезанный вывод, навык не применён.
