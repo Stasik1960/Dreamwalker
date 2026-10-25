@@ -1,0 +1,267 @@
+---- Minecraft Crash Report ----
+// I bet Cylons wouldn't have this problem.
+
+Time: 2026-10-25 22:08:12
+Description: Unexpected error
+
+java.lang.UnsupportedOperationException: No bounds for empty shape.
+	at knot//net.minecraft.class_265.method_1107(class_265.java:49)
+	at knot//net.minecraft.class_702.method_3054(class_702.java:517)
+	at knot//net.minecraft.class_310.method_1590(class_310.java:1694)
+	at knot//net.minecraft.class_310.method_1508(class_310.java:2063)
+	at knot//net.minecraft.class_310.method_1574(class_310.java:1883)
+	at knot//net.minecraft.class_310.method_1523(class_310.java:1181)
+	at knot//net.minecraft.class_310.method_1514(class_310.java:802)
+	at knot//net.minecraft.client.main.Main.main(Main.java:250)
+	at net.fabricmc.loader.impl.game.minecraft.MinecraftGameProvider.launch(MinecraftGameProvider.java:514)
+	at net.fabricmc.loader.impl.launch.knot.Knot.launch(Knot.java:72)
+	at net.fabricmc.loader.impl.launch.knot.KnotClient.main(KnotClient.java:23)
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Head --
+Thread: Render thread
+Stacktrace:
+	at knot//net.minecraft.class_265.method_1107(class_265.java:49)
+	at knot//net.minecraft.class_702.method_3054(class_702.java:517)
+	at knot//net.minecraft.class_310.method_1590(class_310.java:1694)
+	at knot//net.minecraft.class_310.method_1508(class_310.java:2063)
+
+-- Affected level --
+Details:
+	All players: 1 total; [class_746['Alchemist'/138, l='ClientLevel', x=28.72, y=13.00, z=-948.14]]
+	Chunk stats: 961, 609
+	Level dimension: minecraft:overworld
+	Level spawn location: World: (285,34,-842), Section: (at 13,2,6 in 17,2,-53; chunk contains blocks 272,-64,-848 to 287,319,-833), Region: (0,-2; contains chunks 0,-64 to 31,-33, blocks 0,-64,-1024 to 511,319,-513)
+	Level time: 87105888 game time, 6000 day time
+	Server brand: fabric
+	Server type: Non-integrated multiplayer server
+Stacktrace:
+	at knot//net.minecraft.class_638.method_8538(class_638.java:458)
+	at knot//net.minecraft.class_310.method_1587(class_310.java:2406)
+	at knot//net.minecraft.class_310.method_1514(class_310.java:826)
+	at knot//net.minecraft.client.main.Main.main(Main.java:250)
+	at net.fabricmc.loader.impl.game.minecraft.MinecraftGameProvider.launch(MinecraftGameProvider.java:514)
+	at net.fabricmc.loader.impl.launch.knot.Knot.launch(Knot.java:72)
+	at net.fabricmc.loader.impl.launch.knot.KnotClient.main(KnotClient.java:23)
+
+-- Last reload --
+Details:
+	Reload number: 1
+	Reload reason: initial
+	Finished: Yes
+	Packs: vanilla, fabric, cnpcs
+
+-- System Details --
+Details:
+	Minecraft Version: 1.20.1
+	Minecraft Version ID: 1.20.1
+	Operating System: Windows 10 (amd64) version 10.0
+	Java Version: 17.0.20.1, Eclipse Adoptium
+	Java VM Version: OpenJDK 64-Bit Server VM (mixed mode, sharing), Eclipse Adoptium
+	Memory: 2012812288 bytes (1919 MiB) / 7843348480 bytes (7480 MiB) up to 8589934592 bytes (8192 MiB)
+	CPUs: 16
+	Processor Vendor: AuthenticAMD
+	Processor Name: AMD Ryzen 7 5800H with Radeon Graphics         
+	Identifier: AuthenticAMD Family 25 Model 80 Stepping 0
+	Microarchitecture: Zen 3
+	Frequency (GHz): 3.19
+	Number of physical packages: 1
+	Number of physical CPUs: 8
+	Number of logical CPUs: 16
+	Graphics card #0 name: Parsec Virtual Display Adapter
+	Graphics card #0 vendor: Parsec Cloud, Inc.
+	Graphics card #0 VRAM (MB): 0.00
+	Graphics card #0 deviceId: unknown
+	Graphics card #0 versionInfo: DriverVersion=0.45.0.0
+	Graphics card #1 name: Virtual Desktop Monitor
+	Graphics card #1 vendor: Virtual Desktop, Inc.
+	Graphics card #1 VRAM (MB): 0.00
+	Graphics card #1 deviceId: unknown
+	Graphics card #1 versionInfo: DriverVersion=13.50.53.699
+	Graphics card #2 name: NVIDIA GeForce RTX 3070 Laptop GPU
+	Graphics card #2 vendor: NVIDIA (0x10de)
+	Graphics card #2 VRAM (MB): 4095.00
+	Graphics card #2 deviceId: 0x24dd
+	Graphics card #2 versionInfo: DriverVersion=32.0.16.1692
+	Memory slot #0 capacity (MB): 8192.00
+	Memory slot #0 clockSpeed (GHz): 3.20
+	Memory slot #0 type: DDR4
+	Memory slot #1 capacity (MB): 8192.00
+	Memory slot #1 clockSpeed (GHz): 3.20
+	Memory slot #1 type: DDR4
+	Virtual memory max (MB): 38738.63
+	Virtual memory used (MB): 33164.41
+	Swap memory total (MB): 22502.57
+	Swap memory used (MB): 3562.70
+	JVM Flags: 4 total; -Xms512M -Xmx8192M -XX:HeapDumpPath=MojangTricksIntelDriversForPerformance_javaw.exe_minecraft.exe.heapdump -XX:+DisableAttachMechanism
+	Fabric Mods: 
+		architectury: Architectury 9.2.14
+		bloodborne_dw: dreamwalker-bb-fabric-1.20.1 0.1.0-v12.7.4-visual-physics.6
+		cardiac: Cardiac 0.5.3.2
+		cloth-config: Cloth Config v11 11.1.136
+			cloth-basic-math: cloth-basic-math 0.6.1
+		cmdkeybind: Command Macros 1.6.3-1.20
+			kyrptconfig: Kyrpt Config 1.5.6-1.20
+		cpm: Customizable Player Models 0.6.27a
+		crawl: Crawl 0.12.0
+			mm: Manningham Mills 2.3
+		customnpcs: Custom NPCs + CPM 1.0.0+cpm.1.2.0
+			cnpc_cpm: CustomNPCs CPM Integration 1.2.0
+		dw_languages: DW Languages 0.1.0
+			fabric-permissions-api-v0: fabric-permissions-api 0.3.1
+		dw_magic_connect: DW Magic Connect 0.4.3
+		emotecraft: Emotecraft 2.2.7-b.build.50
+			bendy-lib: Bendy api 4.0.0
+			player-animator: Player Animator 1.0.2-rc1+1.20
+		entityculling: EntityCulling 1.11.3
+			transition: TRansition 1.0.26
+			trender: TRender 1.0.17
+		fabric-api: Fabric API 0.92.12+1.20.1
+			fabric-api-base: Fabric API Base 0.4.32+1802ada577
+			fabric-api-lookup-api-v1: Fabric API Lookup API (v1) 1.6.37+1802ada577
+			fabric-biome-api-v1: Fabric Biome API (v1) 13.0.15+93aa238b77
+			fabric-block-api-v1: Fabric Block API (v1) 1.0.12+1802ada577
+			fabric-block-view-api-v2: Fabric BlockView API (v2) 1.0.3+924f046a77
+			fabric-blockrenderlayer-v1: Fabric BlockRenderLayer Registration (v1) 1.1.42+1802ada577
+			fabric-client-tags-api-v1: Fabric Client Tags 1.2.0+238242b777
+			fabric-command-api-v1: Fabric Command API (v1) 1.2.35+f71b366f77
+			fabric-command-api-v2: Fabric Command API (v2) 2.2.14+1802ada577
+			fabric-commands-v0: Fabric Commands (v0) 0.2.52+df3654b377
+			fabric-containers-v0: Fabric Containers (v0) 0.1.68+df3654b377
+			fabric-content-registries-v0: Fabric Content Registries (v0) 4.0.13+1802ada577
+			fabric-convention-tags-v1: Fabric Convention Tags 1.5.6+1802ada577
+			fabric-crash-report-info-v1: Fabric Crash Report Info (v1) 0.2.20+1802ada577
+			fabric-data-attachment-api-v1: Fabric Data Attachment API (v1) 1.0.2+de0fd6d177
+			fabric-data-generation-api-v1: Fabric Data Generation API (v1) 12.4.0+238242b777
+			fabric-dimensions-v1: Fabric Dimensions API (v1) 2.1.55+1802ada577
+			fabric-entity-events-v1: Fabric Entity Events (v1) 1.6.1+1c78457f77
+			fabric-events-interaction-v0: Fabric Events Interaction (v0) 0.6.6+13a40c6677
+			fabric-events-lifecycle-v0: Fabric Events Lifecycle (v0) 0.2.64+df3654b377
+			fabric-game-rule-api-v1: Fabric Game Rule API (v1) 1.0.41+1802ada577
+			fabric-item-api-v1: Fabric Item API (v1) 2.1.29+1802ada577
+			fabric-item-group-api-v1: Fabric Item Group API (v1) 4.0.14+1802ada577
+			fabric-key-binding-api-v1: Fabric Key Binding API (v1) 1.0.38+1802ada577
+			fabric-keybindings-v0: Fabric Key Bindings (v0) 0.2.36+df3654b377
+			fabric-lifecycle-events-v1: Fabric Lifecycle Events (v1) 2.2.23+1802ada577
+			fabric-loot-api-v2: Fabric Loot API (v2) 1.2.3+1802ada577
+			fabric-loot-tables-v1: Fabric Loot Tables (v1) 1.1.47+9e7660c677
+			fabric-message-api-v1: Fabric Message API (v1) 5.1.10+1802ada577
+			fabric-mining-level-api-v1: Fabric Mining Level API (v1) 2.1.52+1802ada577
+			fabric-model-loading-api-v1: Fabric Model Loading API (v1) 1.0.4+1802ada577
+			fabric-models-v0: Fabric Models (v0) 0.4.3+9386d8a777
+			fabric-networking-api-v1: Fabric Networking API (v1) 1.3.15+0caff8d077
+			fabric-networking-v0: Fabric Networking (v0) 0.3.55+df3654b377
+			fabric-object-builder-api-v1: Fabric Object Builder API (v1) 11.1.5+e35120df77
+			fabric-particles-v1: Fabric Particles (v1) 1.1.3+1802ada577
+			fabric-recipe-api-v1: Fabric Recipe API (v1) 1.0.25+1802ada577
+			fabric-registry-sync-v0: Fabric Registry Sync (v0) 2.4.1+4c0a70e677
+			fabric-renderer-api-v1: Fabric Renderer API (v1) 3.2.2+1802ada577
+			fabric-renderer-indigo: Fabric Renderer - Indigo 1.5.3+85287f9f77
+			fabric-renderer-registries-v1: Fabric Renderer Registries (v1) 3.2.48+df3654b377
+			fabric-rendering-data-attachment-v1: Fabric Rendering Data Attachment (v1) 0.3.39+92a0d36777
+			fabric-rendering-fluids-v1: Fabric Rendering Fluids (v1) 3.0.29+1802ada577
+			fabric-rendering-v0: Fabric Rendering (v0) 1.1.51+df3654b377
+			fabric-rendering-v1: Fabric Rendering (v1) 3.0.10+54550fb677
+			fabric-resource-conditions-api-v1: Fabric Resource Conditions API (v1) 2.3.9+1802ada577
+			fabric-resource-loader-v0: Fabric Resource Loader (v0) 0.11.12+fb82e9d777
+			fabric-screen-api-v1: Fabric Screen API (v1) 2.0.9+1802ada577
+			fabric-screen-handler-api-v1: Fabric Screen Handler API (v1) 1.3.34+1802ada577
+			fabric-sound-api-v1: Fabric Sound API (v1) 1.0.14+1802ada577
+			fabric-tag-api-v1: Fabric Tag API (v1) 1.3.0+238242b777
+			fabric-transfer-api-v1: Fabric Transfer API (v1) 3.3.6+8dd72ea377
+			fabric-transitive-access-wideners-v1: Fabric Transitive Access Wideners (v1) 4.3.2+1802ada577
+		fabric-language-kotlin: Fabric Language Kotlin 1.11.0+kotlin.2.0.0
+			org_jetbrains_kotlin_kotlin-reflect: kotlin-reflect 2.0.0
+			org_jetbrains_kotlin_kotlin-stdlib: kotlin-stdlib 2.0.0
+			org_jetbrains_kotlin_kotlin-stdlib-jdk7: kotlin-stdlib-jdk7 2.0.0
+			org_jetbrains_kotlin_kotlin-stdlib-jdk8: kotlin-stdlib-jdk8 2.0.0
+			org_jetbrains_kotlinx_atomicfu-jvm: atomicfu-jvm 0.24.0
+			org_jetbrains_kotlinx_kotlinx-coroutines-core-jvm: kotlinx-coroutines-core-jvm 1.8.1
+			org_jetbrains_kotlinx_kotlinx-coroutines-jdk8: kotlinx-coroutines-jdk8 1.8.1
+			org_jetbrains_kotlinx_kotlinx-datetime-jvm: kotlinx-datetime-jvm 0.6.0
+			org_jetbrains_kotlinx_kotlinx-serialization-cbor-jvm: kotlinx-serialization-cbor-jvm 1.6.3
+			org_jetbrains_kotlinx_kotlinx-serialization-core-jvm: kotlinx-serialization-core-jvm 1.6.3
+			org_jetbrains_kotlinx_kotlinx-serialization-json-jvm: kotlinx-serialization-json-jvm 1.6.3
+		fabricloader: Fabric Loader 0.19.3
+			mixinextras: MixinExtras 0.5.4
+		farmersdelight: Farmer's Delight 1.20.1-2.5.7+refabricated
+			porting_lib_base: Porting Lib Base 2.3.15+1.20.1
+				porting_lib_accessors: Porting Lib Accessors 2.3.15+1.20.1
+				porting_lib_attributes: Porting Lib Attributes 2.3.15+1.20.1
+				porting_lib_common: Porting Lib Common 2.3.15+1.20.1
+				porting_lib_entity: Porting Lib Entity 2.3.15+1.20.1
+				porting_lib_extensions: Porting Lib Extensions 2.3.15+1.20.1
+				porting_lib_fluids: Porting Lib Fluids 2.3.15+1.20.1
+				porting_lib_gui_utils: Porting Lib Gui Utils 2.3.15+1.20.1
+				porting_lib_mixin_extensions: Porting Lib Mixin Extensions 2.3.15+1.20.1
+				porting_lib_tags: Porting Lib Tags 3.0
+				porting_lib_tool_actions: Porting Lib Tool Actions 2.3.15+1.20.1
+				porting_lib_transfer: Porting Lib Transfer 2.3.15+1.20.1
+				porting_lib_utility: Porting Lib Utility 2.3.15+1.20.1
+				reach-entity-attributes: Reach Entity Attributes 2.4.0
+			porting_lib_config: Porting Lib Config 2.3.15+1.20.1
+				com_electronwill_night-config_core: core 3.6.6
+				com_electronwill_night-config_toml: toml 3.6.6
+				porting_lib_core: Porting Lib Core 2.3.15+1.20.1
+			porting_lib_lazy_registration: Porting Lib Lazy Register 2.3.15+1.20.1
+			porting_lib_loot: Porting Lib Loot 2.3.15+1.20.1
+			porting_lib_networking: Porting Lib Networking 2.3.15+1.20.1
+			porting_lib_recipe_book_categories: Porting Lib Recipe Book Categories 2.3.15+1.20.1
+		fzzy_config: Fzzy Config 0.7.7+1.20.1
+			blue_endless_jankson: jankson 1.2.3
+			net_peanuuutz_tomlkt_tomlkt-jvm: tomlkt-jvm 0.3.7
+		geckolib: GeckoLib 4 4.8.4
+			com_eliotlash_mclib_mclib: mclib 20
+		handcrafted: Handcrafted 3.0.6
+		immediatelyfast: ImmediatelyFast 1.5.5+1.20.4
+			net_lenni0451_reflect: Reflect 1.6.2
+		immersive_melodies: Immersive Melodies 0.8.0+1.20.1
+		indium: Indium 1.0.36+mc1.20.1
+		iris: Iris 1.7.6+mc1.20.1
+			io_github_douira_glsl-transformer: glsl-transformer 2.0.1
+			org_anarres_jcpp: jcpp 1.4.14
+			org_antlr_antlr4-runtime: antlr4-runtime 4.13.1
+		item-rename: Item-rename 1.3.1
+		jade: Jade 11.13.3+fabric
+		java: OpenJDK 64-Bit Server VM 17
+		lithium: Lithium 0.11.4
+		minecraft: Minecraft 1.20.1
+		modelprops: Model Props 1.3.1
+		modernfix: ModernFix 5.25.2+mc1.20.1
+		modmenu: Mod Menu 7.2.2
+		octolib: OctoLib 0.5.0.1
+			org_yaml_snakeyaml: snakeyaml 2.2
+		pehkui: Pehkui 3.8.3+1.14.4-1.21
+			kanos_config: Kanos Config 0.4.1+1.14.4-1.19.4
+		poolbilliards: Pool Billiards 0.1.14
+		resourcefullib: Resourceful Lib 2.1.29
+			com_teamresourceful_bytecodecs: bytecodecs 1.0.2
+			com_teamresourceful_yabn: yabn 1.0.3
+		rpchat: RP Chat 0.1.16
+		rpchatui: RP Chat UI 0.3.7
+		rpcontainers: RP Containers 0.1.1
+		simplyswords: Simply Swords 1.70.2-1.20.1
+		simplytooltips: Simply Tooltips 0.1.5-1.20.1
+		sodium: Sodium 0.5.13+mc1.20.1
+		soulreaver: Soulreaver — Horned Runeblade 1.0.0
+		tabletop: Tabletop 0.1.0
+			javazoom_jlayer: jlayer 1.0.1
+		worldeditcui: WorldEditCUI 1.20+01
+		yuushya: Yuushya — RP Final 2.2.3-rp-final.1
+	Loaded Shaderpack: (off)
+	Launched Version: 1.20.1
+	Backend library: LWJGL version 3.3.1 SNAPSHOT
+	Backend API: NVIDIA GeForce RTX 3070 Laptop GPU/PCIe/SSE2 GL version 3.2.0 NVIDIA 616.92, NVIDIA Corporation
+	Window size: 1920x1001
+	GL Caps: Using framebuffer using OpenGL 3.2
+	GL debug messages: 
+	Using VBOs: Yes
+	Is Modded: Definitely; Client brand changed to 'fabric'
+	Type: Client (map_client.txt)
+	Graphics mode: fancy
+	Resource Packs: vanilla, fabric
+	Current Language: en_us
+	CPU: 16x AMD Ryzen 7 5800H with Radeon Graphics 
