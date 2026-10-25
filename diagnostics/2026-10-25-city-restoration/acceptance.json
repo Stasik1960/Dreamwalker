@@ -1,10 +1,14 @@
 {
-  "status": "AWAITING_FINAL_VISUAL_REVIEW",
+  "status": "VERIFIED",
   "productionSha256": "54b93502f7895cebcb3175c6ed9b6d4254d8deb217560f72cd0b1cfad4b87f21",
   "serverRegression": "server-3/checks.json (24 passed; test Actor corrected in server-4)",
   "serverFollowup": "PASS",
   "clientUserPack": "PASS",
   "mapAudit": "PASS",
   "frozenResources": "PASS",
-  "postFixture": null
+  "postFixture": {
+    "status": "PASS",
+    "installed": true,
+    "lanternRemovedIndependently": true
+  }
 }

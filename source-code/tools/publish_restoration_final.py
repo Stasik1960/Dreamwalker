@@ -16,6 +16,7 @@ if stage:
 else:
  manifest=json.loads((D/'artifacts.json').read_text());assert manifest['status']=='PREPARED'
  assert json.loads((D/'ready-to-release.json').read_text())['status']=='READY'
+ assert json.loads((D/'archive-integrity.json').read_text())['status']=='PASS'
 env={**os.environ,'GIT_TERMINAL_PROMPT':'0','GCM_INTERACTIVE':'never'}
 r=subprocess.run([sys.executable,'-X','utf8','-B',str(P/'tools/publish_restoration_checkpoint.py'),*([] if stage else ['--final'])],env=env,cwd=P,capture_output=True,timeout=240);assert r.returncode==0,'Source checkpoint failed'
 commit=json.loads((D/'publication.json').read_text())['commit']
@@ -30,7 +31,10 @@ def api(method,path,body=None,missing=False):
  except urllib.error.HTTPError as e:
   if missing and e.code==404:return None
   raise RuntimeError('GitHub HTTP '+str(e.code)) from None
-release=api('GET','/repos/'+REPO+'/releases/tags/'+TAG,missing=True)
+saved=D/'staged-release.json';release=None
+if saved.exists():release=api('GET','/repos/'+REPO+'/releases/'+str(json.loads(saved.read_text())['releaseId']),missing=True)
+if release is None:release=api('GET','/repos/'+REPO+'/releases/tags/'+TAG,missing=True)
+if release is not None:assert release['tag_name']==TAG or release['draft'] and release['tag_name'].startswith('untagged-')
 body='Draft checkpoint: functional and data tests passed; final visual fixture and complete source package are still being prepared.' if stage else (D/'REPORT-RU.md').read_text(encoding='utf-8')+'\n\nПолные исходники, карта пользователя, журнал решений и инструкция продолжения приложены. SHA256 указан в SHA256SUMS.txt. Резервная карта до исправлений: отдельный prerelease restoration-backup.\n'
 if release is None:release=api('POST','/repos/'+REPO+'/releases',{'tag_name':TAG,'target_commitish':commit,'name':'Dreamwalker city restoration — visual-physics.6','body':body,'draft':True,'prerelease':False,'make_latest':'false'})
 if stage:assert release['draft'],'Never turn a public release back into a draft'
@@ -49,5 +53,7 @@ for row in manifest['artifacts']:
  receipt['assets'].append({'name':p.name,'sha256':h.hexdigest(),'bytes':p.stat().st_size,'url':a['browser_download_url']});(D/('staged-release.json' if stage else 'final-release.json')).write_text(json.dumps(receipt,ensure_ascii=False,indent=2),encoding='utf-8')
 if stage:
  receipt['status']='DRAFT_BINARIES_UPLOADED';(D/'staged-release.json').write_text(json.dumps(receipt,ensure_ascii=False,indent=2),encoding='utf-8');sys.exit(0)
-release=api('PATCH','/repos/'+REPO+'/releases/'+str(release['id']),{'draft':False,'prerelease':False,'make_latest':'true','body':body,'target_commitish':commit})
-assert not release['draft'];receipt['status']='PUBLISHED';receipt['url']=release['html_url'];(D/'final-release.json').write_text(json.dumps(receipt,ensure_ascii=False,indent=2),encoding='utf-8')
+release=api('PATCH','/repos/'+REPO+'/releases/'+str(release['id']),{'tag_name':TAG,'draft':False,'prerelease':False,'make_latest':'true','body':body,'target_commitish':commit})
+assert not release['draft'] and release['tag_name']==TAG;links={a['name']:a for a in release['assets']}
+for row in receipt['assets']:row['url']=links[row['name']]['browser_download_url']
+receipt['status']='PUBLISHED';receipt['url']=release['html_url'];(D/'final-release.json').write_text(json.dumps(receipt,ensure_ascii=False,indent=2),encoding='utf-8')

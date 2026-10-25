@@ -1,4 +1,14 @@
-# Dreamwalker BB — visual-physics.5
+# Dreamwalker BB — visual-physics.6
+
+Текущая проверенная сборка: `0.1.0-v12.7.4-visual-physics.6`.
+Восстановлены разрушение compact-блоков, WorldEdit `//set hand`, стекло и
+RP-наведение; 172 столба собраны целиком, 562 фонаря отделены и реагируют
+звуком и покачиванием. Использована вручную изменённая карта пользователя.
+Отчёт и инструкция: `restoration-evidence/REPORT-RU.md`,
+`restoration-evidence/HANDOFF-RU.md`. Основной JAR: `gradlew.bat remapJar`
+(Java17). Полные native-ресурсы включены; повторная конвертация карты не нужна.
+
+## Сохранённые сведения о предыдущем дополнении .5
 
 Текущая версия: `0.1.0-v12.7.4-visual-physics.5`, добавлена «Завеса фей»
 (`bloodborne_dw:dw_faerie_veil`) по выбранному варианту «Туман и светлячки».

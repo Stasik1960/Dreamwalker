@@ -42,6 +42,7 @@ for folder in ('src','gradle','tools'):
   sources.append((f,'DW/'+rel.as_posix()))
 for name in ('build.gradle','settings.gradle','gradle.properties','gradlew','gradlew.bat','LICENSE','README.md'):
  if (P/name).is_file():sources.append((P/name,'DW/'+name))
+dependency=P/'fix-profiles/server/mods/worldedit-mod-7.2.15.jar';assert dependency.is_file();sources.append((dependency,'DW/build-dependencies/worldedit-mod-7.2.15.jar'))
 for f in files(D):
  if 'final-artifacts' in f.parts or 'installed-backups' in f.parts or f.suffix in ('.zip','.jar','.args') or f.stat().st_size>3_000_000:continue
  sources.append((f,'DW/restoration-evidence/'+f.relative_to(D).as_posix()))

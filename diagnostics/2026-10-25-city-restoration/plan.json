@@ -1,35 +1,42 @@
 {
-  "status": "IN_PROGRESS",
+  "status": "VERIFIED_AWAITING_FINAL_PUBLICATION",
   "inputWorld": "C:\\Users\\vakir\\Desktop\\bloodborne",
   "preserve": "All manual changes, v12, independent component blocks and previously approved whole objects",
   "stages": [
     {
       "id": 0,
-      "task": "Freeze current world with SHA256 manifest, audit and checkpoint GitHub"
+      "task": "Freeze current world with SHA256 manifest, audit and checkpoint GitHub",
+      "status": "VERIFIED"
     },
     {
       "id": 1,
-      "task": "Fix compact block removal and actual WorldEdit //set / undo / redo"
+      "task": "Fix compact block removal and actual WorldEdit //set / undo / redo",
+      "status": "VERIFIED"
     },
     {
       "id": 2,
-      "task": "Fix window rendering and v12/tree targeting; audit collision/selection bounds"
+      "task": "Fix window rendering and v12/tree targeting; audit collision/selection bounds",
+      "status": "VERIFIED"
     },
     {
       "id": 3,
-      "task": "Restore lantern impact sound and sway; add standalone lantern types"
+      "task": "Restore lantern impact sound and sway; add standalone lantern types",
+      "status": "VERIFIED"
     },
     {
       "id": 4,
-      "task": "Assemble lamp posts bottom to top, separate paired lamps, replace only matched originals in user world"
+      "task": "Assemble lamp posts bottom to top, separate paired lamps, replace only matched originals in user world",
+      "status": "VERIFIED"
     },
     {
       "id": 5,
-      "task": "Remove proven empty unnecessary files and stop runtime regeneration"
+      "task": "Remove proven empty unnecessary files and stop runtime regeneration",
+      "status": "VERIFIED"
     },
     {
       "id": 6,
-      "task": "Targeted dedicated and client tests, save/reopen, install mod, publish map/full sources/evidence"
+      "task": "Targeted dedicated and client tests, save/reopen, install mod, publish map/full sources/evidence",
+      "status": "VERIFIED_AWAITING_FINAL_PUBLICATION"
     }
   ]
 }

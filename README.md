@@ -1,3 +1,9 @@
+# Dreamwalker — visual-physics.6
+
+Текущая карта пользователя bloodborne, исправленный мод, полные исходники и отчёт: [релиз restoration-20261025](https://github.com/Stasik1960/Dreamwalker/releases/tag/native-grid-city-restoration-20261025). Инструкция установки и продолжения: [HANDOFF-RU.txt](HANDOFF-RU.txt). Доказательства: [city-restoration](diagnostics/2026-10-25-city-restoration).
+
+<!-- CURRENT_RESTORATION_END -->
+
 # Dreamwalker — готовая карта visual/physics.1
 
 Принятая локальная пара, исходники и проверенные настройки; выпуск: https://github.com/Stasik1960/Dreamwalker/releases/tag/native-grid-city-visual-physics-20261025.
