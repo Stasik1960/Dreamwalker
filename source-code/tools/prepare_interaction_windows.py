@@ -17,9 +17,40 @@ def box(a,b):return {'from':a,'to':b}
 wallboxes=[box([-16,0,5],[-6,48,7]),box([22,0,5],[32,48,7]),box([-6,0,5],[22,2,7]),box([-6,40,5],[22,48,7])]
 glass=copy.deepcopy(models[1]['elements'][8]);glass['faces']['south']=copy.deepcopy(glass['faces']['north']);glass['faces']['south']['uv']=[15.375,5.125,13.375,8.875]
 glassmodel={'textures':{'1':'bloodborne_dw:interactions/shutter_glass','particle':'bloodborne_dw:interactions/shutter_glass'},'elements':[glass]};write(A/'models/interactions/shutter_glass.json',glassmodel)
+frame=copy.deepcopy(models[0]['elements'][4]);frame['faces']['south']['uv']=[14.25,10.125,11.875,14]
+atlas=Image.open(A/'textures/block/remaining/source/minecraft/block/addon/roof_1.png').convert('RGBA');mask=atlas.crop((95,81,114,112));bands=[]
+for row in range(mask.height):
+ opaque=[x for x in range(mask.width) if mask.getpixel((x,row))[3]>0]
+ if opaque:
+  left,right=min(opaque)-2,max(opaque)-1;lo,hi=23-row,24-row
+  if bands and bands[-1][0]==left and bands[-1][2]==right and bands[-1][1]==hi:bands[-1][1]=lo
+  else:bands.append([left,lo,right,hi])
+def clip_element(e,lo,hi):
+ out=copy.deepcopy(e);a=e['from'];b=e['to'];out['from']=lo;out['to']=hi
+ for face,data in out['faces'].items():
+  uv=e['faces'][face].get('uv')
+  if uv is None:continue
+  axis=0 if face in ('north','south','up','down') else 2;reverse=face in ('north','east');vaxis=2 if face in ('up','down') else 1
+  u0=(lo[axis]-a[axis])/(b[axis]-a[axis]);u1=(hi[axis]-a[axis])/(b[axis]-a[axis]);v0=(lo[vaxis]-a[vaxis])/(b[vaxis]-a[vaxis]);v1=(hi[vaxis]-a[vaxis])/(b[vaxis]-a[vaxis])
+  if reverse:u0,u1=1-u1,1-u0
+  if face!='up':v0,v1=1-v1,1-v0
+  data['uv']=[uv[0]+(uv[2]-uv[0])*u0,uv[1]+(uv[3]-uv[1])*v0,uv[0]+(uv[2]-uv[0])*u1,uv[1]+(uv[3]-uv[1])*v1]
+ return out
+def carve(elements):
+ # The legacy decoration had a solid rear wall behind the painted pane.
+ # Cut the same pixel-defined arched aperture through both wall faces.
+ for x0,y0,x1,y1 in bands:
+  result=[]
+  for e in elements:
+   a=e['from'];b=e['to'];lx=max(a[0],x0);rx=min(b[0],x1);by=max(a[1],y0);ty=min(b[1],y1)
+   if lx>=rx or by>=ty:result.append(e);continue
+   for lo,hi in (([a[0],a[1],a[2]],[lx,b[1],b[2]]),([rx,a[1],a[2]],[b[0],b[1],b[2]]),([lx,a[1],a[2]],[rx,by,b[2]]),([lx,ty,a[2]],[rx,b[1],b[2]])):
+    if all(lo[i]<hi[i] for i in range(3)):result.append(clip_element(e,lo,hi))
+  elements=result
+ return elements
 for i,model in enumerate(models):
- surround=copy.deepcopy(model);surround['elements']=[model['elements'][n] for n in wallparts[i]]
- sash=copy.deepcopy(model);sash['elements']=[model['elements'][n] for n in winparts[i]]
+ surround=copy.deepcopy(model);surround['elements']=carve([model['elements'][n] for n in wallparts[i]])
+ sash=copy.deepcopy(model);sash['elements']=[model['elements'][n] for n in (0,1,2)]+[frame]
  write(A/f'models/interactions/shutter_wall_{i}.json',surround);write(A/f'models/interactions/shutter_{i}.json',sash)
  wallpose={'parts':[{'model':f'bloodborne_dw:interactions/shutter_wall_{i}','offset':[0,16,0]}],'collision':wallboxes,'selection':wallboxes}
  wallvariants.append({'poses':{'closed':wallpose}})

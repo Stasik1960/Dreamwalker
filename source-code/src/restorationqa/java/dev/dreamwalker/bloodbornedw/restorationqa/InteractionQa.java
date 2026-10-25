@@ -37,11 +37,11 @@ public final class InteractionQa implements ModInitializer {
     }
     @Override public void onInitialize(){ServerTickEvents.END_SERVER_TICK.register(s->{if(done||++age<25)return;done=true;Path out=Path.of(System.getProperty("dw.interaction.qa.output"));try{run(s);save(out.resolve("server-checks.json"),"PASS",null);}catch(Throwable t){t.printStackTrace();save(out.resolve("server-checks.json"),"FAIL",t);}s.stop(false);});}
     public static void run(MinecraftServer server){
-        var w=server.getOverworld();w.getChunk(BASE);var p=new Actor(server,w);var point=BASE.add(10,0,0);
+        var w=server.getOverworld();w.getChunk(BASE);w.setSpawnPos(BASE.add(-6,0,-4),0);w.setTimeOfDay(6000);w.getGameRules().get(GameRules.DO_DAYLIGHT_CYCLE).set(false,server);w.getGameRules().get(GameRules.DO_MOB_SPAWNING).set(false,server);var p=new Actor(server,w);var point=BASE.add(10,0,0);
         for(Block block:List.of(FaerieVeilBlock.BLOCK,DwUtilityBlocks.DARKNESS)){
             w.setBlockState(point,block.getDefaultState(),Block.NOTIFY_ALL);var state=w.getBlockState(point);
             check(!state.get(DwUtilityBlocks.PLAYER_COLLISION),"default remains passable "+block);
-            check(!state.getOutlineShape(w,point).isEmpty()&&state.getOutlineShape(w,point).getBoundingBox().getLengthX()==1,"contextless hit-particle shape has bounds "+block);
+            check(!state.getOutlineShape(w,point).isEmpty()&&state.getOutlineShape(w,point).getBoundingBox().getXLength()==1,"contextless hit-particle shape has bounds "+block);
             check(state.shouldBlockVision(w,point)&&!state.shouldSuffocate(w,point),"opaque in-wall view without suffocation "+block);
             for(var mode:List.of(GameMode.CREATIVE,GameMode.SURVIVAL,GameMode.ADVENTURE)){
                 p.changeGameMode(mode);check(state.getOutlineShape(w,point,ShapeContext.of(p)).isEmpty()==(mode!=GameMode.CREATIVE),"selection restriction "+mode+" "+block);

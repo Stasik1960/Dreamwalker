@@ -47,7 +47,7 @@ public final class RpObjectEntity extends Entity implements GeoEntity, AssetBack
  private String transition="";private int transitionTicks;private int leverPulseTicks;private String legacyConnectionId="";
  private NbtCompound sourceLegacyPayload;
  private record GeometryKey(double x,double y,double z,float yaw,float pitch,float scale,boolean open,int ladderTicks,boolean motionSelection) {}
-private record GeometrySnapshot(GeometryKey key,net.minecraft.util.math.Box visual,List<net.minecraft.util.math.Box> physical,List<net.minecraft.util.math.Box> selection,List<net.minecraft.util.math.Box> climbing,List<net.minecraft.util.math.Box> ordinaryVisual) {}
+private record GeometrySnapshot(GeometryKey key,net.minecraft.util.math.Box visual,List<net.minecraft.util.math.Box> physical,List<net.minecraft.util.math.Box> selection,List<net.minecraft.util.math.Box> climbing,List<net.minecraft.util.math.Box> ordinaryVisual,net.minecraft.util.math.Box physicalBounds,net.minecraft.util.math.Box queryBounds) {}
  private GeometrySnapshot geometrySnapshot;
  private boolean restoringData;
  private boolean clientOpen;
@@ -132,7 +132,8 @@ private record GeometrySnapshot(GeometryKey key,net.minecraft.util.math.Box visu
         GeometryKey key=new GeometryKey(getX(),getY(),getZ(),getYaw(),getPitch(),objectScale(),isOpen(),dataTracker.get(LADDER_DEPLOY_TICKS),selectionMotionActive());
         if(geometrySnapshot==null||!geometrySnapshot.key.equals(key)){
             var visual=RpObjectGeometry.visualBounds(this);
-            geometrySnapshot=new GeometrySnapshot(key,visual,hasReviewedWorkingGeometry()?RpObjectGeometry.physicalBoxes(this):legacyCollidable()?legacyPhysical(visual):List.of(),RpObjectGeometry.selectionBoxes(this),RpObjectGeometry.climbingBoxes(this),RpObjectGeometry.ordinaryVisualBoxes(this));
+            var physical=hasReviewedWorkingGeometry()?RpObjectGeometry.physicalBoxes(this):legacyCollidable()?legacyPhysical(visual):List.<net.minecraft.util.math.Box>of();net.minecraft.util.math.Box physicalBounds=null,queryBounds=visual;for(var part:physical){physicalBounds=physicalBounds==null?part:physicalBounds.union(part);queryBounds=queryBounds.union(part);}if(physicalBounds==null)physicalBounds=new net.minecraft.util.math.Box(getPos(),getPos());
+            geometrySnapshot=new GeometrySnapshot(key,visual,physical,RpObjectGeometry.selectionBoxes(this),RpObjectGeometry.climbingBoxes(this),RpObjectGeometry.ordinaryVisualBoxes(this),physicalBounds,queryBounds);
         }
         return geometrySnapshot;
     }
@@ -153,7 +154,7 @@ private record GeometrySnapshot(GeometryKey key,net.minecraft.util.math.Box visu
  public List<net.minecraft.util.math.Box> interactionBoxes(){var snapshot=geometry();return snapshot.physical.isEmpty()?snapshot.ordinaryVisual:snapshot.physical;}
  public List<net.minecraft.util.math.Box> climbingBoxes(){return assetId.equals("ladder")?geometry().climbing:List.of();}
  public net.minecraft.util.math.Box visualBounds(){return geometry().visual;}
- public net.minecraft.util.math.Box queryBounds(){var snapshot=geometry();var bounds=snapshot.visual;for(var box:snapshot.physical)bounds=bounds.union(box);return bounds;}
+ public net.minecraft.util.math.Box queryBounds(){return geometry().queryBounds;}
  public List<UUID> links(){return List.copyOf(links);}
  public boolean addLink(RpObjectEntity target){if(!isMechanism()||!target.canBeLinked()||target.getWorld()!=getWorld()||!target.getWorld().isChunkLoaded(target.getBlockPos())||links.size()>=dev.dreamwalker.bloodbornerp.RpConfig.INSTANCE.maxMechanismLinks||links.contains(target.getUuid()))return false;if(!dev.dreamwalker.bloodbornedw.link.MechanismLinks.linkRp(this,target))return false;links.add(target.getUuid());return true;}
  public boolean removeLink(UUID target){if(!isMechanism())return false;boolean removed=dev.dreamwalker.bloodbornedw.link.MechanismLinks.unlinkRp(this,target);return links.remove(target)||removed;}
@@ -226,10 +227,7 @@ private record GeometrySnapshot(GeometryKey key,net.minecraft.util.math.Box visu
  @Override public void setPitch(float pitch){super.setPitch(pitch);if(assetId!=null)refreshCollider();}
  /** Public entity bounds describe the active physical volume. Rendering and
   * indexed part queries keep their independent, complete model envelopes. */
- public net.minecraft.util.math.Box physicalBounds(){
-  net.minecraft.util.math.Box result=null;for(var part:activePhysicalBoxes())result=result==null?part:result.union(part);
-  return result==null?new net.minecraft.util.math.Box(getPos(),getPos()):result;
- }
+ public net.minecraft.util.math.Box physicalBounds(){return geometry().physicalBounds;}
  @Override public net.minecraft.util.math.Box getVisibilityBoundingBox(){return assetId==null?super.getVisibilityBoundingBox():queryBounds();}
  @Override public boolean shouldRender(double squaredDistance){if(assetId==null)return super.shouldRender(squaredDistance);double size=queryBounds().getAverageSideLength();if(Double.isNaN(size))size=1;double range=size*64*getRenderDistanceMultiplier();return squaredDistance<range*range;}
  public void refreshCollider(){if(assetId==null)return;setBoundingBox(physicalBounds());}
