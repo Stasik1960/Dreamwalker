@@ -88,7 +88,8 @@ public final class SourceFallbackCarrierV1271 extends Block implements NewStateS
         super(settings(opaque));
         setDefaultState(getDefaultState().with(SOURCE,0).with(SOURCE_BANK,0).with(CompositeRootBlock.PROFILE,CompositeRootBlock.Profile.BASE));
     }
-    public static void initialize(){if(instance==null){instance=Registry.register(Registries.BLOCK,ID,new SourceFallbackCarrierV1271(true));translucentInstance=Registry.register(Registries.BLOCK,TRANSLUCENT_ID,new SourceFallbackCarrierV1271(false));multipartInstance=Registry.register(Registries.BLOCK,MULTIPART_ID,new SourceFallbackCarrierV1271(false));solidMultipartInstance=Registry.register(Registries.BLOCK,SOLID_MULTIPART_ID,new SourceFallbackCarrierV1271(true));}}
+    public static void initialize(){if(instance==null){instance=Registry.register(Registries.BLOCK,ID,new SourceFallbackCarrierV1271(true));translucentInstance=Registry.register(Registries.BLOCK,TRANSLUCENT_ID,new SourceFallbackCarrierV1271(false));multipartInstance=Registry.register(Registries.BLOCK,MULTIPART_ID,new SourceFallbackCarrierV1271(false));solidMultipartInstance=Registry.register(Registries.BLOCK,SOLID_MULTIPART_ID,new SourceFallbackCarrierV1271(true));for(var block:banks())Registry.register(Registries.ITEM,Registries.BLOCK.getId(block),new StateItem(block));}}
+    public static List<SourceFallbackCarrierV1271> banks(){return List.of(instance,translucentInstance,multipartInstance,solidMultipartInstance);}
     @Override protected void appendProperties(StateManager.Builder<Block,BlockState> builder){builder.add(SOURCE,SOURCE_BANK,CompositeRootBlock.PROFILE);}
     private static int index(BlockState state){int value=state.get(SOURCE)+128*state.get(SOURCE_BANK);return value<SOURCES.size()?value:0;}
     public static BlockState source(BlockState state){return SOURCES.get(index(state));}
@@ -114,5 +115,14 @@ public final class SourceFallbackCarrierV1271 extends Block implements NewStateS
     @Override public FluidState getFluidState(BlockState state){return source(state).getFluidState();}
     @Override public long getRenderingSeed(BlockState state,BlockPos pos){return source(state).getRenderingSeed(pos);}
     public static List<BlockState> sourceStates(){return SOURCES;}
-    @Override public net.minecraft.item.ItemStack getPickStack(BlockView world,BlockPos pos,BlockState state){return dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.item(source(state),new net.minecraft.nbt.NbtCompound());}
+    @Override public net.minecraft.item.ItemStack getPickStack(BlockView world,BlockPos pos,BlockState state){var stack=new net.minecraft.item.ItemStack(this);var tag=stack.getOrCreateSubNbt("BlockStateTag");tag.putString("source",Integer.toString(state.get(SOURCE)));tag.putString("source_bank",Integer.toString(state.get(SOURCE_BANK)));tag.putString("profile",state.get(CompositeRootBlock.PROFILE).asString());return stack;}
+    public static BlockState itemState(net.minecraft.item.ItemStack stack){
+        if(!(stack.getItem() instanceof StateItem item))return null;BlockState state=item.getBlock().getDefaultState();var tag=stack.getSubNbt("BlockStateTag");if(tag==null)return state;
+        try{int source=Integer.parseInt(tag.getString("source")),bank=Integer.parseInt(tag.getString("source_bank"));if(source<0||source>127||bank<0||bank>1||source+bank*128>=SOURCES.size())return null;var profile=CompositeRootBlock.PROFILE.parse(tag.getString("profile")).orElseThrow();return state.with(SOURCE,source).with(SOURCE_BANK,bank).with(CompositeRootBlock.PROFILE,profile);}catch(RuntimeException malformed){return null;}
+    }
+    private static final class StateItem extends net.minecraft.item.BlockItem {
+        StateItem(SourceFallbackCarrierV1271 block){super(block,new net.minecraft.item.Item.Settings());}
+        @Override protected BlockState getPlacementState(net.minecraft.item.ItemPlacementContext context){var state=itemState(context.getStack());return state!=null&&canPlace(context,state)?state:null;}
+        @Override public net.minecraft.text.Text getName(net.minecraft.item.ItemStack stack){return net.minecraft.text.Text.literal("Городская декорация");}
+    }
 }

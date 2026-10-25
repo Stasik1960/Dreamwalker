@@ -34,6 +34,7 @@ public final class CompositeClient {
         StaticGrassMasonryClient.initialize();
         StaticArchitectureClient.initialize();
         ImportedCompactClient.initialize();
+        SourceFallbackItemsClient.initialize();
         SourceFallbackCarrierClientV1271.initialize();
         dev.dreamwalker.bloodbornedw.architecture.mount.NativeMountClient.initialize();
         dev.dreamwalker.bloodbornedw.tool.NativeAlternateVisualClient.initialize();

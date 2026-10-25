@@ -16,14 +16,16 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import com.llamalad7.mixinextras.injector.wrapoperation.*;
 
 /** Keep native/living targeting, substituting source-part tests only for player's RP candidates. */
 @Mixin(ProjectileUtil.class)
 public abstract class RpPartRaycastMixin {
     private static final String RAY="raycast(Lnet/minecraft/entity/Entity;Lnet/minecraft/util/math/Vec3d;Lnet/minecraft/util/math/Vec3d;Lnet/minecraft/util/math/Box;Ljava/util/function/Predicate;D)Lnet/minecraft/util/hit/EntityHitResult;";
-    @Redirect(method=RAY,at=@At(value="INVOKE",target="Lnet/minecraft/world/World;getOtherEntities(Lnet/minecraft/entity/Entity;Lnet/minecraft/util/math/Box;Ljava/util/function/Predicate;)Ljava/util/List;"))
-    private static List<Entity> dreamwalker$nativeCandidates(World world,Entity viewer,Box query,Predicate<? super Entity> predicate){
-        return world.getOtherEntities(viewer,query,viewer instanceof PlayerEntity?e->!(e instanceof RpObjectEntity)&&predicate.test(e):predicate);
+    @WrapOperation(method=RAY,at=@At(value="INVOKE",target="Lnet/minecraft/world/World;getOtherEntities(Lnet/minecraft/entity/Entity;Lnet/minecraft/util/math/Box;Ljava/util/function/Predicate;)Ljava/util/List;"))
+    private static List<Entity> dreamwalker$nativeCandidates(World world,Entity viewer,Box query,Predicate<? super Entity> predicate,Operation<List<Entity>> original){
+        Predicate<? super Entity> filtered=viewer instanceof PlayerEntity?e->!(e instanceof RpObjectEntity)&&predicate.test(e):predicate;
+        return original.call(world,viewer,query,filtered);
     }
     @Inject(method=RAY,at=@At("RETURN"),cancellable=true)
     private static void dreamwalker$sourceParts(Entity viewer,Vec3d start,Vec3d end,Box query,Predicate<Entity> predicate,double maximumSquared,CallbackInfoReturnable<EntityHitResult> cir){

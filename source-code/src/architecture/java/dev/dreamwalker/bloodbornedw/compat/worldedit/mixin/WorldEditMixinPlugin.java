@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.extensibility.*;
 public final class WorldEditMixinPlugin implements IMixinConfigPlugin {
     @Override public void onLoad(String mixinPackage){}
     @Override public String getRefMapperConfig(){return null;}
-    @Override public boolean shouldApplyMixin(String targetClassName,String mixinClassName){return FabricLoader.getInstance().isModLoaded("worldedit");}
+    @Override public boolean shouldApplyMixin(String targetClassName,String mixinClassName){return dev.dreamwalker.bloodbornedw.compat.OptionalMixinContract.checked("worldedit","7.2.15");}
     @Override public void acceptTargets(Set<String> mine,Set<String> others){}
     @Override public List<String> getMixins(){return null;}
     @Override public void preApply(String target,ClassNode node,String mixin,IMixinInfo info){}

@@ -86,7 +86,7 @@ public final class StaticArchitectureClient {
             MatrixStack source=new MatrixStack();source.translate(shift.x(),mountY+shift.y(),shift.z());
             rotate(source,.5,.5,.5,-state.get(CompositeRootBlock.ROTATION)*45,false);
             int tint=RemainingSourceTint.color(block,world,root);
-            var output=new SourceTintConsumer(vertices,tint);
+            var output=new SourceTintConsumer(vertices,tint,world,root);
             int partIndex=0;
             for(var part:parts){
                 source.push();source.translate(part.offset().x()/16,part.offset().y()/16,part.offset().z()/16);
@@ -95,6 +95,7 @@ public final class StaticArchitectureClient {
                 rotate(source,part.extraPivot().x()/16,part.extraPivot().y()/16,part.extraPivot().z()/16,part.extraYaw(),false);
                 var view=pose!=null?new StaticArchitectureRenderView(world,root,source.peek().getPositionMatrix(),source.peek().getNormalMatrix(),pose):new StaticArchitectureRenderView(world,root,source.peek().getPositionMatrix(),source.peek().getNormalMatrix(),owner,wholeSourceOptics);
                 var carrier=ImportedSourceLightingV127.renderCarrier(block.spec,state);
+                output.diagnostic(part.model(),carrier,source.peek().getPositionMatrix());
                 MatrixStack rendered=new MatrixStack();rendered.peek().getPositionMatrix().set(outputMatrices.peek().getPositionMatrix()).mul(source.peek().getPositionMatrix());
                 rendered.peek().getNormalMatrix().set(outputMatrices.peek().getNormalMatrix()).mul(source.peek().getNormalMatrix());
                 var model=pose==null?client.getBakedModelManager().getModel(part.model()):StaticArchitectureGeometry.visible(pose,partIndex,world,root);partIndex++;
@@ -143,10 +144,14 @@ public final class StaticArchitectureClient {
         private final VertexConsumer delegate;private final float red,green,blue;
         private StaticArchitectureRenderView flatView;private BlockState flatCarrier;
         private Set<BakedQuad> rootQuads=Set.of();
-        private SourceTintConsumer(VertexConsumer delegate,int tint){this.delegate=delegate;red=((tint>>16)&255)/255f;green=((tint>>8)&255)/255f;blue=(tint&255)/255f;}
+        private final BlockRenderView diagnosticWorld;private final BlockPos diagnosticRoot;
+        private Identifier diagnosticModel;private BlockState diagnosticCarrier;private org.joml.Matrix4f diagnosticTransform;
+        private SourceTintConsumer(VertexConsumer delegate,int tint,BlockRenderView world,BlockPos root){this.delegate=delegate;red=((tint>>16)&255)/255f;green=((tint>>8)&255)/255f;blue=(tint&255)/255f;diagnosticWorld=SourceLightingDiagnostics.enabled(root)?world:null;diagnosticRoot=root;}
+        private void diagnostic(Identifier model,BlockState carrier,org.joml.Matrix4f transform){if(diagnosticWorld!=null){diagnosticModel=model;diagnosticCarrier=carrier;diagnosticTransform=new org.joml.Matrix4f(transform);}}
         private void flatLighting(StaticArchitectureRenderView view,BlockState carrier,BakedModel raw){flatView=view;flatCarrier=carrier;rootQuads=view==null?Set.of():SourceFlatLight.rootQuads(raw,carrier);}
         @Override public void quad(MatrixStack.Entry matrix,BakedQuad quad,float[] brightness,float r,float g,float b,int[] lights,int overlay,boolean useColor){
             if(flatView!=null&&rootQuads.contains(quad)){int light=flatView.flatLight(quad,flatCarrier);if(light>=0)lights=new int[]{light,light,light,light};}
+            if(diagnosticWorld!=null)SourceLightingDiagnostics.record(diagnosticWorld,diagnosticRoot,diagnosticModel,diagnosticCarrier,diagnosticTransform,quad,brightness,lights);
             delegate.quad(matrix,quad,brightness,quad.hasColor()?red:r,quad.hasColor()?green:g,quad.hasColor()?blue:b,lights,overlay,useColor);
         }
         @Override public void vertex(float x,float y,float z,float r,float g,float b,float a,float u,float v,int overlay,int light,float nx,float ny,float nz){delegate.vertex(x,y,z,r,g,b,a,u,v,overlay,light,nx,ny,nz);}

@@ -114,6 +114,7 @@ public final class SourceLadderRuntime {
         if(!part.equals(root)&&!part.equals(backing)||role==null||part.equals(root)&&!rootState(role)||part.equals(backing)&&!role.isOf(BACKING))return false;
         if(!accessible(world,part,player))return false;
         if(player!=null&&(!accessible(world,root,player)||!accessible(world,backing,player)))return false;
+        if(!dev.dreamwalker.bloodbornedw.composite.NativePlayerBreak.allow(world,player,List.of(root,backing)))return false;
         SourceLadderBlockEntity rootEntity=world.isChunkLoaded(root)?entity(world,root):null;BlockState state=world.isChunkLoaded(root)?world.getBlockState(root):null;
         // WorldChunk publishes the replacement palette before this callback. Its old state is authoritative for loot.
         if(replacing&&part.equals(root)&&original!=null&&rootState(original))state=original;

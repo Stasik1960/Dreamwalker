@@ -9,7 +9,12 @@ assert not git('status','--porcelain'),'Review uncommitted publication state bef
 git('fetch','--depth=1','origin',BR);git('switch','--detach','FETCH_HEAD')
 files=[p for d in ('src/architecture/java','src/rp/java','src/nativegridexport','src/nativegridqa') for p in (P/d).rglob('*') if p.is_file()]
 files += [P/'build.gradle',P/'gradle.properties',P/'src/architecture/resources/native-grid.mixins.json']
+files += [P/'src/architecture/resources/bloodborne_dw.composite.mixins.json']
+files += list((P/'src/architecture/resources/assets/bloodborne_dw/models/item').glob('source_fallback*carrier.json'))
+repair=P/'src/architecture/resources/assets/bloodborne_dw/native_grid/visual-repairs.json'
+if repair.exists():files.append(repair)
 files += [p for p in (P/'tools').glob('*fix*.py')]+[P/'tools/bootstrap_fix_runtime.py']
+files += [p for p in (P/'fix-evidence').rglob('*') if p.is_file() and p.suffix in ('.json','.jsonl') and p.stat().st_size<10_000_000]
 for p in files:
  dst=R/'source-code'/p.relative_to(P);dst.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(p,dst)
 D=R/'diagnostics/2026-10-25-fixes';D.mkdir(parents=True,exist_ok=True)
