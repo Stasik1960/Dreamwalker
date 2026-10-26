@@ -33,7 +33,7 @@ for f in files(history):sources.append((f,'DW/history/TASK/'+f.relative_to(histo
 with zipfile.ZipFile(archive,'w',zipfile.ZIP_DEFLATED,compresslevel=1,allowZip64=True) as z:
  for f,rel in sources:z.write(f,rel)
 shutil.copy2(J,O/J.name)
-for name in ('REPORT-RU.md','TASK-RU.md','DECISIONS-RU.md','HANDOFF-RU.md'):shutil.copy2(D/name,O/name)
+for name in ('REPORT-RU.md','TASK-RU.md','DECISIONS-RU.md','HANDOFF-RU.md','TEST-NOTES-RU.md'):shutil.copy2(D/name,O/name)
 artifacts=[{'name':f.name,'bytes':f.stat().st_size,'sha256':sha(f)} for f in O.iterdir() if f.is_file() and f.name!='SHA256SUMS.txt']
 (O/'SHA256SUMS.txt').write_text(''.join(row['sha256']+'  '+row['name']+'\n' for row in artifacts),encoding='utf-8');artifacts.append({'name':'SHA256SUMS.txt','bytes':(O/'SHA256SUMS.txt').stat().st_size,'sha256':sha(O/'SHA256SUMS.txt')})
 integrity=[]

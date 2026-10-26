@@ -14,6 +14,7 @@ for row in client['checks']:
  if isinstance(row,dict):assert row['bones']>0;states.setdefault(row['model'],set()).add(row['state'])
 assert len(states)==18 and all(s=={'idle','walk','hurt','attack','death'} for s in states.values())
 final=load(D/'client-4/client-checks.json');assert sum(isinstance(s,str) and s.startswith('death last frame remains held ') for s in final['checks'])==18;assert sum(isinstance(s,str) and s.startswith('authored corpse stays above feet plane ') for s in final['checks'])==16;assert sum(isinstance(s,str) and s.startswith('living actor clears floor correction ') for s in final['checks'])==18
+angles=load(D/'client-6/client-checks.json');assert angles['status']=='PASS' and angles['modelCount']==2;result=load(D/'client-6/launch-result.json');assert result['exitCode']==0 and result['saved'];assert load(D/'client-6/process.json')['productionSha256']==H
 receipt={'status':'PASS','productionSha256':H,'server':'server-5','client':'client-2','finalCorpses':'client-4','rendererDelta':'renderer-delta.json','models':18,'modelStates':90,'mapChanged':False};(D/'acceptance.json').write_text(json.dumps(receipt,indent=2),encoding='utf-8')
 pack=[]
 for f in sorted((P/'npc-profiles/client-4/mods').glob('*.jar')):

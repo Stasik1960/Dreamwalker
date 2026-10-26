@@ -22,6 +22,7 @@ elif not client:args+=['-Ddw.npc.qa.server=true']
 if fullMap:args+=['-Ddw.npc.qa.map='+str(D/'preview-2/map-apply.json')]
 if '--resume' in sys.argv:args+=['-Ddw.npc.qa.resume=true']
 if '--corpses' in sys.argv:args+=['-Ddw.npc.qa.finalCorpses=true']
+if '--corpse-angles' in sys.argv:args+=['-Ddw.npc.qa.debugCorpses=true']
 if client:
  if client:shutil.copytree(G/'config',profile/'config')
  else:(profile/'config').mkdir()

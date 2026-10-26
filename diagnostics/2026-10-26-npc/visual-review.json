@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "models": 18,
+  "normalStates": 90,
+  "finalCorpseStates": 18,
+  "sourceImages": ["client-2", "client-4", "client-6"],
+  "review": "All18 original models visible. Authored final poses and both generic lying fallbacks inspected. Actual1HP corpses retain geometry and hold their final state. Numeric floor checks passed for16 authored clips; correction clears on revival. Two apparent missing trunks in the original GUI frames were caused by the grey GUI background depth occluding deeper parts of the rendered entity. Clearing only QA depth confirmed complete bodies in client-6; no production clipping change was needed for that artefact. Some oversized models exceed the diagnostic viewport framing, without missing model resources.",
+  "qaExceptions": "Original client-2 shutdown-only Index18 preserved and reviewed separately in client-reviewed.json. Subsequent corpse runs completed normally."
+}

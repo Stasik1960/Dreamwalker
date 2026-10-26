@@ -11,7 +11,17 @@ filled=subprocess.run(['git','credential','fill'],input='protocol=https\nhost=gi
 class NoRedirect(urllib.request.HTTPRedirectHandler):
  def redirect_request(self,*args,**kwargs):raise RuntimeError('Authenticated redirects forbidden')
 http=urllib.request.build_opener(NoRedirect())
-def api(method,path,body=(D/'REPORT-RU.md').read_text(encoding='utf-8')+'\n\nПолные исходники и инструкции восстановления приложены. Карта не менялась: используйте свою текущую bloodborne или карту стабильного релиза interactions-20261026. Предыдущие релизы сохранены.\n'
+def api(method,path,body=None,missing=False):
+ data=None if body is None else json.dumps(body,ensure_ascii=False).encode();headers={'Authorization':'Bearer '+token,'Accept':'application/vnd.github+json','User-Agent':'Dreamwalker-NPC','Content-Type':'application/json'}
+ try:
+  with http.open(urllib.request.Request('https://api.github.com'+path,data=data,headers=headers,method=method),timeout=90) as result:return json.load(result)
+ except urllib.error.HTTPError as error:
+  if missing and error.code==404:return None
+  raise RuntimeError('GitHub HTTP '+str(error.code)) from None
+saved=D/'final-release.json';release=None
+if saved.exists():release=api('GET','/repos/'+REPO+'/releases/'+str(load(saved)['releaseId']),missing=True)
+if release is None:release=api('GET','/repos/'+REPO+'/releases/tags/'+TAG,missing=True)
+body=(D/'REPORT-RU.md').read_text(encoding='utf-8')+'\n\nПолные исходники и инструкции восстановления приложены. Карта не менялась: используйте свою текущую bloodborne или карту стабильного релиза interactions-20261026. Предыдущие релизы сохранены.\n'
 if release is None:release=api('POST','/repos/'+REPO+'/releases',{'tag_name':TAG,'target_commitish':commit,'name':'Dreamwalker — NPC и Custom NPC, visual-physics.8','body':body,'draft':True,'prerelease':False,'make_latest':'false'})
 assert release['tag_name']==TAG or release['draft'] and release['tag_name'].startswith('untagged-')
 assets={row['name']:row for row in release['assets']};receipt={'status':'UPLOADING','tag':TAG,'url':release['html_url'],'releaseId':release['id'],'commit':commit,'assets':[]}
