@@ -1,0 +1,170 @@
+Compiled from "GeoQuad.java"
+public final class software.bernie.geckolib.cache.object.GeoQuad extends java.lang.Record {
+  private final software.bernie.geckolib.cache.object.GeoVertex[] vertices;
+
+  private final org.joml.Vector3f normal;
+
+  private final net.minecraft.class_2350 direction;
+
+  public software.bernie.geckolib.cache.object.GeoQuad(software.bernie.geckolib.cache.object.GeoVertex[], org.joml.Vector3f, net.minecraft.class_2350);
+    Code:
+       0: aload_0
+       1: invokespecial #21                 // Method java/lang/Record."<init>":()V
+       4: aload_0
+       5: aload_1
+       6: putfield      #23                 // Field vertices:[Lsoftware/bernie/geckolib/cache/object/GeoVertex;
+       9: aload_0
+      10: aload_2
+      11: putfield      #25                 // Field normal:Lorg/joml/Vector3f;
+      14: aload_0
+      15: aload_3
+      16: putfield      #27                 // Field direction:Lnet/minecraft/class_2350;
+      19: return
+
+  public static software.bernie.geckolib.cache.object.GeoQuad build(software.bernie.geckolib.cache.object.GeoVertex[], double[], double[], float, float, boolean, net.minecraft.class_2350);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: iconst_0
+       3: daload
+       4: d2f
+       5: aload_1
+       6: iconst_1
+       7: daload
+       8: d2f
+       9: aload_2
+      10: iconst_0
+      11: daload
+      12: d2f
+      13: aload_2
+      14: iconst_1
+      15: daload
+      16: d2f
+      17: fload_3
+      18: fload         4
+      20: iload         5
+      22: aload         6
+      24: invokestatic  #39                 // Method build:([Lsoftware/bernie/geckolib/cache/object/GeoVertex;FFFFFFZLnet/minecraft/class_2350;)Lsoftware/bernie/geckolib/cache/object/GeoQuad;
+      27: areturn
+
+  public static software.bernie.geckolib.cache.object.GeoQuad build(software.bernie.geckolib.cache.object.GeoVertex[], float, float, float, float, float, float, boolean, net.minecraft.class_2350);
+    Code:
+       0: fload_1
+       1: fload_3
+       2: fadd
+       3: fload         5
+       5: fdiv
+       6: fstore        9
+       8: fload_2
+       9: fload         4
+      11: fadd
+      12: fload         6
+      14: fdiv
+      15: fstore        10
+      17: fload_1
+      18: fload         5
+      20: fdiv
+      21: fstore_1
+      22: fload_2
+      23: fload         6
+      25: fdiv
+      26: fstore_2
+      27: aload         8
+      29: invokevirtual #52                 // Method net/minecraft/class_2350.method_23955:()Lorg/joml/Vector3f;
+      32: astore        11
+      34: iload         7
+      36: ifne          52
+      39: fload         9
+      41: fstore        12
+      43: fload_1
+      44: fstore        9
+      46: fload         12
+      48: fstore_1
+      49: goto          62
+      52: aload         11
+      54: ldc           #55                 // float -1.0f
+      56: fconst_1
+      57: fconst_1
+      58: invokevirtual #59                 // Method org/joml/Vector3f.mul:(FFF)Lorg/joml/Vector3f;
+      61: pop
+      62: aload_0
+      63: iconst_0
+      64: aload_0
+      65: iconst_0
+      66: aaload
+      67: fload_1
+      68: fload_2
+      69: invokevirtual #65                 // Method software/bernie/geckolib/cache/object/GeoVertex.withUVs:(FF)Lsoftware/bernie/geckolib/cache/object/GeoVertex;
+      72: aastore
+      73: aload_0
+      74: iconst_1
+      75: aload_0
+      76: iconst_1
+      77: aaload
+      78: fload         9
+      80: fload_2
+      81: invokevirtual #65                 // Method software/bernie/geckolib/cache/object/GeoVertex.withUVs:(FF)Lsoftware/bernie/geckolib/cache/object/GeoVertex;
+      84: aastore
+      85: aload_0
+      86: iconst_2
+      87: aload_0
+      88: iconst_2
+      89: aaload
+      90: fload         9
+      92: fload         10
+      94: invokevirtual #65                 // Method software/bernie/geckolib/cache/object/GeoVertex.withUVs:(FF)Lsoftware/bernie/geckolib/cache/object/GeoVertex;
+      97: aastore
+      98: aload_0
+      99: iconst_3
+     100: aload_0
+     101: iconst_3
+     102: aaload
+     103: fload_1
+     104: fload         10
+     106: invokevirtual #65                 // Method software/bernie/geckolib/cache/object/GeoVertex.withUVs:(FF)Lsoftware/bernie/geckolib/cache/object/GeoVertex;
+     109: aastore
+     110: new           #2                  // class software/bernie/geckolib/cache/object/GeoQuad
+     113: dup
+     114: aload_0
+     115: aload         11
+     117: aload         8
+     119: invokespecial #67                 // Method "<init>":([Lsoftware/bernie/geckolib/cache/object/GeoVertex;Lorg/joml/Vector3f;Lnet/minecraft/class_2350;)V
+     122: areturn
+
+  public final java.lang.String toString();
+    Code:
+       0: aload_0
+       1: invokedynamic #87,  0             // InvokeDynamic #0:toString:(Lsoftware/bernie/geckolib/cache/object/GeoQuad;)Ljava/lang/String;
+       6: areturn
+
+  public final int hashCode();
+    Code:
+       0: aload_0
+       1: invokedynamic #92,  0             // InvokeDynamic #0:hashCode:(Lsoftware/bernie/geckolib/cache/object/GeoQuad;)I
+       6: ireturn
+
+  public final boolean equals(java.lang.Object);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokedynamic #98,  0             // InvokeDynamic #0:equals:(Lsoftware/bernie/geckolib/cache/object/GeoQuad;Ljava/lang/Object;)Z
+       7: ireturn
+
+  public software.bernie.geckolib.cache.object.GeoVertex[] vertices();
+    Code:
+       0: aload_0
+       1: getfield      #23                 // Field vertices:[Lsoftware/bernie/geckolib/cache/object/GeoVertex;
+       4: areturn
+
+  public org.joml.Vector3f normal();
+    Code:
+       0: aload_0
+       1: getfield      #25                 // Field normal:Lorg/joml/Vector3f;
+       4: areturn
+
+  public net.minecraft.class_2350 direction();
+    Code:
+       0: aload_0
+       1: getfield      #27                 // Field direction:Lnet/minecraft/class_2350;
+       4: areturn
+}

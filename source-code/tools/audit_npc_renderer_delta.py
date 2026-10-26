@@ -1,0 +1,6 @@
+import hashlib,json,zipfile
+from pathlib import Path
+P=Path(__file__).resolve().parents[1];D=P/'npc-evidence';baseline=D/'server-tested-baseline.jar';current=P/'build-native-visual/libs/dreamwalker-bb-fabric-1.20.1-0.1.0-v12.7.4-visual-physics.8.jar';allowed={'dev/dreamwalker/bloodbornerp/client/CatalogMobRenderer.class','dev/dreamwalker/bloodbornerp/client/CorpseFloor.class','dev/dreamwalker/bloodbornerp/client/CorpseFloor$State.class'}
+with zipfile.ZipFile(baseline) as a,zipfile.ZipFile(current) as b:
+ aa={n:hashlib.sha256(a.read(n)).hexdigest() for n in a.namelist() if not n.endswith('/')};bb={n:hashlib.sha256(b.read(n)).hexdigest() for n in b.namelist() if not n.endswith('/')};changed={n for n in aa.keys()|bb.keys() if aa.get(n)!=bb.get(n)};assert changed==allowed,sorted(changed)
+receipt={'status':'PASS','baselineSha256':hashlib.sha256(baseline.read_bytes()).hexdigest(),'productionSha256':hashlib.sha256(current.read_bytes()).hexdigest(),'changedEntries':sorted(changed),'unchangedEntries':len(aa)-1,'reason':'Only corpse renderer and its client-only bounds helper changed. All server behavior, tool, model bridge, controllers, assets, registry, protocol and persistence bytes match accepted server-5/client-2 tests.'};(D/'renderer-delta.json').write_text(json.dumps(receipt,indent=2),encoding='utf-8')

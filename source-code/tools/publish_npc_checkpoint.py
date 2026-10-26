@@ -19,6 +19,7 @@ owned=['gradle.properties','src/architecture/resources/fabric.mod.json','src/arc
 'src/architecture/java/dev/dreamwalker/bloodbornedw/tool/BbToolService.java','src/architecture/java/dev/dreamwalker/bloodbornedw/tool/BbToolRotations.java',
 'src/rp/java/dev/dreamwalker/bloodbornerp/mob/RpMobEntity.java','src/rp/java/dev/dreamwalker/bloodbornerp/client/NpcMobVisualBridge.java','src/rp/java/dev/dreamwalker/bloodbornerp/client/CatalogMobRenderer.java']
 owned += [p.relative_to(P).as_posix() for p in (P/'src/restorationqa').rglob('*') if p.is_file()]
+owned += ['src/rp/java/dev/dreamwalker/bloodbornerp/client/CorpseFloor.java']
 owned += [p.relative_to(P).as_posix() for p in (P/'tools').glob('*npc*.py')]
 paths=[]
 readme=R/'README.md'

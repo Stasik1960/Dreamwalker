@@ -1,0 +1,679 @@
+Compiled from "GeoRenderer.java"
+public interface software.bernie.geckolib.renderer.GeoRenderer<T extends software.bernie.geckolib.core.animatable.GeoAnimatable> {
+  public abstract software.bernie.geckolib.model.GeoModel<T> getGeoModel();
+
+  public abstract T getAnimatable();
+
+  public default net.minecraft.class_2960 getTextureLocation(T);
+    Code:
+       0: aload_0
+       1: invokeinterface #23,  1           // InterfaceMethod getGeoModel:()Lsoftware/bernie/geckolib/model/GeoModel;
+       6: aload_1
+       7: invokevirtual #28                 // Method software/bernie/geckolib/model/GeoModel.getTextureResource:(Lsoftware/bernie/geckolib/core/animatable/GeoAnimatable;)Lnet/minecraft/class_2960;
+      10: areturn
+
+  public default java.util.List<software.bernie.geckolib.renderer.layer.GeoRenderLayer<T>> getRenderLayers();
+    Code:
+       0: invokestatic  #41                 // InterfaceMethod java/util/List.of:()Ljava/util/List;
+       3: areturn
+
+  public default net.minecraft.class_1921 getRenderType(T, net.minecraft.class_2960, net.minecraft.class_4597, float);
+    Code:
+       0: aload_0
+       1: invokeinterface #23,  1           // InterfaceMethod getGeoModel:()Lsoftware/bernie/geckolib/model/GeoModel;
+       6: aload_1
+       7: aload_2
+       8: invokevirtual #51                 // Method software/bernie/geckolib/model/GeoModel.getRenderType:(Lsoftware/bernie/geckolib/core/animatable/GeoAnimatable;Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;
+      11: areturn
+
+  public default software.bernie.geckolib.core.object.Color getRenderColor(T, float, int);
+    Code:
+       0: getstatic     #64                 // Field software/bernie/geckolib/core/object/Color.WHITE:Lsoftware/bernie/geckolib/core/object/Color;
+       3: areturn
+
+  public default int getPackedOverlay(T, float);
+    Code:
+       0: getstatic     #77                 // Field net/minecraft/class_4608.field_21444:I
+       3: ireturn
+
+  public default int getPackedOverlay(T, float, float);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: fload_2
+       3: invokeinterface #81,  3           // InterfaceMethod getPackedOverlay:(Lsoftware/bernie/geckolib/core/animatable/GeoAnimatable;F)I
+       8: ireturn
+
+  public default long getInstanceId(T);
+    Code:
+       0: aload_1
+       1: invokevirtual #88                 // Method java/lang/Object.hashCode:()I
+       4: i2l
+       5: lreturn
+
+  public default float getMotionAnimThreshold(T);
+    Code:
+       0: ldc           #92                 // float 0.015f
+       2: freturn
+
+  public default void defaultRender(net.minecraft.class_4587, T, net.minecraft.class_4597, net.minecraft.class_1921, net.minecraft.class_4588, float, float, int);
+    Code:
+       0: aload_1
+       1: invokevirtual #103                // Method net/minecraft/class_4587.method_22903:()V
+       4: aload_0
+       5: aload_2
+       6: fload         7
+       8: iload         8
+      10: invokeinterface #105,  4          // InterfaceMethod getRenderColor:(Lsoftware/bernie/geckolib/core/animatable/GeoAnimatable;FI)Lsoftware/bernie/geckolib/core/object/Color;
+      15: astore        9
+      17: aload         9
+      19: invokevirtual #109                // Method software/bernie/geckolib/core/object/Color.getRedFloat:()F
+      22: fstore        10
+      24: aload         9
+      26: invokevirtual #112                // Method software/bernie/geckolib/core/object/Color.getGreenFloat:()F
+      29: fstore        11
+      31: aload         9
+      33: invokevirtual #115                // Method software/bernie/geckolib/core/object/Color.getBlueFloat:()F
+      36: fstore        12
+      38: aload         9
+      40: invokevirtual #118                // Method software/bernie/geckolib/core/object/Color.getAlphaFloat:()F
+      43: fstore        13
+      45: aload_0
+      46: aload_2
+      47: fconst_0
+      48: fload         7
+      50: invokeinterface #120,  4          // InterfaceMethod getPackedOverlay:(Lsoftware/bernie/geckolib/core/animatable/GeoAnimatable;FF)I
+      55: istore        14
+      57: aload_0
+      58: invokeinterface #23,  1           // InterfaceMethod getGeoModel:()Lsoftware/bernie/geckolib/model/GeoModel;
+      63: aload_0
+      64: invokeinterface #23,  1           // InterfaceMethod getGeoModel:()Lsoftware/bernie/geckolib/model/GeoModel;
+      69: aload_2
+      70: invokevirtual #123                // Method software/bernie/geckolib/model/GeoModel.getModelResource:(Lsoftware/bernie/geckolib/core/animatable/GeoAnimatable;)Lnet/minecraft/class_2960;
+      73: invokevirtual #127                // Method software/bernie/geckolib/model/GeoModel.getBakedModel:(Lnet/minecraft/class_2960;)Lsoftware/bernie/geckolib/cache/object/BakedGeoModel;
+      76: astore        15
+      78: aload         4
+      80: ifnonnull     102
+      83: aload_0
+      84: aload_2
+      85: aload_0
+      86: aload_2
+      87: invokeinterface #129,  2          // InterfaceMethod getTextureLocation:(Lsoftware/bernie/geckolib/core/animatable/GeoAnimatable;)Lnet/minecraft/class_2960;
+      92: aload_3
+      93: fload         7
+      95: invokeinterface #131,  5          // InterfaceMethod getRenderType:(Lsoftware/bernie/geckolib/core/animatable/GeoAnimatable;Lnet/minecraft/class_2960;Lnet/minecraft/class_4597;F)Lnet/minecraft/class_1921;
+     100: astore        4
+     102: aload         5
+     104: ifnonnull     117
+     107: aload_3
+     108: aload         4
+     110: invokeinterface #145,  2          // InterfaceMethod net/minecraft/class_4597.getBuffer:(Lnet/minecraft/class_1921;)Lnet/minecraft/class_4588;
+     115: astore        5
+     117: aload_0
+     118: aload_1
+     119: aload_2
+     120: aload         15
+     122: aload_3
+     123: aload         5
+     125: iconst_0
+     126: fload         7
+     128: iload         8
+     130: iload         14
+     132: fload         10
+     134: fload         11
+     136: fload         12
+     138: fload         13
+     140: invokeinterface #149,  14         // InterfaceMethod preRender:(Lnet/minecraft/class_4587;Lsoftware/bernie/geckolib/core/animatable/GeoAnimatable;Lsoftware/bernie/geckolib/cache/object/BakedGeoModel;Lnet/minecraft/class_4597;Lnet/minecraft/class_4588;ZFIIFFFF)V
+     145: aload_0
+     146: aload_1
+     147: aload         15
+     149: aload_3
+     150: fload         7
+     152: iload         8
+     154: invokeinterface #153,  6          // InterfaceMethod firePreRenderEvent:(Lnet/minecraft/class_4587;Lsoftware/bernie/geckolib/cache/object/BakedGeoModel;Lnet/minecraft/class_4597;FI)Z
+     159: ifeq          277
+     162: aload_0
+     163: aload_1
+     164: aload_2
+     165: aload         15
+     167: aload         4
+     169: aload_3
+     170: aload         5
+     172: iload         8
+     174: i2f
+     175: iload         8
+     177: iload         14
+     179: invokeinterface #157,  10         // InterfaceMethod preApplyRenderLayers:(Lnet/minecraft/class_4587;Lsoftware/bernie/geckolib/core/animatable/GeoAnimatable;Lsoftware/bernie/geckolib/cache/object/BakedGeoModel;Lnet/minecraft/class_1921;Lnet/minecraft/class_4597;Lnet/minecraft/class_4588;FII)V
+     184: aload_0
+     185: aload_1
+     186: aload_2
+     187: aload         15
+     189: aload         4
+     191: aload_3
+     192: aload         5
+     194: iconst_0
+     195: fload         7
+     197: iload         8
+     199: iload         14
+     201: fload         10
+     203: fload         11
+     205: fload         12
+     207: fload         13
+     209: invokeinterface #161,  15         // InterfaceMethod actuallyRender:(Lnet/minecraft/class_4587;Lsoftware/bernie/geckolib/core/animatable/GeoAnimatable;Lsoftware/bernie/geckolib/cache/object/BakedGeoModel;Lnet/minecraft/class_1921;Lnet/minecraft/class_4597;Lnet/minecraft/class_4588;ZFIIFFFF)V
+     214: aload_0
+     215: aload_1
+     216: aload_2
+     217: aload         15
+     219: aload         4
+     221: aload_3
+     222: aload         5
+     224: fload         7
+     226: iload         8
+     228: iload         14
+     230: invokeinterface #164,  10         // InterfaceMethod applyRenderLayers:(Lnet/minecraft/class_4587;Lsoftware/bernie/geckolib/core/animatable/GeoAnimatable;Lsoftware/bernie/geckolib/cache/object/BakedGeoModel;Lnet/minecraft/class_1921;Lnet/minecraft/class_4597;Lnet/minecraft/class_4588;FII)V
+     235: aload_0
+     236: aload_1
+     237: aload_2
+     238: aload         15
+     240: aload_3
+     241: aload         5
+     243: iconst_0
+     244: fload         7
+     246: iload         8
+     248: iload         14
+     250: fload         10
+     252: fload         11
+     254: fload         12
+     256: fload         13
+     258: invokeinterface #167,  14         // InterfaceMethod postRender:(Lnet/minecraft/class_4587;Lsoftware/bernie/geckolib/core/animatable/GeoAnimatable;Lsoftware/bernie/geckolib/cache/object/BakedGeoModel;Lnet/minecraft/class_4597;Lnet/minecraft/class_4588;ZFIIFFFF)V
+     263: aload_0
+     264: aload_1
+     265: aload         15
+     267: aload_3
+     268: fload         7
+     270: iload         8
+     272: invokeinterface #171,  6          // InterfaceMethod firePostRenderEvent:(Lnet/minecraft/class_4587;Lsoftware/bernie/geckolib/cache/object/BakedGeoModel;Lnet/minecraft/class_4597;FI)V
+     277: aload_1
+     278: invokevirtual #174                // Method net/minecraft/class_4587.method_22909:()V
+     281: aload_0
+     282: aload_1
+     283: aload_2
+     284: aload         15
+     286: aload_3
+     287: aload         5
+     289: fload         7
+     291: iload         8
+     293: iload         14
+     295: fload         10
+     297: fload         11
+     299: fload         12
+     301: fload         13
+     303: invokeinterface #178,  13         // InterfaceMethod renderFinal:(Lnet/minecraft/class_4587;Lsoftware/bernie/geckolib/core/animatable/GeoAnimatable;Lsoftware/bernie/geckolib/cache/object/BakedGeoModel;Lnet/minecraft/class_4597;Lnet/minecraft/class_4588;FIIFFFF)V
+     308: aload_0
+     309: invokeinterface #181,  1          // InterfaceMethod doPostRenderCleanup:()V
+     314: return
+
+  public default void reRender(software.bernie.geckolib.cache.object.BakedGeoModel, net.minecraft.class_4587, net.minecraft.class_4597, T, net.minecraft.class_1921, net.minecraft.class_4588, float, int, int, float, float, float, float);
+    Code:
+       0: aload_2
+       1: invokevirtual #103                // Method net/minecraft/class_4587.method_22903:()V
+       4: aload_0
+       5: aload_2
+       6: aload         4
+       8: aload_1
+       9: aload_3
+      10: aload         6
+      12: iconst_1
+      13: fload         7
+      15: iload         8
+      17: iload         9
+      19: fload         10
+      21: fload         11
+      23: fload         12
+      25: fload         13
+      27: invokeinterface #149,  14         // InterfaceMethod preRender:(Lnet/minecraft/class_4587;Lsoftware/bernie/geckolib/core/animatable/GeoAnimatable;Lsoftware/bernie/geckolib/cache/object/BakedGeoModel;Lnet/minecraft/class_4597;Lnet/minecraft/class_4588;ZFIIFFFF)V
+      32: aload_0
+      33: aload_2
+      34: aload         4
+      36: aload_1
+      37: aload         5
+      39: aload_3
+      40: aload         6
+      42: iconst_1
+      43: fload         7
+      45: iload         8
+      47: iload         9
+      49: fload         10
+      51: fload         11
+      53: fload         12
+      55: fload         13
+      57: invokeinterface #161,  15         // InterfaceMethod actuallyRender:(Lnet/minecraft/class_4587;Lsoftware/bernie/geckolib/core/animatable/GeoAnimatable;Lsoftware/bernie/geckolib/cache/object/BakedGeoModel;Lnet/minecraft/class_1921;Lnet/minecraft/class_4597;Lnet/minecraft/class_4588;ZFIIFFFF)V
+      62: aload_0
+      63: aload_2
+      64: aload         4
+      66: aload_1
+      67: aload_3
+      68: aload         6
+      70: iconst_1
+      71: fload         7
+      73: iload         8
+      75: iload         9
+      77: fload         10
+      79: fload         11
+      81: fload         12
+      83: fload         13
+      85: invokeinterface #167,  14         // InterfaceMethod postRender:(Lnet/minecraft/class_4587;Lsoftware/bernie/geckolib/core/animatable/GeoAnimatable;Lsoftware/bernie/geckolib/cache/object/BakedGeoModel;Lnet/minecraft/class_4597;Lnet/minecraft/class_4588;ZFIIFFFF)V
+      90: aload_2
+      91: invokevirtual #174                // Method net/minecraft/class_4587.method_22909:()V
+      94: return
+
+  public default void actuallyRender(net.minecraft.class_4587, T, software.bernie.geckolib.cache.object.BakedGeoModel, net.minecraft.class_1921, net.minecraft.class_4597, net.minecraft.class_4588, boolean, float, int, int, float, float, float, float);
+    Code:
+       0: aload_0
+       1: aload_2
+       2: invokeinterface #201,  2          // InterfaceMethod updateAnimatedTextureFrame:(Lsoftware/bernie/geckolib/core/animatable/GeoAnimatable;)V
+       7: aload_3
+       8: invokevirtual #204                // Method software/bernie/geckolib/cache/object/BakedGeoModel.topLevelBones:()Ljava/util/List;
+      11: invokeinterface #208,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+      16: astore        15
+      18: aload         15
+      20: invokeinterface #214,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+      25: ifeq          75
+      28: aload         15
+      30: invokeinterface #218,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      35: checkcast     #220                // class software/bernie/geckolib/cache/object/GeoBone
+      38: astore        16
+      40: aload_0
+      41: aload_1
+      42: aload_2
+      43: aload         16
+      45: aload         4
+      47: aload         5
+      49: aload         6
+      51: iload         7
+      53: fload         8
+      55: iload         9
+      57: iload         10
+      59: fload         11
+      61: fload         12
+      63: fload         13
+      65: fload         14
+      67: invokeinterface #224,  15         // InterfaceMethod renderRecursively:(Lnet/minecraft/class_4587;Lsoftware/bernie/geckolib/core/animatable/GeoAnimatable;Lsoftware/bernie/geckolib/cache/object/GeoBone;Lnet/minecraft/class_1921;Lnet/minecraft/class_4597;Lnet/minecraft/class_4588;ZFIIFFFF)V
+      72: goto          18
+      75: return
+
+  public default void preApplyRenderLayers(net.minecraft.class_4587, T, software.bernie.geckolib.cache.object.BakedGeoModel, net.minecraft.class_1921, net.minecraft.class_4597, net.minecraft.class_4588, float, int, int);
+    Code:
+       0: aload_0
+       1: invokeinterface #230,  1          // InterfaceMethod getRenderLayers:()Ljava/util/List;
+       6: invokeinterface #208,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+      11: astore        10
+      13: aload         10
+      15: invokeinterface #214,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+      20: ifeq          58
+      23: aload         10
+      25: invokeinterface #218,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      30: checkcast     #232                // class software/bernie/geckolib/renderer/layer/GeoRenderLayer
+      33: astore        11
+      35: aload         11
+      37: aload_1
+      38: aload_2
+      39: aload_3
+      40: aload         4
+      42: aload         5
+      44: aload         6
+      46: fload         7
+      48: iload         8
+      50: iload         9
+      52: invokevirtual #234                // Method software/bernie/geckolib/renderer/layer/GeoRenderLayer.preRender:(Lnet/minecraft/class_4587;Lsoftware/bernie/geckolib/core/animatable/GeoAnimatable;Lsoftware/bernie/geckolib/cache/object/BakedGeoModel;Lnet/minecraft/class_1921;Lnet/minecraft/class_4597;Lnet/minecraft/class_4588;FII)V
+      55: goto          13
+      58: return
+
+  public default void applyRenderLayersForBone(net.minecraft.class_4587, T, software.bernie.geckolib.cache.object.GeoBone, net.minecraft.class_1921, net.minecraft.class_4597, net.minecraft.class_4588, float, int, int);
+    Code:
+       0: aload_0
+       1: invokeinterface #230,  1          // InterfaceMethod getRenderLayers:()Ljava/util/List;
+       6: invokeinterface #208,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+      11: astore        10
+      13: aload         10
+      15: invokeinterface #214,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+      20: ifeq          58
+      23: aload         10
+      25: invokeinterface #218,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      30: checkcast     #232                // class software/bernie/geckolib/renderer/layer/GeoRenderLayer
+      33: astore        11
+      35: aload         11
+      37: aload_1
+      38: aload_2
+      39: aload_3
+      40: aload         4
+      42: aload         5
+      44: aload         6
+      46: fload         7
+      48: iload         8
+      50: iload         9
+      52: invokevirtual #244                // Method software/bernie/geckolib/renderer/layer/GeoRenderLayer.renderForBone:(Lnet/minecraft/class_4587;Lsoftware/bernie/geckolib/core/animatable/GeoAnimatable;Lsoftware/bernie/geckolib/cache/object/GeoBone;Lnet/minecraft/class_1921;Lnet/minecraft/class_4597;Lnet/minecraft/class_4588;FII)V
+      55: goto          13
+      58: return
+
+  public default void applyRenderLayers(net.minecraft.class_4587, T, software.bernie.geckolib.cache.object.BakedGeoModel, net.minecraft.class_1921, net.minecraft.class_4597, net.minecraft.class_4588, float, int, int);
+    Code:
+       0: aload_0
+       1: invokeinterface #230,  1          // InterfaceMethod getRenderLayers:()Ljava/util/List;
+       6: invokeinterface #208,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+      11: astore        10
+      13: aload         10
+      15: invokeinterface #214,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+      20: ifeq          58
+      23: aload         10
+      25: invokeinterface #218,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      30: checkcast     #232                // class software/bernie/geckolib/renderer/layer/GeoRenderLayer
+      33: astore        11
+      35: aload         11
+      37: aload_1
+      38: aload_2
+      39: aload_3
+      40: aload         4
+      42: aload         5
+      44: aload         6
+      46: fload         7
+      48: iload         8
+      50: iload         9
+      52: invokevirtual #247                // Method software/bernie/geckolib/renderer/layer/GeoRenderLayer.render:(Lnet/minecraft/class_4587;Lsoftware/bernie/geckolib/core/animatable/GeoAnimatable;Lsoftware/bernie/geckolib/cache/object/BakedGeoModel;Lnet/minecraft/class_1921;Lnet/minecraft/class_4597;Lnet/minecraft/class_4588;FII)V
+      55: goto          13
+      58: return
+
+  public default void preRender(net.minecraft.class_4587, T, software.bernie.geckolib.cache.object.BakedGeoModel, net.minecraft.class_4597, net.minecraft.class_4588, boolean, float, int, int, float, float, float, float);
+    Code:
+       0: return
+
+  public default void postRender(net.minecraft.class_4587, T, software.bernie.geckolib.cache.object.BakedGeoModel, net.minecraft.class_4597, net.minecraft.class_4588, boolean, float, int, int, float, float, float, float);
+    Code:
+       0: return
+
+  public default void renderFinal(net.minecraft.class_4587, T, software.bernie.geckolib.cache.object.BakedGeoModel, net.minecraft.class_4597, net.minecraft.class_4588, float, int, int, float, float, float, float);
+    Code:
+       0: return
+
+  public default void doPostRenderCleanup();
+    Code:
+       0: return
+
+  public default void renderRecursively(net.minecraft.class_4587, T, software.bernie.geckolib.cache.object.GeoBone, net.minecraft.class_1921, net.minecraft.class_4597, net.minecraft.class_4588, boolean, float, int, int, float, float, float, float);
+    Code:
+       0: aload_1
+       1: invokevirtual #103                // Method net/minecraft/class_4587.method_22903:()V
+       4: aload_1
+       5: aload_3
+       6: invokestatic  #256                // Method software/bernie/geckolib/util/RenderUtils.prepMatrixForBone:(Lnet/minecraft/class_4587;Lsoftware/bernie/geckolib/core/animatable/model/CoreGeoBone;)V
+       9: aload_0
+      10: aload_1
+      11: aload_3
+      12: aload         6
+      14: iload         9
+      16: iload         10
+      18: fload         11
+      20: fload         12
+      22: fload         13
+      24: fload         14
+      26: invokeinterface #260,  10         // InterfaceMethod renderCubesOfBone:(Lnet/minecraft/class_4587;Lsoftware/bernie/geckolib/cache/object/GeoBone;Lnet/minecraft/class_4588;IIFFFF)V
+      31: iload         7
+      33: ifne          62
+      36: aload_0
+      37: aload_1
+      38: aload_0
+      39: invokeinterface #262,  1          // InterfaceMethod getAnimatable:()Lsoftware/bernie/geckolib/core/animatable/GeoAnimatable;
+      44: aload_3
+      45: aload         4
+      47: aload         5
+      49: aload         6
+      51: fload         8
+      53: iload         9
+      55: iload         10
+      57: invokeinterface #264,  10         // InterfaceMethod applyRenderLayersForBone:(Lnet/minecraft/class_4587;Lsoftware/bernie/geckolib/core/animatable/GeoAnimatable;Lsoftware/bernie/geckolib/cache/object/GeoBone;Lnet/minecraft/class_1921;Lnet/minecraft/class_4597;Lnet/minecraft/class_4588;FII)V
+      62: aload_0
+      63: aload_1
+      64: aload_2
+      65: aload_3
+      66: aload         4
+      68: aload         5
+      70: aload         6
+      72: iload         7
+      74: fload         8
+      76: iload         9
+      78: iload         10
+      80: fload         11
+      82: fload         12
+      84: fload         13
+      86: fload         14
+      88: invokeinterface #267,  15         // InterfaceMethod renderChildBones:(Lnet/minecraft/class_4587;Lsoftware/bernie/geckolib/core/animatable/GeoAnimatable;Lsoftware/bernie/geckolib/cache/object/GeoBone;Lnet/minecraft/class_1921;Lnet/minecraft/class_4597;Lnet/minecraft/class_4588;ZFIIFFFF)V
+      93: aload_1
+      94: invokevirtual #174                // Method net/minecraft/class_4587.method_22909:()V
+      97: return
+
+  public default void renderCubesOfBone(net.minecraft.class_4587, software.bernie.geckolib.cache.object.GeoBone, net.minecraft.class_4588, int, int, float, float, float, float);
+    Code:
+       0: aload_2
+       1: invokevirtual #270                // Method software/bernie/geckolib/cache/object/GeoBone.isHidden:()Z
+       4: ifeq          8
+       7: return
+       8: aload_2
+       9: invokevirtual #273                // Method software/bernie/geckolib/cache/object/GeoBone.getCubes:()Ljava/util/List;
+      12: invokeinterface #208,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+      17: astore        10
+      19: aload         10
+      21: invokeinterface #214,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+      26: ifeq          74
+      29: aload         10
+      31: invokeinterface #218,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      36: checkcast     #275                // class software/bernie/geckolib/cache/object/GeoCube
+      39: astore        11
+      41: aload_1
+      42: invokevirtual #103                // Method net/minecraft/class_4587.method_22903:()V
+      45: aload_0
+      46: aload_1
+      47: aload         11
+      49: aload_3
+      50: iload         4
+      52: iload         5
+      54: fload         6
+      56: fload         7
+      58: fload         8
+      60: fload         9
+      62: invokeinterface #279,  10         // InterfaceMethod renderCube:(Lnet/minecraft/class_4587;Lsoftware/bernie/geckolib/cache/object/GeoCube;Lnet/minecraft/class_4588;IIFFFF)V
+      67: aload_1
+      68: invokevirtual #174                // Method net/minecraft/class_4587.method_22909:()V
+      71: goto          19
+      74: return
+
+  public default void renderChildBones(net.minecraft.class_4587, T, software.bernie.geckolib.cache.object.GeoBone, net.minecraft.class_1921, net.minecraft.class_4597, net.minecraft.class_4588, boolean, float, int, int, float, float, float, float);
+    Code:
+       0: aload_3
+       1: invokevirtual #284                // Method software/bernie/geckolib/cache/object/GeoBone.isHidingChildren:()Z
+       4: ifeq          8
+       7: return
+       8: aload_3
+       9: invokevirtual #287                // Method software/bernie/geckolib/cache/object/GeoBone.getChildBones:()Ljava/util/List;
+      12: invokeinterface #208,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+      17: astore        15
+      19: aload         15
+      21: invokeinterface #214,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+      26: ifeq          76
+      29: aload         15
+      31: invokeinterface #218,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      36: checkcast     #220                // class software/bernie/geckolib/cache/object/GeoBone
+      39: astore        16
+      41: aload_0
+      42: aload_1
+      43: aload_2
+      44: aload         16
+      46: aload         4
+      48: aload         5
+      50: aload         6
+      52: iload         7
+      54: fload         8
+      56: iload         9
+      58: iload         10
+      60: fload         11
+      62: fload         12
+      64: fload         13
+      66: fload         14
+      68: invokeinterface #224,  15         // InterfaceMethod renderRecursively:(Lnet/minecraft/class_4587;Lsoftware/bernie/geckolib/core/animatable/GeoAnimatable;Lsoftware/bernie/geckolib/cache/object/GeoBone;Lnet/minecraft/class_1921;Lnet/minecraft/class_4597;Lnet/minecraft/class_4588;ZFIIFFFF)V
+      73: goto          19
+      76: return
+
+  public default void renderCube(net.minecraft.class_4587, software.bernie.geckolib.cache.object.GeoCube, net.minecraft.class_4588, int, int, float, float, float, float);
+    Code:
+       0: aload_1
+       1: aload_2
+       2: invokestatic  #292                // Method software/bernie/geckolib/util/RenderUtils.translateToPivotPoint:(Lnet/minecraft/class_4587;Lsoftware/bernie/geckolib/cache/object/GeoCube;)V
+       5: aload_1
+       6: aload_2
+       7: invokestatic  #295                // Method software/bernie/geckolib/util/RenderUtils.rotateMatrixAroundCube:(Lnet/minecraft/class_4587;Lsoftware/bernie/geckolib/cache/object/GeoCube;)V
+      10: aload_1
+      11: aload_2
+      12: invokestatic  #298                // Method software/bernie/geckolib/util/RenderUtils.translateAwayFromPivotPoint:(Lnet/minecraft/class_4587;Lsoftware/bernie/geckolib/cache/object/GeoCube;)V
+      15: aload_1
+      16: invokevirtual #302                // Method net/minecraft/class_4587.method_23760:()Lnet/minecraft/class_4587$class_4665;
+      19: invokevirtual #306                // Method net/minecraft/class_4587$class_4665.method_23762:()Lorg/joml/Matrix3f;
+      22: astore        10
+      24: new           #308                // class org/joml/Matrix4f
+      27: dup
+      28: aload_1
+      29: invokevirtual #302                // Method net/minecraft/class_4587.method_23760:()Lnet/minecraft/class_4587$class_4665;
+      32: invokevirtual #312                // Method net/minecraft/class_4587$class_4665.method_23761:()Lorg/joml/Matrix4f;
+      35: invokespecial #316                // Method org/joml/Matrix4f."<init>":(Lorg/joml/Matrix4fc;)V
+      38: astore        11
+      40: aload_2
+      41: invokevirtual #320                // Method software/bernie/geckolib/cache/object/GeoCube.quads:()[Lsoftware/bernie/geckolib/cache/object/GeoQuad;
+      44: astore        12
+      46: aload         12
+      48: arraylength
+      49: istore        13
+      51: iconst_0
+      52: istore        14
+      54: iload         14
+      56: iload         13
+      58: if_icmpge     132
+      61: aload         12
+      63: iload         14
+      65: aaload
+      66: astore        15
+      68: aload         15
+      70: ifnonnull     76
+      73: goto          126
+      76: aload         10
+      78: new           #328                // class org/joml/Vector3f
+      81: dup
+      82: aload         15
+      84: invokevirtual #332                // Method software/bernie/geckolib/cache/object/GeoQuad.normal:()Lorg/joml/Vector3f;
+      87: invokespecial #335                // Method org/joml/Vector3f."<init>":(Lorg/joml/Vector3fc;)V
+      90: invokevirtual #339                // Method org/joml/Matrix3f.transform:(Lorg/joml/Vector3f;)Lorg/joml/Vector3f;
+      93: astore        16
+      95: aload_2
+      96: aload         16
+      98: invokestatic  #343                // Method software/bernie/geckolib/util/RenderUtils.fixInvertedFlatCube:(Lsoftware/bernie/geckolib/cache/object/GeoCube;Lorg/joml/Vector3f;)V
+     101: aload_0
+     102: aload         15
+     104: aload         11
+     106: aload         16
+     108: aload_3
+     109: iload         4
+     111: iload         5
+     113: fload         6
+     115: fload         7
+     117: fload         8
+     119: fload         9
+     121: invokeinterface #347,  11         // InterfaceMethod createVerticesOfQuad:(Lsoftware/bernie/geckolib/cache/object/GeoQuad;Lorg/joml/Matrix4f;Lorg/joml/Vector3f;Lnet/minecraft/class_4588;IIFFFF)V
+     126: iinc          14, 1
+     129: goto          54
+     132: return
+
+  public default void createVerticesOfQuad(software.bernie.geckolib.cache.object.GeoQuad, org.joml.Matrix4f, org.joml.Vector3f, net.minecraft.class_4588, int, int, float, float, float, float);
+    Code:
+       0: aload_1
+       1: invokevirtual #358                // Method software/bernie/geckolib/cache/object/GeoQuad.vertices:()[Lsoftware/bernie/geckolib/cache/object/GeoVertex;
+       4: astore        11
+       6: aload         11
+       8: arraylength
+       9: istore        12
+      11: iconst_0
+      12: istore        13
+      14: iload         13
+      16: iload         12
+      18: if_icmpge     126
+      21: aload         11
+      23: iload         13
+      25: aaload
+      26: astore        14
+      28: aload         14
+      30: invokevirtual #365                // Method software/bernie/geckolib/cache/object/GeoVertex.position:()Lorg/joml/Vector3f;
+      33: astore        15
+      35: aload_2
+      36: new           #367                // class org/joml/Vector4f
+      39: dup
+      40: aload         15
+      42: invokevirtual #370                // Method org/joml/Vector3f.x:()F
+      45: aload         15
+      47: invokevirtual #373                // Method org/joml/Vector3f.y:()F
+      50: aload         15
+      52: invokevirtual #376                // Method org/joml/Vector3f.z:()F
+      55: fconst_1
+      56: invokespecial #379                // Method org/joml/Vector4f."<init>":(FFFF)V
+      59: invokevirtual #382                // Method org/joml/Matrix4f.transform:(Lorg/joml/Vector4f;)Lorg/joml/Vector4f;
+      62: astore        16
+      64: aload         4
+      66: aload         16
+      68: invokevirtual #383                // Method org/joml/Vector4f.x:()F
+      71: aload         16
+      73: invokevirtual #384                // Method org/joml/Vector4f.y:()F
+      76: aload         16
+      78: invokevirtual #385                // Method org/joml/Vector4f.z:()F
+      81: fload         7
+      83: fload         8
+      85: fload         9
+      87: fload         10
+      89: aload         14
+      91: invokevirtual #388                // Method software/bernie/geckolib/cache/object/GeoVertex.texU:()F
+      94: aload         14
+      96: invokevirtual #391                // Method software/bernie/geckolib/cache/object/GeoVertex.texV:()F
+      99: iload         6
+     101: iload         5
+     103: aload_3
+     104: invokevirtual #370                // Method org/joml/Vector3f.x:()F
+     107: aload_3
+     108: invokevirtual #373                // Method org/joml/Vector3f.y:()F
+     111: aload_3
+     112: invokevirtual #376                // Method org/joml/Vector3f.z:()F
+     115: invokeinterface #395,  15         // InterfaceMethod net/minecraft/class_4588.method_23919:(FFFFFFFFFIIFFF)V
+     120: iinc          13, 1
+     123: goto          14
+     126: return
+
+  public abstract void fireCompileRenderLayersEvent();
+
+  public abstract boolean firePreRenderEvent(net.minecraft.class_4587, software.bernie.geckolib.cache.object.BakedGeoModel, net.minecraft.class_4597, float, int);
+
+  public abstract void firePostRenderEvent(net.minecraft.class_4587, software.bernie.geckolib.cache.object.BakedGeoModel, net.minecraft.class_4597, float, int);
+
+  public default void scaleModelForRender(float, float, net.minecraft.class_4587, T, software.bernie.geckolib.cache.object.BakedGeoModel, boolean, float, int, int);
+    Code:
+       0: iload         6
+       2: ifne          24
+       5: fload_1
+       6: fconst_1
+       7: fcmpl
+       8: ifne          17
+      11: fload_2
+      12: fconst_1
+      13: fcmpl
+      14: ifeq          24
+      17: aload_3
+      18: fload_1
+      19: fload_2
+      20: fload_1
+      21: invokevirtual #409                // Method net/minecraft/class_4587.method_22905:(FFF)V
+      24: return
+
+  public abstract void updateAnimatedTextureFrame(T);
+}

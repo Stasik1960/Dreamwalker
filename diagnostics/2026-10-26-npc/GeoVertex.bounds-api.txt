@@ -1,0 +1,88 @@
+Compiled from "GeoVertex.java"
+public final class software.bernie.geckolib.cache.object.GeoVertex extends java.lang.Record {
+  private final org.joml.Vector3f position;
+
+  private final float texU;
+
+  private final float texV;
+
+  public software.bernie.geckolib.cache.object.GeoVertex(double, double, double);
+    Code:
+       0: aload_0
+       1: new           #22                 // class org/joml/Vector3f
+       4: dup
+       5: dload_1
+       6: d2f
+       7: dload_3
+       8: d2f
+       9: dload         5
+      11: d2f
+      12: invokespecial #25                 // Method org/joml/Vector3f."<init>":(FFF)V
+      15: fconst_0
+      16: fconst_0
+      17: invokespecial #28                 // Method "<init>":(Lorg/joml/Vector3f;FF)V
+      20: return
+
+  public software.bernie.geckolib.cache.object.GeoVertex(org.joml.Vector3f, float, float);
+    Code:
+       0: aload_0
+       1: invokespecial #34                 // Method java/lang/Record."<init>":()V
+       4: aload_0
+       5: aload_1
+       6: putfield      #36                 // Field position:Lorg/joml/Vector3f;
+       9: aload_0
+      10: fload_2
+      11: putfield      #38                 // Field texU:F
+      14: aload_0
+      15: fload_3
+      16: putfield      #40                 // Field texV:F
+      19: return
+
+  public software.bernie.geckolib.cache.object.GeoVertex withUVs(float, float);
+    Code:
+       0: new           #2                  // class software/bernie/geckolib/cache/object/GeoVertex
+       3: dup
+       4: aload_0
+       5: getfield      #36                 // Field position:Lorg/joml/Vector3f;
+       8: fload_1
+       9: fload_2
+      10: invokespecial #28                 // Method "<init>":(Lorg/joml/Vector3f;FF)V
+      13: areturn
+
+  public final java.lang.String toString();
+    Code:
+       0: aload_0
+       1: invokedynamic #59,  0             // InvokeDynamic #0:toString:(Lsoftware/bernie/geckolib/cache/object/GeoVertex;)Ljava/lang/String;
+       6: areturn
+
+  public final int hashCode();
+    Code:
+       0: aload_0
+       1: invokedynamic #64,  0             // InvokeDynamic #0:hashCode:(Lsoftware/bernie/geckolib/cache/object/GeoVertex;)I
+       6: ireturn
+
+  public final boolean equals(java.lang.Object);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokedynamic #70,  0             // InvokeDynamic #0:equals:(Lsoftware/bernie/geckolib/cache/object/GeoVertex;Ljava/lang/Object;)Z
+       7: ireturn
+
+  public org.joml.Vector3f position();
+    Code:
+       0: aload_0
+       1: getfield      #36                 // Field position:Lorg/joml/Vector3f;
+       4: areturn
+
+  public float texU();
+    Code:
+       0: aload_0
+       1: getfield      #38                 // Field texU:F
+       4: freturn
+
+  public float texV();
+    Code:
+       0: aload_0
+       1: getfield      #40                 // Field texV:F
+       4: freturn
+}

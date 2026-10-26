@@ -3,19 +3,20 @@ from pathlib import Path
 P=Path(__file__).resolve().parents[1];D=P/'npc-evidence';J=P/'build-native-visual/libs/dreamwalker-bb-fabric-1.20.1-0.1.0-v12.7.4-visual-physics.8.jar';H=hashlib.sha256(J.read_bytes()).hexdigest()
 def load(p):return json.loads(p.read_text(encoding='utf-8'))
 assert load(D/'build.json')['exitCode']==0 and load(D/'assets-audit.json')['status']=='PASS' and load(D/'visual-review.json')['status']=='PASS'
-for run,check in [('server-5','server-checks.json'),('client-2','client-checks.json'),('client-3','client-checks.json')]:
+delta=load(D/'renderer-delta.json');assert delta['status']=='PASS' and delta['productionSha256']==H
+for run,check in [('server-5','server-checks.json'),('client-2','client-checks.json'),('client-3','client-checks.json'),('client-4','client-checks.json')]:
  assert (load(D/'client-reviewed.json')['status'] if run=='client-2' else load(D/run/check)['status'])=='PASS',run
  result=load(D/run/'launch-result.json');assert result['exitCode']==0 and result['saved'],run
- assert load(D/run/'process.json')['productionSha256']==H,run
- assert hashlib.sha256((P/'npc-profiles'/run/'mods'/J.name).read_bytes()).hexdigest()==H,run
+ expected=H if run=='client-4' else delta['baselineSha256'];assert load(D/run/'process.json')['productionSha256']==expected,run
+ assert hashlib.sha256((P/'npc-profiles'/run/'mods'/J.name).read_bytes()).hexdigest()==expected,run
 client=load(D/'client-2/client-checks.json');states={}
 for row in client['checks']:
  if isinstance(row,dict):assert row['bones']>0;states.setdefault(row['model'],set()).add(row['state'])
 assert len(states)==18 and all(s=={'idle','walk','hurt','attack','death'} for s in states.values())
-final=load(D/'client-3/client-checks.json');assert sum(isinstance(s,str) and s.startswith('death last frame remains held ') for s in final['checks'])==18
-receipt={'status':'PASS','productionSha256':H,'server':'server-5','client':'client-2','models':18,'modelStates':90,'mapChanged':False};(D/'acceptance.json').write_text(json.dumps(receipt,indent=2),encoding='utf-8')
+final=load(D/'client-4/client-checks.json');assert sum(isinstance(s,str) and s.startswith('death last frame remains held ') for s in final['checks'])==18;assert sum(isinstance(s,str) and s.startswith('authored corpse stays above feet plane ') for s in final['checks'])==16;assert sum(isinstance(s,str) and s.startswith('living actor clears floor correction ') for s in final['checks'])==18
+receipt={'status':'PASS','productionSha256':H,'server':'server-5','client':'client-2','finalCorpses':'client-4','rendererDelta':'renderer-delta.json','models':18,'modelStates':90,'mapChanged':False};(D/'acceptance.json').write_text(json.dumps(receipt,indent=2),encoding='utf-8')
 pack=[]
-for f in sorted((P/'npc-profiles/client-2/mods').glob('*.jar')):
+for f in sorted((P/'npc-profiles/client-4/mods').glob('*.jar')):
  with zipfile.ZipFile(f) as z:meta=load_meta=json.loads(z.read('fabric.mod.json')) if 'fabric.mod.json' in z.namelist() else {}
  if meta.get('id')=='dw_restoration_qa':continue
  pack.append({'file':f.name,'id':meta.get('id'),'version':meta.get('version'),'sha256':hashlib.sha256(f.read_bytes()).hexdigest()})
@@ -44,6 +45,9 @@ report='''# NPC и Custom NPC — visual-physics.8
 Важное примечание к доказательствам: после завершения всех18 моделей и90 положительных проверок последний кадр тестовой Gallery обратился к индексу18. QA перезаписал свой итоговый статус как FAIL; оригинал и стек сохранены. Это произошло после всех проверок, внутри QA-класса, с последующим штатным выходом0 и сохранением мира. Проверка полноты подтверждена в client-reviewed.json, защитный выход в QA исправлен и пересобран. Production JAR не менялся; незатронутые90 проверок повторно не запускались.
 '''
 (D/'REPORT-RU.md').write_text(report,encoding='utf-8')
+report=report.replace('Все18','Все 18').replace('все18','все 18').replace('всех18','всех 18').replace('GeckoLib4.8.4','GeckoLib 4.8.4').replace('CustomNPCs-CPM1.2.0','CustomNPCs-CPM 1.2.0').replace('90 состояний','90 состояний').replace('2HP','2 HP').replace('1HP','1 HP').replace('80HP','80 HP').replace('к2 HP','к 2 HP')
+report+='\nДополнительная визуальная проверка выявила уход некоторых исходных death-поз ниже точки опоры. Добавлено общее выравнивание по фактическим анимированным вершинам: модель поднимается ровно настолько, чтобы оставаться над полом. Конечный результат кешируется, коллизии и серверные данные не меняются. В renderer-delta.json подтверждено: относительно принятого серверного кандидата изменились только renderer и два класса этого клиентского помощника; остальные11385 записи совпадают побайтно. Финальный адресный клиентский прогон client-4 проверил все18 трупов,16 исходных death-поз над плоскостью опоры, удержание кадров и снятие коррекции при возврате к живому состоянию.\n'
+(D/'REPORT-RU.md').write_text(report.replace('остальные11385','остальные 11 385').replace('все18','все 18').replace('16 исходных','16 исходных'),encoding='utf-8')
 (D/'DECISIONS-RU.md').write_text('''# Принятые решения
 
 1. Правила здоровья, AI и инструмента применены к18 настоящим RpMobEntity. Модель, выбранная в Custom NPC, следует состоянию самого NPC; его собственные AI/статы не изменяются.

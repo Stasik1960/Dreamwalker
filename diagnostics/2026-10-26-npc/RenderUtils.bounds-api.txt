@@ -1,0 +1,644 @@
+Compiled from "RenderUtils.java"
+public final class software.bernie.geckolib.util.RenderUtils {
+  public software.bernie.geckolib.util.RenderUtils();
+    Code:
+       0: aload_0
+       1: invokespecial #16                 // Method java/lang/Object."<init>":()V
+       4: return
+
+  public static void translateMatrixToBone(net.minecraft.class_4587, software.bernie.geckolib.core.animatable.model.CoreGeoBone);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokeinterface #28,  1           // InterfaceMethod software/bernie/geckolib/core/animatable/model/CoreGeoBone.getPosX:()F
+       7: fneg
+       8: ldc           #29                 // float 16.0f
+      10: fdiv
+      11: aload_1
+      12: invokeinterface #32,  1           // InterfaceMethod software/bernie/geckolib/core/animatable/model/CoreGeoBone.getPosY:()F
+      17: ldc           #29                 // float 16.0f
+      19: fdiv
+      20: aload_1
+      21: invokeinterface #35,  1           // InterfaceMethod software/bernie/geckolib/core/animatable/model/CoreGeoBone.getPosZ:()F
+      26: ldc           #29                 // float 16.0f
+      28: fdiv
+      29: invokevirtual #41                 // Method net/minecraft/class_4587.method_46416:(FFF)V
+      32: return
+
+  public static void rotateMatrixAroundBone(net.minecraft.class_4587, software.bernie.geckolib.core.animatable.model.CoreGeoBone);
+    Code:
+       0: aload_1
+       1: invokeinterface #47,  1           // InterfaceMethod software/bernie/geckolib/core/animatable/model/CoreGeoBone.getRotZ:()F
+       6: fconst_0
+       7: fcmpl
+       8: ifeq          29
+      11: aload_0
+      12: getstatic     #53                 // Field net/minecraft/class_7833.field_40718:Lnet/minecraft/class_7833;
+      15: aload_1
+      16: invokeinterface #47,  1           // InterfaceMethod software/bernie/geckolib/core/animatable/model/CoreGeoBone.getRotZ:()F
+      21: invokeinterface #57,  2           // InterfaceMethod net/minecraft/class_7833.rotation:(F)Lorg/joml/Quaternionf;
+      26: invokevirtual #61                 // Method net/minecraft/class_4587.method_22907:(Lorg/joml/Quaternionf;)V
+      29: aload_1
+      30: invokeinterface #64,  1           // InterfaceMethod software/bernie/geckolib/core/animatable/model/CoreGeoBone.getRotY:()F
+      35: fconst_0
+      36: fcmpl
+      37: ifeq          58
+      40: aload_0
+      41: getstatic     #67                 // Field net/minecraft/class_7833.field_40716:Lnet/minecraft/class_7833;
+      44: aload_1
+      45: invokeinterface #64,  1           // InterfaceMethod software/bernie/geckolib/core/animatable/model/CoreGeoBone.getRotY:()F
+      50: invokeinterface #57,  2           // InterfaceMethod net/minecraft/class_7833.rotation:(F)Lorg/joml/Quaternionf;
+      55: invokevirtual #61                 // Method net/minecraft/class_4587.method_22907:(Lorg/joml/Quaternionf;)V
+      58: aload_1
+      59: invokeinterface #70,  1           // InterfaceMethod software/bernie/geckolib/core/animatable/model/CoreGeoBone.getRotX:()F
+      64: fconst_0
+      65: fcmpl
+      66: ifeq          87
+      69: aload_0
+      70: getstatic     #73                 // Field net/minecraft/class_7833.field_40714:Lnet/minecraft/class_7833;
+      73: aload_1
+      74: invokeinterface #70,  1           // InterfaceMethod software/bernie/geckolib/core/animatable/model/CoreGeoBone.getRotX:()F
+      79: invokeinterface #57,  2           // InterfaceMethod net/minecraft/class_7833.rotation:(F)Lorg/joml/Quaternionf;
+      84: invokevirtual #61                 // Method net/minecraft/class_4587.method_22907:(Lorg/joml/Quaternionf;)V
+      87: return
+
+  public static void rotateMatrixAroundCube(net.minecraft.class_4587, software.bernie.geckolib.cache.object.GeoCube);
+    Code:
+       0: aload_1
+       1: invokevirtual #81                 // Method software/bernie/geckolib/cache/object/GeoCube.rotation:()Lnet/minecraft/class_243;
+       4: astore_2
+       5: aload_0
+       6: new           #83                 // class org/joml/Quaternionf
+       9: dup
+      10: invokespecial #84                 // Method org/joml/Quaternionf."<init>":()V
+      13: fconst_0
+      14: fconst_0
+      15: aload_2
+      16: invokevirtual #90                 // Method net/minecraft/class_243.method_10215:()D
+      19: d2f
+      20: invokevirtual #94                 // Method org/joml/Quaternionf.rotationXYZ:(FFF)Lorg/joml/Quaternionf;
+      23: invokevirtual #61                 // Method net/minecraft/class_4587.method_22907:(Lorg/joml/Quaternionf;)V
+      26: aload_0
+      27: new           #83                 // class org/joml/Quaternionf
+      30: dup
+      31: invokespecial #84                 // Method org/joml/Quaternionf."<init>":()V
+      34: fconst_0
+      35: aload_2
+      36: invokevirtual #97                 // Method net/minecraft/class_243.method_10214:()D
+      39: d2f
+      40: fconst_0
+      41: invokevirtual #94                 // Method org/joml/Quaternionf.rotationXYZ:(FFF)Lorg/joml/Quaternionf;
+      44: invokevirtual #61                 // Method net/minecraft/class_4587.method_22907:(Lorg/joml/Quaternionf;)V
+      47: aload_0
+      48: new           #83                 // class org/joml/Quaternionf
+      51: dup
+      52: invokespecial #84                 // Method org/joml/Quaternionf."<init>":()V
+      55: aload_2
+      56: invokevirtual #100                // Method net/minecraft/class_243.method_10216:()D
+      59: d2f
+      60: fconst_0
+      61: fconst_0
+      62: invokevirtual #94                 // Method org/joml/Quaternionf.rotationXYZ:(FFF)Lorg/joml/Quaternionf;
+      65: invokevirtual #61                 // Method net/minecraft/class_4587.method_22907:(Lorg/joml/Quaternionf;)V
+      68: return
+
+  public static void scaleMatrixForBone(net.minecraft.class_4587, software.bernie.geckolib.core.animatable.model.CoreGeoBone);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokeinterface #106,  1          // InterfaceMethod software/bernie/geckolib/core/animatable/model/CoreGeoBone.getScaleX:()F
+       7: aload_1
+       8: invokeinterface #109,  1          // InterfaceMethod software/bernie/geckolib/core/animatable/model/CoreGeoBone.getScaleY:()F
+      13: aload_1
+      14: invokeinterface #112,  1          // InterfaceMethod software/bernie/geckolib/core/animatable/model/CoreGeoBone.getScaleZ:()F
+      19: invokevirtual #115                // Method net/minecraft/class_4587.method_22905:(FFF)V
+      22: return
+
+  public static void translateToPivotPoint(net.minecraft.class_4587, software.bernie.geckolib.cache.object.GeoCube);
+    Code:
+       0: aload_1
+       1: invokevirtual #119                // Method software/bernie/geckolib/cache/object/GeoCube.pivot:()Lnet/minecraft/class_243;
+       4: astore_2
+       5: aload_0
+       6: aload_2
+       7: invokevirtual #100                // Method net/minecraft/class_243.method_10216:()D
+      10: ldc2_w        #120                // double 16.0d
+      13: ddiv
+      14: aload_2
+      15: invokevirtual #97                 // Method net/minecraft/class_243.method_10214:()D
+      18: ldc2_w        #120                // double 16.0d
+      21: ddiv
+      22: aload_2
+      23: invokevirtual #90                 // Method net/minecraft/class_243.method_10215:()D
+      26: ldc2_w        #120                // double 16.0d
+      29: ddiv
+      30: invokevirtual #125                // Method net/minecraft/class_4587.method_22904:(DDD)V
+      33: return
+
+  public static void translateToPivotPoint(net.minecraft.class_4587, software.bernie.geckolib.core.animatable.model.CoreGeoBone);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokeinterface #128,  1          // InterfaceMethod software/bernie/geckolib/core/animatable/model/CoreGeoBone.getPivotX:()F
+       7: ldc           #29                 // float 16.0f
+       9: fdiv
+      10: aload_1
+      11: invokeinterface #131,  1          // InterfaceMethod software/bernie/geckolib/core/animatable/model/CoreGeoBone.getPivotY:()F
+      16: ldc           #29                 // float 16.0f
+      18: fdiv
+      19: aload_1
+      20: invokeinterface #134,  1          // InterfaceMethod software/bernie/geckolib/core/animatable/model/CoreGeoBone.getPivotZ:()F
+      25: ldc           #29                 // float 16.0f
+      27: fdiv
+      28: invokevirtual #41                 // Method net/minecraft/class_4587.method_46416:(FFF)V
+      31: return
+
+  public static void translateAwayFromPivotPoint(net.minecraft.class_4587, software.bernie.geckolib.cache.object.GeoCube);
+    Code:
+       0: aload_1
+       1: invokevirtual #119                // Method software/bernie/geckolib/cache/object/GeoCube.pivot:()Lnet/minecraft/class_243;
+       4: astore_2
+       5: aload_0
+       6: aload_2
+       7: invokevirtual #100                // Method net/minecraft/class_243.method_10216:()D
+      10: dneg
+      11: ldc2_w        #120                // double 16.0d
+      14: ddiv
+      15: aload_2
+      16: invokevirtual #97                 // Method net/minecraft/class_243.method_10214:()D
+      19: dneg
+      20: ldc2_w        #120                // double 16.0d
+      23: ddiv
+      24: aload_2
+      25: invokevirtual #90                 // Method net/minecraft/class_243.method_10215:()D
+      28: dneg
+      29: ldc2_w        #120                // double 16.0d
+      32: ddiv
+      33: invokevirtual #125                // Method net/minecraft/class_4587.method_22904:(DDD)V
+      36: return
+
+  public static void translateAwayFromPivotPoint(net.minecraft.class_4587, software.bernie.geckolib.core.animatable.model.CoreGeoBone);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokeinterface #128,  1          // InterfaceMethod software/bernie/geckolib/core/animatable/model/CoreGeoBone.getPivotX:()F
+       7: fneg
+       8: ldc           #29                 // float 16.0f
+      10: fdiv
+      11: aload_1
+      12: invokeinterface #131,  1          // InterfaceMethod software/bernie/geckolib/core/animatable/model/CoreGeoBone.getPivotY:()F
+      17: fneg
+      18: ldc           #29                 // float 16.0f
+      20: fdiv
+      21: aload_1
+      22: invokeinterface #134,  1          // InterfaceMethod software/bernie/geckolib/core/animatable/model/CoreGeoBone.getPivotZ:()F
+      27: fneg
+      28: ldc           #29                 // float 16.0f
+      30: fdiv
+      31: invokevirtual #41                 // Method net/minecraft/class_4587.method_46416:(FFF)V
+      34: return
+
+  public static void translateAndRotateMatrixForBone(net.minecraft.class_4587, software.bernie.geckolib.core.animatable.model.CoreGeoBone);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokestatic  #138                // Method translateToPivotPoint:(Lnet/minecraft/class_4587;Lsoftware/bernie/geckolib/core/animatable/model/CoreGeoBone;)V
+       5: aload_0
+       6: aload_1
+       7: invokestatic  #140                // Method rotateMatrixAroundBone:(Lnet/minecraft/class_4587;Lsoftware/bernie/geckolib/core/animatable/model/CoreGeoBone;)V
+      10: return
+
+  public static void prepMatrixForBone(net.minecraft.class_4587, software.bernie.geckolib.core.animatable.model.CoreGeoBone);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokestatic  #143                // Method translateMatrixToBone:(Lnet/minecraft/class_4587;Lsoftware/bernie/geckolib/core/animatable/model/CoreGeoBone;)V
+       5: aload_0
+       6: aload_1
+       7: invokestatic  #138                // Method translateToPivotPoint:(Lnet/minecraft/class_4587;Lsoftware/bernie/geckolib/core/animatable/model/CoreGeoBone;)V
+      10: aload_0
+      11: aload_1
+      12: invokestatic  #140                // Method rotateMatrixAroundBone:(Lnet/minecraft/class_4587;Lsoftware/bernie/geckolib/core/animatable/model/CoreGeoBone;)V
+      15: aload_0
+      16: aload_1
+      17: invokestatic  #145                // Method scaleMatrixForBone:(Lnet/minecraft/class_4587;Lsoftware/bernie/geckolib/core/animatable/model/CoreGeoBone;)V
+      20: aload_0
+      21: aload_1
+      22: invokestatic  #147                // Method translateAwayFromPivotPoint:(Lnet/minecraft/class_4587;Lsoftware/bernie/geckolib/core/animatable/model/CoreGeoBone;)V
+      25: return
+
+  public static org.joml.Matrix4f invertAndMultiplyMatrices(org.joml.Matrix4f, org.joml.Matrix4f);
+    Code:
+       0: new           #153                // class org/joml/Matrix4f
+       3: dup
+       4: aload_1
+       5: invokespecial #156                // Method org/joml/Matrix4f."<init>":(Lorg/joml/Matrix4fc;)V
+       8: astore_1
+       9: aload_1
+      10: invokevirtual #160                // Method org/joml/Matrix4f.invert:()Lorg/joml/Matrix4f;
+      13: pop
+      14: aload_1
+      15: aload_0
+      16: invokevirtual #164                // Method org/joml/Matrix4f.mul:(Lorg/joml/Matrix4fc;)Lorg/joml/Matrix4f;
+      19: pop
+      20: aload_1
+      21: areturn
+
+  public static void faceRotation(net.minecraft.class_4587, net.minecraft.class_1297, float);
+    Code:
+       0: aload_0
+       1: getstatic     #67                 // Field net/minecraft/class_7833.field_40716:Lnet/minecraft/class_7833;
+       4: fload_2
+       5: aload_1
+       6: getfield      #175                // Field net/minecraft/class_1297.field_5982:F
+       9: aload_1
+      10: invokevirtual #178                // Method net/minecraft/class_1297.method_36454:()F
+      13: invokestatic  #184                // Method net/minecraft/class_3532.method_16439:(FFF)F
+      16: ldc           #185                // float 90.0f
+      18: fsub
+      19: invokeinterface #188,  2          // InterfaceMethod net/minecraft/class_7833.rotationDegrees:(F)Lorg/joml/Quaternionf;
+      24: invokevirtual #61                 // Method net/minecraft/class_4587.method_22907:(Lorg/joml/Quaternionf;)V
+      27: aload_0
+      28: getstatic     #53                 // Field net/minecraft/class_7833.field_40718:Lnet/minecraft/class_7833;
+      31: fload_2
+      32: aload_1
+      33: getfield      #191                // Field net/minecraft/class_1297.field_6004:F
+      36: aload_1
+      37: invokevirtual #194                // Method net/minecraft/class_1297.method_36455:()F
+      40: invokestatic  #184                // Method net/minecraft/class_3532.method_16439:(FFF)F
+      43: invokeinterface #188,  2          // InterfaceMethod net/minecraft/class_7833.rotationDegrees:(F)Lorg/joml/Quaternionf;
+      48: invokevirtual #61                 // Method net/minecraft/class_4587.method_22907:(Lorg/joml/Quaternionf;)V
+      51: return
+
+  public static org.joml.Matrix4f translateMatrix(org.joml.Matrix4f, org.joml.Vector3f);
+    Code:
+       0: aload_0
+       1: new           #153                // class org/joml/Matrix4f
+       4: dup
+       5: invokespecial #200                // Method org/joml/Matrix4f."<init>":()V
+       8: aload_1
+       9: getfield      #205                // Field org/joml/Vector3f.x:F
+      12: invokevirtual #209                // Method org/joml/Matrix4f.m30:(F)Lorg/joml/Matrix4f;
+      15: aload_1
+      16: getfield      #212                // Field org/joml/Vector3f.y:F
+      19: invokevirtual #215                // Method org/joml/Matrix4f.m31:(F)Lorg/joml/Matrix4f;
+      22: aload_1
+      23: getfield      #218                // Field org/joml/Vector3f.z:F
+      26: invokevirtual #221                // Method org/joml/Matrix4f.m32:(F)Lorg/joml/Matrix4f;
+      29: invokevirtual #224                // Method org/joml/Matrix4f.add:(Lorg/joml/Matrix4fc;)Lorg/joml/Matrix4f;
+      32: areturn
+
+  public static it.unimi.dsi.fastutil.ints.IntIntPair getTextureDimensions(net.minecraft.class_2960);
+    Code:
+       0: aload_0
+       1: ifnonnull     6
+       4: aconst_null
+       5: areturn
+       6: aconst_null
+       7: astore_1
+       8: invokestatic  #237                // Method net/minecraft/class_310.method_1551:()Lnet/minecraft/class_310;
+      11: astore_2
+      12: aload_2
+      13: aload_2
+      14: aload_0
+      15: invokedynamic #257,  0            // InvokeDynamic #0:get:(Lnet/minecraft/class_310;Lnet/minecraft/class_2960;)Ljava/util/function/Supplier;
+      20: invokevirtual #261                // Method net/minecraft/class_310.method_5385:(Ljava/util/function/Supplier;)Ljava/util/concurrent/CompletableFuture;
+      23: invokevirtual #265                // Method java/util/concurrent/CompletableFuture.get:()Ljava/lang/Object;
+      26: checkcast     #267                // class net/minecraft/class_1044
+      29: astore_1
+      30: goto          50
+      33: astore_3
+      34: getstatic     #275                // Field software/bernie/geckolib/GeckoLib.LOGGER:Lorg/apache/logging/log4j/Logger;
+      37: ldc_w         #277                // String Failed to load image for id {}
+      40: aload_0
+      41: invokeinterface #283,  3          // InterfaceMethod org/apache/logging/log4j/Logger.warn:(Ljava/lang/String;Ljava/lang/Object;)V
+      46: aload_3
+      47: invokevirtual #286                // Method java/lang/Exception.printStackTrace:()V
+      50: aload_1
+      51: ifnonnull     56
+      54: aconst_null
+      55: areturn
+      56: aconst_null
+      57: astore_3
+      58: aload_1
+      59: instanceof    #288                // class net/minecraft/class_1043
+      62: ifeq          79
+      65: aload_1
+      66: checkcast     #288                // class net/minecraft/class_1043
+      69: astore        4
+      71: aload         4
+      73: invokevirtual #292                // Method net/minecraft/class_1043.method_4525:()Lnet/minecraft/class_1011;
+      76: goto          101
+      79: aload_2
+      80: invokevirtual #298                // Method net/minecraft/class_310.method_1478:()Lnet/minecraft/class_3300;
+      83: aload_0
+      84: invokeinterface #304,  2          // InterfaceMethod net/minecraft/class_3300.method_14486:(Lnet/minecraft/class_2960;)Ljava/util/Optional;
+      89: invokevirtual #307                // Method java/util/Optional.get:()Ljava/lang/Object;
+      92: checkcast     #309                // class net/minecraft/class_3298
+      95: invokevirtual #313                // Method net/minecraft/class_3298.method_14482:()Ljava/io/InputStream;
+      98: invokestatic  #317                // Method net/minecraft/class_1011.method_4309:(Ljava/io/InputStream;)Lnet/minecraft/class_1011;
+     101: astore_3
+     102: goto          124
+     105: astore        4
+     107: getstatic     #275                // Field software/bernie/geckolib/GeckoLib.LOGGER:Lorg/apache/logging/log4j/Logger;
+     110: ldc_w         #319                // String Failed to read image for id {}
+     113: aload_0
+     114: invokeinterface #322,  3          // InterfaceMethod org/apache/logging/log4j/Logger.error:(Ljava/lang/String;Ljava/lang/Object;)V
+     119: aload         4
+     121: invokevirtual #286                // Method java/lang/Exception.printStackTrace:()V
+     124: aload_3
+     125: ifnonnull     132
+     128: aconst_null
+     129: goto          143
+     132: aload_3
+     133: invokevirtual #326                // Method net/minecraft/class_1011.method_4307:()I
+     136: aload_3
+     137: invokevirtual #329                // Method net/minecraft/class_1011.method_4323:()I
+     140: invokestatic  #335                // Method it/unimi/dsi/fastutil/ints/IntIntImmutablePair.of:(II)Lit/unimi/dsi/fastutil/ints/IntIntImmutablePair;
+     143: areturn
+    Exception table:
+       from    to  target type
+          12    30    33   Class java/lang/Exception
+          58   102   105   Class java/lang/Exception
+
+  public static double getCurrentSystemTick();
+    Code:
+       0: invokestatic  #355                // Method java/lang/System.nanoTime:()J
+       3: l2d
+       4: ldc2_w        #356                // double 1000000.0d
+       7: ddiv
+       8: ldc2_w        #358                // double 50.0d
+      11: ddiv
+      12: dreturn
+
+  public static double getCurrentTick();
+    Code:
+       0: invokestatic  #365                // Method net/minecraft/class_3673.method_15974:()D
+       3: ldc2_w        #366                // double 20.0d
+       6: dmul
+       7: dreturn
+
+  public static float booleanToFloat(boolean);
+    Code:
+       0: iload_0
+       1: ifeq          8
+       4: fconst_1
+       5: goto          9
+       8: fconst_0
+       9: freturn
+
+  public static net.minecraft.class_243 arrayToVec(double[]);
+    Code:
+       0: new           #86                 // class net/minecraft/class_243
+       3: dup
+       4: aload_0
+       5: iconst_0
+       6: daload
+       7: aload_0
+       8: iconst_1
+       9: daload
+      10: aload_0
+      11: iconst_2
+      12: daload
+      13: invokespecial #376                // Method net/minecraft/class_243."<init>":(DDD)V
+      16: areturn
+
+  public static void matchModelPartRot(net.minecraft.class_630, software.bernie.geckolib.core.animatable.model.CoreGeoBone);
+    Code:
+       0: aload_1
+       1: aload_0
+       2: getfield      #386                // Field net/minecraft/class_630.field_3654:F
+       5: fneg
+       6: aload_0
+       7: getfield      #389                // Field net/minecraft/class_630.field_3675:F
+      10: fneg
+      11: aload_0
+      12: getfield      #392                // Field net/minecraft/class_630.field_3674:F
+      15: invokeinterface #395,  4          // InterfaceMethod software/bernie/geckolib/core/animatable/model/CoreGeoBone.updateRotation:(FFF)V
+      20: return
+
+  public static void fixInvertedFlatCube(software.bernie.geckolib.cache.object.GeoCube, org.joml.Vector3f);
+    Code:
+       0: aload_1
+       1: invokevirtual #401                // Method org/joml/Vector3f.x:()F
+       4: fconst_0
+       5: fcmpg
+       6: ifge          43
+       9: aload_0
+      10: invokevirtual #404                // Method software/bernie/geckolib/cache/object/GeoCube.size:()Lnet/minecraft/class_243;
+      13: invokevirtual #97                 // Method net/minecraft/class_243.method_10214:()D
+      16: dconst_0
+      17: dcmpl
+      18: ifeq          33
+      21: aload_0
+      22: invokevirtual #404                // Method software/bernie/geckolib/cache/object/GeoCube.size:()Lnet/minecraft/class_243;
+      25: invokevirtual #90                 // Method net/minecraft/class_243.method_10215:()D
+      28: dconst_0
+      29: dcmpl
+      30: ifne          43
+      33: aload_1
+      34: ldc_w         #405                // float -1.0f
+      37: fconst_1
+      38: fconst_1
+      39: invokevirtual #408                // Method org/joml/Vector3f.mul:(FFF)Lorg/joml/Vector3f;
+      42: pop
+      43: aload_1
+      44: invokevirtual #410                // Method org/joml/Vector3f.y:()F
+      47: fconst_0
+      48: fcmpg
+      49: ifge          86
+      52: aload_0
+      53: invokevirtual #404                // Method software/bernie/geckolib/cache/object/GeoCube.size:()Lnet/minecraft/class_243;
+      56: invokevirtual #100                // Method net/minecraft/class_243.method_10216:()D
+      59: dconst_0
+      60: dcmpl
+      61: ifeq          76
+      64: aload_0
+      65: invokevirtual #404                // Method software/bernie/geckolib/cache/object/GeoCube.size:()Lnet/minecraft/class_243;
+      68: invokevirtual #90                 // Method net/minecraft/class_243.method_10215:()D
+      71: dconst_0
+      72: dcmpl
+      73: ifne          86
+      76: aload_1
+      77: fconst_1
+      78: ldc_w         #405                // float -1.0f
+      81: fconst_1
+      82: invokevirtual #408                // Method org/joml/Vector3f.mul:(FFF)Lorg/joml/Vector3f;
+      85: pop
+      86: aload_1
+      87: invokevirtual #412                // Method org/joml/Vector3f.z:()F
+      90: fconst_0
+      91: fcmpg
+      92: ifge          129
+      95: aload_0
+      96: invokevirtual #404                // Method software/bernie/geckolib/cache/object/GeoCube.size:()Lnet/minecraft/class_243;
+      99: invokevirtual #100                // Method net/minecraft/class_243.method_10216:()D
+     102: dconst_0
+     103: dcmpl
+     104: ifeq          119
+     107: aload_0
+     108: invokevirtual #404                // Method software/bernie/geckolib/cache/object/GeoCube.size:()Lnet/minecraft/class_243;
+     111: invokevirtual #97                 // Method net/minecraft/class_243.method_10214:()D
+     114: dconst_0
+     115: dcmpl
+     116: ifne          129
+     119: aload_1
+     120: fconst_1
+     121: fconst_1
+     122: ldc_w         #405                // float -1.0f
+     125: invokevirtual #408                // Method org/joml/Vector3f.mul:(FFF)Lorg/joml/Vector3f;
+     128: pop
+     129: return
+
+  public static float getDirectionAngle(net.minecraft.class_2350);
+    Code:
+       0: getstatic     #419                // Field software/bernie/geckolib/util/RenderUtils$1.$SwitchMap$net$minecraft$core$Direction:[I
+       3: aload_0
+       4: invokevirtual #424                // Method net/minecraft/class_2350.ordinal:()I
+       7: iaload
+       8: tableswitch   { // 1 to 3
+
+                     1: 36
+
+                     2: 41
+
+                     3: 47
+               default: 53
+          }
+      36: ldc           #185                // float 90.0f
+      38: goto          54
+      41: ldc_w         #425                // float 270.0f
+      44: goto          54
+      47: ldc_w         #426                // float 180.0f
+      50: goto          54
+      53: fconst_0
+      54: freturn
+
+  public static software.bernie.geckolib.model.GeoModel<?> getGeoModelForEntityType(net.minecraft.class_1299<?>);
+    Code:
+       0: invokestatic  #237                // Method net/minecraft/class_310.method_1551:()Lnet/minecraft/class_310;
+       3: invokevirtual #435                // Method net/minecraft/class_310.method_1561:()Lnet/minecraft/class_898;
+       6: getfield      #441                // Field net/minecraft/class_898.field_4696:Ljava/util/Map;
+       9: aload_0
+      10: invokeinterface #446,  2          // InterfaceMethod java/util/Map.get:(Ljava/lang/Object;)Ljava/lang/Object;
+      15: checkcast     #448                // class net/minecraft/class_897
+      18: astore_1
+      19: aload_1
+      20: instanceof    #450                // class software/bernie/geckolib/renderer/GeoRenderer
+      23: ifeq          40
+      26: aload_1
+      27: checkcast     #450                // class software/bernie/geckolib/renderer/GeoRenderer
+      30: astore_2
+      31: aload_2
+      32: invokeinterface #454,  1          // InterfaceMethod software/bernie/geckolib/renderer/GeoRenderer.getGeoModel:()Lsoftware/bernie/geckolib/model/GeoModel;
+      37: goto          41
+      40: aconst_null
+      41: areturn
+
+  public static software.bernie.geckolib.core.animatable.GeoAnimatable getReplacedAnimatable(net.minecraft.class_1299<?>);
+    Code:
+       0: invokestatic  #237                // Method net/minecraft/class_310.method_1551:()Lnet/minecraft/class_310;
+       3: invokevirtual #435                // Method net/minecraft/class_310.method_1561:()Lnet/minecraft/class_898;
+       6: getfield      #441                // Field net/minecraft/class_898.field_4696:Ljava/util/Map;
+       9: aload_0
+      10: invokeinterface #446,  2          // InterfaceMethod java/util/Map.get:(Ljava/lang/Object;)Ljava/lang/Object;
+      15: checkcast     #448                // class net/minecraft/class_897
+      18: astore_1
+      19: aload_1
+      20: instanceof    #469                // class software/bernie/geckolib/renderer/GeoReplacedEntityRenderer
+      23: ifeq          38
+      26: aload_1
+      27: checkcast     #469                // class software/bernie/geckolib/renderer/GeoReplacedEntityRenderer
+      30: astore_2
+      31: aload_2
+      32: invokevirtual #473                // Method software/bernie/geckolib/renderer/GeoReplacedEntityRenderer.getAnimatable:()Lsoftware/bernie/geckolib/core/animatable/GeoAnimatable;
+      35: goto          39
+      38: aconst_null
+      39: areturn
+
+  public static software.bernie.geckolib.model.GeoModel<?> getGeoModelForEntity(net.minecraft.class_1297);
+    Code:
+       0: invokestatic  #237                // Method net/minecraft/class_310.method_1551:()Lnet/minecraft/class_310;
+       3: invokevirtual #435                // Method net/minecraft/class_310.method_1561:()Lnet/minecraft/class_898;
+       6: aload_0
+       7: invokevirtual #486                // Method net/minecraft/class_898.method_3953:(Lnet/minecraft/class_1297;)Lnet/minecraft/class_897;
+      10: astore_1
+      11: aload_1
+      12: instanceof    #450                // class software/bernie/geckolib/renderer/GeoRenderer
+      15: ifeq          32
+      18: aload_1
+      19: checkcast     #450                // class software/bernie/geckolib/renderer/GeoRenderer
+      22: astore_2
+      23: aload_2
+      24: invokeinterface #454,  1          // InterfaceMethod software/bernie/geckolib/renderer/GeoRenderer.getGeoModel:()Lsoftware/bernie/geckolib/model/GeoModel;
+      29: goto          33
+      32: aconst_null
+      33: areturn
+
+  public static software.bernie.geckolib.model.GeoModel<?> getGeoModelForItem(net.minecraft.class_1792);
+    Code:
+       0: aload_0
+       1: invokestatic  #495                // InterfaceMethod software/bernie/geckolib/animatable/client/RenderProvider.of:(Lnet/minecraft/class_1792;)Lsoftware/bernie/geckolib/animatable/client/RenderProvider;
+       4: invokeinterface #499,  1          // InterfaceMethod software/bernie/geckolib/animatable/client/RenderProvider.getCustomRenderer:()Lnet/minecraft/class_756;
+       9: astore_2
+      10: aload_2
+      11: instanceof    #450                // class software/bernie/geckolib/renderer/GeoRenderer
+      14: ifeq          29
+      17: aload_2
+      18: checkcast     #450                // class software/bernie/geckolib/renderer/GeoRenderer
+      21: astore_1
+      22: aload_1
+      23: invokeinterface #454,  1          // InterfaceMethod software/bernie/geckolib/renderer/GeoRenderer.getGeoModel:()Lsoftware/bernie/geckolib/model/GeoModel;
+      28: areturn
+      29: aconst_null
+      30: areturn
+
+  public static software.bernie.geckolib.model.GeoModel<?> getGeoModelForBlock(net.minecraft.class_2586);
+    Code:
+       0: invokestatic  #237                // Method net/minecraft/class_310.method_1551:()Lnet/minecraft/class_310;
+       3: invokevirtual #508                // Method net/minecraft/class_310.method_31975:()Lnet/minecraft/class_824;
+       6: aload_0
+       7: invokevirtual #514                // Method net/minecraft/class_824.method_3550:(Lnet/minecraft/class_2586;)Lnet/minecraft/class_827;
+      10: astore_1
+      11: aload_1
+      12: instanceof    #450                // class software/bernie/geckolib/renderer/GeoRenderer
+      15: ifeq          32
+      18: aload_1
+      19: checkcast     #450                // class software/bernie/geckolib/renderer/GeoRenderer
+      22: astore_2
+      23: aload_2
+      24: invokeinterface #454,  1          // InterfaceMethod software/bernie/geckolib/renderer/GeoRenderer.getGeoModel:()Lsoftware/bernie/geckolib/model/GeoModel;
+      29: goto          33
+      32: aconst_null
+      33: areturn
+
+  public static software.bernie.geckolib.model.GeoModel<?> getGeoModelForArmor(net.minecraft.class_1799);
+    Code:
+       0: aload_0
+       1: invokestatic  #526                // InterfaceMethod software/bernie/geckolib/animatable/client/RenderProvider.of:(Lnet/minecraft/class_1799;)Lsoftware/bernie/geckolib/animatable/client/RenderProvider;
+       4: aconst_null
+       5: aload_0
+       6: aconst_null
+       7: aconst_null
+       8: invokeinterface #530,  5          // InterfaceMethod software/bernie/geckolib/animatable/client/RenderProvider.getHumanoidArmorModel:(Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;Lnet/minecraft/class_1304;Lnet/minecraft/class_572;)Lnet/minecraft/class_572;
+      13: astore_2
+      14: aload_2
+      15: instanceof    #532                // class software/bernie/geckolib/renderer/GeoArmorRenderer
+      18: ifeq          31
+      21: aload_2
+      22: checkcast     #532                // class software/bernie/geckolib/renderer/GeoArmorRenderer
+      25: astore_1
+      26: aload_1
+      27: invokevirtual #533                // Method software/bernie/geckolib/renderer/GeoArmorRenderer.getGeoModel:()Lsoftware/bernie/geckolib/model/GeoModel;
+      30: areturn
+      31: aconst_null
+      32: areturn
+
+  private static net.minecraft.class_1044 lambda$getTextureDimensions$0(net.minecraft.class_310, net.minecraft.class_2960);
+    Code:
+       0: aload_0
+       1: invokevirtual #541                // Method net/minecraft/class_310.method_1531:()Lnet/minecraft/class_1060;
+       4: aload_1
+       5: invokevirtual #547                // Method net/minecraft/class_1060.method_4619:(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1044;
+       8: areturn
+}

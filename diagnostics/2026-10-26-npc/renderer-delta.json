@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "baselineSha256": "aae342abb7258c5010eb17dcd1c5d23aa7beb740bb862f8a00f36650e6df941a",
+  "productionSha256": "632c800f08ad2aab81586bcd16bd567eeb9b151ed0f9d8f671f56d24b2b3f040",
+  "changedEntries": [
+    "dev/dreamwalker/bloodbornerp/client/CatalogMobRenderer.class",
+    "dev/dreamwalker/bloodbornerp/client/CorpseFloor$State.class",
+    "dev/dreamwalker/bloodbornerp/client/CorpseFloor.class"
+  ],
+  "unchangedEntries": 11385,
+  "reason": "Only corpse renderer and its client-only bounds helper changed. All server behavior, tool, model bridge, controllers, assets, registry, protocol and persistence bytes match accepted server-5/client-2 tests."
+}

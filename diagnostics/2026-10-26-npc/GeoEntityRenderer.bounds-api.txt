@@ -1,0 +1,1554 @@
+Compiled from "GeoEntityRenderer.java"
+public class software.bernie.geckolib.renderer.GeoEntityRenderer<T extends net.minecraft.class_1297 & software.bernie.geckolib.core.animatable.GeoAnimatable> extends net.minecraft.class_897<T> implements software.bernie.geckolib.renderer.GeoRenderer<T> {
+  protected final software.bernie.geckolib.renderer.layer.GeoRenderLayersContainer<T> renderLayers;
+
+  protected final software.bernie.geckolib.model.GeoModel<T> model;
+
+  protected T animatable;
+
+  protected float scaleWidth;
+
+  protected float scaleHeight;
+
+  protected org.joml.Matrix4f entityRenderTranslations;
+
+  protected org.joml.Matrix4f modelRenderTranslations;
+
+  public software.bernie.geckolib.renderer.GeoEntityRenderer(net.minecraft.class_5617$class_5618, software.bernie.geckolib.model.GeoModel<T>);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokespecial #73                 // Method net/minecraft/class_897."<init>":(Lnet/minecraft/class_5617$class_5618;)V
+       5: aload_0
+       6: new           #75                 // class software/bernie/geckolib/renderer/layer/GeoRenderLayersContainer
+       9: dup
+      10: aload_0
+      11: invokespecial #78                 // Method software/bernie/geckolib/renderer/layer/GeoRenderLayersContainer."<init>":(Lsoftware/bernie/geckolib/renderer/GeoRenderer;)V
+      14: putfield      #80                 // Field renderLayers:Lsoftware/bernie/geckolib/renderer/layer/GeoRenderLayersContainer;
+      17: aload_0
+      18: fconst_1
+      19: putfield      #82                 // Field scaleWidth:F
+      22: aload_0
+      23: fconst_1
+      24: putfield      #84                 // Field scaleHeight:F
+      27: aload_0
+      28: new           #86                 // class org/joml/Matrix4f
+      31: dup
+      32: invokespecial #89                 // Method org/joml/Matrix4f."<init>":()V
+      35: putfield      #91                 // Field entityRenderTranslations:Lorg/joml/Matrix4f;
+      38: aload_0
+      39: new           #86                 // class org/joml/Matrix4f
+      42: dup
+      43: invokespecial #89                 // Method org/joml/Matrix4f."<init>":()V
+      46: putfield      #93                 // Field modelRenderTranslations:Lorg/joml/Matrix4f;
+      49: aload_0
+      50: aload_2
+      51: putfield      #95                 // Field model:Lsoftware/bernie/geckolib/model/GeoModel;
+      54: return
+
+  public software.bernie.geckolib.model.GeoModel<T> getGeoModel();
+    Code:
+       0: aload_0
+       1: getfield      #95                 // Field model:Lsoftware/bernie/geckolib/model/GeoModel;
+       4: areturn
+
+  public T getAnimatable();
+    Code:
+       0: aload_0
+       1: getfield      #107                // Field animatable:Lnet/minecraft/class_1297;
+       4: areturn
+
+  public long getInstanceId(T);
+    Code:
+       0: aload_1
+       1: invokevirtual #116                // Method net/minecraft/class_1297.method_5628:()I
+       4: i2l
+       5: lreturn
+
+  public net.minecraft.class_2960 method_3931(T);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokespecial #123                // InterfaceMethod software/bernie/geckolib/renderer/GeoRenderer.getTextureLocation:(Lsoftware/bernie/geckolib/core/animatable/GeoAnimatable;)Lnet/minecraft/class_2960;
+       5: areturn
+
+  public java.util.List<software.bernie.geckolib.renderer.layer.GeoRenderLayer<T>> getRenderLayers();
+    Code:
+       0: aload_0
+       1: getfield      #80                 // Field renderLayers:Lsoftware/bernie/geckolib/renderer/layer/GeoRenderLayersContainer;
+       4: invokevirtual #128                // Method software/bernie/geckolib/renderer/layer/GeoRenderLayersContainer.getRenderLayers:()Ljava/util/List;
+       7: areturn
+
+  public software.bernie.geckolib.renderer.GeoEntityRenderer<T> addRenderLayer(software.bernie.geckolib.renderer.layer.GeoRenderLayer<T>);
+    Code:
+       0: aload_0
+       1: getfield      #80                 // Field renderLayers:Lsoftware/bernie/geckolib/renderer/layer/GeoRenderLayersContainer;
+       4: aload_1
+       5: invokevirtual #136                // Method software/bernie/geckolib/renderer/layer/GeoRenderLayersContainer.addLayer:(Lsoftware/bernie/geckolib/renderer/layer/GeoRenderLayer;)V
+       8: aload_0
+       9: areturn
+
+  public software.bernie.geckolib.renderer.GeoEntityRenderer<T> withScale(float);
+    Code:
+       0: aload_0
+       1: fload_1
+       2: fload_1
+       3: invokevirtual #145                // Method withScale:(FF)Lsoftware/bernie/geckolib/renderer/GeoEntityRenderer;
+       6: areturn
+
+  public software.bernie.geckolib.renderer.GeoEntityRenderer<T> withScale(float, float);
+    Code:
+       0: aload_0
+       1: fload_1
+       2: putfield      #82                 // Field scaleWidth:F
+       5: aload_0
+       6: fload_2
+       7: putfield      #84                 // Field scaleHeight:F
+      10: aload_0
+      11: areturn
+
+  public void preRender(net.minecraft.class_4587, T, software.bernie.geckolib.cache.object.BakedGeoModel, net.minecraft.class_4597, net.minecraft.class_4588, boolean, float, int, int, float, float, float, float);
+    Code:
+       0: aload_0
+       1: new           #86                 // class org/joml/Matrix4f
+       4: dup
+       5: aload_1
+       6: invokevirtual #164                // Method net/minecraft/class_4587.method_23760:()Lnet/minecraft/class_4587$class_4665;
+       9: invokevirtual #168                // Method net/minecraft/class_4587$class_4665.method_23761:()Lorg/joml/Matrix4f;
+      12: invokespecial #171                // Method org/joml/Matrix4f."<init>":(Lorg/joml/Matrix4fc;)V
+      15: putfield      #91                 // Field entityRenderTranslations:Lorg/joml/Matrix4f;
+      18: aload_0
+      19: aload_0
+      20: getfield      #82                 // Field scaleWidth:F
+      23: aload_0
+      24: getfield      #84                 // Field scaleHeight:F
+      27: aload_1
+      28: aload_2
+      29: aload_3
+      30: iload         6
+      32: fload         7
+      34: iload         8
+      36: iload         9
+      38: invokevirtual #175                // Method scaleModelForRender:(FFLnet/minecraft/class_4587;Lsoftware/bernie/geckolib/core/animatable/GeoAnimatable;Lsoftware/bernie/geckolib/cache/object/BakedGeoModel;ZFII)V
+      41: return
+
+  public void method_3936(T, float, float, net.minecraft.class_4587, net.minecraft.class_4597, int);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: putfield      #107                // Field animatable:Lnet/minecraft/class_1297;
+       5: aload_0
+       6: aload         4
+       8: aload_1
+       9: aload         5
+      11: aconst_null
+      12: aconst_null
+      13: fload_2
+      14: fload_3
+      15: iload         6
+      17: invokevirtual #190                // Method defaultRender:(Lnet/minecraft/class_4587;Lsoftware/bernie/geckolib/core/animatable/GeoAnimatable;Lnet/minecraft/class_4597;Lnet/minecraft/class_1921;Lnet/minecraft/class_4588;FFI)V
+      20: return
+
+  public void actuallyRender(net.minecraft.class_4587, T, software.bernie.geckolib.cache.object.BakedGeoModel, net.minecraft.class_1921, net.minecraft.class_4597, net.minecraft.class_4588, boolean, float, int, int, float, float, float, float);
+    Code:
+       0: aload_1
+       1: invokevirtual #197                // Method net/minecraft/class_4587.method_22903:()V
+       4: aload_2
+       5: instanceof    #199                // class net/minecraft/class_1309
+       8: ifeq          22
+      11: aload_2
+      12: checkcast     #199                // class net/minecraft/class_1309
+      15: astore        16
+      17: aload         16
+      19: goto          23
+      22: aconst_null
+      23: astore        15
+      25: aload_2
+      26: invokevirtual #203                // Method net/minecraft/class_1297.method_5765:()Z
+      29: ifeq          43
+      32: aload_2
+      33: invokevirtual #206                // Method net/minecraft/class_1297.method_5854:()Lnet/minecraft/class_1297;
+      36: ifnull        43
+      39: iconst_1
+      40: goto          44
+      43: iconst_0
+      44: istore        16
+      46: aload         15
+      48: ifnonnull     55
+      51: fconst_0
+      52: goto          70
+      55: fload         8
+      57: aload         15
+      59: getfield      #209                // Field net/minecraft/class_1309.field_6220:F
+      62: aload         15
+      64: getfield      #212                // Field net/minecraft/class_1309.field_6283:F
+      67: invokestatic  #218                // Method net/minecraft/class_3532.method_17821:(FFF)F
+      70: fstore        17
+      72: aload         15
+      74: ifnonnull     81
+      77: fconst_0
+      78: goto          96
+      81: fload         8
+      83: aload         15
+      85: getfield      #221                // Field net/minecraft/class_1309.field_6259:F
+      88: aload         15
+      90: getfield      #224                // Field net/minecraft/class_1309.field_6241:F
+      93: invokestatic  #218                // Method net/minecraft/class_3532.method_17821:(FFF)F
+      96: fstore        18
+      98: fload         18
+     100: fload         17
+     102: fsub
+     103: fstore        19
+     105: iload         16
+     107: ifeq          204
+     110: aload_2
+     111: invokevirtual #206                // Method net/minecraft/class_1297.method_5854:()Lnet/minecraft/class_1297;
+     114: astore        21
+     116: aload         21
+     118: instanceof    #199                // class net/minecraft/class_1309
+     121: ifeq          204
+     124: aload         21
+     126: checkcast     #199                // class net/minecraft/class_1309
+     129: astore        20
+     131: fload         8
+     133: aload         20
+     135: getfield      #209                // Field net/minecraft/class_1309.field_6220:F
+     138: aload         20
+     140: getfield      #212                // Field net/minecraft/class_1309.field_6283:F
+     143: invokestatic  #218                // Method net/minecraft/class_3532.method_17821:(FFF)F
+     146: fstore        17
+     148: fload         18
+     150: fload         17
+     152: fsub
+     153: fstore        19
+     155: fload         19
+     157: invokestatic  #228                // Method net/minecraft/class_3532.method_15393:(F)F
+     160: ldc           #229                // float -85.0f
+     162: ldc           #230                // float 85.0f
+     164: invokestatic  #233                // Method net/minecraft/class_3532.method_15363:(FFF)F
+     167: fstore        21
+     169: fload         18
+     171: fload         21
+     173: fsub
+     174: fstore        17
+     176: fload         21
+     178: fload         21
+     180: fmul
+     181: ldc           #234                // float 2500.0f
+     183: fcmpl
+     184: ifle          197
+     187: fload         17
+     189: fload         21
+     191: ldc           #235                // float 0.2f
+     193: fmul
+     194: fadd
+     195: fstore        17
+     197: fload         18
+     199: fload         17
+     201: fsub
+     202: fstore        19
+     204: aload_2
+     205: invokevirtual #247                // Method net/minecraft/class_1297.method_18376:()Lnet/minecraft/class_4050;
+     208: getstatic     #253                // Field net/minecraft/class_4050.field_18078:Lnet/minecraft/class_4050;
+     211: if_acmpne     270
+     214: aload         15
+     216: ifnull        270
+     219: aload         15
+     221: invokevirtual #257                // Method net/minecraft/class_1309.method_18401:()Lnet/minecraft/class_2350;
+     224: astore        20
+     226: aload         20
+     228: ifnull        270
+     231: aload         15
+     233: getstatic     #260                // Field net/minecraft/class_4050.field_18076:Lnet/minecraft/class_4050;
+     236: invokevirtual #264                // Method net/minecraft/class_1309.method_18381:(Lnet/minecraft/class_4050;)F
+     239: ldc_w         #265                // float 0.1f
+     242: fsub
+     243: fstore        21
+     245: aload_1
+     246: aload         20
+     248: invokevirtual #270                // Method net/minecraft/class_2350.method_10148:()I
+     251: ineg
+     252: i2f
+     253: fload         21
+     255: fmul
+     256: fconst_0
+     257: aload         20
+     259: invokevirtual #273                // Method net/minecraft/class_2350.method_10165:()I
+     262: ineg
+     263: i2f
+     264: fload         21
+     266: fmul
+     267: invokevirtual #277                // Method net/minecraft/class_4587.method_46416:(FFF)V
+     270: aload_2
+     271: getfield      #280                // Field net/minecraft/class_1297.field_6012:I
+     274: i2f
+     275: fload         8
+     277: fadd
+     278: fstore        20
+     280: fconst_0
+     281: fstore        21
+     283: fconst_0
+     284: fstore        22
+     286: aload_0
+     287: aload_2
+     288: aload_1
+     289: fload         20
+     291: fload         17
+     293: fload         8
+     295: invokevirtual #284                // Method applyRotations:(Lnet/minecraft/class_1297;Lnet/minecraft/class_4587;FFF)V
+     298: iload         16
+     300: ifne          365
+     303: aload_2
+     304: invokevirtual #287                // Method net/minecraft/class_1297.method_5805:()Z
+     307: ifeq          365
+     310: aload         15
+     312: ifnull        365
+     315: aload         15
+     317: getfield      #291                // Field net/minecraft/class_1309.field_42108:Lnet/minecraft/class_8080;
+     320: fload         8
+     322: invokevirtual #296                // Method net/minecraft/class_8080.method_48570:(F)F
+     325: fstore        21
+     327: aload         15
+     329: getfield      #291                // Field net/minecraft/class_1309.field_42108:Lnet/minecraft/class_8080;
+     332: fload         8
+     334: invokevirtual #299                // Method net/minecraft/class_8080.method_48572:(F)F
+     337: fstore        22
+     339: aload         15
+     341: invokevirtual #302                // Method net/minecraft/class_1309.method_6109:()Z
+     344: ifeq          355
+     347: fload         22
+     349: ldc_w         #303                // float 3.0f
+     352: fmul
+     353: fstore        22
+     355: fload         21
+     357: fconst_1
+     358: fcmpl
+     359: ifle          365
+     362: fconst_1
+     363: fstore        21
+     365: iload         7
+     367: ifne          572
+     370: fload         8
+     372: aload_2
+     373: getfield      #306                // Field net/minecraft/class_1297.field_6004:F
+     376: aload_2
+     377: invokevirtual #310                // Method net/minecraft/class_1297.method_36455:()F
+     380: invokestatic  #313                // Method net/minecraft/class_3532.method_16439:(FFF)F
+     383: fstore        23
+     385: aload_0
+     386: aload_2
+     387: invokevirtual #317                // Method getMotionAnimThreshold:(Lsoftware/bernie/geckolib/core/animatable/GeoAnimatable;)F
+     390: fstore        24
+     392: aload_2
+     393: invokevirtual #321                // Method net/minecraft/class_1297.method_18798:()Lnet/minecraft/class_243;
+     396: astore        25
+     398: aload         25
+     400: getfield      #327                // Field net/minecraft/class_243.field_1352:D
+     403: invokestatic  #333                // Method java/lang/Math.abs:(D)D
+     406: aload         25
+     408: getfield      #336                // Field net/minecraft/class_243.field_1350:D
+     411: invokestatic  #333                // Method java/lang/Math.abs:(D)D
+     414: ldc2_w        #337                // double 2.0d
+     417: ddiv
+     418: dadd
+     419: d2f
+     420: fstore        26
+     422: new           #340                // class software/bernie/geckolib/core/animation/AnimationState
+     425: dup
+     426: aload_2
+     427: fload         22
+     429: fload         21
+     431: fload         8
+     433: fload         26
+     435: fload         24
+     437: fcmpl
+     438: iflt          452
+     441: fload         21
+     443: fconst_0
+     444: fcmpl
+     445: ifeq          452
+     448: iconst_1
+     449: goto          453
+     452: iconst_0
+     453: invokespecial #343                // Method software/bernie/geckolib/core/animation/AnimationState."<init>":(Lsoftware/bernie/geckolib/core/animatable/GeoAnimatable;FFFZ)V
+     456: astore        27
+     458: aload_0
+     459: aload_2
+     460: invokevirtual #345                // Method getInstanceId:(Lnet/minecraft/class_1297;)J
+     463: lstore        28
+     465: aload_0
+     466: invokevirtual #347                // Method getGeoModel:()Lsoftware/bernie/geckolib/model/GeoModel;
+     469: astore        30
+     471: aload         27
+     473: getstatic     #353                // Field software/bernie/geckolib/constant/DataTickets.TICK:Lsoftware/bernie/geckolib/core/object/DataTicket;
+     476: aload_2
+     477: checkcast     #355                // class software/bernie/geckolib/core/animatable/GeoAnimatable
+     480: aload_2
+     481: invokeinterface #359,  2          // InterfaceMethod software/bernie/geckolib/core/animatable/GeoAnimatable.getTick:(Ljava/lang/Object;)D
+     486: invokestatic  #365                // Method java/lang/Double.valueOf:(D)Ljava/lang/Double;
+     489: invokevirtual #369                // Method software/bernie/geckolib/core/animation/AnimationState.setData:(Lsoftware/bernie/geckolib/core/object/DataTicket;Ljava/lang/Object;)V
+     492: aload         27
+     494: getstatic     #372                // Field software/bernie/geckolib/constant/DataTickets.ENTITY:Lsoftware/bernie/geckolib/core/object/DataTicket;
+     497: aload_2
+     498: invokevirtual #369                // Method software/bernie/geckolib/core/animation/AnimationState.setData:(Lsoftware/bernie/geckolib/core/object/DataTicket;Ljava/lang/Object;)V
+     501: aload         27
+     503: getstatic     #375                // Field software/bernie/geckolib/constant/DataTickets.ENTITY_MODEL_DATA:Lsoftware/bernie/geckolib/core/object/DataTicket;
+     506: new           #377                // class software/bernie/geckolib/model/data/EntityModelData
+     509: dup
+     510: iload         16
+     512: aload         15
+     514: ifnull        529
+     517: aload         15
+     519: invokevirtual #302                // Method net/minecraft/class_1309.method_6109:()Z
+     522: ifeq          529
+     525: iconst_1
+     526: goto          530
+     529: iconst_0
+     530: fload         19
+     532: fneg
+     533: fload         23
+     535: fneg
+     536: invokespecial #384                // Method software/bernie/geckolib/model/data/EntityModelData."<init>":(ZZFF)V
+     539: invokevirtual #369                // Method software/bernie/geckolib/core/animation/AnimationState.setData:(Lsoftware/bernie/geckolib/core/object/DataTicket;Ljava/lang/Object;)V
+     542: aload         30
+     544: aload_2
+     545: lload         28
+     547: aload         27
+     549: dup
+     550: invokestatic  #390                // Method java/util/Objects.requireNonNull:(Ljava/lang/Object;)Ljava/lang/Object;
+     553: pop
+     554: invokedynamic #406,  0            // InvokeDynamic #0:accept:(Lsoftware/bernie/geckolib/core/animation/AnimationState;)Ljava/util/function/BiConsumer;
+     559: invokevirtual #410                // Method software/bernie/geckolib/model/GeoModel.addAdditionalStateData:(Lsoftware/bernie/geckolib/core/animatable/GeoAnimatable;JLjava/util/function/BiConsumer;)V
+     562: aload         30
+     564: aload_2
+     565: lload         28
+     567: aload         27
+     569: invokevirtual #414                // Method software/bernie/geckolib/model/GeoModel.handleAnimations:(Lsoftware/bernie/geckolib/core/animatable/GeoAnimatable;JLsoftware/bernie/geckolib/core/animation/AnimationState;)V
+     572: aload_1
+     573: fconst_0
+     574: ldc_w         #415                // float 0.01f
+     577: fconst_0
+     578: invokevirtual #277                // Method net/minecraft/class_4587.method_46416:(FFF)V
+     581: aload_0
+     582: new           #86                 // class org/joml/Matrix4f
+     585: dup
+     586: aload_1
+     587: invokevirtual #164                // Method net/minecraft/class_4587.method_23760:()Lnet/minecraft/class_4587$class_4665;
+     590: invokevirtual #168                // Method net/minecraft/class_4587$class_4665.method_23761:()Lorg/joml/Matrix4f;
+     593: invokespecial #171                // Method org/joml/Matrix4f."<init>":(Lorg/joml/Matrix4fc;)V
+     596: putfield      #93                 // Field modelRenderTranslations:Lorg/joml/Matrix4f;
+     599: aload_2
+     600: invokestatic  #421                // Method net/minecraft/class_310.method_1551:()Lnet/minecraft/class_310;
+     603: getfield      #425                // Field net/minecraft/class_310.field_1724:Lnet/minecraft/class_746;
+     606: invokevirtual #429                // Method net/minecraft/class_1297.method_5756:(Lnet/minecraft/class_1657;)Z
+     609: ifeq          648
+     612: invokestatic  #421                // Method net/minecraft/class_310.method_1551:()Lnet/minecraft/class_310;
+     615: aload_2
+     616: invokevirtual #433                // Method net/minecraft/class_310.method_27022:(Lnet/minecraft/class_1297;)Z
+     619: ifeq          645
+     622: aload         5
+     624: aload_0
+     625: aload_2
+     626: invokevirtual #435                // Method method_3931:(Lnet/minecraft/class_1297;)Lnet/minecraft/class_2960;
+     629: invokestatic  #439                // Method net/minecraft/class_1921.method_23287:(Lnet/minecraft/class_2960;)Lnet/minecraft/class_1921;
+     632: dup
+     633: astore        4
+     635: invokeinterface #443,  2          // InterfaceMethod net/minecraft/class_4597.getBuffer:(Lnet/minecraft/class_1921;)Lnet/minecraft/class_4588;
+     640: astore        6
+     642: goto          648
+     645: aconst_null
+     646: astore        4
+     648: aload         4
+     650: ifnull        682
+     653: aload_0
+     654: aload_1
+     655: aload_2
+     656: aload_3
+     657: aload         4
+     659: aload         5
+     661: aload         6
+     663: iload         7
+     665: fload         8
+     667: iload         9
+     669: iload         10
+     671: fload         11
+     673: fload         12
+     675: fload         13
+     677: fload         14
+     679: invokespecial #446                // InterfaceMethod software/bernie/geckolib/renderer/GeoRenderer.actuallyRender:(Lnet/minecraft/class_4587;Lsoftware/bernie/geckolib/core/animatable/GeoAnimatable;Lsoftware/bernie/geckolib/cache/object/BakedGeoModel;Lnet/minecraft/class_1921;Lnet/minecraft/class_4597;Lnet/minecraft/class_4588;ZFIIFFFF)V
+     682: aload_1
+     683: invokevirtual #449                // Method net/minecraft/class_4587.method_22909:()V
+     686: return
+
+  public void applyRenderLayers(net.minecraft.class_4587, T, software.bernie.geckolib.cache.object.BakedGeoModel, net.minecraft.class_1921, net.minecraft.class_4597, net.minecraft.class_4588, float, int, int);
+    Code:
+       0: aload_2
+       1: invokevirtual #481                // Method net/minecraft/class_1297.method_7325:()Z
+       4: ifne          26
+       7: aload_0
+       8: aload_1
+       9: aload_2
+      10: aload_3
+      11: aload         4
+      13: aload         5
+      15: aload         6
+      17: fload         7
+      19: iload         8
+      21: iload         9
+      23: invokespecial #484                // InterfaceMethod software/bernie/geckolib/renderer/GeoRenderer.applyRenderLayers:(Lnet/minecraft/class_4587;Lsoftware/bernie/geckolib/core/animatable/GeoAnimatable;Lsoftware/bernie/geckolib/cache/object/BakedGeoModel;Lnet/minecraft/class_1921;Lnet/minecraft/class_4597;Lnet/minecraft/class_4588;FII)V
+      26: return
+
+  public void renderFinal(net.minecraft.class_4587, T, software.bernie.geckolib.cache.object.BakedGeoModel, net.minecraft.class_4597, net.minecraft.class_4588, float, int, int, float, float, float, float);
+    Code:
+       0: aload_0
+       1: aload_2
+       2: fconst_0
+       3: fload         6
+       5: aload_1
+       6: aload         4
+       8: iload         7
+      10: invokespecial #489                // Method net/minecraft/class_897.method_3936:(Lnet/minecraft/class_1297;FFLnet/minecraft/class_4587;Lnet/minecraft/class_4597;I)V
+      13: aload_2
+      14: instanceof    #491                // class net/minecraft/class_1308
+      17: ifeq          51
+      20: aload_2
+      21: checkcast     #491                // class net/minecraft/class_1308
+      24: astore        13
+      26: aload         13
+      28: invokevirtual #494                // Method net/minecraft/class_1308.method_5933:()Lnet/minecraft/class_1297;
+      31: astore        14
+      33: aload         14
+      35: ifnull        51
+      38: aload_0
+      39: aload         13
+      41: fload         6
+      43: aload_1
+      44: aload         4
+      46: aload         14
+      48: invokevirtual #498                // Method renderLeash:(Lnet/minecraft/class_1308;FLnet/minecraft/class_4587;Lnet/minecraft/class_4597;Lnet/minecraft/class_1297;)V
+      51: return
+
+  public void doPostRenderCleanup();
+    Code:
+       0: aload_0
+       1: aconst_null
+       2: putfield      #107                // Field animatable:Lnet/minecraft/class_1297;
+       5: return
+
+  public void renderRecursively(net.minecraft.class_4587, T, software.bernie.geckolib.cache.object.GeoBone, net.minecraft.class_1921, net.minecraft.class_4597, net.minecraft.class_4588, boolean, float, int, int, float, float, float, float);
+    Code:
+       0: aload_1
+       1: invokevirtual #197                // Method net/minecraft/class_4587.method_22903:()V
+       4: aload_1
+       5: aload_3
+       6: invokestatic  #512                // Method software/bernie/geckolib/util/RenderUtils.translateMatrixToBone:(Lnet/minecraft/class_4587;Lsoftware/bernie/geckolib/core/animatable/model/CoreGeoBone;)V
+       9: aload_1
+      10: aload_3
+      11: invokestatic  #515                // Method software/bernie/geckolib/util/RenderUtils.translateToPivotPoint:(Lnet/minecraft/class_4587;Lsoftware/bernie/geckolib/core/animatable/model/CoreGeoBone;)V
+      14: aload_1
+      15: aload_3
+      16: invokestatic  #518                // Method software/bernie/geckolib/util/RenderUtils.rotateMatrixAroundBone:(Lnet/minecraft/class_4587;Lsoftware/bernie/geckolib/core/animatable/model/CoreGeoBone;)V
+      19: aload_1
+      20: aload_3
+      21: invokestatic  #521                // Method software/bernie/geckolib/util/RenderUtils.scaleMatrixForBone:(Lnet/minecraft/class_4587;Lsoftware/bernie/geckolib/core/animatable/model/CoreGeoBone;)V
+      24: aload_3
+      25: invokevirtual #526                // Method software/bernie/geckolib/cache/object/GeoBone.isTrackingMatrices:()Z
+      28: ifeq          118
+      31: new           #86                 // class org/joml/Matrix4f
+      34: dup
+      35: aload_1
+      36: invokevirtual #164                // Method net/minecraft/class_4587.method_23760:()Lnet/minecraft/class_4587$class_4665;
+      39: invokevirtual #168                // Method net/minecraft/class_4587$class_4665.method_23761:()Lorg/joml/Matrix4f;
+      42: invokespecial #171                // Method org/joml/Matrix4f."<init>":(Lorg/joml/Matrix4fc;)V
+      45: astore        15
+      47: aload         15
+      49: aload_0
+      50: getfield      #91                 // Field entityRenderTranslations:Lorg/joml/Matrix4f;
+      53: invokestatic  #530                // Method software/bernie/geckolib/util/RenderUtils.invertAndMultiplyMatrices:(Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;)Lorg/joml/Matrix4f;
+      56: astore        16
+      58: aload_3
+      59: aload         15
+      61: aload_0
+      62: getfield      #93                 // Field modelRenderTranslations:Lorg/joml/Matrix4f;
+      65: invokestatic  #530                // Method software/bernie/geckolib/util/RenderUtils.invertAndMultiplyMatrices:(Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;)Lorg/joml/Matrix4f;
+      68: invokevirtual #534                // Method software/bernie/geckolib/cache/object/GeoBone.setModelSpaceMatrix:(Lorg/joml/Matrix4f;)V
+      71: aload_3
+      72: aload         16
+      74: aload_0
+      75: aload_0
+      76: getfield      #107                // Field animatable:Lnet/minecraft/class_1297;
+      79: fconst_1
+      80: invokevirtual #538                // Method method_23169:(Lnet/minecraft/class_1297;F)Lnet/minecraft/class_243;
+      83: invokevirtual #542                // Method net/minecraft/class_243.method_46409:()Lorg/joml/Vector3f;
+      86: invokestatic  #546                // Method software/bernie/geckolib/util/RenderUtils.translateMatrix:(Lorg/joml/Matrix4f;Lorg/joml/Vector3f;)Lorg/joml/Matrix4f;
+      89: invokevirtual #549                // Method software/bernie/geckolib/cache/object/GeoBone.setLocalSpaceMatrix:(Lorg/joml/Matrix4f;)V
+      92: aload_3
+      93: new           #86                 // class org/joml/Matrix4f
+      96: dup
+      97: aload         16
+      99: invokespecial #171                // Method org/joml/Matrix4f."<init>":(Lorg/joml/Matrix4fc;)V
+     102: aload_0
+     103: getfield      #107                // Field animatable:Lnet/minecraft/class_1297;
+     106: invokevirtual #552                // Method net/minecraft/class_1297.method_19538:()Lnet/minecraft/class_243;
+     109: invokevirtual #542                // Method net/minecraft/class_243.method_46409:()Lorg/joml/Vector3f;
+     112: invokestatic  #546                // Method software/bernie/geckolib/util/RenderUtils.translateMatrix:(Lorg/joml/Matrix4f;Lorg/joml/Vector3f;)Lorg/joml/Matrix4f;
+     115: invokevirtual #555                // Method software/bernie/geckolib/cache/object/GeoBone.setWorldSpaceMatrix:(Lorg/joml/Matrix4f;)V
+     118: aload_1
+     119: aload_3
+     120: invokestatic  #558                // Method software/bernie/geckolib/util/RenderUtils.translateAwayFromPivotPoint:(Lnet/minecraft/class_4587;Lsoftware/bernie/geckolib/core/animatable/model/CoreGeoBone;)V
+     123: aload_0
+     124: aload_1
+     125: aload_3
+     126: aload         6
+     128: iload         9
+     130: iload         10
+     132: fload         11
+     134: fload         12
+     136: fload         13
+     138: fload         14
+     140: invokevirtual #562                // Method renderCubesOfBone:(Lnet/minecraft/class_4587;Lsoftware/bernie/geckolib/cache/object/GeoBone;Lnet/minecraft/class_4588;IIFFFF)V
+     143: iload         7
+     145: ifne          167
+     148: aload_0
+     149: aload_1
+     150: aload_2
+     151: aload_3
+     152: aload         4
+     154: aload         5
+     156: aload         6
+     158: fload         8
+     160: iload         9
+     162: iload         10
+     164: invokevirtual #566                // Method applyRenderLayersForBone:(Lnet/minecraft/class_4587;Lsoftware/bernie/geckolib/core/animatable/GeoAnimatable;Lsoftware/bernie/geckolib/cache/object/GeoBone;Lnet/minecraft/class_1921;Lnet/minecraft/class_4597;Lnet/minecraft/class_4588;FII)V
+     167: aload_0
+     168: aload_1
+     169: aload_2
+     170: aload_3
+     171: aload         4
+     173: aload         5
+     175: aload         6
+     177: iload         7
+     179: fload         8
+     181: iload         9
+     183: iload         10
+     185: fload         11
+     187: fload         12
+     189: fload         13
+     191: fload         14
+     193: invokevirtual #570                // Method renderChildBones:(Lnet/minecraft/class_4587;Lsoftware/bernie/geckolib/core/animatable/GeoAnimatable;Lsoftware/bernie/geckolib/cache/object/GeoBone;Lnet/minecraft/class_1921;Lnet/minecraft/class_4597;Lnet/minecraft/class_4588;ZFIIFFFF)V
+     196: aload_1
+     197: invokevirtual #449                // Method net/minecraft/class_4587.method_22909:()V
+     200: return
+
+  protected void applyRotations(T, net.minecraft.class_4587, float, float, float);
+    Code:
+       0: aload_1
+       1: invokevirtual #247                // Method net/minecraft/class_1297.method_18376:()Lnet/minecraft/class_4050;
+       4: astore        6
+       6: aload_1
+       7: instanceof    #199                // class net/minecraft/class_1309
+      10: ifeq          24
+      13: aload_1
+      14: checkcast     #199                // class net/minecraft/class_1309
+      17: astore        8
+      19: aload         8
+      21: goto          25
+      24: aconst_null
+      25: astore        7
+      27: aload_0
+      28: aload_1
+      29: invokevirtual #578                // Method isShaking:(Lnet/minecraft/class_1297;)Z
+      32: ifeq          61
+      35: fload         4
+      37: aload_1
+      38: getfield      #280                // Field net/minecraft/class_1297.field_6012:I
+      41: i2d
+      42: ldc2_w        #579                // double 3.25d
+      45: dmul
+      46: invokestatic  #583                // Method java/lang/Math.cos:(D)D
+      49: ldc2_w        #584                // double 3.141592653589793d
+      52: dmul
+      53: ldc2_w        #586                // double 0.4d
+      56: dmul
+      57: d2f
+      58: fadd
+      59: fstore        4
+      61: aload         6
+      63: getstatic     #253                // Field net/minecraft/class_4050.field_18078:Lnet/minecraft/class_4050;
+      66: if_acmpeq     87
+      69: aload_2
+      70: getstatic     #593                // Field net/minecraft/class_7833.field_40716:Lnet/minecraft/class_7833;
+      73: ldc_w         #594                // float 180.0f
+      76: fload         4
+      78: fsub
+      79: invokeinterface #598,  2          // InterfaceMethod net/minecraft/class_7833.rotationDegrees:(F)Lorg/joml/Quaternionf;
+      84: invokevirtual #602                // Method net/minecraft/class_4587.method_22907:(Lorg/joml/Quaternionf;)V
+      87: aload         7
+      89: ifnull        151
+      92: aload         7
+      94: getfield      #605                // Field net/minecraft/class_1309.field_6213:I
+      97: ifle          151
+     100: aload         7
+     102: getfield      #605                // Field net/minecraft/class_1309.field_6213:I
+     105: i2f
+     106: fload         5
+     108: fadd
+     109: fconst_1
+     110: fsub
+     111: ldc_w         #606                // float 20.0f
+     114: fdiv
+     115: ldc_w         #607                // float 1.6f
+     118: fmul
+     119: fstore        8
+     121: aload_2
+     122: getstatic     #610                // Field net/minecraft/class_7833.field_40718:Lnet/minecraft/class_7833;
+     125: fload         8
+     127: invokestatic  #613                // Method net/minecraft/class_3532.method_15355:(F)F
+     130: fconst_1
+     131: invokestatic  #617                // Method java/lang/Math.min:(FF)F
+     134: aload_0
+     135: aload_1
+     136: invokevirtual #621                // Method getDeathMaxRotation:(Lnet/minecraft/class_1297;)F
+     139: fmul
+     140: invokeinterface #598,  2          // InterfaceMethod net/minecraft/class_7833.rotationDegrees:(F)Lorg/joml/Quaternionf;
+     145: invokevirtual #602                // Method net/minecraft/class_4587.method_22907:(Lorg/joml/Quaternionf;)V
+     148: goto          408
+     151: aload         7
+     153: ifnull        213
+     156: aload         7
+     158: invokevirtual #624                // Method net/minecraft/class_1309.method_6123:()Z
+     161: ifeq          213
+     164: aload_2
+     165: getstatic     #627                // Field net/minecraft/class_7833.field_40714:Lnet/minecraft/class_7833;
+     168: ldc_w         #628                // float -90.0f
+     171: aload         7
+     173: invokevirtual #629                // Method net/minecraft/class_1309.method_36455:()F
+     176: fsub
+     177: invokeinterface #598,  2          // InterfaceMethod net/minecraft/class_7833.rotationDegrees:(F)Lorg/joml/Quaternionf;
+     182: invokevirtual #602                // Method net/minecraft/class_4587.method_22907:(Lorg/joml/Quaternionf;)V
+     185: aload_2
+     186: getstatic     #593                // Field net/minecraft/class_7833.field_40716:Lnet/minecraft/class_7833;
+     189: aload         7
+     191: getfield      #630                // Field net/minecraft/class_1309.field_6012:I
+     194: i2f
+     195: fload         5
+     197: fadd
+     198: ldc_w         #631                // float -75.0f
+     201: fmul
+     202: invokeinterface #598,  2          // InterfaceMethod net/minecraft/class_7833.rotationDegrees:(F)Lorg/joml/Quaternionf;
+     207: invokevirtual #602                // Method net/minecraft/class_4587.method_22907:(Lorg/joml/Quaternionf;)V
+     210: goto          408
+     213: aload         7
+     215: ifnull        295
+     218: aload         6
+     220: getstatic     #253                // Field net/minecraft/class_4050.field_18078:Lnet/minecraft/class_4050;
+     223: if_acmpne     295
+     226: aload         7
+     228: invokevirtual #257                // Method net/minecraft/class_1309.method_18401:()Lnet/minecraft/class_2350;
+     231: astore        8
+     233: aload_2
+     234: getstatic     #593                // Field net/minecraft/class_7833.field_40716:Lnet/minecraft/class_7833;
+     237: aload         8
+     239: ifnull        250
+     242: aload         8
+     244: invokestatic  #635                // Method software/bernie/geckolib/util/RenderUtils.getDirectionAngle:(Lnet/minecraft/class_2350;)F
+     247: goto          252
+     250: fload         4
+     252: invokeinterface #598,  2          // InterfaceMethod net/minecraft/class_7833.rotationDegrees:(F)Lorg/joml/Quaternionf;
+     257: invokevirtual #602                // Method net/minecraft/class_4587.method_22907:(Lorg/joml/Quaternionf;)V
+     260: aload_2
+     261: getstatic     #610                // Field net/minecraft/class_7833.field_40718:Lnet/minecraft/class_7833;
+     264: aload_0
+     265: aload_1
+     266: invokevirtual #621                // Method getDeathMaxRotation:(Lnet/minecraft/class_1297;)F
+     269: invokeinterface #598,  2          // InterfaceMethod net/minecraft/class_7833.rotationDegrees:(F)Lorg/joml/Quaternionf;
+     274: invokevirtual #602                // Method net/minecraft/class_4587.method_22907:(Lorg/joml/Quaternionf;)V
+     277: aload_2
+     278: getstatic     #593                // Field net/minecraft/class_7833.field_40716:Lnet/minecraft/class_7833;
+     281: ldc_w         #636                // float 270.0f
+     284: invokeinterface #598,  2          // InterfaceMethod net/minecraft/class_7833.rotationDegrees:(F)Lorg/joml/Quaternionf;
+     289: invokevirtual #602                // Method net/minecraft/class_4587.method_22907:(Lorg/joml/Quaternionf;)V
+     292: goto          408
+     295: aload_1
+     296: invokevirtual #639                // Method net/minecraft/class_1297.method_16914:()Z
+     299: ifne          309
+     302: aload_1
+     303: instanceof    #641                // class net/minecraft/class_1657
+     306: ifeq          408
+     309: aload_1
+     310: invokevirtual #645                // Method net/minecraft/class_1297.method_5477:()Lnet/minecraft/class_2561;
+     313: invokeinterface #651,  1          // InterfaceMethod net/minecraft/class_2561.getString:()Ljava/lang/String;
+     318: astore        8
+     320: aload_1
+     321: instanceof    #641                // class net/minecraft/class_1657
+     324: ifeq          345
+     327: aload_1
+     328: checkcast     #641                // class net/minecraft/class_1657
+     331: astore        9
+     333: aload         9
+     335: getstatic     #657                // Field net/minecraft/class_1664.field_7559:Lnet/minecraft/class_1664;
+     338: invokevirtual #661                // Method net/minecraft/class_1657.method_7348:(Lnet/minecraft/class_1664;)Z
+     341: ifne          352
+     344: return
+     345: aload         8
+     347: invokestatic  #669                // Method net/minecraft/class_124.method_539:(Ljava/lang/String;)Ljava/lang/String;
+     350: astore        8
+     352: aload         8
+     354: ifnull        408
+     357: aload         8
+     359: ldc_w         #671                // String Dinnerbone
+     362: invokevirtual #675                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     365: ifne          379
+     368: aload         8
+     370: ldc_w         #677                // String Grumm
+     373: invokevirtual #681                // Method java/lang/String.equalsIgnoreCase:(Ljava/lang/String;)Z
+     376: ifeq          408
+     379: aload_2
+     380: fconst_0
+     381: aload_1
+     382: invokevirtual #684                // Method net/minecraft/class_1297.method_17682:()F
+     385: ldc_w         #265                // float 0.1f
+     388: fadd
+     389: fconst_0
+     390: invokevirtual #277                // Method net/minecraft/class_4587.method_46416:(FFF)V
+     393: aload_2
+     394: getstatic     #610                // Field net/minecraft/class_7833.field_40718:Lnet/minecraft/class_7833;
+     397: ldc_w         #594                // float 180.0f
+     400: invokeinterface #598,  2          // InterfaceMethod net/minecraft/class_7833.rotationDegrees:(F)Lorg/joml/Quaternionf;
+     405: invokevirtual #602                // Method net/minecraft/class_4587.method_22907:(Lorg/joml/Quaternionf;)V
+     408: return
+
+  protected float getDeathMaxRotation(T);
+    Code:
+       0: ldc_w         #693                // float 90.0f
+       3: freturn
+
+  public double getNameRenderCutoffDistance(T);
+    Code:
+       0: aload_1
+       1: invokevirtual #699                // Method net/minecraft/class_1297.method_21751:()Z
+       4: ifeq          13
+       7: ldc2_w        #700                // double 32.0d
+      10: goto          16
+      13: ldc2_w        #702                // double 64.0d
+      16: dreturn
+
+  public boolean method_3921(T);
+    Code:
+       0: aload_1
+       1: instanceof    #199                // class net/minecraft/class_1309
+       4: ifne          13
+       7: aload_0
+       8: aload_1
+       9: invokespecial #707                // Method net/minecraft/class_897.method_3921:(Lnet/minecraft/class_1297;)Z
+      12: ireturn
+      13: aload_0
+      14: aload_1
+      15: invokevirtual #709                // Method getNameRenderCutoffDistance:(Lnet/minecraft/class_1297;)D
+      18: dstore_2
+      19: aload_0
+      20: getfield      #713                // Field field_4676:Lnet/minecraft/class_898;
+      23: aload_1
+      24: invokevirtual #718                // Method net/minecraft/class_898.method_23168:(Lnet/minecraft/class_1297;)D
+      27: dload_2
+      28: dload_2
+      29: dmul
+      30: dcmpl
+      31: iflt          36
+      34: iconst_0
+      35: ireturn
+      36: aload_1
+      37: instanceof    #491                // class net/minecraft/class_1308
+      40: ifeq          70
+      43: aload_1
+      44: invokevirtual #721                // Method net/minecraft/class_1297.method_5733:()Z
+      47: ifne          70
+      50: aload_1
+      51: invokevirtual #639                // Method net/minecraft/class_1297.method_16914:()Z
+      54: ifeq          68
+      57: aload_1
+      58: aload_0
+      59: getfield      #713                // Field field_4676:Lnet/minecraft/class_898;
+      62: getfield      #724                // Field net/minecraft/class_898.field_4678:Lnet/minecraft/class_1297;
+      65: if_acmpeq     70
+      68: iconst_0
+      69: ireturn
+      70: invokestatic  #421                // Method net/minecraft/class_310.method_1551:()Lnet/minecraft/class_310;
+      73: astore        4
+      75: aload_1
+      76: aload         4
+      78: getfield      #425                // Field net/minecraft/class_310.field_1724:Lnet/minecraft/class_746;
+      81: invokevirtual #429                // Method net/minecraft/class_1297.method_5756:(Lnet/minecraft/class_1657;)Z
+      84: ifne          91
+      87: iconst_1
+      88: goto          92
+      91: iconst_0
+      92: istore        5
+      94: aload_1
+      95: invokevirtual #728                // Method net/minecraft/class_1297.method_5781:()Lnet/minecraft/class_270;
+      98: astore        6
+     100: aload         6
+     102: ifnonnull     138
+     105: invokestatic  #731                // Method net/minecraft/class_310.method_1498:()Z
+     108: ifeq          136
+     111: aload_1
+     112: aload         4
+     114: invokevirtual #734                // Method net/minecraft/class_310.method_1560:()Lnet/minecraft/class_1297;
+     117: if_acmpeq     136
+     120: iload         5
+     122: ifeq          136
+     125: aload_1
+     126: invokevirtual #737                // Method net/minecraft/class_1297.method_5782:()Z
+     129: ifne          136
+     132: iconst_1
+     133: goto          137
+     136: iconst_0
+     137: ireturn
+     138: aload         4
+     140: getfield      #425                // Field net/minecraft/class_310.field_1724:Lnet/minecraft/class_746;
+     143: invokevirtual #740                // Method net/minecraft/class_746.method_5781:()Lnet/minecraft/class_270;
+     146: astore        7
+     148: getstatic     #744                // Field software/bernie/geckolib/renderer/GeoEntityRenderer$1.$SwitchMap$net$minecraft$world$scores$Team$Visibility:[I
+     151: aload         6
+     153: invokevirtual #748                // Method net/minecraft/class_270.method_1201:()Lnet/minecraft/class_270$class_272;
+     156: invokevirtual #751                // Method net/minecraft/class_270$class_272.ordinal:()I
+     159: iaload
+     160: tableswitch   { // 1 to 4
+
+                     1: 200
+
+                     2: 205
+
+                     3: 209
+
+                     4: 250
+               default: 192
+          }
+     192: new           #753                // class java/lang/IncompatibleClassChangeError
+     195: dup
+     196: invokespecial #754                // Method java/lang/IncompatibleClassChangeError."<init>":()V
+     199: athrow
+     200: iload         5
+     202: goto          280
+     205: iconst_0
+     206: goto          280
+     209: aload         7
+     211: ifnonnull     219
+     214: iload         5
+     216: goto          280
+     219: aload         6
+     221: aload         7
+     223: invokevirtual #758                // Method net/minecraft/class_270.method_1206:(Lnet/minecraft/class_270;)Z
+     226: ifeq          246
+     229: aload         6
+     231: invokevirtual #761                // Method net/minecraft/class_270.method_1199:()Z
+     234: ifne          242
+     237: iload         5
+     239: ifeq          246
+     242: iconst_1
+     243: goto          280
+     246: iconst_0
+     247: goto          280
+     250: aload         7
+     252: ifnonnull     260
+     255: iload         5
+     257: goto          280
+     260: aload         6
+     262: aload         7
+     264: invokevirtual #758                // Method net/minecraft/class_270.method_1206:(Lnet/minecraft/class_270;)Z
+     267: ifne          279
+     270: iload         5
+     272: ifeq          279
+     275: iconst_1
+     276: goto          280
+     279: iconst_0
+     280: ireturn
+
+  public int getPackedOverlay(T, float);
+    Code:
+       0: aload_1
+       1: instanceof    #199                // class net/minecraft/class_1309
+       4: ifeq          15
+       7: aload_1
+       8: checkcast     #199                // class net/minecraft/class_1309
+      11: astore_3
+      12: goto          19
+      15: getstatic     #777                // Field net/minecraft/class_4608.field_21444:I
+      18: ireturn
+      19: fload_2
+      20: invokestatic  #781                // Method net/minecraft/class_4608.method_23210:(F)I
+      23: aload_3
+      24: getfield      #784                // Field net/minecraft/class_1309.field_6235:I
+      27: ifgt          37
+      30: aload_3
+      31: getfield      #605                // Field net/minecraft/class_1309.field_6213:I
+      34: ifle          41
+      37: iconst_1
+      38: goto          42
+      41: iconst_0
+      42: invokestatic  #788                // Method net/minecraft/class_4608.method_23212:(Z)I
+      45: invokestatic  #792                // Method net/minecraft/class_4608.method_23625:(II)I
+      48: ireturn
+
+  public int getPackedOverlay(T, float, float);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: fload_2
+       3: invokevirtual #796                // Method getPackedOverlay:(Lnet/minecraft/class_1297;F)I
+       6: ireturn
+
+  public boolean isShaking(T);
+    Code:
+       0: aload_1
+       1: invokevirtual #799                // Method net/minecraft/class_1297.method_32314:()Z
+       4: ireturn
+
+  public <E extends net.minecraft.class_1297, M extends net.minecraft.class_1308> void renderLeash(M, float, net.minecraft.class_4587, net.minecraft.class_4597, E);
+    Code:
+       0: fload_2
+       1: aload_1
+       2: getfield      #801                // Field net/minecraft/class_1308.field_6220:F
+       5: aload_1
+       6: getfield      #802                // Field net/minecraft/class_1308.field_6283:F
+       9: invokestatic  #313                // Method net/minecraft/class_3532.method_16439:(FFF)F
+      12: ldc_w         #803                // float 0.017453292f
+      15: fmul
+      16: ldc_w         #804                // float 1.5707964f
+      19: fadd
+      20: f2d
+      21: dstore        6
+      23: aload_1
+      24: invokevirtual #807                // Method net/minecraft/class_1308.method_29919:()Lnet/minecraft/class_243;
+      27: astore        8
+      29: dload         6
+      31: invokestatic  #583                // Method java/lang/Math.cos:(D)D
+      34: aload         8
+      36: getfield      #336                // Field net/minecraft/class_243.field_1350:D
+      39: dmul
+      40: dload         6
+      42: invokestatic  #810                // Method java/lang/Math.sin:(D)D
+      45: aload         8
+      47: getfield      #327                // Field net/minecraft/class_243.field_1352:D
+      50: dmul
+      51: dadd
+      52: dstore        9
+      54: dload         6
+      56: invokestatic  #810                // Method java/lang/Math.sin:(D)D
+      59: aload         8
+      61: getfield      #336                // Field net/minecraft/class_243.field_1350:D
+      64: dmul
+      65: dload         6
+      67: invokestatic  #583                // Method java/lang/Math.cos:(D)D
+      70: aload         8
+      72: getfield      #327                // Field net/minecraft/class_243.field_1352:D
+      75: dmul
+      76: dsub
+      77: dstore        11
+      79: fload_2
+      80: f2d
+      81: aload_1
+      82: getfield      #813                // Field net/minecraft/class_1308.field_6014:D
+      85: aload_1
+      86: invokevirtual #817                // Method net/minecraft/class_1308.method_23317:()D
+      89: invokestatic  #821                // Method net/minecraft/class_3532.method_16436:(DDD)D
+      92: dload         9
+      94: dadd
+      95: dstore        13
+      97: fload_2
+      98: f2d
+      99: aload_1
+     100: getfield      #824                // Field net/minecraft/class_1308.field_6036:D
+     103: aload_1
+     104: invokevirtual #827                // Method net/minecraft/class_1308.method_23318:()D
+     107: invokestatic  #821                // Method net/minecraft/class_3532.method_16436:(DDD)D
+     110: aload         8
+     112: getfield      #830                // Field net/minecraft/class_243.field_1351:D
+     115: dadd
+     116: dstore        15
+     118: fload_2
+     119: f2d
+     120: aload_1
+     121: getfield      #833                // Field net/minecraft/class_1308.field_5969:D
+     124: aload_1
+     125: invokevirtual #836                // Method net/minecraft/class_1308.method_23321:()D
+     128: invokestatic  #821                // Method net/minecraft/class_3532.method_16436:(DDD)D
+     131: dload         11
+     133: dadd
+     134: dstore        17
+     136: aload         5
+     138: fload_2
+     139: invokevirtual #840                // Method net/minecraft/class_1297.method_30951:(F)Lnet/minecraft/class_243;
+     142: astore        19
+     144: aload         19
+     146: getfield      #327                // Field net/minecraft/class_243.field_1352:D
+     149: dload         13
+     151: dsub
+     152: d2f
+     153: fstore        20
+     155: aload         19
+     157: getfield      #830                // Field net/minecraft/class_243.field_1351:D
+     160: dload         15
+     162: dsub
+     163: d2f
+     164: fstore        21
+     166: aload         19
+     168: getfield      #336                // Field net/minecraft/class_243.field_1350:D
+     171: dload         17
+     173: dsub
+     174: d2f
+     175: fstore        22
+     177: fload         20
+     179: fload         20
+     181: fmul
+     182: fload         22
+     184: fload         22
+     186: fmul
+     187: fadd
+     188: invokestatic  #843                // Method net/minecraft/class_3532.method_48119:(F)F
+     191: ldc_w         #844                // float 0.025f
+     194: fmul
+     195: fconst_2
+     196: fdiv
+     197: fstore        23
+     199: fload         22
+     201: fload         23
+     203: fmul
+     204: fstore        24
+     206: fload         20
+     208: fload         23
+     210: fmul
+     211: fstore        25
+     213: aload         4
+     215: invokestatic  #848                // Method net/minecraft/class_1921.method_23587:()Lnet/minecraft/class_1921;
+     218: invokeinterface #443,  2          // InterfaceMethod net/minecraft/class_4597.getBuffer:(Lnet/minecraft/class_1921;)Lnet/minecraft/class_4588;
+     223: astore        26
+     225: aload_1
+     226: fload_2
+     227: invokevirtual #851                // Method net/minecraft/class_1308.method_5836:(F)Lnet/minecraft/class_243;
+     230: invokestatic  #857                // Method net/minecraft/class_2338.method_49638:(Lnet/minecraft/class_2374;)Lnet/minecraft/class_2338;
+     233: astore        27
+     235: aload         5
+     237: fload_2
+     238: invokevirtual #858                // Method net/minecraft/class_1297.method_5836:(F)Lnet/minecraft/class_243;
+     241: invokestatic  #857                // Method net/minecraft/class_2338.method_49638:(Lnet/minecraft/class_2374;)Lnet/minecraft/class_2338;
+     244: astore        28
+     246: aload_0
+     247: aload_1
+     248: aload         27
+     250: invokevirtual #862                // Method method_24087:(Lnet/minecraft/class_1297;Lnet/minecraft/class_2338;)I
+     253: istore        29
+     255: aload         5
+     257: invokevirtual #865                // Method net/minecraft/class_1297.method_5809:()Z
+     260: ifeq          268
+     263: bipush        15
+     265: goto          281
+     268: aload         5
+     270: invokevirtual #869                // Method net/minecraft/class_1297.method_37908:()Lnet/minecraft/class_1937;
+     273: getstatic     #875                // Field net/minecraft/class_1944.field_9282:Lnet/minecraft/class_1944;
+     276: aload         28
+     278: invokevirtual #881                // Method net/minecraft/class_1937.method_8314:(Lnet/minecraft/class_1944;Lnet/minecraft/class_2338;)I
+     281: istore        30
+     283: aload_1
+     284: invokevirtual #882                // Method net/minecraft/class_1308.method_37908:()Lnet/minecraft/class_1937;
+     287: getstatic     #885                // Field net/minecraft/class_1944.field_9284:Lnet/minecraft/class_1944;
+     290: aload         27
+     292: invokevirtual #881                // Method net/minecraft/class_1937.method_8314:(Lnet/minecraft/class_1944;Lnet/minecraft/class_2338;)I
+     295: istore        31
+     297: aload_1
+     298: invokevirtual #882                // Method net/minecraft/class_1308.method_37908:()Lnet/minecraft/class_1937;
+     301: getstatic     #885                // Field net/minecraft/class_1944.field_9284:Lnet/minecraft/class_1944;
+     304: aload         28
+     306: invokevirtual #881                // Method net/minecraft/class_1937.method_8314:(Lnet/minecraft/class_1944;Lnet/minecraft/class_2338;)I
+     309: istore        32
+     311: aload_3
+     312: invokevirtual #197                // Method net/minecraft/class_4587.method_22903:()V
+     315: aload_3
+     316: dload         9
+     318: aload         8
+     320: getfield      #830                // Field net/minecraft/class_243.field_1351:D
+     323: dload         11
+     325: invokevirtual #889                // Method net/minecraft/class_4587.method_22904:(DDD)V
+     328: new           #86                 // class org/joml/Matrix4f
+     331: dup
+     332: aload_3
+     333: invokevirtual #164                // Method net/minecraft/class_4587.method_23760:()Lnet/minecraft/class_4587$class_4665;
+     336: invokevirtual #168                // Method net/minecraft/class_4587$class_4665.method_23761:()Lorg/joml/Matrix4f;
+     339: invokespecial #171                // Method org/joml/Matrix4f."<init>":(Lorg/joml/Matrix4fc;)V
+     342: astore        33
+     344: iconst_0
+     345: istore        34
+     347: iload         34
+     349: bipush        24
+     351: if_icmpgt     394
+     354: aload         26
+     356: aload         33
+     358: fload         20
+     360: fload         21
+     362: fload         22
+     364: iload         29
+     366: iload         30
+     368: iload         31
+     370: iload         32
+     372: ldc_w         #844                // float 0.025f
+     375: ldc_w         #844                // float 0.025f
+     378: fload         24
+     380: fload         25
+     382: iload         34
+     384: iconst_0
+     385: invokestatic  #893                // Method renderLeashPiece:(Lnet/minecraft/class_4588;Lorg/joml/Matrix4f;FFFIIIIFFFFIZ)V
+     388: iinc          34, 1
+     391: goto          347
+     394: bipush        24
+     396: istore        34
+     398: iload         34
+     400: iflt          441
+     403: aload         26
+     405: aload         33
+     407: fload         20
+     409: fload         21
+     411: fload         22
+     413: iload         29
+     415: iload         30
+     417: iload         31
+     419: iload         32
+     421: ldc_w         #844                // float 0.025f
+     424: fconst_0
+     425: fload         24
+     427: fload         25
+     429: iload         34
+     431: iconst_1
+     432: invokestatic  #893                // Method renderLeashPiece:(Lnet/minecraft/class_4588;Lorg/joml/Matrix4f;FFFIIIIFFFFIZ)V
+     435: iinc          34, -1
+     438: goto          398
+     441: aload_3
+     442: invokevirtual #449                // Method net/minecraft/class_4587.method_22909:()V
+     445: return
+
+  private static void renderLeashPiece(net.minecraft.class_4588, org.joml.Matrix4f, float, float, float, int, int, int, int, float, float, float, float, int, boolean);
+    Code:
+       0: iload         13
+       2: i2f
+       3: ldc_w         #924                // float 24.0f
+       6: fdiv
+       7: fstore        15
+       9: fload         15
+      11: iload         5
+      13: i2f
+      14: iload         6
+      16: i2f
+      17: invokestatic  #313                // Method net/minecraft/class_3532.method_16439:(FFF)F
+      20: f2i
+      21: istore        16
+      23: fload         15
+      25: iload         7
+      27: i2f
+      28: iload         8
+      30: i2f
+      31: invokestatic  #313                // Method net/minecraft/class_3532.method_16439:(FFF)F
+      34: f2i
+      35: istore        17
+      37: iload         16
+      39: iload         17
+      41: invokestatic  #929                // Method net/minecraft/class_765.method_23687:(II)I
+      44: istore        18
+      46: iload         13
+      48: iconst_2
+      49: irem
+      50: iload         14
+      52: ifeq          59
+      55: iconst_1
+      56: goto          60
+      59: iconst_0
+      60: if_icmpne     69
+      63: ldc_w         #930                // float 0.7f
+      66: goto          70
+      69: fconst_1
+      70: fstore        19
+      72: ldc_w         #931                // float 0.5f
+      75: fload         19
+      77: fmul
+      78: fstore        20
+      80: ldc_w         #932                // float 0.4f
+      83: fload         19
+      85: fmul
+      86: fstore        21
+      88: ldc_w         #933                // float 0.3f
+      91: fload         19
+      93: fmul
+      94: fstore        22
+      96: fload_2
+      97: fload         15
+      99: fmul
+     100: fstore        23
+     102: fload_3
+     103: fconst_0
+     104: fcmpl
+     105: ifle          118
+     108: fload_3
+     109: fload         15
+     111: fmul
+     112: fload         15
+     114: fmul
+     115: goto          131
+     118: fload_3
+     119: fload_3
+     120: fconst_1
+     121: fload         15
+     123: fsub
+     124: fmul
+     125: fconst_1
+     126: fload         15
+     128: fsub
+     129: fmul
+     130: fsub
+     131: fstore        24
+     133: fload         4
+     135: fload         15
+     137: fmul
+     138: fstore        25
+     140: aload_0
+     141: aload_1
+     142: fload         23
+     144: fload         11
+     146: fsub
+     147: fload         24
+     149: fload         10
+     151: fadd
+     152: fload         25
+     154: fload         12
+     156: fadd
+     157: invokeinterface #937,  5          // InterfaceMethod net/minecraft/class_4588.method_22918:(Lorg/joml/Matrix4f;FFF)Lnet/minecraft/class_4588;
+     162: fload         20
+     164: fload         21
+     166: fload         22
+     168: fconst_1
+     169: invokeinterface #941,  5          // InterfaceMethod net/minecraft/class_4588.method_22915:(FFFF)Lnet/minecraft/class_4588;
+     174: iload         18
+     176: invokeinterface #945,  2          // InterfaceMethod net/minecraft/class_4588.method_22916:(I)Lnet/minecraft/class_4588;
+     181: invokeinterface #948,  1          // InterfaceMethod net/minecraft/class_4588.method_1344:()V
+     186: aload_0
+     187: aload_1
+     188: fload         23
+     190: fload         11
+     192: fadd
+     193: fload         24
+     195: fload         9
+     197: fadd
+     198: fload         10
+     200: fsub
+     201: fload         25
+     203: fload         12
+     205: fsub
+     206: invokeinterface #937,  5          // InterfaceMethod net/minecraft/class_4588.method_22918:(Lorg/joml/Matrix4f;FFF)Lnet/minecraft/class_4588;
+     211: fload         20
+     213: fload         21
+     215: fload         22
+     217: fconst_1
+     218: invokeinterface #941,  5          // InterfaceMethod net/minecraft/class_4588.method_22915:(FFFF)Lnet/minecraft/class_4588;
+     223: iload         18
+     225: invokeinterface #945,  2          // InterfaceMethod net/minecraft/class_4588.method_22916:(I)Lnet/minecraft/class_4588;
+     230: invokeinterface #948,  1          // InterfaceMethod net/minecraft/class_4588.method_1344:()V
+     235: return
+
+  public void updateAnimatedTextureFrame(T);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokevirtual #435                // Method method_3931:(Lnet/minecraft/class_1297;)Lnet/minecraft/class_2960;
+       5: invokestatic  #964                // Method software/bernie/geckolib/cache/texture/AnimatableTexture.setAndUpdate:(Lnet/minecraft/class_2960;)V
+       8: return
+
+  public void fireCompileRenderLayersEvent();
+    Code:
+       0: getstatic     #969                // Field software/bernie/geckolib/event/GeoRenderEvent$Entity$CompileRenderLayers.EVENT:Lnet/fabricmc/fabric/api/event/Event;
+       3: invokevirtual #975                // Method net/fabricmc/fabric/api/event/Event.invoker:()Ljava/lang/Object;
+       6: checkcast     #35                 // class software/bernie/geckolib/event/GeoRenderEvent$Entity$CompileRenderLayers$Listener
+       9: new           #32                 // class software/bernie/geckolib/event/GeoRenderEvent$Entity$CompileRenderLayers
+      12: dup
+      13: aload_0
+      14: invokespecial #978                // Method software/bernie/geckolib/event/GeoRenderEvent$Entity$CompileRenderLayers."<init>":(Lsoftware/bernie/geckolib/renderer/GeoEntityRenderer;)V
+      17: invokeinterface #982,  2          // InterfaceMethod software/bernie/geckolib/event/GeoRenderEvent$Entity$CompileRenderLayers$Listener.handle:(Lsoftware/bernie/geckolib/event/GeoRenderEvent$Entity$CompileRenderLayers;)V
+      22: return
+
+  public boolean firePreRenderEvent(net.minecraft.class_4587, software.bernie.geckolib.cache.object.BakedGeoModel, net.minecraft.class_4597, float, int);
+    Code:
+       0: getstatic     #985                // Field software/bernie/geckolib/event/GeoRenderEvent$Entity$Pre.EVENT:Lnet/fabricmc/fabric/api/event/Event;
+       3: invokevirtual #975                // Method net/fabricmc/fabric/api/event/Event.invoker:()Ljava/lang/Object;
+       6: checkcast     #41                 // class software/bernie/geckolib/event/GeoRenderEvent$Entity$Pre$Listener
+       9: new           #38                 // class software/bernie/geckolib/event/GeoRenderEvent$Entity$Pre
+      12: dup
+      13: aload_0
+      14: aload_1
+      15: aload_2
+      16: aload_3
+      17: fload         4
+      19: iload         5
+      21: invokespecial #988                // Method software/bernie/geckolib/event/GeoRenderEvent$Entity$Pre."<init>":(Lsoftware/bernie/geckolib/renderer/GeoEntityRenderer;Lnet/minecraft/class_4587;Lsoftware/bernie/geckolib/cache/object/BakedGeoModel;Lnet/minecraft/class_4597;FI)V
+      24: invokeinterface #991,  2          // InterfaceMethod software/bernie/geckolib/event/GeoRenderEvent$Entity$Pre$Listener.handle:(Lsoftware/bernie/geckolib/event/GeoRenderEvent$Entity$Pre;)Z
+      29: ireturn
+
+  public void firePostRenderEvent(net.minecraft.class_4587, software.bernie.geckolib.cache.object.BakedGeoModel, net.minecraft.class_4597, float, int);
+    Code:
+       0: getstatic     #994                // Field software/bernie/geckolib/event/GeoRenderEvent$Entity$Post.EVENT:Lnet/fabricmc/fabric/api/event/Event;
+       3: invokevirtual #975                // Method net/fabricmc/fabric/api/event/Event.invoker:()Ljava/lang/Object;
+       6: checkcast     #46                 // class software/bernie/geckolib/event/GeoRenderEvent$Entity$Post$Listener
+       9: new           #43                 // class software/bernie/geckolib/event/GeoRenderEvent$Entity$Post
+      12: dup
+      13: aload_0
+      14: aload_1
+      15: aload_2
+      16: aload_3
+      17: fload         4
+      19: iload         5
+      21: invokespecial #995                // Method software/bernie/geckolib/event/GeoRenderEvent$Entity$Post."<init>":(Lsoftware/bernie/geckolib/renderer/GeoEntityRenderer;Lnet/minecraft/class_4587;Lsoftware/bernie/geckolib/cache/object/BakedGeoModel;Lnet/minecraft/class_4597;FI)V
+      24: invokeinterface #998,  2          // InterfaceMethod software/bernie/geckolib/event/GeoRenderEvent$Entity$Post$Listener.handle:(Lsoftware/bernie/geckolib/event/GeoRenderEvent$Entity$Post;)V
+      29: return
+
+  public void updateAnimatedTextureFrame(software.bernie.geckolib.core.animatable.GeoAnimatable);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: checkcast     #112                // class net/minecraft/class_1297
+       5: invokevirtual #1001               // Method updateAnimatedTextureFrame:(Lnet/minecraft/class_1297;)V
+       8: return
+
+  public void renderRecursively(net.minecraft.class_4587, software.bernie.geckolib.core.animatable.GeoAnimatable, software.bernie.geckolib.cache.object.GeoBone, net.minecraft.class_1921, net.minecraft.class_4597, net.minecraft.class_4588, boolean, float, int, int, float, float, float, float);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: aload_2
+       3: checkcast     #112                // class net/minecraft/class_1297
+       6: aload_3
+       7: aload         4
+       9: aload         5
+      11: aload         6
+      13: iload         7
+      15: fload         8
+      17: iload         9
+      19: iload         10
+      21: fload         11
+      23: fload         12
+      25: fload         13
+      27: fload         14
+      29: invokevirtual #1003               // Method renderRecursively:(Lnet/minecraft/class_4587;Lnet/minecraft/class_1297;Lsoftware/bernie/geckolib/cache/object/GeoBone;Lnet/minecraft/class_1921;Lnet/minecraft/class_4597;Lnet/minecraft/class_4588;ZFIIFFFF)V
+      32: return
+
+  public void renderFinal(net.minecraft.class_4587, software.bernie.geckolib.core.animatable.GeoAnimatable, software.bernie.geckolib.cache.object.BakedGeoModel, net.minecraft.class_4597, net.minecraft.class_4588, float, int, int, float, float, float, float);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: aload_2
+       3: checkcast     #112                // class net/minecraft/class_1297
+       6: aload_3
+       7: aload         4
+       9: aload         5
+      11: fload         6
+      13: iload         7
+      15: iload         8
+      17: fload         9
+      19: fload         10
+      21: fload         11
+      23: fload         12
+      25: invokevirtual #1006               // Method renderFinal:(Lnet/minecraft/class_4587;Lnet/minecraft/class_1297;Lsoftware/bernie/geckolib/cache/object/BakedGeoModel;Lnet/minecraft/class_4597;Lnet/minecraft/class_4588;FIIFFFF)V
+      28: return
+
+  public void preRender(net.minecraft.class_4587, software.bernie.geckolib.core.animatable.GeoAnimatable, software.bernie.geckolib.cache.object.BakedGeoModel, net.minecraft.class_4597, net.minecraft.class_4588, boolean, float, int, int, float, float, float, float);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: aload_2
+       3: checkcast     #112                // class net/minecraft/class_1297
+       6: aload_3
+       7: aload         4
+       9: aload         5
+      11: iload         6
+      13: fload         7
+      15: iload         8
+      17: iload         9
+      19: fload         10
+      21: fload         11
+      23: fload         12
+      25: fload         13
+      27: invokevirtual #1009               // Method preRender:(Lnet/minecraft/class_4587;Lnet/minecraft/class_1297;Lsoftware/bernie/geckolib/cache/object/BakedGeoModel;Lnet/minecraft/class_4597;Lnet/minecraft/class_4588;ZFIIFFFF)V
+      30: return
+
+  public void applyRenderLayers(net.minecraft.class_4587, software.bernie.geckolib.core.animatable.GeoAnimatable, software.bernie.geckolib.cache.object.BakedGeoModel, net.minecraft.class_1921, net.minecraft.class_4597, net.minecraft.class_4588, float, int, int);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: aload_2
+       3: checkcast     #112                // class net/minecraft/class_1297
+       6: aload_3
+       7: aload         4
+       9: aload         5
+      11: aload         6
+      13: fload         7
+      15: iload         8
+      17: iload         9
+      19: invokevirtual #1011               // Method applyRenderLayers:(Lnet/minecraft/class_4587;Lnet/minecraft/class_1297;Lsoftware/bernie/geckolib/cache/object/BakedGeoModel;Lnet/minecraft/class_1921;Lnet/minecraft/class_4597;Lnet/minecraft/class_4588;FII)V
+      22: return
+
+  public void actuallyRender(net.minecraft.class_4587, software.bernie.geckolib.core.animatable.GeoAnimatable, software.bernie.geckolib.cache.object.BakedGeoModel, net.minecraft.class_1921, net.minecraft.class_4597, net.minecraft.class_4588, boolean, float, int, int, float, float, float, float);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: aload_2
+       3: checkcast     #112                // class net/minecraft/class_1297
+       6: aload_3
+       7: aload         4
+       9: aload         5
+      11: aload         6
+      13: iload         7
+      15: fload         8
+      17: iload         9
+      19: iload         10
+      21: fload         11
+      23: fload         12
+      25: fload         13
+      27: fload         14
+      29: invokevirtual #1013               // Method actuallyRender:(Lnet/minecraft/class_4587;Lnet/minecraft/class_1297;Lsoftware/bernie/geckolib/cache/object/BakedGeoModel;Lnet/minecraft/class_1921;Lnet/minecraft/class_4597;Lnet/minecraft/class_4588;ZFIIFFFF)V
+      32: return
+
+  public long getInstanceId(software.bernie.geckolib.core.animatable.GeoAnimatable);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: checkcast     #112                // class net/minecraft/class_1297
+       5: invokevirtual #345                // Method getInstanceId:(Lnet/minecraft/class_1297;)J
+       8: lreturn
+
+  public int getPackedOverlay(software.bernie.geckolib.core.animatable.GeoAnimatable, float, float);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: checkcast     #112                // class net/minecraft/class_1297
+       5: fload_2
+       6: fload_3
+       7: invokevirtual #1017               // Method getPackedOverlay:(Lnet/minecraft/class_1297;FF)I
+      10: ireturn
+
+  public int getPackedOverlay(software.bernie.geckolib.core.animatable.GeoAnimatable, float);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: checkcast     #112                // class net/minecraft/class_1297
+       5: fload_2
+       6: invokevirtual #796                // Method getPackedOverlay:(Lnet/minecraft/class_1297;F)I
+       9: ireturn
+
+  public net.minecraft.class_2960 getTextureLocation(software.bernie.geckolib.core.animatable.GeoAnimatable);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: checkcast     #112                // class net/minecraft/class_1297
+       5: invokevirtual #435                // Method method_3931:(Lnet/minecraft/class_1297;)Lnet/minecraft/class_2960;
+       8: areturn
+
+  public software.bernie.geckolib.core.animatable.GeoAnimatable getAnimatable();
+    Code:
+       0: aload_0
+       1: invokevirtual #1021               // Method getAnimatable:()Lnet/minecraft/class_1297;
+       4: checkcast     #355                // class software/bernie/geckolib/core/animatable/GeoAnimatable
+       7: areturn
+}
