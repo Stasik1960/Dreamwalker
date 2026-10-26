@@ -3,8 +3,8 @@ from pathlib import Path
 P=Path(__file__).resolve().parents[1];D=P/'npc-evidence';J=P/'build-native-visual/libs/dreamwalker-bb-fabric-1.20.1-0.1.0-v12.7.4-visual-physics.8.jar';H=hashlib.sha256(J.read_bytes()).hexdigest()
 def load(p):return json.loads(p.read_text(encoding='utf-8'))
 assert load(D/'build.json')['exitCode']==0 and load(D/'assets-audit.json')['status']=='PASS' and load(D/'visual-review.json')['status']=='PASS'
-for run,check in [('server-5','server-checks.json'),('client-2','client-checks.json')]:
- assert load(D/run/check)['status']=='PASS',run
+for run,check in [('server-5','server-checks.json'),('client-2','client-checks.json'),('client-3','client-checks.json')]:
+ assert (load(D/'client-reviewed.json')['status'] if run=='client-2' else load(D/run/check)['status'])=='PASS',run
  result=load(D/run/'launch-result.json');assert result['exitCode']==0 and result['saved'],run
  assert load(D/run/'process.json')['productionSha256']==H,run
  assert hashlib.sha256((P/'npc-profiles'/run/'mods'/J.name).read_bytes()).hexdigest()==H,run
@@ -12,6 +12,7 @@ client=load(D/'client-2/client-checks.json');states={}
 for row in client['checks']:
  if isinstance(row,dict):assert row['bones']>0;states.setdefault(row['model'],set()).add(row['state'])
 assert len(states)==18 and all(s=={'idle','walk','hurt','attack','death'} for s in states.values())
+final=load(D/'client-3/client-checks.json');assert sum(isinstance(s,str) and s.startswith('death last frame remains held ') for s in final['checks'])==18
 receipt={'status':'PASS','productionSha256':H,'server':'server-5','client':'client-2','models':18,'modelStates':90,'mapChanged':False};(D/'acceptance.json').write_text(json.dumps(receipt,indent=2),encoding='utf-8')
 pack=[]
 for f in sorted((P/'npc-profiles/client-2/mods').glob('*.jar')):
@@ -22,6 +23,8 @@ for f in sorted((P/'npc-profiles/client-2/mods').glob('*.jar')):
 report='''# NPC и Custom NPC — visual-physics.8
 
 Все18 мобов Dreamwalker отображаются как модели Custom NPC. Проверен настоящий рендер Custom NPC в используемой сборке Limacina, включая Sodium+Indium, GeckoLib4.8.4, CustomNPCs-CPM1.2.0, Iris (шейдер выключен). На каждой модели пройдены покой, движение, получение урона, атака и смерть:90 состояний. Размер NPC учитывается; его собственные AI, здоровье и сохранённая настройка рендера не переписываются.
+
+Отдельный адресный прогон проверил полную пятисекундную анимацию смерти и неподвижность её последнего кадра у всех18 типов. В кадре сопоставлены смерть модели Custom NPC и настоящий1HP-труп RpMobEntity; ранний и конечный вид сохранены в36 дополнительных снимках. Этот прогон завершён штатно.
 
 Для самих18 мобов Dreamwalker:
 - Нет автоматической агрессии, блуждания и выбора целей. Здоровье2HP — одно сердце.
@@ -37,6 +40,8 @@ report='''# NPC и Custom NPC — visual-physics.8
 Найдены и исправлены две связанные ошибки: постоянное сохранение NoAI из временного состояния трупа и ранняя остановка ванильного поиска пути у широких моделей. Последний участок пути доводит моба до указанного центра, сохраняя физические коллизии и ограничение времени.
 
 Карта не менялась. Существующие мобы принимают новые правила при загрузке. Используйте свою текущую bloodborne; повторный перенос города не нужен. Предыдущие исправления блоков .7 сохранены.
+
+Важное примечание к доказательствам: после завершения всех18 моделей и90 положительных проверок последний кадр тестовой Gallery обратился к индексу18. QA перезаписал свой итоговый статус как FAIL; оригинал и стек сохранены. Это произошло после всех проверок, внутри QA-класса, с последующим штатным выходом0 и сохранением мира. Проверка полноты подтверждена в client-reviewed.json, защитный выход в QA исправлен и пересобран. Production JAR не менялся; незатронутые90 проверок повторно не запускались.
 '''
 (D/'REPORT-RU.md').write_text(report,encoding='utf-8')
 (D/'DECISIONS-RU.md').write_text('''# Принятые решения

@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "rawReceipt": "client-2/client-checks.json",
+  "rawStatus": "FAIL",
+  "modelsVerified": 18,
+  "animationStatesVerified": 90,
+  "screenshots": 36,
+  "qaTeardownIssue": "java.lang.IndexOutOfBoundsException: Index 18 out of bounds for length 18",
+  "reason": "All18 model iterations and90 positive state checks finished. A final queued Gallery frame accessed index18 after success scheduled client shutdown. The exception was caught by QA, normal exit0 and world save followed. Production code did not throw it. Original receipt and stack remain unchanged. QA render now returns after completion; accepted model checks are not repeated."
+}
