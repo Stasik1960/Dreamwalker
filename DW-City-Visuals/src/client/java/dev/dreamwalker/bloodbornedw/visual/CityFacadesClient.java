@@ -50,6 +50,14 @@ public final class CityFacadesClient implements ClientModInitializer {
         boolean general=FacadeMaterials.hasGeneral(model,state);
         return role==0&&!general?model:fixed(model,role,general);
     }
+    /** visible() returns a fresh, world-bound occlusion view. Never retain or probe it. */
+    public static BakedModel visibleModel(BakedModel model, BakedModel stableSource, BlockPos root, BlockState state) {
+        Identifier id=Registries.BLOCK.getId(state.getBlock());
+        if(!id.getNamespace().equals("bloodborne_dw"))return model;
+        int role=brick(id.getPath())?FacadeMaterials.role(root):0;
+        boolean general=FacadeMaterials.hasGeneral(stableSource,state);
+        return role==0&&!general?model:new FacadeModel(model,role,general);
+    }
     public static BakedModel terrainModel(BakedModel model,BlockPos pos,BlockState state) {
         if(!CityVisualClient.isAlt())return model;
         if(!(state.getBlock() instanceof NativeGridBlock) && !(state.getBlock() instanceof NativePhysicsBlock))return model;

@@ -1,6 +1,7 @@
 package dev.dreamwalker.bloodbornedw.visual;
 
 import java.util.List;
+import java.util.ArrayList;
 import java.util.function.Supplier;
 import net.fabricmc.fabric.api.renderer.v1.model.FabricBakedModel;
 import net.fabricmc.fabric.api.renderer.v1.render.RenderContext;
@@ -26,7 +27,16 @@ final class FacadeModel implements BakedModel, FabricBakedModel {
     boolean general() { return general; }
     @Override public List<BakedQuad> getQuads(BlockState state,Direction side,Random random) {
         List<BakedQuad> quads=delegate.getQuads(state,side,random);
-        return fixedRole==0&&!general?quads:quads.stream().map(q->FacadeMaterials.quad(q,fixedRole,general)).toList();
+        if(fixedRole==0&&!general)return quads;
+        List<BakedQuad> changed=null;
+        for(int i=0;i<quads.size();i++) {
+            BakedQuad source=quads.get(i), result=FacadeMaterials.quad(source,fixedRole,general);
+            if(result!=source) {
+                if(changed==null)changed=new ArrayList<>(quads);
+                changed.set(i,result);
+            }
+        }
+        return changed==null?quads:changed;
     }
     @Override public boolean isVanillaAdapter() {
         return fixedRole!=0 || !CityVisualClient.isAlt() ? ((FabricBakedModel) delegate).isVanillaAdapter() : false;
