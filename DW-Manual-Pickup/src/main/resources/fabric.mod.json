@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "dw_manual_pickup",
+  "version": "${version}",
+  "name": "DreamWalker Manual Pickup",
+  "description": "One press of the sneak key picks up the nearest item stack. No automatic item pickup.",
+  "authors": ["DreamWalker"],
+  "license": "MIT",
+  "environment": "*",
+  "entrypoints": { "main": ["dev.dreamwalker.pickup.ManualPickup"] },
+  "mixins": ["dw-manual-pickup.mixins.json"],
+  "depends": {
+    "fabricloader": ">=0.16.10",
+    "minecraft": "1.20.1",
+    "java": ">=17",
+    "fabric-api": ">=0.92.12+1.20.1"
+  }
+}

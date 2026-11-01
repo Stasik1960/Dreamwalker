@@ -1,0 +1,74 @@
+plugins { id 'fabric-loom' version '1.6.12' }
+
+version = '1.0.0'
+group = 'dev.dreamwalker'
+base { archivesName = 'dw-manual-pickup-fabric-1.20.1' }
+repositories { mavenCentral() }
+dependencies {
+    minecraft 'com.mojang:minecraft:1.20.1'
+    mappings 'net.fabricmc:yarn:1.20.1+build.10:v2'
+    modImplementation 'net.fabricmc:fabric-loader:0.16.10'
+    modImplementation 'net.fabricmc.fabric-api:fabric-api:0.92.12+1.20.1'
+}
+java { withSourcesJar() }
+jar { from('LICENSE') }
+tasks.withType(JavaCompile).configureEach { options.release = 17; options.encoding = 'UTF-8' }
+processResources {
+    inputs.property 'version', project.version
+    filesMatching('fabric.mod.json') { expand 'version': project.version }
+}
+tasks.withType(AbstractArchiveTask).configureEach {
+    preserveFileTimestamps = false
+    reproducibleFileOrder = true
+}
+sourceSets {
+    gametest {
+        compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
+        runtimeClasspath += sourceSets.main.output + sourceSets.main.runtimeClasspath
+    }
+    clientqa {
+        compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
+        runtimeClasspath += sourceSets.main.output + sourceSets.main.runtimeClasspath
+    }
+}
+loom {
+    mods {
+        dw_manual_pickup { sourceSet sourceSets.main }
+        dw_manual_pickup_tests { sourceSet sourceSets.gametest }
+        dw_manual_pickup_clientqa { sourceSet sourceSets.clientqa }
+    }
+    runs {
+        gametest {
+            inherit server
+            source sourceSets.gametest
+            runDir 'build/gametest'
+            vmArg '-Dfabric-api.gametest'
+            vmArg "-Dfabric-api.gametest.report-file=${file('build/test-results/gametest/results.xml').absolutePath}"
+        }
+        clientqa {
+            inherit client
+            source sourceSets.clientqa
+            runDir 'build/clientqa'
+            vmArgs '-Xmx2G'
+            programArgs '--username', 'PickupQA', '--width', '854', '--height', '480'
+        }
+    }
+}
+tasks.register('sourceZip', Zip) {
+    archiveBaseName = 'dw-manual-pickup-fabric-1.20.1'
+    archiveClassifier = 'source-project'
+    destinationDirectory = layout.buildDirectory.dir('distributions')
+    from(projectDir) { include 'src/**', '*.gradle', 'gradle.properties', 'README.md', 'LICENSE' }
+}
+tasks.named('runGametest') {
+    doFirst { file('build/test-results/gametest').mkdirs() }
+}
+tasks.named('runClientqa') {
+    doFirst { delete file('build/clientqa/pickup-client-qa.txt') }
+    doLast {
+        def report = file('build/clientqa/pickup-client-qa.txt')
+        if (!report.exists() || !report.getText('UTF-8').startsWith('STATUS: PASS\n')) {
+            throw new GradleException('Client QA failed; inspect build/clientqa/pickup-client-qa.txt')
+        }
+    }
+}

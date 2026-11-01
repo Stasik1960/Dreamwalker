@@ -1,0 +1,43 @@
+STATUS: PASS
+PASS: prepare isolated survival scene
+PASS: standing near drops does not collect
+PASS: first Shift key-down callback
+PASS: first press collects only nearest stack and preserves sneak
+PASS: OS key repeat ignored 0
+PASS: OS key repeat ignored 1
+PASS: OS key repeat ignored 2
+PASS: OS key repeat ignored 3
+PASS: OS key repeat ignored 4
+PASS: OS key repeat ignored 5
+PASS: OS key repeat ignored 6
+PASS: OS key repeat ignored 7
+PASS: OS key repeat ignored 8
+PASS: OS key repeat ignored 9
+PASS: OS key repeat ignored 10
+PASS: OS key repeat ignored 11
+PASS: OS key repeat ignored 12
+PASS: OS key repeat ignored 13
+PASS: OS key repeat ignored 14
+PASS: hold does not collect second stack
+PASS: release and press again
+PASS: second press collects exactly second stack
+PASS: Shift in inventory screen
+PASS: inventory Shift does not pick up
+PASS: third press after closing inventory
+PASS: third stack collected
+PASS: rebind sneak to G
+PASS: old Shift key no longer requests pickup
+PASS: old key left item untouched; use new sneak key
+PASS: new sneak key works
+PASS: real connected player enters spectator mode
+PASS: spectator key-down callback
+PASS: spectator cannot pick up even by direct server request
+PASS: rebind sneak to mouse button
+PASS: mouse binding keeps pickup and crouching
+PASS: enable toggle sneak
+PASS: toggle sneak on and pick up
+PASS: toggle on collects one stack
+PASS: remaining crouched with toggle does not collect
+PASS: toggle sneak off also counts as one press
+PASS: toggle off collects next stack and stands up
+PASS: complete
