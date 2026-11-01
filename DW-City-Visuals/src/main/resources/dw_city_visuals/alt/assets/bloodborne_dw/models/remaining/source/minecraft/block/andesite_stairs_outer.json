@@ -1,0 +1,146 @@
+{
+  "textures": {
+    "particle": "#side",
+    "bottom": "bloodborne_dw:block/remaining/source/minecraft/block/andesite",
+    "side": "bloodborne_dw:block/remaining/source/minecraft/block/andesite",
+    "top": "bloodborne_dw:block/remaining/source/minecraft/block/andesite",
+    "c3_wall_andesite": "bloodborne_dw:block/remaining/source/minecraft/block/andesite"
+  },
+  "elements": [
+    {
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        8,
+        16
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#bottom",
+          "cullface": "down"
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#top"
+        },
+        "north": {
+          "uv": [
+            0,
+            8,
+            16,
+            16
+          ],
+          "texture": "#c3_wall_andesite",
+          "cullface": "north"
+        },
+        "south": {
+          "uv": [
+            0,
+            8,
+            16,
+            16
+          ],
+          "texture": "#c3_wall_andesite",
+          "cullface": "south"
+        },
+        "west": {
+          "uv": [
+            0,
+            8,
+            16,
+            16
+          ],
+          "texture": "#c3_wall_andesite",
+          "cullface": "west"
+        },
+        "east": {
+          "uv": [
+            0,
+            8,
+            16,
+            16
+          ],
+          "texture": "#c3_wall_andesite",
+          "cullface": "east"
+        }
+      }
+    },
+    {
+      "from": [
+        8,
+        8,
+        8
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            8,
+            8,
+            16,
+            16
+          ],
+          "texture": "#top",
+          "cullface": "up"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            8,
+            8
+          ],
+          "texture": "#c3_wall_andesite"
+        },
+        "south": {
+          "uv": [
+            8,
+            0,
+            16,
+            8
+          ],
+          "texture": "#c3_wall_andesite",
+          "cullface": "south"
+        },
+        "west": {
+          "uv": [
+            8,
+            0,
+            16,
+            8
+          ],
+          "texture": "#c3_wall_andesite"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            8,
+            8
+          ],
+          "texture": "#c3_wall_andesite",
+          "cullface": "east"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 1,
+  "id": "dw_city_visuals_overlay",
+  "version": "1.0.0",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "dev.dreamwalker.bloodbornedw.visual.CityVisualMode",
+      "dev.dreamwalker.bloodbornedw.composite.StandardLanternGameplay",
+      "dev.dreamwalker.bloodbornedw.composite.RetainedFramePlacement",
+      "dev.dreamwalker.bloodbornedw.composite.AutoStoneFence"
+    ],
+    "client": [
+      "dev.dreamwalker.bloodbornedw.visual.CityVisualClient",
+      "dev.dreamwalker.bloodbornedw.visual.CityFacadesClient",
+      "dev.dreamwalker.bloodbornedw.composite.StandardLanternClient",
+      "dev.dreamwalker.bloodbornedw.composite.RetainedFramesClient"
+    ]
+  },
+  "mixins": [
+    { "config": "dw-city-visual-server.mixins.json" },
+    {
+      "config": "dw-balustrade-physics.mixins.json"
+    },
+    {
+      "config": "dw-placement-rotation.mixins.json"
+    },
+    {
+      "config": "dw-v12-palettes.mixins.json",
+      "environment": "client"
+    },
+    {
+      "config": "dw-city-visuals.mixins.json",
+      "environment": "client"
+    },
+    {
+      "config": "dw-city-facades.mixins.json",
+      "environment": "client"
+    },
+    {
+      "config": "dw-tree-bounds.mixins.json",
+      "environment": "client"
+    },
+    {
+      "config": "dw-native-session.mixins.json",
+      "environment": "client"
+    },
+    {
+      "config": "dw-composite-lifecycle.mixins.json",
+      "environment": "client"
+    },
+    {
+      "config": "dw-lantern-gameplay.mixins.json"
+    },
+    {
+      "config": "dw-lantern-client.mixins.json",
+      "environment": "client"
+    },
+    {
+      "config": "dw-retained-frame.mixins.json"
+    },
+    {
+      "config": "dw-retained-frame-data.mixins.json"
+    },
+    {
+      "config": "dw-retained-frame-client.mixins.json",
+      "environment": "client"
+    },
+    {
+      "config": "dw-retained-frame-placement.mixins.json"
+    },
+    {
+      "config": "dw-retained-frame-section-render.mixins.json",
+      "environment": "client"
+    },
+    {
+      "config": "dw-stone-fence.mixins.json"
+    },
+    {
+      "config": "dw-static-recipe-layer.mixins.json"
+    },
+    {
+      "config": "dw-transparent-quads.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=0.16.0",
+    "minecraft": "1.20.1",
+    "fabric-api": "*"
+  }
+}

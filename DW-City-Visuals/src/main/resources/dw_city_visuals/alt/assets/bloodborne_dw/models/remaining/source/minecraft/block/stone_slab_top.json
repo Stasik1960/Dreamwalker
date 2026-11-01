@@ -1,0 +1,84 @@
+{
+  "textures": {
+    "particle": "#side",
+    "bottom": "bloodborne_dw:block/remaining/source/minecraft/block/stone",
+    "side": "bloodborne_dw:block/remaining/source/minecraft/block/stone",
+    "top": "bloodborne_dw:block/remaining/source/minecraft/block/stone",
+    "c3_wall_stone": "bloodborne_dw:block/remaining/source/minecraft/block/stone"
+  },
+  "elements": [
+    {
+      "from": [
+        0,
+        8,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#bottom"
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#top",
+          "cullface": "up"
+        },
+        "north": {
+          "uv": [
+            0,
+            0,
+            16,
+            8
+          ],
+          "texture": "#c3_wall_stone",
+          "cullface": "north"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            16,
+            8
+          ],
+          "texture": "#c3_wall_stone",
+          "cullface": "south"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            16,
+            8
+          ],
+          "texture": "#c3_wall_stone",
+          "cullface": "west"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            16,
+            8
+          ],
+          "texture": "#c3_wall_stone",
+          "cullface": "east"
+        }
+      }
+    }
+  ]
+}

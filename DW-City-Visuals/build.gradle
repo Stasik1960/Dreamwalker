@@ -1,0 +1,54 @@
+plugins { id 'fabric-loom' version '1.6.12' }
+
+def workspace = file('D:/DreamWalker')
+def baseline = providers.gradleProperty('baselineJar').orElse(file('baseline/mod.jar').path)
+version = '20261101-altvisual.4'
+group = 'dev.dreamwalker'
+base { archivesName = 'dw-altvisual-overlay' }
+layout.buildDirectory = new File(projectDir, 'build')
+loom {
+    splitEnvironmentSourceSets()
+    mods {
+        altvisual {
+            sourceSet sourceSets.main
+            sourceSet sourceSets.client
+        }
+    }
+}
+repositories { mavenCentral() }
+dependencies {
+    minecraft 'com.mojang:minecraft:1.20.1'
+    mappings 'net.fabricmc:yarn:1.20.1+build.10:v2'
+    modImplementation 'net.fabricmc:fabric-loader:0.16.10'
+    modImplementation 'net.fabricmc.fabric-api:fabric-api:0.92.12+1.20.1'
+    modCompileOnly files(baseline.get())
+    compileOnly 'io.github.llamalad7:mixinextras-fabric:0.4.1'
+}
+tasks.register('verifyBaseline') {
+    inputs.file(baseline)
+    doLast {
+        def digest = java.security.MessageDigest.getInstance('SHA-256').digest(file(baseline.get()).bytes).encodeHex().toString()
+        if (digest != '1f2e71c6203a9b3794d9c3cf6cf6cbe6e0a93a750584dc9df967bd2cd166e621')
+            throw new GradleException('Baseline is not the pinned v22 checkpoint')
+    }
+}
+tasks.withType(JavaCompile).configureEach {
+    dependsOn tasks.named('verifyBaseline')
+    options.release = 17
+    options.encoding = 'UTF-8'
+}
+tasks.withType(AbstractArchiveTask).configureEach {
+    preserveFileTimestamps = false
+    reproducibleFileOrder = true
+}
+java { withSourcesJar() }
+
+// Keep the handshake identity in sync without hashing resources on either game thread.
+tasks.register('generateVisualFingerprints', Exec) {
+    inputs.files(fileTree('src') { exclude '**/profile-fingerprints.json' })
+    inputs.file('tools/prepare_visual_fingerprints.py')
+    outputs.file('src/main/resources/assets/bloodborne_dw/visuals/profile-fingerprints.json')
+    commandLine new File(workspace, '.local/venv/Scripts/python.exe').path,
+        file('tools/prepare_visual_fingerprints.py').path
+}
+tasks.named('processResources') { dependsOn tasks.named('generateVisualFingerprints') }

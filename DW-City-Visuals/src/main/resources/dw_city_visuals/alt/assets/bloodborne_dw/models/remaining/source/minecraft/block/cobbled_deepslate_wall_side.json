@@ -1,0 +1,41 @@
+{
+  "textures": {
+    "particle": "#wall",
+    "wall": "bloodborne_dw:block/remaining/source/minecraft/block/cobbled_deepslate",
+    "c3_wall_cobbled_deepslate": "bloodborne_dw:block/remaining/source/minecraft/block/cobbled_deepslate"
+  },
+  "elements": [
+    {
+      "from": [
+        5,
+        0,
+        0
+      ],
+      "to": [
+        11,
+        14,
+        8
+      ],
+      "faces": {
+        "down": {
+          "texture": "#wall",
+          "cullface": "down"
+        },
+        "up": {
+          "texture": "#wall"
+        },
+        "north": {
+          "texture": "#c3_wall_cobbled_deepslate",
+          "cullface": "north"
+        },
+        "west": {
+          "texture": "#c3_wall_cobbled_deepslate"
+        },
+        "east": {
+          "texture": "#c3_wall_cobbled_deepslate"
+        }
+      },
+      "__comment": "wall"
+    }
+  ]
+}

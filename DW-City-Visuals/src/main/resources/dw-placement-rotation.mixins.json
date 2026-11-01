@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "package": "dev.dreamwalker.bloodbornedw.composite.overlaymixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "dw-altvisual-overlay-refmap.json",
+  "mixins": [
+    "CompositePlacementRotationMixin",
+    "CompactPlacementRotationMixin",
+    "LadderPlacementRotationMixin",
+    "ImportedStairPlacementRotationMixin",
+    "WallPlacementRotationMixin"
+  ],
+  "injectors": {"defaultRequire": 1}
+}

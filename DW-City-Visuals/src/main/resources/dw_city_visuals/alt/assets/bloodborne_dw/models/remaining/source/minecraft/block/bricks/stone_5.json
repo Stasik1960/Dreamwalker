@@ -1,0 +1,158 @@
+{
+  "gui_light": "side",
+  "display": {
+    "gui": {
+      "rotation": [
+        30,
+        225,
+        0
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        0.625,
+        0.625,
+        0.625
+      ]
+    },
+    "ground": {
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "translation": [
+        0,
+        3,
+        0
+      ],
+      "scale": [
+        0.25,
+        0.25,
+        0.25
+      ]
+    },
+    "fixed": {
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "thirdperson_righthand": {
+      "rotation": [
+        75,
+        45,
+        0
+      ],
+      "translation": [
+        0,
+        2.5,
+        0
+      ],
+      "scale": [
+        0.375,
+        0.375,
+        0.375
+      ]
+    },
+    "firstperson_righthand": {
+      "rotation": [
+        0,
+        45,
+        0
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        0.4,
+        0.4,
+        0.4
+      ]
+    },
+    "firstperson_lefthand": {
+      "rotation": [
+        0,
+        225,
+        0
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        0.4,
+        0.4,
+        0.4
+      ]
+    }
+  },
+  "elements": [
+    {
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ],
+      "faces": {
+        "down": {
+          "texture": "#down",
+          "cullface": "down"
+        },
+        "up": {
+          "texture": "#up",
+          "cullface": "up"
+        },
+        "north": {
+          "texture": "#c3_wall_stone_5",
+          "cullface": "north"
+        },
+        "south": {
+          "texture": "#c3_wall_stone_5",
+          "cullface": "south"
+        },
+        "west": {
+          "texture": "#c3_wall_stone_5",
+          "cullface": "west"
+        },
+        "east": {
+          "texture": "#c3_wall_stone_5",
+          "cullface": "east"
+        }
+      }
+    }
+  ],
+  "textures": {
+    "particle": "#all",
+    "down": "#all",
+    "up": "#all",
+    "north": "#all",
+    "east": "#all",
+    "south": "#all",
+    "west": "#all",
+    "all": "bloodborne_dw:block/remaining/source/minecraft/block/addon/stone_5",
+    "c3_wall_stone_5": "bloodborne_dw:block/remaining/source/minecraft/block/addon/stone_5"
+  }
+}

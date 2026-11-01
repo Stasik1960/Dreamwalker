@@ -1,0 +1,132 @@
+{
+  "gui_light": "side",
+  "display": {
+    "thirdperson_righthand": {
+      "rotation": [
+        75,
+        45,
+        0
+      ],
+      "translation": [
+        0,
+        2.5,
+        2
+      ],
+      "scale": [
+        0.375,
+        0.375,
+        0.375
+      ]
+    },
+    "firstperson_righthand": {
+      "rotation": [
+        0,
+        45,
+        0
+      ],
+      "translation": [
+        0,
+        4.2,
+        0
+      ],
+      "scale": [
+        0.4,
+        0.4,
+        0.4
+      ]
+    },
+    "firstperson_lefthand": {
+      "rotation": [
+        0,
+        225,
+        0
+      ],
+      "translation": [
+        0,
+        4.2,
+        0
+      ],
+      "scale": [
+        0.4,
+        0.4,
+        0.4
+      ]
+    }
+  },
+  "textures": {
+    "particle": "#texture",
+    "texture": "bloodborne_dw:block/remaining/source/minecraft/block/stone",
+    "c3_wall_stone": "bloodborne_dw:block/remaining/source/minecraft/block/stone"
+  },
+  "elements": [
+    {
+      "from": [
+        1,
+        0,
+        1
+      ],
+      "to": [
+        15,
+        1,
+        15
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            1,
+            1,
+            15,
+            15
+          ],
+          "texture": "#texture",
+          "cullface": "down"
+        },
+        "up": {
+          "uv": [
+            1,
+            1,
+            15,
+            15
+          ],
+          "texture": "#texture"
+        },
+        "north": {
+          "uv": [
+            1,
+            15,
+            15,
+            16
+          ],
+          "texture": "#c3_wall_stone"
+        },
+        "south": {
+          "uv": [
+            1,
+            15,
+            15,
+            16
+          ],
+          "texture": "#c3_wall_stone"
+        },
+        "west": {
+          "uv": [
+            1,
+            15,
+            15,
+            16
+          ],
+          "texture": "#c3_wall_stone"
+        },
+        "east": {
+          "uv": [
+            1,
+            15,
+            15,
+            16
+          ],
+          "texture": "#c3_wall_stone"
+        }
+      }
+    }
+  ]
+}
