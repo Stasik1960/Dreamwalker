@@ -2,7 +2,7 @@ plugins { id 'fabric-loom' version '1.6.12' }
 
 def workspace = file('D:/DreamWalker')
 def baseline = providers.gradleProperty('baselineJar').orElse(file('baseline/mod.jar').path)
-version = '20261101-altvisual.4'
+version = '20261101-altvisual.5'
 group = 'dev.dreamwalker'
 base { archivesName = 'dw-altvisual-overlay' }
 layout.buildDirectory = new File(projectDir, 'build')

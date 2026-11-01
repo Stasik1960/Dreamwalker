@@ -18,7 +18,9 @@
     ]
   },
   "mixins": [
-    { "config": "dw-city-visual-server.mixins.json" },
+    {
+      "config": "dw-city-visual-server.mixins.json"
+    },
     {
       "config": "dw-balustrade-physics.mixins.json"
     },
@@ -35,10 +37,6 @@
     },
     {
       "config": "dw-city-facades.mixins.json",
-      "environment": "client"
-    },
-    {
-      "config": "dw-tree-bounds.mixins.json",
       "environment": "client"
     },
     {
