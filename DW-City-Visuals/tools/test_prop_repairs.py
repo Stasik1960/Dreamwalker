@@ -23,6 +23,7 @@ def main():
         for key,spec in contract.items():
             sprite=spec['sprite'];path=png_path(sprite)
             rule=next(r for r in rules if r['sprite']==sprite)
+            original_base=Image.open(io.BytesIO(base.read(path))).convert('RGBA')
             for mode in ('original','alt'):
                 canonical=mode+'/'+path
                 raw_source=inputs.read(canonical) if canonical in inputs.namelist() else base.read(path)
@@ -52,9 +53,26 @@ def main():
                                 l=(77*values[0]+150*values[1]+29*values[2]+128)>>8;values=(l,l,l)
                             expected=tuple(max(0,min(255,math.floor(values[c]*tone['scale'][c]+tone['offset'][c]+.5))) for c in range(3))+(before[3],)
                         if after!=expected: raise AssertionError(f'{key}/{mode} pixel {x},{y}: expected{expected} got{after}')
-                        changed+=after!=before;alpha+=after[3]!=before[3];protected+=tone is None and after!=before
+                        changed+=after!=original_base.getpixel((x,y));alpha+=after[3]!=before[3];protected+=tone is None and after!=before
                 check(key+'/'+mode+' changed',changed>0,dict(changedPixels=changed))
                 check(key+'/'+mode+' alpha and protected pixels',alpha==0 and protected==0)
+                if key=='roof' and mode=='alt':
+                    reference_path='dw_city_visuals/alt/'+png_path(spec['referenceSprite'])
+                    reference_bytes=jar.read(reference_path)
+                    reference=Image.open(io.BytesIO(reference_bytes)).convert('RGBA')
+                    check('roof/connected cornice reference bytes preserved',hashlib.sha256(reference_bytes).hexdigest()==spec['referenceAltSha256'])
+                    mismatches=outside=0
+                    for y in range(out.height):
+                        for x in range(out.width):
+                            inside=any(b[0]<=x<b[2] and b[1]<=y<b[3] for b in spec['uvRegions'])
+                            if inside:mismatches+=out.getpixel((x,y))!=reference.getpixel((x,y))
+                            else:outside+=out.getpixel((x,y))!=original_base.getpixel((x,y))
+                    check('roof/exact connected stone-cornice pixels',mismatches==0,dict(mismatchedTexels=mismatches))
+                    check('roof/unrelated atlas pixels unchanged',outside==0,dict(outsideMismatches=outside))
+                    reference_model=json.loads(jar.read('assets/'+spec['referenceModel'].replace(':','/models/')+'.json'))
+                    reference_composite=json.loads(jar.read('bloodborne_dw/composite/'+spec['referenceSource'].split(':')[1]+'.json'))
+                    check('roof/actual connected corner model binding',any(p['model']==spec['referenceModel'] for p in reference_composite['variants'][spec['referenceVariant']]['poses']['closed']['parts']))
+                    check('roof/actual connected corner atlas binding',spec['referenceSprite'] in reference_model['textures'].values())
                 if key=='friezeCorner':
                     before=Image.open(io.BytesIO(inputs.read(path) if mode=='alt' else base.read(path))).convert('RGBA')
                     errors=0

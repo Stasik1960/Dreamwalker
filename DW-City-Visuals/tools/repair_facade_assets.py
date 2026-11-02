@@ -47,13 +47,20 @@ def generate():
             dest.parent.mkdir(parents=True,exist_ok=True)
             buffer=io.BytesIO();image.save(buffer,format='PNG');data=buffer.getvalue();dest.write_bytes(data)
             receipt.append({'profile':mode,'path':path,'reason':reason,'sha256':hashlib.sha256(data).hexdigest()})
+        def save_exact(mode,path,data,reason):
+            dest=RESOURCE/'dw_city_visuals'/mode/path
+            dest.parent.mkdir(parents=True,exist_ok=True)
+            dest.write_bytes(data)
+            receipt.append({'profile':mode,'path':path,'reason':reason,'sha256':hashlib.sha256(data).hexdigest()})
         chestnut=png(read('alt',SOURCE+'polished_deepslate_wall_1.png'))
         beige=png(read('alt',SOURCE+'bricks.png'))
         stone=png(read('alt',SOURCE+'stone_bricks.png'))
         for suffix in ('bricks','bricks_0','bricks_1','bricks_2'):
-            old=png(read('alt',SOURCE+suffix+'.png'))
+            previous=read('alt',SOURCE+suffix+'.png')
+            old=png(previous)
             save('alt',PREFIX+'autumn_c3/accent/base_'+suffix+'.png',old,'preserve sage/sand regional base')
-            save('alt',SOURCE+suffix+'.png',transfer(old,chestnut),'uniform chestnut masonry on every generic brick wall')
+            save_exact('alt',SOURCE+suffix+'.png',previous,'restore global v6 masonry byte-for-byte, including streets and unrelated buildings')
+            save('alt',PREFIX+'autumn_c3/accent/red_'+suffix+'.png',transfer(old,chestnut),'separate red masonry restricted to the explicitly bounded screenshot6 house walls')
         roof=png(read('original',SOURCE+'addon/roof_1.png'))
         brick_rect=[(0,0,128,64)]
         rust_roof=transfer(roof,chestnut,brick_rect)
@@ -73,7 +80,7 @@ def generate():
         # Editing their pixels also covers UV-locked models and native meshes.
         for mode in ('original','alt'):
             texture=png(read(mode,SOURCE+'addon/spirelamp_0018.png'))
-            wall=png(read(mode,SOURCE+'bricks.png')) if mode=='original' else chestnut
+            wall=png(read(mode,SOURCE+'bricks.png')) if mode=='original' else beige
             fixed=transfer(texture,wall,[(96,64,126,96)])
             # This authored corner keeps shade:false and receives substantially
             # brighter source lighting than the recessed adjoining brick wall.
@@ -84,56 +91,21 @@ def generate():
                     pixel=fixed.getpixel((x,y))
                     if pixel[3]:fixed.putpixel((x,y),(*(round(c*.65) for c in pixel[:3]),pixel[3]))
             save(mode,SOURCE+'addon/spirelamp_0018.png',fixed,'corner masonry palette compensates unshaded source brightness')
-        # Keep both end arches and all physical geometry. The connecting shell
-        # wrongly sampled unrelated cap/ornament pixels from spirelamp_0033.
+        # User correction: preserve the original HALF-arch artwork and UVs.
+        # Only remove its unwanted upper and non-arched side stone render faces.
+        # Do not replace the artwork with a rounded full arch or another atlas.
         modelpath='assets/bloodborne_dw/models/remaining/source/minecraft/block/addon/gray_glazed_terracotta_0.json'
         model=json.loads(base.read(modelpath))
         shell=model['elements'][0]
         assert shell['from']==[-10,0,-16] and shell['to']==[26,25,21]
-        for face in ('north','south','up','down'):
-            shell['faces'][face]['texture']='#0'
-            shell['faces'][face]['uv']=[6.75,5,9.25,9.75]
-            shell['faces'][face].pop('rotation',None)
-        # The old end UVs were shifted 25px down the same atlas and sampled a
-        # triangular roof ornament with stripes instead of its actual arch.
-        shell['faces']['east']['uv']=[10,0,16,3.5]
-        shell['faces']['west']['uv']=[16,0,10,3.5]
+        for face in ('north','south','up'):
+            assert shell['faces'][face]['texture']=='#4'
+            del shell['faces'][face]
         for mode in ('original','alt'):
             dest=RESOURCE/'dw_city_visuals'/mode/modelpath
             dest.parent.mkdir(parents=True,exist_ok=True)
             dest.write_text(json.dumps(model,ensure_ascii=False,separators=(',',':'))+'\n',encoding='utf-8')
-            receipt.append({'profile':mode,'path':modelpath,'reason':'real rounded arch ends with continuous matching stone shell'})
-        # Native cells retain the same finite mesh IDs in every profile. Classify
-        # structural material once at build time, including converted/retained
-        # backgrounds; runtime needs only an indexed byte, never model scans of
-        # neighbouring blocks. Keep the original catalog and mesh bytes intact.
-        catalog=json.loads(base.read('assets/bloodborne_dw/native_grid/catalog.json'))
-        material_types=[]
-        for material in catalog['materials']:
-            name=material['sprite'].rsplit('/',1)[-1]
-            material_types.append(2 if name in ('bricks','bricks_0','bricks_1','bricks_2') else 1 if name=='stone_bricks' else 0)
-        types=bytearray()
-        with base.open('assets/bloodborne_dw/native_grid/meshes.bin') as stream:
-            header=stream.read(8)
-            if header[:4]!=b'NGQ1':raise ValueError('Unknown native mesh layout')
-            count=struct.unpack('>I',header[4:])[0]
-            if count!=len(catalog['meshes']):raise ValueError('Native mesh count changed')
-            for mesh in catalog['meshes']:
-                quads=struct.unpack('>I',stream.read(4))[0]
-                if quads!=mesh['quadCount']:raise ValueError('Native quad count changed')
-                body=stream.read(quads*139)
-                if len(body)!=quads*139:raise ValueError('Truncated native mesh')
-                stone=brick=0
-                for offset in range(0,len(body),139):
-                    kind=material_types[struct.unpack_from('>i',body,offset)[0]]
-                    if kind==1:stone+=1
-                    elif kind==2:brick+=1
-                types.append(2 if brick>stone else 1 if stone else 0)
-            if stream.read(1):raise ValueError('Unexpected native mesh suffix')
-        data=b'NSS1'+struct.pack('>I',len(types))+types
-        path='assets/bloodborne_dw/visuals/native-substrates.bin'
-        (RESOURCE/path).write_bytes(data)
-        receipt.append({'profile':'shared','path':path,'reason':'finite source-material classification for every native cell mesh','sha256':hashlib.sha256(data).hexdigest(),'meshCount':len(types),'stoneMeshes':types.count(1),'brickMeshes':types.count(2)})
+            receipt.append({'profile':mode,'path':modelpath,'reason':'original half-arch UVs restored; only top/north/south stone render faces suppressed'})
         # Discover every source family carrying the shared shutter backing or
         # embedded 0010 masonry. This routes all clones, not a single house box.
         models={}

@@ -10,7 +10,13 @@
     {
       "profile": "alt",
       "path": "assets/bloodborne_dw/textures/block/remaining/source/minecraft/block/bricks.png",
-      "reason": "uniform chestnut masonry on every generic brick wall",
+      "reason": "restore global v6 masonry byte-for-byte, including streets and unrelated buildings",
+      "sha256": "93404c16d46e1e98585eedf9dfdbb9fbb2fc686bc6fdb99a20ca0dd0550f906e"
+    },
+    {
+      "profile": "alt",
+      "path": "assets/bloodborne_dw/textures/block/autumn_c3/accent/red_bricks.png",
+      "reason": "separate red masonry restricted to the explicitly bounded screenshot6 house walls",
       "sha256": "6532683be49e57bce6b7a403ff5ec644a798c0e6464d317490b4417995a02222"
     },
     {
@@ -22,7 +28,13 @@
     {
       "profile": "alt",
       "path": "assets/bloodborne_dw/textures/block/remaining/source/minecraft/block/bricks_0.png",
-      "reason": "uniform chestnut masonry on every generic brick wall",
+      "reason": "restore global v6 masonry byte-for-byte, including streets and unrelated buildings",
+      "sha256": "45d5d62c273b81c40abd7b30a861d8c2c433e99153784f2d22ea117d7448d4ef"
+    },
+    {
+      "profile": "alt",
+      "path": "assets/bloodborne_dw/textures/block/autumn_c3/accent/red_bricks_0.png",
+      "reason": "separate red masonry restricted to the explicitly bounded screenshot6 house walls",
       "sha256": "bfb9e6c9d58130409eb44e6e0d042da590f2b0dceb781f92b681b9c12a4b70ea"
     },
     {
@@ -34,7 +46,13 @@
     {
       "profile": "alt",
       "path": "assets/bloodborne_dw/textures/block/remaining/source/minecraft/block/bricks_1.png",
-      "reason": "uniform chestnut masonry on every generic brick wall",
+      "reason": "restore global v6 masonry byte-for-byte, including streets and unrelated buildings",
+      "sha256": "55bd7eb1b7939d382447be6f4d9317ed735b41b2f55887d73838d80ac72f223b"
+    },
+    {
+      "profile": "alt",
+      "path": "assets/bloodborne_dw/textures/block/autumn_c3/accent/red_bricks_1.png",
+      "reason": "separate red masonry restricted to the explicitly bounded screenshot6 house walls",
       "sha256": "44509ddd8208b644d7ba75f962668cd238ba1d4a19b83e769714cca1f8ee6064"
     },
     {
@@ -46,7 +64,13 @@
     {
       "profile": "alt",
       "path": "assets/bloodborne_dw/textures/block/remaining/source/minecraft/block/bricks_2.png",
-      "reason": "uniform chestnut masonry on every generic brick wall",
+      "reason": "restore global v6 masonry byte-for-byte, including streets and unrelated buildings",
+      "sha256": "0077cab116634d0a663044adfbe7b36a003dcbcad37d3943b0de73fd58f20e91"
+    },
+    {
+      "profile": "alt",
+      "path": "assets/bloodborne_dw/textures/block/autumn_c3/accent/red_bricks_2.png",
+      "reason": "separate red masonry restricted to the explicitly bounded screenshot6 house walls",
       "sha256": "55afb1e73180b62998401f9b734958db859baf8992793b2b5d02a93957419af7"
     },
     {
@@ -95,26 +119,17 @@
       "profile": "alt",
       "path": "assets/bloodborne_dw/textures/block/remaining/source/minecraft/block/addon/spirelamp_0018.png",
       "reason": "corner masonry palette compensates unshaded source brightness",
-      "sha256": "a7fe0e14d542fdc8ce089e5b0696eb67532551c46672b182662a3c62217ccb01"
+      "sha256": "fcc8502954a755bb149b5b684239baa1329a4dbf168f86584559e481a369fa8f"
     },
     {
       "profile": "original",
       "path": "assets/bloodborne_dw/models/remaining/source/minecraft/block/addon/gray_glazed_terracotta_0.json",
-      "reason": "real rounded arch ends with continuous matching stone shell"
+      "reason": "original half-arch UVs restored; only top/north/south stone render faces suppressed"
     },
     {
       "profile": "alt",
       "path": "assets/bloodborne_dw/models/remaining/source/minecraft/block/addon/gray_glazed_terracotta_0.json",
-      "reason": "real rounded arch ends with continuous matching stone shell"
-    },
-    {
-      "profile": "shared",
-      "path": "assets/bloodborne_dw/visuals/native-substrates.bin",
-      "reason": "finite source-material classification for every native cell mesh",
-      "sha256": "eca30d22f3d2194752a6a3dc5be963788d339051c94fe019579a003bd8bc4297",
-      "meshCount": 144883,
-      "stoneMeshes": 6306,
-      "brickMeshes": 19506
+      "reason": "original half-arch UVs restored; only top/north/south stone render faces suppressed"
     },
     {
       "profile": "shared",

@@ -28,6 +28,9 @@ final class FacadeMaterials {
         Sprite sprite=source.getSprite(); Identifier id=sprite.getContents().getId();
         FacadeConfig c=config();
         if(role==4&&!c.brickWindow.containsKey(id))return source;
+        // A facade correction must never recolour horizontal pavements or
+        // floors even when they happen to share a sprite inside the house box.
+        if(role==4&&(source.getFace()==Direction.UP||source.getFace()==Direction.DOWN))return source;
         if(!c.bricks.contains(id)&&!(role==1&&c.rose.containsKey(id))&&!(role==4&&c.brickWindow.containsKey(id)))return source;
         // roof_1 is shared with the moving wooden shutter and glass islands.
         // Regional wall colours must affect only its upper masonry half.
@@ -45,6 +48,7 @@ final class FacadeMaterials {
         Sprite sprite=SpriteFinder.get(atlas()).find(quad); Identifier id=sprite.getContents().getId();
         if(role==0)return true; FacadeConfig c=config(); if(!c.bricks.contains(id)&&!(role==1&&c.rose.containsKey(id))&&!(role==4&&c.brickWindow.containsKey(id)))return true;
         if(role==4&&!c.brickWindow.containsKey(id))return true;
+        if(role==4&&(quad.nominalFace()==Direction.UP||quad.nominalFace()==Direction.DOWN||horizontal(quad)))return true;
         if(id.getPath().endsWith("/roof_1")) { float v=0; for(int i=0;i<4;i++)v+=quad.v(i); if(v/4>sprite.getMinV()+(sprite.getMaxV()-sprite.getMinV())*.5F)return true; }
         if(id.getPath().endsWith("/spirelamp_0010")&&(quad.nominalFace()==Direction.UP||quad.nominalFace()==Direction.DOWN))return true;
         Identifier targetId=role==4?c.brickWindow.get(id):role==1?c.rose.get(id):c.accentBase.get(id);
@@ -54,4 +58,5 @@ final class FacadeMaterials {
     }
     private static float map(float v,float a,float b,float c,float d) { return c+(v-a)*(d-c)/(b-a); }
     private static boolean wallHalf(int[] vertices,Sprite sprite) { float v=0;for(int i=0;i<4;i++)v+=Float.intBitsToFloat(vertices[i*8+5]);return v/4<=sprite.getMinV()+(sprite.getMaxV()-sprite.getMinV())*.5F; }
+    private static boolean horizontal(MutableQuadView quad) {float y=quad.y(0);for(int i=1;i<4;i++)if(Math.abs(quad.y(i)-y)>.00001F)return false;return true;}
 }

@@ -36,7 +36,7 @@ final class FacadeConfig {
             List<Region> regions = new ArrayList<>();
             for (JsonElement element : json.getAsJsonArray("regions")) {
                 JsonObject region=element.getAsJsonObject(); JsonArray a=region.getAsJsonArray("min"), b=region.getAsJsonArray("max");
-                int role=switch(region.get("role").getAsString()) { case "rose" -> 1; case "sage" -> 2; case "sand" -> 3; default -> throw new IllegalArgumentException("Unknown facade role"); };
+                int role=switch(region.get("role").getAsString()) { case "rose" -> 1; case "sage" -> 2; case "sand" -> 3; case "red_house" -> 4; default -> throw new IllegalArgumentException("Unknown facade role"); };
                 Region r=new Region(a.get(0).getAsInt(),a.get(1).getAsInt(),a.get(2).getAsInt(),b.get(0).getAsInt(),b.get(1).getAsInt(),b.get(2).getAsInt(),role);
                 if(r.minX>r.maxX||r.minY>r.maxY||r.minZ>r.maxZ) throw new IllegalArgumentException("Invalid facade bounds"); regions.add(r);
             }
@@ -49,6 +49,6 @@ final class FacadeConfig {
             return new FacadeConfig(new Identifier(json.get("dimension").getAsString()),regions,bricks,rose,accentBase,brickWindow,colors);
         } catch (Exception ex) { throw new IllegalStateException("Cannot load facade configuration " + RESOURCE,ex); }
     }
-    int role(BlockPos pos) { List<Region> regions=regionChunks.get(key(pos.getX()>>4,pos.getZ()>>4)); if(regions==null)return 0; int result=0; for(Region region:regions) if(region.contains(pos)) { if(region.role==1)return 1; if(result==0)result=region.role; } return result; }
+    int role(BlockPos pos) { List<Region> regions=regionChunks.get(key(pos.getX()>>4,pos.getZ()>>4)); if(regions==null)return 0; int result=0; for(Region region:regions) if(region.contains(pos)) { if(region.role==1)return 1; if(result==0||(result==4&&region.role<4))result=region.role; } return result; }
 }
 

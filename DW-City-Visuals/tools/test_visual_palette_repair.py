@@ -451,7 +451,7 @@ def run(jar: Path) -> dict:
                    (120.85,47,-950.338), (177.089,66.99565,-933.721),
                    (278.429,44.87609,-846.249), (194.524,60.05132,-971.282),
                    (293.234,61.5177,-979.893), (249.608,46.24593,-839.298)]
-    a.require("current-source-camera-plan-coverage", len(views) == 13 and all(len(v) == 5 and all(math.isfinite(c) for c in v) for v in views)
+    a.require("current-source-camera-plan-coverage", len(views) == 15 and all(len(v) == 5 and all(math.isfinite(c) for c in v) for v in views)
               and all(all(abs(views[i][c]-expected[c]) < .00001 for c in range(3)) for i,expected in enumerate(screenshots)),
               "Static plan has the ten supplied screenshot positions plus three 3D-tree positions. This does not certify actual capture, terrain readiness or visual correctness.")
 
@@ -462,7 +462,7 @@ def run(jar: Path) -> dict:
         "checks": a.checks,
         "limitations": [
             "This does not prove in-game colors, texture reload mode selection, or gate visibility at runtime.",
-            "The separate runtime pass uses the current 13-camera driver; completion, terrain readiness and visual review require actual capture evidence."
+            "The separate runtime pass uses the current 15-camera driver; completion, terrain readiness and visual review require actual capture evidence."
         ]
     }
     a.jar.close()

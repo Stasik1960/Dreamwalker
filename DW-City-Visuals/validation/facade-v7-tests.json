@@ -30,7 +30,15 @@
       }
     },
     {
-      "name": "chestnut-generic-wall-bricks.png",
+      "name": "global-v6-masonry-restored-exact-bricks.png",
+      "status": "PASS",
+      "detail": {
+        "sha256": "93404c16d46e1e98585eedf9dfdbb9fbb2fc686bc6fdb99a20ca0dd0550f906e",
+        "scope": "All common walls and pavements keep the exact frozen v6 PNG bytes"
+      }
+    },
+    {
+      "name": "separate-bounded-red-material-bricks.png",
       "status": "PASS",
       "detail": {
         "mean": [
@@ -43,7 +51,7 @@
           84.7109375,
           74.7421875
         ],
-        "allSourceRepresentations": "shared sprite"
+        "scope": "Separate alias, never a replacement for the shared world sprite"
       }
     },
     {
@@ -52,7 +60,15 @@
       "detail": "Regional sage/sand still receive the original warm base, not newly red pixels"
     },
     {
-      "name": "chestnut-generic-wall-bricks_0.png",
+      "name": "global-v6-masonry-restored-exact-bricks_0.png",
+      "status": "PASS",
+      "detail": {
+        "sha256": "45d5d62c273b81c40abd7b30a861d8c2c433e99153784f2d22ea117d7448d4ef",
+        "scope": "All common walls and pavements keep the exact frozen v6 PNG bytes"
+      }
+    },
+    {
+      "name": "separate-bounded-red-material-bricks_0.png",
       "status": "PASS",
       "detail": {
         "mean": [
@@ -65,7 +81,7 @@
           84.7109375,
           74.7421875
         ],
-        "allSourceRepresentations": "shared sprite"
+        "scope": "Separate alias, never a replacement for the shared world sprite"
       }
     },
     {
@@ -74,7 +90,15 @@
       "detail": "Regional sage/sand still receive the original warm base, not newly red pixels"
     },
     {
-      "name": "chestnut-generic-wall-bricks_1.png",
+      "name": "global-v6-masonry-restored-exact-bricks_1.png",
+      "status": "PASS",
+      "detail": {
+        "sha256": "55bd7eb1b7939d382447be6f4d9317ed735b41b2f55887d73838d80ac72f223b",
+        "scope": "All common walls and pavements keep the exact frozen v6 PNG bytes"
+      }
+    },
+    {
+      "name": "separate-bounded-red-material-bricks_1.png",
       "status": "PASS",
       "detail": {
         "mean": [
@@ -87,7 +111,7 @@
           84.7109375,
           74.7421875
         ],
-        "allSourceRepresentations": "shared sprite"
+        "scope": "Separate alias, never a replacement for the shared world sprite"
       }
     },
     {
@@ -96,7 +120,15 @@
       "detail": "Regional sage/sand still receive the original warm base, not newly red pixels"
     },
     {
-      "name": "chestnut-generic-wall-bricks_2.png",
+      "name": "global-v6-masonry-restored-exact-bricks_2.png",
+      "status": "PASS",
+      "detail": {
+        "sha256": "0077cab116634d0a663044adfbe7b36a003dcbcad37d3943b0de73fd58f20e91",
+        "scope": "All common walls and pavements keep the exact frozen v6 PNG bytes"
+      }
+    },
+    {
+      "name": "separate-bounded-red-material-bricks_2.png",
       "status": "PASS",
       "detail": {
         "mean": [
@@ -109,7 +141,7 @@
           84.7109375,
           74.7421875
         ],
-        "allSourceRepresentations": "shared sprite"
+        "scope": "Separate alias, never a replacement for the shared world sprite"
       }
     },
     {
@@ -146,7 +178,7 @@
     {
       "name": "brick-context-shutter-tone-matches-brick-wall",
       "status": "PASS",
-      "detail": "Nearest actual structural brick walls select a chestnut atlas; wood/glass still exact"
+      "detail": "Only explicitly bounded house walls may select this separate chestnut atlas; wood/glass still exact"
     },
     {
       "name": "shutter-model-coverage",
@@ -165,6 +197,64 @@
       "name": "regional-wall-quads-never-cross-wood-boundary",
       "status": "PASS",
       "detail": []
+    },
+    {
+      "name": "red-house-only-two-reviewed-volumes",
+      "status": "PASS",
+      "detail": "Actual screenshot6 main house and attached east annex only; no inferred or guessed clone regions"
+    },
+    {
+      "name": "pavements-other-houses-and-height-guards-not-red",
+      "status": "PASS",
+      "detail": {
+        "negativeFixtures": [
+          [
+            184,
+            57,
+            -943
+          ],
+          [
+            188,
+            56,
+            -948
+          ],
+          [
+            161,
+            88,
+            -1022
+          ],
+          [
+            272,
+            50,
+            -917
+          ],
+          [
+            215,
+            41,
+            -914
+          ],
+          [
+            182,
+            64,
+            -943
+          ],
+          [
+            200,
+            64,
+            -944
+          ],
+          [
+            190,
+            71,
+            -948
+          ]
+        ]
+      }
+    },
+    {
+      "name": "requested-red-house-walls-inside-reviewed-volume",
+      "status": "PASS",
+      "detail": "The actual source/static wall roots are inside; trim/pavement protection is enforced by face direction"
     },
     {
       "name": "regional-shutter-coverage",
@@ -189,25 +279,7 @@
     {
       "name": "red-house-actual-static-family-is-contextual",
       "status": "PASS",
-      "detail": "Actual screenshot6 cell183,64,-943 recipe198 resolves the embedded0010 family; every clone is classified by its structural neighbours"
-    },
-    {
-      "name": "all-native-meshes-classified",
-      "status": "PASS",
-      "detail": {
-        "meshes": 144883,
-        "nativeCells": 157579,
-        "stoneMeshes": 6306,
-        "brickMeshes": 19506
-      }
-    },
-    {
-      "name": "native-converted-wall-types-resolve-actual-sprites",
-      "status": "PASS",
-      "detail": {
-        "homogeneousStructuralMeshesChecked": 303,
-        "wrongMeshIndices": []
-      }
+      "detail": "Actual screenshot6 cell183,64,-943 recipe198 resolves the embedded0010 family; route is now bounded solely by reviewed house regions"
     },
     {
       "name": "original-corner-protected-atlas",
@@ -232,24 +304,19 @@
       }
     },
     {
-      "name": "original-arch-only-shell-material-changed",
+      "name": "original-half-arch-only-three-render-faces-suppressed",
       "status": "PASS",
-      "detail": "All geometry, other elements and physical models remain identical"
+      "detail": "All18 element bounds, rotations, other geometry/materials and physical models remain identical"
     },
     {
-      "name": "original-arch-stone-continues-between-ends",
+      "name": "original-half-arch-upper-and-side-stone-removed",
       "status": "PASS",
-      "detail": "All four shell faces use the real arch stone atlas rather than unrelated decoration pixels"
+      "detail": "Only the requested top and two non-arched side stone faces are absent"
     },
     {
-      "name": "original-arch-ends-use-real-rounded-arch",
+      "name": "original-original-half-arch-artwork-and-underside-restored",
       "status": "PASS",
-      "detail": "Both ends sample the full rounded arch island at pixels80..128/y0..28; the old striped triangular roof island is no longer used"
-    },
-    {
-      "name": "original-arch-shell-opaque",
-      "status": "PASS",
-      "detail": "The connecting stone UV patch has no hidden transparent holes"
+      "detail": "Original half-arch east/west UVs and original lower face are exact; no full-arch substitution remains"
     },
     {
       "name": "alt-corner-protected-atlas",
@@ -261,37 +328,32 @@
       "status": "PASS",
       "detail": {
         "corner": [
-          66.9,
-          54.34791666666667,
-          48.114583333333336
+          77.49895833333333,
+          72.60520833333334,
+          63.547916666666666
         ],
         "adjacentBrick": [
-          103.78515625,
-          84.7109375,
-          74.7421875
+          119.3203125,
+          111.5390625,
+          97.6015625
         ],
         "sourceLightingCompensation": 0.65
       }
     },
     {
-      "name": "alt-arch-only-shell-material-changed",
+      "name": "alt-half-arch-only-three-render-faces-suppressed",
       "status": "PASS",
-      "detail": "All geometry, other elements and physical models remain identical"
+      "detail": "All18 element bounds, rotations, other geometry/materials and physical models remain identical"
     },
     {
-      "name": "alt-arch-stone-continues-between-ends",
+      "name": "alt-half-arch-upper-and-side-stone-removed",
       "status": "PASS",
-      "detail": "All four shell faces use the real arch stone atlas rather than unrelated decoration pixels"
+      "detail": "Only the requested top and two non-arched side stone faces are absent"
     },
     {
-      "name": "alt-arch-ends-use-real-rounded-arch",
+      "name": "alt-original-half-arch-artwork-and-underside-restored",
       "status": "PASS",
-      "detail": "Both ends sample the full rounded arch island at pixels80..128/y0..28; the old striped triangular roof island is no longer used"
-    },
-    {
-      "name": "alt-arch-shell-opaque",
-      "status": "PASS",
-      "detail": "The connecting stone UV patch has no hidden transparent holes"
+      "detail": "Original half-arch east/west UVs and original lower face are exact; no full-arch substitution remains"
     }
   ],
   "limitations": [

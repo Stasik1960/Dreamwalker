@@ -1,0 +1,201 @@
+DreamWalker-v22-Visual-Fixes8-20261102
+
+Финальный JAR: DreamWalker-v22-Visual-Fixes8-20261102.jar
+
+Версия: 0.1.0-v12.7.4-visual-physics.8-building-water.3-stutter.1-visual.4-rc3-dwfix.22-altvisual.8
+
+SHA256: 3b5f9466f8bd414cbb4895c9ac671271c4a99a6b9dccf64c4d4e3f47410e258e
+
+Пять статических аудитов: PASS, 331 проверок. Финальные игровые кадры ALT и Original: 30 проверенных PNG, оба визуальных обзора PASS. Производительность: MEASURED_MATCHED_COMPARISON. Это результаты конкретных кадров и одного сопоставимого маршрута, а не гарантия отсутствия любых ошибок во всех местах карты или на другом компьютере.
+
+Десять запросов и последние уточнения
+
+Запрос; Результат
+1; В ALT импортированы все три 3D-дерева из пользовательского DreamWalker-trees.dwtree.json вместе с вложенной текстурой; Original сохранён.
+2; Каменные подложки ставней согласованы с базовой стеной во всех поддержанных семействах source/static/native/owner, включая открытые и закрытые варианты. Сохранены исходные акцентные зоны; дерево, стекло и alpha защищены.
+3; Восстановлены исходные рисунок и UV полуарки. В обоих видах удалены только element0.faces north/south/up; east/west/down, остальные элементы и физика сохранены.
+4; Яркие угловые кирпичи приведены к соседней кладке в обоих видах с учётом исходного shade:false.
+5; Мини-шпиль получил отдельный ALT-материал. Показ minecraft:air объяснён смещением видимой модели относительно клетки-корня; прицеливание и коллизии не переделывались.
+6; Стены проверенного краснокирпичного дома и соединённой пристройки согласованы локальными красными материалами. Горизонтальные поверхности, тротуары, основания и посторонние здания защищены; границы указаны ниже.
+7; Яркий декоративный фриз согласован с окружением. Затронутые области атласа и Original/ALT проверены отдельно.
+8; Добавлен ALT-материал двери в палитре соседних объектов; геометрия и UV сохранены.
+9; Наклонный prototype_roof исправлен как каменный карниз: ALT использует точные пиксели той же UV-области соединённого верхнего угла. Синяя палитра отменена; Original и остальные пиксели атласа сохранены.
+10; У спрайтовых деревьев убрана ошибочная чёрная обводка и слегка осветлена листва; это отдельные ассеты от пользовательских 3D-деревьев.
+
+Три последующих исправления относительно ошибочной v7: восстановлен общий вид города и тротуаров с отдельными локальными красными материалами; восстановлена полуарка вместо полной арки; наклонный элемент согласован с каменным карнизом вместо синей черепицы. Статические и прежние игровые проверки v7 не выявили неверный масштаб перекраски и подмену рисунка арки; их PASS относился к прежнему контракту и ограниченным кадрам. Они не засчитываются как подтверждение v8. Слабые промежуточные игровые прогоны до последней коррекции карниза также исключены из финального допуска.
+
+Границы локальной кирпичной правки и поиск копий
+
+Материал; Минимум XYZ; Максимум XYZ
+red_house; [183, 58, -953]; [193, 70, -941]
+red_house; [194, 58, -952]; [199, 70, -944]
+
+Четыре общих bricks PNG восстановлены точными байтами v6; исходные 11 областей rose/sage/sand сохранены. Красная подмена разрешена только вертикальным граням в этих двух объёмах; вывод цвета по ближайшему кирпичному блоку удалён.
+
+Census карты: 50/50 регионов, 39485/39485 размещённых чанков прочитаны и распакованы; пропущенных регионов 0, ошибок чтения 0, ошибок декодирования 0. NBT разобран для 2753 кандидатных чанков после фильтра seed-строк; 17872 ориентаций проверено. Положительный контроль [183, 58, -943] при повороте 0 распознан по 14 точкам и исключён из числа копий; дополнительных точных совпадений 0. Покрытие относится к точному четырнадцатиточечному шаблону source/static в четырёх поворотах. Оно не доказывает отсутствие всех визуально похожих или иначе собранных домов и не является общим аудитом целостности NBT.
+
+Проверки финальной ревизии
+
+Статический отчёт; Проверок; Результат
+palette-v8-final.json; 134; PASS
+trees-v8-final.json; 25; PASS
+facade-v8-final.json; 62; PASS
+props-v8-final.json; 51; PASS
+city-scope-v8-final.json; 59; PASS
+
+Игровой профиль; Кадров; Обзор; Сохранение мира
+final-alt; 15; PASS; нормальное
+final-original; 15; PASS; нормальное
+
+Кадр допускался только после фактического достижения заданной позиции/углов, загрузки всех FULL-чанков дальности обзора, завершения terrain render и рендера на целевой позиции. Дополнительно не менее двух секунд одновременно требовались pendingMeshes=0, pendingSectionUpdates=0, pendingWholeView=false, shapeSnapshotPendingCells=0, shapeSnapshotBatchDepth=0. PNG подтверждены callback screenshot.success, непустым новым файлом, сигнатурой и размером. Те же native-readiness классы побайтово совпадают в visual/perf QA и отсутствуют в релизном моде. Игровой обзор ограничен этими контрольными видами; исчерпывающий осмотр каждой точки города не заявляется.
+
+Visual QA SHA256: d2c190397060c49155737762f3772a74cb6a5886d3df18deecb852dae55831eb
+
+Perf QA SHA256: bdfd579c69d7325e996d0cf50dd87da8c39ba127ee1c1e55b491bfc8dadee509
+
+Сопоставимые условия измерений
+
+База производительности — закреплённая test-launch-microstutter-v22-20261029 до полного ALT, SHA256 1f2e71c6203a9b3794d9c3cf6cf6cbe6e0a93a750584dc9df967bd2cd166e621. Визуальный эталон восстановления v6 — другой артефакт, SHA256 0bf53c3f6c1aafa96c8cc52307bd239dfd3095dea31cf512b6d56f5e8da17302; эти две базы не смешиваются.
+
+Порядок: baseline-a0, original, alt, baseline-a1. Отдельные одинаковые копии исходного мира; хэши модов, конфигурации, Java, loader, клиента, QA, маршрута и исходного мира закреплены общей cohort-lock. Фактические настройки: render 12, simulation 12, FOV 70, gamma 1.0, mipmap 2, лимит 260 FPS, VSync выключен, 1280×720, heap 6G, ActiveProcessorCount 16; внешних resource packs и shaders нет. Графический renderer: NVIDIA GeForce RTX 3070 Laptop GPU/PCIe/SSE2. Финальные визуальные снимки используют отдельный лимит 30 FPS; числовое сравнение ниже относится только к perf-прогонам с общим лимитом.
+
+Каждый прогон: 6 камер, 12 визитов, стабилизация не менее 2.0 с, стационарное окно каждого визита не менее 15.0 с. FULL/render/native-idle gate применяется заново на каждом визите; готовность не подменяется фиксированной задержкой.
+
+FPS и длительность стационарных кадров
+
+Прогон; Кадров; Средний FPS; 1% low FPS; p99, мс; Максимум, мс
+База A0; 11763; 65.33; 33.64; 26.21; 57.39
+v8 Original; 12114; 67.27; 33.71; 26.11; 62.43
+v8 ALT; 11579; 64.31; 33.03; 27.11; 58.11
+База A1; 12321; 68.39; 34.45; 25.62; 64.00
+
+Средний FPS = число записанных интервалов / их суммарная длительность; 1% low — обратная средней длительности худшего одного процента интервалов. Это интервалы представления на стороне CPU с frame pacing, а не измерение времени GPU или физического сканирования экрана.
+
+Загрузка сцены и задержки до готовности
+
+Прогон; Loading p99, мс; Loading max, мс; Первый ready: медиана / max, с; Ready + settle: медиана / max, с; Визитов
+База A0; 70.75; 102.85; 8.00 / 18.70; 10.13 / 20.94; 12
+v8 Original; 72.09; 127.77; 8.01 / 19.17; 10.25 / 21.91; 12
+v8 ALT; 71.86; 117.76; 8.50 / 18.63; 10.74 / 20.87; 12
+База A1; 69.69; 105.06; 8.26 / 18.13; 10.63 / 20.37; 12
+
+Loading p99/max вычислены по объединённым реальным кадрам переходов. Первый ready — время до первого выполнения условий готовности; ready + settle включает обязательный непрерывный интервал стабилизации. Медиана и максимум времени рассчитаны по всем визитам каждого прогона. Это готовность сцены после перехода, не чистое дисковое I/O и не полный запуск JVM/вход в мир.
+
+RAM процесса отдельно от Java heap и GC
+
+Прогон; WS peak маршрута, GiB; Private peak маршрута, GiB; Native samples маршрута; Heap used sampled peak, GiB; Heap max, GiB; GC count Δ; GC time Δ, мс
+База A0; 7.653; 10.642; 316; 5.345; 6.000; 215; 3822
+v8 Original; 7.655; 10.856; 314; 5.356; 6.000; 224; 3924
+v8 ALT; 7.672; 10.892; 321; 5.354; 6.000; 227; 3915
+База A1; 7.634; 10.840; 317; 5.539; 6.000; 216; 3725
+
+Working Set и Private Bytes — выборочные пики именно процесса измеряемой JVM между началом первого loading и концом последнего steady окна маршрута. Они не заменены lifetime peak процесса или одним последним снимком. Использованный Java heap — отдельный выборочный максимум QA, GC — разница счётчиков между границами маршрута; это не общая память процесса. Краткие пики между native samples могли не попасть в выборку.
+
+Сравнения и наблюдаемый дрейф базы
+
+Сравнение; Средний FPS Δ, %; Steady p99 Δ, %; Loading p99 Δ, %; WS peak Δ, %; Private peak Δ, %
+v8 Original / База A0; +2.97; -0.39; +1.90; +0.02; +2.01
+v8 ALT / База A0; -1.56; +3.42; +1.57; +0.25; +2.35
+v8 Original / База A1; -1.64; +1.89; +3.45; +0.27; +0.15
+v8 ALT / База A1; -5.96; +5.79; +3.12; +0.50; +0.48
+База A1 / База A0; +4.68; -2.23; -1.50; -0.24; +1.86
+
+Дрейф A0→A1 показан отдельной строкой и не вычитается из результатов как установленная причина. Кэш ОС не очищался; порядок прогонов, фоновая нагрузка и состояние кэшей могли влиять на результат. Для FPS больший показатель лучше; для времени кадров и задержек меньший лучше. Один маршрут с повторными визитами не доказывает универсальное улучшение или отсутствие регрессий во всей игре.
+
+Диагностика и ограничения проверки ошибок
+
+В слабом промежуточном Original-прогоне до последней коррекции наблюдался NPE EntityCulling Provider.isOpaqueFullCube на CullThread. Проверка установленного байткода показала обращение к state, полученному из ClientWorld.getBlockState; на строке 30 state был null. Это не доказывает виновность данного мода или существование ошибки в закреплённой базе. Зависимости ради этого наблюдения не менялись; исправление этого NPE не заявляется.
+
+Финальный лог; NPE-строк с state; Provider.isOpaqueFullCube stack-строк
+final-alt; 0; 0
+final-original; 0; 0
+baseline-a0; 0; 0
+original; 0; 0
+alt; 0; 0
+baseline-a1; 0; 0
+
+Эта узкая автоматическая выборка строк служит наблюдением для финальных запусков, а не исчерпывающим поиском всех ошибок. Отсутствие таких строк не доказывает исправление прежнего NPE; сравнение базы и кандидата ограничено фактическими прогонами.
+
+Дополнительная проверенная сводка игровых логов
+
+Фактические игровые логи v8: ANALYSIS_COMPLETE.
+
+Это завершение подсчёта и сравнения событий, а не утверждение об отсутствии ошибок. В финальную группу включены только два окончательных visual и четыре измеренных perf запуска. Исторический промежуточный Original приведён отдельно и не добавлен к финальным количествам.
+
+Финальные события (ERROR/FATAL; exception notice; точный CullThread state-null NPE; fatal signal):
+
+final-alt: 10; 442; 0; 0. QA failure flags: не наблюдались по записанным полям. Log SHA256 c05aea84b06db8d73eacf23f4365e2e51b6879a124d79fd76af6290d796c2c6b.
+
+final-original: 10; 442; 0; 0. QA failure flags: не наблюдались по записанным полям. Log SHA256 697654d7a254c252ac3c98e5b52b7a8766dead7f11f94b0094980b11692c97e4.
+
+baseline-a0: 10; 441; 0; 0. QA failure flags: не наблюдались по записанным полям. Log SHA256 917bb47a47354f15448f1d4dd8175a71511d88077aca510b0ac6b3465a2b0073.
+
+original: 10; 442; 0; 0. QA failure flags: не наблюдались по записанным полям. Log SHA256 cf9e2beb9a39030e74d52063bc80febd36ac3b9cd189a96e1ee2b960e06db548.
+
+alt: 10; 442; 0; 0. QA failure flags: не наблюдались по записанным полям. Log SHA256 d42913cdc8ebc25e80a0a22df3290b7eb4701fc87237a1274c2cc68dbe387581.
+
+baseline-a1: 10; 441; 0; 0. QA failure flags: не наблюдались по записанным полям. Log SHA256 117eb1d493170f6c6abaaf3eab52884d43c8dc7dd878511ba7677e542c2bd46f.
+
+Отдельно классифицированные события сохраняются в полном учёте; они не исключены и не объявлены безопасными:
+
+final-alt: auth401=1, Yuushya missing-model definition WARN=432.
+
+final-original: auth401=1, Yuushya missing-model definition WARN=432.
+
+baseline-a0: auth401=1, Yuushya missing-model definition WARN=432.
+
+original: auth401=1, Yuushya missing-model definition WARN=432.
+
+alt: auth401=1, Yuushya missing-model definition WARN=432.
+
+baseline-a1: auth401=1, Yuushya missing-model definition WARN=432.
+
+Исторический промежуточный Original: exact CullThread Provider.java:30 state-null NPE=1; log SHA256 ab99a8d89b982e0b7d36ff46bf386ba55587c50993d0693aed02e5d7283e58e2. Он не является контрольным baseline и не доказывает источник ошибки.
+
+Сигнатур кандидатов с обязательным разбором проверяющим: 4. Глобальных QA/fatal флагов во всех шести запусках: 0. Новая сигнатура означает отсутствие совпадения в двух фактических контрольных логах, а не доказанную причинность мода. Visual и perf имеют разные маршруты; совпадение или расхождение их количеств не заменяет сопоставимый perf-контроль.
+
+REVIEW final-alt other_error_or_exception: candidate=1, A0=0, A1=0; dev.dreamwalker.bloodbornedw.visual.CompositeLifecycleDispatch; Off-thread composite lifecycle operation disconnect queued on client thread; fingerprint=44061983fe3df4ed41a3af529bb463f5f7091627ca2f2b8d7310527dc1218dcb. Off-thread composite lifecycle operation disconnect queued on client thread
+java.lang.Throwable: Off-thread lifecycle origin
+at dev.dreamwalker.bloodbornedw.visual.CompositeLifecycleDispatch.report(CompositeLifecycleDispatch.java:21) ~[DreamWalker-v22-Visual-Fixes8-20261102.jar:?]
+at dev.dreamwalker.bloodbornedw.visual.CompositeLifecycleDispatch.disconnect(CompositeLifecycleDispatch.java:31) ~[DreamWalker-v22-Visual-Fixes8-20261102.jar:?]
+at dev.dreamwalker.bloodbornedw.composite.CompositeClient.redirect$bbk000$bloodborne_dw$dw$disconnect(CompositeClient.java:516) ~[DreamWalker-v22-Visual-Fixes8-20261102.jar:?]
+at dev.dreamwalker.bloodbornedw.composite.CompositeClient.lambda$initialize$0(CompositeClient.java:36) ~[DreamWalker-v22-Visual-Fixes8-20261102.jar:?]
+
+REVIEW final-original other_error_or_exception: candidate=1, A0=0, A1=0; dev.dreamwalker.bloodbornedw.visual.CompositeLifecycleDispatch; Off-thread composite lifecycle operation disconnect queued on client thread; fingerprint=44061983fe3df4ed41a3af529bb463f5f7091627ca2f2b8d7310527dc1218dcb. Off-thread composite lifecycle operation disconnect queued on client thread
+java.lang.Throwable: Off-thread lifecycle origin
+at dev.dreamwalker.bloodbornedw.visual.CompositeLifecycleDispatch.report(CompositeLifecycleDispatch.java:21) ~[DreamWalker-v22-Visual-Fixes8-20261102.jar:?]
+at dev.dreamwalker.bloodbornedw.visual.CompositeLifecycleDispatch.disconnect(CompositeLifecycleDispatch.java:31) ~[DreamWalker-v22-Visual-Fixes8-20261102.jar:?]
+at dev.dreamwalker.bloodbornedw.composite.CompositeClient.redirect$bbk000$bloodborne_dw$dw$disconnect(CompositeClient.java:516) ~[DreamWalker-v22-Visual-Fixes8-20261102.jar:?]
+at dev.dreamwalker.bloodbornedw.composite.CompositeClient.lambda$initialize$0(CompositeClient.java:36) ~[DreamWalker-v22-Visual-Fixes8-20261102.jar:?]
+
+REVIEW original other_error_or_exception: candidate=1, A0=0, A1=0; dev.dreamwalker.bloodbornedw.visual.CompositeLifecycleDispatch; Off-thread composite lifecycle operation disconnect queued on client thread; fingerprint=44061983fe3df4ed41a3af529bb463f5f7091627ca2f2b8d7310527dc1218dcb. Off-thread composite lifecycle operation disconnect queued on client thread
+java.lang.Throwable: Off-thread lifecycle origin
+at dev.dreamwalker.bloodbornedw.visual.CompositeLifecycleDispatch.report(CompositeLifecycleDispatch.java:21) ~[DreamWalker-v22-Visual-Fixes8-20261102.jar:?]
+at dev.dreamwalker.bloodbornedw.visual.CompositeLifecycleDispatch.disconnect(CompositeLifecycleDispatch.java:31) ~[DreamWalker-v22-Visual-Fixes8-20261102.jar:?]
+at dev.dreamwalker.bloodbornedw.composite.CompositeClient.redirect$bbk000$bloodborne_dw$dw$disconnect(CompositeClient.java:516) ~[DreamWalker-v22-Visual-Fixes8-20261102.jar:?]
+at dev.dreamwalker.bloodbornedw.composite.CompositeClient.lambda$initialize$0(CompositeClient.java:36) ~[DreamWalker-v22-Visual-Fixes8-20261102.jar:?]
+
+REVIEW alt other_error_or_exception: candidate=1, A0=0, A1=0; dev.dreamwalker.bloodbornedw.visual.CompositeLifecycleDispatch; Off-thread composite lifecycle operation disconnect queued on client thread; fingerprint=44061983fe3df4ed41a3af529bb463f5f7091627ca2f2b8d7310527dc1218dcb. Off-thread composite lifecycle operation disconnect queued on client thread
+java.lang.Throwable: Off-thread lifecycle origin
+at dev.dreamwalker.bloodbornedw.visual.CompositeLifecycleDispatch.report(CompositeLifecycleDispatch.java:21) ~[DreamWalker-v22-Visual-Fixes8-20261102.jar:?]
+at dev.dreamwalker.bloodbornedw.visual.CompositeLifecycleDispatch.disconnect(CompositeLifecycleDispatch.java:31) ~[DreamWalker-v22-Visual-Fixes8-20261102.jar:?]
+at dev.dreamwalker.bloodbornedw.composite.CompositeClient.redirect$bbk000$bloodborne_dw$dw$disconnect(CompositeClient.java:516) ~[DreamWalker-v22-Visual-Fixes8-20261102.jar:?]
+at dev.dreamwalker.bloodbornedw.composite.CompositeClient.lambda$initialize$0(CompositeClient.java:36) ~[DreamWalker-v22-Visual-Fixes8-20261102.jar:?]
+
+Fingerprint counts are observations from these six actual logs only; they do not establish causality, fix status or absence of hidden failures.
+
+ERROR/FATAL and exception-notice counts overlap when the same event has both; a stack/cause chain is counted once per event.
+
+Known offline-auth401 and Yuushya definition warnings remain counted. Classification never exempts an event from baseline comparison.
+
+Only the exact line30 CullThread state-null signature joins that NPE count; other null-pointer errors remain separate fingerprints.
+
+Worker ordinal normalization, timestamp removal and path/session redaction can merge otherwise identical diagnostic messages; substantive message and source frame differences are preserved.
+
+Решение проверяющего об оставшихся событиях следует приложить отдельно; автоматического PASS по отсутствию новых ошибок этот анализ не выдаёт.
+
+Что входит в исходники и доказательства
+
+Архив исходников — воспроизводимый модуль поверх настоящего закреплённого baseline/mod.jar, baseline/repair-sources.zip с исходниками прежних исправлений, новый overlay-код src/main и src/client, генераторы, замороженные входные ZIP, палитры и пользовательский проект деревьев. Это не заявление о восстановлении полного исходного дерева всех классов двоичной базы. В репозитории сохранена история проекта. QA-драйверы, данные измерений и тестовые профили не входят в релизный мод; отдельный evidence-архив сохраняет проверяемые отчёты и данные сравнений.
+
+Источники чисел: пять validation/*-v8-final.json; runtime/final-alt и runtime/final-original (complete/captures/visual-review/scope-runtime/lock); performance/comparison.json и все четыре исходных performance.json + process-memory.jsonl. Метрики повторно рассчитаны из rawIntervalsNs и PID-привязанных native samples; компактная сводка сверена с этим пересчётом. SHA256 comparison.json: 0f5c4f7fa039ecf637aba03188c1d2cc0b75792698f91ff90573bee1b085a95b. Cohort lock: ddabbe55cfdde49bf310a1ba06e5f4f64e90c006a782fa04c56cf57c89921ecc.

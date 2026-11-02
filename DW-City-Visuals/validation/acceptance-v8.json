@@ -1,0 +1,474 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "productionSha256": "3b5f9466f8bd414cbb4895c9ac671271c4a99a6b9dccf64c4d4e3f47410e258e",
+  "staticAudits": {
+    "palette-v8-final.json": {
+      "status": "PASS",
+      "checks": 134,
+      "sha256": "89b3e7b9187528ebe0f462b9092ee47c81cef9dc0f0257ad988c3a1d00aa132a"
+    },
+    "trees-v8-final.json": {
+      "status": "PASS",
+      "checks": 25,
+      "sha256": "5c1e2b16591a36958e2f97181980ddd93d0f458e94e580516eebacc88de96b14"
+    },
+    "facade-v8-final.json": {
+      "status": "PASS",
+      "checks": 62,
+      "sha256": "e5ce7815b999b47df91a0020abb607641ff3ec81ea182f55e9201c6791ebd304"
+    },
+    "props-v8-final.json": {
+      "status": "PASS",
+      "checks": 51,
+      "sha256": "1d4eab7f467ce3a66b66ef521ede73debbf07877a3c80eb0b7909e7479184cce"
+    },
+    "city-scope-v8-final.json": {
+      "status": "PASS",
+      "checks": 59,
+      "sha256": "e4c3e13bb04acd01387f5cd47e5e050790da4d2f23f7f0bd6f8e78e1526dbfea"
+    }
+  },
+  "artifactDeltaAuditSha256": "9e559965bc97df9473321199041af045f46f9ee380479b20d90b30f489fecd46",
+  "runtime": {
+    "final-alt": {
+      "status": "PASS",
+      "productionSha256": "3b5f9466f8bd414cbb4895c9ac671271c4a99a6b9dccf64c4d4e3f47410e258e",
+      "qaSha256": "d2c190397060c49155737762f3772a74cb6a5886d3df18deecb852dae55831eb",
+      "complete": {
+        "status": "CAPTURED",
+        "count": 15,
+        "alt": true,
+        "readinessGated": true,
+        "pngWritesVerified": true
+      },
+      "launch": {
+        "exitCode": 0,
+        "seconds": 478.9025218486786,
+        "stoppedAfterSave": false,
+        "normalSave": true
+      },
+      "review": {
+        "status": "PASS",
+        "mode": "alt",
+        "reviewedUtc": "2026-11-02T12:17:23.128067+00:00",
+        "reviewedViews": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "method": "Direct inspection of all 15 actual PNGs through view_image, plus recorded FULL chunks, vanilla terrain and common native queue readiness.",
+        "observations": [
+          {
+            "view": 1,
+            "observation": "Shutter masonry is integrated with the surrounding gray stone facade."
+          },
+          {
+            "view": 2,
+            "observation": "Other shutter placements have matching stone surround; wood and glass preserved."
+          },
+          {
+            "view": 3,
+            "observation": "Original half-arch silhouette restored; removed top/side stone faces visible as open geometry."
+          },
+          {
+            "view": 4,
+            "observation": "Corner masonry no longer has the earlier bright green-white appearance."
+          },
+          {
+            "view": 5,
+            "observation": "Both miniature shrines use warm stone ALT; targeting was not modified."
+          },
+          {
+            "view": 6,
+            "observation": "Shown main house and annex wall masonry red; adjacent buildings and paving remain stone."
+          },
+          {
+            "view": 7,
+            "observation": "Straight and corner frieze have muted matching masonry tones."
+          },
+          {
+            "view": 8,
+            "observation": "Door frame warm stone; glass, wood and white ornament preserved."
+          },
+          {
+            "view": 9,
+            "observation": "Angled cornice now uses the connected stone-cornice palette, distinct from blue roof tiles."
+          },
+          {
+            "view": 10,
+            "observation": "Target twig dark contour absent; golden foliage retained and lightened."
+          },
+          {
+            "view": 11,
+            "observation": "Imported ALT tree visible with orange foliage and surrounding city fully drawn."
+          },
+          {
+            "view": 12,
+            "observation": "Imported ALT tree visible with golden foliage; silhouette and branches present."
+          },
+          {
+            "view": 13,
+            "observation": "Imported ALT tree visible with golden foliage; no cutoff at the tested viewing angle."
+          },
+          {
+            "view": 14,
+            "observation": "User panorama: broad city facades and sidewalks stone again; red limited to intentional houses."
+          },
+          {
+            "view": 15,
+            "observation": "Close pavement retains pre-v7 stone appearance, without global red bricks."
+          }
+        ],
+        "limitations": [
+          "15 fixed cameras; not every possible camera or world interaction.",
+          "Mini-shrine displaced-root F3 air behavior diagnosed, not changed.",
+          "Exact-house clone census does not cover every visually similar building.",
+          "No FPS conclusions are derived from this cap30 visual run."
+        ]
+      },
+      "scope": {
+        "status": "PASS",
+        "negativePositions": 5
+      },
+      "profileLockSha256": "25dcdf43a69e75371da501c057dcad6ff8889908bdd0c6ac6a9cff9a26955166",
+      "screenshots": [
+        {
+          "name": "visual8-alt-01.png",
+          "sha256": "435e38b7f2a173ab654d126ae3d22ba65da2579639c93f0403105206a5384ed8"
+        },
+        {
+          "name": "visual8-alt-02.png",
+          "sha256": "088eed9cf8c22f56e4f3edb7684df944e6c565b01ea6cd8fa4cfd47f4c4bdba9"
+        },
+        {
+          "name": "visual8-alt-03.png",
+          "sha256": "44eff53ecf3666b9052e4424c517016497e31a27b5c61db8a222b660fbf568fb"
+        },
+        {
+          "name": "visual8-alt-04.png",
+          "sha256": "23084fd22259d2ea9d7b2e6a22cfffba357ef5e4360ef859270b824894504397"
+        },
+        {
+          "name": "visual8-alt-05.png",
+          "sha256": "933f1abb10369814d9c099c3ccde45f3fbd3b86b38afa800db521ec37719d041"
+        },
+        {
+          "name": "visual8-alt-06.png",
+          "sha256": "311529ea22ae2fed06102c0a7d6cfb4419ab1b4bd91c8729978da877b107c68b"
+        },
+        {
+          "name": "visual8-alt-07.png",
+          "sha256": "17bdcece8e700c0c8ad727e927e6cb9e5d46d4842c8ac04692e10d6670f80430"
+        },
+        {
+          "name": "visual8-alt-08.png",
+          "sha256": "e0ebd258cc5221b165c03bda7b3d8ed359f1ef26d36da3254ade38ad3272535f"
+        },
+        {
+          "name": "visual8-alt-09.png",
+          "sha256": "97cd033da2f2ee4e3a00cf3162cece09873d08cf1ca22392a6bf01938bcdab18"
+        },
+        {
+          "name": "visual8-alt-10.png",
+          "sha256": "d49f5b96690cda9fb639ecb33c6091164294ef7588ef9b2ef20585b3f3f01a76"
+        },
+        {
+          "name": "visual8-alt-11.png",
+          "sha256": "5a61be1a94ed757ee7d93e53db103f7e41f3a852403a1cb09d71a99d01ea8ca1"
+        },
+        {
+          "name": "visual8-alt-12.png",
+          "sha256": "963cabd3edbc51d2854d9e9c543a8f2962c48faea18c4492a0582b5c88954625"
+        },
+        {
+          "name": "visual8-alt-13.png",
+          "sha256": "61a7b2bda745abb105b107547d9a246341ed1e560bff3e21ba7db706a7ed2f2d"
+        },
+        {
+          "name": "visual8-alt-14.png",
+          "sha256": "645ddc0ef63ef4b268ac125238260ce13fed5cda38e580effee1b7900fdd2b9d"
+        },
+        {
+          "name": "visual8-alt-15.png",
+          "sha256": "36dffbc86c6cb95c0d3af8761a762ea76abed08ffbd4adc3e43010df834f11b3"
+        }
+      ]
+    },
+    "final-original": {
+      "status": "PASS",
+      "productionSha256": "3b5f9466f8bd414cbb4895c9ac671271c4a99a6b9dccf64c4d4e3f47410e258e",
+      "qaSha256": "d2c190397060c49155737762f3772a74cb6a5886d3df18deecb852dae55831eb",
+      "complete": {
+        "status": "CAPTURED",
+        "count": 15,
+        "alt": false,
+        "readinessGated": true,
+        "pngWritesVerified": true
+      },
+      "launch": {
+        "exitCode": 0,
+        "seconds": 485.32043194770813,
+        "stoppedAfterSave": false,
+        "normalSave": true
+      },
+      "review": {
+        "status": "PASS",
+        "mode": "original",
+        "reviewedUtc": "2026-11-02T12:28:01.575588+00:00",
+        "reviewedViews": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "method": "Direct view_image inspection of every actual final PNG plus actual camera, FULL chunks, terrain and common native idle records.",
+        "observations": [
+          {
+            "view": 1,
+            "observation": "Original shutter and surrounding stone retained."
+          },
+          {
+            "view": 2,
+            "observation": "Original stone facades and wood/glass shutters retained."
+          },
+          {
+            "view": 3,
+            "observation": "Original half-arch silhouette retained with only the requested top/side stone faces removed."
+          },
+          {
+            "view": 4,
+            "observation": "Original corner masonry muted to neighboring wall tone."
+          },
+          {
+            "view": 5,
+            "observation": "Original shrine/decor appearance retained."
+          },
+          {
+            "view": 6,
+            "observation": "Original house and adjacent walls retain original stone; no ALT red aliases leaked."
+          },
+          {
+            "view": 7,
+            "observation": "Straight and corner friezes have coherent muted original stone tone."
+          },
+          {
+            "view": 8,
+            "observation": "Original door frame, wood, glass and ornament retained."
+          },
+          {
+            "view": 9,
+            "observation": "Original angled cornice remains original gray stone."
+          },
+          {
+            "view": 10,
+            "observation": "Original sprite tree retained; ALT twig/foliage edits did not leak into Original."
+          },
+          {
+            "view": 11,
+            "observation": "Original bare 3D tree retained."
+          },
+          {
+            "view": 12,
+            "observation": "Original bare 3D tree retained."
+          },
+          {
+            "view": 13,
+            "observation": "Original bare 3D tree retained."
+          },
+          {
+            "view": 14,
+            "observation": "Original city panorama is fully drawn with original gray architecture and stone pavement."
+          },
+          {
+            "view": 15,
+            "observation": "Original stone pavement retained without ALT or red contamination."
+          }
+        ],
+        "limitations": [
+          "15 fixed cameras, not every world interaction or possible viewing angle.",
+          "F3 displaced-root targeting remains existing behavior.",
+          "No FPS conclusion from cap30 visual capture."
+        ]
+      },
+      "scope": {
+        "status": "PASS",
+        "negativePositions": 5
+      },
+      "profileLockSha256": "25dcdf43a69e75371da501c057dcad6ff8889908bdd0c6ac6a9cff9a26955166",
+      "screenshots": [
+        {
+          "name": "visual8-original-01.png",
+          "sha256": "1bc639141814d78992dbb7c86a71c9be2245d2ba75a5e10df97a99d783f5f118"
+        },
+        {
+          "name": "visual8-original-02.png",
+          "sha256": "92c1a7c2619ce7a8e1e593e86e94cd732ec195e1b4fa861ca170b2991cb9f9d2"
+        },
+        {
+          "name": "visual8-original-03.png",
+          "sha256": "32890ef3bf5149ffc793ae47ad169cf74309639ab6fd6892d9d0339491ee4eb3"
+        },
+        {
+          "name": "visual8-original-04.png",
+          "sha256": "d6f7a8d7fd999d7b9580710a4f448eea3c3f2f2927aa55494dfc7f19b99e9dd9"
+        },
+        {
+          "name": "visual8-original-05.png",
+          "sha256": "6813d881eccd6e4259ee2ebb690f432add0b20527ba86f7b672878e9ebd6f0cb"
+        },
+        {
+          "name": "visual8-original-06.png",
+          "sha256": "3d5b59d652816740238526ce5bcfe48856d1bdaf4dd350c9cf62972c025345d2"
+        },
+        {
+          "name": "visual8-original-07.png",
+          "sha256": "a84fab44d99b9d578235903e7deb642ed691b8a0818c64eef97757ad45ec350b"
+        },
+        {
+          "name": "visual8-original-08.png",
+          "sha256": "4a91a5a46ba41a0eceaf6f145da902f3f114df5159349cf3264e898bd7d9d4a2"
+        },
+        {
+          "name": "visual8-original-09.png",
+          "sha256": "2a2e6f2c131a65eeca4886d1f83be1ee1ed79a56877721973b6aa51bdad6fd44"
+        },
+        {
+          "name": "visual8-original-10.png",
+          "sha256": "19cd1b56a949332e3cdde3204fce21e715ffb80dd3e8080315ed6313e9ef4cd5"
+        },
+        {
+          "name": "visual8-original-11.png",
+          "sha256": "c15081e5c120d4ce31e8a66393fc351de177f66eaed74ef8fcceea14d9fb5a72"
+        },
+        {
+          "name": "visual8-original-12.png",
+          "sha256": "05ebe5aad3b881f2be5f051e89b9db49e12db3e08de2625f787f43c6f171e6ea"
+        },
+        {
+          "name": "visual8-original-13.png",
+          "sha256": "5591b949a4bf0f1292cbc45026560440d129e251c354cf8a45a4307d1b26084d"
+        },
+        {
+          "name": "visual8-original-14.png",
+          "sha256": "89344274f643ad8a831de581d90a3a15653cda5ab644104ada898c3b6958d3a6"
+        },
+        {
+          "name": "visual8-original-15.png",
+          "sha256": "7a0bd12cdfe95f967f3cb889315278b8eb583d06d1a2670e07aa1a4cb5bdacfd"
+        }
+      ]
+    }
+  },
+  "performance": {
+    "status": "PASS",
+    "comparisonStatus": "MEASURED_MATCHED_COMPARISON",
+    "comparisonSha256": "0f5c4f7fa039ecf637aba03188c1d2cc0b75792698f91ff90573bee1b085a95b",
+    "cohortLockSha256": "ddabbe55cfdde49bf310a1ba06e5f4f64e90c006a782fa04c56cf57c89921ecc",
+    "runs": [
+      {
+        "name": "baseline-a0",
+        "variant": "baseline",
+        "productionSha256": "1f2e71c6203a9b3794d9c3cf6cf6cbe6e0a93a750584dc9df967bd2cd166e621",
+        "qaSha256": "bdfd579c69d7325e996d0cf50dd87da8c39ba127ee1c1e55b491bfc8dadee509",
+        "phases": 12,
+        "independentPopulatedSceneReview": {
+          "status": "PASS",
+          "scope": "observed12PNGpopulatedcamerascenesonly",
+          "reviewSha256": "a7112b5298544e8aa408631d2077cbd178822ff69d78b3e22541d610c11be0eb",
+          "phases": 12
+        }
+      },
+      {
+        "name": "original",
+        "variant": "original",
+        "productionSha256": "3b5f9466f8bd414cbb4895c9ac671271c4a99a6b9dccf64c4d4e3f47410e258e",
+        "qaSha256": "bdfd579c69d7325e996d0cf50dd87da8c39ba127ee1c1e55b491bfc8dadee509",
+        "phases": 12,
+        "independentPopulatedSceneReview": {
+          "status": "PASS",
+          "scope": "observed12PNGpopulatedcamerascenesonly",
+          "reviewSha256": "7e81a14bb7ea745b2be67e7976578377217e81abfd9e4d1a89093d570f937d6f",
+          "phases": 12
+        }
+      },
+      {
+        "name": "alt",
+        "variant": "alt",
+        "productionSha256": "3b5f9466f8bd414cbb4895c9ac671271c4a99a6b9dccf64c4d4e3f47410e258e",
+        "qaSha256": "bdfd579c69d7325e996d0cf50dd87da8c39ba127ee1c1e55b491bfc8dadee509",
+        "phases": 12,
+        "independentPopulatedSceneReview": {
+          "status": "PASS",
+          "scope": "observed12PNGpopulatedcamerascenesonly",
+          "reviewSha256": "317023dc4fc5443724bb162786521a0f9ec4f663c939f3a5ae6815473b083bbc",
+          "phases": 12
+        }
+      },
+      {
+        "name": "baseline-a1",
+        "variant": "baseline",
+        "productionSha256": "1f2e71c6203a9b3794d9c3cf6cf6cbe6e0a93a750584dc9df967bd2cd166e621",
+        "qaSha256": "bdfd579c69d7325e996d0cf50dd87da8c39ba127ee1c1e55b491bfc8dadee509",
+        "phases": 12,
+        "independentPopulatedSceneReview": {
+          "status": "PASS",
+          "scope": "observed12PNGpopulatedcamerascenesonly",
+          "reviewSha256": "93ddc3040e5d8e7ea69fc4bfdcbb670ff5d5ed9a77fc99653414641e38a8d7ea",
+          "phases": 12
+        }
+      }
+    ],
+    "limitations": [
+      "One bounded local route with two visits per scene per run; it does not prove every location or a global absence of regressions.",
+      "CPU-side presentation intervals include frame pacing; they are not GPU execution or display scanout timings.",
+      "Time to readiness includes a fixed settle interval and integrated server/client work, not pure disk I/O.",
+      "Process memory peaks are sampled. Java heap usage is reported separately from Working Set and Private Bytes.",
+      "Unchanged full modpack/config/world identity must be locked and hashed by the runner; loaded IDs/versions alone do not prove byte identity.",
+      "OS filesystem cache is not reset; repeated baseline reveals observed ordering drift without proving its cause."
+    ]
+  },
+  "runtimeErrorAnalysis": {
+    "status": "ANALYSIS_COMPLETE_ROOT_REVIEWED",
+    "noErrorsClaim": false,
+    "analysisSha256": "a308b1f5bdc383b5d575249d0c41bde2ccfdf2779feff54cd21821df3a8052cc",
+    "summarySha256": "7e149eea1f341b8a3a15b375d981b69d5e8caabd005c3ab63d66b66650de5ff6",
+    "reviewSha256": "c5ac72832b24fd233c736cb878a2c6a38d5bf1a29a84cd171df54a83dfabff01",
+    "normalizationProofSha256": "dfa13b174f0f2d89556025447731cb11808bcf421a4a304a7e2a8bf955d969e2",
+    "compiledLifecycleEvidenceSha256": {
+      "lifecycle-provenance.json": "efefbaa3868861b83b8c1d3d82e81480338358344786e044448791a67af254aa",
+      "lifecycle-javap-final-v8.txt": "fdc2147ffa30bc71b0cc96c46feeb74450460a98edc0bdd9f108cf683fd2b65a",
+      "lifecycle-client-executor-javap.txt": "a3f506cc9ed4a96d203045e5b7840402e53a8dec5992ae7e7a0867471e3de76b",
+      "inspect_lifecycle.py": "f47eb424e36e3ea463112b9607e8e58eb77025f63a2aaa229c8c193bd25f43b1"
+    },
+    "explicitDecisions": 4
+  },
+  "perRequestDocumentationSha256": "7432dd020fc535ec18d182611d8d3b24735751aa762c7a4f5db88c4c2231e605",
+  "houseTemplateCensusSha256": "3ef4db1c6e5d6934d947d588172ab67c456a8d2e6f62289bd21c911710d21213",
+  "limits": [
+    "Acceptance is limited to these actual camera views and the bounded matched local performance cohort; no claim covers every future map location or machine."
+  ]
+}

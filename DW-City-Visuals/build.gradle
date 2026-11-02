@@ -2,7 +2,7 @@ plugins { id 'fabric-loom' version '1.6.12' }
 
 def baseline = providers.gradleProperty('baselineJar').orElse(file('baseline/mod.jar').path)
 def pythonExecutable = providers.gradleProperty('pythonExecutable').orElse('python')
-version = '20261102-altvisual.7'
+version = '20261102-altvisual.8'
 group = 'dev.dreamwalker'
 base { archivesName = 'dw-altvisual-overlay' }
 layout.buildDirectory = new File(projectDir, 'build')
@@ -109,11 +109,39 @@ tasks.register('prepareRevisionAssets', Exec) {
 // Isolated capture driver. Never included in the production mod.
 sourceSets {
     visualqa {
+        java.srcDir 'src/qacommon/java'
         compileClasspath += sourceSets.main.output + sourceSets.client.output + sourceSets.client.compileClasspath
         runtimeClasspath += sourceSets.main.output + sourceSets.client.output + sourceSets.client.runtimeClasspath
     }
 }
 configurations { visualqaImplementation.extendsFrom implementation }
+
+sourceSets {
+    perfqa {
+        java.srcDir 'src/qacommon/java'
+        compileClasspath += sourceSets.client.compileClasspath
+        runtimeClasspath += sourceSets.client.runtimeClasspath
+    }
+}
+configurations { perfqaImplementation.extendsFrom implementation }
+loom { mixin {
+    add sourceSets.main, 'dw-altvisual-overlay-refmap.json'
+    add sourceSets.client, 'client-dw-altvisual-overlay-refmap.json'
+    add sourceSets.perfqa, 'dw-perfqa-refmap.json'
+} }
+tasks.register('perfQaJar', Jar) {
+    archiveBaseName = 'dw-visual-perfqa'
+    archiveClassifier = 'dev'
+    from sourceSets.perfqa.output
+}
+tasks.register('remapPerfQaJar', net.fabricmc.loom.task.RemapJarTask) {
+    dependsOn perfQaJar
+    inputFile.set(tasks.named('perfQaJar', Jar).flatMap { it.archiveFile })
+    classpath.from(sourceSets.perfqa.compileClasspath)
+    archiveBaseName = 'dw-visual-perfqa'
+    archiveClassifier = ''
+    addNestedDependencies = false
+}
 tasks.register('visualQaJar', Jar) {
     archiveBaseName = 'dw-visual-revision-qa'
     archiveClassifier = 'dev'

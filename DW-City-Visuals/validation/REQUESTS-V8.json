@@ -1,0 +1,1038 @@
+{
+  "schemaVersion": 1,
+  "revision": "20261102-altvisual.8",
+  "date": "2026-11-02",
+  "jarName": "DreamWalker-v22-Visual-Fixes8-20261102.jar",
+  "overallStatus": "STATIC_PASS_FINAL_CAMERA_REVIEW_PASS_MATCHED_PERFORMANCE_AND_LOG_REVIEW_COMPLETE",
+  "mapChanged": false,
+  "verification": {
+    "staticAudits": [
+      {
+        "report": "validation/palette-v8-final.json",
+        "status": "PASS",
+        "checkCount": 134,
+        "sha256": "89b3e7b9187528ebe0f462b9092ee47c81cef9dc0f0257ad988c3a1d00aa132a"
+      },
+      {
+        "report": "validation/trees-v8-final.json",
+        "status": "PASS",
+        "checkCount": 25,
+        "sha256": "5c1e2b16591a36958e2f97181980ddd93d0f458e94e580516eebacc88de96b14"
+      },
+      {
+        "report": "validation/facade-v8-final.json",
+        "status": "PASS",
+        "checkCount": 62,
+        "sha256": "e5ce7815b999b47df91a0020abb607641ff3ec81ea182f55e9201c6791ebd304"
+      },
+      {
+        "report": "validation/props-v8-final.json",
+        "status": "PASS",
+        "checkCount": 51,
+        "sha256": "1d4eab7f467ce3a66b66ef521ede73debbf07877a3c80eb0b7909e7479184cce"
+      },
+      {
+        "report": "validation/city-scope-v8-final.json",
+        "status": "PASS",
+        "checkCount": 59,
+        "sha256": "e4c3e13bb04acd01387f5cd47e5e050790da4d2f23f7f0bd6f8e78e1526dbfea"
+      }
+    ],
+    "runtime": {
+      "status": "PASS_OBSERVED_FINAL_CAMERA_SCOPE",
+      "revision": "altvisual.8",
+      "productionSha256": "3b5f9466f8bd414cbb4895c9ac671271c4a99a6b9dccf64c4d4e3f47410e258e",
+      "qaSha256": "d2c190397060c49155737762f3772a74cb6a5886d3df18deecb852dae55831eb",
+      "profiles": [
+        {
+          "mode": "alt",
+          "phase": "final-alt",
+          "count": 15,
+          "reviewStatus": "PASS",
+          "normalSave": true,
+          "evidenceArchiveFolder": "runtime/final-alt",
+          "completeSha256": "15831520885d66c57b72c155160d7ea07082280a9636e0c0daeeff83d9f3f57a",
+          "capturesSha256": "777b57ee153895ecc31f2a004e9d1e8af56d5b56a5509c458b7668ea0bd05f5a",
+          "reviewSha256": "f310a63a872b44e015ce6a44d31aa0a04d2ae8361862005f864b1ee427b7bd0e",
+          "scopeSha256": "64de6b48bd54e04a3b8a83e3da0df9f6d6e7a49dfd402194d59032260d300be6"
+        },
+        {
+          "mode": "original",
+          "phase": "final-original",
+          "count": 15,
+          "reviewStatus": "PASS",
+          "normalSave": true,
+          "evidenceArchiveFolder": "runtime/final-original",
+          "completeSha256": "1cf81f687671530ceb1e1154de26ba052eb3337bcf327e28576690028af817c3",
+          "capturesSha256": "19e19079a1b40fd9343fc17f494ec62abc8c6b2787411943fd1b7cee21fbdc69",
+          "reviewSha256": "6a429692939d09c6131e9b0d87c569ab96d67b7fb6f42d9006a6c3846a03f8fe",
+          "scopeSha256": "64de6b48bd54e04a3b8a83e3da0df9f6d6e7a49dfd402194d59032260d300be6"
+        }
+      ],
+      "readiness": "Actual target pose, every view chunk FULL, terrain complete and rendered at target; all five native queues continuously idle for at least two seconds; callback-verified fresh nonempty PNG.",
+      "modeCoverage": "Separate actual ALT and Original launches, matched requested/saved world modes and normal saves; an in-session UI toggle/reload is not claimed.",
+      "coverageLimit": "Only the listed fifteen cameras per mode were visually inspected. Representation-level static tests do not constitute a manual visual census of every city instance.",
+      "historicalEvidence": "v7 and pre-cornice-correction weak intermediate runs are historical observations, excluded from final acceptance."
+    },
+    "performance": {
+      "status": "MEASURED_MATCHED_COMPARISON",
+      "baselineCheckpoint": "test-launch-microstutter-v22-20261029",
+      "baselineSha256": "1f2e71c6203a9b3794d9c3cf6cf6cbe6e0a93a750584dc9df967bd2cd166e621",
+      "baselineMeaning": "Закреплённая версия до полного ALT, указанная для сравнения производительности.",
+      "required": [
+        "Matched stationary frame intervals and FPS",
+        "PID-bound native process RAM samples",
+        "Scene transition readiness and loading-frame intervals across twelve visits per run"
+      ],
+      "result": {
+        "evidenceArchivePath": "performance/comparison.json",
+        "sha256": "0f5c4f7fa039ecf637aba03188c1d2cc0b75792698f91ff90573bee1b085a95b",
+        "cohortLockSha256": "ddabbe55cfdde49bf310a1ba06e5f4f64e90c006a782fa04c56cf57c89921ecc",
+        "runs": [
+          {
+            "name": "baseline-a0",
+            "variant": "baseline",
+            "productionSha256": "1f2e71c6203a9b3794d9c3cf6cf6cbe6e0a93a750584dc9df967bd2cd166e621",
+            "qaSha256": "bdfd579c69d7325e996d0cf50dd87da8c39ba127ee1c1e55b491bfc8dadee509",
+            "phases": 12,
+            "independentPopulatedSceneReview": {
+              "status": "PASS",
+              "scope": "observed12PNGpopulatedcamerascenesonly",
+              "reviewSha256": "a7112b5298544e8aa408631d2077cbd178822ff69d78b3e22541d610c11be0eb",
+              "phases": 12
+            }
+          },
+          {
+            "name": "original",
+            "variant": "original",
+            "productionSha256": "3b5f9466f8bd414cbb4895c9ac671271c4a99a6b9dccf64c4d4e3f47410e258e",
+            "qaSha256": "bdfd579c69d7325e996d0cf50dd87da8c39ba127ee1c1e55b491bfc8dadee509",
+            "phases": 12,
+            "independentPopulatedSceneReview": {
+              "status": "PASS",
+              "scope": "observed12PNGpopulatedcamerascenesonly",
+              "reviewSha256": "7e81a14bb7ea745b2be67e7976578377217e81abfd9e4d1a89093d570f937d6f",
+              "phases": 12
+            }
+          },
+          {
+            "name": "alt",
+            "variant": "alt",
+            "productionSha256": "3b5f9466f8bd414cbb4895c9ac671271c4a99a6b9dccf64c4d4e3f47410e258e",
+            "qaSha256": "bdfd579c69d7325e996d0cf50dd87da8c39ba127ee1c1e55b491bfc8dadee509",
+            "phases": 12,
+            "independentPopulatedSceneReview": {
+              "status": "PASS",
+              "scope": "observed12PNGpopulatedcamerascenesonly",
+              "reviewSha256": "317023dc4fc5443724bb162786521a0f9ec4f663c939f3a5ae6815473b083bbc",
+              "phases": 12
+            }
+          },
+          {
+            "name": "baseline-a1",
+            "variant": "baseline",
+            "productionSha256": "1f2e71c6203a9b3794d9c3cf6cf6cbe6e0a93a750584dc9df967bd2cd166e621",
+            "qaSha256": "bdfd579c69d7325e996d0cf50dd87da8c39ba127ee1c1e55b491bfc8dadee509",
+            "phases": 12,
+            "independentPopulatedSceneReview": {
+              "status": "PASS",
+              "scope": "observed12PNGpopulatedcamerascenesonly",
+              "reviewSha256": "93ddc3040e5d8e7ea69fc4bfdcbb670ff5d5ed9a77fc99653414641e38a8d7ea",
+              "phases": 12
+            }
+          }
+        ],
+        "comparisonPairs": [
+          {
+            "baseline": "baseline-a0",
+            "candidate": "original"
+          },
+          {
+            "baseline": "baseline-a0",
+            "candidate": "alt"
+          },
+          {
+            "baseline": "baseline-a1",
+            "candidate": "original"
+          },
+          {
+            "baseline": "baseline-a1",
+            "candidate": "alt"
+          }
+        ],
+        "baselineDriftPairs": [
+          {
+            "baseline": "baseline-a0",
+            "candidate": "baseline-a1"
+          }
+        ]
+      },
+      "coverageLimit": "One bounded matched route, two visits to each of six scenes in four sequential runs. Full JVM startup/world-entry latency and universal performance improvement are not measured or claimed."
+    },
+    "errors": {
+      "status": "ANALYSIS_COMPLETE_ROOT_REVIEWED",
+      "noErrorsClaim": false,
+      "analysisSha256": "a308b1f5bdc383b5d575249d0c41bde2ccfdf2779feff54cd21821df3a8052cc",
+      "summarySha256": "7e149eea1f341b8a3a15b375d981b69d5e8caabd005c3ab63d66b66650de5ff6",
+      "reviewSha256": "c5ac72832b24fd233c736cb878a2c6a38d5bf1a29a84cd171df54a83dfabff01",
+      "normalizationProofSha256": "dfa13b174f0f2d89556025447731cb11808bcf421a4a304a7e2a8bf955d969e2",
+      "compiledLifecycleEvidenceSha256": {
+        "lifecycle-provenance.json": "efefbaa3868861b83b8c1d3d82e81480338358344786e044448791a67af254aa",
+        "lifecycle-javap-final-v8.txt": "fdc2147ffa30bc71b0cc96c46feeb74450460a98edc0bdd9f108cf683fd2b65a",
+        "lifecycle-client-executor-javap.txt": "a3f506cc9ed4a96d203045e5b7840402e53a8dec5992ae7e7a0867471e3de76b",
+        "inspect_lifecycle.py": "f47eb424e36e3ea463112b9607e8e58eb77025f63a2aaa229c8c193bd25f43b1"
+      },
+      "explicitDecisions": 4,
+      "analysisEvidenceArchivePath": "error-summary.json",
+      "summaryEvidenceArchivePath": "error-summary.txt",
+      "reviewEvidenceArchivePath": "error-review.json"
+    }
+  },
+  "requests": [
+    {
+      "id": 1,
+      "request": "Импортировать пользовательский проект трёх 3D-деревьев и показывать его в ALT.",
+      "profiles": [
+        "ALT"
+      ],
+      "implementationStatus": "IMPLEMENTED",
+      "implementation": "Геометрия tree_1/2/3 соответствует inputs/trees/DreamWalker-trees.dwtree.json; встроенная текстура импортирована точными байтами. Для расширенной геометрии задан конечный ALT render-envelope.",
+      "preserved": "Original-геометрии/текстура и физика деревьев.",
+      "staticStatus": "PASS",
+      "evidence": [
+        "validation/trees-v8-final.json"
+      ],
+      "runtimeStatus": "PASS_OBSERVED_CAMERA_SCOPE",
+      "runtimeScope": "Three edited 3D trees in ALT; the same Original views provide preservation observations.",
+      "runtimeEvidence": [
+        {
+          "mode": "alt",
+          "views": [
+            11,
+            12,
+            13
+          ],
+          "reviewEvidenceArchivePath": "runtime/final-alt/visual-review.json",
+          "screenshots": [
+            {
+              "view": 11,
+              "evidenceArchivePath": "runtime/final-alt/screenshots/visual8-alt-11.png",
+              "sha256": "5a61be1a94ed757ee7d93e53db103f7e41f3a852403a1cb09d71a99d01ea8ca1"
+            },
+            {
+              "view": 12,
+              "evidenceArchivePath": "runtime/final-alt/screenshots/visual8-alt-12.png",
+              "sha256": "963cabd3edbc51d2854d9e9c543a8f2962c48faea18c4492a0582b5c88954625"
+            },
+            {
+              "view": 13,
+              "evidenceArchivePath": "runtime/final-alt/screenshots/visual8-alt-13.png",
+              "sha256": "61a7b2bda745abb105b107547d9a246341ed1e560bff3e21ba7db706a7ed2f2d"
+            }
+          ]
+        },
+        {
+          "mode": "original",
+          "views": [
+            11,
+            12,
+            13
+          ],
+          "reviewEvidenceArchivePath": "runtime/final-original/visual-review.json",
+          "screenshots": [
+            {
+              "view": 11,
+              "evidenceArchivePath": "runtime/final-original/screenshots/visual8-original-11.png",
+              "sha256": "c15081e5c120d4ce31e8a66393fc351de177f66eaed74ef8fcceea14d9fb5a72"
+            },
+            {
+              "view": 12,
+              "evidenceArchivePath": "runtime/final-original/screenshots/visual8-original-12.png",
+              "sha256": "05ebe5aad3b881f2be5f051e89b9db49e12db3e08de2625f787f43c6f171e6ea"
+            },
+            {
+              "view": 13,
+              "evidenceArchivePath": "runtime/final-original/screenshots/visual8-original-13.png",
+              "sha256": "5591b949a4bf0f1292cbc45026560440d129e251c354cf8a45a4307d1b26084d"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "request": "Согласовать стены вокруг окон со ставнями с окружающей стеной во всех представлениях.",
+      "profiles": [
+        "ALT"
+      ],
+      "implementationStatus": "IMPLEMENTED_REPRESENTATION_LEVEL",
+      "implementation": "Исправлена верхняя каменная часть общего roof_1 и согласованы window_surround, исходные закрытые/открытые ставни, backdrop и отдельные стеновые модели. Сохранены роли исходных 11 акцентных областей; красные подложки разрешены только в проверенном доме.",
+      "preserved": "Дерево, стекло, нижняя часть атласа, alpha и геометрия.",
+      "staticStatus": "PASS",
+      "evidence": [
+        "validation/facade-v8-final.json",
+        "validation/palette-v8-final.json",
+        "validation/city-scope-v8-final.json"
+      ],
+      "runtimeStatus": "PASS_OBSERVED_CAMERA_SCOPE",
+      "coverageLimit": "Статически проверены реальные семейства моделей и маршруты source/static/native/owner; исчерпывающий игровой осмотр каждой точки города не заявлен.",
+      "runtimeScope": "Two supplied shutter streets; broader source/static/native/owner coverage is static, not an all-city manual visual survey.",
+      "runtimeEvidence": [
+        {
+          "mode": "alt",
+          "views": [
+            1,
+            2
+          ],
+          "reviewEvidenceArchivePath": "runtime/final-alt/visual-review.json",
+          "screenshots": [
+            {
+              "view": 1,
+              "evidenceArchivePath": "runtime/final-alt/screenshots/visual8-alt-01.png",
+              "sha256": "435e38b7f2a173ab654d126ae3d22ba65da2579639c93f0403105206a5384ed8"
+            },
+            {
+              "view": 2,
+              "evidenceArchivePath": "runtime/final-alt/screenshots/visual8-alt-02.png",
+              "sha256": "088eed9cf8c22f56e4f3edb7684df944e6c565b01ea6cd8fa4cfd47f4c4bdba9"
+            }
+          ]
+        },
+        {
+          "mode": "original",
+          "views": [
+            1,
+            2
+          ],
+          "reviewEvidenceArchivePath": "runtime/final-original/visual-review.json",
+          "screenshots": [
+            {
+              "view": 1,
+              "evidenceArchivePath": "runtime/final-original/screenshots/visual8-original-01.png",
+              "sha256": "1bc639141814d78992dbb7c86a71c9be2245d2ba75a5e10df97a99d783f5f118"
+            },
+            {
+              "view": 2,
+              "evidenceArchivePath": "runtime/final-original/screenshots/visual8-original-02.png",
+              "sha256": "92c1a7c2619ce7a8e1e593e86e94cd732ec195e1b4fa861ca170b2991cb9f9d2"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "request": "Полуарка: согласно последнему уточнению откатить полную арку и сначала убрать только лишние каменные поверхности сверху и сбоку.",
+      "profiles": [
+        "ALT",
+        "Original"
+      ],
+      "implementationStatus": "IMPLEMENTED_LATEST_USER_CORRECTION",
+      "source": "bloodborne_dw:source_addon_gray_glazed_terracotta_0",
+      "staticTarget": "bloodborne_dw:static_architecture_230[part=36]",
+      "implementation": "Модель точно соответствует baseline, кроме отсутствующих element0.faces north/south/up. Исходные east/west UV полуарки и нижняя грань восстановлены без подмены другим рисунком.",
+      "preserved": "Все 18 element bounds/rotations, все остальные грани/материалы, коллизии и данные мира.",
+      "staticStatus": "PASS",
+      "evidence": [
+        "validation/facade-v8-final.json",
+        "validation/city-scope-v8-final.json"
+      ],
+      "runtimeStatus": "PASS_OBSERVED_CAMERA_SCOPE",
+      "runtimeScope": "Supplied half-arch in both modes after the final north/south/up render-face removal.",
+      "runtimeEvidence": [
+        {
+          "mode": "alt",
+          "views": [
+            3
+          ],
+          "reviewEvidenceArchivePath": "runtime/final-alt/visual-review.json",
+          "screenshots": [
+            {
+              "view": 3,
+              "evidenceArchivePath": "runtime/final-alt/screenshots/visual8-alt-03.png",
+              "sha256": "44eff53ecf3666b9052e4424c517016497e31a27b5c61db8a222b660fbf568fb"
+            }
+          ]
+        },
+        {
+          "mode": "original",
+          "views": [
+            3
+          ],
+          "reviewEvidenceArchivePath": "runtime/final-original/visual-review.json",
+          "screenshots": [
+            {
+              "view": 3,
+              "evidenceArchivePath": "runtime/final-original/screenshots/visual8-original-03.png",
+              "sha256": "32890ef3bf5149ffc793ae47ad169cf74309639ab6fd6892d9d0339491ee4eb3"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "request": "Уменьшить чрезмерную яркость угловых блоков в обоих видах.",
+      "profiles": [
+        "ALT",
+        "Original"
+      ],
+      "implementationStatus": "IMPLEMENTED",
+      "staticTarget": "bloodborne_dw:static_architecture_13[part=103]",
+      "implementation": "UV-островок spirelamp_0018 x96..126/y64..96 согласован с обычной кладкой соответствующего профиля, с компенсацией яркости 0.65. В ALT используется восстановленная бежевая кладка, а не глобальный красный материал v7.",
+      "preserved": "Все пиксели вне островка, alpha, геометрия и исходная модель освещения.",
+      "staticStatus": "PASS",
+      "evidence": [
+        "validation/facade-v8-final.json"
+      ],
+      "runtimeStatus": "PASS_OBSERVED_CAMERA_SCOPE",
+      "runtimeScope": "Supplied bright-corner location in both modes.",
+      "runtimeEvidence": [
+        {
+          "mode": "alt",
+          "views": [
+            4
+          ],
+          "reviewEvidenceArchivePath": "runtime/final-alt/visual-review.json",
+          "screenshots": [
+            {
+              "view": 4,
+              "evidenceArchivePath": "runtime/final-alt/screenshots/visual8-alt-04.png",
+              "sha256": "23084fd22259d2ea9d7b2e6a22cfffba357ef5e4360ef859270b824894504397"
+            }
+          ]
+        },
+        {
+          "mode": "original",
+          "views": [
+            4
+          ],
+          "reviewEvidenceArchivePath": "runtime/final-original/visual-review.json",
+          "screenshots": [
+            {
+              "view": 4,
+              "evidenceArchivePath": "runtime/final-original/screenshots/visual8-original-04.png",
+              "sha256": "d6f7a8d7fd999d7b9580710a4f448eea3c3f2f2927aa55494dfc7f19b99e9dd9"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "request": "Проверить мини-шпиль с F3 minecraft:air и добавить ему ALT-внешний вид.",
+      "profiles": [
+        "ALT"
+      ],
+      "implementationStatus": "IMPLEMENTED_WITH_EXISTING_HIT_CELL_EXPLANATION",
+      "source": "bloodborne_dw:source_addon_coral_dead_horn_coral_wall_fan",
+      "implementation": "Добавлена ALT-палитра реального sprite spirelamp_0092. Видимая модель и selection исходного объекта смещены относительно resident-root: F3 показывает соседнюю клетку воздуха, а не отсутствие модели.",
+      "preserved": "Существующие прицеливание/selection, коллизии, owner, геометрия и карта; изменение имени клетки F3 не заявлено.",
+      "staticStatus": "PASS",
+      "evidence": [
+        "tools/prop-repair-contract.json",
+        "validation/props-v8-final.json"
+      ],
+      "runtimeStatus": "PASS_ALT_MATERIAL_WITH_EXISTING_F3_DIAGNOSIS",
+      "runtimeScope": "Miniature-spire ALT material and Original reference; existing shifted resident/hit-cell behaviour is diagnosed, not changed.",
+      "runtimeEvidence": [
+        {
+          "mode": "alt",
+          "views": [
+            5
+          ],
+          "reviewEvidenceArchivePath": "runtime/final-alt/visual-review.json",
+          "screenshots": [
+            {
+              "view": 5,
+              "evidenceArchivePath": "runtime/final-alt/screenshots/visual8-alt-05.png",
+              "sha256": "933f1abb10369814d9c099c3ccde45f3fbd3b86b38afa800db521ec37719d041"
+            }
+          ]
+        },
+        {
+          "mode": "original",
+          "views": [
+            5
+          ],
+          "reviewEvidenceArchivePath": "runtime/final-original/visual-review.json",
+          "screenshots": [
+            {
+              "view": 5,
+              "evidenceArchivePath": "runtime/final-original/screenshots/visual8-original-05.png",
+              "sha256": "6813d881eccd6e4259ee2ebb690f432add0b20527ba86f7b672878e9ebd6f0cb"
+            }
+          ]
+        }
+      ],
+      "f3AirBehaviourChanged": false
+    },
+    {
+      "id": 6,
+      "request": "Согласовать стены краснокирпичного дома со скриншота 6 и подтверждённых копий.",
+      "profiles": [
+        "ALT"
+      ],
+      "implementationStatus": "IMPLEMENTED_FOR_CONFIRMED_HOUSE_ONLY",
+      "implementation": "Отдельные red_bricks* и маска кирпичной вставки0010 выбираются ролью red_house=4 только для стен проверенного дома и его связанной пристройки. Горизонтальные quads исключены в vanilla и Fabric.",
+      "confirmedRegions": [
+        {
+          "min": [
+            183,
+            58,
+            -953
+          ],
+          "max": [
+            193,
+            70,
+            -941
+          ],
+          "part": "main house including entrance wall projection"
+        },
+        {
+          "min": [
+            194,
+            58,
+            -952
+          ],
+          "max": [
+            199,
+            70,
+            -944
+          ],
+          "part": "connected east annex"
+        }
+      ],
+      "provenance": "Фактическая карта client-3/restoration-city: углы основного объёма source_chiseled_quartz_block по x183/193,z-953/-943; красная западная стена x183; связанная внешняя стена пристройки x199.",
+      "preserved": "Общие четыре bricks* PNG точными байтами v6, тротуары/полы y56/57, горизонтальные грани, обрамления, исходные 11 rose/sage/sand-зон.",
+      "staticStatus": "PASS_FOR_DOCUMENTED_SCOPE",
+      "evidence": [
+        "validation/FACADE-V8-SCOPE-RU.txt",
+        "validation/facade-v8-final.json",
+        "validation/city-scope-v8-final.json",
+        "validation/HOUSE-CLONE-CENSUS-V8.json"
+      ],
+      "runtimeStatus": "PASS_OBSERVED_CAMERA_SCOPE",
+      "cloneVerificationStatus": "COMPLETE_EXACT_STENCIL_CENSUS_NO_ADDITIONAL_MATCHES",
+      "coverageLimit": "Полный read-only скан 50/50 регионов по точному 14-точечному source/static-шаблону с четырьмя поворотами распознал контрольный дом и не выявил дополнительных совпадений. Это не проверка всех визуально похожих или иначе собранных домов; глобальное обобщение по общим кирпичным sprites не сделано.",
+      "cloneCensus": {
+        "report": "validation/HOUSE-CLONE-CENSUS-V8.json",
+        "status": "PASS_COMPLETE_EXACT_STENCIL_CENSUS",
+        "regionsScanned": 50,
+        "regionsTotal": 50,
+        "chunksRead": 39485,
+        "seedCells": 35551,
+        "candidateOrientationsTested": 17872,
+        "elapsedSeconds": 95.687,
+        "readOrDecodeErrors": 0,
+        "positiveControl": {
+          "origin": [
+            183,
+            58,
+            -943
+          ],
+          "quarterTurns": 0,
+          "matchedStencilPoints": 14,
+          "excludedFromCloneCount": true
+        },
+        "additionalExactCloneCount": 0,
+        "criterion": "Exact fourteen-point source/static registry-and-intrinsic-properties stencil under four rotations; complete overworld region coverage"
+      },
+      "runtimeScope": "Supplied house and connected annex plus wide-city/pavement negative views; exact-template census only, not all visually similar houses.",
+      "runtimeEvidence": [
+        {
+          "mode": "alt",
+          "views": [
+            6,
+            14,
+            15
+          ],
+          "reviewEvidenceArchivePath": "runtime/final-alt/visual-review.json",
+          "screenshots": [
+            {
+              "view": 6,
+              "evidenceArchivePath": "runtime/final-alt/screenshots/visual8-alt-06.png",
+              "sha256": "311529ea22ae2fed06102c0a7d6cfb4419ab1b4bd91c8729978da877b107c68b"
+            },
+            {
+              "view": 14,
+              "evidenceArchivePath": "runtime/final-alt/screenshots/visual8-alt-14.png",
+              "sha256": "645ddc0ef63ef4b268ac125238260ce13fed5cda38e580effee1b7900fdd2b9d"
+            },
+            {
+              "view": 15,
+              "evidenceArchivePath": "runtime/final-alt/screenshots/visual8-alt-15.png",
+              "sha256": "36dffbc86c6cb95c0d3af8761a762ea76abed08ffbd4adc3e43010df834f11b3"
+            }
+          ]
+        },
+        {
+          "mode": "original",
+          "views": [
+            6,
+            14,
+            15
+          ],
+          "reviewEvidenceArchivePath": "runtime/final-original/visual-review.json",
+          "screenshots": [
+            {
+              "view": 6,
+              "evidenceArchivePath": "runtime/final-original/screenshots/visual8-original-06.png",
+              "sha256": "3d5b59d652816740238526ce5bcfe48856d1bdaf4dd350c9cf62972c025345d2"
+            },
+            {
+              "view": 14,
+              "evidenceArchivePath": "runtime/final-original/screenshots/visual8-original-14.png",
+              "sha256": "89344274f643ad8a831de581d90a3a15653cda5ab644104ada898c3b6958d3a6"
+            },
+            {
+              "view": 15,
+              "evidenceArchivePath": "runtime/final-original/screenshots/visual8-original-15.png",
+              "sha256": "7a0bd12cdfe95f967f3cb889315278b8eb583d06d1a2670e07aa1a4cb5bdacfd"
+            }
+          ]
+        }
+      ],
+      "allVisuallySimilarHousesCovered": false
+    },
+    {
+      "id": 7,
+      "request": "Приглушить слишком яркий декоративный фриз и проверить Original.",
+      "profiles": [
+        "ALT",
+        "Original"
+      ],
+      "implementationStatus": "IMPLEMENTED",
+      "implementation": "Отдельными UV-масками согласованы прямой source_quartz_stairs_top/spirelamp_0012 и угловой source_quartz_stairs_outer_1/spirelamp_0015 фриз в обоих профилях.",
+      "preserved": "Прочие островки общих атласов, исходная геометрия и физика.",
+      "staticStatus": "PASS",
+      "evidence": [
+        "tools/prop-repair-contract.json",
+        "validation/props-v8-final.json"
+      ],
+      "runtimeStatus": "PASS_OBSERVED_CAMERA_SCOPE",
+      "runtimeScope": "Supplied straight/corner frieze scene in both modes.",
+      "runtimeEvidence": [
+        {
+          "mode": "alt",
+          "views": [
+            7
+          ],
+          "reviewEvidenceArchivePath": "runtime/final-alt/visual-review.json",
+          "screenshots": [
+            {
+              "view": 7,
+              "evidenceArchivePath": "runtime/final-alt/screenshots/visual8-alt-07.png",
+              "sha256": "17bdcece8e700c0c8ad727e927e6cb9e5d46d4842c8ac04692e10d6670f80430"
+            }
+          ]
+        },
+        {
+          "mode": "original",
+          "views": [
+            7
+          ],
+          "reviewEvidenceArchivePath": "runtime/final-original/visual-review.json",
+          "screenshots": [
+            {
+              "view": 7,
+              "evidenceArchivePath": "runtime/final-original/screenshots/visual8-original-07.png",
+              "sha256": "a84fab44d99b9d578235903e7deb642ed691b8a0818c64eef97757ad45ec350b"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "request": "Добавить ALT-палитру двери со скриншота 8.",
+      "profiles": [
+        "ALT"
+      ],
+      "implementationStatus": "IMPLEMENTED",
+      "entity": "bloodborne_rp:door_1",
+      "implementation": "Каменные участки реальной door_1 согласованы с родственными дверными материалами.",
+      "preserved": "Дерево, стекло, светлый орнамент, кости, анимация, геометрия и коллизии.",
+      "staticStatus": "PASS",
+      "evidence": [
+        "tools/prop-repair-contract.json",
+        "validation/props-v8-final.json"
+      ],
+      "runtimeStatus": "PASS_OBSERVED_CAMERA_SCOPE",
+      "runtimeScope": "Supplied door ALT appearance and unchanged Original reference.",
+      "runtimeEvidence": [
+        {
+          "mode": "alt",
+          "views": [
+            8
+          ],
+          "reviewEvidenceArchivePath": "runtime/final-alt/visual-review.json",
+          "screenshots": [
+            {
+              "view": 8,
+              "evidenceArchivePath": "runtime/final-alt/screenshots/visual8-alt-08.png",
+              "sha256": "e0ebd258cc5221b165c03bda7b3d8ed359f1ef26d36da3254ade38ad3272535f"
+            }
+          ]
+        },
+        {
+          "mode": "original",
+          "views": [
+            8
+          ],
+          "reviewEvidenceArchivePath": "runtime/final-original/visual-review.json",
+          "screenshots": [
+            {
+              "view": 8,
+              "evidenceArchivePath": "runtime/final-original/screenshots/visual8-original-08.png",
+              "sha256": "4a91a5a46ba41a0eceaf6f145da902f3f114df5159349cf3264e898bd7d9d4a2"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "request": "Наклонный prototype_roof должен совпадать с соединённым верхним каменным карнизом, согласно последнему уточнению; не с синей черепицей.",
+      "profiles": [
+        "ALT"
+      ],
+      "implementationStatus": "IMPLEMENTED_LATEST_CONNECTED_STONE_CORNICE_CORRECTION",
+      "source": "bloodborne_dw:prototype_roof",
+      "implementation": "ALT-пиксели наклонного элемента в объединении его UV-граней точно соответствуют тем же UV существующего ALT-атласа верхнего соединённого угла в (296,64,-983). Исходные atlases spirelamp_0026 одинаковы, но используют пространства base/source и block/remaining/source. Синяя палитра отменена.",
+      "preserved": "Original точными байтами, вся геометрия/UV, размещение и все пиксели вне UV-маски наклонного элемента.",
+      "staticStatus": "PASS",
+      "evidence": [
+        "tools/prop-repair-contract.json",
+        "validation/ROOF-CORNICE-CORRECTION-RU.txt",
+        "validation/props-v8-final.json"
+      ],
+      "runtimeStatus": "PASS_OBSERVED_CAMERA_SCOPE",
+      "reference": {
+        "source": "bloodborne_dw:source_stairs_jungle_stairs_inner_left_top",
+        "variant": 2,
+        "rotation": 6,
+        "root": [
+          296,
+          64,
+          -983
+        ],
+        "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/jungle_stairs_roof_corner",
+        "sprite": "bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0026",
+        "altSha256": "e870e511f998a80f83fd01a268b2899aa0855ba9381395c6eb9e3fd3862775c0"
+      },
+      "pixelContract": {
+        "sameUVReference": true,
+        "maskTexels": 736,
+        "mismatchedTexels": 0,
+        "outsideMaskMismatches": 0,
+        "originalExact": true
+      },
+      "runtimeScope": "Supplied angled stone cornice beside its connected upper reference; original geometry/UV preserved.",
+      "runtimeEvidence": [
+        {
+          "mode": "alt",
+          "views": [
+            9
+          ],
+          "reviewEvidenceArchivePath": "runtime/final-alt/visual-review.json",
+          "screenshots": [
+            {
+              "view": 9,
+              "evidenceArchivePath": "runtime/final-alt/screenshots/visual8-alt-09.png",
+              "sha256": "97cd033da2f2ee4e3a00cf3162cece09873d08cf1ca22392a6bf01938bcdab18"
+            }
+          ]
+        },
+        {
+          "mode": "original",
+          "views": [
+            9
+          ],
+          "reviewEvidenceArchivePath": "runtime/final-original/visual-review.json",
+          "screenshots": [
+            {
+              "view": 9,
+              "evidenceArchivePath": "runtime/final-original/screenshots/visual8-original-09.png",
+              "sha256": "2a2e6f2c131a65eeca4886d1f83be1ee1ed79a56877721973b6aa51bdad6fd44"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "request": "Убрать неуместную чёрную обводку спрайтового дерева и немного осветлить листву.",
+      "profiles": [
+        "ALT"
+      ],
+      "implementationStatus": "IMPLEMENTED",
+      "implementation": "Исправлены авторские пиксели коры/обводки и слегка осветлена листва спрайтовых tree_1/tree_2; генерация воспроизводима из включённых исходных данных.",
+      "preserved": "Прозрачность, размеры изображений, исходная геометрия и физика.",
+      "staticStatus": "PASS",
+      "evidence": [
+        "validation/trees-v8-final.json",
+        "validation/palette-v8-final.json"
+      ],
+      "runtimeStatus": "PASS_OBSERVED_CAMERA_SCOPE",
+      "runtimeScope": "Supplied sprite-tree outline/foliage scene; this is distinct from the three edited 3D tree views.",
+      "runtimeEvidence": [
+        {
+          "mode": "alt",
+          "views": [
+            10
+          ],
+          "reviewEvidenceArchivePath": "runtime/final-alt/visual-review.json",
+          "screenshots": [
+            {
+              "view": 10,
+              "evidenceArchivePath": "runtime/final-alt/screenshots/visual8-alt-10.png",
+              "sha256": "d49f5b96690cda9fb639ecb33c6091164294ef7588ef9b2ef20585b3f3f01a76"
+            }
+          ]
+        },
+        {
+          "mode": "original",
+          "views": [
+            10
+          ],
+          "reviewEvidenceArchivePath": "runtime/final-original/visual-review.json",
+          "screenshots": [
+            {
+              "view": 10,
+              "evidenceArchivePath": "runtime/final-original/screenshots/visual8-original-10.png",
+              "sha256": "19cd1b56a949332e3cdde3204fce21e715ffb80dd3e8080315ed6313e9ef4cd5"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "regressions": [
+    {
+      "id": "V7_GLOBAL_CITY_AND_PAVEMENT_RECOLOR",
+      "historicalStatus": "FAILED",
+      "correction": "Общие bricks* возвращены точными байтами v6; красные материалы выделены отдельно. Красная роль ограничена двумя проверенными объёмами и вертикальными поверхностями.",
+      "staticStatus": "PASS",
+      "runtimeStatus": "PASS_OBSERVED_CAMERA_SCOPE",
+      "evidence": [
+        "validation/city-scope-v8-final.json",
+        "validation/facade-v8-final.json"
+      ],
+      "runtimeEvidence": [
+        {
+          "mode": "alt",
+          "views": [
+            6,
+            14,
+            15
+          ],
+          "reviewEvidenceArchivePath": "runtime/final-alt/visual-review.json",
+          "screenshots": [
+            {
+              "view": 6,
+              "evidenceArchivePath": "runtime/final-alt/screenshots/visual8-alt-06.png",
+              "sha256": "311529ea22ae2fed06102c0a7d6cfb4419ab1b4bd91c8729978da877b107c68b"
+            },
+            {
+              "view": 14,
+              "evidenceArchivePath": "runtime/final-alt/screenshots/visual8-alt-14.png",
+              "sha256": "645ddc0ef63ef4b268ac125238260ce13fed5cda38e580effee1b7900fdd2b9d"
+            },
+            {
+              "view": 15,
+              "evidenceArchivePath": "runtime/final-alt/screenshots/visual8-alt-15.png",
+              "sha256": "36dffbc86c6cb95c0d3af8761a762ea76abed08ffbd4adc3e43010df834f11b3"
+            }
+          ]
+        },
+        {
+          "mode": "original",
+          "views": [
+            6,
+            14,
+            15
+          ],
+          "reviewEvidenceArchivePath": "runtime/final-original/visual-review.json",
+          "screenshots": [
+            {
+              "view": 6,
+              "evidenceArchivePath": "runtime/final-original/screenshots/visual8-original-06.png",
+              "sha256": "3d5b59d652816740238526ce5bcfe48856d1bdaf4dd350c9cf62972c025345d2"
+            },
+            {
+              "view": 14,
+              "evidenceArchivePath": "runtime/final-original/screenshots/visual8-original-14.png",
+              "sha256": "89344274f643ad8a831de581d90a3a15653cda5ab644104ada898c3b6958d3a6"
+            },
+            {
+              "view": 15,
+              "evidenceArchivePath": "runtime/final-original/screenshots/visual8-original-15.png",
+              "sha256": "7a0bd12cdfe95f967f3cb889315278b8eb583d06d1a2670e07aa1a4cb5bdacfd"
+            }
+          ]
+        }
+      ],
+      "runtimeScope": "Only the named final cameras and scoped runtime assertions were observed; underlying material routing/removal is also covered by the named static audit."
+    },
+    {
+      "id": "V7_NEAREST_GENERIC_BRICK_INFERENCE",
+      "historicalStatus": "REJECTED_SCOPE_INFERENCE",
+      "correction": "Удалены обход соседей, source/native-классификатор красного и native-substrates.bin. Production resolver читает только явную таблицу областей; новые копии по общей семье материалов не выводятся.",
+      "staticStatus": "PASS",
+      "runtimeStatus": "PASS_OBSERVED_CAMERA_SCOPE",
+      "evidence": [
+        "validation/city-scope-v8-final.json"
+      ],
+      "runtimeEvidence": [
+        {
+          "mode": "alt",
+          "views": [
+            6,
+            14,
+            15
+          ],
+          "reviewEvidenceArchivePath": "runtime/final-alt/visual-review.json",
+          "screenshots": [
+            {
+              "view": 6,
+              "evidenceArchivePath": "runtime/final-alt/screenshots/visual8-alt-06.png",
+              "sha256": "311529ea22ae2fed06102c0a7d6cfb4419ab1b4bd91c8729978da877b107c68b"
+            },
+            {
+              "view": 14,
+              "evidenceArchivePath": "runtime/final-alt/screenshots/visual8-alt-14.png",
+              "sha256": "645ddc0ef63ef4b268ac125238260ce13fed5cda38e580effee1b7900fdd2b9d"
+            },
+            {
+              "view": 15,
+              "evidenceArchivePath": "runtime/final-alt/screenshots/visual8-alt-15.png",
+              "sha256": "36dffbc86c6cb95c0d3af8761a762ea76abed08ffbd4adc3e43010df834f11b3"
+            }
+          ]
+        },
+        {
+          "mode": "original",
+          "views": [
+            6,
+            14,
+            15
+          ],
+          "reviewEvidenceArchivePath": "runtime/final-original/visual-review.json",
+          "screenshots": [
+            {
+              "view": 6,
+              "evidenceArchivePath": "runtime/final-original/screenshots/visual8-original-06.png",
+              "sha256": "3d5b59d652816740238526ce5bcfe48856d1bdaf4dd350c9cf62972c025345d2"
+            },
+            {
+              "view": 14,
+              "evidenceArchivePath": "runtime/final-original/screenshots/visual8-original-14.png",
+              "sha256": "89344274f643ad8a831de581d90a3a15653cda5ab644104ada898c3b6958d3a6"
+            },
+            {
+              "view": 15,
+              "evidenceArchivePath": "runtime/final-original/screenshots/visual8-original-15.png",
+              "sha256": "7a0bd12cdfe95f967f3cb889315278b8eb583d06d1a2670e07aa1a4cb5bdacfd"
+            }
+          ]
+        }
+      ],
+      "runtimeScope": "Only the named final cameras and scoped runtime assertions were observed; underlying material routing/removal is also covered by the named static audit."
+    },
+    {
+      "id": "V7_HALF_ARCH_REPLACED_WITH_FULL_ARCH",
+      "historicalStatus": "FAILED",
+      "correction": "Восстановлены baseline-полуарка и её UV; удалены только north/south/up каменные render-грани element0 по последнему уточнению пользователя.",
+      "staticStatus": "PASS",
+      "runtimeStatus": "PASS_OBSERVED_CAMERA_SCOPE",
+      "evidence": [
+        "validation/facade-v8-final.json",
+        "validation/city-scope-v8-final.json"
+      ],
+      "runtimeEvidence": [
+        {
+          "mode": "alt",
+          "views": [
+            3
+          ],
+          "reviewEvidenceArchivePath": "runtime/final-alt/visual-review.json",
+          "screenshots": [
+            {
+              "view": 3,
+              "evidenceArchivePath": "runtime/final-alt/screenshots/visual8-alt-03.png",
+              "sha256": "44eff53ecf3666b9052e4424c517016497e31a27b5c61db8a222b660fbf568fb"
+            }
+          ]
+        },
+        {
+          "mode": "original",
+          "views": [
+            3
+          ],
+          "reviewEvidenceArchivePath": "runtime/final-original/visual-review.json",
+          "screenshots": [
+            {
+              "view": 3,
+              "evidenceArchivePath": "runtime/final-original/screenshots/visual8-original-03.png",
+              "sha256": "32890ef3bf5149ffc793ae47ad169cf74309639ab6fd6892d9d0339491ee4eb3"
+            }
+          ]
+        }
+      ],
+      "runtimeScope": "Only the named final cameras and scoped runtime assertions were observed; underlying material routing/removal is also covered by the named static audit."
+    },
+    {
+      "id": "V7_ANGLED_STONE_CORNICE_TREATED_AS_BLUE_SLATE",
+      "historicalStatus": "SUPERSEDED_BY_USER_CORRECTION",
+      "correction": "Наклонный prototype_roof снова каменный; 736 texel-позиций совпадают с теми же UV существующего ALT-атласа соединённого верхнего карниза. Вне маски 0 изменений, Original точный.",
+      "staticStatus": "PASS",
+      "runtimeStatus": "PASS_OBSERVED_CAMERA_SCOPE",
+      "evidence": [
+        "tools/prop-repair-contract.json",
+        "validation/ROOF-CORNICE-CORRECTION-RU.txt",
+        "validation/props-v8-final.json"
+      ],
+      "runtimeEvidence": [
+        {
+          "mode": "alt",
+          "views": [
+            9
+          ],
+          "reviewEvidenceArchivePath": "runtime/final-alt/visual-review.json",
+          "screenshots": [
+            {
+              "view": 9,
+              "evidenceArchivePath": "runtime/final-alt/screenshots/visual8-alt-09.png",
+              "sha256": "97cd033da2f2ee4e3a00cf3162cece09873d08cf1ca22392a6bf01938bcdab18"
+            }
+          ]
+        },
+        {
+          "mode": "original",
+          "views": [
+            9
+          ],
+          "reviewEvidenceArchivePath": "runtime/final-original/visual-review.json",
+          "screenshots": [
+            {
+              "view": 9,
+              "evidenceArchivePath": "runtime/final-original/screenshots/visual8-original-09.png",
+              "sha256": "2a2e6f2c131a65eeca4886d1f83be1ee1ed79a56877721973b6aa51bdad6fd44"
+            }
+          ]
+        }
+      ],
+      "runtimeScope": "Only the named final cameras and scoped runtime assertions were observed; underlying material routing/removal is also covered by the named static audit."
+    }
+  ],
+  "limitations": [
+    "Final PASS is limited to actual reviewed camera views and the specified static model/material contracts; it is not an exhaustive manual city inspection or a universal absence-of-errors claim.",
+    "Performance numbers come from the four matched runs in comparison.json; one bounded route and observed baseline drift do not establish universal improvements or causes.",
+    "Exact-template census coverage does not cover every visually similar or differently authored house; no additional red scope was inferred.",
+    "ALT/Original were validated in separate actual launches with saved-mode verification; an in-session UI toggle is not claimed.",
+    "Full JVM startup and world-entry latency are not represented by scene-readiness timing."
+  ],
+  "productionSha256": "3b5f9466f8bd414cbb4895c9ac671271c4a99a6b9dccf64c4d4e3f47410e258e",
+  "noErrorsClaim": false
+}
