@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Static asset-contract checks for the November city palette repair.
 
-This intentionally does not launch Minecraft. Runtime appearance is verified
-by the bounded capture phases in artifacts/palette-repair-20261101/qa-plan.json.
+This intentionally does not launch Minecraft. The current source camera plan
+is checked separately from runtime captures and their visual review evidence.
 """
 from __future__ import annotations
 
@@ -17,9 +17,9 @@ from pathlib import Path
 
 
 WORK = Path(__file__).resolve().parents[1]
-DEFAULT_JAR = Path(r"D:\DreamWalker\.local\dw-fix-20261028\checkpoints\test-launch-microstutter-v22-20261029\mod.jar")
+DEFAULT_JAR = WORK / "baseline/mod.jar"
 CANONICAL_INPUTS = WORK / "tools" / "v12-palette-inputs.zip"
-REPORT = WORK / "artifacts" / "palette-repair-20261101" / "static-audit.json"
+REPORT = WORK / "validation" / "palette-v7-regression.json"
 
 
 class Audit:
@@ -92,7 +92,8 @@ def transformed_pixel(pixel: tuple[int, int, int, int], tone: dict | None, palet
     return converted[0], converted[1], converted[2], pixel[3]
 
 
-def verify_baked_png(source_bytes: bytes, output_path: Path, rule: dict, mode: str, palettes: dict, family: bool) -> dict:
+def verify_baked_png(source_bytes: bytes, output_path: Path, rule: dict, mode: str, palettes: dict, family: bool,
+                     superseded_regions: tuple = ()) -> dict:
     from PIL import Image
 
     source = Image.open(BytesIO(source_bytes)).convert("RGBA")
@@ -110,6 +111,7 @@ def verify_baked_png(source_bytes: bytes, output_path: Path, rule: dict, mode: s
     alpha_changed = 0
     outside_changed = 0
     changed_in_region = 0
+    superseded_pixels = 0
     for y in range(source.height):
         for x in range(source.width):
             before = source.getpixel((x, y))
@@ -122,19 +124,25 @@ def verify_baked_png(source_bytes: bytes, output_path: Path, rule: dict, mode: s
                     in_region = True
                     break
             expected = transformed_pixel(before, selected, palettes)
-            if after != expected:
+            superseded = any(x0 <= x < x1 and y0 <= y < y1 for x0,y0,x1,y1 in superseded_regions)
+            if after != expected and not superseded:
                 return {"ok": False, "reason": f"pixel mismatch at ({x},{y}) expected={expected} actual={after}"}
+            if superseded:
+                # v7 facade audit owns colour comparison only inside this
+                # explicit UV island; this audit still checks every alpha.
+                superseded_pixels += 1
             if after != before:
                 changed += 1
                 if after[3] != before[3]:
                     alpha_changed += 1
-                if fallback is None and not in_region:
+                if fallback is None and not in_region and not superseded:
                     outside_changed += 1
                 if in_region:
                     changed_in_region += 1
     return {"ok": alpha_changed == 0 and outside_changed == 0, "size": list(source.size), "changedPixels": changed,
             "alphaChanged": alpha_changed, "outsideMaskedRegionChanged": outside_changed,
-            "maskedRegionChangedPixels": changed_in_region}
+            "maskedRegionChangedPixels": changed_in_region,
+            "supersededUVPixelsVerifiedByFacadeAudit": superseded_pixels}
 
 
 def inspect_materialized_profiles(a: "Audit", resources: Path, family: dict, baked_v12: dict,
@@ -178,6 +186,11 @@ def inspect_materialized_profiles(a: "Audit", resources: Path, family: dict, bak
         # source sprite. V12 rules are ALT-only and preserve all pixels outside masks.
         jobs = []
         for rule in family.get("sprites", []):
+            # v7 deliberately supersedes these v6 intermediate bakes with the
+            # same real masonry material used by all source shutter atlases.
+            # test_facade_v7 verifies their UV coverage and protected pixels.
+            if rule["sprite"] in {"bloodborne_dw:block/autumn_c3/window_surround", "bloodborne_dw:block/autumn_c3/accent/window_surround"}:
+                continue
             for mode in ("original", "alt"):
                 fallback = rule.get(mode)
                 active = fallback is not None or any(region.get(mode) is not None for region in rule.get("regions", []))
@@ -196,7 +209,11 @@ def inspect_materialized_profiles(a: "Audit", resources: Path, family: dict, bak
                 source_bytes = family_zip.read(f"{mode}/{source_path}") if kind == "family" else v12_zip.read(source_path)
             else:
                 source_bytes = a.jar_bytes(source_path)
-            result = verify_baked_png(source_bytes, target_path, rule, mode, palettes, kind == "family")
+            # The corner masonry supersedes .6's old grey tint in exactly the
+            # model's shared brick island. Facade-v7 independently checks tone,
+            # alpha and the entire protected outside for Original and ALT.
+            superseded = ((96, 64, 126, 96),) if target_sprite == "bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0018" else ()
+            result = verify_baked_png(source_bytes, target_path, rule, mode, palettes, kind == "family", superseded)
             a.require(f"baked-pixels-{mode}-{target_sprite}", result.get("ok", False), str(result))
             checked.append({"profile": mode, "sprite": target_sprite, **result})
     finally:
@@ -205,7 +222,7 @@ def inspect_materialized_profiles(a: "Audit", resources: Path, family: dict, bak
     if missing:
         a.pending("materialized-palette-pixels", f"offline bake not complete yet: {len(missing)} of {len(jobs)} active profile PNGs missing; sample={missing[:6]}")
     else:
-        a.require("materialized-palette-pixels", len(checked) == len(jobs), f"validated {len(checked)} generated profile PNGs pixel-for-pixel")
+        a.require("materialized-palette-pixels", len(checked) == len(jobs), f"validated {len(checked)} generated profile PNGs; explicit v7 UV supersessions are independently covered by facade-v7")
 
 
 def run(jar: Path) -> dict:
@@ -287,12 +304,15 @@ def run(jar: Path) -> dict:
         a.require(f"shutter-wall-dedicated-backing-{name}", geometry_unchanged and roof_shared and alt_model.get("textures", {}).get("particle") == alt_texture,
                   f"geometry unchanged={geometry_unchanged}; shared roof1 source={source_texture}; ALT backing={alt_texture}")
     surround_aliases = {"bloodborne_dw:block/autumn_c3/window_surround": "bloodborne_dw:block/remaining/source/minecraft/block/addon/roof_1", "bloodborne_dw:block/autumn_c3/accent/window_surround": "bloodborne_dw:block/remaining/source/minecraft/block/addon/roof_1"}
-    a.require("window-backing-aliases-isolated", all(aliases.get(alias) == alias and rules.get(alias, {}).get("sourceSprite") == source for alias, source in surround_aliases.items()),
-              "dedicated backing aliases use baked physical PNGs derived from roof_1; shared roof source remains unchanged")
+    a.require("window-backing-aliases-indexed", all(aliases.get(alias) == alias and rules.get(alias, {}).get("sourceSprite") == source for alias, source in surround_aliases.items()),
+              "dedicated backing aliases remain physical roof_1-derived PNGs; v7 also repairs the shared wall islands used by all other shutter representations")
     original_atlas = json.loads((resources / "dw_city_visuals/original/assets/minecraft/atlases/blocks.json").read_text(encoding="utf-8"))
     original_roof = [row for row in original_atlas.get("sources", []) if row.get("resource") == "bloodborne_dw:block/remaining/source/minecraft/block/addon/roof_1"]
     a.require("shared-roof-resource-not-repointed", len(original_roof) == 1 and "sprite" not in original_roof[0],
               "original atlas retains ordinary roof_1 without an alias override")
+    from test_facade_v7 import run as verify_facades
+    for row in verify_facades()["checks"]:
+        a.require("v7-"+row["name"], row["status"]=="PASS", str(row["detail"]))
 
     # These scene gates are RP entities, not the native source blocks behind them.
     # Match their real atlas islands and preserve all alpha holes.
@@ -391,12 +411,16 @@ def run(jar: Path) -> dict:
     a.require("billboard-tree-base-only-mask", tree.get("palette", "preserve") == "preserve" and mask == expected_stone and not trunk_overlap and set(tree_palette_names) == {"alt_warm_stone"} and dims == (256,256),
               f"all stone UVs covered={mask == expected_stone}; masked texels={len(mask)}; trunk overlap={trunk_overlap}; atlas dimensions={dims}")
 
-    # Original 3D tree rollback and billboard foliage remain covered by the
-    # v5 production regression manifest; this audit records current profile equality.
+    # The user's editor project replaces ALT only; keep Original bound to the
+    # pinned baseline rather than the former .5 rollback equality.
     originals = resources / "dw_city_visuals/original/assets/bloodborne_rp/geo"
     alts = resources / "dw_city_visuals/alt/assets/bloodborne_rp/geo"
-    tree_equal = all((originals / f"tree_{i}.geo.json").read_bytes() == (alts / f"tree_{i}.geo.json").read_bytes() for i in (1, 2, 3))
-    a.require("original-3d-tree-rollback-preserved", tree_equal, "ALT and original tree_1/2/3 geometries remain byte-identical")
+    project = json.loads((WORK / "inputs/trees/DreamWalker-trees.dwtree.json").read_text(encoding="utf-8-sig"))
+    tree_equal = all(json.loads((alts / Path(m["assetPath"]).name).read_text(encoding="utf-8")) == m["geometry"] for m in project["models"])
+    with zipfile.ZipFile(WORK / "baseline/mod.jar") as pinned:
+        original_equal = all((originals / f"tree_{i}.geo.json").read_bytes() == pinned.read(f"assets/bloodborne_rp/geo/tree_{i}.geo.json") for i in (1, 2, 3))
+    a.require("user-3d-tree-project-imported-original-preserved", tree_equal and original_equal,
+              "ALT tree_1/2/3 geometries equal the uploaded project; Original stays byte-identical to the pinned baseline")
 
     for sprite, palette in (("bloodborne_rp:textures/entities/decorations/statue.png", "alt_statue_stone"),):
         rule = entity_rules.get(sprite, {})
@@ -415,14 +439,21 @@ def run(jar: Path) -> dict:
 
     inspect_materialized_profiles(a, resources, family, baked_v12, CANONICAL_INPUTS, CANONICAL_INPUTS)
 
-    plan = a.source_json(WORK / "artifacts/palette-repair-20261101/qa-plan.json")
-    phase_names = [row.get("name") for row in plan.get("phases", [])]
-    expected_names = {"spire-blue-0013", "band-single-tone", "prototype-wall-alt", "billboard-tree-stone-base", "rose-wall-window", "statue-palette", "narrow-gate-alt", "large-gate-front", "large-gate-edge", "door-alt", "grille-alt", "shutter-wall-backing-alt"}
-    phase_map = {row.get("name"): row for row in plan.get("phases", [])}
-    a.require("runtime-capture-plan-coverage", len(phase_names) == 12 and set(phase_names) == expected_names and all(row.get("requireTerrain") and row.get("lockCamera") for row in plan.get("phases", [])),
-              f"12 captures cover requested types and both gate views; names={phase_names}")
-    a.require("runtime-capture-corrected-view-settings", plan.get("renderDistance") == 8 and plan.get("simulationDistance") == 6 and phase_map.get("spire-blue-0013", {}).get("yaw") == 147.3 and phase_map.get("large-gate-edge", {}).get("x") == 256.5 and phase_map.get("large-gate-edge", {}).get("yaw") == -90.0,
-              "plan uses the corrected spire yaw, open-side edge camera and requested 8/6 distances")
+    # The ignored .6 artifacts/qa-plan.json is historical and cannot be a
+    # prerequisite for checking the published .7 sources. Inspect the current
+    # finite source plan separately from real runtime captures and their logs.
+    driver_path = WORK / "src/visualqa/java/dev/dreamwalker/bloodbornedw/visual/VisualRevisionQa.java"
+    driver = driver_path.read_text(encoding="utf-8")
+    views_source = driver.split("double[][] VIEWS =", 1)[1].split("};", 1)[0]
+    views = [tuple(float(v) for v in row.split(",")) for row in re.findall(r"\{\s*([-+\d.,\s]+)\s*\}", views_source)]
+    screenshots = [(262.312,50.18922,-910.191), (221.217,46.06987,-895.841),
+                   (68.873,104.9155,-788.288), (125.434,60.07117,-858.094),
+                   (120.85,47,-950.338), (177.089,66.99565,-933.721),
+                   (278.429,44.87609,-846.249), (194.524,60.05132,-971.282),
+                   (293.234,61.5177,-979.893), (249.608,46.24593,-839.298)]
+    a.require("current-source-camera-plan-coverage", len(views) == 13 and all(len(v) == 5 and all(math.isfinite(c) for c in v) for v in views)
+              and all(all(abs(views[i][c]-expected[c]) < .00001 for c in range(3)) for i,expected in enumerate(screenshots)),
+              "Static plan has the ten supplied screenshot positions plus three 3D-tree positions. This does not certify actual capture, terrain readiness or visual correctness.")
 
     result = {
         "status": "FAIL" if any(row["status"] == "FAIL" for row in a.checks) else ("PENDING" if any(row["status"] == "PENDING" for row in a.checks) else "PASS"),
@@ -431,7 +462,7 @@ def run(jar: Path) -> dict:
         "checks": a.checks,
         "limitations": [
             "This does not prove in-game colors, texture reload mode selection, or gate visibility at runtime.",
-            "Root runs the bounded 12-camera runtime capture plan against the final candidate."
+            "The separate runtime pass uses the current 13-camera driver; completion, terrain readiness and visual review require actual capture evidence."
         ]
     }
     a.jar.close()

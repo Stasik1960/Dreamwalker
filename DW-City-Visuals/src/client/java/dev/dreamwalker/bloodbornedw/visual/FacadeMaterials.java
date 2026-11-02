@@ -27,22 +27,31 @@ final class FacadeMaterials {
         if(role==0)return source;
         Sprite sprite=source.getSprite(); Identifier id=sprite.getContents().getId();
         FacadeConfig c=config();
-        if(!c.bricks.contains(id)&&!(role==1&&c.rose.containsKey(id)))return source;
+        if(role==4&&!c.brickWindow.containsKey(id))return source;
+        if(!c.bricks.contains(id)&&!(role==1&&c.rose.containsKey(id))&&!(role==4&&c.brickWindow.containsKey(id)))return source;
+        // roof_1 is shared with the moving wooden shutter and glass islands.
+        // Regional wall colours must affect only its upper masonry half.
+        if(id.getPath().endsWith("/roof_1")&&!wallHalf(source.getVertexData(),sprite))return source;
         if(id.getPath().endsWith("/spirelamp_0010")&&(source.getFace()==Direction.UP||source.getFace()==Direction.DOWN))return source;
-        BakedQuad[] variants=CACHE.computeIfAbsent(source,k->new BakedQuad[4]);if(variants[role]!=null)return variants[role];
+        BakedQuad[] variants=CACHE.computeIfAbsent(source,k->new BakedQuad[5]);if(variants[role]!=null)return variants[role];
         int slot=role;
-        Sprite target=role==1&&c.rose.containsKey(id)?atlas().getSprite(c.rose.get(id)):sprite;
+        Sprite target=role==4?atlas().getSprite(c.brickWindow.get(id)):role==1&&c.rose.containsKey(id)?atlas().getSprite(c.rose.get(id)):
+            role>1&&c.accentBase.containsKey(id)?atlas().getSprite(c.accentBase.get(id)):sprite;
         int[] data=source.getVertexData().clone();
-        for(int i=0;i<4;i++) { int p=i*8; if(role==1&&target!=sprite) { data[p+4]=Float.floatToRawIntBits(map(Float.intBitsToFloat(data[p+4]),sprite.getMinU(),sprite.getMaxU(),target.getMinU(),target.getMaxU())); data[p+5]=Float.floatToRawIntBits(map(Float.intBitsToFloat(data[p+5]),sprite.getMinV(),sprite.getMaxV(),target.getMinV(),target.getMaxV())); } else if(role>1) { int color=data[p+3]; float[] m=c.multipliers[role]; data[p+3]=(color&0xff000000)|((int)((color&255)*m[0]))|((int)(((color>>>8)&255)*m[1])<<8)|((int)(((color>>>16)&255)*m[2])<<16); } }
+        for(int i=0;i<4;i++) { int p=i*8; if(target!=sprite) { data[p+4]=Float.floatToRawIntBits(map(Float.intBitsToFloat(data[p+4]),sprite.getMinU(),sprite.getMaxU(),target.getMinU(),target.getMaxU())); data[p+5]=Float.floatToRawIntBits(map(Float.intBitsToFloat(data[p+5]),sprite.getMinV(),sprite.getMaxV(),target.getMinV(),target.getMaxV())); } if(role>1&&role<4) { int color=data[p+3]; float[] m=c.multipliers[role]; data[p+3]=(color&0xff000000)|((int)((color&255)*m[0]))|((int)(((color>>>8)&255)*m[1])<<8)|((int)(((color>>>16)&255)*m[2])<<16); } }
         return variants[slot]=new BakedQuad(data,source.getColorIndex(),source.getFace(),target,source.hasShade());
     }
     static boolean transform(MutableQuadView quad,int role) {
         Sprite sprite=SpriteFinder.get(atlas()).find(quad); Identifier id=sprite.getContents().getId();
-        if(role==0)return true; FacadeConfig c=config(); if(!c.bricks.contains(id)&&!(role==1&&c.rose.containsKey(id)))return true;
+        if(role==0)return true; FacadeConfig c=config(); if(!c.bricks.contains(id)&&!(role==1&&c.rose.containsKey(id))&&!(role==4&&c.brickWindow.containsKey(id)))return true;
+        if(role==4&&!c.brickWindow.containsKey(id))return true;
+        if(id.getPath().endsWith("/roof_1")) { float v=0; for(int i=0;i<4;i++)v+=quad.v(i); if(v/4>sprite.getMinV()+(sprite.getMaxV()-sprite.getMinV())*.5F)return true; }
         if(id.getPath().endsWith("/spirelamp_0010")&&(quad.nominalFace()==Direction.UP||quad.nominalFace()==Direction.DOWN))return true;
-        if(role==1 && c.rose.containsKey(id)) { Sprite target=atlas().getSprite(c.rose.get(id)); for(int i=0;i<4;i++)quad.uv(i,map(quad.u(i),sprite.getMinU(),sprite.getMaxU(),target.getMinU(),target.getMaxU()),map(quad.v(i),sprite.getMinV(),sprite.getMaxV(),target.getMinV(),target.getMaxV())); }
-        else if(role>1) { float[] m=c.multipliers[role]; for(int i=0;i<4;i++){ int color=quad.color(i); quad.color(i,(color&0xff000000)|((int)(((color>>>16)&255)*m[0])<<16)|((int)(((color>>>8)&255)*m[1])<<8)|(int)((color&255)*m[2])); } }
+        Identifier targetId=role==4?c.brickWindow.get(id):role==1?c.rose.get(id):c.accentBase.get(id);
+        if(targetId!=null) { Sprite target=atlas().getSprite(targetId); for(int i=0;i<4;i++)quad.uv(i,map(quad.u(i),sprite.getMinU(),sprite.getMaxU(),target.getMinU(),target.getMaxU()),map(quad.v(i),sprite.getMinV(),sprite.getMaxV(),target.getMinV(),target.getMaxV())); }
+        if(role>1&&role<4) { float[] m=c.multipliers[role]; for(int i=0;i<4;i++){ int color=quad.color(i); quad.color(i,(color&0xff000000)|((int)(((color>>>16)&255)*m[0])<<16)|((int)(((color>>>8)&255)*m[1])<<8)|(int)((color&255)*m[2])); } }
         return true;
     }
     private static float map(float v,float a,float b,float c,float d) { return c+(v-a)*(d-c)/(b-a); }
+    private static boolean wallHalf(int[] vertices,Sprite sprite) { float v=0;for(int i=0;i<4;i++)v+=Float.intBitsToFloat(vertices[i*8+5]);return v/4<=sprite.getMinV()+(sprite.getMaxV()-sprite.getMinV())*.5F; }
 }

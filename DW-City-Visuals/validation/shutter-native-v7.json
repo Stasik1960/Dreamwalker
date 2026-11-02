@@ -1,0 +1,214 @@
+{
+  "status": "PASS",
+  "jar": "compiled-client-classes",
+  "checks": [
+    {
+      "name": "mesh-table-native-index-domain",
+      "status": "PASS",
+      "detail": "One indexed byte per actual native mesh"
+    },
+    {
+      "name": "actual-visuals-sharing-one-physics-differ-in-wall-material",
+      "status": "PASS",
+      "detail": {
+        "sharedPhysicsGroups": 406,
+        "examples": [
+          {
+            "physics": 7,
+            "stoneVisual": 23638,
+            "brickVisual": 8,
+            "representative": 8,
+            "representativeKind": 2
+          },
+          {
+            "physics": 12,
+            "stoneVisual": 21939,
+            "brickVisual": 13,
+            "representative": 13,
+            "representativeKind": 2
+          },
+          {
+            "physics": 8,
+            "stoneVisual": 2074,
+            "brickVisual": 14,
+            "representative": 9,
+            "representativeKind": 0
+          },
+          {
+            "physics": 15,
+            "stoneVisual": 92313,
+            "brickVisual": 17,
+            "representative": 17,
+            "representativeKind": 2
+          }
+        ]
+      }
+    },
+    {
+      "name": "physics-representative-cannot-classify-both-materials",
+      "status": "PASS",
+      "detail": "A shared state has both stone and brick visuals; using one representative necessarily misclassifies one"
+    },
+    {
+      "name": "baseline-cell-is-documented-physical-representative",
+      "status": "PASS",
+      "detail": "Pinned NativePhysicsBlock.cell bytecode calls NativeVisualLayout.representative"
+    },
+    {
+      "name": "compiled-material-uses-actual-visual-before-cell-interface",
+      "status": "PASS",
+      "detail": [
+        [
+          2,
+          "net/minecraft/world/BlockRenderView",
+          "getBlockState",
+          "(Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/block/BlockState;"
+        ],
+        [
+          9,
+          "net/minecraft/block/BlockState",
+          "getBlock",
+          "()Lnet/minecraft/block/Block;"
+        ],
+        [
+          21,
+          "dev/dreamwalker/bloodbornedw/composite/NativeVisuals",
+          "forView",
+          "(Lnet/minecraft/world/BlockView;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;)I"
+        ],
+        [
+          26,
+          "dev/dreamwalker/bloodbornedw/composite/NativeGridCatalog",
+          "cell",
+          "(I)Ldev/dreamwalker/bloodbornedw/composite/NativeGridCatalog$Cell;"
+        ],
+        [
+          29,
+          "dev/dreamwalker/bloodbornedw/composite/NativeGridCatalog$Cell",
+          "mesh",
+          "()I"
+        ],
+        [
+          32,
+          "dev/dreamwalker/bloodbornedw/visual/ShutterSubstrate",
+          "nativeMaterial",
+          "(I)I"
+        ],
+        [
+          37,
+          "net/minecraft/block/BlockState",
+          "getBlock",
+          "()Lnet/minecraft/block/Block;"
+        ],
+        [
+          58,
+          "dev/dreamwalker/bloodbornedw/composite/NativeCellBlock",
+          "cell",
+          "(Lnet/minecraft/block/BlockState;)Ldev/dreamwalker/bloodbornedw/composite/NativeGridCatalog$Cell;"
+        ],
+        [
+          63,
+          "dev/dreamwalker/bloodbornedw/composite/NativeGridCatalog$Cell",
+          "mesh",
+          "()I"
+        ],
+        [
+          66,
+          "dev/dreamwalker/bloodbornedw/visual/ShutterSubstrate",
+          "nativeMaterial",
+          "(I)I"
+        ],
+        [
+          71,
+          "net/minecraft/block/BlockState",
+          "getBlock",
+          "()Lnet/minecraft/block/Block;"
+        ],
+        [
+          83,
+          "dev/dreamwalker/bloodbornedw/composite/StaticArchitectureCatalog",
+          "recipe",
+          "(Lnet/minecraft/block/BlockState;)Ldev/dreamwalker/bloodbornedw/composite/StaticArchitectureCatalog$Recipe;"
+        ],
+        [
+          86,
+          "dev/dreamwalker/bloodbornedw/composite/StaticArchitectureCatalog$Recipe",
+          "fragments",
+          "()Ljava/util/List;"
+        ],
+        [
+          89,
+          "java/util/List",
+          "iterator",
+          "()Ljava/util/Iterator;"
+        ],
+        [
+          98,
+          "java/util/Iterator",
+          "hasNext",
+          "()Z"
+        ],
+        [
+          108,
+          "java/util/Iterator",
+          "next",
+          "()Ljava/lang/Object;"
+        ],
+        [
+          120,
+          "dev/dreamwalker/bloodbornedw/composite/StaticArchitectureCatalog$Fragment",
+          "pose",
+          "()Ldev/dreamwalker/bloodbornedw/composite/StaticArchitectureCatalog$Pose;"
+        ],
+        [
+          123,
+          "dev/dreamwalker/bloodbornedw/composite/StaticArchitectureCatalog$Pose",
+          "state",
+          "()Lnet/minecraft/block/BlockState;"
+        ],
+        [
+          126,
+          "dev/dreamwalker/bloodbornedw/visual/ShutterSubstrate",
+          "sourceMaterial",
+          "(Lnet/minecraft/block/BlockState;)I"
+        ],
+        [
+          157,
+          "dev/dreamwalker/bloodbornedw/visual/ShutterSubstrate",
+          "sourceMaterial",
+          "(Lnet/minecraft/block/BlockState;)I"
+        ],
+        [
+          169,
+          "dev/dreamwalker/bloodbornedw/composite/NativeGridBridge",
+          "base",
+          "(Lnet/minecraft/world/BlockView;Lnet/minecraft/util/math/BlockPos;)I"
+        ],
+        [
+          181,
+          "dev/dreamwalker/bloodbornedw/composite/NativeGridCatalog",
+          "cell",
+          "(I)Ldev/dreamwalker/bloodbornedw/composite/NativeGridCatalog$Cell;"
+        ],
+        [
+          184,
+          "dev/dreamwalker/bloodbornedw/composite/NativeGridCatalog$Cell",
+          "mesh",
+          "()I"
+        ],
+        [
+          187,
+          "dev/dreamwalker/bloodbornedw/visual/ShutterSubstrate",
+          "nativeMaterial",
+          "(I)I"
+        ]
+      ]
+    },
+    {
+      "name": "compiled-bridge-retains-view-and-position-lookup",
+      "status": "PASS",
+      "detail": "Bridge background keeps the established coordinate-aware lookup"
+    }
+  ],
+  "limitation": "Read-only native metadata and compiled callflow checks; no game or world is launched."
+}

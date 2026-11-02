@@ -14,6 +14,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 abstract class FacadeNativeTerrainMixin {
     @Inject(method="terrainModel",at=@At("RETURN"),cancellable=true,remap=false)
     private static void dw$facades(BlockRenderView world,BlockState state,BlockPos pos,BakedModel fallback,CallbackInfoReturnable<BakedModel> cir) {
-        cir.setReturnValue(CityFacadesClient.terrainModel(cir.getReturnValue(),pos,state));
+        cir.setReturnValue(CityFacadesClient.terrainModel(cir.getReturnValue(),pos,state,world));
     }
 }

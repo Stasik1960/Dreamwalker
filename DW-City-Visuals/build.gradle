@@ -1,9 +1,8 @@
 plugins { id 'fabric-loom' version '1.6.12' }
 
-def workspace = file('D:/DreamWalker')
-def baseline = providers.gradleProperty('baselineJar').orElse(new File(workspace,
-    '.local/dw-fix-20261028/checkpoints/test-launch-microstutter-v22-20261029/mod.jar').path)
-version = '20261101-altvisual.6'
+def baseline = providers.gradleProperty('baselineJar').orElse(file('baseline/mod.jar').path)
+def pythonExecutable = providers.gradleProperty('pythonExecutable').orElse('python')
+version = '20261102-altvisual.7'
 group = 'dev.dreamwalker'
 base { archivesName = 'dw-altvisual-overlay' }
 layout.buildDirectory = new File(projectDir, 'build')
@@ -16,13 +15,17 @@ loom {
         }
     }
 }
-repositories { mavenCentral() }
+repositories {
+    mavenCentral()
+    maven { url = 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/' }
+}
 dependencies {
     minecraft 'com.mojang:minecraft:1.20.1'
     mappings 'net.fabricmc:yarn:1.20.1+build.10:v2'
     modImplementation 'net.fabricmc:fabric-loader:0.16.10'
     modImplementation 'net.fabricmc.fabric-api:fabric-api:0.92.12+1.20.1'
     modCompileOnly files(baseline.get())
+    modCompileOnly 'software.bernie.geckolib:geckolib-fabric-1.20.1:4.4.9'
     compileOnly 'io.github.llamalad7:mixinextras-fabric:0.4.1'
 }
 tasks.register('verifyBaseline') {
@@ -79,11 +82,11 @@ tasks.register('materializeV12Palettes', Exec) {
 }
 
 tasks.register('generateVisualResourceIndex', Exec) {
-    dependsOn tasks.named('materializeV12Palettes')
+    dependsOn tasks.named('prepareRevisionAssets')
     inputs.files(fileTree('src/main/resources/dw_city_visuals'))
     inputs.file('tools/prepare_resource_index.py')
     outputs.file('src/main/resources/assets/bloodborne_dw/visuals/resource-index.json')
-    commandLine new File(workspace, '.local/venv/Scripts/python.exe').path,
+    commandLine pythonExecutable.get(),
         file('tools/prepare_resource_index.py').path
 }
 
@@ -93,7 +96,34 @@ tasks.register('generateVisualFingerprints', Exec) {
     inputs.files(fileTree('src') { exclude '**/profile-fingerprints.json' })
     inputs.file('tools/prepare_visual_fingerprints.py')
     outputs.file('src/main/resources/assets/bloodborne_dw/visuals/profile-fingerprints.json')
-    commandLine new File(workspace, '.local/venv/Scripts/python.exe').path,
+    commandLine pythonExecutable.get(),
         file('tools/prepare_visual_fingerprints.py').path
 }
 tasks.named('processResources') { dependsOn tasks.named('generateVisualFingerprints') }
+
+tasks.register('prepareRevisionAssets', Exec) {
+    dependsOn tasks.named('materializeV12Palettes')
+    commandLine pythonExecutable.get(), file('tools/prepare_revision_assets.py').path
+}
+
+// Isolated capture driver. Never included in the production mod.
+sourceSets {
+    visualqa {
+        compileClasspath += sourceSets.main.output + sourceSets.client.output + sourceSets.client.compileClasspath
+        runtimeClasspath += sourceSets.main.output + sourceSets.client.output + sourceSets.client.runtimeClasspath
+    }
+}
+configurations { visualqaImplementation.extendsFrom implementation }
+tasks.register('visualQaJar', Jar) {
+    archiveBaseName = 'dw-visual-revision-qa'
+    archiveClassifier = 'dev'
+    from sourceSets.visualqa.output
+}
+tasks.register('remapVisualQaJar', net.fabricmc.loom.task.RemapJarTask) {
+    dependsOn visualQaJar
+    inputFile.set(tasks.named('visualQaJar', Jar).flatMap { it.archiveFile })
+    classpath.from(sourceSets.visualqa.compileClasspath)
+    archiveBaseName = 'dw-visual-revision-qa'
+    archiveClassifier = ''
+    addNestedDependencies = false
+}

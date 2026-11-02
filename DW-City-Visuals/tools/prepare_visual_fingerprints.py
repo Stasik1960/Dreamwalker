@@ -21,7 +21,7 @@ def fingerprints():
     index = json.loads((RES / 'assets/bloodborne_dw/visuals/resource-index.json').read_bytes())
     shared = hashlib.sha256()
     add(shared, 'baseline', BASELINE.encode('ascii'))
-    paths = sorted((W / 'src').rglob('*.java'))
+    paths = sorted(p for side in ('main', 'client') for p in (W / 'src' / side).rglob('*.java'))
     paths += sorted(p for p in RES.rglob('*') if p.is_file() and p != OUTPUT
                     and not p.relative_to(RES).as_posix().startswith('dw_city_visuals/'))
     for path in paths:

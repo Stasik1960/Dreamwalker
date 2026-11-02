@@ -41,7 +41,7 @@ final class FacadeModel implements BakedModel, FabricBakedModel {
     }
     @Override public void emitBlockQuads(BlockRenderView world,BlockState state,BlockPos pos,Supplier<Random> random,RenderContext context) {
         FabricBakedModel fabric=(FabricBakedModel)delegate;
-        int role=fixedRole!=0?fixedRole:FacadeMaterials.role(pos);
+        int role=fixedRole!=0?fixedRole:ShutterSubstrate.source(state)?ShutterSubstrate.role(world,pos):FacadeMaterials.role(pos);
         if(role==0) { fabric.emitBlockQuads(world,state,pos,random,context); return; }
         context.pushTransform(quad->FacadeMaterials.transform(quad,role));
         try { fabric.emitBlockQuads(world,state,pos,random,context); } finally { context.popTransform(); }

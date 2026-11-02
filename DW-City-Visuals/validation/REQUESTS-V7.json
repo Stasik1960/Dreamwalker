@@ -1,0 +1,16 @@
+{
+  "revision": "altvisual.7",
+  "requests": [
+    {"number": 1, "objects": ["bloodborne_rp:tree1", "bloodborne_rp:tree2", "bloodborne_rp:tree3"], "checks": "trees-v7-final.json", "views": [11,12,13], "profiles": ["alt", "original"], "source": "inputs/trees/DreamWalker-trees.dwtree.json"},
+    {"number": 2, "objects": ["source_shutter_window", "source_shutter_window_surround", "source_spruce_trapdoor_bottom", "source_spruce_trapdoor_open"], "checks": ["facade-v7-final.json", "shutter-native-v7-final.json"], "views": [1,2], "profiles": ["alt"], "coverage": "Shared roof_1/window surround atlas and source/static/native wall substrate classification"},
+    {"number": 3, "objects": ["static_architecture_230[part=36]", "source_addon_gray_glazed_terracotta_0"], "checks": "facade-v7-final.json", "views": [3], "profiles": ["alt", "original"]},
+    {"number": 4, "objects": ["static_architecture_13[part=103]", "source_stairs_exposed_cut_copper_stairs_top"], "checks": "facade-v7-final.json", "views": [4], "profiles": ["alt", "original"]},
+    {"number": 5, "objects": ["source_addon_coral_dead_horn_coral_wall_fan"], "checks": "props-v7-final.json", "views": [5], "profiles": ["alt"], "note": "F3 air is the displaced source model's neighbouring cell; targeting and physics are preserved."},
+    {"number": 6, "objects": ["source_bricks", "source_assembly_brick_wall", "source_chiseled_quartz_block[variant=1]"], "checks": "facade-v7-final.json", "views": [6], "profiles": ["alt"], "coverage": "Generic brick family and embedded spirelamp_0010 masonry: 37 models/34 source families with source/static/native material context"},
+    {"number": 7, "objects": ["static_architecture_1[part=66]", "source_quartz_stairs_top[variant=1]", "static_architecture_1[part=63]", "source_quartz_stairs_outer_1"], "checks": "props-v7-final.json", "views": [7], "profiles": ["alt", "original"]},
+    {"number": 8, "objects": ["bloodborne_rp:door_1"], "checks": "props-v7-final.json", "views": [8], "profiles": ["alt"], "note": "The screenshot's F3 native_physics label is the wall behind the RP door."},
+    {"number": 9, "objects": ["prototype_roof[variant=0]"], "checks": "props-v7-final.json", "views": [9], "profiles": ["alt"], "source": "base/source/minecraft/block/addon/spirelamp_0026"},
+    {"number": 10, "objects": ["remaining/source/minecraft/block/addon/tree_1", "remaining/source/minecraft/block/addon/tree_2"], "checks": "trees-v7-final.json", "views": [10], "profiles": ["alt"]}
+  ],
+  "runtimeEvidence": "acceptance-v7.json is written only after completed captures and visual review. This mapping alone is not runtime proof."
+}

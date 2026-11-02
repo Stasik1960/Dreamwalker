@@ -13,6 +13,7 @@ import net.minecraft.resource.ResourceManager;
 import net.minecraft.resource.ResourceType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.BlockRenderView;
 import dev.dreamwalker.bloodbornedw.composite.NativeGridBlock;
 import dev.dreamwalker.bloodbornedw.composite.NativePhysicsBlock;
 import java.util.IdentityHashMap;
@@ -20,17 +21,18 @@ import java.util.Map;
 
 public final class CityFacadesClient implements ClientModInitializer {
     private static final Map<BakedModel,BakedModel[]> MODELS=new IdentityHashMap<>();
-    static synchronized void clearCache() { MODELS.clear(); }
+    static synchronized void clearCache() { MODELS.clear(); ShutterSubstrate.reload(); }
     private static synchronized BakedModel fixed(BakedModel model,int role) {
         if(model instanceof FacadeModel facade) {
             if(facade.role()==role)return model;
             model=facade.delegate();
         }
-        BakedModel[] variants=MODELS.computeIfAbsent(model,ignored->new BakedModel[4]);
+        BakedModel[] variants=MODELS.computeIfAbsent(model,ignored->new BakedModel[5]);
         if(variants[role]==null)variants[role]=new FacadeModel(model,role);
         return variants[role];
     }
-    private static boolean brick(String path) { return path.equals("source_assembly_brick_wall") || path.equals("source_bricks"); }
+    private static boolean brick(String path) { return path.equals("source_assembly_brick_wall") || path.equals("source_bricks") || ShutterSubstrate.sourceId(new Identifier("bloodborne_dw",path)); }
+    public static boolean contextualPart(Identifier id){return ShutterSubstrate.modelId(id);}
     @Override public void onInitializeClient() {
         CityVisualClient.registerReloadListener(FacadeMaterials::reload);
         ResourceManagerHelper.get(ResourceType.CLIENT_RESOURCES).registerReloadListener(new SimpleSynchronousResourceReloadListener() {
@@ -42,27 +44,28 @@ public final class CityFacadesClient implements ClientModInitializer {
             return model;
         }));
     }
-    public static BakedModel staticModel(BakedModel model, BlockPos root, BlockState state) {
+    public static BakedModel staticModel(BakedModel model, BlockPos root, BlockState state,BlockRenderView world) {
         Identifier id=Registries.BLOCK.getId(state.getBlock());
         if(!id.getNamespace().equals("bloodborne_dw"))return model;
-        int role=FacadeMaterials.role(root);
+        int role=ShutterSubstrate.source(state)||ShutterSubstrate.model(model,state)?ShutterSubstrate.role(world,root):FacadeMaterials.role(root);
         return role==0?model:fixed(model,role);
     }
     /** visible() returns a fresh, world-bound occlusion view. Never retain or probe it. */
-    public static BakedModel visibleModel(BakedModel model, BlockPos root, BlockState state) {
+    public static BakedModel visibleModel(BakedModel model, BlockPos root, BlockState state,BlockRenderView world,boolean shutterPart) {
         Identifier id=Registries.BLOCK.getId(state.getBlock());
         if(!id.getNamespace().equals("bloodborne_dw"))return model;
-        int role=FacadeMaterials.role(root);
+        int role=ShutterSubstrate.source(state)||shutterPart?ShutterSubstrate.role(world,root):FacadeMaterials.role(root);
         return role==0?model:new FacadeModel(model,role);
     }
-    public static BakedModel terrainModel(BakedModel model,BlockPos pos,BlockState state) {
+    public static BakedModel terrainModel(BakedModel model,BlockPos pos,BlockState state,BlockRenderView world) {
         if(!CityVisualClient.isAlt())return model;
         if(!(state.getBlock() instanceof NativeGridBlock) && !(state.getBlock() instanceof NativePhysicsBlock))return model;
         if(model instanceof FacadeModel)return model;
-        int role=FacadeMaterials.role(pos); return role==0?model:fixed(model,role);
+        int role=ShutterSubstrate.model(model,state)?ShutterSubstrate.role(world,pos):FacadeMaterials.role(pos); return role==0?model:fixed(model,role);
     }
     public static BakedModel legacyTerrainModel(BakedModel model,BlockPos pos,BlockState state) {
-        return state.getBlock() instanceof NativeGridBlock ? terrainModel(model,pos,state) : model;
+        var world=net.minecraft.client.MinecraftClient.getInstance().world;
+        return state.getBlock() instanceof NativeGridBlock && world!=null ? terrainModel(model,pos,state,world) : model;
     }
 }
 

@@ -1,0 +1,131 @@
+{
+  "status": "PASS",
+  "jar": "C:\\Users\\vakir\\CodexProjects\\DW-Visual-Fixes7\\delivery\\DreamWalker-v22-Visual-Fixes7-20261102.jar",
+  "checks": [
+    {
+      "name": "tree_1-exact-editor-geometry",
+      "status": "PASS",
+      "detail": "All bones/cubes/UV/transform values equal the uploaded editor project"
+    },
+    {
+      "name": "tree_1-original-preserved",
+      "status": "PASS",
+      "detail": "Original profile remains byte-identical to the pinned original geometry"
+    },
+    {
+      "name": "tree_1-finite-render-envelope",
+      "status": "PASS",
+      "detail": "All rotated cube corners fit the declared ALT render envelope: min=[-7.507690541319855, -0.7351611060056613, -5.864237391556919], max=[5.1926875, 17.3815717169311, 5.632848180151174]"
+    },
+    {
+      "name": "tree_2-exact-editor-geometry",
+      "status": "PASS",
+      "detail": "All bones/cubes/UV/transform values equal the uploaded editor project"
+    },
+    {
+      "name": "tree_2-original-preserved",
+      "status": "PASS",
+      "detail": "Original profile remains byte-identical to the pinned original geometry"
+    },
+    {
+      "name": "tree_2-finite-render-envelope",
+      "status": "PASS",
+      "detail": "All rotated cube corners fit the declared ALT render envelope: min=[-5.745197529096936, -0.7351611060056613, -7.160521956572274], max=[6.52240571447219, 12.671617279982588, 4.386308087983078]"
+    },
+    {
+      "name": "tree_3-exact-editor-geometry",
+      "status": "PASS",
+      "detail": "All bones/cubes/UV/transform values equal the uploaded editor project"
+    },
+    {
+      "name": "tree_3-original-preserved",
+      "status": "PASS",
+      "detail": "Original profile remains byte-identical to the pinned original geometry"
+    },
+    {
+      "name": "tree_3-finite-render-envelope",
+      "status": "PASS",
+      "detail": "All rotated cube corners fit the declared ALT render envelope: min=[-7.494672213067783, -0.7351611060056613, -7.447143969156718], max=[6.125880273159689, 13.656184654993273, 6.784170480336767]"
+    },
+    {
+      "name": "exact-editor-atlas",
+      "status": "PASS",
+      "detail": "Uploaded embedded PNG bytes are used directly"
+    },
+    {
+      "name": "original-atlas-preserved",
+      "status": "PASS",
+      "detail": "Original 3D atlas is unchanged"
+    },
+    {
+      "name": "renderer-injection-target-exists",
+      "status": "PASS",
+      "detail": "Typed production shouldRender overload exists with intermediary Frustum descriptor"
+    },
+    {
+      "name": "tree_1.png-alpha-and-size",
+      "status": "PASS",
+      "detail": "Geometry silhouette and transparency remain exact"
+    },
+    {
+      "name": "tree_1.png-foliage-lighter",
+      "status": "PASS",
+      "detail": "703 authored ochre leaf texels increase luminance"
+    },
+    {
+      "name": "tree_1.png-unrelated-islands-protected",
+      "status": "PASS",
+      "detail": "Outside the requested leaf/bark areas and pre-existing stone mask, all atlas pixels are unchanged"
+    },
+    {
+      "name": "tree_2.png-alpha-and-size",
+      "status": "PASS",
+      "detail": "Geometry silhouette and transparency remain exact"
+    },
+    {
+      "name": "tree_2.png-foliage-lighter",
+      "status": "PASS",
+      "detail": "267 authored ochre leaf texels increase luminance"
+    },
+    {
+      "name": "tree_2.png-unrelated-islands-protected",
+      "status": "PASS",
+      "detail": "Outside the requested leaf/bark areas and pre-existing stone mask, all atlas pixels are unchanged"
+    },
+    {
+      "name": "target-twig-uses-corrected-small-island",
+      "status": "PASS",
+      "detail": "Actual source_original_tree variant5 uses the top-left48x48 island"
+    },
+    {
+      "name": "small-twig-no-black-neutral-contour",
+      "status": "PASS",
+      "detail": "No neutral twig contour remains darker than the main bark minimum; saturated ochre leaf detail is preserved"
+    },
+    {
+      "name": "second-tree-outline-matches-primary",
+      "status": "PASS",
+      "detail": "All 1908 darkest bark texels now match the main tree, preserving the original shape"
+    },
+    {
+      "name": "tree-render-bounds-registered",
+      "status": "PASS",
+      "detail": "Separate client-only culling adjustment"
+    },
+    {
+      "name": "bounds-mode-and-id-gated",
+      "status": "PASS",
+      "detail": "Only ALT tree rendering changes, without physical bounds mutation"
+    },
+    {
+      "name": "production-tree-mixin-class",
+      "status": "PASS",
+      "detail": "Compiled class present"
+    },
+    {
+      "name": "production-tree-mixin-config",
+      "status": "PASS",
+      "detail": "Production Fabric metadata registers the config"
+    }
+  ]
+}

@@ -1,0 +1,300 @@
+{
+  "status": "PASS",
+  "checks": [
+    {
+      "name": "actual-static-target-230-36",
+      "status": "PASS",
+      "detail": [
+        "bloodborne_dw:source_addon_gray_glazed_terracotta_0"
+      ]
+    },
+    {
+      "name": "actual-static-target-13-103",
+      "status": "PASS",
+      "detail": [
+        "bloodborne_dw:source_stairs_exposed_cut_copper_stairs_top"
+      ]
+    },
+    {
+      "name": "every-corner-face-inside-corrected-island",
+      "status": "PASS",
+      "detail": {
+        "facesChecked": 11,
+        "sourceSprite": "bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0018",
+        "rectangle": [
+          96,
+          64,
+          126,
+          96
+        ]
+      }
+    },
+    {
+      "name": "chestnut-generic-wall-bricks.png",
+      "status": "PASS",
+      "detail": {
+        "mean": [
+          102.3671875,
+          83.484375,
+          73.6484375
+        ],
+        "matchingWallMean": [
+          103.78515625,
+          84.7109375,
+          74.7421875
+        ],
+        "allSourceRepresentations": "shared sprite"
+      }
+    },
+    {
+      "name": "accent-base-preserved-bricks.png",
+      "status": "PASS",
+      "detail": "Regional sage/sand still receive the original warm base, not newly red pixels"
+    },
+    {
+      "name": "chestnut-generic-wall-bricks_0.png",
+      "status": "PASS",
+      "detail": {
+        "mean": [
+          104.07421875,
+          84.91015625,
+          74.8984375
+        ],
+        "matchingWallMean": [
+          103.78515625,
+          84.7109375,
+          74.7421875
+        ],
+        "allSourceRepresentations": "shared sprite"
+      }
+    },
+    {
+      "name": "accent-base-preserved-bricks_0.png",
+      "status": "PASS",
+      "detail": "Regional sage/sand still receive the original warm base, not newly red pixels"
+    },
+    {
+      "name": "chestnut-generic-wall-bricks_1.png",
+      "status": "PASS",
+      "detail": {
+        "mean": [
+          103.96875,
+          84.90625,
+          74.8046875
+        ],
+        "matchingWallMean": [
+          103.78515625,
+          84.7109375,
+          74.7421875
+        ],
+        "allSourceRepresentations": "shared sprite"
+      }
+    },
+    {
+      "name": "accent-base-preserved-bricks_1.png",
+      "status": "PASS",
+      "detail": "Regional sage/sand still receive the original warm base, not newly red pixels"
+    },
+    {
+      "name": "chestnut-generic-wall-bricks_2.png",
+      "status": "PASS",
+      "detail": {
+        "mean": [
+          102.97265625,
+          84.09375,
+          74.06640625
+        ],
+        "matchingWallMean": [
+          103.78515625,
+          84.7109375,
+          74.7421875
+        ],
+        "allSourceRepresentations": "shared sprite"
+      }
+    },
+    {
+      "name": "accent-base-preserved-bricks_2.png",
+      "status": "PASS",
+      "detail": "Regional sage/sand still receive the original warm base, not newly red pixels"
+    },
+    {
+      "name": "all-shutter-texture-aliases-equal",
+      "status": "PASS",
+      "detail": "Closed/open source shutters, backdrop and dedicated wall models now sample identical material pixels"
+    },
+    {
+      "name": "shutter-wood-glass-and-alpha-preserved",
+      "status": "PASS",
+      "detail": "Entire lower atlas and every transparent cutout remain exact"
+    },
+    {
+      "name": "default-shutter-tone-matches-stone-wall",
+      "status": "PASS",
+      "detail": {
+        "surround": [
+          133.1783431006926,
+          127.7477357485349,
+          112.46350559403304
+        ],
+        "stoneWall": [
+          130.875,
+          125.49609375,
+          110.60546875
+        ]
+      }
+    },
+    {
+      "name": "brick-context-shutter-tone-matches-brick-wall",
+      "status": "PASS",
+      "detail": "Nearest actual structural brick walls select a chestnut atlas; wood/glass still exact"
+    },
+    {
+      "name": "shutter-model-coverage",
+      "status": "PASS",
+      "detail": [
+        "assets/bloodborne_dw/models/interactions/shutter_0.json",
+        "assets/bloodborne_dw/models/interactions/shutter_1.json",
+        "assets/bloodborne_dw/models/interactions/shutter_wall_0.json",
+        "assets/bloodborne_dw/models/interactions/shutter_wall_1.json",
+        "assets/bloodborne_dw/models/remaining/source/minecraft/block/spruce_trapdoor_bottom.json",
+        "assets/bloodborne_dw/models/remaining/source/minecraft/block/spruce_trapdoor_open.json",
+        "assets/bloodborne_dw/models/interactions/shutter_backdrop.json"
+      ]
+    },
+    {
+      "name": "regional-wall-quads-never-cross-wood-boundary",
+      "status": "PASS",
+      "detail": []
+    },
+    {
+      "name": "regional-shutter-coverage",
+      "status": "PASS",
+      "detail": "Shared source atlas participates in every existing facade role, not only the two patched model files"
+    },
+    {
+      "name": "accent-sprites-stitched",
+      "status": "PASS",
+      "detail": "All preserved regional sprite aliases are physically stitched"
+    },
+    {
+      "name": "embedded-red-wall-protects-all-trims",
+      "status": "PASS",
+      "detail": "Only the brick UV island changes; every stone trim, window and alpha texel stays exact"
+    },
+    {
+      "name": "embedded-red-wall-matches-brick-family",
+      "status": "PASS",
+      "detail": "Mixed corner/side faces no longer retain beige embedded masonry next to generic red brick"
+    },
+    {
+      "name": "red-house-actual-static-family-is-contextual",
+      "status": "PASS",
+      "detail": "Actual screenshot6 cell183,64,-943 recipe198 resolves the embedded0010 family; every clone is classified by its structural neighbours"
+    },
+    {
+      "name": "all-native-meshes-classified",
+      "status": "PASS",
+      "detail": {
+        "meshes": 144883,
+        "nativeCells": 157579,
+        "stoneMeshes": 6306,
+        "brickMeshes": 19506
+      }
+    },
+    {
+      "name": "native-converted-wall-types-resolve-actual-sprites",
+      "status": "PASS",
+      "detail": {
+        "homogeneousStructuralMeshesChecked": 303,
+        "wrongMeshIndices": []
+      }
+    },
+    {
+      "name": "original-corner-protected-atlas",
+      "status": "PASS",
+      "detail": "Only the UV islands used by the bright corner masonry change"
+    },
+    {
+      "name": "original-corner-tone",
+      "status": "PASS",
+      "detail": {
+        "corner": [
+          62.021875,
+          62.021875,
+          62.021875
+        ],
+        "adjacentBrick": [
+          95.1640625,
+          95.1640625,
+          95.1640625
+        ],
+        "sourceLightingCompensation": 0.65
+      }
+    },
+    {
+      "name": "original-arch-only-shell-material-changed",
+      "status": "PASS",
+      "detail": "All geometry, other elements and physical models remain identical"
+    },
+    {
+      "name": "original-arch-stone-continues-between-ends",
+      "status": "PASS",
+      "detail": "All four shell faces use the real arch stone atlas rather than unrelated decoration pixels"
+    },
+    {
+      "name": "original-arch-ends-use-real-rounded-arch",
+      "status": "PASS",
+      "detail": "Both ends sample the full rounded arch island at pixels80..128/y0..28; the old striped triangular roof island is no longer used"
+    },
+    {
+      "name": "original-arch-shell-opaque",
+      "status": "PASS",
+      "detail": "The connecting stone UV patch has no hidden transparent holes"
+    },
+    {
+      "name": "alt-corner-protected-atlas",
+      "status": "PASS",
+      "detail": "Only the UV islands used by the bright corner masonry change"
+    },
+    {
+      "name": "alt-corner-tone",
+      "status": "PASS",
+      "detail": {
+        "corner": [
+          66.9,
+          54.34791666666667,
+          48.114583333333336
+        ],
+        "adjacentBrick": [
+          103.78515625,
+          84.7109375,
+          74.7421875
+        ],
+        "sourceLightingCompensation": 0.65
+      }
+    },
+    {
+      "name": "alt-arch-only-shell-material-changed",
+      "status": "PASS",
+      "detail": "All geometry, other elements and physical models remain identical"
+    },
+    {
+      "name": "alt-arch-stone-continues-between-ends",
+      "status": "PASS",
+      "detail": "All four shell faces use the real arch stone atlas rather than unrelated decoration pixels"
+    },
+    {
+      "name": "alt-arch-ends-use-real-rounded-arch",
+      "status": "PASS",
+      "detail": "Both ends sample the full rounded arch island at pixels80..128/y0..28; the old striped triangular roof island is no longer used"
+    },
+    {
+      "name": "alt-arch-shell-opaque",
+      "status": "PASS",
+      "detail": "The connecting stone UV patch has no hidden transparent holes"
+    }
+  ],
+  "limitations": [
+    "Static material/UV checks do not replace a runtime city visual pass."
+  ]
+}

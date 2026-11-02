@@ -1,0 +1,616 @@
+{
+  "status": "PASS",
+  "kind": "static-source-and-pinned-base-asset-contract",
+  "baseJar": "C:\\Users\\vakir\\CodexProjects\\DW-Visual-Fixes7\\repo\\DW-City-Visuals\\baseline\\mod.jar",
+  "checks": [
+    {
+      "name": "spire-blue-family",
+      "status": "PASS",
+      "detail": "bad spire material=bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0013; blue bias=[0.62, 0.78, 0.84]; cyan reference variants=8, textures=['bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0115']"
+    },
+    {
+      "name": "prototype-wall-eight-materials",
+      "status": "PASS",
+      "detail": "eight source backing sprites map to one ALT material: [{'luminance': True, 'scale': [0.88, 0.72, 0.64], 'offset': [5, 4, 3]}, {'luminance': True, 'scale': [0.88, 0.72, 0.64], 'offset': [5, 4, 3]}, {'luminance': True, 'scale': [0.88, 0.72, 0.64], 'offset': [5, 4, 3]}, {'luminance': True, 'scale': [0.88, 0.72, 0.64], 'offset': [5, 4, 3]}, {'luminance': True, 'scale': [0.88, 0.72, 0.64], 'offset': [5, 4, 3]}, {'luminance': True, 'scale': [0.88, 0.72, 0.64], 'offset': [5, 4, 3]}, {'luminance': True, 'scale': [0.88, 0.72, 0.64], 'offset': [5, 4, 3]}, {'luminance': True, 'scale': [0.88, 0.72, 0.64], 'offset': [5, 4, 3]}]"
+    },
+    {
+      "name": "bright-spire-0010-single-decode-rule",
+      "status": "PASS",
+      "detail": "original and ALT modes each have exactly one sprite rule; ALT={'luminance': True, 'scale': [0.76, 0.73, 0.65], 'offset': [3, 3, 2]}"
+    },
+    {
+      "name": "bright-spire-0028-single-decode-rule",
+      "status": "PASS",
+      "detail": "original and ALT modes each have exactly one sprite rule; ALT={'luminance': True, 'scale': [0.76, 0.73, 0.65], 'offset': [3, 3, 2]}"
+    },
+    {
+      "name": "bright-spire-0045-single-decode-rule",
+      "status": "PASS",
+      "detail": "original and ALT modes each have exactly one sprite rule; ALT={'luminance': True, 'scale': [0.76, 0.73, 0.65], 'offset': [3, 3, 2]}"
+    },
+    {
+      "name": "sprite-tone-runtime-hook-removed",
+      "status": "PASS",
+      "detail": "color families are baked to profile PNGs; no per-sprite runtime color hook is registered"
+    },
+    {
+      "name": "original-bright-family-unified",
+      "status": "PASS",
+      "detail": "0010/0028/0045 use one original-mode tone rule: [{'luminance': True, 'scale': [0.84, 0.84, 0.84], 'offset': [0, 0, 0]}, {'luminance': True, 'scale': [0.84, 0.84, 0.84], 'offset': [0, 0, 0]}, {'luminance': True, 'scale': [0.84, 0.84, 0.84], 'offset': [0, 0, 0]}]"
+    },
+    {
+      "name": "pink-window-alias-atlas",
+      "status": "PASS",
+      "detail": "ALT atlas loads the baked alias PNG; family rule derives it from source bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0010"
+    },
+    {
+      "name": "pink-window-region-mask",
+      "status": "PASS",
+      "detail": "side-only pixel mask=[[51, 48, 71, 64]]; facade rose region covers (178,92,-814)=True"
+    },
+    {
+      "name": "shutter-wall-dedicated-backing-shutter_wall_0.json",
+      "status": "PASS",
+      "detail": "geometry unchanged=True; shared roof1 source=bloodborne_dw:block/remaining/source/minecraft/block/addon/roof_1; ALT backing=bloodborne_dw:block/autumn_c3/window_surround"
+    },
+    {
+      "name": "shutter-wall-dedicated-backing-shutter_wall_1.json",
+      "status": "PASS",
+      "detail": "geometry unchanged=True; shared roof1 source=bloodborne_dw:block/remaining/source/minecraft/block/addon/roof_1; ALT backing=bloodborne_dw:block/autumn_c3/window_surround"
+    },
+    {
+      "name": "window-backing-aliases-indexed",
+      "status": "PASS",
+      "detail": "dedicated backing aliases remain physical roof_1-derived PNGs; v7 also repairs the shared wall islands used by all other shutter representations"
+    },
+    {
+      "name": "shared-roof-resource-not-repointed",
+      "status": "PASS",
+      "detail": "original atlas retains ordinary roof_1 without an alias override"
+    },
+    {
+      "name": "v7-actual-static-target-230-36",
+      "status": "PASS",
+      "detail": "['bloodborne_dw:source_addon_gray_glazed_terracotta_0']"
+    },
+    {
+      "name": "v7-actual-static-target-13-103",
+      "status": "PASS",
+      "detail": "['bloodborne_dw:source_stairs_exposed_cut_copper_stairs_top']"
+    },
+    {
+      "name": "v7-every-corner-face-inside-corrected-island",
+      "status": "PASS",
+      "detail": "{'facesChecked': 11, 'sourceSprite': 'bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0018', 'rectangle': [96, 64, 126, 96]}"
+    },
+    {
+      "name": "v7-chestnut-generic-wall-bricks.png",
+      "status": "PASS",
+      "detail": "{'mean': [102.3671875, 83.484375, 73.6484375], 'matchingWallMean': [103.78515625, 84.7109375, 74.7421875], 'allSourceRepresentations': 'shared sprite'}"
+    },
+    {
+      "name": "v7-accent-base-preserved-bricks.png",
+      "status": "PASS",
+      "detail": "Regional sage/sand still receive the original warm base, not newly red pixels"
+    },
+    {
+      "name": "v7-chestnut-generic-wall-bricks_0.png",
+      "status": "PASS",
+      "detail": "{'mean': [104.07421875, 84.91015625, 74.8984375], 'matchingWallMean': [103.78515625, 84.7109375, 74.7421875], 'allSourceRepresentations': 'shared sprite'}"
+    },
+    {
+      "name": "v7-accent-base-preserved-bricks_0.png",
+      "status": "PASS",
+      "detail": "Regional sage/sand still receive the original warm base, not newly red pixels"
+    },
+    {
+      "name": "v7-chestnut-generic-wall-bricks_1.png",
+      "status": "PASS",
+      "detail": "{'mean': [103.96875, 84.90625, 74.8046875], 'matchingWallMean': [103.78515625, 84.7109375, 74.7421875], 'allSourceRepresentations': 'shared sprite'}"
+    },
+    {
+      "name": "v7-accent-base-preserved-bricks_1.png",
+      "status": "PASS",
+      "detail": "Regional sage/sand still receive the original warm base, not newly red pixels"
+    },
+    {
+      "name": "v7-chestnut-generic-wall-bricks_2.png",
+      "status": "PASS",
+      "detail": "{'mean': [102.97265625, 84.09375, 74.06640625], 'matchingWallMean': [103.78515625, 84.7109375, 74.7421875], 'allSourceRepresentations': 'shared sprite'}"
+    },
+    {
+      "name": "v7-accent-base-preserved-bricks_2.png",
+      "status": "PASS",
+      "detail": "Regional sage/sand still receive the original warm base, not newly red pixels"
+    },
+    {
+      "name": "v7-all-shutter-texture-aliases-equal",
+      "status": "PASS",
+      "detail": "Closed/open source shutters, backdrop and dedicated wall models now sample identical material pixels"
+    },
+    {
+      "name": "v7-shutter-wood-glass-and-alpha-preserved",
+      "status": "PASS",
+      "detail": "Entire lower atlas and every transparent cutout remain exact"
+    },
+    {
+      "name": "v7-shutter-tone-matches-generic-wall",
+      "status": "PASS",
+      "detail": "{'surround': [103.04994672349494, 84.05394246137453, 74.23534896110814], 'wall': [103.78515625, 84.7109375, 74.7421875]}"
+    },
+    {
+      "name": "v7-shutter-model-coverage",
+      "status": "PASS",
+      "detail": "['assets/bloodborne_dw/models/interactions/shutter_0.json', 'assets/bloodborne_dw/models/interactions/shutter_1.json', 'assets/bloodborne_dw/models/interactions/shutter_wall_0.json', 'assets/bloodborne_dw/models/interactions/shutter_wall_1.json', 'assets/bloodborne_dw/models/remaining/source/minecraft/block/spruce_trapdoor_bottom.json', 'assets/bloodborne_dw/models/remaining/source/minecraft/block/spruce_trapdoor_open.json', 'assets/bloodborne_dw/models/interactions/shutter_backdrop.json']"
+    },
+    {
+      "name": "v7-regional-shutter-coverage",
+      "status": "PASS",
+      "detail": "Shared source atlas participates in every existing facade role, not only the two patched model files"
+    },
+    {
+      "name": "v7-accent-sprites-stitched",
+      "status": "PASS",
+      "detail": "All preserved regional sprite aliases are physically stitched"
+    },
+    {
+      "name": "v7-original-corner-protected-atlas",
+      "status": "PASS",
+      "detail": "Only the UV islands used by the bright corner masonry change"
+    },
+    {
+      "name": "v7-original-corner-tone",
+      "status": "PASS",
+      "detail": "{'corner': [95.246875, 95.246875, 95.246875], 'adjacentBrick': [95.1640625, 95.1640625, 95.1640625]}"
+    },
+    {
+      "name": "v7-original-arch-only-shell-material-changed",
+      "status": "PASS",
+      "detail": "All geometry, arch ends, other elements and physical models remain identical"
+    },
+    {
+      "name": "v7-original-arch-stone-continues-between-ends",
+      "status": "PASS",
+      "detail": "All four shell faces use the real arch stone atlas rather than unrelated decoration pixels"
+    },
+    {
+      "name": "v7-original-arch-shell-opaque",
+      "status": "PASS",
+      "detail": "The connecting stone UV patch has no hidden transparent holes"
+    },
+    {
+      "name": "v7-alt-corner-protected-atlas",
+      "status": "PASS",
+      "detail": "Only the UV islands used by the bright corner masonry change"
+    },
+    {
+      "name": "v7-alt-corner-tone",
+      "status": "PASS",
+      "detail": "{'corner': [102.675, 83.734375, 73.871875], 'adjacentBrick': [103.78515625, 84.7109375, 74.7421875]}"
+    },
+    {
+      "name": "v7-alt-arch-only-shell-material-changed",
+      "status": "PASS",
+      "detail": "All geometry, arch ends, other elements and physical models remain identical"
+    },
+    {
+      "name": "v7-alt-arch-stone-continues-between-ends",
+      "status": "PASS",
+      "detail": "All four shell faces use the real arch stone atlas rather than unrelated decoration pixels"
+    },
+    {
+      "name": "v7-alt-arch-shell-opaque",
+      "status": "PASS",
+      "detail": "The connecting stone UV patch has no hidden transparent holes"
+    },
+    {
+      "name": "actual-rp-gate-palette-small_gate",
+      "status": "PASS",
+      "detail": "real entity texture; bronze leaf islands=[[0, 0, 64, 96], [130, 0, 159, 86], [131, 96, 149, 109]]; warm frame base registered"
+    },
+    {
+      "name": "rp-gate-leaves-two-sided-small_gate",
+      "status": "PASS",
+      "detail": "actual entity leaf geometry retains front/back faces and original transforms"
+    },
+    {
+      "name": "actual-rp-gate-palette-main_gate",
+      "status": "PASS",
+      "detail": "real entity texture; bronze leaf islands=[[256, 256, 311, 379]]; warm frame base registered"
+    },
+    {
+      "name": "rp-gate-leaves-two-sided-main_gate",
+      "status": "PASS",
+      "detail": "actual entity leaf geometry retains front/back faces and original transforms"
+    },
+    {
+      "name": "native-editable-wall-material-parity-1",
+      "status": "PASS",
+      "detail": "native retained and editable primitive share the exact same authored material and tone"
+    },
+    {
+      "name": "native-editable-wall-material-parity-2",
+      "status": "PASS",
+      "detail": "native retained and editable primitive share the exact same authored material and tone"
+    },
+    {
+      "name": "native-editable-wall-material-parity-3",
+      "status": "PASS",
+      "detail": "native retained and editable primitive share the exact same authored material and tone"
+    },
+    {
+      "name": "native-editable-wall-material-parity-4",
+      "status": "PASS",
+      "detail": "native retained and editable primitive share the exact same authored material and tone"
+    },
+    {
+      "name": "native-editable-wall-material-parity-5",
+      "status": "PASS",
+      "detail": "native retained and editable primitive share the exact same authored material and tone"
+    },
+    {
+      "name": "native-editable-wall-material-parity-7",
+      "status": "PASS",
+      "detail": "native retained and editable primitive share the exact same authored material and tone"
+    },
+    {
+      "name": "main-gate-complete-opaque-edges-original",
+      "status": "PASS",
+      "detail": "six added perimeter quads; two side UVs exclude transparent padding; all geometry transforms/front-back faces preserved"
+    },
+    {
+      "name": "main-gate-complete-opaque-edges-alt",
+      "status": "PASS",
+      "detail": "six added perimeter quads; two side UVs exclude transparent padding; all geometry transforms/front-back faces preserved"
+    },
+    {
+      "name": "chestnut-window-backing-only",
+      "status": "PASS",
+      "detail": "the remaining beige insert is the exact window_6 brick UV; glass, wood and stone frame outside it are protected"
+    },
+    {
+      "name": "rp-door-frame-only",
+      "status": "PASS",
+      "detail": "static stone frame is masked; full-atlas default leaves moving wood and inset panes unchanged"
+    },
+    {
+      "name": "rp-window-pane-protection",
+      "status": "PASS",
+      "detail": "frame/ironwork masks=3981 texels; protected pane overlap=0"
+    },
+    {
+      "name": "billboard-tree-base-only-mask",
+      "status": "PASS",
+      "detail": "all stone UVs covered=True; masked texels=3506; trunk overlap=False; atlas dimensions=(256, 256)"
+    },
+    {
+      "name": "user-3d-tree-project-imported-original-preserved",
+      "status": "PASS",
+      "detail": "ALT tree_1/2/3 geometries equal the uploaded project; Original stays byte-identical to the pinned baseline"
+    },
+    {
+      "name": "statue-entity-palette-contract",
+      "status": "PASS",
+      "detail": "ResourceTexture decode rule=alt_statue_stone; expected registered alt_statue_stone"
+    },
+    {
+      "name": "statue-hook-is-texture-scoped-and-mode-aware",
+      "status": "PASS",
+      "detail": "exact RP entity hook uses the remapped image accessor and decoder applies only for ALT"
+    },
+    {
+      "name": "statue-image-accessor-registered",
+      "status": "PASS",
+      "detail": "TextureData image accessor is remapped and registered in the client mixin config"
+    },
+    {
+      "name": "original-resource-index-complete",
+      "status": "PASS",
+      "detail": "active profile assets=272 indexed=272 unindexed=[] stale=[]"
+    },
+    {
+      "name": "alt-resource-index-complete",
+      "status": "PASS",
+      "detail": "active profile assets=315 indexed=315 unindexed=[] stale=[]"
+    },
+    {
+      "name": "alt-indexed-override-shutter_wall_0.json",
+      "status": "PASS",
+      "detail": "required model override is physical and indexed: assets/bloodborne_dw/models/interactions/shutter_wall_0.json"
+    },
+    {
+      "name": "alt-indexed-override-shutter_wall_1.json",
+      "status": "PASS",
+      "detail": "required model override is physical and indexed: assets/bloodborne_dw/models/interactions/shutter_wall_1.json"
+    },
+    {
+      "name": "baked-pixels-original-bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0010",
+      "status": "PASS",
+      "detail": "{'ok': True, 'size': [128, 128], 'changedPixels': 10203, 'alphaChanged': 0, 'outsideMaskedRegionChanged': 0, 'maskedRegionChangedPixels': 0, 'supersededUVPixelsVerifiedByFacadeAudit': 0}"
+    },
+    {
+      "name": "baked-pixels-alt-bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0010",
+      "status": "PASS",
+      "detail": "{'ok': True, 'size': [128, 128], 'changedPixels': 10203, 'alphaChanged': 0, 'outsideMaskedRegionChanged': 0, 'maskedRegionChangedPixels': 0, 'supersededUVPixelsVerifiedByFacadeAudit': 0}"
+    },
+    {
+      "name": "baked-pixels-original-bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0028",
+      "status": "PASS",
+      "detail": "{'ok': True, 'size': [128, 128], 'changedPixels': 8664, 'alphaChanged': 0, 'outsideMaskedRegionChanged': 0, 'maskedRegionChangedPixels': 0, 'supersededUVPixelsVerifiedByFacadeAudit': 0}"
+    },
+    {
+      "name": "baked-pixels-alt-bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0028",
+      "status": "PASS",
+      "detail": "{'ok': True, 'size': [128, 128], 'changedPixels': 8664, 'alphaChanged': 0, 'outsideMaskedRegionChanged': 0, 'maskedRegionChangedPixels': 0, 'supersededUVPixelsVerifiedByFacadeAudit': 0}"
+    },
+    {
+      "name": "baked-pixels-original-bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0045",
+      "status": "PASS",
+      "detail": "{'ok': True, 'size': [128, 128], 'changedPixels': 13505, 'alphaChanged': 0, 'outsideMaskedRegionChanged': 0, 'maskedRegionChangedPixels': 0, 'supersededUVPixelsVerifiedByFacadeAudit': 0}"
+    },
+    {
+      "name": "baked-pixels-alt-bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0045",
+      "status": "PASS",
+      "detail": "{'ok': True, 'size': [128, 128], 'changedPixels': 13505, 'alphaChanged': 0, 'outsideMaskedRegionChanged': 0, 'maskedRegionChangedPixels': 0, 'supersededUVPixelsVerifiedByFacadeAudit': 0}"
+    },
+    {
+      "name": "baked-pixels-alt-bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0013",
+      "status": "PASS",
+      "detail": "{'ok': True, 'size': [128, 128], 'changedPixels': 5186, 'alphaChanged': 0, 'outsideMaskedRegionChanged': 0, 'maskedRegionChangedPixels': 0, 'supersededUVPixelsVerifiedByFacadeAudit': 0}"
+    },
+    {
+      "name": "baked-pixels-alt-bloodborne_dw:wall/source/minecraft/block/polished_deepslate_wall_0",
+      "status": "PASS",
+      "detail": "{'ok': True, 'size': [16, 16], 'changedPixels': 256, 'alphaChanged': 0, 'outsideMaskedRegionChanged': 0, 'maskedRegionChangedPixels': 0, 'supersededUVPixelsVerifiedByFacadeAudit': 0}"
+    },
+    {
+      "name": "baked-pixels-alt-bloodborne_dw:wall/source/minecraft/block/polished_deepslate_wall_1",
+      "status": "PASS",
+      "detail": "{'ok': True, 'size': [16, 16], 'changedPixels': 256, 'alphaChanged': 0, 'outsideMaskedRegionChanged': 0, 'maskedRegionChangedPixels': 0, 'supersededUVPixelsVerifiedByFacadeAudit': 0}"
+    },
+    {
+      "name": "baked-pixels-alt-bloodborne_dw:wall/source/minecraft/block/polished_deepslate_wall_2",
+      "status": "PASS",
+      "detail": "{'ok': True, 'size': [16, 16], 'changedPixels': 256, 'alphaChanged': 0, 'outsideMaskedRegionChanged': 0, 'maskedRegionChangedPixels': 0, 'supersededUVPixelsVerifiedByFacadeAudit': 0}"
+    },
+    {
+      "name": "baked-pixels-alt-bloodborne_dw:wall/source/minecraft/block/polished_deepslate_wall_3",
+      "status": "PASS",
+      "detail": "{'ok': True, 'size': [16, 16], 'changedPixels': 256, 'alphaChanged': 0, 'outsideMaskedRegionChanged': 0, 'maskedRegionChangedPixels': 0, 'supersededUVPixelsVerifiedByFacadeAudit': 0}"
+    },
+    {
+      "name": "baked-pixels-alt-bloodborne_dw:wall/source/minecraft/block/polished_deepslate_wall_4",
+      "status": "PASS",
+      "detail": "{'ok': True, 'size': [16, 16], 'changedPixels': 256, 'alphaChanged': 0, 'outsideMaskedRegionChanged': 0, 'maskedRegionChangedPixels': 0, 'supersededUVPixelsVerifiedByFacadeAudit': 0}"
+    },
+    {
+      "name": "baked-pixels-alt-bloodborne_dw:wall/source/minecraft/block/polished_deepslate_wall_5",
+      "status": "PASS",
+      "detail": "{'ok': True, 'size': [16, 16], 'changedPixels': 256, 'alphaChanged': 0, 'outsideMaskedRegionChanged': 0, 'maskedRegionChangedPixels': 0, 'supersededUVPixelsVerifiedByFacadeAudit': 0}"
+    },
+    {
+      "name": "baked-pixels-alt-bloodborne_dw:wall/source/minecraft/block/polished_deepslate_wall_6",
+      "status": "PASS",
+      "detail": "{'ok': True, 'size': [16, 16], 'changedPixels': 256, 'alphaChanged': 0, 'outsideMaskedRegionChanged': 0, 'maskedRegionChangedPixels': 0, 'supersededUVPixelsVerifiedByFacadeAudit': 0}"
+    },
+    {
+      "name": "baked-pixels-alt-bloodborne_dw:wall/source/minecraft/block/polished_deepslate_wall_7",
+      "status": "PASS",
+      "detail": "{'ok': True, 'size': [16, 16], 'changedPixels': 256, 'alphaChanged': 0, 'outsideMaskedRegionChanged': 0, 'maskedRegionChangedPixels': 0, 'supersededUVPixelsVerifiedByFacadeAudit': 0}"
+    },
+    {
+      "name": "baked-pixels-alt-bloodborne_dw:block/autumn_c3/accent/window_wall_0010",
+      "status": "PASS",
+      "detail": "{'ok': True, 'size': [128, 128], 'changedPixels': 10203, 'alphaChanged': 0, 'outsideMaskedRegionChanged': 0, 'maskedRegionChangedPixels': 320, 'supersededUVPixelsVerifiedByFacadeAudit': 0}"
+    },
+    {
+      "name": "baked-pixels-alt-bloodborne_rp:entities/decorations/small_gate",
+      "status": "PASS",
+      "detail": "{'ok': True, 'size': [176, 176], 'changedPixels': 10055, 'alphaChanged': 0, 'outsideMaskedRegionChanged': 0, 'maskedRegionChangedPixels': 2715, 'supersededUVPixelsVerifiedByFacadeAudit': 0}"
+    },
+    {
+      "name": "baked-pixels-alt-bloodborne_rp:entities/decorations/main_gate",
+      "status": "PASS",
+      "detail": "{'ok': True, 'size': [512, 384], 'changedPixels': 128486, 'alphaChanged': 0, 'outsideMaskedRegionChanged': 0, 'maskedRegionChangedPixels': 3419, 'supersededUVPixelsVerifiedByFacadeAudit': 0}"
+    },
+    {
+      "name": "baked-pixels-alt-bloodborne_dw:block/remaining/source/minecraft/block/polished_deepslate_wall_4",
+      "status": "PASS",
+      "detail": "{'ok': True, 'size': [16, 16], 'changedPixels': 256, 'alphaChanged': 0, 'outsideMaskedRegionChanged': 0, 'maskedRegionChangedPixels': 0, 'supersededUVPixelsVerifiedByFacadeAudit': 0}"
+    },
+    {
+      "name": "baked-pixels-alt-bloodborne_dw:block/remaining/source/minecraft/block/polished_deepslate_wall_1",
+      "status": "PASS",
+      "detail": "{'ok': True, 'size': [16, 16], 'changedPixels': 256, 'alphaChanged': 0, 'outsideMaskedRegionChanged': 0, 'maskedRegionChangedPixels': 0, 'supersededUVPixelsVerifiedByFacadeAudit': 0}"
+    },
+    {
+      "name": "baked-pixels-alt-bloodborne_dw:block/remaining/source/minecraft/block/polished_deepslate_wall_2",
+      "status": "PASS",
+      "detail": "{'ok': True, 'size': [16, 16], 'changedPixels': 256, 'alphaChanged': 0, 'outsideMaskedRegionChanged': 0, 'maskedRegionChangedPixels': 0, 'supersededUVPixelsVerifiedByFacadeAudit': 0}"
+    },
+    {
+      "name": "baked-pixels-alt-bloodborne_dw:block/remaining/source/minecraft/block/polished_deepslate_wall_3",
+      "status": "PASS",
+      "detail": "{'ok': True, 'size': [16, 16], 'changedPixels': 256, 'alphaChanged': 0, 'outsideMaskedRegionChanged': 0, 'maskedRegionChangedPixels': 0, 'supersededUVPixelsVerifiedByFacadeAudit': 0}"
+    },
+    {
+      "name": "baked-pixels-alt-bloodborne_dw:block/remaining/source/minecraft/block/polished_deepslate_wall_5",
+      "status": "PASS",
+      "detail": "{'ok': True, 'size': [16, 16], 'changedPixels': 256, 'alphaChanged': 0, 'outsideMaskedRegionChanged': 0, 'maskedRegionChangedPixels': 0, 'supersededUVPixelsVerifiedByFacadeAudit': 0}"
+    },
+    {
+      "name": "baked-pixels-alt-bloodborne_dw:block/remaining/source/minecraft/block/polished_deepslate_wall_7",
+      "status": "PASS",
+      "detail": "{'ok': True, 'size': [16, 16], 'changedPixels': 256, 'alphaChanged': 0, 'outsideMaskedRegionChanged': 0, 'maskedRegionChangedPixels': 0, 'supersededUVPixelsVerifiedByFacadeAudit': 0}"
+    },
+    {
+      "name": "baked-pixels-alt-bloodborne_rp:entities/decorations/door",
+      "status": "PASS",
+      "detail": "{'ok': True, 'size': [128, 128], 'changedPixels': 3202, 'alphaChanged': 0, 'outsideMaskedRegionChanged': 0, 'maskedRegionChangedPixels': 3202, 'supersededUVPixelsVerifiedByFacadeAudit': 0}"
+    },
+    {
+      "name": "baked-pixels-alt-bloodborne_rp:entities/decorations/spirelamp_0094",
+      "status": "PASS",
+      "detail": "{'ok': True, 'size': [500, 500], 'changedPixels': 1956, 'alphaChanged': 0, 'outsideMaskedRegionChanged': 0, 'maskedRegionChangedPixels': 1956, 'supersededUVPixelsVerifiedByFacadeAudit': 0}"
+    },
+    {
+      "name": "baked-pixels-alt-bloodborne_dw:block/remaining/source/minecraft/block/addon/window_6",
+      "status": "PASS",
+      "detail": "{'ok': True, 'size': [128, 128], 'changedPixels': 160, 'alphaChanged': 0, 'outsideMaskedRegionChanged': 0, 'maskedRegionChangedPixels': 160, 'supersededUVPixelsVerifiedByFacadeAudit': 0}"
+    },
+    {
+      "name": "baked-pixels-alt-bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0092",
+      "status": "PASS",
+      "detail": "{'ok': True, 'size': [128, 128], 'changedPixels': 1484, 'alphaChanged': 0, 'outsideMaskedRegionChanged': 0, 'maskedRegionChangedPixels': 1484, 'supersededUVPixelsVerifiedByFacadeAudit': 0}"
+    },
+    {
+      "name": "baked-pixels-original-bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0012",
+      "status": "PASS",
+      "detail": "{'ok': True, 'size': [128, 128], 'changedPixels': 840, 'alphaChanged': 0, 'outsideMaskedRegionChanged': 0, 'maskedRegionChangedPixels': 840, 'supersededUVPixelsVerifiedByFacadeAudit': 0}"
+    },
+    {
+      "name": "baked-pixels-alt-bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0012",
+      "status": "PASS",
+      "detail": "{'ok': True, 'size': [128, 128], 'changedPixels': 840, 'alphaChanged': 0, 'outsideMaskedRegionChanged': 0, 'maskedRegionChangedPixels': 840, 'supersededUVPixelsVerifiedByFacadeAudit': 0}"
+    },
+    {
+      "name": "baked-pixels-alt-bloodborne_rp:entities/decorations/door_1",
+      "status": "PASS",
+      "detail": "{'ok': True, 'size': [128, 128], 'changedPixels': 3202, 'alphaChanged': 0, 'outsideMaskedRegionChanged': 0, 'maskedRegionChangedPixels': 3202, 'supersededUVPixelsVerifiedByFacadeAudit': 0}"
+    },
+    {
+      "name": "baked-pixels-alt-bloodborne_dw:base/source/minecraft/block/addon/spirelamp_0026",
+      "status": "PASS",
+      "detail": "{'ok': True, 'size': [128, 128], 'changedPixels': 660, 'alphaChanged': 0, 'outsideMaskedRegionChanged': 0, 'maskedRegionChangedPixels': 660, 'supersededUVPixelsVerifiedByFacadeAudit': 0}"
+    },
+    {
+      "name": "baked-pixels-alt-bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0043",
+      "status": "PASS",
+      "detail": "{'ok': True, 'size': [128, 128], 'changedPixels': 6532, 'alphaChanged': 0, 'outsideMaskedRegionChanged': 0, 'maskedRegionChangedPixels': 0, 'supersededUVPixelsVerifiedByFacadeAudit': 0}"
+    },
+    {
+      "name": "baked-pixels-alt-bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0046",
+      "status": "PASS",
+      "detail": "{'ok': True, 'size': [128, 128], 'changedPixels': 4657, 'alphaChanged': 0, 'outsideMaskedRegionChanged': 0, 'maskedRegionChangedPixels': 0, 'supersededUVPixelsVerifiedByFacadeAudit': 0}"
+    },
+    {
+      "name": "baked-pixels-alt-bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0047",
+      "status": "PASS",
+      "detail": "{'ok': True, 'size': [128, 128], 'changedPixels': 4419, 'alphaChanged': 0, 'outsideMaskedRegionChanged': 0, 'maskedRegionChangedPixels': 0, 'supersededUVPixelsVerifiedByFacadeAudit': 0}"
+    },
+    {
+      "name": "baked-pixels-alt-bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0054",
+      "status": "PASS",
+      "detail": "{'ok': True, 'size': [128, 128], 'changedPixels': 5734, 'alphaChanged': 0, 'outsideMaskedRegionChanged': 0, 'maskedRegionChangedPixels': 0, 'supersededUVPixelsVerifiedByFacadeAudit': 0}"
+    },
+    {
+      "name": "baked-pixels-alt-bloodborne_dw:block/remaining/source/minecraft/block/addon/fence_1",
+      "status": "PASS",
+      "detail": "{'ok': True, 'size': [64, 64], 'changedPixels': 448, 'alphaChanged': 0, 'outsideMaskedRegionChanged': 0, 'maskedRegionChangedPixels': 0, 'supersededUVPixelsVerifiedByFacadeAudit': 0}"
+    },
+    {
+      "name": "baked-pixels-alt-bloodborne_dw:block/remaining/source/minecraft/block/addon/gothic_fence",
+      "status": "PASS",
+      "detail": "{'ok': True, 'size': [128, 128], 'changedPixels': 1277, 'alphaChanged': 0, 'outsideMaskedRegionChanged': 0, 'maskedRegionChangedPixels': 0, 'supersededUVPixelsVerifiedByFacadeAudit': 0}"
+    },
+    {
+      "name": "baked-pixels-alt-bloodborne_dw:block/remaining/source/minecraft/block/iron_bars",
+      "status": "PASS",
+      "detail": "{'ok': True, 'size': [16, 16], 'changedPixels': 128, 'alphaChanged': 0, 'outsideMaskedRegionChanged': 0, 'maskedRegionChangedPixels': 0, 'supersededUVPixelsVerifiedByFacadeAudit': 0}"
+    },
+    {
+      "name": "baked-pixels-alt-bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0048",
+      "status": "PASS",
+      "detail": "{'ok': True, 'size': [128, 128], 'changedPixels': 3871, 'alphaChanged': 0, 'outsideMaskedRegionChanged': 0, 'maskedRegionChangedPixels': 0, 'supersededUVPixelsVerifiedByFacadeAudit': 0}"
+    },
+    {
+      "name": "baked-pixels-alt-bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0049",
+      "status": "PASS",
+      "detail": "{'ok': True, 'size': [128, 128], 'changedPixels': 3951, 'alphaChanged': 0, 'outsideMaskedRegionChanged': 0, 'maskedRegionChangedPixels': 0, 'supersededUVPixelsVerifiedByFacadeAudit': 0}"
+    },
+    {
+      "name": "baked-pixels-alt-bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0070",
+      "status": "PASS",
+      "detail": "{'ok': True, 'size': [128, 128], 'changedPixels': 4594, 'alphaChanged': 0, 'outsideMaskedRegionChanged': 0, 'maskedRegionChangedPixels': 0, 'supersededUVPixelsVerifiedByFacadeAudit': 0}"
+    },
+    {
+      "name": "baked-pixels-alt-bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0088",
+      "status": "PASS",
+      "detail": "{'ok': True, 'size': [128, 128], 'changedPixels': 13999, 'alphaChanged': 0, 'outsideMaskedRegionChanged': 0, 'maskedRegionChangedPixels': 0, 'supersededUVPixelsVerifiedByFacadeAudit': 0}"
+    },
+    {
+      "name": "baked-pixels-alt-bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0053",
+      "status": "PASS",
+      "detail": "{'ok': True, 'size': [128, 128], 'changedPixels': 13280, 'alphaChanged': 0, 'outsideMaskedRegionChanged': 0, 'maskedRegionChangedPixels': 0, 'supersededUVPixelsVerifiedByFacadeAudit': 0}"
+    },
+    {
+      "name": "baked-pixels-alt-bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0106",
+      "status": "PASS",
+      "detail": "{'ok': True, 'size': [128, 128], 'changedPixels': 9692, 'alphaChanged': 0, 'outsideMaskedRegionChanged': 0, 'maskedRegionChangedPixels': 0, 'supersededUVPixelsVerifiedByFacadeAudit': 0}"
+    },
+    {
+      "name": "baked-pixels-alt-bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0020",
+      "status": "PASS",
+      "detail": "{'ok': True, 'size': [128, 128], 'changedPixels': 13094, 'alphaChanged': 0, 'outsideMaskedRegionChanged': 0, 'maskedRegionChangedPixels': 0, 'supersededUVPixelsVerifiedByFacadeAudit': 0}"
+    },
+    {
+      "name": "baked-pixels-alt-bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0015",
+      "status": "PASS",
+      "detail": "{'ok': True, 'size': [128, 128], 'changedPixels': 10663, 'alphaChanged': 0, 'outsideMaskedRegionChanged': 0, 'maskedRegionChangedPixels': 0, 'supersededUVPixelsVerifiedByFacadeAudit': 0}"
+    },
+    {
+      "name": "baked-pixels-alt-bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0071",
+      "status": "PASS",
+      "detail": "{'ok': True, 'size': [128, 128], 'changedPixels': 8871, 'alphaChanged': 0, 'outsideMaskedRegionChanged': 0, 'maskedRegionChangedPixels': 0, 'supersededUVPixelsVerifiedByFacadeAudit': 0}"
+    },
+    {
+      "name": "baked-pixels-alt-bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0018",
+      "status": "PASS",
+      "detail": "{'ok': True, 'size': [128, 128], 'changedPixels': 13397, 'alphaChanged': 0, 'outsideMaskedRegionChanged': 0, 'maskedRegionChangedPixels': 3439, 'supersededUVPixelsVerifiedByFacadeAudit': 960}"
+    },
+    {
+      "name": "baked-pixels-alt-bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0108",
+      "status": "PASS",
+      "detail": "{'ok': True, 'size': [128, 128], 'changedPixels': 2453, 'alphaChanged': 0, 'outsideMaskedRegionChanged': 0, 'maskedRegionChangedPixels': 2453, 'supersededUVPixelsVerifiedByFacadeAudit': 0}"
+    },
+    {
+      "name": "baked-pixels-alt-bloodborne_dw:block/remaining/source/minecraft/block/addon/door",
+      "status": "PASS",
+      "detail": "{'ok': True, 'size': [64, 64], 'changedPixels': 3072, 'alphaChanged': 0, 'outsideMaskedRegionChanged': 0, 'maskedRegionChangedPixels': 0, 'supersededUVPixelsVerifiedByFacadeAudit': 0}"
+    },
+    {
+      "name": "baked-pixels-alt-bloodborne_dw:block/remaining/source/minecraft/block/wood_tex",
+      "status": "PASS",
+      "detail": "{'ok': True, 'size': [16, 16], 'changedPixels': 256, 'alphaChanged': 0, 'outsideMaskedRegionChanged': 0, 'maskedRegionChangedPixels': 0, 'supersededUVPixelsVerifiedByFacadeAudit': 0}"
+    },
+    {
+      "name": "baked-pixels-alt-bloodborne_dw:block/remaining/source/minecraft/block/addon/window_1",
+      "status": "PASS",
+      "detail": "{'ok': True, 'size': [64, 64], 'changedPixels': 3856, 'alphaChanged': 0, 'outsideMaskedRegionChanged': 0, 'maskedRegionChangedPixels': 0, 'supersededUVPixelsVerifiedByFacadeAudit': 0}"
+    },
+    {
+      "name": "baked-pixels-alt-bloodborne_dw:block/remaining/source/minecraft/block/addon/tree_1",
+      "status": "PASS",
+      "detail": "{'ok': True, 'size': [256, 256], 'changedPixels': 3506, 'alphaChanged': 0, 'outsideMaskedRegionChanged': 0, 'maskedRegionChangedPixels': 3506, 'supersededUVPixelsVerifiedByFacadeAudit': 0}"
+    },
+    {
+      "name": "baked-pixels-alt-bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0034",
+      "status": "PASS",
+      "detail": "{'ok': True, 'size': [128, 128], 'changedPixels': 5604, 'alphaChanged': 0, 'outsideMaskedRegionChanged': 0, 'maskedRegionChangedPixels': 0, 'supersededUVPixelsVerifiedByFacadeAudit': 0}"
+    },
+    {
+      "name": "materialized-palette-pixels",
+      "status": "PASS",
+      "detail": "validated 55 generated profile PNGs; explicit v7 UV supersessions are independently covered by facade-v7"
+    },
+    {
+      "name": "current-source-camera-plan-coverage",
+      "status": "PASS",
+      "detail": "Static plan has the ten supplied screenshot positions plus three 3D-tree positions. This does not certify actual capture, terrain readiness or visual correctness."
+    }
+  ],
+  "limitations": [
+    "This does not prove in-game colors, texture reload mode selection, or gate visibility at runtime.",
+    "The separate runtime pass uses the current 13-camera driver; completion, terrain readiness and visual review require actual capture evidence."
+  ]
+}
