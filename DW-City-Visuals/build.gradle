@@ -1,8 +1,9 @@
 plugins { id 'fabric-loom' version '1.6.12' }
 
 def workspace = file('D:/DreamWalker')
-def baseline = providers.gradleProperty('baselineJar').orElse(file('baseline/mod.jar').path)
-version = '20261101-altvisual.5'
+def baseline = providers.gradleProperty('baselineJar').orElse(new File(workspace,
+    '.local/dw-fix-20261028/checkpoints/test-launch-microstutter-v22-20261029/mod.jar').path)
+version = '20261101-altvisual.6'
 group = 'dev.dreamwalker'
 base { archivesName = 'dw-altvisual-overlay' }
 layout.buildDirectory = new File(projectDir, 'build')
@@ -43,8 +44,52 @@ tasks.withType(AbstractArchiveTask).configureEach {
 }
 java { withSourcesJar() }
 
+// Compile small ALT texture assets once at build time from immutable source pixels.
+tasks.register('materializeV12Palettes', Exec) {
+    dependsOn tasks.named('verifyBaseline')
+    inputs.files('tools/MaterializeV12Palettes.java', 'tools/v12-baked-palettes.json', 'tools/v12-palette-inputs.zip', 'tools/family-baked-palettes.json')
+    inputs.file(baseline)
+    outputs.files(providers.provider {
+        def rules = new groovy.json.JsonSlurper().parse(file('tools/v12-baked-palettes.json'))
+        def images = rules.sprites.collect { rule ->
+            file('src/main/resources/dw_city_visuals/alt/assets/' + rule.sprite.replace(':', '/textures/') + '.png')
+        }
+        def family = new groovy.json.JsonSlurper().parse(file('tools/family-baked-palettes.json'))
+        family.sprites.each { rule ->
+            ['original', 'alt'].each { mode ->
+                if (rule[mode] || rule.regions?.any { it[mode] })
+                    images.add(file('src/main/resources/dw_city_visuals/' + mode + '/assets/' + rule.sprite.replace(':', '/textures/') + '.png'))
+            }
+        }
+        images.unique()
+    })
+    outputs.file('build/reports/v12-palette-assets.json')
+    doFirst {
+        def gson = sourceSets.client.compileClasspath.files.find { it.name.startsWith('gson-') && it.name.endsWith('.jar') }
+        if (gson == null) throw new GradleException('Missing Gson for palette asset compiler')
+        commandLine new File(System.getProperty('java.home'), 'bin/java.exe').path,
+            '--class-path', gson.path,
+            file('tools/MaterializeV12Palettes.java').path,
+            '--base', baseline.get(), '--resources', file('src/main/resources').path,
+            '--rules', file('tools/v12-baked-palettes.json').path,
+            '--family', file('tools/family-baked-palettes.json').path,
+            '--inputs', file('tools/v12-palette-inputs.zip').path,
+            '--receipt', file('build/reports/v12-palette-assets.json').path
+    }
+}
+
+tasks.register('generateVisualResourceIndex', Exec) {
+    dependsOn tasks.named('materializeV12Palettes')
+    inputs.files(fileTree('src/main/resources/dw_city_visuals'))
+    inputs.file('tools/prepare_resource_index.py')
+    outputs.file('src/main/resources/assets/bloodborne_dw/visuals/resource-index.json')
+    commandLine new File(workspace, '.local/venv/Scripts/python.exe').path,
+        file('tools/prepare_resource_index.py').path
+}
+
 // Keep the handshake identity in sync without hashing resources on either game thread.
 tasks.register('generateVisualFingerprints', Exec) {
+    dependsOn tasks.named('generateVisualResourceIndex')
     inputs.files(fileTree('src') { exclude '**/profile-fingerprints.json' })
     inputs.file('tools/prepare_visual_fingerprints.py')
     outputs.file('src/main/resources/assets/bloodborne_dw/visuals/profile-fingerprints.json')

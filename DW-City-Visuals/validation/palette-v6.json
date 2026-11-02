@@ -1,0 +1,41 @@
+{
+  "version": "20261101-altvisual.6",
+  "releasedDate": "2026-11-02",
+  "jarSha256": "0bf53c3f6c1aafa96c8cc52307bd239dfd3095dea31cf512b6d56f5e8da17302",
+  "jarBytes": 122694932,
+  "staticStatus": "PASS",
+  "staticCheckCount": 92,
+  "exactPixelPNGs": 52,
+  "runtimeSession": "visual-fixes6c",
+  "runtimeCaptureCount": 9,
+  "runtimeSaved": true,
+  "runtimeActualSimulationDistance": [
+    12
+  ],
+  "runtimeHarnessCorrections": [
+    "invalid requested simulationDistance2; actual12 recorded",
+    "capture driver phase reset after inspected harness error"
+  ],
+  "productionClassesChangedAfterRuntime": [],
+  "finalResourceDeltaAfterRuntime": [
+    "assets/bloodborne_dw/visuals/profile-fingerprints.json",
+    "assets/bloodborne_dw/visuals/resource-index.json",
+    "dw_city_visuals/alt/assets/bloodborne_dw/textures/block/remaining/source/minecraft/block/addon/window_6.png",
+    "dw_city_visuals/alt/assets/bloodborne_rp/geo/main_gate.geo.json",
+    "dw_city_visuals/alt/assets/minecraft/atlases/blocks.json",
+    "dw_city_visuals/original/assets/bloodborne_rp/geo/main_gate.geo.json"
+  ],
+  "finalAssetDeltaTestedBy": [
+    "exact pixel/alpha checks against frozen ALT source",
+    "source-geometry UV and six-face comparison",
+    "independent read-only asset review"
+  ],
+  "limits": [
+    "Final six leaf-cap faces and small window brick patch were verified statically after the client pass, without another client launch.",
+    "Original band tone checked against exact image data; Original runtime reload skipped due low RAM.",
+    "Large-gate back camera was physically blocked by a wall; no claim of a verified full rear panorama.",
+    "This palette update did not repeat a full FPS/memory/flight benchmark."
+  ],
+  "mapChanged": false,
+  "mapSha256": "067b50bc1c3c14e986781f61a65b2a622e66a8381cf25389190aa3e42d3d35c2"
+}

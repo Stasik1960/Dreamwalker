@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--overlay', type=Path, default=ROOT / 'build/libs/dw-altvisual-overlay-20261101-altvisual.5.jar')
+    parser.add_argument('--overlay', type=Path, default=ROOT / 'build/libs/dw-altvisual-overlay-20261101-altvisual.6.jar')
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
     base = ROOT / 'baseline/mod.jar'

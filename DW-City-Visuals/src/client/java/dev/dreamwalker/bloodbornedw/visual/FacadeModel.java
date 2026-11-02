@@ -20,17 +20,15 @@ import net.minecraft.world.BlockRenderView;
 final class FacadeModel implements BakedModel, FabricBakedModel {
     private final BakedModel delegate;
     private final int fixedRole;
-    private final boolean general;
-    FacadeModel(BakedModel delegate,int fixedRole,boolean general) { this.delegate=delegate; this.fixedRole=fixedRole; this.general=general; }
+    FacadeModel(BakedModel delegate,int fixedRole) { this.delegate=delegate; this.fixedRole=fixedRole; }
     BakedModel delegate() { return delegate; }
     int role() { return fixedRole; }
-    boolean general() { return general; }
     @Override public List<BakedQuad> getQuads(BlockState state,Direction side,Random random) {
         List<BakedQuad> quads=delegate.getQuads(state,side,random);
-        if(fixedRole==0&&!general)return quads;
+        if(fixedRole==0)return quads;
         List<BakedQuad> changed=null;
         for(int i=0;i<quads.size();i++) {
-            BakedQuad source=quads.get(i), result=FacadeMaterials.quad(source,fixedRole,general);
+            BakedQuad source=quads.get(i), result=FacadeMaterials.quad(source,fixedRole);
             if(result!=source) {
                 if(changed==null)changed=new ArrayList<>(quads);
                 changed.set(i,result);
@@ -44,8 +42,8 @@ final class FacadeModel implements BakedModel, FabricBakedModel {
     @Override public void emitBlockQuads(BlockRenderView world,BlockState state,BlockPos pos,Supplier<Random> random,RenderContext context) {
         FabricBakedModel fabric=(FabricBakedModel)delegate;
         int role=fixedRole!=0?fixedRole:FacadeMaterials.role(pos);
-        if(role==0&&!general) { fabric.emitBlockQuads(world,state,pos,random,context); return; }
-        context.pushTransform(quad->FacadeMaterials.transform(quad,role,general));
+        if(role==0) { fabric.emitBlockQuads(world,state,pos,random,context); return; }
+        context.pushTransform(quad->FacadeMaterials.transform(quad,role));
         try { fabric.emitBlockQuads(world,state,pos,random,context); } finally { context.popTransform(); }
     }
     @Override public void emitItemQuads(ItemStack stack,Supplier<Random> random,RenderContext context) { ((FabricBakedModel)delegate).emitItemQuads(stack,random,context); }
