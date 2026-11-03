@@ -1,0 +1,25 @@
+{
+  "status": "PASS",
+  "scope": "Eight supplied cameras, Original and ALT, real noon and midnight; bounded visual acceptance.",
+  "productionSha256": "a0ded104f56c1cf76662840d3973b2042ee84b30024dfb54dd56933ff81ccdd2",
+  "version": "0.1.0-v12.7.4-visual-physics.8-building-water.3-stutter.1-visual.4-rc3-dwfix.22-cityeditor.1-cornerlight.1",
+  "baseEditorCommit": "0be6c62da0553d7cfbf21642513d98da3366b51d",
+  "baseEditorSha256": "7805d91c09758af14453ac6e201d7475a14ca7aec44c6e10b0951003d55234b1",
+  "captures": 64,
+  "clientTimes": [
+    6000,
+    18000
+  ],
+  "unchangedPreviousClasses": 864,
+  "unchangedAssets": 9510,
+  "sourceWorldSha256": "3cc850b848d6616f308e3c08e4c0079dc853f120dddee103aedc4fcd18f8d898",
+  "sourceWorldUnchanged": true,
+  "nightReview": "No apparent fullbright or new self-lighting in eight inspected views per mode.",
+  "nativeUnitChecks": [
+    "sampler",
+    "splitter geometry, UV, colors and source lights",
+    "nested scope cleanup and thread isolation",
+    "64 transient children, including nested, absent from both identity caches"
+  ],
+  "performance": "No new controlled FPS/RAM benchmark; previous editor performance report retained without changing its INVESTIGATE qualification."
+}

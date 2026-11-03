@@ -3,7 +3,9 @@
   "id": "dw_city_visuals_overlay",
   "version": "1.0.0",
   "environment": "*",
-  "custom": { "dreamwalker:revisionSuffix": "cityeditor.1" },
+  "custom": {
+    "dreamwalker:revisionSuffix": "cityeditor.1-cornerlight.1"
+  },
   "entrypoints": {
     "main": [
       "dev.dreamwalker.bloodbornedw.visual.CityVisualMode",
@@ -21,9 +23,15 @@
     ]
   },
   "mixins": [
-    { "config": "dw-editor.mixins.json" },
-    { "config": "dw-editor-catalogue.mixins.json" },
-    { "config": "dw-editor-worldedit.mixins.json" },
+    {
+      "config": "dw-editor.mixins.json"
+    },
+    {
+      "config": "dw-editor-catalogue.mixins.json"
+    },
+    {
+      "config": "dw-editor-worldedit.mixins.json"
+    },
     {
       "config": "dw-alt-tree-bounds.mixins.json",
       "environment": "client"
@@ -93,6 +101,10 @@
     },
     {
       "config": "dw-transparent-quads.mixins.json",
+      "environment": "client"
+    },
+    {
+      "config": "dw-corner-surface-light.mixins.json",
       "environment": "client"
     }
   ],

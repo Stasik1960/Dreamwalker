@@ -2,7 +2,7 @@ plugins { id 'fabric-loom' version '1.6.12' }
 
 def baseline = providers.gradleProperty('baselineJar').orElse(file('baseline/mod.jar').path)
 def pythonExecutable = providers.gradleProperty('pythonExecutable').orElse('python')
-version = '20261102-cityeditor.1'
+version = '20261103-cityeditor.1-cornerlight.1'
 group = 'dev.dreamwalker'
 base { archivesName = 'dw-altvisual-overlay' }
 layout.buildDirectory = new File(projectDir, 'build')
@@ -242,4 +242,20 @@ tasks.register('remapRenderDiagJar', net.fabricmc.loom.task.RemapJarTask) {
     archiveBaseName = 'dw-editor-render-diag'
     archiveClassifier = ''
     addNestedDependencies = false
+}
+
+
+sourceSets { cornerqa {
+    java.srcDir 'src/qacommon/java'
+    java.srcDir 'src/test/java'
+    compileClasspath += sourceSets.main.output + sourceSets.client.output + sourceSets.client.compileClasspath
+    runtimeClasspath += sourceSets.main.output + sourceSets.client.output + sourceSets.client.runtimeClasspath
+} }
+configurations { cornerqaImplementation.extendsFrom implementation }
+tasks.register('cornerQaJar', Jar) { archiveBaseName='dw-corner-light-qa';archiveClassifier='dev';from sourceSets.cornerqa.output }
+tasks.register('remapCornerQaJar', net.fabricmc.loom.task.RemapJarTask) {
+    dependsOn cornerQaJar
+    inputFile.set(tasks.named('cornerQaJar',Jar).flatMap{it.archiveFile})
+    classpath.from(sourceSets.cornerqa.compileClasspath)
+    archiveBaseName='dw-corner-light-qa';archiveClassifier='';addNestedDependencies=false
 }

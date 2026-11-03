@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "package": "dev.dreamwalker.bloodbornedw.composite.overlaymixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "client-dw-altvisual-overlay-refmap.json",
+  "client": [
+    "StaticLightingViewAccess",
+    "StaticCornerContextMixin",
+    "StaticCornerLightMixin",
+    "CornerOpaqueCacheGuardMixin",
+    "CornerBinaryCacheGuardMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
