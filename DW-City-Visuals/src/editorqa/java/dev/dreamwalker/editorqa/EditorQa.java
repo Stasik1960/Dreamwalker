@@ -18,6 +18,7 @@ import dev.dreamwalker.bloodbornedw.debug.UnifiedCreativeCatalogue;
 import dev.dreamwalker.bloodbornedw.editor.CityEditorServer;
 import dev.dreamwalker.bloodbornedw.editor.EditorCells;
 import dev.dreamwalker.bloodbornedw.editor.EditorData;
+import dev.dreamwalker.bloodbornedw.editor.StonePaletteSupport;
 import dev.dreamwalker.bloodbornedw.editor.catalogue.EditorCatalogue;
 import dev.dreamwalker.bloodbornedw.visual.CityVisualModeState;
 import dev.dreamwalker.bloodbornedw.visual.CityVisualClient;
@@ -83,7 +84,8 @@ public final class EditorQa implements ClientModInitializer {
     private final JsonArray checks = new JsonArray(), failures = new JsonArray(), unsupported = new JsonArray(), items = new JsonArray();
     private volatile boolean running, done, interruptArmed;
     private volatile Phase phase = Phase.START;
-    private int ticks, waitTicks, cursor, placed, cleared, fixtureCursor, catalogueAttempts, pendingReplacementTick;
+    private volatile int ticks;
+    private int waitTicks, cursor, placed, cleared, fixtureCursor, catalogueAttempts, pendingReplacementTick;
     private int lastActionTick = -100, nativeIndexBeforePaint;
     private BlockState stateBeforePaint;
     private BlockState stampSourceState;
@@ -92,6 +94,24 @@ public final class EditorQa implements ClientModInitializer {
     private final Set<String> catalogueExcludedVerified = new LinkedHashSet<>();
     private final Set<String> catalogueRemovedVerified = new LinkedHashSet<>();
     private final boolean catalogueOnly=Boolean.getBoolean("dw.editorqa.catalogueOnly");
+    private final boolean editor2Only=Boolean.getBoolean("dw.editorqa.editor2Only");
+    private final boolean functionalAfterEditor2=Boolean.getBoolean("dw.editorqa.functionalAfterEditor2");
+    private boolean functionalAfterEditor2Started;
+    private final List<BlockPos> editor2Targets = new ArrayList<>();
+    private final JsonArray editor2QuadEvidence = new JsonArray();
+    private final JsonArray editor2ClientLatencies = new JsonArray();
+    private int editor2Target, editor2Colour, editor2Stage, editor2Before, editor2Native, editor2ChunkSize, editor2LastAction=-100;
+    private BlockState editor2State;
+    private ItemStack editor2Held=ItemStack.EMPTY;
+    private boolean editor2ActorOwned,editor2OriginalFlying,editor2OriginalNoGravity;
+    private NbtCompound editor2BlockEntity;
+    private int editor2Light;
+    private long editor2Epoch;
+    private long editor2WaitStart,editor2WaitDeadline;
+    private int editor2WaitServerTick,editor2WaitClientTick;
+    private boolean editor2ClientLatencyRecorded;
+    private boolean editor2MatrixDone, editor2WallOwned, editor2FloorOwned;
+    private static final BlockPos EDITOR2_WALL=new BlockPos(117,200,-1091);
     private boolean catalogueFiltered;
     private final List<BlockPos> gridFloors = new ArrayList<>(130), gridTargets = new ArrayList<>(130);
     private List<SectionFixture> fixtureBaseline = List.of();
@@ -126,9 +146,26 @@ public final class EditorQa implements ClientModInitializer {
     private BlockPos persistencePos, persistenceSupport;
     private int persistenceNativeIndex;
     private volatile int clientSnapshotStyle = -2;
+    private record Editor2ClientReadiness(BlockPos target,boolean chunkLoaded,String state,int nativeIndex,int style,String dimension,double playerX,double playerY,double playerZ,String screen,long sampledNano,int sampledTick) {}
+    private volatile BlockPos editor2ObservedTarget;
+    private volatile Editor2ClientReadiness editor2ClientReadiness;
+    private long editor2ReadyDeadline,editor2NextReadyReport;
+    private boolean failureHoldStarted;
+    private long failureHoldUntil;
+    private volatile boolean failureHoldReady,failureHoldRestored;
+    private boolean failureHoldRestoring,failureHoldActorCaptured;
+    private GameMode failureHoldOriginalMode;
+    private ItemStack failureHoldOriginalHeld=ItemStack.EMPTY;
+    private boolean failureHoldOriginalFlying,failureHoldOriginalNoGravity;
     private int persistenceWait;
     private volatile boolean quickClickInvoked;
     private volatile boolean quickClickRaceExercised;
+    private volatile long quickClientEventNano;
+    private long quickAcquireDeadline,persistenceClientDeadline;
+    private record QuickClientState(String position,String eye,String velocity,float yaw,float pitch,boolean flying,boolean noGravity,String held,String screen,String hitType,String hitPosition,boolean chunkLoaded,long sampledNano,int sampledTick) {}
+    private volatile QuickClientState quickClientState;
+    private boolean functionalActorOwned,functionalOriginalFlying,functionalOriginalNoGravity;
+    private ItemStack functionalOriginalHeld=ItemStack.EMPTY;
     private int quickPaintTick;
     private ItemStack safeFixture = ItemStack.EMPTY;
     private final String output = System.getProperty("dw.editorqa.output", "");
@@ -148,7 +185,29 @@ public final class EditorQa implements ClientModInitializer {
 
     private void clientTick(MinecraftClient client) {
         if (done) return;
-        if(uiOnly)EditorRenderProbe.tick(client);
+        if (phase == Phase.DONE) { finish(client); return; }
+        if(!failures.isEmpty()&&Integer.getInteger("dw.editorqa.failureHoldSeconds",0)>0&&!running&&client.getServer()!=null) {
+            if(phase==Phase.QUICK_CLICK||phase==Phase.WAIT_QUICK_CLICK){functionalSuiteFailed=true;report.addProperty("functionalSuiteStatus","FAIL");report.add("quickClickClientState",quickClientStateJson());}
+            running=true;MinecraftServer server=client.getServer();
+            server.execute(()->{try{ServerPlayerEntity player=playerId==null?null:server.getPlayerManager().getPlayer(playerId);stopForFailureHold(player);}finally{phase=Phase.DONE;running=false;client.execute(()->finish(client));}});
+            return;
+        }
+        if(uiOnly||editor2Only)EditorRenderProbe.tick(client);
+        BlockPos observed=editor2ObservedTarget;
+        if(editor2Only && observed!=null && client.world!=null && client.player!=null) {
+            var chunk=client.world.getChunkManager().getChunk(observed.getX()>>4,observed.getZ()>>4,ChunkStatus.FULL,false);
+            int observedStyle=chunk==null?-2:cells(chunk).style(observed);
+            int nativeIndex=chunk==null?-2:NativeVisuals.index(client.world,observed);
+            String state=chunk==null?"UNLOADED":client.world.getBlockState(observed).toString();
+            var player=client.player;
+            editor2ClientReadiness=new Editor2ClientReadiness(observed,chunk!=null,state,nativeIndex,observedStyle,client.world.getRegistryKey().getValue().toString(),player.getX(),player.getY(),player.getZ(),client.currentScreen==null?"none":client.currentScreen.getClass().getName(),System.nanoTime(),ticks);
+            clientSnapshotStyle=observedStyle;
+        }
+        if((phase==Phase.QUICK_CLICK||phase==Phase.WAIT_QUICK_CLICK)&&client.player!=null&&client.world!=null&&sampleTarget!=null) {
+            var p=client.player;var hit=client.crosshairTarget;
+            var chunk=client.world.getChunkManager().getChunk(sampleTarget.getX()>>4,sampleTarget.getZ()>>4,ChunkStatus.FULL,false);
+            quickClientState=new QuickClientState(p.getPos().toString(),p.getEyePos().toString(),p.getVelocity().toString(),p.getYaw(),p.getPitch(),p.getAbilities().flying,p.hasNoGravity(),Registries.ITEM.getId(p.getMainHandStack().getItem()).toString(),client.currentScreen==null?"none":client.currentScreen.getClass().getName(),hit==null?"none":hit.getType().toString(),hit instanceof BlockHitResult block?block.getBlockPos().toShortString():"none",chunk!=null,System.nanoTime(),ticks);
+        }
         if(phase==Phase.QUICK_CLICK&&client.player!=null&&client.world!=null&&client.currentScreen==null
                 &&client.player.getMainHandStack().isOf(CityEditorServer.BRUSH)
                 &&client.crosshairTarget instanceof BlockHitResult hit&&hit.getBlockPos().equals(sampleTarget)){
@@ -157,7 +216,7 @@ public final class EditorQa implements ClientModInitializer {
                 exerciseSecondQuickClickWhilePending(client,hit);
                 ActionResult result=AttackBlockCallback.EVENT.invoker().interact(client.player,client.world,Hand.MAIN_HAND,hit.getBlockPos(),hit.getSide());
                 if(result!=ActionResult.FAIL)failures.add("Brush did not consume released-key attack event");
-                quickClickInvoked=true;
+                quickClientEventNano=System.nanoTime();quickClickInvoked=true;
             }
             phase=Phase.WAIT_QUICK_CLICK;
         }
@@ -165,8 +224,8 @@ public final class EditorQa implements ClientModInitializer {
             var candidate = client.world.getChunkManager().getChunk(persistencePos.getX() >> 4, persistencePos.getZ() >> 4, ChunkStatus.FULL, false);
             if (candidate != null) clientSnapshotStyle = cells(candidate).style(persistencePos);
         }
-        if (++ticks > 48000) { failures.add("QA exceeded the 48000 tick limit including startup"); finish(client); return; }
-        if (!Boolean.getBoolean("dw.editorqa.disposable") || output.isBlank()) { failures.add("Requires disposable-copy opt-in and output path"); finish(client); return; }
+        if (++ticks > 48000) { failures.add("QA exceeded the 48000 tick limit including startup"); phase=Phase.DONE;finish(client); return; }
+        if (!Boolean.getBoolean("dw.editorqa.disposable") || output.isBlank()) { failures.add("Requires disposable-copy opt-in and output path");phase=Phase.DONE;finish(client); return; }
         if (client.world == null || client.player == null || client.getServer() == null || running) return;
         playerId = client.player.getUuid(); running = true;
         MinecraftServer server = client.getServer();
@@ -178,8 +237,19 @@ public final class EditorQa implements ClientModInitializer {
                 failures.add(error.getClass().getName() + ": " + String.valueOf(error.getMessage()));
                 java.io.StringWriter trace=new java.io.StringWriter();error.printStackTrace(new java.io.PrintWriter(trace));
                 report.addProperty("failureStack",trace.toString());report.addProperty("failurePhase",phase.name());
-                if(qaPlayer==null||!recoverScenarioFailure(qaPlayer,client,error)){
-                    if (qaPlayer != null) cleanup(qaPlayer);
+                if(phase==Phase.QUICK_CLICK||phase==Phase.WAIT_QUICK_CLICK){report.add("quickClickClientState",quickClientStateJson());if(qaPlayer!=null){report.addProperty("quickClickFailureDiagnostic",quickClickDiagnostic(qaPlayer));report.addProperty("quickClickServerPosition",qaPlayer.getPos().toString());report.addProperty("quickClickServerEye",qaPlayer.getEyePos().toString());report.addProperty("quickClickServerVelocity",qaPlayer.getVelocity().toString());report.addProperty("quickClickServerYaw",qaPlayer.getYaw());report.addProperty("quickClickServerPitch",qaPlayer.getPitch());report.addProperty("quickClickServerHeadYaw",qaPlayer.getHeadYaw());report.addProperty("quickClickServerFlying",qaPlayer.getAbilities().flying);report.addProperty("quickClickServerNoGravity",qaPlayer.hasNoGravity());}}
+                if(!uiOnly&&!catalogueOnly&&(!editor2Only||editor2MatrixDone&&functionalAfterEditor2Started)&&phase!=Phase.CATALOG_PLACE&&phase!=Phase.CATALOG_CLEAR&&phase!=Phase.CATALOG_RESTORE_VERIFY&&phase!=Phase.CLEANUP&&phase!=Phase.PERSIST_WRITE_PREP&&phase!=Phase.PERSIST_WRITE_APPLY&&phase!=Phase.PERSIST_WRITE_SAVE&&phase!=Phase.PERSIST_VERIFY_CLIENT&&phase!=Phase.PERSIST_VERIFY_BREAK&&phase!=Phase.DONE){functionalSuiteFailed=true;report.addProperty("functionalSuiteStatus","FAIL");}
+                if(editor2Only && !editor2MatrixDone && qaPlayer!=null) {
+                    if(editor2State!=null && editor2Target<editor2Targets.size() && !editor2Targets.get(editor2Target).equals(EDITOR2_WALL)) {
+                        try{CityEditorServer.queueAppearance(qaPlayer.getServerWorld(),editor2Targets.get(editor2Target),editor2Before);report.addProperty("editor2FailureRestoreQueued",true);}
+                        catch(Throwable cleanupError){failures.add("editor2 appearance restore failed: "+cleanupError);}
+                    }
+                    if(editor2WallOwned||editor2FloorOwned)try{cleanupEditor2Wall(qaPlayer);}catch(Throwable cleanupError){failures.add("editor2 wall cleanup failed: "+cleanupError);}
+                }
+                if(Integer.getInteger("dw.editorqa.failureHoldSeconds",0)>0){stopForFailureHold(qaPlayer);phase=Phase.DONE;}
+                else if(qaPlayer==null||!recoverScenarioFailure(qaPlayer,client,error)){
+                    if (qaPlayer != null) try{cleanup(qaPlayer);}catch(Throwable cleanupError){failures.add("final cleanup failed: "+cleanupError);}
+                    finally{if(qaPlayer!=null){try{restoreEditor2Actor(qaPlayer);}catch(Throwable actorError){failures.add("editor2 actor restore failed: "+actorError);}try{restoreFunctionalActor(qaPlayer);}catch(Throwable actorError){failures.add("functional actor restore failed: "+actorError);}}}
                     if(qaPlayer!=null&&fixtureBaseline.size()>0)finalCleanupVerified=matches(qaPlayer.getServerWorld(),fixtureBaseline);
                     phase = Phase.DONE;
                 }
@@ -192,12 +262,28 @@ public final class EditorQa implements ClientModInitializer {
         if (!ok) throw new AssertionError(label);
         checks.add(label);
     }
+    private void stopForFailureHold(ServerPlayerEntity player) {
+        interruptArmed=false;
+        if(player==null)return;
+        try {
+            if(editor2Only&&!editor2MatrixDone&&editor2State!=null&&editor2Target<editor2Targets.size()&&!editor2Targets.get(editor2Target).equals(EDITOR2_WALL))
+                CityEditorServer.queueAppearance(player.getServerWorld(),editor2Targets.get(editor2Target),editor2Before);
+        } catch(Throwable error){failures.add("Failure-hold appearance restore failed: "+error);}
+        try {if(editor2WallOwned||editor2FloorOwned)cleanupEditor2Wall(player);}
+        catch(Throwable error){failures.add("Failure-hold wall cleanup failed: "+error);}
+        try {if(pendingCatalogue!=null&&(phase==Phase.CATALOG_CLEAR||phase==Phase.CATALOG_RESTORE_VERIFY))restoreTouchedFixture(player,pendingCatalogue.probe());}
+        catch(Throwable error){failures.add("Failure-hold catalogue cleanup failed: "+error);}
+        try {cleanup(player);}
+        catch(Throwable error){failures.add("Failure-hold cleanup failed: "+error);}
+        finally {try{restoreEditor2Actor(player);}catch(Throwable error){failures.add("Failure-hold actor restore failed: "+error);}try{restoreFunctionalActor(player);}catch(Throwable error){failures.add("Failure-hold functional actor restore failed: "+error);}}
+    }
     private void exerciseSecondQuickClickWhilePending(MinecraftClient client,BlockHitResult hit){
         try{
             Class<?> type=Class.forName("dev.dreamwalker.bloodbornedw.editor.CityEditorClient");
             String[] names={"clickGeneration","pendingRequestId","pendingPosition","pendingOneShot","pendingGeneration",
                     "attackClickQueued","releaseAfterQueued","pressActive","strokePressGeneration","strokeId","lastStrokePos",
-                    "retryPosition","retryGeneration","retryOneShot","waitingForServerIdle","retryAfterTick"};
+                    "retryPosition","retryGeneration","retryOneShot","waitingForServerIdle","retryAfterTick",
+                    "cornerAction","cornerPosition","cornerDimension","cornerRequestId","cornerAttempts","cornerAfterTick","cornerDeadline","lastStrokeTick"};
             java.util.Map<String,Object> saved=new java.util.LinkedHashMap<>();
             for(String name:names){java.lang.reflect.Field field=type.getDeclaredField(name);field.setAccessible(true);saved.put(name,field.get(null));}
             long firstGeneration=1001L,firstRequest=0x5eedL;
@@ -224,6 +310,25 @@ public final class EditorQa implements ClientModInitializer {
                 report.addProperty("quickClickFirstGeneration",firstGeneration);report.addProperty("quickClickSecondGeneration",secondGeneration);
                 report.addProperty("quickClickSyntheticAckRequestId",firstRequest);report.addProperty("quickClickAckPreservedSecond",true);
                 report.addProperty("quickClickOneShotAckGenerationIsolationSimulated",true);
+                // Queue a Shift corner while a paint is in flight, then deliver its ACK.
+                setClientField(type,"pendingRequestId",firstRequest);
+                setClientField(type,"pendingPosition",sampleTarget.asLong());
+                setClientField(type,"pendingGeneration",firstGeneration);
+                setClientField(type,"pendingOneShot",true);
+                setClientField(type,"cornerAction","");
+                setClientField(type,"strokeId","");
+                Method queueCorner=type.getDeclaredMethod("queueCorner",String.class,MinecraftClient.class,long.class);
+                queueCorner.setAccessible(true);
+                queueCorner.invoke(null,"first",client,hit.getBlockPos().asLong());
+                if((Boolean)acknowledge.invoke(null,firstRequest+1,true,false,false))
+                    throw new IllegalStateException("unrelated ACK matched pending paint");
+                if(!((Boolean)acknowledge.invoke(null,firstRequest,true,false,false))
+                        || !"first".equals(getClientField(type,"cornerAction"))
+                        || ((Number)getClientField(type,"cornerPosition")).longValue()!=hit.getBlockPos().asLong()
+                        || ((Number)getClientField(type,"pendingRequestId")).longValue()!=-1L
+                        || ((Number)getClientField(type,"cornerAfterTick")).intValue()<=((Number)getClientField(type,"strokeTick")).intValue())
+                    throw new IllegalStateException("paint ACK lost or failed to defer queued Shift corner");
+                report.addProperty("shiftCornerPendingPaintAckPreservedSimulated",true);
             }finally{
                 for(var entry:saved.entrySet()){java.lang.reflect.Field field=type.getDeclaredField(entry.getKey());field.setAccessible(true);field.set(null,entry.getValue());}
             }
@@ -250,6 +355,12 @@ public final class EditorQa implements ClientModInitializer {
                     +",jobActive="+jobActive(player);
         }catch(Throwable error){return "diagnostic unavailable: "+error.getClass().getSimpleName()+": "+error.getMessage();}
     }
+    private JsonObject quickClientStateJson(){
+        QuickClientState state=quickClientState;JsonObject row=new JsonObject();
+        row.addProperty("expected",sampleTarget==null?"none":sampleTarget.toShortString());row.addProperty("available",state!=null);
+        if(state!=null){row.addProperty("position",state.position());row.addProperty("eye",state.eye());row.addProperty("velocity",state.velocity());row.addProperty("yaw",state.yaw());row.addProperty("pitch",state.pitch());row.addProperty("flying",state.flying());row.addProperty("noGravity",state.noGravity());row.addProperty("held",state.held());row.addProperty("screen",state.screen());row.addProperty("hitType",state.hitType());row.addProperty("hitPosition",state.hitPosition());row.addProperty("chunkLoaded",state.chunkLoaded());row.addProperty("sampledNano",state.sampledNano());row.addProperty("sampledClientTick",state.sampledTick());}
+        return row;
+    }
     private void fail(String id, String reason) {
         JsonObject row = new JsonObject(); row.addProperty("id", id); row.addProperty("status", "FAIL"); row.addProperty("reason", reason);
         items.add(row); failures.add(id + ": " + reason);
@@ -263,6 +374,25 @@ public final class EditorQa implements ClientModInitializer {
     private static String catalogueKey(ItemStack stack){
         String id=Registries.ITEM.getId(stack.getItem()).toString();
         return id+(stack.hasNbt()?"|"+stack.getNbt().toString():"");
+    }
+    /** Independently verify creative entries by item identity, not NBT-variant keys. */
+    private void auditCanonicalItemIds() {
+        Set<String> ids = new HashSet<>();
+        JsonArray duplicates = new JsonArray();
+        int brushes = 0;
+        for (ItemStack stack : catalogue) {
+            String id = Registries.ITEM.getId(stack.getItem()).toString();
+            if (!ids.add(id)) duplicates.add(id);
+            if (stack.isOf(CityEditorServer.BRUSH)) brushes++;
+        }
+        report.add("catalogueDuplicateItemIds", duplicates);
+        report.addProperty("catalogueBrushCount", brushes);
+        report.addProperty("catalogueSize", catalogue.size());
+        report.addProperty("registeredBrushId", Registries.ITEM.getId(CityEditorServer.BRUSH).toString());
+        JsonArray catalogueIds = new JsonArray(); ids.stream().sorted().forEach(catalogueIds::add);
+        report.add("catalogueItemIds", catalogueIds);
+        check(duplicates.size() == 0, "creative catalogue contains one entry per item ID");
+        check(brushes == 1, "creative catalogue contains exactly one editor brush");
     }
     private void configureCatalogueRun() throws Exception {
         catalogueRun=catalogue;String rawPath=System.getProperty("dw.editorqa.catalogueFilter","");
@@ -356,6 +486,7 @@ public final class EditorQa implements ClientModInitializer {
         double dx=hit.x-eye.x,dy=hit.y-eye.y,dz=hit.z-eye.z,horizontal=Math.sqrt(dx*dx+dz*dz);
         player.setYaw((float)Math.toDegrees(Math.atan2(-dx,dz)));
         player.setPitch((float)-Math.toDegrees(Math.atan2(dy,horizontal)));
+        player.setHeadYaw(player.getYaw());
         Vec3d eyeAfter=player.getEyePos();
         var actual=player.getServerWorld().raycast(new net.minecraft.world.RaycastContext(eyeAfter,
                 eyeAfter.add(player.getRotationVec(1.0F).multiply(6.0)),net.minecraft.world.RaycastContext.ShapeType.OUTLINE,
@@ -373,6 +504,7 @@ public final class EditorQa implements ClientModInitializer {
         float yaw = (float)Math.toDegrees(Math.atan2(-dx, dz));
         float pitch = (float)-Math.toDegrees(Math.atan2(dy, horizontal));
         player.teleport(player.getServerWorld(), px, py, pz, yaw, pitch);
+        player.setHeadYaw(yaw);
     }
     private static ActionResult interactOn(ServerPlayerEntity player, BlockPos floor, ItemStack stack) {
         ServerWorld world = player.getServerWorld();
@@ -401,6 +533,7 @@ public final class EditorQa implements ClientModInitializer {
 
     private void step(ServerPlayerEntity player) throws Exception {
         ServerWorld world = player.getServerWorld();
+        if (editor2Only && !editor2MatrixDone) { editor2Step(player); return; }
         if (usesEditorAction(phase)) {
             int now = player.getServer().getTicks();
             if (now - lastActionTick < 2) return;
@@ -409,6 +542,7 @@ public final class EditorQa implements ClientModInitializer {
         }
         switch (phase) {
             case START -> {
+                if(editor2Only&&functionalAfterEditor2)functionalAfterEditor2Started=true;
                 if (player.getServerWorld().getRegistryKey() != net.minecraft.world.World.OVERWORLD) throw new IllegalStateException("QA fixture requires the Overworld city copy");
                 if (!persistenceMode.equals("write") && !persistenceMode.equals("verify")) throw new IllegalStateException("dw.editorqa.persistence must be write or verify");
                 originalGameMode = player.interactionManager.getGameMode();
@@ -444,14 +578,17 @@ public final class EditorQa implements ClientModInitializer {
                     report.addProperty("persistenceSentinelBlock", Registries.BLOCK.getId(world.getBlockState(persistencePos).getBlock()).toString());
                     report.addProperty("persistenceSentinelNativeIndex", NativeVisuals.index(world, persistencePos));
                     report.addProperty("persistenceSentinelStyle", style(world, persistencePos));
-                    clientSnapshotStyle = -2; persistenceWait = 0; setAim(player, persistencePos); phase = Phase.PERSIST_VERIFY_CLIENT;
+                    clientSnapshotStyle = -2; persistenceWait = 0; setAim(player, persistencePos);persistenceClientDeadline=System.nanoTime()+30_000_000_000L; phase = Phase.PERSIST_VERIFY_CLIENT;
                     return;
                 }
+                if(!catalogueOnly){functionalOriginalHeld=player.getMainHandStack().copy();functionalOriginalFlying=player.getAbilities().flying;functionalOriginalNoGravity=player.hasNoGravity();functionalActorOwned=true;}
                 if (originalGameMode != GameMode.CREATIVE) player.changeGameMode(GameMode.CREATIVE);
                 if (!CityEditorServer.editable(player)) throw new IllegalStateException("QA player lacks editor permission after Creative mode setup");
+                if(functionalActorOwned){player.getAbilities().flying=true;player.setNoGravity(true);player.setVelocity(Vec3d.ZERO);player.sendAbilitiesUpdate();}
                 catalogue = UnifiedCreativeCatalogue.canonicalItems();
+                auditCanonicalItemIds();
                 configureCatalogueRun();
-                report.addProperty("runScope",catalogueOnly?"CATALOGUE_ONLY_WITH_STANDARD_START_CLEANUP_AND_PERSISTENCE":"FULL_FUNCTIONAL_QA_PLUS_"+(catalogueFiltered?"FILTERED_CATALOGUE_SUBSET":"FULL_CATALOGUE"));
+                report.addProperty("runScope",catalogueOnly?"CATALOGUE_ONLY_WITH_STANDARD_START_CLEANUP_AND_PERSISTENCE":(editor2Only&&functionalAfterEditor2?"EDITOR2_MATRIX_PLUS_":"")+"FULL_FUNCTIONAL_QA_PLUS_"+(catalogueFiltered?"FILTERED_CATALOGUE_SUBSET":"FULL_CATALOGUE"));
                 enableAlt(player.getServer());
                 report.add("catalogueAudit", EditorCatalogue.audit());
                 if (report.getAsJsonObject("catalogueAudit").get("pass").getAsBoolean()) checks.add("creative catalogue audit pass");
@@ -526,16 +663,16 @@ public final class EditorQa implements ClientModInitializer {
             }
             case QUICK_PREPARE -> {
                 player.setStackInHand(Hand.MAIN_HAND,new ItemStack(CityEditorServer.BRUSH));
-                invoke(player,config(4,0,"single"));setAim(player,sampleTarget);waitTicks=0;phase=Phase.QUICK_CLICK;
+                invoke(player,config(4,0,"single"));aimEditor2(player,sampleTarget);quickClientState=null;quickClientEventNano=0;quickAcquireDeadline=System.nanoTime()+30_000_000_000L;waitTicks=0;phase=Phase.QUICK_CLICK;
             }
-            case QUICK_CLICK -> timeout("Client did not acquire the short-click fixture target");
+            case QUICK_CLICK -> {if(System.nanoTime()>=quickAcquireDeadline)throw new IllegalStateException("Client did not acquire the short-click fixture target within 30 seconds: "+quickClientStateJson());}
             case WAIT_QUICK_CLICK -> {
                 if(quickClickInvoked&&quickClickRaceExercised&&style(world,sampleTarget)==4&&!jobActive(player)){
                     check(true,"released-key attack event paints through actual client packet path");
                     check(true,"synthetic pending ACK preserves the newer released-key press generation");
                     check(sessionInt(player,"material")==4,"server config selects the released-key paint material");
                     quickPaintTick=player.getServer().getTicks();waitTicks=0;phase=Phase.QUICK_UNDO;
-                }else timeout("Released-key attack event did not paint the fixture; "+quickClickDiagnostic(player));
+                }else if(quickClientEventNano>0&&System.nanoTime()-quickClientEventNano>=30_000_000_000L)throw new IllegalStateException("Released-key attack event did not paint the fixture within 30 seconds; "+quickClickDiagnostic(player)+" client="+quickClientStateJson());
             }
             case QUICK_UNDO -> {
                 if(player.getServer().getTicks()-quickPaintTick<2)return;
@@ -758,7 +895,7 @@ public final class EditorQa implements ClientModInitializer {
                 if (clientSnapshotStyle == 2) {
                     check(true, "client chunk snapshot loaded persisted editor style 2");
                     phase = Phase.PERSIST_VERIFY_BREAK;
-                } else if (++persistenceWait > 100) throw new IllegalStateException("Client chunk snapshot did not load persisted style 2");
+                } else if (System.nanoTime()>=persistenceClientDeadline) throw new IllegalStateException("Client chunk snapshot did not load persisted style 2 within 30 seconds: target="+persistencePos+" style="+clientSnapshotStyle+" clientTicks="+ticks);
             }
             case PERSIST_VERIFY_BREAK -> {
                 if (player.interactionManager.getGameMode() != GameMode.CREATIVE) player.changeGameMode(GameMode.CREATIVE);
@@ -770,6 +907,242 @@ public final class EditorQa implements ClientModInitializer {
             }
             case DONE -> { }
         }
+    }
+
+    private void editor2Step(ServerPlayerEntity player) throws Exception {
+        ServerWorld world=player.getServerWorld();
+        if(editor2Stage==0) {
+            if(functionalAfterEditor2&&catalogueOnly)throw new IllegalStateException("functionalAfterEditor2 cannot be combined with catalogueOnly");
+            if(world.getRegistryKey()!=net.minecraft.world.World.OVERWORLD)throw new IllegalStateException("Editor2 QA requires the Overworld city copy");
+            originalGameMode=player.interactionManager.getGameMode();
+            editor2Held=player.getMainHandStack().copy();editor2OriginalFlying=player.getAbilities().flying;editor2OriginalNoGravity=player.hasNoGravity();editor2ActorOwned=true;
+            if(originalGameMode!=GameMode.CREATIVE)player.changeGameMode(GameMode.CREATIVE);
+            boolean editable=CityEditorServer.editable(player);report.addProperty("editor2ActorEditable",editable);
+            check(editable,"editor2 creative actor has editor permission");
+            player.getAbilities().flying=true;player.setNoGravity(true);player.setVelocity(Vec3d.ZERO);player.sendAbilitiesUpdate();
+            player.setStackInHand(Hand.MAIN_HAND,new ItemStack(CityEditorServer.BRUSH));
+            catalogue=UnifiedCreativeCatalogue.canonicalItems();auditCanonicalItemIds();
+            report.add("catalogueAudit",EditorCatalogue.audit());
+            check(report.getAsJsonObject("catalogueAudit").get("pass").getAsBoolean(),"canonical creative catalogue audit");
+            editor2Targets.add(new BlockPos(117,62,-1091));editor2Targets.add(new BlockPos(257,55,-1010));
+            editor2Targets.add(new BlockPos(117,141,-708));editor2Targets.add(new BlockPos(260,56,-921));
+            editor2Targets.add(EDITOR2_WALL);
+            report.addProperty("runScope","EDITOR2_REAL_CITY_SERVER_AND_CLIENT_SNAPSHOT");
+            report.addProperty("appearanceCheckScope","Matrix checks physical block state, native index, block entity data, light, sparse styles, client snapshots and observed paired facade quads at selected city cells and a placed wall; full model topology and all nonstone faces are not verified.");
+            report.add("editor2QuadEvidence",editor2QuadEvidence);
+            report.add("editor2ClientLatencies",editor2ClientLatencies);
+            report.addProperty("editor2VisualProof","paired facade material hooks check observed quad positions, light and appearance; full model topology and nonstone faces require separate inspection");
+            editor2Stage=1;return;
+        }
+        if(editor2Target>=editor2Targets.size()) {
+            cleanupEditor2Wall(player);
+            restoreEditor2Actor(player);
+            finalCleanupVerified=true;editor2MatrixDone=true;report.addProperty("editor2MatrixComplete",true);
+            editor2ObservedTarget=null;
+            phase=(catalogueOnly||functionalAfterEditor2)?Phase.START:Phase.DONE;return;
+        }
+        BlockPos pos=editor2Targets.get(editor2Target);
+        if(editor2Stage==1) {
+            // Existing city points are untouched; the final point is a disposable canonical-wall fixture.
+            world.getChunkManager().getChunk(pos.getX()>>4,pos.getZ()>>4,ChunkStatus.FULL,true);
+            if(loaded(world,pos)==null)throw new IllegalStateException("Target chunk unavailable: "+pos);
+            if(pos.equals(EDITOR2_WALL)&&!editor2WallOwned) {
+                BlockPos floor=pos.down();
+                if(!world.getBlockState(pos).isAir()||!world.getBlockState(floor).isAir()||style(world,pos)!=-1||style(world,floor)!=-1)
+                    throw new IllegalStateException("Prototype wall fixture and floor must be empty: "+pos);
+                ItemStack wall=catalogue.stream().filter(s->Registries.ITEM.getId(s.getItem()).toString().equals("bloodborne_dw:prototype_wall")).findFirst().orElseThrow(()->new IllegalStateException("Canonical prototype_wall item absent")).copy();
+                if(!world.setBlockState(floor,Blocks.STONE.getDefaultState(),3))throw new IllegalStateException("Cannot create temporary wall floor");
+                editor2FloorOwned=true;setPlacementAim(player,pos);
+                ActionResult placedResult=interactOn(player,floor,wall);
+                editor2WallOwned=!world.getBlockState(pos).isAir();
+                if(!placedResult.isAccepted()||!editor2WallOwned||!Registries.BLOCK.getId(world.getBlockState(pos).getBlock()).toString().equals("bloodborne_dw:prototype_wall"))throw new IllegalStateException("Normal canonical prototype wall placement failed at "+pos);
+                player.setStackInHand(Hand.MAIN_HAND,new ItemStack(CityEditorServer.BRUSH));
+                report.addProperty("editor2PrototypeWallFixture",pos.toShortString());editor2StartWait(player);waitTicks=0;editor2Stage=11;return;
+            }
+            if(!StonePaletteSupport.paintable(world,pos))throw new IllegalStateException("Target is not a paintable city cell: "+pos+" "+world.getBlockState(pos));
+            editor2Before=style(world,pos);
+            if(editor2Before!=(pos.equals(EDITOR2_WALL)?0:-1))throw new IllegalStateException("Unexpected initial city or placed wall style at "+pos+": "+editor2Before);
+            editor2State=world.getBlockState(pos);editor2Native=NativeVisuals.index(world,pos);
+            editor2ChunkSize=cells(loaded(world,pos)).size();editor2Light=world.getLightLevel(pos);
+            var be=world.getBlockEntity(pos);editor2BlockEntity=be==null?null:be.createNbtWithId();
+            EditorRenderProbe.setTarget(pos);aimEditor2(player,pos);clientSnapshotStyle=-2;editor2ClientReadiness=null;editor2ObservedTarget=pos.toImmutable();
+            editor2ReadyDeadline=System.nanoTime()+180_000_000_000L;editor2NextReadyReport=0;waitTicks=0;editor2Stage=2;return;
+        }
+        if(editor2Stage==11){if(System.nanoTime()>=editor2WaitDeadline||CityEditorServer.pendingStyle(world,pos)!=-2||cells(loaded(world,pos)).style(pos)!=0){editor2Wait(player,pos,0,"fixture server flush");return;}editor2Stage=1;return;}
+        if(editor2Stage==2) {
+            Editor2ClientReadiness ready=editor2ClientReadiness;
+            boolean initialReady=ready!=null&&ready.target().equals(pos)&&ready.chunkLoaded()&&ready.style()==editor2Before
+                    &&ready.nativeIndex()==editor2Native&&ready.state().equals(editor2State.toString())
+                    &&ready.dimension().equals(world.getRegistryKey().getValue().toString())
+                    &&new Vec3d(ready.playerX(),ready.playerY(),ready.playerZ()).squaredDistanceTo(Vec3d.ofCenter(pos))<=64.0;
+            if(!initialReady) {
+                long now=System.nanoTime();
+                if(now>=editor2NextReadyReport) {
+                    report.add("editor2ClientReadiness",editor2ReadinessJson(ready,pos,player));
+                    report.addProperty("progressPhase","EDITOR2_WAIT_CLIENT");
+                    Files.writeString(Path.of(output),new GsonBuilder().setPrettyPrinting().create().toJson(report),StandardCharsets.UTF_8);
+                    editor2NextReadyReport=now+5_000_000_000L;
+                }
+                if(now>=editor2ReadyDeadline)throw new IllegalStateException("Client did not load initial city cell within 180 seconds: "+pos+" readiness="+editor2ReadinessJson(ready,pos,player));
+                return;
+            }
+            report.add("editor2ClientReadiness",editor2ReadinessJson(ready,pos,player));report.addProperty("progressPhase","EDITOR2_MATRIX");
+            if(!editor2ActionReady(player))return;
+            invoke(player,config(editor2Colour==4?0:editor2Colour+1,0,"single"));editor2Stage=3;return;
+        }
+        if(editor2Stage==3) {
+            if(!editor2ActionReady(player))return;
+            aimEditor2(player,pos);
+            Method target=CityEditorServer.class.getDeclaredMethod("target",ServerPlayerEntity.class);target.setAccessible(true);
+            BlockHitResult hit=(BlockHitResult)target.invoke(null,player);
+            if(hit==null||!hit.getBlockPos().equals(pos))throw new IllegalStateException("Cannot raycast city target "+pos+"; actual="+hit);
+            if(EditorRenderProbe.enabled())editor2Epoch=EditorRenderProbe.arm(pos,editor2Colour==4?0:editor2Colour+1);
+            editor2StartWait(player);invoke(player,request("paint"));waitTicks=0;editor2Stage=4;return;
+        }
+        int expected=editor2Colour==4?0:editor2Colour+1;
+        if(editor2Stage==4||editor2Stage==6||editor2Stage==8||editor2Stage==10) {
+            int wanted=(editor2Stage==6||editor2Stage==10)?editor2Before:expected;
+            if(jobActive(player)){editor2Wait(player,pos,wanted,"server job");return;}
+            if(style(world,pos)!=wanted){editor2Wait(player,pos,wanted,"server style");return;}
+            Editor2ClientReadiness sample=editor2ClientReadiness;
+            if(clientSnapshotStyle!=wanted||sample==null||!sample.target().equals(pos)||!sample.chunkLoaded()||sample.style()!=wanted||sample.sampledNano()<editor2WaitStart){editor2Wait(player,pos,wanted,"fresh client snapshot");return;}
+            if(!editor2ClientLatencyRecorded){
+                double seconds=(sample.sampledNano()-editor2WaitStart)/1_000_000_000.0;
+                JsonObject latency=new JsonObject();latency.addProperty("target",pos.toShortString());latency.addProperty("stage",editor2Stage);latency.addProperty("style",wanted);latency.addProperty("seconds",seconds);latency.addProperty("overFiveSecondsInvestigate",seconds>5.0);latency.addProperty("startServerTick",editor2WaitServerTick);latency.addProperty("sampleObservedAtServerTick",player.getServer().getTicks());latency.addProperty("startClientTick",editor2WaitClientTick);latency.addProperty("sampleClientTick",sample.sampledTick());editor2ClientLatencies.add(latency);editor2ClientLatencyRecorded=true;
+            }
+            if(++waitTicks<12){editor2Wait(player,pos,wanted,"render settling");return;} // Give the terrain rebuild observer time to record this epoch.
+            if(EditorRenderProbe.enabled() && (editor2Stage==4||editor2Stage==8) && EditorRenderProbe.liveStyle()==wanted) {
+                long generation=editor2Epoch;long[] stats=EditorModelProbe.quadStats(generation);
+                // The compact reference is the known FacadeModel route. Require actual changed material quads
+                // for each manual colour, rather than inferring a visible transform from saved style.
+                if((editor2Target==0||pos.equals(EDITOR2_WALL)||pos.equals(new BlockPos(260,56,-921))) && wanted>0 && (stats[0]==0||stats[1]==0)) {
+                    editor2Wait(player,pos,wanted,"changed render quad generation="+generation+" observed="+stats[0]+" changed="+stats[1]);return;
+                }
+                check(stats[2]==0,"observed manual quad positions and light preserved at "+pos+" style "+wanted);
+                JsonObject row=new JsonObject();row.addProperty("position",pos.toShortString());row.addProperty("style",wanted);row.addProperty("stage",editor2Stage);row.addProperty("generation",generation);row.addProperty("observed",stats[0]);row.addProperty("appearanceChanged",stats[1]);row.addProperty("geometryOrLightChanged",stats[2]);editor2QuadEvidence.add(row);
+            } else if(EditorRenderProbe.enabled() && (editor2Stage==4||editor2Stage==8) && (editor2Target==0||pos.equals(EDITOR2_WALL)||pos.equals(new BlockPos(260,56,-921))) && wanted>0) {
+                editor2Wait(player,pos,wanted,"render probe style");return;
+            }
+            if(System.nanoTime()>=editor2WaitDeadline){editor2Wait(player,pos,wanted,"matching client and render completed after deadline");return;}
+            var be=world.getBlockEntity(pos);NbtCompound nbt=be==null?null:be.createNbtWithId();
+            check(world.getBlockState(pos)==editor2State && NativeVisuals.index(world,pos)==editor2Native && java.util.Objects.equals(editor2BlockEntity,nbt) && world.getLightLevel(pos)==editor2Light,"city physical state, native index, block entity and light preserved at "+pos+" stage "+editor2Stage);
+            check(cells(loaded(world,pos)).size()==editor2ChunkSize+(wanted==-1?0:1)-(editor2Before==-1?0:1),"city editor storage remains sparse at "+pos+" stage "+editor2Stage);
+            waitTicks=0;
+            if(editor2Stage==10){editor2Colour++;if(editor2Colour==(pos.equals(EDITOR2_WALL)?4:5)){editor2Colour=0;editor2Target++;editor2State=null;editor2Stage=1;}else editor2Stage=2;}
+            else editor2Stage++;
+            return;
+        }
+        if(editor2Stage==5||editor2Stage==7||editor2Stage==9) {
+            if(!editor2ActionReady(player))return;
+            if(EditorRenderProbe.enabled())editor2Epoch=EditorRenderProbe.arm(pos,editor2Stage==7?expected:editor2Before);
+            editor2StartWait(player);invoke(player,request(editor2Stage==7?"redo":"undo"));waitTicks=0;editor2Stage++;return;
+        }
+        throw new IllegalStateException("Unknown editor2 stage "+editor2Stage);
+    }
+    private boolean editor2ActionReady(ServerPlayerEntity player) throws ReflectiveOperationException {
+        int now=player.getServer().getTicks();
+        if(now-editor2LastAction<2)return false;
+        Object existing=session(player);
+        if(existing!=null && now-intField(existing,"lastRequest")<2)return false;
+        editor2LastAction=now;return true;
+    }
+    private void editor2StartWait(ServerPlayerEntity player) {
+        editor2WaitStart=System.nanoTime();editor2WaitDeadline=editor2WaitStart+30_000_000_000L;
+        editor2WaitServerTick=player.getServer().getTicks();editor2WaitClientTick=ticks;editor2ClientLatencyRecorded=false;
+    }
+    private void editor2Wait(ServerPlayerEntity player,BlockPos pos,int wanted,String reason) throws ReflectiveOperationException {
+        long now=System.nanoTime();if(now<editor2WaitDeadline)return;
+        Object current=session(player);boolean active=current!=null&&field(current,"job")!=null;
+        JsonObject detail=new JsonObject();detail.addProperty("reason",reason);detail.addProperty("target",pos.toShortString());detail.addProperty("stage",editor2Stage);
+        detail.addProperty("wanted",wanted);detail.addProperty("serverStyle",style(player.getServerWorld(),pos));detail.addProperty("clientStyle",clientSnapshotStyle);
+        detail.addProperty("serverJobActive",active);detail.addProperty("serverMessage",current==null?"NO_SESSION":sessionString(player,"message"));
+        detail.addProperty("nowNano",now);detail.addProperty("waitSeconds",(now-editor2WaitStart)/1_000_000_000.0);
+        detail.addProperty("serverTick",player.getServer().getTicks());detail.addProperty("startServerTick",editor2WaitServerTick);
+        detail.addProperty("clientTick",ticks);detail.addProperty("startClientTick",editor2WaitClientTick);detail.addProperty("renderEpoch",editor2Epoch);
+        report.add("editor2WaitTimeout",detail);throw new IllegalStateException("Editor2 30-second wait expired: "+detail);
+    }
+    private void restoreEditor2Actor(ServerPlayerEntity player) {
+        if(!editor2ActorOwned)return;
+        player.setStackInHand(Hand.MAIN_HAND,editor2Held);
+        if(originalGameMode!=null&&player.interactionManager.getGameMode()!=originalGameMode)player.changeGameMode(originalGameMode);
+        player.getAbilities().flying=editor2OriginalFlying;player.setNoGravity(editor2OriginalNoGravity);player.sendAbilitiesUpdate();editor2ActorOwned=false;
+    }
+    private void restoreFunctionalActor(ServerPlayerEntity player) {
+        if(!functionalActorOwned)return;
+        player.setStackInHand(Hand.MAIN_HAND,functionalOriginalHeld);
+        if(originalGameMode!=null&&player.interactionManager.getGameMode()!=originalGameMode)player.changeGameMode(originalGameMode);
+        player.getAbilities().flying=functionalOriginalFlying;player.setNoGravity(functionalOriginalNoGravity);player.sendAbilitiesUpdate();functionalActorOwned=false;
+    }
+    private JsonObject editor2ReadinessJson(Editor2ClientReadiness ready,BlockPos expected,ServerPlayerEntity player) {
+        JsonObject row=new JsonObject();row.addProperty("target",expected.toShortString());row.addProperty("available",ready!=null);
+        row.addProperty("expectedStyle",editor2Before);row.addProperty("expectedState",editor2State.toString());row.addProperty("expectedNativeIndex",editor2Native);
+        row.addProperty("serverDimension",player.getServerWorld().getRegistryKey().getValue().toString());
+        row.addProperty("serverPlayerX",player.getX());row.addProperty("serverPlayerY",player.getY());row.addProperty("serverPlayerZ",player.getZ());
+        if(ready!=null){row.addProperty("observedTarget",ready.target().toShortString());row.addProperty("chunkLoaded",ready.chunkLoaded());row.addProperty("state",ready.state());row.addProperty("nativeIndex",ready.nativeIndex());row.addProperty("style",ready.style());row.addProperty("dimension",ready.dimension());row.addProperty("playerX",ready.playerX());row.addProperty("playerY",ready.playerY());row.addProperty("playerZ",ready.playerZ());row.addProperty("screen",ready.screen());row.addProperty("playerWithinEightBlocks",new Vec3d(ready.playerX(),ready.playerY(),ready.playerZ()).squaredDistanceTo(Vec3d.ofCenter(expected))<=64.0);}
+        return row;
+    }
+    private record Editor2View(Vec3d feet,float yaw,float pitch) {}
+    private static final Map<BlockPos,Editor2View> EDITOR2_VIEWS=new HashMap<>();
+    private boolean editor2View(ServerPlayerEntity player,BlockPos pos,Editor2View view,boolean requireClear,StringBuilder diagnostics) throws ReflectiveOperationException {
+        ServerWorld world=player.getServerWorld();Vec3d feet=view.feet();
+        if(requireClear&&!world.isSpaceEmpty(player,player.getBoundingBox().offset(feet.x-player.getX(),feet.y-player.getY(),feet.z-player.getZ())))return false;
+        Vec3d eye=feet.add(0,player.getStandingEyeHeight(),0);
+        var hit=world.raycast(new net.minecraft.world.RaycastContext(eye,eye.add(Vec3d.fromPolar(view.pitch(),view.yaw()).multiply(6.0)),net.minecraft.world.RaycastContext.ShapeType.OUTLINE,net.minecraft.world.RaycastContext.FluidHandling.NONE,player));
+        if(hit.getType()!=net.minecraft.util.hit.HitResult.Type.BLOCK||!hit.getBlockPos().equals(pos)) {
+            if(diagnostics.length()<700)diagnostics.append(" [eye=").append(eye).append(" yaw=").append(view.yaw()).append(" pitch=").append(view.pitch()).append(" hit=").append(hit.getType()).append(':').append(hit.getBlockPos()).append(']');
+            return false;
+        }
+        player.teleport(world,feet.x,feet.y,feet.z,view.yaw(),view.pitch());
+        // LivingEntity.getRotationVec(1) reads headYaw; same-world teleport sets body yaw only.
+        player.setHeadYaw(view.yaw());
+        Vec3d actualEye=player.getEyePos(),actualDirection=player.getRotationVec(1);
+        if(actualEye.squaredDistanceTo(eye)>1.0e-8 || actualDirection.squaredDistanceTo(Vec3d.fromPolar(view.pitch(),view.yaw()))>1.0e-8)
+            throw new IllegalStateException("QA orientation differs after teleport: eye="+actualEye+" expected="+eye+" direction="+actualDirection+" view="+view);
+        Method target=CityEditorServer.class.getDeclaredMethod("target",ServerPlayerEntity.class);target.setAccessible(true);
+        BlockHitResult actual=(BlockHitResult)target.invoke(null,player);
+        if(actual==null||!actual.getBlockPos().equals(pos)) {
+            if(diagnostics.length()<700)diagnostics.append(" [server hit=").append(actual==null?null:actual.getBlockPos()+" side="+actual.getSide()+" point="+actual.getPos()).append(" view=").append(view).append(']');
+            return false;
+        }
+        EDITOR2_VIEWS.put(pos.toImmutable(),view);
+        JsonObject views=report.has("editor2Viewpoints")?report.getAsJsonObject("editor2Viewpoints"):new JsonObject();
+        JsonObject row=new JsonObject();row.addProperty("feet",feet.toString());row.addProperty("yaw",view.yaw());row.addProperty("pitch",view.pitch());row.addProperty("collisionFree",requireClear);row.addProperty("exactServerRayHit",true);
+        views.add(pos.toShortString(),row);report.add("editor2Viewpoints",views);return true;
+    }
+    private void aimEditor2(ServerPlayerEntity player, BlockPos pos) throws ReflectiveOperationException {
+        ServerWorld world=player.getServerWorld();StringBuilder diagnostics=new StringBuilder();
+        List<Vec3d> points=new ArrayList<>();points.add(Vec3d.ofCenter(pos));
+        var boxes=world.getBlockState(pos).getOutlineShape(world,pos).getBoundingBoxes();
+        for(int i=0;i<Math.min(32,boxes.size());i++) {
+            var box=boxes.get(i);points.add(new Vec3d(pos.getX()+(box.minX+box.maxX)/2,pos.getY()+(box.minY+box.maxY)/2,pos.getZ()+(box.minZ+box.maxZ)/2));
+        }
+        Editor2View known=pos.equals(new BlockPos(117,62,-1091))?new Editor2View(new Vec3d(114.518,61.262,-1089.413),-116.6F,10.0F):null;
+        Editor2View cached=EDITOR2_VIEWS.get(pos);int candidates=0;
+        // Every accepted viewpoint must fit the normal player collision box.
+        for(boolean requireClear:new boolean[]{true}) {
+            if(known!=null){candidates++;if(editor2View(player,pos,known,requireClear,diagnostics))return;}
+            if(cached!=null){candidates++;if(editor2View(player,pos,cached,requireClear,diagnostics))return;}
+            for(Vec3d point:points)for(int dx=-1;dx<=1;dx++)for(int dy=-1;dy<=1;dy++)for(int dz=-1;dz<=1;dz++) {
+                if(dx==0&&dy==0&&dz==0)continue;
+                Vec3d direction=new Vec3d(dx,dy,dz).normalize();
+                for(double distance:new double[]{1.5,2.5,3.5,4.5}) {
+                    Vec3d eye=point.add(direction.multiply(distance));Vec3d toward=point.subtract(eye);
+                    float yaw=(float)Math.toDegrees(Math.atan2(-toward.x,toward.z));
+                    float pitch=(float)-Math.toDegrees(Math.atan2(toward.y,Math.sqrt(toward.x*toward.x+toward.z*toward.z)));
+                    Editor2View view=new Editor2View(eye.add(0,-player.getStandingEyeHeight(),0),yaw,pitch);candidates++;
+                    if(editor2View(player,pos,view,requireClear,diagnostics))return;
+                }
+            }
+        }
+        throw new IllegalStateException("No exact OUTLINE ray to "+pos+"; boxes="+boxes.size()+" candidates="+candidates+diagnostics);
+    }
+    private void cleanupEditor2Wall(ServerPlayerEntity player) {
+        ServerWorld world=player.getServerWorld();
+        if(editor2WallOwned) {if(!physicalBreak(player,EDITOR2_WALL))throw new IllegalStateException("Could not normally break prototype wall fixture");editor2WallOwned=false;}
+        if(editor2FloorOwned) {if(!physicalBreak(player,EDITOR2_WALL.down()))throw new IllegalStateException("Could not normally break prototype wall floor");editor2FloorOwned=false;}
+        if(!world.getBlockState(EDITOR2_WALL).isAir()||!world.getBlockState(EDITOR2_WALL.down()).isAir()||style(world,EDITOR2_WALL)!=-1)
+            throw new IllegalStateException("Prototype wall fixture did not clean up");
+        report.addProperty("editor2PrototypeWallCleanupVerified",true);
     }
 
     private boolean recoverScenarioFailure(ServerPlayerEntity player,MinecraftClient client,Throwable error){
@@ -873,6 +1246,7 @@ public final class EditorQa implements ClientModInitializer {
     }
     private ItemStack findSafeTestStack() {
         for (ItemStack stack : catalogue) if (stack.getItem() instanceof BlockItem block && block.getBlock() instanceof SourceFallbackCarrierV1271) return stack.copy();
+        for (var item : Registries.ITEM) if (item instanceof BlockItem block && block.getBlock() instanceof SourceFallbackCarrierV1271) return new ItemStack(item);
         return ItemStack.EMPTY;
     }
     private BlockPos findAutoSample(ServerWorld world,ServerPlayerEntity player){
@@ -968,7 +1342,7 @@ public final class EditorQa implements ClientModInitializer {
     }
 
     private void interruptAtTickStart(MinecraftServer server) {
-        if (!interruptArmed || server.getPlayerManager().getPlayer(playerId) == null) return;
+        if (phase==Phase.DONE || !interruptArmed || server.getPlayerManager().getPlayer(playerId) == null) return;
         try {
             ServerPlayerEntity player = server.getPlayerManager().getPlayer(playerId);
             Object session = session(player), job = field(session, "job");
@@ -1393,7 +1767,7 @@ public final class EditorQa implements ClientModInitializer {
             fixtureOwned=false;
         }
         if(uiBeOwned)restoreUiBeFixture(player);
-        restoreMode();
+        restoreEditor2Actor(player);restoreFunctionalActor(player);restoreMode();
         if (originalGameMode != null && player.interactionManager.getGameMode() != originalGameMode) player.changeGameMode(originalGameMode);
     }
     private void installUiBeFixture(ServerPlayerEntity player) {
@@ -1488,8 +1862,45 @@ public final class EditorQa implements ClientModInitializer {
             });
             return;
         }
+        int failureSeconds=Math.max(0,Math.min(300,Integer.getInteger("dw.editorqa.failureHoldSeconds",0)));
+        if(!failures.isEmpty()&&failureSeconds>0&&client.world!=null&&client.player!=null&&client.getServer()!=null&&!output.isBlank()) {
+            phase=Phase.DONE;
+            if(!failureHoldStarted) {
+                failureHoldStarted=true;failureHoldUntil=System.nanoTime()+failureSeconds*1_000_000_000L;
+                report.addProperty("status","FAIL");report.addProperty("pass",false);report.addProperty("progressPhase","FAILURE_HOLD");report.addProperty("failureHoldActive",true);
+                try{Files.writeString(Path.of(output),new GsonBuilder().setPrettyPrinting().create().toJson(report),StandardCharsets.UTF_8);}
+                catch(java.io.IOException error){failures.add("Failure-hold report write failed: "+error.getMessage());}
+                client.getServer().execute(()->{
+                    try {
+                        ServerPlayerEntity player=playerId==null?null:client.getServer().getPlayerManager().getPlayer(playerId);
+                        if(player!=null){
+                            failureHoldOriginalMode=player.interactionManager.getGameMode();failureHoldOriginalHeld=player.getMainHandStack().copy();
+                            failureHoldOriginalFlying=player.getAbilities().flying;failureHoldOriginalNoGravity=player.hasNoGravity();failureHoldActorCaptured=true;
+                            player.changeGameMode(GameMode.CREATIVE);player.getAbilities().flying=true;player.setNoGravity(true);player.setVelocity(Vec3d.ZERO);player.sendAbilitiesUpdate();
+                            player.setStackInHand(Hand.MAIN_HAND,new ItemStack(CityEditorServer.BRUSH));
+                        }
+                    }catch(Throwable error){failures.add("Failure-hold actor setup failed: "+error);}
+                    finally{failureHoldReady=true;}
+                });
+            }
+            if(!failureHoldReady)return;
+            if(System.nanoTime()<failureHoldUntil&&!Files.isRegularFile(client.runDirectory.toPath().resolve("evidence/failure-reviewed.ok")))return;
+            if(!failureHoldRestoring){
+                failureHoldRestoring=true;
+                client.getServer().execute(()->{
+                    try{
+                        ServerPlayerEntity player=playerId==null?null:client.getServer().getPlayerManager().getPlayer(playerId);
+                        if(player!=null&&failureHoldActorCaptured){player.setStackInHand(Hand.MAIN_HAND,failureHoldOriginalHeld);player.changeGameMode(failureHoldOriginalMode);player.getAbilities().flying=failureHoldOriginalFlying;player.setNoGravity(failureHoldOriginalNoGravity);player.sendAbilitiesUpdate();}
+                    }catch(Throwable error){failures.add("Failure-hold actor restore failed: "+error);}
+                    finally{failureHoldRestored=true;}
+                });
+                return;
+            }
+            if(!failureHoldRestored)return;
+            report.addProperty("failureHoldActive",false);
+        }
         int holdSeconds=Math.max(0,Math.min(uiOnly?900:300,Integer.getInteger("dw.editorqa.uiHoldSeconds",0)));
-        if(holdSeconds>0&&finalCleanupVerified&&client.getServer()!=null&&playerId!=null){
+        if(!failureHoldStarted&&holdSeconds>0&&finalCleanupVerified&&client.getServer()!=null&&playerId!=null){
             if(!uiHoldStarted){
                 uiHoldStarted=true;uiHoldUntil=System.nanoTime()+holdSeconds*1_000_000_000L;
                 report.addProperty("progressPhase","UI_HOLD");report.addProperty("uiHoldActive",true);report.addProperty("uiHoldAfterScenarioFailures",!failures.isEmpty());
@@ -1540,15 +1951,18 @@ public final class EditorQa implements ClientModInitializer {
         }
         done = true;
         report.addProperty("functionalSuiteFailed",functionalSuiteFailed);
-        if(uiOnly||catalogueOnly)report.addProperty("functionalSuiteStatus","SKIPPED");
+        boolean functionalRequested=!uiOnly&&!catalogueOnly&&(!editor2Only||functionalAfterEditor2);
+        if(!functionalRequested)report.addProperty("functionalSuiteStatus","SKIPPED");
+        else if(editor2Only&&!functionalAfterEditor2Started)report.addProperty("functionalSuiteStatus","INCOMPLETE");
         else if(functionalSuiteFailed)report.addProperty("functionalSuiteStatus","FAIL");
+        else if(editor2Only&&!failures.isEmpty())report.addProperty("functionalSuiteStatus","FAIL");
         else report.addProperty("functionalSuiteStatus","PASS");
-        report.addProperty("functionalSuiteComplete",!uiOnly&&!catalogueOnly&&!catalogueRecoveryStarted&&!functionalSuiteFailed);
+        report.addProperty("functionalSuiteComplete",functionalRequested&&(!editor2Only||editor2MatrixDone&&functionalAfterEditor2Started&&failures.isEmpty())&&!catalogueRecoveryStarted&&!functionalSuiteFailed);
         report.addProperty("finalCleanupVerified",finalCleanupVerified);
         report.addProperty("catalogueRecoveryUsed",catalogueRecoveryStarted);
-        boolean fullCatalogueCompleted=!uiOnly&&!catalogueOnly&&!catalogueFiltered&&!catalogue.isEmpty()&&cursor>=catalogue.size();
+        boolean fullCatalogueCompleted=!uiOnly&&(!editor2Only||editor2MatrixDone&&catalogueOnly)&&!catalogueFiltered&&!catalogue.isEmpty()&&cursor>=catalogue.size();
         report.addProperty("catalogueCompletedCount",cursor);
-        if(!uiOnly)report.addProperty("catalogueScope",catalogueFiltered?"FILTERED_OR_VERIFIED_EXCLUSIONS_NOT_WHOLE_CATALOGUE":(catalogueOnly?"CATALOGUE_ONLY_FULL_RUN":(fullCatalogueCompleted?"FULL_CATALOGUE":"INCOMPLETE")));
+        if(!uiOnly)report.addProperty("catalogueScope",editor2Only&&!catalogueOnly&&!functionalAfterEditor2?"CANONICAL_ID_AUDIT_ONLY":(catalogueFiltered?"FILTERED_OR_VERIFIED_EXCLUSIONS_NOT_WHOLE_CATALOGUE":(fullCatalogueCompleted?(catalogueOnly?"CATALOGUE_ONLY_FULL_RUN":"FULL_CATALOGUE"):"INCOMPLETE")));
         report.addProperty("wholeCatalogueFreshPass",fullCatalogueCompleted&&failures.isEmpty()&&unsupported.isEmpty());
         if(uiOnly)report.addProperty("uiOnlyPass",failures.isEmpty()&&unsupported.isEmpty());
         else report.addProperty("pass", failures.isEmpty() && unsupported.isEmpty());

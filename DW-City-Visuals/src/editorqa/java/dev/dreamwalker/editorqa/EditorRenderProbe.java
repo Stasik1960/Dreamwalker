@@ -20,10 +20,12 @@ import net.minecraft.world.chunk.ChunkStatus;
 /** Read-only, bounded evidence in the disposable QA jar, never production. */
 public final class EditorRenderProbe {
     private static final Gson GSON=new Gson();
-    private static final BlockPos TARGET=new BlockPos(117,Boolean.getBoolean("dw.editorqa.uiBeFixture")?200:62,-1091);
+    private static volatile BlockPos TARGET=new BlockPos(117,Boolean.getBoolean("dw.editorqa.uiBeFixture")?200:62,-1091);
     private static final boolean ENABLED=Boolean.getBoolean("dw.editorqa.renderProbe");
     private static final AtomicInteger EVENTS=new AtomicInteger();
     private static final AtomicLong GENERATION=new AtomicLong();
+    public record ArmedEpoch(BlockPos target,int style,long epoch) {}
+    private static volatile ArmedEpoch armed;
     private static volatile int lastStyle=Integer.MIN_VALUE;
     private static long changedTick,lastSample;
     private static boolean originsRecorded,writeErrorReported;
@@ -31,13 +33,19 @@ public final class EditorRenderProbe {
     private EditorRenderProbe() {}
     public static boolean enabled(){return ENABLED;}
     public static BlockPos target(){return TARGET;}
+    public static synchronized void setTarget(BlockPos pos){armed=null;TARGET=pos.toImmutable();lastStyle=Integer.MIN_VALUE;}
+    public static synchronized long arm(BlockPos pos,int style) {
+        long epoch=GENERATION.incrementAndGet();
+        TARGET=pos.toImmutable();armed=new ArmedEpoch(TARGET,style,epoch);EVENTS.set(0);return epoch;
+    }
+    public static ArmedEpoch armed(){return armed;}
     public static int liveStyle(){return lastStyle;}
     public static long generation(){return GENERATION.get();}
     public static void tick(MinecraftClient client) {
         if(!ENABLED||client.world==null||client.player==null)return;
         try {
             int style=EditorData.style(client.world,TARGET);long now=client.world.getTime();
-            if(style!=lastStyle){lastStyle=style;changedTick=now;GENERATION.incrementAndGet();EVENTS.set(0);describe(client,"style_change",style);}
+            if(style!=lastStyle){lastStyle=style;changedTick=now;synchronized(EditorRenderProbe.class){if(armed==null)GENERATION.incrementAndGet();}EVENTS.set(0);describe(client,"style_change",style);}
             if(!originsRecorded){
                 originsRecorded=true;
                 for(String name:new String[]{"dev.dreamwalker.bloodbornedw.visual.CityFacadesClient","dev.dreamwalker.bloodbornedw.visual.FacadeModel","dev.dreamwalker.bloodbornedw.visual.FacadeMaterials","dev.dreamwalker.bloodbornedw.editor.CityEditorClient","dev.dreamwalker.bloodbornedw.editor.EditorData","dev.dreamwalker.bloodbornedw.editor.EditorRenderScope","dev.dreamwalker.bloodbornedw.composite.NativeVisuals"})

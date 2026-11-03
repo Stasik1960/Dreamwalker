@@ -1,0 +1,18 @@
+{
+  "schema": 3,
+  "frozenUtc": "2026-11-03T19:34:57.237557+00:00",
+  "qaSha256": "da179e4e339a8d2a731b5f25fab977340c9634d7b034343c3f085b291ef6431a",
+  "planSha256": "a479d1c7f08049e92503a3c02cecbeb3177578ebaed66667244540dc74fcd7c4",
+  "comparatorSha256": "cf49ab35ea3e4e6b7bfc4546478c95504e1a9df19f994af1334739db098d65a0",
+  "baselineProductionSha256": "1dac47beb172a16b64280802be36048605e9b7e697234795011fbf3c09d7e5c4",
+  "candidateProductionSha256": "801fb49c7521f9d8caa4fee28ec15901b7ad485d4fabb62bc428b9e45d00431d",
+  "conditions": "same source world, full client modpack, native CPU8, ALT, 1280x720, rd12/sim12, two laps; identical new collector in both runs",
+  "changes": "atomic server tick/XYZ snapshot and one discarded MXBean prewarm before clock; all timed frames retained; movement, plan and thresholds unchanged",
+  "gates": "unchanged 15% per frame/memory/rate metric; zero baseline requires zero candidate; no increase of stutter counts",
+  "previousCandidateRun": "editor2-final-flight1 INVALID: two torn server-coordinate rows; raw frames and memory retained for investigation",
+  "previousInitialMaxima": "both frame index1; candidate cold sampler setup possible contributor, not proven; second candidate254ms spike strongly GC-associated",
+  "nextRuns": [
+    "editor2-baseline-flight2",
+    "editor2-final-flight2"
+  ]
+}

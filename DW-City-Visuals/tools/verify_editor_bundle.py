@@ -7,11 +7,25 @@ def verify(reference,candidate):
     with zipfile.ZipFile(reference) as old,zipfile.ZipFile(candidate) as new:
         names=set(new.namelist());meta=json.loads(new.read('fabric.mod.json'))
         for name in old.namelist():
-            if name not in names:failures.append('Removed reference entry: '+name);continue
+            if name not in names:
+                # Private record used only by the removed creative-state expansion;
+                # Neither this helper nor the removed creative-only fence appender is a registered or saved type.
+                if name not in {
+                    'dev/dreamwalker/bloodbornedw/editor/catalogue/EditorCatalogue$SourcePalette.class',
+                    'dev/dreamwalker/bloodbornedw/composite/overlaymixin/FenceUnifiedCatalogueMixin.class',
+                }:
+                    failures.append('Removed reference entry: '+name)
+                continue
             city=name.startswith('dw_city_visuals/') or (name.startswith('assets/') and (name.endswith('.png') or '/models/' in name or '/geo/' in name))
             if city:
                 checked+=1
-                if old.read(name)!=new.read(name):failures.append('City image/model changed: '+name)
+                if old.read(name)!=new.read(name):
+                    if name=='dw_city_visuals/alt/assets/minecraft/atlases/blocks.json':
+                        before=json.loads(old.read(name));after=json.loads(new.read(name))
+                        expected=dict(before)
+                        expected['sources']=before['sources']+[{'type':'minecraft:directory','source':'block/editor2_palette','prefix':'block/editor2_palette/'}]
+                        if after!=expected:failures.append('Unexpected atlas modification: '+name)
+                    else:failures.append('City image/model changed: '+name)
         for entry in meta['mixins']:
             config=entry if isinstance(entry,str) else entry['config'];data=json.loads(new.read(config));package=data['package'].replace('.','/')+'/'
             declared={package+name.replace('.','/')+'.class' for key in ('mixins','client','server') for name in data.get(key,[])}

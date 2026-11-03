@@ -29,7 +29,8 @@ public final class FlightQa implements ClientModInitializer {
     private final int[] ticks=new int[LIMIT];
     private int count, tick, segment; private long previous, flightStart, boot, stable, nextMemory;
     private boolean recording, done, placed, renderedInitial, closing, captureDone; private int correctionCount; private long flightEnd,flightEndEpoch; private volatile Throwable serverError;
-    private volatile double serverX,serverY,serverZ; private volatile int serverSampleTick=-1;
+    private record ServerPosition(int tick,double x,double y,double z) {}
+    private volatile ServerPosition serverPosition=new ServerPosition(-1,0,0,0);
     private Path output; private JsonObject report=new JsonObject(),plan; private JsonArray points, memory=new JsonArray(),positions=new JsonArray();
     private CompletableFuture<Void> job; private int state; // 0 boot, 1 initial load, 2 flight, 3 saving
     private double x,y,z; private long fixedTime, loadingAt; private double routeLength; private double[] lengths;
@@ -78,10 +79,11 @@ public final class FlightQa implements ClientModInitializer {
                 if(tick++%5!=0)return;boolean ready=renderedInitial&&full(c)&&c.worldRenderer.isTerrainRenderComplete()&&NativeReadiness.idle(NativeReadiness.sample(c.world));
                 if(!ready){stable=0;return;}if(stable==0){stable=now;return;}if(now-stable<2_000_000_000L)return;
                 report.addProperty("initialTerrainComplete",true);report.addProperty("initialFullChunks",true);report.addProperty("initialRendered",renderedInitial);report.addProperty("initialStage","cold initial view; first lap streams, second lap revisits");report.add("initialNativeReadiness",NativeReadiness.sample(c.world));report.addProperty("initialStableSeconds",(now-stable)/1e9);
-                tick=0;state=2;report.addProperty("flightStartEpochMillis",System.currentTimeMillis());report.addProperty("status","FLYING");save();flightStart=System.nanoTime();report.addProperty("flightStartNanoTime",flightStart);previous=flightStart;nextMemory=flightStart;recording=true;return;
+                memory(); // Initialize the same management collectors before recording, without adding a sample.
+                tick=0;report.addProperty("flightStartEpochMillis",System.currentTimeMillis());report.addProperty("status","FLYING");save();state=2;flightStart=System.nanoTime();report.addProperty("flightStartNanoTime",flightStart);previous=flightStart;nextMemory=flightStart;recording=true;return;
             }
             int duration=plan.get("ticksPerLap").getAsInt(),total=duration*2;
-            if(tick>=total){if(!closing){closing=true;return;}if(!captureDone)return;report.addProperty("flightEndEpochMillis",flightEndEpoch);report.addProperty("flightEndNanoTime",flightEnd);report.addProperty("wallSeconds",(flightEnd-flightStart)/1e9);report.addProperty("correctionCount",correctionCount);report.add("frames",frames());check(count>=1000,"too few frames");check(serverSampleTick>=total-40,"no recent server position");state=3;job=new CompletableFuture<>();c.getServer().execute(()->{try{c.getServer().save(false,true,true);job.complete(null);}catch(Throwable e){job.completeExceptionally(e);}});report.addProperty("status","SAVING");save();return;}
+            if(tick>=total){if(!closing){closing=true;return;}if(!captureDone)return;report.addProperty("flightEndEpochMillis",flightEndEpoch);report.addProperty("flightEndNanoTime",flightEnd);report.addProperty("wallSeconds",(flightEnd-flightStart)/1e9);report.addProperty("correctionCount",correctionCount);report.add("frames",frames());check(count>=1000,"too few frames");check(serverPosition.tick()>=total-40,"no recent server position");state=3;job=new CompletableFuture<>();c.getServer().execute(()->{try{c.getServer().save(false,true,true);job.complete(null);}catch(Throwable e){job.completeExceptionally(e);}});report.addProperty("status","SAVING");save();return;}
             // Equal distance per tick; move through vanilla collision handling and fail on obstruction.
             double distance=(tick%duration)*routeLength/duration;segment=0;
             while(segment<lengths.length-1 && distance>=lengths[segment]){distance-=lengths[segment];segment++;}
@@ -91,8 +93,8 @@ public final class FlightQa implements ClientModInitializer {
             c.player.move(MovementType.SELF,new Vec3d(x-c.player.getX(),y-c.player.getY(),z-c.player.getZ()));
             check(c.player.squaredDistanceTo(x,y,z)<.0025,"flight route obstructed or player corrected");
             c.player.setYaw((float)(Math.toDegrees(Math.atan2(-(b.get("x").getAsDouble()-a.get("x").getAsDouble()),b.get("z").getAsDouble()-a.get("z").getAsDouble()))));c.player.setPitch(15);
-            if(tick%20==0){int sampleTick=tick;double sx=x,sy=y,sz=z;c.getServer().execute(()->{try{var p=c.getServer().getPlayerManager().getPlayer(c.player.getUuid());check(p!=null,"server player missing");serverX=p.getX();serverY=p.getY();serverZ=p.getZ();serverSampleTick=sampleTick;check((serverX-sx)*(serverX-sx)+(serverY-sy)*(serverY-sy)+(serverZ-sz)*(serverZ-sz)<100,"server movement diverged");}catch(Throwable e){serverError=e;}});
-                JsonObject pos=new JsonObject();pos.addProperty("tick",tick);pos.addProperty("elapsedSeconds",(now-flightStart)/1e9);pos.addProperty("segment",segment);pos.addProperty("x",x);pos.addProperty("y",y);pos.addProperty("z",z);pos.addProperty("serverSampleTick",serverSampleTick);pos.addProperty("serverX",serverX);pos.addProperty("serverY",serverY);pos.addProperty("serverZ",serverZ);positions.add(pos);
+            if(tick%20==0){int sampleTick=tick;double sx=x,sy=y,sz=z;c.getServer().execute(()->{try{var p=c.getServer().getPlayerManager().getPlayer(c.player.getUuid());check(p!=null,"server player missing");ServerPosition sample=new ServerPosition(sampleTick,p.getX(),p.getY(),p.getZ());serverPosition=sample;check((sample.x()-sx)*(sample.x()-sx)+(sample.y()-sy)*(sample.y()-sy)+(sample.z()-sz)*(sample.z()-sz)<100,"server movement diverged");}catch(Throwable e){serverError=e;}});
+                ServerPosition sample=serverPosition;JsonObject pos=new JsonObject();pos.addProperty("tick",tick);pos.addProperty("elapsedSeconds",(now-flightStart)/1e9);pos.addProperty("segment",segment);pos.addProperty("x",x);pos.addProperty("y",y);pos.addProperty("z",z);pos.addProperty("serverSampleTick",sample.tick());pos.addProperty("serverX",sample.x());pos.addProperty("serverY",sample.y());pos.addProperty("serverZ",sample.z());positions.add(pos);
             }
             if(now>=nextMemory){JsonObject m=memory();m.addProperty("elapsedSeconds",(now-flightStart)/1e9);m.addProperty("epochMillis",System.currentTimeMillis());m.addProperty("nanoTime",now);memory.add(m);nextMemory=now+1_000_000_000L;}tick++;
         }catch(Throwable e){fail(e);}

@@ -31,9 +31,15 @@ import org.lwjgl.glfw.GLFW;
 public final class CityEditorClient implements ClientModInitializer {
     private static KeyBinding open;
     private static volatile int material = 1, radius = 0, undo, redo;
-    private static volatile int secondary = 2, accent = 3, primaryWeight = 80, secondaryWeight = 15;
+    private static volatile int secondary = 0, accent = 0, primaryWeight = 85, secondaryWeight = 15;
     private static volatile String mode = "single", message = "";
-    private static volatile boolean selected;
+    private static volatile boolean selected, hasFirst, hasSecond;
+    private static volatile long first, second;
+    private static volatile String selectionDimension = "";
+    private static boolean shiftAttackHandled;
+    private static String cornerAction = "", cornerDimension = "";
+    private static long cornerPosition, cornerRequestId = -1L;
+    private static int cornerAfterTick, cornerDeadline, cornerAttempts;
     private static volatile boolean serverBusy;
     private static String strokeId="";
     private static long requestSequence, pendingRequestId=-1L, pendingPosition=Long.MIN_VALUE, retryPosition=Long.MIN_VALUE;
@@ -54,12 +60,20 @@ public final class CityEditorClient implements ClientModInitializer {
             client.execute(() -> {
                 if (client.getNetworkHandler() != handler) return;
                 material = state.getInt("material"); mode = state.getString("mode"); radius = state.getInt("radius");
+                if (mode.equals("stamp")) mode = "single";
+                hasFirst = state.getBoolean("hasFirst"); hasSecond = state.getBoolean("hasSecond");
+                first = state.getLong("first"); second = state.getLong("second"); selectionDimension = state.getString("selectionDimension");
                 secondary = clampMaterial(state.getInt("secondary")); accent = clampMaterial(state.getInt("accent"));
                 primaryWeight = clampWeight(state.getInt("primaryWeight")); secondaryWeight = clampWeight(state.getInt("secondaryWeight"));
                 if (primaryWeight + secondaryWeight > 100) secondaryWeight = 100 - primaryWeight;
                 message = state.getString("message"); undo = state.getInt("undo"); redo = state.getInt("redo"); selected = state.getBoolean("selected");
                 serverBusy = state.getBoolean("busy");
                 long ackId = state.getLong("requestId");
+                if (cornerRequestId != -1L && ackId == cornerRequestId) {
+                    cornerRequestId = -1L;
+                    if (state.getBoolean("retry") && cornerAttempts < 8) cornerAfterTick = strokeTick + 2;
+                    else cornerAction = "";
+                }
                 if(!acknowledgePaint(ackId,state.getBoolean("accepted"),state.getBoolean("retry"),serverBusy)
                         && waitingForServerIdle && !serverBusy) {
                     waitingForServerIdle=false; retryAfterTick=strokeTick+2;
@@ -99,9 +113,15 @@ public final class CityEditorClient implements ClientModInitializer {
         });
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             strokeTick++;
-            while (open.wasPressed()) if (client.player != null && heldBrush(client)) client.setScreen(new CityEditorScreen());
-            if (client.player == null || client.currentScreen != null || !heldBrush(client)) { resetStroke(); return; }
+            while (open.wasPressed()) if (client.player != null && heldBrush(client)) {
+                if (mode.equals("stamp")) mode="single"; secondary=0; accent=0; primaryWeight=85; secondaryWeight=15;
+                config(); client.setScreen(new CityEditorScreen());
+            }
+            if (client.player == null || client.currentScreen != null || !heldBrush(client)) { clearCorner(); resetStroke(); return; }
             boolean attackHeld=client.options.attackKey.isPressed();
+            if (!attackHeld) shiftAttackHandled=false;
+            if (!cornerAction.isEmpty()) { processCorner(client); return; }
+            if (client.player.isSneaking() || shiftAttackHandled) { stopForCorner(); return; }
             if (!attackHeld && !attackClickQueued) {
                 pressActive=false;
                 if (pendingRequestId != -1L) releaseAfterQueued=true;
@@ -138,6 +158,11 @@ public final class CityEditorClient implements ClientModInitializer {
         AttackBlockCallback.EVENT.register((player, world, hand, pos, direction) -> {
             MinecraftClient client = MinecraftClient.getInstance();
             if (world.isClient && client.currentScreen == null && heldBrush(client)) {
+                if (player.isSneaking()) {
+                    if (!shiftAttackHandled) { queueCorner("first", client, pos.asLong()); shiftAttackHandled=true; }
+                    return net.minecraft.util.ActionResult.FAIL;
+                }
+                if (!cornerAction.isEmpty() || shiftAttackHandled) return net.minecraft.util.ActionResult.FAIL;
                 if(!pressActive||releaseAfterQueued){clickGeneration++;pressActive=true;releaseAfterQueued=false;}
                 attackClickQueued=true;return net.minecraft.util.ActionResult.FAIL;
             }
@@ -145,14 +170,14 @@ public final class CityEditorClient implements ClientModInitializer {
         });
         UseBlockCallback.EVENT.register((player, world, hand, hit) -> {
             MinecraftClient client = MinecraftClient.getInstance();
-            if (world.isClient && client.currentScreen == null && heldBrush(client)) { request("sample"); return net.minecraft.util.ActionResult.FAIL; }
+            if (world.isClient && client.currentScreen == null && heldBrush(client)) { if (player.isSneaking()) queueCorner("second", client, hit.getBlockPos().asLong()); else if (cornerAction.isEmpty()) request("sample"); return net.minecraft.util.ActionResult.FAIL; }
             return net.minecraft.util.ActionResult.PASS;
         });
         HudRenderCallback.EVENT.register((draw, tick) -> {
             MinecraftClient client = MinecraftClient.getInstance();
             if (client.player != null && heldBrush(client)) {
-                String status = "Режим: " + modeName(mode) + " · Радиус: " + radius + " · " + materialName(material) + (message.isEmpty() ? "" : " · " + message);
-                draw.drawText(client.textRenderer, Text.literal(status), 8, 8, 0xFFE8D9B0, true);
+                String status = materialName(material) + " · " + modeName(mode) + (mode.equals("plane") ? " · " + (radius*2+1) + "×" + (radius*2+1) : "") + (message.isEmpty() ? "" : " · " + message);
+                draw.drawCenteredTextWithShadow(client.textRenderer, Text.literal(status), draw.getScaledWindowWidth()/2, draw.getScaledWindowHeight()-62, 0xFFE8D9B0);
             }
         });
         WorldRenderEvents.BEFORE_DEBUG_RENDER.register(context -> {
@@ -162,6 +187,11 @@ public final class CityEditorClient implements ClientModInitializer {
             var camera=context.camera().getPos();
             WorldRenderer.drawBox(context.matrixStack(), context.consumers().getBuffer(RenderLayer.getLines()),
                 new Box(hit.getBlockPos()).expand(0.002).offset(-camera.x,-camera.y,-camera.z), color, 0.88F, 0.32F, 0.92F);
+            if (hasFirst && client.world != null && client.world.getRegistryKey().getValue().toString().equals(selectionDimension)) {
+                var a=net.minecraft.util.math.BlockPos.fromLong(first); var b=hasSecond ? net.minecraft.util.math.BlockPos.fromLong(second) : a;
+                WorldRenderer.drawBox(context.matrixStack(), context.consumers().getBuffer(RenderLayer.getLines()),
+                    new Box(Math.min(a.getX(),b.getX()),Math.min(a.getY(),b.getY()),Math.min(a.getZ(),b.getZ()),Math.max(a.getX(),b.getX())+1,Math.max(a.getY(),b.getY())+1,Math.max(a.getZ(),b.getZ())+1).offset(-camera.x,-camera.y,-camera.z), 0.35F,0.8F,1F,0.9F);
+            }
         });
     }
     static int material() { return material; }
@@ -174,6 +204,12 @@ public final class CityEditorClient implements ClientModInitializer {
     static int undoCount() { return undo; }
     static int redoCount() { return redo; }
     static boolean selected() { return selected; }
+    static boolean busy() { return serverBusy; }
+    static String selectionText() {
+        var world=MinecraftClient.getInstance().world;
+        if(hasFirst && world!=null && !world.getRegistryKey().getValue().toString().equals(selectionDimension))return "Выделение: в другом измерении";
+        return hasSecond ? "Выделение: две точки" : hasFirst ? "Выделение: первая точка" : "Выделение: нет точек";
+    }
     static String message() { return message; }
     static String materialName(int value) { return switch (value) { case 0 -> "Базовый"; case 1 -> "Розовый"; case 2 -> "Шалфей"; case 3 -> "Песочный"; case 4 -> "Красный"; default -> "?"; }; }
     static String modeName(String value) { return switch(value) { case "single" -> "одиночный"; case "area" -> "область"; case "plane" -> "плоскость"; case "fill" -> "заливка"; case "noise" -> "шум"; case "stamp" -> "штамп"; default -> value; }; }
@@ -202,9 +238,9 @@ public final class CityEditorClient implements ClientModInitializer {
         request.putInt("secondary",secondary);request.putInt("accent",accent);request.putInt("primaryWeight",primaryWeight);request.putInt("secondaryWeight",secondaryWeight);
         var buf=net.fabricmc.fabric.api.networking.v1.PacketByteBufs.create();buf.writeNbt(request);ClientPlayNetworking.send(CityEditorServer.REQUEST,buf);
     }
-    static void setMaterial(int value) { material = Math.max(0,Math.min(4,value)); config(); }
-    static void setMode(String value) { mode = value; config(); }
-    static void setRadius(int value) { radius = Math.max(0, Math.min(4, value)); config(); }
+    static void setMaterial(int value) { value=clampMaterial(value); if (material!=value) { material=value; config(); } }
+    static void setMode(String value) { if (!mode.equals(value)) { mode=value; config(); } }
+    static void setRadius(int value) { value=Math.max(0,Math.min(4,value)); if (radius!=value) { radius=value; config(); } }
     static void setSecondary(int value) { secondary=clampMaterial(value); config(); }
     static void setAccent(int value) { accent=clampMaterial(value); config(); }
     static void setPrimaryWeight(int value) { primaryWeight=clampWeight(value); if(primaryWeight+secondaryWeight>100)secondaryWeight=100-primaryWeight; config(); }
@@ -215,12 +251,41 @@ public final class CityEditorClient implements ClientModInitializer {
         if(pendingRequestId==-1L||id!=pendingRequestId)return false;
         long ackPos=pendingPosition,ackGeneration=pendingGeneration;boolean ackOneShot=pendingOneShot;
         pendingRequestId=-1L;pendingPosition=Long.MIN_VALUE;pendingOneShot=false;pendingGeneration=-1L;
+        if (!cornerAction.isEmpty() || (MinecraftClient.getInstance().player != null && MinecraftClient.getInstance().player.isSneaking())) {
+            resetStroke(); cornerAfterTick=strokeTick+2; return true;
+        }
         if(retry){retryPosition=ackPos;retryOneShot=ackOneShot;retryGeneration=ackGeneration;waitingForServerIdle=busy;retryAfterTick=strokeTick+2;if(releaseAfterQueued)attackClickQueued=true;return true;}
         lastStrokePos=ackPos;if(ackOneShot)strokePressGeneration=ackGeneration;
         retryPosition=Long.MIN_VALUE;retryOneShot=false;retryGeneration=-1L;waitingForServerIdle=false;
         if(clickGeneration>ackGeneration&&attackClickQueued)finishAcknowledgedStrokePreservingQueuedPress();
         else if(releaseAfterQueued)resetStroke();
         return true;
+    }
+    private static void clearCorner() { cornerAction=""; cornerRequestId=-1L; cornerAttempts=0; }
+    private static void stopForCorner() {
+        attackClickQueued=false; retryPosition=Long.MIN_VALUE; retryOneShot=false; retryGeneration=-1L;
+        waitingForServerIdle=false; pressActive=false;
+        if (pendingRequestId == -1L) { if (!strokeId.isEmpty()) resetStroke(); }
+        else releaseAfterQueued=true;
+    }
+    private static void queueCorner(String action, MinecraftClient client, long pos) {
+        if (!cornerAction.isEmpty() || client.world == null) return;
+        cornerAction=action; cornerPosition=pos; cornerDimension=client.world.getRegistryKey().getValue().toString();
+        cornerRequestId=-1L; cornerAttempts=0; cornerAfterTick=strokeTick+2; cornerDeadline=strokeTick+100;
+        stopForCorner();
+    }
+    private static void processCorner(MinecraftClient client) {
+        stopForCorner();
+        if (strokeTick > cornerDeadline || client.world == null || !client.world.getRegistryKey().getValue().toString().equals(cornerDimension)
+                || !(client.crosshairTarget instanceof BlockHitResult hit) || hit.getBlockPos().asLong()!=cornerPosition) {
+            clearCorner(); message="Выделение отменено: цель изменилась или сервер не ответил"; return;
+        }
+        if (pendingRequestId!=-1L || cornerRequestId!=-1L || serverBusy || strokeTick<cornerAfterTick) return;
+        if (!ClientPlayNetworking.canSend(CityEditorServer.REQUEST)) { clearCorner(); return; }
+        long id=nextRequestId(); NbtCompound packet=new NbtCompound();
+        packet.putString("action",cornerAction); packet.putLong("requestId",id);
+        var buf=net.fabricmc.fabric.api.networking.v1.PacketByteBufs.create(); buf.writeNbt(packet);
+        cornerRequestId=id; cornerAttempts++; ClientPlayNetworking.send(CityEditorServer.REQUEST,buf);
     }
     private static void finishAcknowledgedStrokePreservingQueuedPress(){
         if(!strokeId.isEmpty()){request("endStroke");strokeId="";}

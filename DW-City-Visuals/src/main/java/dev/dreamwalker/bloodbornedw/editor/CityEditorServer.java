@@ -57,7 +57,7 @@ public final class CityEditorServer implements ModInitializer {
         Edit(RegistryKey<net.minecraft.world.World> dimension,List<Change> changes,Placement placement){this(dimension,List.copyOf(changes),placement,placement==null?changes.stream().mapToLong(c->c.pos.asLong()).sorted().toArray():new long[]{placement.root.asLong()});}
     }
     private static final class Session {
-        int material=1,radius=0,lastRequest=-100,secondary=2,accent=3,primaryWeight=80,secondaryWeight=15; String mode="single",message="Готово";
+        int material=1,radius=0,lastRequest=-100,secondary=0,accent=0,primaryWeight=85,secondaryWeight=15; String mode="single",message="Готово";
         BlockPos first,second; ItemStack stamp=ItemStack.EMPTY; int stampStyle;
         RegistryKey<net.minecraft.world.World> selectionDimension;
         final Deque<Edit> undo=new ArrayDeque<>(),redo=new ArrayDeque<>(); Job job;
@@ -72,6 +72,7 @@ public final class CityEditorServer implements ModInitializer {
     private static Identifier id(String path){return new Identifier("bloodborne_dw",path);}
     @Override public void onInitialize(){
         Registry.register(Registries.ITEM,id("editor_brush"),BRUSH);
+        StonePaletteSupport.initialize();
         ServerPlayNetworking.registerGlobalReceiver(REQUEST,(server,player,handler,buf,sender)->{
             Ingress ingress=INGRESS.computeIfAbsent(player.getUuid(),ignored->new Ingress());
             if(!ingress.acquire()){handler.disconnect(Text.literal("Слишком много запросов редактора"));return;}
@@ -135,7 +136,14 @@ public final class CityEditorServer implements ModInitializer {
     public static int pendingStyle(ServerWorld world,BlockPos pos){
         if(EXTERNAL_UPDATES.isEmpty())return -2;WorldChunk chunk=loaded(world,pos);if(chunk==null)return -2;Map<Long,Integer> pending=EXTERNAL_UPDATES.get(chunk);return pending==null? -2:pending.getOrDefault(pos.asLong(),-2);
     }
-    public static int effectiveStyle(ServerWorld world,BlockPos pos){WorldChunk chunk=loaded(world,pos);if(chunk==null)return 0;int value=style(chunk,pos);return value<0?regional(pos,world):value;}
+    public static int effectiveStyle(ServerWorld world,BlockPos pos){
+        if(!CityVisualModeState.isAlt(world.getServer()))return 0;
+        pos=StonePaletteSupport.paintTarget(world,pos);if(pos==null)return 0;
+        WorldChunk chunk=loaded(world,pos);if(chunk==null)return 0;
+        int value=style(chunk,pos);if(value>=0)return value;
+        int role=regional(pos,world);
+        return (StonePaletteSupport.automaticRoles(world,pos)&(1<<role))!=0?role:0;
+    }
     public static void queueAppearance(ServerWorld world,BlockPos pos,int value){
         if(!world.getServer().isOnThread())throw new IllegalStateException("Editor writes require the server thread");
         if(value< -1||value>4||pos.getY()<world.getBottomY()||pos.getY()>=world.getTopY())throw new IllegalArgumentException("Invalid editor appearance");
@@ -173,9 +181,11 @@ public final class CityEditorServer implements ModInitializer {
         BlockHitResult hit=target(p);if(hit==null){s.message="Под прицелом нет блока";state(p,s);return;}
         BlockPos pos=hit.getBlockPos();ServerWorld world=p.getServerWorld();WorldChunk chunk=loaded(world,pos);
         boolean stampPlacement=action.equals("paint")&&s.mode.equals("stamp");
-        if(chunk==null||(!stampPlacement&&!supported(world.getBlockState(pos)))){s.message="Выберите блок DreamWalker";state(p,s);return;}
+        boolean selection=action.equals("first")||action.equals("second");
+        if(chunk==null){s.message="Цель не загружена";state(p,s);return;}
+        if(!selection&&!stampPlacement&&!StonePaletteSupport.paintable(world,pos)){s.message="Выберите каменный блок DreamWalker или города";state(p,s);return;}
         switch(action){
-            case "sample"->{int value=style(chunk,pos);s.material=value<0?regional(pos,world):value;s.message="Материал скопирован";}
+            case "sample"->{s.material=effectiveStyle(world,pos);s.message="Цвет скопирован: "+switch(s.material){case 1->"розовый";case 2->"шалфей";case 3->"песочный";case 4->"красный";default->"базовый";};}
             case "first"->{s.first=pos.toImmutable();s.second=null;s.selectionDimension=world.getRegistryKey();s.message="Первая точка выделения";}
             case "second"->{if(!world.getRegistryKey().equals(s.selectionDimension))throw new IllegalArgumentException("Выберите первую точку в этом измерении");s.second=pos.toImmutable();s.message="Вторая точка выделения";}
             case "stamp"->{s.stamp=world.getBlockState(pos).getBlock().getPickStack(world,pos,world.getBlockState(pos));s.stampStyle=style(chunk,pos);if(s.stampStyle<0)s.stampStyle=regional(pos,world);s.mode="stamp";s.message=s.stamp.isEmpty()?"У этой детали нет безопасного предмета":"Образец формы взят";}
@@ -188,8 +198,11 @@ public final class CityEditorServer implements ModInitializer {
                 String mode=action.equals("fill")?"fill":action.equals("noise")?"noise":s.mode;
                 List<BlockPos> cells=collect(world,pos,hit.getSide(),s,mode);
                 List<Change> changes=new ArrayList<>();
-                for(BlockPos cell:cells){var c=loaded(world,cell);if(c==null||!supported(world.getBlockState(cell)))continue;
-                    if(!dev.dreamwalker.bloodbornedw.architecture.BuildPermissions.canEdit(world,p,cell))throw new IllegalArgumentException("Участок защищён от редактирования");
+                Set<BlockPos> roots=new HashSet<>();
+                for(BlockPos hitCell:cells){
+                    BlockPos cell=StonePaletteSupport.paintTarget(world,hitCell);if(cell==null||!roots.add(cell))continue;
+                    var c=loaded(world,cell);if(c==null)continue;
+                    if(!dev.dreamwalker.bloodbornedw.architecture.BuildPermissions.canEdit(world,p,hitCell)||!dev.dreamwalker.bloodbornedw.architecture.BuildPermissions.canEdit(world,p,cell))throw new IllegalArgumentException("Участок защищён от редактирования");
                     int before=style(c,cell),after=action.equals("reset")?0:s.material;
                     if(mode.equals("noise")&&!action.equals("reset")){long random=MathHelper.hashCode(cell.getX(),cell.getY(),cell.getZ());int v=Math.floorMod(random,100);after=v<s.primaryWeight?s.material:v<s.primaryWeight+s.secondaryWeight?s.secondary:s.accent;}
                     if(before!=after)changes.add(new Change(cell.toImmutable(),world.getBlockState(cell),NativeVisuals.index(world,cell),before,after));}
@@ -305,7 +318,15 @@ public final class CityEditorServer implements ModInitializer {
             var buf=PacketByteBufs.create();buf.writeIdentifier(world.getRegistryKey().getValue());buf.writeInt(chunk.getPos().x);buf.writeInt(chunk.getPos().z);NbtCompound n=new NbtCompound();n.put("Editor",cells.packed());buf.writeNbt(n);ServerPlayNetworking.send(p,UPDATE,buf);}
     }
     private static void state(ServerPlayerEntity p,Session s){
-        if(!ServerPlayNetworking.canSend(p,STATE))return;NbtCompound n=new NbtCompound();n.putLong("requestId",s.requestId);n.putBoolean("accepted",s.accepted);n.putBoolean("retry",s.retry);n.putBoolean("busy",s.job!=null);n.putInt("material",s.material);n.putInt("radius",s.radius);n.putInt("secondary",s.secondary);n.putInt("accent",s.accent);n.putInt("primaryWeight",s.primaryWeight);n.putInt("secondaryWeight",s.secondaryWeight);n.putString("mode",s.mode);n.putString("message",s.message);n.putInt("undo",s.undo.size());n.putInt("redo",s.redo.size());n.putBoolean("selected",s.first!=null&&s.second!=null);var buf=PacketByteBufs.create();buf.writeNbt(n);ServerPlayNetworking.send(p,STATE,buf);
+        if(!ServerPlayNetworking.canSend(p,STATE))return;
+        NbtCompound n=new NbtCompound();n.putLong("requestId",s.requestId);n.putBoolean("accepted",s.accepted);n.putBoolean("retry",s.retry);n.putBoolean("busy",s.job!=null);n.putInt("material",s.material);n.putInt("radius",s.radius);n.putInt("secondary",s.secondary);n.putInt("accent",s.accent);n.putInt("primaryWeight",s.primaryWeight);n.putInt("secondaryWeight",s.secondaryWeight);n.putString("mode",s.mode);n.putString("message",s.message);n.putInt("undo",s.undo.size());n.putInt("redo",s.redo.size());
+        boolean sameDimension=p.getServerWorld().getRegistryKey().equals(s.selectionDimension);
+        n.putBoolean("selected",sameDimension&&s.first!=null&&s.second!=null);
+        n.putBoolean("hasFirst",s.first!=null);n.putBoolean("hasSecond",s.second!=null);
+        if(s.first!=null)n.putLong("first",s.first.asLong());
+        if(s.second!=null)n.putLong("second",s.second.asLong());
+        n.putString("selectionDimension",s.selectionDimension==null?"":s.selectionDimension.getValue().toString());
+        var buf=PacketByteBufs.create();buf.writeNbt(n);ServerPlayNetworking.send(p,STATE,buf);
     }
     private static int regional(BlockPos pos,ServerWorld world){
         if(!world.getRegistryKey().equals(net.minecraft.world.World.OVERWORLD))return 0;

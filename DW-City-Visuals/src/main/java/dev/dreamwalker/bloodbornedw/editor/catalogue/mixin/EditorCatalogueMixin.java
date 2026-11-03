@@ -1,21 +1,23 @@
 package dev.dreamwalker.bloodbornedw.editor.catalogue.mixin;
-import dev.dreamwalker.bloodbornedw.editor.catalogue.EditorCatalogue;
 
+import dev.dreamwalker.bloodbornedw.editor.catalogue.EditorCatalogue;
 import dev.dreamwalker.bloodbornedw.debug.UnifiedCreativeCatalogue;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 import net.minecraft.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.injection.Redirect;
 
-@Mixin(value = UnifiedCreativeCatalogue.class, remap = false, priority = 900)
+@Mixin(value = UnifiedCreativeCatalogue.class, remap = false)
 public abstract class EditorCatalogueMixin {
-    @Inject(method = "canonicalItems", at = @At("RETURN"), cancellable = true, remap = false)
-    private static void dw$completeCatalogue(CallbackInfoReturnable<List<ItemStack>> cir) {
-        List<ItemStack> items = new ArrayList<>(cir.getReturnValue());
+    // Normalize the original list before the pinned lantern repair's cancellable RETURN.
+    // No competing RETURN callback or thread-local intermediate list is needed.
+    @Redirect(method = "canonicalItems", at = @At(value = "INVOKE", target = "Ljava/util/stream/Stream;toList()Ljava/util/List;"), remap = false)
+    private static List<ItemStack> dw$completeOriginalCatalogue(Stream<ItemStack> stream) {
+        List<ItemStack> items = new ArrayList<>(stream.toList());
         EditorCatalogue.fill(items);
-        cir.setReturnValue(List.copyOf(items));
+        return List.copyOf(items);
     }
 }

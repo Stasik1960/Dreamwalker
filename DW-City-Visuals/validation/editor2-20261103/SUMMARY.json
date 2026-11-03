@@ -1,0 +1,469 @@
+{
+  "schema": 1,
+  "functionalStatus": "PASS",
+  "performanceStatus": "PASS",
+  "productionSha256": "801fb49c7521f9d8caa4fee28ec15901b7ad485d4fabb62bc428b9e45d00431d",
+  "provenance": {
+    "editor2-final-qa8": {
+      "productionSha256": "801fb49c7521f9d8caa4fee28ec15901b7ad485d4fabb62bc428b9e45d00431d",
+      "qaSha256": "7103676637dba3fb2483fba9e1092a043093cc97e4365d1e13987496d46b40a7",
+      "recipeSha256": "5e48e2a12cee74f9a03ba0252c53d60c8ba0b88dc9fee8c3e288121f7b06545c",
+      "exit": {
+        "exitCode": 0,
+        "samplerExitCode": 0,
+        "finishedUtc": "2026-11-03T21:17:47.664445+00:00"
+      },
+      "reportSha256": "97832452e7d4b56928110f907e928ad781ea238053b09b7edb70d149ce2ee9a7"
+    },
+    "editor2-functional-final1": {
+      "productionSha256": "801fb49c7521f9d8caa4fee28ec15901b7ad485d4fabb62bc428b9e45d00431d",
+      "qaSha256": "ce37abc6cb7219d0b8191e2c76c7211d4410488889a67c3337a626154e1ed44e",
+      "recipeSha256": "66e6f86d38d686b1bb464c100484fd5e449fb699d4a8b4c8c750517d5436f866",
+      "exit": {
+        "exitCode": 0,
+        "samplerExitCode": 0,
+        "finishedUtc": "2026-11-03T21:39:03.246832+00:00"
+      },
+      "reportSha256": "887ca9d0a4d51f5e115c8c25bc325a60625348706459afc4659453d0e0ce9cb9"
+    },
+    "editor2-functional-final2": {
+      "productionSha256": "801fb49c7521f9d8caa4fee28ec15901b7ad485d4fabb62bc428b9e45d00431d",
+      "qaSha256": "6942eddcfd11ecb8009635f53b1f1858931cdb734119aecc267ed3df487f9602",
+      "recipeSha256": "34a5c01537b6b0a10ecb7a6ebbbe3824acfc648c7379127c49b8ef1ff3856357",
+      "exit": {
+        "exitCode": 0,
+        "samplerExitCode": 0,
+        "finishedUtc": "2026-11-03T21:56:07.345315+00:00"
+      },
+      "reportSha256": "39b6a95ef59ce1d88259a349999f9fc900a738a22f5fcb988d06000552106320"
+    },
+    "editor2-baseline-flight3": {
+      "productionSha256": "1dac47beb172a16b64280802be36048605e9b7e697234795011fbf3c09d7e5c4",
+      "qaSha256": "da179e4e339a8d2a731b5f25fab977340c9634d7b034343c3f085b291ef6431a",
+      "recipeSha256": "9f29fe81df8e2fd1397549191441d0e97686ccafb8f8ec843bae583acde569f0",
+      "exit": {
+        "exitCode": 0,
+        "samplerExitCode": 0,
+        "finishedUtc": "2026-11-03T22:37:11.945426+00:00"
+      },
+      "reportSha256": "a66867516509f1e057a4bfce8f153604843f467db6bb2c2882d6e29b69c48e3c",
+      "planSha256": "a479d1c7f08049e92503a3c02cecbeb3177578ebaed66667244540dc74fcd7c4",
+      "rawFrames": 8257
+    },
+    "editor2-final-flight2": {
+      "productionSha256": "801fb49c7521f9d8caa4fee28ec15901b7ad485d4fabb62bc428b9e45d00431d",
+      "qaSha256": "da179e4e339a8d2a731b5f25fab977340c9634d7b034343c3f085b291ef6431a",
+      "recipeSha256": "8ddef2040c949e3743c6dbd9dd5d31413a20b8f0f0e1fa334e6d77674c700f82",
+      "exit": {
+        "exitCode": 0,
+        "samplerExitCode": 0,
+        "finishedUtc": "2026-11-03T22:55:05.565345+00:00"
+      },
+      "reportSha256": "3b6209a6990cbf543b4709d564aa9cf18242bbd1ee3dd31422a76d2bf79920ff",
+      "planSha256": "a479d1c7f08049e92503a3c02cecbeb3177578ebaed66667244540dc74fcd7c4",
+      "rawFrames": 8222
+    }
+  },
+  "catalogue": {
+    "entries": 634,
+    "blockItemsPass": 541,
+    "brushPass": 1,
+    "nonBlockSkipped": 92
+  },
+  "strictMatrix": {
+    "source": "editor2-functional-final1",
+    "sourceOverallStatus": "FAIL",
+    "failures": [
+      "java.lang.IllegalStateException: Client did not acquire the short-click fixture target"
+    ],
+    "rows": 48,
+    "viewpoints": 5,
+    "geometryOrLightChanges": 0,
+    "baseRowsWithoutObservedQuads": 8,
+    "manualStyleRowsObservedAndChanged": 40
+  },
+  "functionalChecks": 253,
+  "performance": {
+    "status": "PASS",
+    "budget": "15% for each frame, memory and stutter-rate row; zero baseline requires zero candidate; noise is informational only",
+    "strictBudgetPass": true,
+    "noStutterWorsening": true,
+    "baseline": {
+      "meanMs": 35.04169448952404,
+      "meanFps": 28.53743275168834,
+      "p95Ms": 57.67448,
+      "p99Ms": 84.4776359999997,
+      "p999Ms": 146.47405120000025,
+      "maxMs": 187.1977,
+      "worst": {
+        "elapsedSeconds": 127.5446317,
+        "tick": 2551,
+        "lap": 1,
+        "segment": 13,
+        "position": {
+          "x": 200.0,
+          "y": 135.6590964813962,
+          "z": -1049.0455028387673
+        }
+      },
+      "seconds": 289.3392714,
+      "over50msCount": 984,
+      "over50msPerMinute": 204.05111174272488,
+      "over100msCount": 49,
+      "over100msPerMinute": 10.161081783936504,
+      "over250msCount": 0,
+      "over250msPerMinute": 0.0,
+      "over1000msCount": 0,
+      "over1000msPerMinute": 0.0,
+      "laps": [
+        {
+          "lap": 1,
+          "samples": 4110,
+          "seconds": 144.59791810000002,
+          "p99Ms": 91.60692599999996,
+          "maxMs": 187.1977,
+          "over50msPerMinute": 236.932871857164,
+          "over100msPerMinute": 12.86325574005619,
+          "over250msPerMinute": 0.0,
+          "over1000msPerMinute": 0.0
+        },
+        {
+          "lap": 2,
+          "samples": 4144,
+          "seconds": 144.6537778,
+          "p99Ms": 76.7677369999999,
+          "maxMs": 165.1513,
+          "over50msPerMinute": 171.3055848030538,
+          "over100msPerMinute": 7.466102969624621,
+          "over250msPerMinute": 0.0,
+          "over1000msPerMinute": 0.0
+        }
+      ],
+      "heapPeakBytes": 5731512008,
+      "heapMedianBytes": 4763404760,
+      "gcCountDelta": 146,
+      "gcTimeMsDelta": 4183,
+      "processMemory": {
+        "samples": 289,
+        "peakWorkingSetBytes": 8941228032,
+        "peakPrivateBytes": 9900933120,
+        "medianWorkingSetBytes": 8594358272,
+        "medianPrivateBytes": 9587101696
+      },
+      "serverPositionCoverage": {
+        "samples": 289,
+        "firstTick": 0,
+        "lastTick": 5760
+      }
+    },
+    "candidate": {
+      "meanMs": 35.193204682558985,
+      "meanFps": 28.41457630869231,
+      "p95Ms": 57.438105,
+      "p99Ms": 79.50487799999999,
+      "p999Ms": 144.73527220000142,
+      "maxMs": 186.0629,
+      "worst": {
+        "elapsedSeconds": 10.20968,
+        "tick": 204,
+        "lap": 1,
+        "segment": 0,
+        "position": {
+          "x": 48.95577092044323,
+          "y": 130.0,
+          "z": -986.0065170832512
+        }
+      },
+      "seconds": 289.3585289,
+      "over50msCount": 967,
+      "over50msPerMinute": 200.51249299809388,
+      "over100msCount": 40,
+      "over100msPerMinute": 8.294208603850834,
+      "over250msCount": 0,
+      "over250msPerMinute": 0.0,
+      "over1000msCount": 0,
+      "over1000msPerMinute": 0.0,
+      "laps": [
+        {
+          "lap": 1,
+          "samples": 4115,
+          "seconds": 144.6246481,
+          "p99Ms": 84.84557200000002,
+          "maxMs": 186.0629,
+          "over50msPerMinute": 211.582191569737,
+          "over100msPerMinute": 10.371676057340048,
+          "over250msPerMinute": 0.0,
+          "over1000msPerMinute": 0.0
+        },
+        {
+          "lap": 2,
+          "samples": 4105,
+          "seconds": 144.65142319999998,
+          "p99Ms": 72.848956,
+          "maxMs": 157.5468,
+          "over50msPerMinute": 189.55914427532576,
+          "over100msPerMinute": 6.2218537508312615,
+          "over250msPerMinute": 0.0,
+          "over1000msPerMinute": 0.0
+        }
+      ],
+      "heapPeakBytes": 5716104720,
+      "heapMedianBytes": 4780146132.0,
+      "gcCountDelta": 147,
+      "gcTimeMsDelta": 3951,
+      "processMemory": {
+        "samples": 289,
+        "peakWorkingSetBytes": 9472339968,
+        "peakPrivateBytes": 10214883328,
+        "medianWorkingSetBytes": 9008508928,
+        "medianPrivateBytes": 9750388736
+      },
+      "serverPositionCoverage": {
+        "samples": 289,
+        "firstTick": 0,
+        "lastTick": 5760
+      }
+    },
+    "rows": [
+      {
+        "metric": "meanMs",
+        "baseline": 35.04169448952404,
+        "candidate": 35.193204682558985,
+        "ratio": 1.00432371194493,
+        "baselineZero": false,
+        "within15Percent": true,
+        "budgetRatio": 1.15
+      },
+      {
+        "metric": "p95Ms",
+        "baseline": 57.67448,
+        "candidate": 57.438105,
+        "ratio": 0.9959015668628481,
+        "baselineZero": false,
+        "within15Percent": true,
+        "budgetRatio": 1.15
+      },
+      {
+        "metric": "p99Ms",
+        "baseline": 84.4776359999997,
+        "candidate": 79.50487799999999,
+        "ratio": 0.9411352135848151,
+        "baselineZero": false,
+        "within15Percent": true,
+        "budgetRatio": 1.15
+      },
+      {
+        "metric": "p999Ms",
+        "baseline": 146.47405120000025,
+        "candidate": 144.73527220000142,
+        "ratio": 0.9881290987328216,
+        "baselineZero": false,
+        "within15Percent": true,
+        "budgetRatio": 1.15
+      },
+      {
+        "metric": "maxMs",
+        "baseline": 187.1977,
+        "candidate": 186.0629,
+        "ratio": 0.9939379597078384,
+        "baselineZero": false,
+        "within15Percent": true,
+        "budgetRatio": 1.15
+      },
+      {
+        "metric": "heapPeakBytes",
+        "baseline": 5731512008,
+        "candidate": 5716104720,
+        "ratio": 0.9973118283659714,
+        "baselineZero": false,
+        "within15Percent": true,
+        "budgetRatio": 1.15
+      },
+      {
+        "metric": "heapMedianBytes",
+        "baseline": 4763404760,
+        "candidate": 4780146132.0,
+        "ratio": 1.0035145810283819,
+        "baselineZero": false,
+        "within15Percent": true,
+        "budgetRatio": 1.15
+      },
+      {
+        "metric": "peakWorkingSetBytes",
+        "baseline": 8941228032,
+        "candidate": 9472339968,
+        "ratio": 1.0594003345065341,
+        "baselineZero": false,
+        "within15Percent": true,
+        "budgetRatio": 1.15
+      },
+      {
+        "metric": "medianWorkingSetBytes",
+        "baseline": 8594358272,
+        "candidate": 9008508928,
+        "ratio": 1.0481886655050539,
+        "baselineZero": false,
+        "within15Percent": true,
+        "budgetRatio": 1.15
+      },
+      {
+        "metric": "peakPrivateBytes",
+        "baseline": 9900933120,
+        "candidate": 10214883328,
+        "ratio": 1.0317091534903733,
+        "baselineZero": false,
+        "within15Percent": true,
+        "budgetRatio": 1.15
+      },
+      {
+        "metric": "medianPrivateBytes",
+        "baseline": 9587101696,
+        "candidate": 9750388736,
+        "ratio": 1.0170319503409595,
+        "baselineZero": false,
+        "within15Percent": true,
+        "budgetRatio": 1.15
+      },
+      {
+        "metric": "over50msPerMinute",
+        "baseline": 204.05111174272488,
+        "candidate": 200.51249299809388,
+        "ratio": 0.9826581746386531,
+        "baselineZero": false,
+        "within15Percent": true,
+        "budgetRatio": 1.15,
+        "baselineCount": 984,
+        "candidateCount": 967,
+        "noCountWorsening": true,
+        "informationalNoiseAllowanceCounts": 86.57059059079675
+      },
+      {
+        "metric": "over100msPerMinute",
+        "baseline": 10.161081783936504,
+        "candidate": 8.294208603850834,
+        "ratio": 0.8162722021353099,
+        "baselineZero": false,
+        "within15Percent": true,
+        "budgetRatio": 1.15,
+        "baselineCount": 49,
+        "candidateCount": 40,
+        "noCountWorsening": true,
+        "informationalNoiseAllowanceCounts": 18.490049953136047
+      },
+      {
+        "metric": "over250msPerMinute",
+        "baseline": 0.0,
+        "candidate": 0.0,
+        "ratio": null,
+        "baselineZero": true,
+        "within15Percent": true,
+        "budgetRatio": 1.15,
+        "baselineCount": 0,
+        "candidateCount": 0,
+        "noCountWorsening": true,
+        "informationalNoiseAllowanceCounts": 0.0
+      },
+      {
+        "metric": "over1000msPerMinute",
+        "baseline": 0.0,
+        "candidate": 0.0,
+        "ratio": null,
+        "baselineZero": true,
+        "within15Percent": true,
+        "budgetRatio": 1.15,
+        "baselineCount": 0,
+        "candidateCount": 0,
+        "noCountWorsening": true,
+        "informationalNoiseAllowanceCounts": 0.0
+      }
+    ],
+    "baselineProductionSha256": "1dac47beb172a16b64280802be36048605e9b7e697234795011fbf3c09d7e5c4",
+    "candidateProductionSha256": "801fb49c7521f9d8caa4fee28ec15901b7ad485d4fabb62bc428b9e45d00431d",
+    "planSha256": "a479d1c7f08049e92503a3c02cecbeb3177578ebaed66667244540dc74fcd7c4",
+    "qaSha256": "da179e4e339a8d2a731b5f25fab977340c9634d7b034343c3f085b291ef6431a"
+  },
+  "scopeLimitsRu": [
+    "Физическое удержание кнопки мыши не проверено; группировка мазка проверена программно.",
+    "Гонки ACK проверены симуляцией; это не независимое измерение реальной сетевой задержки.",
+    "Проверены normal-save и NBT roundtrip; повторное открытие мира с диска не проверено.",
+    "Проверены выбранные поверхности и наблюдаемые квады; строки возврата к базе могут не иметь наблюдаемых квадов. Полная топология всех моделей не проверена.",
+    "Одна пара пролётов; 15% бюджет и отдельный запрет роста счётчиков заиканий. Это не гарантия для всех сцен.",
+    "CornerLight2: прежние 72 принятых кадра девяти точек, Original/ALT, день/ночь, до/после, без шейдеров; новый аудит подтверждает включение кода."
+  ],
+  "evidenceCopies": {
+    "editor2-final-qa8-recipe.json": {
+      "source": ".local\\editor-validation\\runs\\editor2-final-qa8\\recipe.json",
+      "sha256": "5e48e2a12cee74f9a03ba0252c53d60c8ba0b88dc9fee8c3e288121f7b06545c"
+    },
+    "editor2-final-qa8-exit.json": {
+      "source": ".local\\editor-validation\\runs\\editor2-final-qa8\\exit.json",
+      "sha256": "e2862c7b085361dec6267515452605b653baeda373cd9c80c306e7833367f20d"
+    },
+    "editor2-final-qa8-editor-qa.json": {
+      "source": ".local\\editor-validation\\runs\\editor2-final-qa8\\evidence\\editor-qa.json",
+      "sha256": "97832452e7d4b56928110f907e928ad781ea238053b09b7edb70d149ce2ee9a7"
+    },
+    "editor2-functional-final1-recipe.json": {
+      "source": ".local\\editor-validation\\runs\\editor2-functional-final1\\recipe.json",
+      "sha256": "66e6f86d38d686b1bb464c100484fd5e449fb699d4a8b4c8c750517d5436f866"
+    },
+    "editor2-functional-final1-exit.json": {
+      "source": ".local\\editor-validation\\runs\\editor2-functional-final1\\exit.json",
+      "sha256": "c1cef4ffdd135a9613d168081c2f67efd03f9a1bcacea77014312699aa456458"
+    },
+    "editor2-functional-final1-editor-qa.json": {
+      "source": ".local\\editor-validation\\runs\\editor2-functional-final1\\evidence\\editor-qa.json",
+      "sha256": "887ca9d0a4d51f5e115c8c25bc325a60625348706459afc4659453d0e0ce9cb9"
+    },
+    "editor2-functional-final2-recipe.json": {
+      "source": ".local\\editor-validation\\runs\\editor2-functional-final2\\recipe.json",
+      "sha256": "34a5c01537b6b0a10ecb7a6ebbbe3824acfc648c7379127c49b8ef1ff3856357"
+    },
+    "editor2-functional-final2-exit.json": {
+      "source": ".local\\editor-validation\\runs\\editor2-functional-final2\\exit.json",
+      "sha256": "45e12945355a07b3b5eba8eecbb80b9044d296fb709e49e66bb2f60fb82ab6c4"
+    },
+    "editor2-functional-final2-editor-qa.json": {
+      "source": ".local\\editor-validation\\runs\\editor2-functional-final2\\evidence\\editor-qa.json",
+      "sha256": "39b6a95ef59ce1d88259a349999f9fc900a738a22f5fcb988d06000552106320"
+    },
+    "editor2-baseline-flight3-recipe.json": {
+      "source": ".local\\editor-validation\\runs\\editor2-baseline-flight3\\recipe.json",
+      "sha256": "9f29fe81df8e2fd1397549191441d0e97686ccafb8f8ec843bae583acde569f0"
+    },
+    "editor2-baseline-flight3-exit.json": {
+      "source": ".local\\editor-validation\\runs\\editor2-baseline-flight3\\exit.json",
+      "sha256": "9680221e23896bb46ccc8c155f1d8db56288f082436024e21f0f14c5bd67c5a0"
+    },
+    "editor2-final-flight2-recipe.json": {
+      "source": ".local\\editor-validation\\runs\\editor2-final-flight2\\recipe.json",
+      "sha256": "8ddef2040c949e3743c6dbd9dd5d31413a20b8f0f0e1fa334e6d77674c700f82"
+    },
+    "editor2-final-flight2-exit.json": {
+      "source": ".local\\editor-validation\\runs\\editor2-final-flight2\\exit.json",
+      "sha256": "f023a9b59d774c4f8385d61a366636be1a11cebe7a9eab11805cf90be96b2035"
+    },
+    "compare-final-v3.json": {
+      "source": ".local\\editor-validation\\compare-final-v3.json",
+      "sha256": "87a90a39ef4afb7f3f87b22017f7eafc2a3e81fc37cb12eb3fe3bafd66f04f63"
+    },
+    "shadow-inclusion-final.json": {
+      "source": ".local\\editor2\\shadow-inclusion-final.json",
+      "sha256": "fa25701673de47bd262462067c6cad61f62a6516d8ce0448382520ad9674292f"
+    },
+    "qa8-ui-reviewed.ok": {
+      "source": ".local\\editor-validation\\runs\\editor2-final-qa8\\evidence\\ui-reviewed.ok",
+      "sha256": "ecf1dd0cfe42c6cfd6030b38aea9738cd733a58066246c3052f1b1fd4f86cc8a"
+    },
+    "qa8-ui-2026-11-03_23.15.26.png": {
+      "source": ".local\\editor-validation\\runs\\editor2-final-qa8\\screenshots\\2026-11-03_23.15.26.png",
+      "sha256": "85db17f633e650d055b3213a5d89ed01b1a2712af172418b6b1b2feb98136443"
+    }
+  },
+  "sourceWorldIntegrity": {
+    "status": "PASS",
+    "sourceWorldUnchanged": true,
+    "files": 1877,
+    "sha256": "2774aa89657b0d5762e73e0c02b0047bab515f1839d7770744e8ebf95e2bb88c"
+  }
+}

@@ -2,7 +2,7 @@ plugins { id 'fabric-loom' version '1.6.12' }
 
 def baseline = providers.gradleProperty('baselineJar').orElse(file('baseline/mod.jar').path)
 def pythonExecutable = providers.gradleProperty('pythonExecutable').orElse('python')
-version = '20261103-cityeditor.1-cornerlight.2'
+version = '20261103-cityeditor.2-cornerlight.2'
 group = 'dev.dreamwalker'
 base { archivesName = 'dw-altvisual-overlay' }
 layout.buildDirectory = new File(projectDir, 'build')
@@ -82,8 +82,39 @@ tasks.register('materializeV12Palettes', Exec) {
     }
 }
 
-tasks.register('generateVisualResourceIndex', Exec) {
+tasks.register('generateEditor2Palette', Exec) {
     dependsOn tasks.named('prepareRevisionAssets')
+    inputs.files('tools/editor2-palette-inputs/classification.json', 'tools/editor2-palette-inputs/inventory.json', 'tools/editor2-palette-inputs/sources.zip')
+    inputs.files(fileTree('tools/editor2-palette-inputs/masks'))
+    inputs.file('tools/generate_editor2_palette.py')
+    outputs.file('src/main/resources/dw_city_visuals/alt/assets/bloodborne_dw/visuals/editor2-palette.json')
+    outputs.dir('src/main/resources/dw_city_visuals/alt/assets/bloodborne_dw/textures/block/editor2_palette')
+    commandLine pythonExecutable.get(), file('tools/generate_editor2_palette.py').path
+}
+
+tasks.register('generateEditor2NativeFlags', Exec) {
+    dependsOn tasks.named('verifyBaseline')
+    inputs.file(baseline)
+    inputs.files(fileTree('tools/editor2-palette-inputs'))
+    inputs.files('tools/generate_editor2_native_flags.py', 'src/main/resources/assets/bloodborne_dw/visuals/facades.json')
+    outputs.file('src/main/resources/bloodborne_dw/editor2-native-flags.bin')
+    commandLine pythonExecutable.get(), file('tools/generate_editor2_native_flags.py').path, baseline.get()
+}
+tasks.register('generateEditor2PoseFlags', Exec) {
+    inputs.files(fileTree('tools/editor2-palette-inputs'))
+    inputs.files('tools/generate_editor2_pose_flags.py', 'src/main/resources/assets/bloodborne_dw/visuals/facades.json')
+    outputs.files('src/main/resources/bloodborne_dw/editor2-pose-flags.json', 'src/main/resources/bloodborne_dw/editor2-fallback-flags.bin', 'src/main/resources/bloodborne_dw/editor2-wall-flags.bin')
+    commandLine pythonExecutable.get(), file('tools/generate_editor2_pose_flags.py').path
+}
+
+tasks.register('generateEditor2SlabFlags', Exec) {
+    inputs.files('tools/editor2-palette-inputs/classification.json', 'tools/editor2-palette-inputs/slab-sprites.json', 'tools/generate_editor2_slab_flags.py', 'src/main/resources/assets/bloodborne_dw/visuals/facades.json')
+    outputs.file('src/main/resources/bloodborne_dw/editor2-slab-flags.json')
+    commandLine pythonExecutable.get(), file('tools/generate_editor2_slab_flags.py').path
+}
+
+tasks.register('generateVisualResourceIndex', Exec) {
+    dependsOn tasks.named('generateEditor2Palette')
     inputs.files(fileTree('src/main/resources/dw_city_visuals'))
     inputs.file('tools/prepare_resource_index.py')
     outputs.file('src/main/resources/assets/bloodborne_dw/visuals/resource-index.json')
@@ -93,7 +124,7 @@ tasks.register('generateVisualResourceIndex', Exec) {
 
 // Keep the handshake identity in sync without hashing resources on either game thread.
 tasks.register('generateVisualFingerprints', Exec) {
-    dependsOn tasks.named('generateVisualResourceIndex')
+    dependsOn tasks.named('generateVisualResourceIndex'), tasks.named('generateEditor2NativeFlags'), tasks.named('generateEditor2PoseFlags'), tasks.named('generateEditor2SlabFlags')
     inputs.files(fileTree('src') { exclude '**/profile-fingerprints.json' })
     inputs.file('tools/prepare_visual_fingerprints.py')
     outputs.file('src/main/resources/assets/bloodborne_dw/visuals/profile-fingerprints.json')
@@ -258,4 +289,14 @@ tasks.register('remapCornerQaJar', net.fabricmc.loom.task.RemapJarTask) {
     inputFile.set(tasks.named('cornerQaJar',Jar).flatMap{it.archiveFile})
     classpath.from(sourceSets.cornerqa.compileClasspath)
     archiveBaseName='dw-corner-light-qa';archiveClassifier='';addNestedDependencies=false
+}
+
+sourceSets.test {
+    compileClasspath += sourceSets.client.output + sourceSets.client.compileClasspath
+    runtimeClasspath += sourceSets.client.output + sourceSets.client.runtimeClasspath
+}
+tasks.register('cornerScopeTest', JavaExec) {
+    dependsOn tasks.named('testClasses')
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass = 'dev.dreamwalker.bloodbornedw.composite.CornerQuadParentScopeTest'
 }

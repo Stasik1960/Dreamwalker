@@ -15,8 +15,8 @@ import net.minecraft.util.math.Direction;
 final class FacadeMaterials {
     private static volatile FacadeConfig config;
     private static final Map<BakedQuad,BakedQuad[]> CACHE = new IdentityHashMap<>();
-    private static final Map<BakedQuad,BakedQuad[]> MANUAL_CACHE = new IdentityHashMap<>();
-    static synchronized void reload() { config=null; CACHE.clear(); MANUAL_CACHE.clear(); CityFacadesClient.clearCache(); }
+    private static final Map<BakedQuad,BakedQuad[]> MANUAL_CACHE = new LinkedHashMap<>(256, .75f, true) { protected boolean removeEldestEntry(Map.Entry<BakedQuad,BakedQuad[]> e) { return size() > 8192; } };
+    static synchronized void reload() { config=null; ManualStonePalette.reload(); CACHE.clear(); MANUAL_CACHE.clear(); CityFacadesClient.clearCache(); }
     static FacadeConfig config() { FacadeConfig c=config; if(c==null) synchronized(FacadeMaterials.class) { if(config==null)config=FacadeConfig.load(); c=config; } return c; }
     static int role(BlockPos pos) {
         if(!CityVisualClient.isAlt())return 0;
@@ -29,7 +29,7 @@ final class FacadeMaterials {
     }
     static synchronized BakedQuad quad(BakedQuad source,int role,boolean manual) {
         if(role==0)return source;
-        Sprite sprite=source.getSprite(); Identifier id=sprite.getContents().getId();
+        Sprite sprite=source.getSprite(); Identifier id=sprite.getContents().getId(); if(manual)return manualQuad(source,role,sprite,id);
         FacadeConfig c=config();
         if(role==4&&!c.brickWindow.containsKey(id))return source;
         // A facade correction must never recolour horizontal pavements or
@@ -54,7 +54,9 @@ final class FacadeMaterials {
     }
     static boolean transform(MutableQuadView quad,int role,boolean manual) {
         Sprite sprite=SpriteFinder.get(atlas()).find(quad); Identifier id=sprite.getContents().getId();
-        if(role==0)return true; FacadeConfig c=config(); if(!c.bricks.contains(id)&&!(role==1&&c.rose.containsKey(id))&&!(role==4&&c.brickWindow.containsKey(id)))return true;
+        if(role==0)return true;
+        if(manual) { Identifier targetId=ManualStonePalette.target(id,role); if(targetId!=null) { Sprite target=atlas().getSprite(targetId); for(int i=0;i<4;i++)quad.uv(i,map(quad.u(i),sprite.getMinU(),sprite.getMaxU(),target.getMinU(),target.getMaxU()),map(quad.v(i),sprite.getMinV(),sprite.getMaxV(),target.getMinV(),target.getMaxV())); } return true; }
+        FacadeConfig c=config(); if(!c.bricks.contains(id)&&!(role==1&&c.rose.containsKey(id))&&!(role==4&&c.brickWindow.containsKey(id)))return true;
         if(role==4&&!c.brickWindow.containsKey(id))return true;
         if(!manual&&role==4&&(quad.nominalFace()==Direction.UP||quad.nominalFace()==Direction.DOWN||horizontal(quad)))return true;
         if(id.getPath().endsWith("/roof_1")) { float v=0; for(int i=0;i<4;i++)v+=quad.v(i); if(v/4>sprite.getMinV()+(sprite.getMaxV()-sprite.getMinV())*.5F)return true; }
@@ -63,6 +65,17 @@ final class FacadeMaterials {
         if(targetId!=null) { Sprite target=atlas().getSprite(targetId); for(int i=0;i<4;i++)quad.uv(i,map(quad.u(i),sprite.getMinU(),sprite.getMaxU(),target.getMinU(),target.getMaxU()),map(quad.v(i),sprite.getMinV(),sprite.getMaxV(),target.getMinV(),target.getMaxV())); }
         if(role>1&&role<4) { float[] m=c.multipliers[role]; for(int i=0;i<4;i++){ int color=quad.color(i); quad.color(i,(color&0xff000000)|((int)(((color>>>16)&255)*m[0])<<16)|((int)(((color>>>8)&255)*m[1])<<8)|(int)((color&255)*m[2])); } }
         return true;
+    }
+    private static BakedQuad manualQuad(BakedQuad source,int role,Sprite sprite,Identifier id) {
+        Identifier targetId=ManualStonePalette.target(id,role); if(targetId==null)return source;
+        boolean transientQuad=dev.dreamwalker.bloodbornedw.composite.CornerQuadParentScope.parentFor(source)!=null;
+        BakedQuad[] variants=transientQuad?null:MANUAL_CACHE.computeIfAbsent(source,k->new BakedQuad[5]);
+        if(variants!=null&&variants[role]!=null)return variants[role];
+        Sprite target=atlas().getSprite(targetId); int[] data=source.getVertexData().clone();
+        for(int i=0;i<4;i++){int p=i*8;data[p+4]=Float.floatToRawIntBits(map(Float.intBitsToFloat(data[p+4]),sprite.getMinU(),sprite.getMaxU(),target.getMinU(),target.getMaxU()));data[p+5]=Float.floatToRawIntBits(map(Float.intBitsToFloat(data[p+5]),sprite.getMinV(),sprite.getMaxV(),target.getMinV(),target.getMaxV()));}
+        BakedQuad result=new BakedQuad(data,source.getColorIndex(),source.getFace(),target,source.hasShade());
+        if(transientQuad)dev.dreamwalker.bloodbornedw.composite.CornerQuadParentScope.alias(source,result);
+        if(variants!=null)variants[role]=result; return result;
     }
     private static float map(float v,float a,float b,float c,float d) { return c+(v-a)*(d-c)/(b-a); }
     private static boolean wallHalf(int[] vertices,Sprite sprite) { float v=0;for(int i=0;i<4;i++)v+=Float.intBitsToFloat(vertices[i*8+5]);return v/4<=sprite.getMinV()+(sprite.getMaxV()-sprite.getMinV())*.5F; }

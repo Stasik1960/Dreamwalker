@@ -1,0 +1,37 @@
+City-Editor2 + CornerLight2 — результаты
+SHA-256 кандидата: 801fb49c7521f9d8caa4fee28ec15901b7ad485d4fabb62bc428b9e45d00431d
+Каталог: 634 записи; 541 BlockItem PASS, кисть PASS, 92 неблочных предмета SKIP.
+QA8: весь каталог, очистка и реальные F9 Красный/Плоскость ACK; снимок приложен.
+functional-final1: общий FAIL (quick-click acquire); отдельно завершена строгая матрица 48 строк/5 точек, включая WetSponge, без изменений геометрии/света.
+functional-final2: PASS, 253 проверки, suite complete, очистка и штатное сохранение.
+CornerLight2 включён: 24/25 классов идентичны; единственное рассмотренное отличие — scoped alias CornerQuadParentScope.
+Производительность: PASS
+Правило: 15% for each frame, memory and stutter-rate row; zero baseline requires zero candidate; noise is informational only
+strictBudgetPass=True; noStutterWorsening=True
+Сырые счётчики/метрики единственной завершённой пары (baseline → candidate):
+meanFps: 28.53743275168834 → 28.41457630869231
+meanMs: 35.04169448952404 → 35.193204682558985
+p95Ms: 57.67448 → 57.438105
+p99Ms: 84.4776359999997 → 79.50487799999999
+p999Ms: 146.47405120000025 → 144.73527220000142
+maxMs: 187.1977 → 186.0629
+over50msCount: 984 → 967
+over100msCount: 49 → 40
+over250msCount: 0 → 0
+over1000msCount: 0 → 0
+heapPeakBytes: 5731512008 → 5716104720
+gcCountDelta: 146 → 147
+gcTimeMsDelta: 4183 → 3951
+processMemory: {'samples': 289, 'peakWorkingSetBytes': 8941228032, 'peakPrivateBytes': 9900933120, 'medianWorkingSetBytes': 8594358272, 'medianPrivateBytes': 9587101696} → {'samples': 289, 'peakWorkingSetBytes': 9472339968, 'peakPrivateBytes': 10214883328, 'medianWorkingSetBytes': 9008508928, 'medianPrivateBytes': 9750388736}
+Все строки gates сохранены в SUMMARY.json и compare-final-v3.json без изменения вердикта.
+INVESTIGATE означает необходимость расследования; отсутствие регрессии в этом случае не заявляется.
+
+Границы проверки:
+Физическое удержание кнопки мыши не проверено; группировка мазка проверена программно.
+Гонки ACK проверены симуляцией; это не независимое измерение реальной сетевой задержки.
+Проверены normal-save и NBT roundtrip; повторное открытие мира с диска не проверено.
+Проверены выбранные поверхности и наблюдаемые квады; строки возврата к базе могут не иметь наблюдаемых квадов. Полная топология всех моделей не проверена.
+Одна пара пролётов; 15% бюджет и отдельный запрет роста счётчиков заиканий. Это не гарантия для всех сцен.
+CornerLight2: прежние 72 принятых кадра девяти точек, Original/ALT, день/ночь, до/после, без шейдеров; новый аудит подтверждает включение кода.
+
+Исходная карта: контрольные суммы всех 1877 файлов совпали с входным снимком, без изменений. Доказательство: source-world-integrity.json.

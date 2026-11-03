@@ -77,6 +77,9 @@ def prepare(args):
     if kind=='dw_editor_qa':
         arguments += ['-Ddw.editorqa.disposable=true','-Ddw.editorqa.output='+str(game/'evidence/editor-qa.json'),'-Ddw.editorqa.persistence='+args.persistence]
         if args.persistence_only: arguments += ['-Ddw.editorqa.persistenceOnly=true']
+        if args.editor2_only: arguments += ['-Ddw.editorqa.editor2Only=true']
+        if args.functional_after_editor2: arguments += ['-Ddw.editorqa.functionalAfterEditor2=true']
+        if args.failure_hold_seconds: arguments += ['-Ddw.editorqa.failureHoldSeconds='+str(args.failure_hold_seconds)]
         if args.ui_hold_seconds: arguments += ['-Ddw.editorqa.uiHoldSeconds='+str(args.ui_hold_seconds)]
         if args.ui_only: arguments += ['-Ddw.editorqa.uiOnly=true']
         if args.ui_be_fixture: arguments += ['-Ddw.editorqa.uiBeFixture=true']
@@ -175,21 +178,31 @@ def main():
     parser.add_argument('--world',type=Path,default=DEFAULT_WORLD);parser.add_argument('--plan',type=Path)
     parser.add_argument('--persistence',choices=['write','verify'],default='write')
     parser.add_argument('--persistence-only',action='store_true')
+    parser.add_argument('--editor2-only',action='store_true',help='Run the bounded real-city brush matrix and original catalogue audit')
+    parser.add_argument('--functional-after-editor2',action='store_true',help='Run the functional suite after the editor2 matrix with the prototype-wall catalogue filter')
     parser.add_argument('--ui-only',action='store_true',help='Skip functional/catalogue/persistence mutations and run only the live UI hold')
     parser.add_argument('--ui-be-fixture',action='store_true',help='Temporarily use a block-entity target in the disposable UI-only world')
     parser.add_argument('--render-probe',action='store_true',help='Bounded read-only packet/model observations in an isolated UI-only QA run')
     parser.add_argument('--ui-hold-seconds',type=int,default=0)
+    parser.add_argument('--failure-hold-seconds',type=int,default=0,help='Keep a failed editor QA client open for up to 300 seconds for inspection')
     parser.add_argument('--catalogue-filter',type=Path)
     parser.add_argument('--catalogue-exclude-verified',type=Path)
     parser.add_argument('--catalogue-exclude-verified-allow-removed',action='store_true')
     parser.add_argument('--catalogue-only',action='store_true')
     parser.add_argument('--run',type=Path)
     args=parser.parse_args();guard()
+    if not 0<=args.failure_hold_seconds<=300:parser.error('--failure-hold-seconds must be between 0 and 300')
     if args.run:run(args.run)
     else:
         if not args.name or not args.name.replace('-','').isalnum() or not args.jar or not args.qa:parser.error('name, jar and qa required')
+        if args.functional_after_editor2:
+            if not args.editor2_only or args.catalogue_only or args.ui_only:parser.error('--functional-after-editor2 requires --editor2-only and cannot use --catalogue-only or --ui-only')
+            fixed_filter=WORKSPACE/'.local/editor2/functional-catalogue-filter.json'
+            if args.catalogue_filter and args.catalogue_filter.resolve()!=fixed_filter.resolve():parser.error('--functional-after-editor2 requires the prototype-wall catalogue filter')
+            if json.loads(fixed_filter.read_text(encoding='utf-8-sig'))!=['bloodborne_dw:prototype_wall']:parser.error('prototype-wall catalogue filter has unexpected contents')
+            args.catalogue_filter=fixed_filter
         if args.ui_only and not args.ui_hold_seconds:parser.error('--ui-only requires --ui-hold-seconds')
-        if args.render_probe and not args.ui_only:parser.error('--render-probe requires --ui-only')
+        if args.render_probe and not (args.ui_only or args.editor2_only):parser.error('--render-probe requires --ui-only or --editor2-only')
         if args.ui_be_fixture and not args.ui_only:parser.error('--ui-be-fixture requires --ui-only')
         prepare(args)
 if __name__=='__main__':main()
