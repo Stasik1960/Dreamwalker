@@ -1,0 +1,73 @@
+{
+  "reference": "candidate-15.jar",
+  "candidate": "candidate-16.jar",
+  "candidateSha256": "7805d91c09758af14453ac6e201d7475a14ca7aec44c6e10b0951003d55234b1",
+  "changedEntries": [
+    "assets/bloodborne_dw/visuals/profile-fingerprints.json",
+    "dev/dreamwalker/bloodbornedw/editor/CityEditorClient$RebuildSection.class",
+    "dev/dreamwalker/bloodbornedw/editor/CityEditorClient.class",
+    "dev/dreamwalker/bloodbornedw/editor/mixin/CompositeEditorModelMixin.class",
+    "dw-editor-client.mixins.json"
+  ],
+  "addedEntries": [
+    "dev/dreamwalker/bloodbornedw/composite/EditorMeshUpdates.class"
+  ],
+  "removedEntries": [
+    "dev/dreamwalker/bloodbornedw/editor/mixin/CompositeMeshJobsInvoker.class",
+    "dev/dreamwalker/bloodbornedw/editor/mixin/CompositeWorldMeshInvoker.class"
+  ],
+  "qaDriverClassesInProduction": [],
+  "worldEdit": {
+    "testedCandidate": 6,
+    "identicalClasses": [
+      "dev/dreamwalker/bloodbornedw/editor/worldedit/AppearanceTag.class",
+      "dev/dreamwalker/bloodbornedw/editor/worldedit/WorldEditMixinPlugin.class",
+      "dev/dreamwalker/bloodbornedw/editor/worldedit/mixin/FabricWorldWriteMixin.class",
+      "dev/dreamwalker/bloodbornedw/editor/worldedit/mixin/LogicalReadMixin.class",
+      "dev/dreamwalker/bloodbornedw/editor/worldedit/mixin/ObjectExtentMixin.class"
+    ],
+    "mismatches": [],
+    "pass": true
+  },
+  "serverOperations": {
+    "testedCandidate": 10,
+    "identicalClasses": [
+      "dev/dreamwalker/bloodbornedw/editor/CityEditorServer$1.class",
+      "dev/dreamwalker/bloodbornedw/editor/CityEditorServer$Change.class",
+      "dev/dreamwalker/bloodbornedw/editor/CityEditorServer$Edit.class",
+      "dev/dreamwalker/bloodbornedw/editor/CityEditorServer$Ingress.class",
+      "dev/dreamwalker/bloodbornedw/editor/CityEditorServer$Job.class",
+      "dev/dreamwalker/bloodbornedw/editor/CityEditorServer$Placement.class",
+      "dev/dreamwalker/bloodbornedw/editor/CityEditorServer$Region.class",
+      "dev/dreamwalker/bloodbornedw/editor/CityEditorServer$Session.class",
+      "dev/dreamwalker/bloodbornedw/editor/CityEditorServer.class"
+    ],
+    "mismatches": [],
+    "pass": true
+  },
+  "catalogue": {
+    "testedCandidate": 11,
+    "identicalClasses": [
+      "dev/dreamwalker/bloodbornedw/editor/catalogue/EditorCatalogue$SourcePalette.class",
+      "dev/dreamwalker/bloodbornedw/editor/catalogue/EditorCatalogue.class",
+      "dev/dreamwalker/bloodbornedw/editor/catalogue/mixin/EditorCatalogueMixin.class"
+    ],
+    "mismatches": [],
+    "pass": true
+  },
+  "placementReplacement": {
+    "testedCandidate": 11,
+    "identicalClasses": [
+      "dev/dreamwalker/bloodbornedw/editor/mixin/EditorPlacementMixin.class",
+      "dev/dreamwalker/bloodbornedw/editor/mixin/EditorReplacementMixin.class"
+    ],
+    "mismatches": [],
+    "pass": true
+  },
+  "explicitlyAllowedRemovals": [
+    "dev/dreamwalker/bloodbornedw/editor/mixin/CompositeMeshJobsInvoker.class",
+    "dev/dreamwalker/bloodbornedw/editor/mixin/CompositeWorldMeshInvoker.class"
+  ],
+  "unexpectedRemovals": [],
+  "pass": true
+}

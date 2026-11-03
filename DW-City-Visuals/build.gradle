@@ -2,7 +2,7 @@ plugins { id 'fabric-loom' version '1.6.12' }
 
 def baseline = providers.gradleProperty('baselineJar').orElse(file('baseline/mod.jar').path)
 def pythonExecutable = providers.gradleProperty('pythonExecutable').orElse('python')
-version = '20261102-altvisual.8'
+version = '20261102-cityeditor.1'
 group = 'dev.dreamwalker'
 base { archivesName = 'dw-altvisual-overlay' }
 layout.buildDirectory = new File(projectDir, 'build')
@@ -27,6 +27,7 @@ dependencies {
     modCompileOnly files(baseline.get())
     modCompileOnly 'software.bernie.geckolib:geckolib-fabric-1.20.1:4.4.9'
     compileOnly 'io.github.llamalad7:mixinextras-fabric:0.4.1'
+    compileOnly files(providers.gradleProperty('worldEditJar').orElse('../.local/modpacks/client-server-20261028/server_mods/worldedit-mod-7.2.15.jar'))
 }
 tasks.register('verifyBaseline') {
     inputs.file(baseline)
@@ -117,18 +118,36 @@ sourceSets {
 configurations { visualqaImplementation.extendsFrom implementation }
 
 sourceSets {
+    editorqa {
+        compileClasspath += sourceSets.main.output + sourceSets.client.output + sourceSets.client.compileClasspath
+        runtimeClasspath += sourceSets.main.output + sourceSets.client.output + sourceSets.client.runtimeClasspath
+    }
     perfqa {
         java.srcDir 'src/qacommon/java'
         compileClasspath += sourceSets.client.compileClasspath
         runtimeClasspath += sourceSets.client.runtimeClasspath
     }
 }
-configurations { perfqaImplementation.extendsFrom implementation }
+configurations { perfqaImplementation.extendsFrom implementation; editorqaImplementation.extendsFrom implementation }
 loom { mixin {
     add sourceSets.main, 'dw-altvisual-overlay-refmap.json'
     add sourceSets.client, 'client-dw-altvisual-overlay-refmap.json'
     add sourceSets.perfqa, 'dw-perfqa-refmap.json'
+    add sourceSets.editorqa, 'dw-editorqa-refmap.json'
 } }
+tasks.register('editorQaJar', Jar) {
+    archiveBaseName = 'dw-city-editor-qa'
+    archiveClassifier = 'dev'
+    from sourceSets.editorqa.output
+}
+tasks.register('remapEditorQaJar', net.fabricmc.loom.task.RemapJarTask) {
+    dependsOn editorQaJar
+    inputFile.set(tasks.named('editorQaJar', Jar).flatMap { it.archiveFile })
+    classpath.from(sourceSets.editorqa.compileClasspath)
+    archiveBaseName = 'dw-city-editor-qa'
+    archiveClassifier = ''
+    addNestedDependencies = false
+}
 tasks.register('perfQaJar', Jar) {
     archiveBaseName = 'dw-visual-perfqa'
     archiveClassifier = 'dev'
@@ -152,6 +171,75 @@ tasks.register('remapVisualQaJar', net.fabricmc.loom.task.RemapJarTask) {
     inputFile.set(tasks.named('visualQaJar', Jar).flatMap { it.archiveFile })
     classpath.from(sourceSets.visualqa.compileClasspath)
     archiveBaseName = 'dw-visual-revision-qa'
+    archiveClassifier = ''
+    addNestedDependencies = false
+}
+
+// Dedicated server integration driver; never included in the production mod.
+sourceSets {
+    serverqa {
+        compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
+        runtimeClasspath += sourceSets.main.output + sourceSets.main.runtimeClasspath
+    }
+}
+configurations { serverqaImplementation.extendsFrom implementation }
+tasks.register('serverQaJar', Jar) {
+    archiveBaseName = 'dw-city-editor-server-qa'
+    archiveClassifier = 'dev'
+    from sourceSets.serverqa.output
+}
+tasks.register('remapServerQaJar', net.fabricmc.loom.task.RemapJarTask) {
+    dependsOn serverQaJar
+    inputFile.set(tasks.named('serverQaJar', Jar).flatMap { it.archiveFile })
+    classpath.from(sourceSets.serverqa.compileClasspath)
+    archiveBaseName = 'dw-city-editor-server-qa'
+    archiveClassifier = ''
+    addNestedDependencies = false
+}
+
+// Independent continuous-flight recorder; excluded from the production JAR.
+sourceSets {
+    flightqa {
+        java.srcDir 'src/qacommon/java'
+        compileClasspath += sourceSets.client.compileClasspath
+        runtimeClasspath += sourceSets.client.runtimeClasspath
+    }
+}
+configurations { flightqaImplementation.extendsFrom implementation }
+loom { mixin { add sourceSets.flightqa, 'dw-flightqa-refmap.json' } }
+tasks.register('flightQaJar', Jar) {
+    archiveBaseName = 'dw-city-flight-qa'
+    archiveClassifier = 'dev'
+    from sourceSets.flightqa.output
+}
+tasks.register('remapFlightQaJar', net.fabricmc.loom.task.RemapJarTask) {
+    dependsOn flightQaJar
+    inputFile.set(tasks.named('flightQaJar', Jar).flatMap { it.archiveFile })
+    classpath.from(sourceSets.flightqa.compileClasspath)
+    archiveBaseName = 'dw-city-flight-qa'
+    archiveClassifier = ''
+    addNestedDependencies = false
+}
+
+// Independent, opt-in render diagnostics; never included in the production JAR.
+sourceSets {
+    renderdiag {
+        compileClasspath += sourceSets.client.compileClasspath
+        runtimeClasspath += sourceSets.client.runtimeClasspath
+    }
+}
+configurations { renderdiagImplementation.extendsFrom implementation }
+loom { mixin { add sourceSets.renderdiag, 'dw-renderdiag-refmap.json' } }
+tasks.register('renderDiagJar', Jar) {
+    archiveBaseName = 'dw-editor-render-diag'
+    archiveClassifier = 'dev'
+    from sourceSets.renderdiag.output
+}
+tasks.register('remapRenderDiagJar', net.fabricmc.loom.task.RemapJarTask) {
+    dependsOn renderDiagJar
+    inputFile.set(tasks.named('renderDiagJar', Jar).flatMap { it.archiveFile })
+    classpath.from(sourceSets.renderdiag.compileClasspath)
+    archiveBaseName = 'dw-editor-render-diag'
     archiveClassifier = ''
     addNestedDependencies = false
 }

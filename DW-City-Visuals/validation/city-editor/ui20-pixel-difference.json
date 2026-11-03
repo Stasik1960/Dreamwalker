@@ -1,0 +1,116 @@
+{
+  "screenshots": [
+    "2026-11-03_10.07.31.png",
+    "2026-11-03_10.11.14.png",
+    "2026-11-03_10.15.10.png"
+  ],
+  "regions": [
+    {
+      "region": "pillar_lower_interior",
+      "roi": [
+        610,
+        390,
+        680,
+        428
+      ],
+      "beforeMeanRGB": [
+        24.088345864661655,
+        22.475563909774436,
+        19.7
+      ],
+      "after": {
+        "changedPixelsFromBefore": 2648,
+        "meanRGB": [
+          18.942857142857143,
+          20.510526315789473,
+          18.542857142857144
+        ],
+        "diffBoundsLocal": [
+          0,
+          0,
+          70,
+          38
+        ]
+      },
+      "undo": {
+        "changedPixelsFromBefore": 0,
+        "meanRGB": [
+          24.088345864661655,
+          22.475563909774436,
+          19.7
+        ],
+        "diffBoundsLocal": null
+      }
+    },
+    {
+      "region": "pillar_interior",
+      "roi": [
+        604,
+        330,
+        680,
+        430
+      ],
+      "beforeMeanRGB": [
+        13.718947368421052,
+        12.992631578947368,
+        11.692631578947369
+      ],
+      "after": {
+        "changedPixelsFromBefore": 5012,
+        "meanRGB": [
+          11.340657894736841,
+          12.072368421052632,
+          11.151447368421053
+        ],
+        "diffBoundsLocal": [
+          0,
+          0,
+          76,
+          100
+        ]
+      },
+      "undo": {
+        "changedPixelsFromBefore": 0,
+        "meanRGB": [
+          13.718947368421052,
+          12.992631578947368,
+          11.692631578947369
+        ],
+        "diffBoundsLocal": null
+      }
+    },
+    {
+      "region": "stone_control",
+      "roi": [
+        560,
+        475,
+        650,
+        550
+      ],
+      "beforeMeanRGB": [
+        70.2917037037037,
+        70.2917037037037,
+        70.2917037037037
+      ],
+      "after": {
+        "changedPixelsFromBefore": 0,
+        "meanRGB": [
+          70.2917037037037,
+          70.2917037037037,
+          70.2917037037037
+        ],
+        "diffBoundsLocal": null
+      },
+      "undo": {
+        "changedPixelsFromBefore": 0,
+        "meanRGB": [
+          70.2917037037037,
+          70.2917037037037,
+          70.2917037037037
+        ],
+        "diffBoundsLocal": null
+      }
+    }
+  ],
+  "scope": "Isolated actual block-entity target. Interior ROIs exclude moving clouds, sky, HUD, held brush and yellow selection edges; stone support is a control region. Native F9 paint and Undo, no renderer reload."
+}

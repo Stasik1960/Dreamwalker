@@ -1,0 +1,1094 @@
+{
+  "schema": 1,
+  "budget": 0.15,
+  "baselineRuns": [
+    ".local\\editor-validation\\runs\\perf-v8-alt-1"
+  ],
+  "candidateRun": ".local\\editor-validation\\runs\\perf-editor-alt-3",
+  "pass": false,
+  "failures": [
+    {
+      "phase": "brick-house-visit1",
+      "metric": "p95FrameMs",
+      "baseline": 40.3754,
+      "candidate": 55.2868,
+      "relativeIncrease": 0.36931894173184654,
+      "pass": false
+    },
+    {
+      "phase": "brick-house-visit1",
+      "metric": "p99FrameMs",
+      "baseline": 47.8665,
+      "candidate": 65.604,
+      "relativeIncrease": 0.3705618752154429,
+      "pass": false
+    },
+    {
+      "phase": "brick-house-visit1",
+      "metric": "steadyOver50msRate",
+      "baseline": 0.13362213710286164,
+      "candidate": 3.0003348573723154,
+      "relativeIncrease": 21.453875700720705,
+      "pass": false
+    },
+    {
+      "phase": "high-spire-visit1",
+      "metric": "steadyOver50msRate",
+      "baseline": 0.0,
+      "candidate": 0.0665992797394455,
+      "relativeIncrease": null,
+      "pass": false
+    },
+    {
+      "phase": "dense-facade-visit1",
+      "metric": "p99FrameMs",
+      "baseline": 25.6181,
+      "candidate": 29.968,
+      "relativeIncrease": 0.16979791631697916,
+      "pass": false
+    },
+    {
+      "phase": "brick-house-visit2",
+      "metric": "p95FrameMs",
+      "baseline": 44.262,
+      "candidate": 56.6799,
+      "relativeIncrease": 0.28055442591839497,
+      "pass": false
+    },
+    {
+      "phase": "brick-house-visit2",
+      "metric": "p99FrameMs",
+      "baseline": 50.317499,
+      "candidate": 65.2678,
+      "relativeIncrease": 0.2971193182713632,
+      "pass": false
+    },
+    {
+      "phase": "brick-house-visit2",
+      "metric": "steadyOver50msRate",
+      "baseline": 0.33398706848829,
+      "candidate": 2.8745457198301687,
+      "relativeIncrease": 7.606757539569092,
+      "pass": false
+    },
+    {
+      "phase": "high-spire-visit2",
+      "metric": "steadyOver50msRate",
+      "baseline": 0.06679166236918814,
+      "candidate": 0.1332003115102405,
+      "relativeIncrease": 0.9942655532958786,
+      "pass": false
+    },
+    {
+      "phase": "dense-facade-visit2",
+      "metric": "steadyOver50msRate",
+      "baseline": 0.0,
+      "candidate": 0.06659048182821664,
+      "relativeIncrease": null,
+      "pass": false
+    }
+  ],
+  "measurements": [
+    {
+      "phase": "wide-city-visit1",
+      "metric": "meanFrameMs",
+      "baseline": 30.589811475409835,
+      "candidate": 29.444434251968502,
+      "relativeIncrease": -0.03744309520711053,
+      "pass": true
+    },
+    {
+      "phase": "wide-city-visit1",
+      "metric": "p95FrameMs",
+      "baseline": 44.3455,
+      "candidate": 38.3813,
+      "relativeIncrease": -0.1344939170829058,
+      "pass": true
+    },
+    {
+      "phase": "wide-city-visit1",
+      "metric": "p99FrameMs",
+      "baseline": 69.8337,
+      "candidate": 48.9972,
+      "relativeIncrease": -0.2983731350336585,
+      "pass": true
+    },
+    {
+      "phase": "wide-city-visit1",
+      "metric": "loadingSeconds",
+      "baseline": 54.920865401,
+      "candidate": 38.4814438,
+      "relativeIncrease": -0.29932925275246425,
+      "pass": true
+    },
+    {
+      "phase": "wide-city-visit1",
+      "metric": "medianHeapBytes",
+      "baseline": 4584559944,
+      "candidate": 4693152024.0,
+      "relativeIncrease": 0.023686478381010012,
+      "pass": true
+    },
+    {
+      "phase": "wide-city-visit1",
+      "metric": "steadyOver50msRate",
+      "baseline": 0.8038677830425163,
+      "candidate": 0.26741949533314874,
+      "relativeIncrease": -0.6673339808183294,
+      "pass": true
+    },
+    {
+      "phase": "wide-city-visit1",
+      "metric": "loadingOver250msRate",
+      "baseline": 0.10928849752807451,
+      "candidate": 0.05210441024572057,
+      "relativeIncrease": -0.5232397605947894,
+      "pass": true
+    },
+    {
+      "phase": "wide-city-visit1",
+      "metric": "medianWorkingSetBytes",
+      "baseline": 8762261504,
+      "candidate": 8802983936,
+      "relativeIncrease": 0.004647479646825214,
+      "pass": true
+    },
+    {
+      "phase": "wide-city-visit1",
+      "metric": "peakWorkingSetBytes",
+      "baseline": 8882933760,
+      "candidate": 8907268096,
+      "relativeIncrease": 0.002739448098732611,
+      "pass": true
+    },
+    {
+      "phase": "wide-city-visit1",
+      "metric": "medianPrivateBytes",
+      "baseline": 9720012800,
+      "candidate": 9767383040,
+      "relativeIncrease": 0.0048734750637364765,
+      "pass": true
+    },
+    {
+      "phase": "brick-house-visit1",
+      "metric": "meanFrameMs",
+      "baseline": 33.78686184875847,
+      "candidate": 37.779158438287155,
+      "relativeIncrease": 0.11816121329644536,
+      "pass": true
+    },
+    {
+      "phase": "brick-house-visit1",
+      "metric": "p95FrameMs",
+      "baseline": 40.3754,
+      "candidate": 55.2868,
+      "relativeIncrease": 0.36931894173184654,
+      "pass": false
+    },
+    {
+      "phase": "brick-house-visit1",
+      "metric": "p99FrameMs",
+      "baseline": 47.8665,
+      "candidate": 65.604,
+      "relativeIncrease": 0.3705618752154429,
+      "pass": false
+    },
+    {
+      "phase": "brick-house-visit1",
+      "metric": "loadingSeconds",
+      "baseline": 18.480272701,
+      "candidate": 15.509606,
+      "relativeIncrease": -0.16074799052284827,
+      "pass": true
+    },
+    {
+      "phase": "brick-house-visit1",
+      "metric": "medianHeapBytes",
+      "baseline": 4698301952,
+      "candidate": 4713578712.0,
+      "relativeIncrease": 0.003251549209921878,
+      "pass": true
+    },
+    {
+      "phase": "brick-house-visit1",
+      "metric": "steadyOver50msRate",
+      "baseline": 0.13362213710286164,
+      "candidate": 3.0003348573723154,
+      "relativeIncrease": 21.453875700720705,
+      "pass": false
+    },
+    {
+      "phase": "brick-house-visit1",
+      "metric": "loadingOver250msRate",
+      "baseline": 0.1627110383862675,
+      "candidate": 0.06464304418057944,
+      "relativeIncrease": -0.6027126074438771,
+      "pass": true
+    },
+    {
+      "phase": "brick-house-visit1",
+      "metric": "medianWorkingSetBytes",
+      "baseline": 8840732672,
+      "candidate": 8841736192,
+      "relativeIncrease": 0.00011351095403866474,
+      "pass": true
+    },
+    {
+      "phase": "brick-house-visit1",
+      "metric": "peakWorkingSetBytes",
+      "baseline": 8999882752,
+      "candidate": 8972337152,
+      "relativeIncrease": -0.0030606620951677543,
+      "pass": true
+    },
+    {
+      "phase": "brick-house-visit1",
+      "metric": "medianPrivateBytes",
+      "baseline": 9759797248,
+      "candidate": 9781276672,
+      "relativeIncrease": 0.0022008063747842588,
+      "pass": true
+    },
+    {
+      "phase": "cemetery-visit1",
+      "metric": "meanFrameMs",
+      "baseline": 23.33051804043546,
+      "candidate": 23.80431030110935,
+      "relativeIncrease": 0.02030783285020643,
+      "pass": true
+    },
+    {
+      "phase": "cemetery-visit1",
+      "metric": "p95FrameMs",
+      "baseline": 31.6514,
+      "candidate": 28.6304,
+      "relativeIncrease": -0.09544601502619154,
+      "pass": true
+    },
+    {
+      "phase": "cemetery-visit1",
+      "metric": "p99FrameMs",
+      "baseline": 37.2347,
+      "candidate": 34.3314,
+      "relativeIncrease": -0.07797296607734172,
+      "pass": true
+    },
+    {
+      "phase": "cemetery-visit1",
+      "metric": "loadingSeconds",
+      "baseline": 13.251131899,
+      "candidate": 11.9686036,
+      "relativeIncrease": -0.09678632050268754,
+      "pass": true
+    },
+    {
+      "phase": "cemetery-visit1",
+      "metric": "medianHeapBytes",
+      "baseline": 4362866368.0,
+      "candidate": 4785118688,
+      "relativeIncrease": 0.09678323477818696,
+      "pass": true
+    },
+    {
+      "phase": "cemetery-visit1",
+      "metric": "steadyOver50msRate",
+      "baseline": 0.06665989802062165,
+      "candidate": 0.06657559214428783,
+      "relativeIncrease": -0.0012647165512874592,
+      "pass": true
+    },
+    {
+      "phase": "cemetery-visit1",
+      "metric": "loadingOver250msRate",
+      "baseline": 0.0,
+      "candidate": 0.0,
+      "relativeIncrease": 0.0,
+      "pass": true
+    },
+    {
+      "phase": "cemetery-visit1",
+      "metric": "medianWorkingSetBytes",
+      "baseline": 8932569088,
+      "candidate": 8888762368,
+      "relativeIncrease": -0.0049041568633205745,
+      "pass": true
+    },
+    {
+      "phase": "cemetery-visit1",
+      "metric": "peakWorkingSetBytes",
+      "baseline": 9017393152,
+      "candidate": 8920670208,
+      "relativeIncrease": -0.010726264494583693,
+      "pass": true
+    },
+    {
+      "phase": "cemetery-visit1",
+      "metric": "medianPrivateBytes",
+      "baseline": 9861349376,
+      "candidate": 9851285504,
+      "relativeIncrease": -0.001020537009315703,
+      "pass": true
+    },
+    {
+      "phase": "shutter-street-visit1",
+      "metric": "meanFrameMs",
+      "baseline": 24.5218356792144,
+      "candidate": 25.255867959527823,
+      "relativeIncrease": 0.029933822651605713,
+      "pass": true
+    },
+    {
+      "phase": "shutter-street-visit1",
+      "metric": "p95FrameMs",
+      "baseline": 31.931499,
+      "candidate": 31.8681,
+      "relativeIncrease": -0.001985468956530956,
+      "pass": true
+    },
+    {
+      "phase": "shutter-street-visit1",
+      "metric": "p99FrameMs",
+      "baseline": 36.6518,
+      "candidate": 40.5245,
+      "relativeIncrease": 0.10566193201970986,
+      "pass": true
+    },
+    {
+      "phase": "shutter-street-visit1",
+      "metric": "loadingSeconds",
+      "baseline": 8.490829101,
+      "candidate": 8.2412806,
+      "relativeIncrease": -0.02939035729391959,
+      "pass": true
+    },
+    {
+      "phase": "shutter-street-visit1",
+      "metric": "medianHeapBytes",
+      "baseline": 4444212608.0,
+      "candidate": 4405071776,
+      "relativeIncrease": -0.00880714660894999,
+      "pass": true
+    },
+    {
+      "phase": "shutter-street-visit1",
+      "metric": "steadyOver50msRate",
+      "baseline": 0.06674301355491871,
+      "candidate": 0.06677025091799581,
+      "relativeIncrease": 0.00040809309658573767,
+      "pass": true
+    },
+    {
+      "phase": "shutter-street-visit1",
+      "metric": "loadingOver250msRate",
+      "baseline": 0.0,
+      "candidate": 0.0,
+      "relativeIncrease": 0.0,
+      "pass": true
+    },
+    {
+      "phase": "shutter-street-visit1",
+      "metric": "medianWorkingSetBytes",
+      "baseline": 8984313856,
+      "candidate": 8940937216,
+      "relativeIncrease": -0.004828041483772472,
+      "pass": true
+    },
+    {
+      "phase": "shutter-street-visit1",
+      "metric": "peakWorkingSetBytes",
+      "baseline": 9040101376,
+      "candidate": 8954720256,
+      "relativeIncrease": -0.009444708244829347,
+      "pass": true
+    },
+    {
+      "phase": "shutter-street-visit1",
+      "metric": "medianPrivateBytes",
+      "baseline": 9944391680,
+      "candidate": 9938604032,
+      "relativeIncrease": -0.000582001210957972,
+      "pass": true
+    },
+    {
+      "phase": "high-spire-visit1",
+      "metric": "meanFrameMs",
+      "baseline": 27.91535390520446,
+      "candidate": 28.06575214953271,
+      "relativeIncrease": 0.005387653147403304,
+      "pass": true
+    },
+    {
+      "phase": "high-spire-visit1",
+      "metric": "p95FrameMs",
+      "baseline": 36.5054,
+      "candidate": 35.111,
+      "relativeIncrease": -0.03819708864989846,
+      "pass": true
+    },
+    {
+      "phase": "high-spire-visit1",
+      "metric": "p99FrameMs",
+      "baseline": 42.028401,
+      "candidate": 39.3853,
+      "relativeIncrease": -0.0628884501220972,
+      "pass": true
+    },
+    {
+      "phase": "high-spire-visit1",
+      "metric": "loadingSeconds",
+      "baseline": 36.7366666,
+      "candidate": 37.4877007,
+      "relativeIncrease": 0.02044371930032418,
+      "pass": true
+    },
+    {
+      "phase": "high-spire-visit1",
+      "metric": "medianHeapBytes",
+      "baseline": 5068429696,
+      "candidate": 4637168824.0,
+      "relativeIncrease": -0.08508766972546755,
+      "pass": true
+    },
+    {
+      "phase": "high-spire-visit1",
+      "metric": "steadyOver50msRate",
+      "baseline": 0.0,
+      "candidate": 0.0665992797394455,
+      "relativeIncrease": null,
+      "pass": false
+    },
+    {
+      "phase": "high-spire-visit1",
+      "metric": "loadingOver250msRate",
+      "baseline": 0.10901290609221344,
+      "candidate": 0.05340607425788314,
+      "relativeIncrease": -0.5100940230626709,
+      "pass": true
+    },
+    {
+      "phase": "high-spire-visit1",
+      "metric": "medianWorkingSetBytes",
+      "baseline": 9016205312,
+      "candidate": 9071251456,
+      "relativeIncrease": 0.006105245177451479,
+      "pass": true
+    },
+    {
+      "phase": "high-spire-visit1",
+      "metric": "peakWorkingSetBytes",
+      "baseline": 9164587008,
+      "candidate": 9107861504,
+      "relativeIncrease": -0.006189641055345252,
+      "pass": true
+    },
+    {
+      "phase": "high-spire-visit1",
+      "metric": "medianPrivateBytes",
+      "baseline": 9924374528,
+      "candidate": 10056806400,
+      "relativeIncrease": 0.01334410260579788,
+      "pass": true
+    },
+    {
+      "phase": "dense-facade-visit1",
+      "metric": "meanFrameMs",
+      "baseline": 17.192114924225027,
+      "candidate": 18.102729951690822,
+      "relativeIncrease": 0.05296701606983012,
+      "pass": true
+    },
+    {
+      "phase": "dense-facade-visit1",
+      "metric": "p95FrameMs",
+      "baseline": 21.9572,
+      "candidate": 23.5686,
+      "relativeIncrease": 0.07338822800721401,
+      "pass": true
+    },
+    {
+      "phase": "dense-facade-visit1",
+      "metric": "p99FrameMs",
+      "baseline": 25.6181,
+      "candidate": 29.968,
+      "relativeIncrease": 0.16979791631697916,
+      "pass": false
+    },
+    {
+      "phase": "dense-facade-visit1",
+      "metric": "loadingSeconds",
+      "baseline": 18.2503464,
+      "candidate": 18.0059721,
+      "relativeIncrease": -0.013390118447285992,
+      "pass": true
+    },
+    {
+      "phase": "dense-facade-visit1",
+      "metric": "medianHeapBytes",
+      "baseline": 4823918112.0,
+      "candidate": 4828437696,
+      "relativeIncrease": 0.000936911426576037,
+      "pass": true
+    },
+    {
+      "phase": "dense-facade-visit1",
+      "metric": "steadyOver50msRate",
+      "baseline": 0.0,
+      "candidate": 0.0,
+      "relativeIncrease": 0.0,
+      "pass": true
+    },
+    {
+      "phase": "dense-facade-visit1",
+      "metric": "loadingOver250msRate",
+      "baseline": 0.0,
+      "candidate": 0.0,
+      "relativeIncrease": 0.0,
+      "pass": true
+    },
+    {
+      "phase": "dense-facade-visit1",
+      "metric": "medianWorkingSetBytes",
+      "baseline": 8892289024,
+      "candidate": 8944644096,
+      "relativeIncrease": 0.005887693467755639,
+      "pass": true
+    },
+    {
+      "phase": "dense-facade-visit1",
+      "metric": "peakWorkingSetBytes",
+      "baseline": 8987979776,
+      "candidate": 9003569152,
+      "relativeIncrease": 0.0017344694123173632,
+      "pass": true
+    },
+    {
+      "phase": "dense-facade-visit1",
+      "metric": "medianPrivateBytes",
+      "baseline": 9786400768,
+      "candidate": 9849876480,
+      "relativeIncrease": 0.006486114099021556,
+      "pass": true
+    },
+    {
+      "phase": "wide-city-visit2",
+      "metric": "meanFrameMs",
+      "baseline": 34.74357036805555,
+      "candidate": 35.50102796208531,
+      "relativeIncrease": 0.021801374643009908,
+      "pass": true
+    },
+    {
+      "phase": "wide-city-visit2",
+      "metric": "p95FrameMs",
+      "baseline": 47.0625,
+      "candidate": 47.2005,
+      "relativeIncrease": 0.002932270916334634,
+      "pass": true
+    },
+    {
+      "phase": "wide-city-visit2",
+      "metric": "p99FrameMs",
+      "baseline": 57.851101,
+      "candidate": 53.7217,
+      "relativeIncrease": -0.07137981695456408,
+      "pass": true
+    },
+    {
+      "phase": "wide-city-visit2",
+      "metric": "loadingSeconds",
+      "baseline": 17.496882601,
+      "candidate": 15.732103,
+      "relativeIncrease": -0.10086251598322649,
+      "pass": true
+    },
+    {
+      "phase": "wide-city-visit2",
+      "metric": "medianHeapBytes",
+      "baseline": 4812392376.0,
+      "candidate": 4621700056,
+      "relativeIncrease": -0.03962526433858682,
+      "pass": true
+    },
+    {
+      "phase": "wide-city-visit2",
+      "metric": "steadyOver50msRate",
+      "baseline": 0.7995084409435833,
+      "candidate": 0.7342421390935225,
+      "relativeIncrease": -0.08163303663565225,
+      "pass": true
+    },
+    {
+      "phase": "wide-city-visit2",
+      "metric": "loadingOver250msRate",
+      "baseline": 0.0,
+      "candidate": 0.0,
+      "relativeIncrease": 0.0,
+      "pass": true
+    },
+    {
+      "phase": "wide-city-visit2",
+      "metric": "medianWorkingSetBytes",
+      "baseline": 9164107776,
+      "candidate": 9225420800,
+      "relativeIncrease": 0.006690561208869017,
+      "pass": true
+    },
+    {
+      "phase": "wide-city-visit2",
+      "metric": "peakWorkingSetBytes",
+      "baseline": 9196863488,
+      "candidate": 9294569472,
+      "relativeIncrease": 0.010623837586312579,
+      "pass": true
+    },
+    {
+      "phase": "wide-city-visit2",
+      "metric": "medianPrivateBytes",
+      "baseline": 10078810112,
+      "candidate": 10167889920,
+      "relativeIncrease": 0.008838325854947815,
+      "pass": true
+    },
+    {
+      "phase": "brick-house-visit2",
+      "metric": "meanFrameMs",
+      "baseline": 36.96454197530864,
+      "candidate": 40.75990572207084,
+      "relativeIncrease": 0.10267579534185511,
+      "pass": true
+    },
+    {
+      "phase": "brick-house-visit2",
+      "metric": "p95FrameMs",
+      "baseline": 44.262,
+      "candidate": 56.6799,
+      "relativeIncrease": 0.28055442591839497,
+      "pass": false
+    },
+    {
+      "phase": "brick-house-visit2",
+      "metric": "p99FrameMs",
+      "baseline": 50.317499,
+      "candidate": 65.2678,
+      "relativeIncrease": 0.2971193182713632,
+      "pass": false
+    },
+    {
+      "phase": "brick-house-visit2",
+      "metric": "loadingSeconds",
+      "baseline": 17.2444794,
+      "candidate": 15.9820998,
+      "relativeIncrease": -0.07320485418655198,
+      "pass": true
+    },
+    {
+      "phase": "brick-house-visit2",
+      "metric": "medianHeapBytes",
+      "baseline": 4986808816,
+      "candidate": 4724242240.0,
+      "relativeIncrease": -0.052652224235580136,
+      "pass": true
+    },
+    {
+      "phase": "brick-house-visit2",
+      "metric": "steadyOver50msRate",
+      "baseline": 0.33398706848829,
+      "candidate": 2.8745457198301687,
+      "relativeIncrease": 7.606757539569092,
+      "pass": false
+    },
+    {
+      "phase": "brick-house-visit2",
+      "metric": "loadingOver250msRate",
+      "baseline": 0.0,
+      "candidate": 0.0,
+      "relativeIncrease": 0.0,
+      "pass": true
+    },
+    {
+      "phase": "brick-house-visit2",
+      "metric": "medianWorkingSetBytes",
+      "baseline": 9148973056,
+      "candidate": 9175388160,
+      "relativeIncrease": 0.0028872206572601034,
+      "pass": true
+    },
+    {
+      "phase": "brick-house-visit2",
+      "metric": "peakWorkingSetBytes",
+      "baseline": 9155911680,
+      "candidate": 9194913792,
+      "relativeIncrease": 0.004259773724685001,
+      "pass": true
+    },
+    {
+      "phase": "brick-house-visit2",
+      "metric": "medianPrivateBytes",
+      "baseline": 10082373632,
+      "candidate": 10096701440,
+      "relativeIncrease": 0.0014210748899967651,
+      "pass": true
+    },
+    {
+      "phase": "cemetery-visit2",
+      "metric": "meanFrameMs",
+      "baseline": 25.500771722316866,
+      "candidate": 27.411511496350368,
+      "relativeIncrease": 0.07492870391688289,
+      "pass": true
+    },
+    {
+      "phase": "cemetery-visit2",
+      "metric": "p95FrameMs",
+      "baseline": 33.023201,
+      "candidate": 36.9684,
+      "relativeIncrease": 0.11946749196118223,
+      "pass": true
+    },
+    {
+      "phase": "cemetery-visit2",
+      "metric": "p99FrameMs",
+      "baseline": 37.9385,
+      "candidate": 42.1548,
+      "relativeIncrease": 0.1111351265864493,
+      "pass": true
+    },
+    {
+      "phase": "cemetery-visit2",
+      "metric": "loadingSeconds",
+      "baseline": 12.532749799,
+      "candidate": 11.7506311,
+      "relativeIncrease": -0.062405993221248734,
+      "pass": true
+    },
+    {
+      "phase": "cemetery-visit2",
+      "metric": "medianHeapBytes",
+      "baseline": 4516742136,
+      "candidate": 4970002360,
+      "relativeIncrease": 0.10035114034679093,
+      "pass": true
+    },
+    {
+      "phase": "cemetery-visit2",
+      "metric": "steadyOver50msRate",
+      "baseline": 0.06680493952604401,
+      "candidate": 0.0,
+      "relativeIncrease": -1.0,
+      "pass": true
+    },
+    {
+      "phase": "cemetery-visit2",
+      "metric": "loadingOver250msRate",
+      "baseline": 0.0,
+      "candidate": 0.0,
+      "relativeIncrease": 0.0,
+      "pass": true
+    },
+    {
+      "phase": "cemetery-visit2",
+      "metric": "medianWorkingSetBytes",
+      "baseline": 9096200192,
+      "candidate": 9159340032,
+      "relativeIncrease": 0.006941342392126737,
+      "pass": true
+    },
+    {
+      "phase": "cemetery-visit2",
+      "metric": "peakWorkingSetBytes",
+      "baseline": 9101262848,
+      "candidate": 9166376960,
+      "relativeIncrease": 0.0071544040741893244,
+      "pass": true
+    },
+    {
+      "phase": "cemetery-visit2",
+      "metric": "medianPrivateBytes",
+      "baseline": 10002333696,
+      "candidate": 10105843712,
+      "relativeIncrease": 0.01034858655449522,
+      "pass": true
+    },
+    {
+      "phase": "shutter-street-visit2",
+      "metric": "meanFrameMs",
+      "baseline": 27.59151197237569,
+      "candidate": 26.45774831858407,
+      "relativeIncrease": -0.04109103027506189,
+      "pass": true
+    },
+    {
+      "phase": "shutter-street-visit2",
+      "metric": "p95FrameMs",
+      "baseline": 39.7885,
+      "candidate": 31.1896,
+      "relativeIncrease": -0.21611520916847837,
+      "pass": true
+    },
+    {
+      "phase": "shutter-street-visit2",
+      "metric": "p99FrameMs",
+      "baseline": 46.4914,
+      "candidate": 34.8405,
+      "relativeIncrease": -0.2506033373914316,
+      "pass": true
+    },
+    {
+      "phase": "shutter-street-visit2",
+      "metric": "loadingSeconds",
+      "baseline": 8.2431352,
+      "candidate": 8.9728672,
+      "relativeIncrease": 0.08852602587423286,
+      "pass": true
+    },
+    {
+      "phase": "shutter-street-visit2",
+      "metric": "medianHeapBytes",
+      "baseline": 4445432520,
+      "candidate": 5024004620.0,
+      "relativeIncrease": 0.13014978798958343,
+      "pass": true
+    },
+    {
+      "phase": "shutter-street-visit2",
+      "metric": "steadyOver50msRate",
+      "baseline": 0.20023773557550842,
+      "candidate": 0.0,
+      "relativeIncrease": -1.0,
+      "pass": true
+    },
+    {
+      "phase": "shutter-street-visit2",
+      "metric": "loadingOver250msRate",
+      "baseline": 0.0,
+      "candidate": 0.0,
+      "relativeIncrease": 0.0,
+      "pass": true
+    },
+    {
+      "phase": "shutter-street-visit2",
+      "metric": "medianWorkingSetBytes",
+      "baseline": 9105694720,
+      "candidate": 9147834368,
+      "relativeIncrease": 0.004627834481145454,
+      "pass": true
+    },
+    {
+      "phase": "shutter-street-visit2",
+      "metric": "peakWorkingSetBytes",
+      "baseline": 9111363584,
+      "candidate": 9164791808,
+      "relativeIncrease": 0.005863910874309042,
+      "pass": true
+    },
+    {
+      "phase": "shutter-street-visit2",
+      "metric": "medianPrivateBytes",
+      "baseline": 10063585280,
+      "candidate": 10074021888,
+      "relativeIncrease": 0.0010370665830934378,
+      "pass": true
+    },
+    {
+      "phase": "high-spire-visit2",
+      "metric": "meanFrameMs",
+      "baseline": 27.074011933092226,
+      "candidate": 23.947336363636364,
+      "relativeIncrease": -0.115486230012116,
+      "pass": true
+    },
+    {
+      "phase": "high-spire-visit2",
+      "metric": "p95FrameMs",
+      "baseline": 36.4569,
+      "candidate": 34.1297,
+      "relativeIncrease": -0.06383428102773403,
+      "pass": true
+    },
+    {
+      "phase": "high-spire-visit2",
+      "metric": "p99FrameMs",
+      "baseline": 40.1178,
+      "candidate": 41.951,
+      "relativeIncrease": 0.045695426967580444,
+      "pass": true
+    },
+    {
+      "phase": "high-spire-visit2",
+      "metric": "loadingSeconds",
+      "baseline": 23.9834959,
+      "candidate": 15.4888592,
+      "relativeIncrease": -0.35418675973755775,
+      "pass": true
+    },
+    {
+      "phase": "high-spire-visit2",
+      "metric": "medianHeapBytes",
+      "baseline": 4818145280,
+      "candidate": 4827515820.0,
+      "relativeIncrease": 0.0019448438051250516,
+      "pass": true
+    },
+    {
+      "phase": "high-spire-visit2",
+      "metric": "steadyOver50msRate",
+      "baseline": 0.06679166236918814,
+      "candidate": 0.1332003115102405,
+      "relativeIncrease": 0.9942655532958786,
+      "pass": false
+    },
+    {
+      "phase": "high-spire-visit2",
+      "metric": "loadingOver250msRate",
+      "baseline": 0.04176583337139179,
+      "candidate": 0.0,
+      "relativeIncrease": -1.0,
+      "pass": true
+    },
+    {
+      "phase": "high-spire-visit2",
+      "metric": "medianWorkingSetBytes",
+      "baseline": 9008480256,
+      "candidate": 9033650176,
+      "relativeIncrease": 0.0027940251057592125,
+      "pass": true
+    },
+    {
+      "phase": "high-spire-visit2",
+      "metric": "peakWorkingSetBytes",
+      "baseline": 9065406464,
+      "candidate": 9054662656,
+      "relativeIncrease": -0.0011851435501171181,
+      "pass": true
+    },
+    {
+      "phase": "high-spire-visit2",
+      "metric": "medianPrivateBytes",
+      "baseline": 9930027008,
+      "candidate": 9984491520,
+      "relativeIncrease": 0.005484830197956203,
+      "pass": true
+    },
+    {
+      "phase": "dense-facade-visit2",
+      "metric": "meanFrameMs",
+      "baseline": 17.894484404761904,
+      "candidate": 19.452281347150258,
+      "relativeIncrease": 0.08705458660623977,
+      "pass": true
+    },
+    {
+      "phase": "dense-facade-visit2",
+      "metric": "p95FrameMs",
+      "baseline": 23.920601,
+      "candidate": 26.988,
+      "relativeIncrease": 0.12823252225142667,
+      "pass": true
+    },
+    {
+      "phase": "dense-facade-visit2",
+      "metric": "p99FrameMs",
+      "baseline": 28.455,
+      "candidate": 32.4753,
+      "relativeIncrease": 0.14128624143384294,
+      "pass": true
+    },
+    {
+      "phase": "dense-facade-visit2",
+      "metric": "loadingSeconds",
+      "baseline": 18.7356448,
+      "candidate": 16.4812923,
+      "relativeIncrease": -0.1203242548663177,
+      "pass": true
+    },
+    {
+      "phase": "dense-facade-visit2",
+      "metric": "medianHeapBytes",
+      "baseline": 4522262552,
+      "candidate": 4746419512.0,
+      "relativeIncrease": 0.04956743608370662,
+      "pass": true
+    },
+    {
+      "phase": "dense-facade-visit2",
+      "metric": "steadyOver50msRate",
+      "baseline": 0.0,
+      "candidate": 0.06659048182821664,
+      "relativeIncrease": null,
+      "pass": false
+    },
+    {
+      "phase": "dense-facade-visit2",
+      "metric": "loadingOver250msRate",
+      "baseline": 0.05346002875729672,
+      "candidate": 0.0,
+      "relativeIncrease": -1.0,
+      "pass": true
+    },
+    {
+      "phase": "dense-facade-visit2",
+      "metric": "medianWorkingSetBytes",
+      "baseline": 8898535424,
+      "candidate": 8942399488,
+      "relativeIncrease": 0.004929357687524005,
+      "pass": true
+    },
+    {
+      "phase": "dense-facade-visit2",
+      "metric": "peakWorkingSetBytes",
+      "baseline": 8992894976,
+      "candidate": 9011449856,
+      "relativeIncrease": 0.0020632821854940087,
+      "pass": true
+    },
+    {
+      "phase": "dense-facade-visit2",
+      "metric": "medianPrivateBytes",
+      "baseline": 9801908224,
+      "candidate": 9852850176,
+      "relativeIncrease": 0.00519714639597102,
+      "pass": true
+    }
+  ],
+  "scope": "Matched recorded camera visits and process RAM intervals; does not prove every map location or eliminate OS noise.",
+  "wholeRouteRareEvents": {
+    "measurements": [
+      {
+        "kind": "steady",
+        "candidate": {
+          "events": 109,
+          "recordedSeconds": 179.9001822,
+          "eventsPerSecond": 0.605891548674596
+        },
+        "baselines": [
+          {
+            "events": 38,
+            "recordedSeconds": 179.806866399,
+            "eventsPerSecond": 0.2113378691316281
+          }
+        ],
+        "relativeIncrease": 1.8669331774951656,
+        "withinBudget": false
+      },
+      {
+        "kind": "loading",
+        "candidate": {
+          "events": 5,
+          "recordedSeconds": 213.4828611,
+          "eventsPerSecond": 0.02342108389515115
+        },
+        "baselines": [
+          {
+            "events": 15,
+            "recordedSeconds": 247.5494524,
+            "eventsPerSecond": 0.060593953468991796
+          }
+        ],
+        "relativeIncrease": -0.6134749004760582,
+        "withinBudget": true
+      }
+    ],
+    "withinBudget": false,
+    "scope": "Additional aggregate evidence; does not override the strict per-visit pass or its failures."
+  }
+}

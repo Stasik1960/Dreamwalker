@@ -5,6 +5,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.PersistentState;
 
 public final class CityVisualModeState extends PersistentState {
+    public static boolean isAlt(MinecraftServer server) { return get(server).alt; }
     boolean alt;
     long revision;
     static CityVisualModeState get(MinecraftServer server) {

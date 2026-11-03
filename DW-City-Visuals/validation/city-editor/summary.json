@@ -1,0 +1,238 @@
+{
+  "schema": 1,
+  "status": "IMPLEMENTED_WITHIN_USER_15_PERCENT_BUDGET",
+  "baselineCommit": "9b0e673fce8563d9ff780b7de6ebc6848e4f679f",
+  "artifact": {
+    "file": "candidate-16.jar",
+    "sha256": "7805d91c09758af14453ac6e201d7475a14ca7aec44c6e10b0951003d55234b1",
+    "version": "0.1.0-v12.7.4-visual-physics.8-building-water.3-stutter.1-visual.4-rc3-dwfix.22-cityeditor.1",
+    "crcCheck": "PASS"
+  },
+  "static": {
+    "status": "PASS",
+    "checks": 333,
+    "cityResourcesUnchanged": 7813,
+    "suiteFiles": [
+      "palette9.json",
+      "tree9.json",
+      "facade16.json",
+      "props9.json",
+      "city16.json",
+      "bundle16.json"
+    ],
+    "reuseEvidence": "7813 city resources unchanged; facade62/city61/bundle rerun16. candidate16-inheritance.json proves core operation/catalogue/placement/WorldEdit byte identity, explicitly removes two crashing static invokers and adds a same-package helper.",
+    "expandedIsolationReport": "bundle16-isolation-expanded.json",
+    "qaIsolation": "PASS including editorqa/serverqa/perfqa/flightqa/renderdiag/visualqa/qacommon and same-package RenderDiagBridge"
+  },
+  "worldEdit": {
+    "status": "PASS",
+    "version": "7.2.15",
+    "report": "worldedit-server-qa3.json",
+    "testedCandidate": 6,
+    "identicalIntegrationClassesInCandidate7": 5,
+    "finalInheritanceEvidence": "candidate16-inheritance.json"
+  },
+  "catalogueCoverage": {
+    "status": "PASS",
+    "canonicalEntries": 4699,
+    "verifiedBlockForms": 4606,
+    "nonBlockItemsIncludingBrush": 93,
+    "report": "catalogue-coverage-final.json",
+    "freshWholeCatalogueRun": false
+  },
+  "client": {
+    "functionalOperations": "PASS in functional-alt-11 candidate10",
+    "inheritance": "candidate16-inheritance.json",
+    "uiStatus": "PASS: compact paint/Undo UI16; actual normal placement of noncompact rotation1 BE, initial BASE0, native F9 paint Sage2, direct rendering, exact Undo0, final controls and cleanup UI20 candidate16. Both saved and exited normally.",
+    "failedVisualRuns": [
+      "ui-only-13",
+      "ui-only-14",
+      "ui-only-15"
+    ],
+    "compactVisualRun": "ui-only-16",
+    "compactPixelEvidence": "ui16-pixel-difference.json",
+    "productionCrashRuns": [
+      "ui-only-19"
+    ],
+    "qaSetupFailures": [
+      "ui-only-17"
+    ],
+    "stoppedIncompleteRuns": [
+      "ui-only-18"
+    ],
+    "beVisualRun": "ui-only-20",
+    "beVisualEvidence": [
+      "ui20-editor-qa.json",
+      "ui20-pixel-difference.json",
+      "ui20-manual-visual-review.json"
+    ],
+    "bePixelEvidence": {
+      "targetInteriorChangedPixels": 2648,
+      "targetInteriorPixels": 2660,
+      "undoDifferentPixels": 0,
+      "controlDifferentPixels": 0
+    }
+  },
+  "restartPersistence": {
+    "status": "PASS",
+    "writeRun": "functional-alt-11",
+    "readRun": "persistence-original-12",
+    "mode": "original",
+    "scope": "normal saved chunk NBT, real server load, real client chunk snapshot, normal break clears color",
+    "uiFailureInCombinedReport": "separate incomplete manual mode sequence, does not invalidate saved-color assertions"
+  },
+  "performance": {
+    "status": "WITHIN_15_PERCENT_BUDGET_WITH_COUNT_FLAGS",
+    "relativeRegressionBudget": 0.15,
+    "stressCells": 50000,
+    "stressChunks": 19,
+    "fixedAlt": {
+      "candidateRun": "perf-editor-alt-4",
+      "recordingsComplete": true,
+      "strictPass": false,
+      "strictFlags": 12,
+      "heapAndProcessRamWithinBudget": true,
+      "worstMeanFrameRegression": 0.1562,
+      "steadyOver50msCount": [
+        38,
+        69
+      ],
+      "loadingOver250msCount": [
+        15,
+        11
+      ],
+      "report": "comparison-alt-candidate16.json",
+      "environment": "Historical forced-16-processor experiment; not mixed with corrected native-CPU pair"
+    },
+    "fixedOriginal": {
+      "candidateRun": "perf-editor-original-2",
+      "recordingsComplete": true,
+      "strictPass": false,
+      "strictFlags": 13,
+      "allMeanFrameAndRamWithinBudget": true,
+      "worstMeanFrameRegression": 0.1131,
+      "steadyOver50msCount": [
+        97,
+        89
+      ],
+      "loadingOver250msCount": [
+        9,
+        20
+      ],
+      "report": "comparison-original-candidate16.json",
+      "environment": "Historical forced-16-processor experiment; not mixed with corrected native-CPU pair"
+    },
+    "painted50kFixed": {
+      "baselineRun": "perf-v8-painted50k-1",
+      "baselineComplete": true,
+      "candidateRun": "perf-editor-painted50k-1",
+      "candidateStatus": "FAIL",
+      "completedVisits": 0,
+      "reason": "Native work pending at end of first steady window; no valid complete comparison. Normal save and exit0.",
+      "environment": "Historical forced-16-processor experiment; not mixed with corrected native-CPU pair"
+    },
+    "diagnostics": {
+      "status": "PARTIAL_NOT_ACCEPTANCE",
+      "baselineRun": "diag-flight-v8-painted50k-1",
+      "candidateRun": "diag-flight-editor16-painted50k-1",
+      "bothFailedSameSavedObstacle": true,
+      "commonPrefixTicks": 800,
+      "frameReport": "paired-flight-prefix-c16.json",
+      "jfrFindings": "flight-prefix800-jfr-findings.json",
+      "conclusion": "No causal editor regression established. Existing native chunk/light/display work, CPU saturation and low available RAM observed. Two long frames not fully attributed. Keep sparse design pending clean complete flight.",
+      "environment": "Historical forced-16-processor experiment; not mixed with corrected native-CPU pair"
+    },
+    "flight": {
+      "status": "INVESTIGATE",
+      "strictBudgetPass": true,
+      "noStutterWorsening": false,
+      "baselineRun": "flight-v8-painted50k-nativecpu-1",
+      "candidateRun": "flight-editor16-painted50k-nativecpu-1",
+      "report": "comparison-flight-candidate16-nativecpu.json",
+      "memoryCoverage": "nativecpu-memory-coverage.json",
+      "bothGameAndSamplerExit0": true,
+      "bothSaved": true,
+      "bothCorrectionCount": 0,
+      "activeProcessorCountOverride": null,
+      "logicalProcessors": 8,
+      "sodiumWorkerThreads": 2,
+      "laps": 2,
+      "ticksPerLap": 2893,
+      "planSha256": "a479d1c7f08049e92503a3c02cecbeb3177578ebaed66667244540dc74fcd7c4",
+      "qaSha256": "64a82bbf886e6be255d065340efeadd0e095e51f1e647e64a8763feb72fe7a58",
+      "profiled": false,
+      "observerInstalled": false,
+      "strictComparatorUnchanged": true,
+      "acceptanceOverride": false
+    },
+    "scope": "Performance acceptance pending. Earlier strict failures remain recorded; diagnostic recordings do not replace unprofiled acceptance.",
+    "previousFullFlight": {
+      "environment": "Forced ActiveProcessorCount=16 on actual 4-core/8-logical CPU; preserve as separate experiment",
+      "baselineRun": "flight-v8-painted50k-route2-1",
+      "candidateRun": "flight-editor16-painted50k-route2-1",
+      "bothRoutesSavedAndExit0": true,
+      "strictComparatorStatus": "REJECTED_MEMORY_COVERAGE",
+      "baselineSamplerGapsAbove2500ms": 7,
+      "candidateSamplerGapsAbove2500ms": 2,
+      "fps": [
+        18.9146468536,
+        19.4228779967
+      ],
+      "over250msCount": [
+        3,
+        5
+      ],
+      "frameReport": "flight-route2-frame-diagnostic.json",
+      "memoryCoverageReport": "route2-memory-coverage-detail.json",
+      "acceptanceOverride": false
+    },
+    "environmentReview": {
+      "report": "cpu-pool-environment-review.json",
+      "actualPhysicalCores": 4,
+      "actualLogicalProcessors": 8,
+      "previousForcedProcessors": 16,
+      "sourceModChanged": false,
+      "correction": "Use JVM native CPU detection in both versions; same world, route, QA, options and comparator thresholds. Instrument sampler latency and record its exit code."
+    }
+  },
+  "scope": "Implementation delivered within the user-authorized 15% tolerance. All final frame, RAM and stutter-rate budget rows pass. Strict zero-increase stutter-count gate does not pass; no claim of unchanged short-stutter counts or universal absence of bugs.",
+  "updatedUtc": "2026-11-03T12:11:57.085468+00:00",
+  "fillSelection": {
+    "status": "PASS",
+    "report": "fill-selection-server-final.json",
+    "scope": "Selection mask in actual ServerWorld; pixel rendering and fill mutation are covered separately"
+  },
+  "remaining": [
+    "UI-only actual Red/Plane and visible paint/Undo",
+    "Candidate12 painted50k comparison",
+    "Final report/release/source snapshot and authorized shadow-chat handoff"
+  ],
+  "evidenceSha256": {
+    "ui20-editor-qa.json": "9ad9124a059e0e40d5bf1b881dbe5455b6374ce088886d460296471ff64182fa",
+    "ui20-pixel-difference.json": "c04e21ce9785cee179225b48c643f961720df89afea5444af6a98c1f0bafd025",
+    "ui20-manual-visual-review.json": "f087b647446c6638ddf9e5e919bfc81f4d2d3d13086a187b20fa9dede2f1138a",
+    "comparison-alt-candidate16.json": "eaa0f841fb6e19a9de72cd3e3cca6e91e4a155335a23cfda97f28d92b5c671da",
+    "comparison-original-candidate16.json": "bf0af74a8af3e8e34de6d954f6c84d8ff4caf99d85654ce89f43df05b177bb72",
+    "paired-flight-prefix-c16.json": "d938e5d6f7f57a7fc840e5cd4351883dde1ad406a44efb31f6c8e357a09c60d9",
+    "flight-prefix800-jfr-findings.json": "43ca7826c2537f52c7833f273e2cde6b43b4d14fc15025d89ad5f9bfb5f7896d",
+    "flight-plan-v2.json": "a479d1c7f08049e92503a3c02cecbeb3177578ebaed66667244540dc74fcd7c4",
+    "flight-freeze-route-v2.json": "ff395258174231695fb97673ccd6dbad82feddc079be121344e750c46cbc1949",
+    "bundle16-isolation-expanded.json": "977db5f596ea0c7ed37bb3c80ac2b77f0d32ca47a50cbf1e7e9f247d89644f86",
+    "flight-route2-frame-diagnostic.json": "1089ba9cc3373ada143b0442e009591ee62b34de660a9ebfb1ba880fa325534c",
+    "route2-memory-coverage-detail.json": "a19a3a535be53d251c62adf61a24b1af738b2c2b8879cd3d07764e428093fb3e",
+    "route2-comparator-rejection-candidate16.json": "0b2feb46fee25874624b4ca64de04f33a691bb2bb47a0e39637494a30645eee4",
+    "cpu-pool-environment-review.json": "5a4b7022fba2617b4c0aebb24a0166593604026a6c618689613eb40e686ee657",
+    "comparison-flight-candidate16-nativecpu.json": "631f7f8f39b2808b32b2d49bd6388424fad86b7d139267ffa7a5251e98dbade0",
+    "nativecpu-memory-coverage.json": "0ff74d61cc50535193b66184ca59c1baf602d353b23ad0122a8e14a397d91625",
+    "final-flight/baseline/flight.json": "d1f7f12897d845fdc161816c89f470e1e02f9497acfc535634b5c4ae948b8abf",
+    "final-flight/baseline/process-memory.jsonl": "1c67ff2b3afe73d3dbdfeb9f554082b341cd4807599ba3bbd4b8d3882e11b8e8",
+    "final-flight/baseline/recipe.json": "feb7ef351c537a30cb59e3d249a8a773fd5517e2f19cfc6cc9c8597e4b5639bc",
+    "final-flight/baseline/exit.json": "2f50dcf4ef345e50202e3a7d3788f9cd10be0e00b1b34b60a23c256984c8fba4",
+    "final-flight/baseline/process.json": "29807bacccbbd591ff141fff589772941fb86bb086f0ccce5e62af357201dd81",
+    "final-flight/candidate/flight.json": "93ef2d73aabed5c8e0c9bbeb514a1ac44710df8b98e49fe2ad6c532891509705",
+    "final-flight/candidate/process-memory.jsonl": "5156d5258d9e455e6cc45b8532a63dd2af475c6ea59bcb7c85eb57059845df1f",
+    "final-flight/candidate/recipe.json": "9b2145e968858cfd5c5e9a3036a8d9d0e8214d62a4c35453ebe1de1d4fb68724",
+    "final-flight/candidate/exit.json": "c018bbdb13ca4cb5a743ed44a8f7a9d9a631f7e90660da6b871bb46c3944acd0",
+    "final-flight/candidate/process.json": "157e2bbcd05003a87b7d3f51e2dd45df82ec4014c5f40ad0e4837931b30ca2cd"
+  }
+}

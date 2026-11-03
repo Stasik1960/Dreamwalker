@@ -1,0 +1,104 @@
+{
+  "scope": "DIAGNOSTIC_PARTIAL, six completed visits only; not a complete performance pass. Matching JFR profile; instrumentation overhead is not separately measured.",
+  "rows": [
+    {
+      "phase": "wide-city-visit1",
+      "differences": {
+        "meanMs": -0.03698188400170699,
+        "p95Ms": -0.15126603567737662,
+        "p99Ms": -0.11729583117437081
+      },
+      "hitches": [
+        8,
+        1
+      ]
+    },
+    {
+      "phase": "brick-house-visit1",
+      "differences": {
+        "meanMs": 0.052221310889657646,
+        "p95Ms": 0.061853490576674774,
+        "p99Ms": 0.07261482376380357
+      },
+      "hitches": [
+        0,
+        1
+      ]
+    },
+    {
+      "phase": "cemetery-visit1",
+      "differences": {
+        "meanMs": 0.06182342327182244,
+        "p95Ms": 0.10508933112537955,
+        "p99Ms": 0.2601465700619974
+      },
+      "hitches": [
+        1,
+        1
+      ]
+    },
+    {
+      "phase": "shutter-street-visit1",
+      "differences": {
+        "meanMs": -0.014855896476532071,
+        "p95Ms": -0.13085786094812635,
+        "p99Ms": -0.054877698526873075
+      },
+      "hitches": [
+        0,
+        1
+      ]
+    },
+    {
+      "phase": "high-spire-visit1",
+      "differences": {
+        "meanMs": 0.13197695133046294,
+        "p95Ms": 0.16288698291326043,
+        "p99Ms": 0.16638182023383674
+      },
+      "hitches": [
+        1,
+        2
+      ]
+    },
+    {
+      "phase": "dense-facade-visit1",
+      "differences": {
+        "meanMs": -0.035812166734436435,
+        "p95Ms": -0.06543676261602882,
+        "p99Ms": -0.07567805015791862
+      },
+      "hitches": [
+        3,
+        1
+      ]
+    }
+  ],
+  "editorInclusiveSamples": [
+    {
+      "phase": "cemetery-visit1",
+      "thread": "main",
+      "event": "jdk.ExecutionSample",
+      "method": "dev.dreamwalker.bloodbornedw.editor.CityEditorClient$$Lambda$7617+0x000002bb3c135dd8.751963917.beforeDebugRender",
+      "samples": "1"
+    },
+    {
+      "phase": "cemetery-visit1",
+      "thread": "main",
+      "event": "jdk.ExecutionSample",
+      "method": "dev.dreamwalker.bloodbornedw.editor.CityEditorClient.heldBrush",
+      "samples": "1"
+    },
+    {
+      "phase": "cemetery-visit1",
+      "thread": "main",
+      "event": "jdk.ExecutionSample",
+      "method": "dev.dreamwalker.bloodbornedw.editor.CityEditorClient.lambda$onInitializeClient$8",
+      "samples": "1"
+    }
+  ],
+  "candidateRunStatus": "FAIL",
+  "failure": "java.lang.IllegalStateException: Native work still pending at the end of the steady camera window",
+  "mainAndServerEditorInclusiveFrameHits": 3,
+  "countMeaning": "Inclusive stack-frame hits can refer to the same sample; they are not unique CPU samples or wall time."
+}

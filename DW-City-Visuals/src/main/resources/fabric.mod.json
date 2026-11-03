@@ -3,9 +3,11 @@
   "id": "dw_city_visuals_overlay",
   "version": "1.0.0",
   "environment": "*",
+  "custom": { "dreamwalker:revisionSuffix": "cityeditor.1" },
   "entrypoints": {
     "main": [
       "dev.dreamwalker.bloodbornedw.visual.CityVisualMode",
+      "dev.dreamwalker.bloodbornedw.editor.CityEditorServer",
       "dev.dreamwalker.bloodbornedw.composite.StandardLanternGameplay",
       "dev.dreamwalker.bloodbornedw.composite.RetainedFramePlacement",
       "dev.dreamwalker.bloodbornedw.composite.AutoStoneFence"
@@ -14,10 +16,14 @@
       "dev.dreamwalker.bloodbornedw.visual.CityVisualClient",
       "dev.dreamwalker.bloodbornedw.visual.CityFacadesClient",
       "dev.dreamwalker.bloodbornedw.composite.StandardLanternClient",
-      "dev.dreamwalker.bloodbornedw.composite.RetainedFramesClient"
+      "dev.dreamwalker.bloodbornedw.composite.RetainedFramesClient",
+      "dev.dreamwalker.bloodbornedw.editor.CityEditorClient"
     ]
   },
   "mixins": [
+    { "config": "dw-editor.mixins.json" },
+    { "config": "dw-editor-catalogue.mixins.json" },
+    { "config": "dw-editor-worldedit.mixins.json" },
     {
       "config": "dw-alt-tree-bounds.mixins.json",
       "environment": "client"
@@ -73,6 +79,10 @@
     },
     {
       "config": "dw-retained-frame-section-render.mixins.json",
+      "environment": "client"
+    },
+    {
+      "config": "dw-editor-client.mixins.json",
       "environment": "client"
     },
     {

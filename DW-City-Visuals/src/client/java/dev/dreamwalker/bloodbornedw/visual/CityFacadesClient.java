@@ -16,20 +16,32 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockRenderView;
 import dev.dreamwalker.bloodbornedw.composite.NativeGridBlock;
 import dev.dreamwalker.bloodbornedw.composite.NativePhysicsBlock;
+import dev.dreamwalker.bloodbornedw.editor.EditorRenderScope;
 import java.util.IdentityHashMap;
 import java.util.Map;
 
 public final class CityFacadesClient implements ClientModInitializer {
     private static final Map<BakedModel,BakedModel[]> MODELS=new IdentityHashMap<>();
-    static synchronized void clearCache() { MODELS.clear(); ShutterSubstrate.reload(); }
+    private static final Map<BakedModel,BakedModel[]> MANUAL_MODELS=new IdentityHashMap<>();
+    private static final Map<BakedModel,BakedModel> BASE_MODELS=new IdentityHashMap<>();
+    static synchronized void clearCache() { MODELS.clear(); MANUAL_MODELS.clear(); BASE_MODELS.clear(); ShutterSubstrate.reload(); }
     private static synchronized BakedModel fixed(BakedModel model,int role) {
+        return fixed(model,role,false);
+    }
+    private static synchronized BakedModel fixed(BakedModel model,int role,boolean manual) {
         if(model instanceof FacadeModel facade) {
-            if(facade.role()==role)return model;
+            if(facade.resolved()&&facade.role()==role&&facade.manualStyle()==manual)return model;
             model=facade.delegate();
         }
-        BakedModel[] variants=MODELS.computeIfAbsent(model,ignored->new BakedModel[5]);
-        if(variants[role]==null)variants[role]=new FacadeModel(model,role);
+        Map<BakedModel,BakedModel[]> cache=manual?MANUAL_MODELS:MODELS;
+        BakedModel[] variants=cache.computeIfAbsent(model,ignored->new BakedModel[5]);
+        if(variants[role]==null)variants[role]=new FacadeModel(model,role,false,manual,true);
         return variants[role];
+    }
+    private static synchronized BakedModel fixedBase(BakedModel model) {
+        if(model instanceof FacadeModel facade) model=facade.delegate();
+        BakedModel key=model;
+        return BASE_MODELS.computeIfAbsent(key,ignored->new FacadeModel(key,0,true,false,true));
     }
     private static boolean brick(String path) { return path.equals("source_assembly_brick_wall") || path.equals("source_bricks") || ShutterSubstrate.sourceId(new Identifier("bloodborne_dw",path)); }
     public static boolean contextualPart(Identifier id){return ShutterSubstrate.modelId(id);}
@@ -45,23 +57,46 @@ public final class CityFacadesClient implements ClientModInitializer {
         }));
     }
     public static BakedModel staticModel(BakedModel model, BlockPos root, BlockState state,BlockRenderView world) {
+        if(!CityVisualClient.isAlt())return model;
         Identifier id=Registries.BLOCK.getId(state.getBlock());
         if(!id.getNamespace().equals("bloodborne_dw"))return model;
-        int role=ShutterSubstrate.source(state)||ShutterSubstrate.model(model,state)?ShutterSubstrate.role(world,root):FacadeMaterials.role(root);
-        return role==0?model:fixed(model,role);
+        int painted=EditorRenderScope.style(world,root);
+        int role=painted>=0?painted:(ShutterSubstrate.source(state)||ShutterSubstrate.model(model,state)?ShutterSubstrate.role(world,root):FacadeMaterials.role(root));
+        if(painted==0)return fixedBase(model);
+        return role==0?model:fixed(model,role,painted>0);
     }
     /** visible() returns a fresh, world-bound occlusion view. Never retain or probe it. */
     public static BakedModel visibleModel(BakedModel model, BlockPos root, BlockState state,BlockRenderView world,boolean shutterPart) {
+        if(!CityVisualClient.isAlt())return model;
         Identifier id=Registries.BLOCK.getId(state.getBlock());
         if(!id.getNamespace().equals("bloodborne_dw"))return model;
-        int role=ShutterSubstrate.source(state)||shutterPart?ShutterSubstrate.role(world,root):FacadeMaterials.role(root);
-        return role==0?model:new FacadeModel(model,role);
+        int painted=EditorRenderScope.style(world,root);
+        int role=painted>=0?painted:(ShutterSubstrate.source(state)||shutterPart?ShutterSubstrate.role(world,root):FacadeMaterials.role(root));
+        if(painted==0)return new FacadeModel(model,0,true,false,true);
+        return role==0?model:new FacadeModel(model,role,false,painted>0,true);
     }
     public static BakedModel terrainModel(BakedModel model,BlockPos pos,BlockState state,BlockRenderView world) {
         if(!CityVisualClient.isAlt())return model;
+        // A native terrain snapshot can contain ordinary compact imported
+        // blocks as well as city carrier blocks. Resolve an explicit editor
+        // style before the native-only facade fallback below.
+        Identifier id=Registries.BLOCK.getId(state.getBlock());
+        if(!id.getNamespace().equals("bloodborne_dw"))return model;
+        int painted=EditorRenderScope.style(world,pos);
+        if(painted>=0) {
+            if(model instanceof FacadeModel facade) {
+                if(facade.resolved()&&facade.role()==painted&&facade.manualStyle()==(painted>0))return model;
+                // Resolved models may already be bound to position-specific
+                // occlusion. Never place them in a shared cache or unwrap one
+                // for reuse by a different world position.
+                return new FacadeModel(facade.delegate(),painted,painted==0,painted>0,true);
+            }
+            return new FacadeModel(model,painted,painted==0,painted>0,true);
+        }
         if(!(state.getBlock() instanceof NativeGridBlock) && !(state.getBlock() instanceof NativePhysicsBlock))return model;
         if(model instanceof FacadeModel)return model;
-        int role=ShutterSubstrate.model(model,state)?ShutterSubstrate.role(world,pos):FacadeMaterials.role(pos); return role==0?model:fixed(model,role);
+        int role=ShutterSubstrate.model(model,state)?ShutterSubstrate.role(world,pos):FacadeMaterials.role(pos);
+        return role==0?model:fixed(model,role);
     }
     public static BakedModel legacyTerrainModel(BakedModel model,BlockPos pos,BlockState state) {
         var world=net.minecraft.client.MinecraftClient.getInstance().world;

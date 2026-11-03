@@ -1,0 +1,420 @@
+{
+  "scope": "DIAGNOSTIC, cannot replace complete unprofiled acceptance",
+  "rows": {
+    "diag-flight-v8-painted50k-1": {
+      "scope": "DIAGNOSTIC PARTIAL ticks 0..800; route FAIL, not acceptance",
+      "frames": 650,
+      "seconds": 40.0450109,
+      "meanMs": 61.60770907692308,
+      "fps": 16.231734875117738,
+      "p95Ms": 120.76683499999996,
+      "p99Ms": 168.44239899999997,
+      "p999Ms": 248.23127239999997,
+      "maxMs": 280.6374,
+      "stutters": {
+        "50": {
+          "count": 415,
+          "perMinute": 621.8003052160487
+        },
+        "100": {
+          "count": 54,
+          "perMinute": 80.90895537750995
+        },
+        "250": {
+          "count": 1,
+          "perMinute": 1.4983139884724066
+        },
+        "1000": {
+          "count": 0,
+          "perMinute": 0.0
+        }
+      },
+      "worstFrames": [
+        {
+          "tick": 388,
+          "epochMillis": 1793700712346.1475,
+          "ms": 280.6374
+        },
+        {
+          "tick": 642,
+          "epochMillis": 1793700724993.2788,
+          "ms": 230.705
+        },
+        {
+          "tick": 121,
+          "epochMillis": 1793700698969.4495,
+          "ms": 227.3888
+        },
+        {
+          "tick": 15,
+          "epochMillis": 1793700693628.468,
+          "ms": 207.8398
+        },
+        {
+          "tick": 30,
+          "epochMillis": 1793700694380.1914,
+          "ms": 194.9617
+        },
+        {
+          "tick": 96,
+          "epochMillis": 1793700697629.118,
+          "ms": 184.7264
+        },
+        {
+          "tick": 683,
+          "epochMillis": 1793700726918.0537,
+          "ms": 171.3358
+        },
+        {
+          "tick": 353,
+          "epochMillis": 1793700710425.8245,
+          "ms": 165.4309
+        },
+        {
+          "tick": 1,
+          "epochMillis": 1793700692916.873,
+          "ms": 165.0495
+        },
+        {
+          "tick": 531,
+          "epochMillis": 1793700719350.2576,
+          "ms": 155.9013
+        },
+        {
+          "tick": 474,
+          "epochMillis": 1793700716414.6255,
+          "ms": 155.0607
+        },
+        {
+          "tick": 538,
+          "epochMillis": 1793700719678.046,
+          "ms": 154.5472
+        }
+      ],
+      "memory": {
+        "workingSetBytes": {
+          "median": 8368900096.0,
+          "min": 8289349632,
+          "max": 8500543488
+        },
+        "privateBytes": {
+          "median": 10092292096.0,
+          "min": 10020880384,
+          "max": 10207375360
+        },
+        "systemAvailablePhysicalBytes": {
+          "median": 1077708800.0,
+          "min": 395419648,
+          "max": 1201111040
+        },
+        "systemAvailableCommitBytes": {
+          "median": 4839272448.0,
+          "min": 4704653312,
+          "max": 4977819648
+        },
+        "pageFaultDelta": 381811,
+        "samples": 40
+      },
+      "heap": {
+        "median": 4921985024,
+        "peak": 5949550816,
+        "gcCount": 29,
+        "gcMs": 961
+      },
+      "counterRange": {
+        "startMs": -291,
+        "endMs": 104.989013671875,
+        "deltaSeconds": 40.441
+      },
+      "counterDeltas": {
+        "worldMesh": {
+          "batchRetainedHits": 79683,
+          "cacheByteLimit": 0,
+          "batchGpuByteLimit": 0,
+          "chunkMaxPerFrame": 0,
+          "chunkMaxFrameNs": 115309700,
+          "meshAsyncRetries": 0,
+          "lightRevision": 0,
+          "batchGpuBytes": -4903808,
+          "sectionRevisions": 11487,
+          "meshAsyncBakeAttempts": 8010,
+          "chunkApplyNs": 9182078500,
+          "meshVerified": 0,
+          "meshAsyncBakeNs": 16192239000,
+          "chunkDeferredFrames": 479,
+          "cachedOwners": 855,
+          "bakedVertices": 562584,
+          "indexedOwners": 855,
+          "pendingMeshes": 33,
+          "bakedOwners": 5472,
+          "meshAsyncSaturated": 52976,
+          "chunkApplyPackets": 561,
+          "batchDraws": 10640,
+          "meshVerificationFailures": 0,
+          "meshAsyncFallbacks": 0,
+          "meshAsyncCancelled": 2566,
+          "batchUploads": 1798,
+          "meshAsyncMainNs": 1553806000,
+          "meshAsyncCompleted": 5472,
+          "meshWorkers": 0,
+          "cachedBytes": 3689920
+        },
+        "counters": {
+          "preparedWorker": 7912,
+          "rootDependency": 317914,
+          "signatureTotal": 773824,
+          "styleWorld": 0,
+          "updateEmpty": 0,
+          "invalidRoot": 299640,
+          "preparedMain": 0,
+          "signatureInvalid": 317914,
+          "facade": 4153,
+          "styleOther": 0,
+          "invalidOther": 176054,
+          "bake": 0,
+          "rootKnown": 773824,
+          "invalidUnknown": 0,
+          "prepare": 8071,
+          "updateFull": 0
+        },
+        "terrainUpdates": {
+          "visibleOverhangSectionsLast": 0,
+          "compiledNoOpHelperExclusions": 0,
+          "pendingSectionUpdates": 0,
+          "overhangRebuilds": 152102,
+          "overhangVisibilityAdditions": 0,
+          "overhangNeighbourSectionRadius": 0,
+          "overhangVisibilitySectionScans": 0
+        },
+        "shapeSnapshots": {
+          "shapeSnapshotCells": 15604,
+          "shapeSnapshotCopiedChunks": 839,
+          "sourceCarrierLightChecks": 0,
+          "shapeSnapshotPublishedCells": 64913,
+          "shapeSnapshotUnchangedPublications": 0,
+          "shapeSnapshotChunks": -60,
+          "shapeSnapshotBatchDepth": 0,
+          "shapeSnapshotPublications": 839,
+          "shapeSnapshotPendingCells": 0
+        }
+      },
+      "pending": {
+        "nonIdleSamples": 31,
+        "samples": 38,
+        "maxMeshes": 61,
+        "maxSectionUpdates": 0
+      }
+    },
+    "diag-flight-editor16-painted50k-1": {
+      "scope": "DIAGNOSTIC PARTIAL ticks 0..800; route FAIL, not acceptance",
+      "frames": 611,
+      "seconds": 40.0825915,
+      "meanMs": 65.60162274959083,
+      "fps": 15.243525359382016,
+      "p95Ms": 124.44,
+      "p99Ms": 198.56642999999954,
+      "p999Ms": 352.7028779999981,
+      "maxMs": 436.334,
+      "stutters": {
+        "50": {
+          "count": 442,
+          "perMinute": 661.6338666625385
+        },
+        "100": {
+          "count": 58,
+          "perMinute": 86.82073363445076
+        },
+        "250": {
+          "count": 4,
+          "perMinute": 5.987636802375914
+        },
+        "1000": {
+          "count": 0,
+          "perMinute": 0.0
+        }
+      },
+      "worstFrames": [
+        {
+          "tick": 54,
+          "epochMillis": 1793701822583.583,
+          "ms": 436.334
+        },
+        {
+          "tick": 76,
+          "epochMillis": 1793701823474.2708,
+          "ms": 299.2338
+        },
+        {
+          "tick": 249,
+          "epochMillis": 1793701832182.0833,
+          "ms": 274.595
+        },
+        {
+          "tick": 615,
+          "epochMillis": 1793701850408.6826,
+          "ms": 264.2062
+        },
+        {
+          "tick": 734,
+          "epochMillis": 1793701856369.125,
+          "ms": 232.1331
+        },
+        {
+          "tick": 637,
+          "epochMillis": 1793701851510.0925,
+          "ms": 225.2097
+        },
+        {
+          "tick": 751,
+          "epochMillis": 1793701857093.2412,
+          "ms": 200.5504
+        },
+        {
+          "tick": 97,
+          "epochMillis": 1793701824481.865,
+          "ms": 180.7107
+        },
+        {
+          "tick": 279,
+          "epochMillis": 1793701833579.517,
+          "ms": 172.7152
+        },
+        {
+          "tick": 362,
+          "epochMillis": 1793701837705.457,
+          "ms": 164.5885
+        },
+        {
+          "tick": 63,
+          "epochMillis": 1793701822739.4358,
+          "ms": 155.8528
+        },
+        {
+          "tick": 451,
+          "epochMillis": 1793701842089.0596,
+          "ms": 148.9453
+        }
+      ],
+      "memory": {
+        "workingSetBytes": {
+          "median": 8944926720,
+          "min": 8898060288,
+          "max": 9054097408
+        },
+        "privateBytes": {
+          "median": 10083667968,
+          "min": 10010882048,
+          "max": 10191183872
+        },
+        "systemAvailablePhysicalBytes": {
+          "median": 481632256,
+          "min": 388247552,
+          "max": 549838848
+        },
+        "systemAvailableCommitBytes": {
+          "median": 4884656128,
+          "min": 4802543616,
+          "max": 5003481088
+        },
+        "pageFaultDelta": 321610,
+        "samples": 39
+      },
+      "heap": {
+        "median": 4684375120,
+        "peak": 5616165280,
+        "gcCount": 28,
+        "gcMs": 832
+      },
+      "counterRange": {
+        "startMs": -457,
+        "endMs": 126.408447265625,
+        "deltaSeconds": 40.666
+      },
+      "counterDeltas": {
+        "worldMesh": {
+          "batchRetainedHits": 121698,
+          "cacheByteLimit": 0,
+          "batchGpuByteLimit": 0,
+          "chunkMaxPerFrame": 0,
+          "chunkMaxFrameNs": 154258800,
+          "meshAsyncRetries": 0,
+          "lightRevision": 0,
+          "batchGpuBytes": -4043392,
+          "sectionRevisions": 11180,
+          "meshAsyncBakeAttempts": 9040,
+          "chunkApplyNs": 7729781000,
+          "meshVerified": 0,
+          "meshAsyncBakeNs": 14313306100,
+          "chunkDeferredFrames": 470,
+          "cachedOwners": 1462,
+          "bakedVertices": 645184,
+          "indexedOwners": 1462,
+          "pendingMeshes": 37,
+          "bakedOwners": 6207,
+          "meshAsyncSaturated": 116244,
+          "chunkApplyPackets": 558,
+          "batchDraws": 12814,
+          "meshVerificationFailures": 0,
+          "meshAsyncFallbacks": 0,
+          "meshAsyncCancelled": 2886,
+          "batchUploads": 1994,
+          "meshAsyncMainNs": 1701720300,
+          "meshAsyncCompleted": 6207,
+          "meshWorkers": 0,
+          "cachedBytes": 6283056
+        },
+        "counters": {
+          "preparedWorker": 8967,
+          "rootDependency": 306274,
+          "signatureTotal": 993130,
+          "styleWorld": 12131,
+          "updateEmpty": 0,
+          "invalidRoot": 291882,
+          "preparedMain": 0,
+          "signatureInvalid": 306274,
+          "facade": 0,
+          "styleOther": 0,
+          "invalidOther": 169683,
+          "bake": 0,
+          "rootKnown": 993130,
+          "invalidUnknown": 0,
+          "prepare": 9124,
+          "updateFull": 0
+        },
+        "terrainUpdates": {
+          "visibleOverhangSectionsLast": 0,
+          "pendingSectionUpdates": 0,
+          "overhangVisibilityAdditions": 0,
+          "overhangNeighbourSectionRadius": 0,
+          "overhangRebuilds": 149712,
+          "compiledNoOpHelperExclusions": 0,
+          "overhangVisibilitySectionScans": 0
+        },
+        "shapeSnapshots": {
+          "shapeSnapshotCells": 23896,
+          "shapeSnapshotCopiedChunks": 844,
+          "sourceCarrierLightChecks": 0,
+          "shapeSnapshotPublishedCells": 64313,
+          "shapeSnapshotUnchangedPublications": 0,
+          "shapeSnapshotChunks": -33,
+          "shapeSnapshotBatchDepth": 0,
+          "shapeSnapshotPublications": 844,
+          "shapeSnapshotPendingCells": 0
+        }
+      },
+      "pending": {
+        "nonIdleSamples": 32,
+        "samples": 38,
+        "maxMeshes": 57,
+        "maxSectionUpdates": 0
+      }
+    }
+  },
+  "changePercent": {
+    "meanMs": 6.482814784885083,
+    "p95Ms": 3.0415345405053085,
+    "p99Ms": 17.8838767310596,
+    "p999Ms": 42.08639974726977,
+    "maxMs": 55.4796331493949
+  }
+}

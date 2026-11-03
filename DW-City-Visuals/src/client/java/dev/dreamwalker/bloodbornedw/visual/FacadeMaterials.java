@@ -15,7 +15,8 @@ import net.minecraft.util.math.Direction;
 final class FacadeMaterials {
     private static volatile FacadeConfig config;
     private static final Map<BakedQuad,BakedQuad[]> CACHE = new IdentityHashMap<>();
-    static synchronized void reload() { config=null; CACHE.clear(); CityFacadesClient.clearCache(); }
+    private static final Map<BakedQuad,BakedQuad[]> MANUAL_CACHE = new IdentityHashMap<>();
+    static synchronized void reload() { config=null; CACHE.clear(); MANUAL_CACHE.clear(); CityFacadesClient.clearCache(); }
     static FacadeConfig config() { FacadeConfig c=config; if(c==null) synchronized(FacadeMaterials.class) { if(config==null)config=FacadeConfig.load(); c=config; } return c; }
     static int role(BlockPos pos) {
         if(!CityVisualClient.isAlt())return 0;
@@ -24,19 +25,23 @@ final class FacadeMaterials {
     }
     private static SpriteAtlasTexture atlas() { return (SpriteAtlasTexture) MinecraftClient.getInstance().getTextureManager().getTexture(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE); }
     static synchronized BakedQuad quad(BakedQuad source,int role) {
+        return quad(source,role,false);
+    }
+    static synchronized BakedQuad quad(BakedQuad source,int role,boolean manual) {
         if(role==0)return source;
         Sprite sprite=source.getSprite(); Identifier id=sprite.getContents().getId();
         FacadeConfig c=config();
         if(role==4&&!c.brickWindow.containsKey(id))return source;
         // A facade correction must never recolour horizontal pavements or
         // floors even when they happen to share a sprite inside the house box.
-        if(role==4&&(source.getFace()==Direction.UP||source.getFace()==Direction.DOWN))return source;
+        if(!manual&&role==4&&(source.getFace()==Direction.UP||source.getFace()==Direction.DOWN))return source;
         if(!c.bricks.contains(id)&&!(role==1&&c.rose.containsKey(id))&&!(role==4&&c.brickWindow.containsKey(id)))return source;
         // roof_1 is shared with the moving wooden shutter and glass islands.
         // Regional wall colours must affect only its upper masonry half.
         if(id.getPath().endsWith("/roof_1")&&!wallHalf(source.getVertexData(),sprite))return source;
         if(id.getPath().endsWith("/spirelamp_0010")&&(source.getFace()==Direction.UP||source.getFace()==Direction.DOWN))return source;
-        BakedQuad[] variants=CACHE.computeIfAbsent(source,k->new BakedQuad[5]);if(variants[role]!=null)return variants[role];
+        Map<BakedQuad,BakedQuad[]> cache=manual?MANUAL_CACHE:CACHE;
+        BakedQuad[] variants=cache.computeIfAbsent(source,k->new BakedQuad[5]);if(variants[role]!=null)return variants[role];
         int slot=role;
         Sprite target=role==4?atlas().getSprite(c.brickWindow.get(id)):role==1&&c.rose.containsKey(id)?atlas().getSprite(c.rose.get(id)):
             role>1&&c.accentBase.containsKey(id)?atlas().getSprite(c.accentBase.get(id)):sprite;
@@ -45,10 +50,13 @@ final class FacadeMaterials {
         return variants[slot]=new BakedQuad(data,source.getColorIndex(),source.getFace(),target,source.hasShade());
     }
     static boolean transform(MutableQuadView quad,int role) {
+        return transform(quad,role,false);
+    }
+    static boolean transform(MutableQuadView quad,int role,boolean manual) {
         Sprite sprite=SpriteFinder.get(atlas()).find(quad); Identifier id=sprite.getContents().getId();
         if(role==0)return true; FacadeConfig c=config(); if(!c.bricks.contains(id)&&!(role==1&&c.rose.containsKey(id))&&!(role==4&&c.brickWindow.containsKey(id)))return true;
         if(role==4&&!c.brickWindow.containsKey(id))return true;
-        if(role==4&&(quad.nominalFace()==Direction.UP||quad.nominalFace()==Direction.DOWN||horizontal(quad)))return true;
+        if(!manual&&role==4&&(quad.nominalFace()==Direction.UP||quad.nominalFace()==Direction.DOWN||horizontal(quad)))return true;
         if(id.getPath().endsWith("/roof_1")) { float v=0; for(int i=0;i<4;i++)v+=quad.v(i); if(v/4>sprite.getMinV()+(sprite.getMaxV()-sprite.getMinV())*.5F)return true; }
         if(id.getPath().endsWith("/spirelamp_0010")&&(quad.nominalFace()==Direction.UP||quad.nominalFace()==Direction.DOWN))return true;
         Identifier targetId=role==4?c.brickWindow.get(id):role==1?c.rose.get(id):c.accentBase.get(id);

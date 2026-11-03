@@ -67,7 +67,7 @@ def main():
         refmap = data.get('refmap')
         if refmap and refmap not in all_names: raise ValueError('Missing mixin refmap '+refmap)
         if mix not in meta.setdefault('mixins',[]): meta['mixins'].append(mix)
-    meta['version'] += '-altvisual.8'
+    meta['version'] += '-' + overlay_meta.get('custom', {}).get('dreamwalker:revisionSuffix', 'altvisual.8')
     # Existing IDs, dependencies, old entrypoint order, mixins and refmaps stay intact.
     replacements = set(args.replace_entry)
     for name in new.keys() & old.keys():

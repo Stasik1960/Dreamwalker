@@ -1,0 +1,105 @@
+{
+  "scope": "DIAGNOSTIC ONLY. Matching approximately40-second prefix through tick800 of two failed43-second flights. Same physical route obstruction; no acceptance PASS.",
+  "inputs": [
+    "diag-flight-v8-painted50k-1",
+    "diag-flight-editor16-painted50k-1"
+  ],
+  "analysisRangesEpochMillis": {
+    "v8": [
+      1793700692710,
+      1793700732755
+    ],
+    "c16": [
+      1793701819465,
+      1793701859547
+    ]
+  },
+  "epochCalibrationCaveat": "flightStartEpochMillis precedes flightStartNanoTime by about29ms v8 and4ms c16, inferred from median paired memory samples. VM/hitch correlation report uses calibrated starts; CPU summary uses original approximately40s ranges.",
+  "cpu": {
+    "machineMean": [
+      0.9985289487,
+      0.9996058237
+    ],
+    "jvmUserMean": [
+      0.8723158328,
+      0.8810289911
+    ],
+    "mainThreadUserMeanMachineNormalized": [
+      0.05127372475,
+      0.050909785
+    ],
+    "executionSamples": [
+      2470,
+      2848
+    ],
+    "mainExecutionSamples": [
+      262,
+      333
+    ],
+    "candidateEditorInclusiveSamples": 9,
+    "candidateEditorMainSamples": 0
+  },
+  "allocationSampleWeights": {
+    "totalBytes": [
+      39902432064,
+      41933317776
+    ],
+    "candidateEditorInclusiveBytes": 14143272,
+    "caveat": "JFR allocation sampling weights estimate allocation throughput, not retained memory. Inclusive weights can overlap and sampling is noisy."
+  },
+  "gcPause": {
+    "count": [
+      38,
+      39
+    ],
+    "totalMs": [
+      1069.493474,
+      964.379425
+    ],
+    "maxMs": [
+      181.193434,
+      69.474467
+    ]
+  },
+  "longFrames": [
+    {
+      "version": "v8",
+      "tick": 388,
+      "ms": 280.6374,
+      "observed": "ChunkApplyBudget task and chunk/light-column installation; no recordedGC/main monitor overlap."
+    },
+    {
+      "version": "c16",
+      "tick": 54,
+      "ms": 436.334,
+      "observed": "One main CPU sample in ClientWorld display/fluid lookup. No recordedGC/main monitor/non-GC VM overlap; cause of full duration unresolved."
+    },
+    {
+      "version": "c16",
+      "tick": 76,
+      "ms": 299.2338,
+      "observed": "Chunk/light-column application and ClientWorld display/fluid hooks.87.15ms HandshakeAllThreads VM operation overlaps; safepoint=false, blocking caller=Sweeper thread, so not a measured87ms global pause."
+    },
+    {
+      "version": "c16",
+      "tick": 249,
+      "ms": 274.595,
+      "observed": "Chunk application, CompositeTerrainUpdates.flush, BE rendering;19.64ms GC pause plus9.97ms SafepointBegin overlap."
+    },
+    {
+      "version": "c16",
+      "tick": 615,
+      "ms": 264.2062,
+      "observed": "No main CPU sample or recordedGC/main monitor/VM overlap; cannot attribute full duration from this recording."
+    }
+  ],
+  "additionalStall": "Candidate main thread waited224.68ms in SecureRandom/DRBG during existing CompositeBlockEntity constructor UUID creation, outside the four>250ms frames.",
+  "geometryAudit": "FacadeModel preserves quad count and delegates occlusion models. FacadeMaterials editsUV/color only, preservingxyz/face/shade. No supported helper-geometry revival. Parent absolute metrics show nearlyequal initial cached geometry and lower cumulativecandidate baked vertices; deltas reflect different preflight history.",
+  "decision": "No causal evidence currently supports rewriting sparse editor storage, root invalidation, or geometry wrappers. Preserve candidate16 for clean full-route acceptance withoutdiagnostic instrumentation. If regression persists, isolate the observed existing chunk/display/renderer/scheduler work with a targeted controlled comparison.",
+  "uncertainties": [
+    "Short partialroute and onepair cannot establish stutter equivalence.",
+    "100% CPU saturation and lowavailable RAM bothruns create scheduler/memory-pressure variance; recording doesnot establish hardpaging orGPUwait.",
+    "Initial worldage differed~129s v8/~99s c16; warmup/cache/unload histories differ.",
+    "Synchronousbake0 andUPDATEpackets0 duringprefix rule out those eventpaths for this flightonly, not priorfixedtests."
+  ]
+}

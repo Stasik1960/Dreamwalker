@@ -1,0 +1,174 @@
+{
+  "status": "DIAGNOSTIC_FRAME_RESULTS_ONLY",
+  "strictComparatorStatus": "REJECTED_MEMORY_COVERAGE",
+  "acceptanceOverride": false,
+  "frameTimelineAndServerPositionValidation": "PASS via frozen comparator metrics()",
+  "rows": [
+    {
+      "meanMs": 52.86908118033985,
+      "meanFps": 18.914646853591712,
+      "p95Ms": 97.72501999999997,
+      "p99Ms": 134.86616799999985,
+      "p999Ms": 223.2054312000013,
+      "maxMs": 414.1613,
+      "worst": {
+        "elapsedSeconds": 0.4141613,
+        "tick": 1,
+        "lap": 1,
+        "segment": 0,
+        "position": {
+          "x": 160.45076358294335,
+          "y": 130.0,
+          "z": -1021.8235613582513
+        }
+      },
+      "seconds": 289.3524813,
+      "over50msCount": 2581,
+      "over50msPerMinute": 535.1949957513635,
+      "over100msCount": 237,
+      "over100msPerMinute": 49.14421309301556,
+      "over250msCount": 3,
+      "over250msPerMinute": 0.6220786467470324,
+      "over1000msCount": 0,
+      "over1000msPerMinute": 0.0,
+      "laps": [
+        {
+          "lap": 1,
+          "samples": 2636,
+          "seconds": 144.5862519,
+          "p99Ms": 136.75976500000016,
+          "maxMs": 414.1613,
+          "over50msPerMinute": 562.7091022199739,
+          "over100msPerMinute": 48.13735682707741,
+          "over250msPerMinute": 1.2449316420795882,
+          "over1000msPerMinute": 0.0
+        },
+        {
+          "lap": 2,
+          "samples": 2835,
+          "seconds": 144.6760897,
+          "p99Ms": 133.19143599999995,
+          "maxMs": 225.7025,
+          "over50msPerMinute": 508.0314249051756,
+          "over100msPerMinute": 50.1810631947153,
+          "over250msPerMinute": 0.0,
+          "over1000msPerMinute": 0.0
+        }
+      ],
+      "heapPeakBytes": 5674894112,
+      "heapMedianBytes": 4741387664.0,
+      "gcCountDelta": 207,
+      "gcTimeMsDelta": 5468,
+      "processMemory": {
+        "samples": 289,
+        "peakWorkingSetBytes": 9190928384,
+        "medianWorkingSetBytes": 8509902848,
+        "peakPrivateBytes": 10219941888,
+        "medianPrivateBytes": 10050199552
+      },
+      "serverPositionCoverage": {
+        "samples": 288,
+        "firstTick": 0,
+        "lastTick": 5760
+      },
+      "availablePhysicalMedianBytes": 778248192,
+      "availablePhysicalMinBytes": 353153024,
+      "samplerMaxGapMs": 3617.744140625
+    },
+    {
+      "meanMs": 51.485675818505335,
+      "meanFps": 19.422877996690744,
+      "p95Ms": 99.09024000000001,
+      "p99Ms": 144.6810840000002,
+      "p999Ms": 240.3315904000004,
+      "maxMs": 471.9309,
+      "worst": {
+        "elapsedSeconds": 98.9460168,
+        "tick": 1971,
+        "lap": 1,
+        "segment": 9,
+        "position": {
+          "x": 399.1507142971409,
+          "y": 139.91507142971406,
+          "z": -800.6794285622873
+        }
+      },
+      "seconds": 289.3494981,
+      "over50msCount": 2447,
+      "over50msPerMinute": 507.4140475932624,
+      "over100msCount": 273,
+      "over100msPerMinute": 56.60974049569295,
+      "over250msCount": 5,
+      "over250msPerMinute": 1.0368084339870502,
+      "over1000msCount": 0,
+      "over1000msPerMinute": 0.0,
+      "laps": [
+        {
+          "lap": 1,
+          "samples": 2598,
+          "seconds": 144.61932810000002,
+          "p99Ms": 151.727656,
+          "maxMs": 471.9309,
+          "over50msPerMinute": 554.6976400314226,
+          "over100msPerMinute": 58.083522516379325,
+          "over250msPerMinute": 1.2446469110652711,
+          "over1000msPerMinute": 0.0
+        },
+        {
+          "lap": 2,
+          "samples": 3020,
+          "seconds": 144.62951089999999,
+          "p99Ms": 136.827369,
+          "maxMs": 269.2079,
+          "over50msPerMinute": 460.0720806281867,
+          "over100msPerMinute": 55.175461427906974,
+          "over250msPerMinute": 0.8297061868858191,
+          "over1000msPerMinute": 0.0
+        }
+      ],
+      "heapPeakBytes": 5715257568,
+      "heapMedianBytes": 4781941872.0,
+      "gcCountDelta": 206,
+      "gcTimeMsDelta": 5528,
+      "processMemory": {
+        "samples": 289,
+        "peakWorkingSetBytes": 9181364224,
+        "medianWorkingSetBytes": 7966605312,
+        "peakPrivateBytes": 10396897280,
+        "medianPrivateBytes": 10098888704
+      },
+      "serverPositionCoverage": {
+        "samples": 288,
+        "firstTick": 0,
+        "lastTick": 5760
+      },
+      "availablePhysicalMedianBytes": 711581696,
+      "availablePhysicalMinBytes": 395497472,
+      "samplerMaxGapMs": 3151.816162109375
+    }
+  ],
+  "changePercent": {
+    "meanMs": -2.616662387446511,
+    "meanFps": 2.6869713562879705,
+    "p95Ms": 1.3970015048347273,
+    "p99Ms": 7.277522706806927,
+    "p999Ms": 7.672823688888353,
+    "maxMs": 13.94857510829719,
+    "seconds": -0.0010309916772199834,
+    "over50msCount": -5.191786129407205,
+    "over50msPerMinute": -5.190808654535206,
+    "over100msCount": 15.189873417721511,
+    "over100msPerMinute": 15.191061027973607,
+    "over250msCount": 66.66666666666667,
+    "over250msPerMinute": 66.66838500384458,
+    "over1000msCount": null,
+    "over1000msPerMinute": null,
+    "heapPeakBytes": 0.7112635972299275,
+    "heapMedianBytes": 0.8553236072198045,
+    "gcCountDelta": -0.48309178743961567,
+    "gcTimeMsDelta": 1.097293343087058,
+    "availablePhysicalMedianBytes": -8.566225618677702,
+    "availablePhysicalMinBytes": 11.990396548324611,
+    "samplerMaxGapMs": -12.878964360236145
+  }
+}

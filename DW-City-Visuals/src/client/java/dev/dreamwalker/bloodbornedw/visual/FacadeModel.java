@@ -16,19 +16,29 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.BlockRenderView;
+import dev.dreamwalker.bloodbornedw.editor.EditorRenderScope;
 
 final class FacadeModel implements BakedModel, FabricBakedModel {
     private final BakedModel delegate;
     private final int fixedRole;
-    FacadeModel(BakedModel delegate,int fixedRole) { this.delegate=delegate; this.fixedRole=fixedRole; }
+    private final boolean forceBase;
+    private final boolean manualStyle;
+    /** Model selection already resolved the root's appearance from this render snapshot. */
+    private final boolean resolved;
+    FacadeModel(BakedModel delegate,int fixedRole) { this(delegate,fixedRole,false,false); }
+    FacadeModel(BakedModel delegate,int fixedRole,boolean forceBase) { this(delegate,fixedRole,forceBase,false); }
+    FacadeModel(BakedModel delegate,int fixedRole,boolean forceBase,boolean manualStyle) { this(delegate,fixedRole,forceBase,manualStyle,false); }
+    FacadeModel(BakedModel delegate,int fixedRole,boolean forceBase,boolean manualStyle,boolean resolved) { this.delegate=delegate; this.fixedRole=fixedRole; this.forceBase=forceBase; this.manualStyle=manualStyle; this.resolved=resolved; }
     BakedModel delegate() { return delegate; }
     int role() { return fixedRole; }
+    boolean manualStyle() { return manualStyle; }
+    boolean resolved() { return resolved; }
     @Override public List<BakedQuad> getQuads(BlockState state,Direction side,Random random) {
         List<BakedQuad> quads=delegate.getQuads(state,side,random);
-        if(fixedRole==0)return quads;
+        if(fixedRole==0||!CityVisualClient.isAlt())return quads;
         List<BakedQuad> changed=null;
         for(int i=0;i<quads.size();i++) {
-            BakedQuad source=quads.get(i), result=FacadeMaterials.quad(source,fixedRole);
+            BakedQuad source=quads.get(i), result=FacadeMaterials.quad(source,fixedRole,manualStyle);
             if(result!=source) {
                 if(changed==null)changed=new ArrayList<>(quads);
                 changed.set(i,result);
@@ -41,9 +51,12 @@ final class FacadeModel implements BakedModel, FabricBakedModel {
     }
     @Override public void emitBlockQuads(BlockRenderView world,BlockState state,BlockPos pos,Supplier<Random> random,RenderContext context) {
         FabricBakedModel fabric=(FabricBakedModel)delegate;
-        int role=fixedRole!=0?fixedRole:ShutterSubstrate.source(state)?ShutterSubstrate.role(world,pos):FacadeMaterials.role(pos);
+        if(!CityVisualClient.isAlt()) { fabric.emitBlockQuads(world,state,pos,random,context); return; }
+        int painted=resolved?-1:EditorRenderScope.style(world,pos);
+        int role=resolved?fixedRole:forceBase?0:(painted>=0?painted:(fixedRole!=0?fixedRole:ShutterSubstrate.source(state)?ShutterSubstrate.role(world,pos):FacadeMaterials.role(pos)));
         if(role==0) { fabric.emitBlockQuads(world,state,pos,random,context); return; }
-        context.pushTransform(quad->FacadeMaterials.transform(quad,role));
+        boolean manual=painted>=0||manualStyle;
+        context.pushTransform(quad->FacadeMaterials.transform(quad,role,manual));
         try { fabric.emitBlockQuads(world,state,pos,random,context); } finally { context.popTransform(); }
     }
     @Override public void emitItemQuads(ItemStack stack,Supplier<Random> random,RenderContext context) { ((FabricBakedModel)delegate).emitItemQuads(stack,random,context); }

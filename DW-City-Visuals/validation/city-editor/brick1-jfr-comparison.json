@@ -1,0 +1,554 @@
+{
+  "v8": {
+    "frame": {
+      "meanMs": 32.85197177242888,
+      "medianMs": 32.2051,
+      "p95Ms": 38.31344,
+      "p99Ms": 42.4629,
+      "over50ms": 0,
+      "maxMs": 46.1618
+    },
+    "renderSamples": [
+      {
+        "phase": "brick-house-visit1",
+        "thread": "main",
+        "event": "jdk.ExecutionSample",
+        "samples": "1030"
+      },
+      {
+        "phase": "brick-house-visit1",
+        "thread": "CullThread",
+        "event": "jdk.ExecutionSample",
+        "samples": "1021"
+      },
+      {
+        "phase": "brick-house-visit1",
+        "thread": "main",
+        "event": "jdk.NativeMethodSample",
+        "samples": "11"
+      }
+    ],
+    "renderTop": [
+      {
+        "phase": "brick-house-visit1",
+        "thread": "main",
+        "event": "jdk.ExecutionSample",
+        "method": "java.util.HashMap.get",
+        "samples": "87"
+      },
+      {
+        "phase": "brick-house-visit1",
+        "thread": "main",
+        "event": "jdk.ExecutionSample",
+        "method": "java.util.HashMap.getNode",
+        "samples": "83"
+      },
+      {
+        "phase": "brick-house-visit1",
+        "thread": "main",
+        "event": "jdk.ExecutionSample",
+        "method": "me.jellysquid.mods.sodium.client.render.SodiumWorldRenderer.renderBlockEntity",
+        "samples": "69"
+      },
+      {
+        "phase": "brick-house-visit1",
+        "thread": "main",
+        "event": "jdk.ExecutionSample",
+        "method": "com.google.common.collect.RegularImmutableSet.contains",
+        "samples": "59"
+      },
+      {
+        "phase": "brick-house-visit1",
+        "thread": "main",
+        "event": "jdk.ExecutionSample",
+        "method": "com.google.common.collect.RegularImmutableMap.get",
+        "samples": "52"
+      },
+      {
+        "phase": "brick-house-visit1",
+        "thread": "main",
+        "event": "jdk.ExecutionSample",
+        "method": "dev.dreamwalker.bloodbornedw.composite.CompositeWorldMesh.redirect$bad000$bloodborne_dw$dw$glassLayers",
+        "samples": "45"
+      },
+      {
+        "phase": "brick-house-visit1",
+        "thread": "main",
+        "event": "jdk.ExecutionSample",
+        "method": "java.util.WeakHashMap.get",
+        "samples": "41"
+      },
+      {
+        "phase": "brick-house-visit1",
+        "thread": "main",
+        "event": "jdk.ExecutionSample",
+        "method": "java.util.concurrent.ConcurrentHashMap.get",
+        "samples": "29"
+      },
+      {
+        "phase": "brick-house-visit1",
+        "thread": "main",
+        "event": "jdk.ExecutionSample",
+        "method": "java.util.HashMap$TreeNode.getTreeNode",
+        "samples": "26"
+      },
+      {
+        "phase": "brick-house-visit1",
+        "thread": "main",
+        "event": "jdk.ExecutionSample",
+        "method": "me.jellysquid.mods.sodium.client.util.sorting.MergeSort.mergeSort",
+        "samples": "23"
+      },
+      {
+        "phase": "brick-house-visit1",
+        "thread": "main",
+        "event": "jdk.ExecutionSample",
+        "method": "net.minecraft.class_2841.method_12331",
+        "samples": "20"
+      },
+      {
+        "phase": "brick-house-visit1",
+        "thread": "main",
+        "event": "jdk.ExecutionSample",
+        "method": "net.minecraft.class_287.method_1335",
+        "samples": "19"
+      },
+      {
+        "phase": "brick-house-visit1",
+        "thread": "main",
+        "event": "jdk.ExecutionSample",
+        "method": "dev.dreamwalker.bloodbornedw.composite.CompositeClient$2.method_3569",
+        "samples": "18"
+      },
+      {
+        "phase": "brick-house-visit1",
+        "thread": "main",
+        "event": "jdk.ExecutionSample",
+        "method": "java.util.concurrent.CompletableFuture.reportJoin",
+        "samples": "18"
+      },
+      {
+        "phase": "brick-house-visit1",
+        "thread": "main",
+        "event": "jdk.ExecutionSample",
+        "method": "dev.dreamwalker.bloodbornedw.composite.CompositeGpuBatch.cameraTransform",
+        "samples": "17"
+      }
+    ],
+    "cullTop": [
+      {
+        "phase": "brick-house-visit1",
+        "thread": "CullThread",
+        "event": "jdk.ExecutionSample",
+        "method": "dev.tr7zw.entityculling.Provider.isOpaqueFullCube",
+        "samples": "416"
+      },
+      {
+        "phase": "brick-house-visit1",
+        "thread": "CullThread",
+        "event": "jdk.ExecutionSample",
+        "method": "com.logisticscraft.occlusionculling.OcclusionCullingInstance.cacheResult",
+        "samples": "169"
+      },
+      {
+        "phase": "brick-house-visit1",
+        "thread": "CullThread",
+        "event": "jdk.ExecutionSample",
+        "method": "java.util.BitSet.set",
+        "samples": "46"
+      },
+      {
+        "phase": "brick-house-visit1",
+        "thread": "CullThread",
+        "event": "jdk.ExecutionSample",
+        "method": "dev.tr7zw.entityculling.CullTask.cullBlockEntities",
+        "samples": "44"
+      },
+      {
+        "phase": "brick-house-visit1",
+        "thread": "CullThread",
+        "event": "jdk.ExecutionSample",
+        "method": "com.logisticscraft.occlusionculling.OcclusionCullingInstance.isAABBVisible",
+        "samples": "38"
+      },
+      {
+        "phase": "brick-house-visit1",
+        "thread": "CullThread",
+        "event": "jdk.ExecutionSample",
+        "method": "dev.dreamwalker.bloodbornedw.composite.CompositeWorldMesh$PartView.worldPosition",
+        "samples": "33"
+      },
+      {
+        "phase": "brick-house-visit1",
+        "thread": "CullThread",
+        "event": "jdk.ExecutionSample",
+        "method": "dev.dreamwalker.bloodbornedw.composite.NativeGridBridge.base",
+        "samples": "30"
+      },
+      {
+        "phase": "brick-house-visit1",
+        "thread": "CullThread",
+        "event": "jdk.ExecutionSample",
+        "method": "java.util.Arrays.fill",
+        "samples": "29"
+      },
+      {
+        "phase": "brick-house-visit1",
+        "thread": "CullThread",
+        "event": "jdk.ExecutionSample",
+        "method": "it.unimi.dsi.fastutil.ints.Int2ReferenceOpenHashMap.get",
+        "samples": "22"
+      },
+      {
+        "phase": "brick-house-visit1",
+        "thread": "CullThread",
+        "event": "jdk.ExecutionSample",
+        "method": "java.util.Collections$UnmodifiableMap.getOrDefault",
+        "samples": "21"
+      }
+    ],
+    "editorInclusive": [],
+    "facadeInclusive": [
+      {
+        "phase": "brick-house-visit1",
+        "thread": "Chunk Render Task Executor #2",
+        "event": "jdk.ExecutionSample",
+        "method": "dev.dreamwalker.bloodbornedw.visual.FacadeModel.emitBlockQuads",
+        "samples": "1"
+      },
+      {
+        "phase": "brick-house-visit1",
+        "thread": "Chunk Render Task Executor #7",
+        "event": "jdk.ExecutionSample",
+        "method": "dev.dreamwalker.bloodbornedw.composite.StaticArchitectureClient$MarkerModel.emitBlockQuads",
+        "samples": "1"
+      },
+      {
+        "phase": "brick-house-visit1",
+        "thread": "Chunk Render Task Executor #7",
+        "event": "jdk.ExecutionSample",
+        "method": "dev.dreamwalker.bloodbornedw.composite.StaticArchitectureClient.renderLayered",
+        "samples": "1"
+      },
+      {
+        "phase": "brick-house-visit1",
+        "thread": "Chunk Render Task Executor #7",
+        "event": "jdk.ExecutionSample",
+        "method": "dev.dreamwalker.bloodbornedw.composite.StaticArchitectureClient.renderSource",
+        "samples": "1"
+      },
+      {
+        "phase": "brick-house-visit1",
+        "thread": "Chunk Render Task Executor #7",
+        "event": "jdk.ExecutionSample",
+        "method": "dev.dreamwalker.bloodbornedw.composite.StaticArchitectureClient.renderTo",
+        "samples": "1"
+      }
+    ],
+    "emptyInclusive": [],
+    "hostMetrics": {
+      "jdk.CPULoad.jvmUser": {
+        "samples": 15,
+        "mean": 0.255398404,
+        "median": 0.24896331,
+        "min": 0.21399392,
+        "max": 0.3278324
+      },
+      "jdk.CPULoad.jvmSystem": {
+        "samples": 15,
+        "mean": 0.0038723381,
+        "median": 0.0038895076,
+        "min": 0.0,
+        "max": 0.009710672
+      },
+      "jdk.CPULoad.machineTotal": {
+        "samples": 15,
+        "mean": 0.328322138,
+        "median": 0.31954536,
+        "min": 0.28052524,
+        "max": 0.4034723
+      }
+    },
+    "pauseGroups": [
+      {
+        "event": "jdk.ThreadPark",
+        "thread": "Server thread",
+        "count": 305,
+        "totalMs": 13014.072445,
+        "maxMs": 45.534613
+      },
+      {
+        "event": "jdk.GCPhasePause",
+        "thread": "<none>",
+        "count": 1,
+        "totalMs": 5.425968,
+        "maxMs": 5.425968
+      },
+      {
+        "event": "jdk.GarbageCollection",
+        "thread": "<global>",
+        "count": 1,
+        "totalMs": 5.425968,
+        "maxMs": 5.425968
+      }
+    ]
+  },
+  "editor12": {
+    "frame": {
+      "meanMs": 34.56754480369515,
+      "medianMs": 33.6949,
+      "p95Ms": 40.68326,
+      "p99Ms": 45.54633600000001,
+      "over50ms": 1,
+      "maxMs": 50.6627
+    },
+    "renderSamples": [
+      {
+        "phase": "brick-house-visit1",
+        "thread": "CullThread",
+        "event": "jdk.ExecutionSample",
+        "samples": "1055"
+      },
+      {
+        "phase": "brick-house-visit1",
+        "thread": "main",
+        "event": "jdk.ExecutionSample",
+        "samples": "1017"
+      },
+      {
+        "phase": "brick-house-visit1",
+        "thread": "main",
+        "event": "jdk.NativeMethodSample",
+        "samples": "7"
+      }
+    ],
+    "renderTop": [
+      {
+        "phase": "brick-house-visit1",
+        "thread": "main",
+        "event": "jdk.ExecutionSample",
+        "method": "java.util.HashMap.getNode",
+        "samples": "85"
+      },
+      {
+        "phase": "brick-house-visit1",
+        "thread": "main",
+        "event": "jdk.ExecutionSample",
+        "method": "me.jellysquid.mods.sodium.client.render.SodiumWorldRenderer.renderBlockEntity",
+        "samples": "77"
+      },
+      {
+        "phase": "brick-house-visit1",
+        "thread": "main",
+        "event": "jdk.ExecutionSample",
+        "method": "com.google.common.collect.RegularImmutableMap.get",
+        "samples": "67"
+      },
+      {
+        "phase": "brick-house-visit1",
+        "thread": "main",
+        "event": "jdk.ExecutionSample",
+        "method": "java.util.HashMap.get",
+        "samples": "50"
+      },
+      {
+        "phase": "brick-house-visit1",
+        "thread": "main",
+        "event": "jdk.ExecutionSample",
+        "method": "com.google.common.collect.RegularImmutableSet.contains",
+        "samples": "43"
+      },
+      {
+        "phase": "brick-house-visit1",
+        "thread": "main",
+        "event": "jdk.ExecutionSample",
+        "method": "dev.dreamwalker.bloodbornedw.composite.CompositeWorldMesh.render$mixinextras$wrapped$34",
+        "samples": "40"
+      },
+      {
+        "phase": "brick-house-visit1",
+        "thread": "main",
+        "event": "jdk.ExecutionSample",
+        "method": "net.minecraft.class_2841.method_12331",
+        "samples": "38"
+      },
+      {
+        "phase": "brick-house-visit1",
+        "thread": "main",
+        "event": "jdk.ExecutionSample",
+        "method": "java.util.WeakHashMap.get",
+        "samples": "33"
+      },
+      {
+        "phase": "brick-house-visit1",
+        "thread": "main",
+        "event": "jdk.ExecutionSample",
+        "method": "dev.dreamwalker.bloodbornedw.composite.CompositeWorldMesh$CacheSignature.current",
+        "samples": "30"
+      },
+      {
+        "phase": "brick-house-visit1",
+        "thread": "main",
+        "event": "jdk.ExecutionSample",
+        "method": "net.minecraft.class_761.method_23793",
+        "samples": "25"
+      },
+      {
+        "phase": "brick-house-visit1",
+        "thread": "main",
+        "event": "jdk.ExecutionSample",
+        "method": "net.minecraft.class_3569.method_15538",
+        "samples": "23"
+      },
+      {
+        "phase": "brick-house-visit1",
+        "thread": "main",
+        "event": "jdk.ExecutionSample",
+        "method": "java.util.concurrent.ConcurrentHashMap.get",
+        "samples": "19"
+      },
+      {
+        "phase": "brick-house-visit1",
+        "thread": "main",
+        "event": "jdk.ExecutionSample",
+        "method": "net.minecraft.class_287.method_1335",
+        "samples": "17"
+      },
+      {
+        "phase": "brick-house-visit1",
+        "thread": "main",
+        "event": "jdk.ExecutionSample",
+        "method": "dev.dreamwalker.bloodbornedw.composite.CompositeGpuBatch.cameraTransform",
+        "samples": "16"
+      },
+      {
+        "phase": "brick-house-visit1",
+        "thread": "main",
+        "event": "jdk.ExecutionSample",
+        "method": "dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.offset",
+        "samples": "14"
+      }
+    ],
+    "cullTop": [
+      {
+        "phase": "brick-house-visit1",
+        "thread": "CullThread",
+        "event": "jdk.ExecutionSample",
+        "method": "net.minecraft.class_2841.method_12331",
+        "samples": "492"
+      },
+      {
+        "phase": "brick-house-visit1",
+        "thread": "CullThread",
+        "event": "jdk.ExecutionSample",
+        "method": "com.logisticscraft.occlusionculling.OcclusionCullingInstance.cacheResult",
+        "samples": "176"
+      },
+      {
+        "phase": "brick-house-visit1",
+        "thread": "CullThread",
+        "event": "jdk.ExecutionSample",
+        "method": "dev.tr7zw.entityculling.CullTask.cullBlockEntities",
+        "samples": "41"
+      },
+      {
+        "phase": "brick-house-visit1",
+        "thread": "CullThread",
+        "event": "jdk.ExecutionSample",
+        "method": "java.util.BitSet.set",
+        "samples": "41"
+      },
+      {
+        "phase": "brick-house-visit1",
+        "thread": "CullThread",
+        "event": "jdk.ExecutionSample",
+        "method": "com.logisticscraft.occlusionculling.OcclusionCullingInstance.isAABBVisible",
+        "samples": "40"
+      },
+      {
+        "phase": "brick-house-visit1",
+        "thread": "CullThread",
+        "event": "jdk.ExecutionSample",
+        "method": "dev.dreamwalker.bloodbornedw.composite.CompositeShapeSnapshots.nativeGridBase",
+        "samples": "33"
+      },
+      {
+        "phase": "brick-house-visit1",
+        "thread": "CullThread",
+        "event": "jdk.ExecutionSample",
+        "method": "java.util.Arrays.fill",
+        "samples": "31"
+      },
+      {
+        "phase": "brick-house-visit1",
+        "thread": "CullThread",
+        "event": "jdk.ExecutionSample",
+        "method": "net.minecraft.class_4970$class_4971.handler$znk000$bloodborne_dw$dw$nativeGridOpaque",
+        "samples": "27"
+      },
+      {
+        "phase": "brick-house-visit1",
+        "thread": "CullThread",
+        "event": "jdk.ExecutionSample",
+        "method": "java.util.Collections$UnmodifiableMap.getOrDefault",
+        "samples": "24"
+      },
+      {
+        "phase": "brick-house-visit1",
+        "thread": "CullThread",
+        "event": "jdk.ExecutionSample",
+        "method": "com.logisticscraft.occlusionculling.OcclusionCullingInstance.isVoxelVisible",
+        "samples": "23"
+      }
+    ],
+    "editorInclusive": [],
+    "facadeInclusive": [],
+    "emptyInclusive": [],
+    "hostMetrics": {
+      "jdk.CPULoad.jvmUser": {
+        "samples": 15,
+        "mean": 0.2537152386666667,
+        "median": 0.25164953,
+        "min": 0.23130721,
+        "max": 0.27798972
+      },
+      "jdk.CPULoad.jvmSystem": {
+        "samples": 15,
+        "mean": 0.0038607436266666667,
+        "median": 0.0038902676,
+        "min": 0.0,
+        "max": 0.00970458
+      },
+      "jdk.CPULoad.machineTotal": {
+        "samples": 15,
+        "mean": 0.3263541833333333,
+        "median": 0.3234946,
+        "min": 0.28515378,
+        "max": 0.37634975
+      }
+    },
+    "pauseGroups": [
+      {
+        "event": "jdk.ThreadPark",
+        "thread": "Server thread",
+        "count": 320,
+        "totalMs": 13026.80057,
+        "maxMs": 46.340372
+      },
+      {
+        "event": "jdk.GCPhasePause",
+        "thread": "<none>",
+        "count": 1,
+        "totalMs": 6.60422,
+        "maxMs": 6.60422
+      },
+      {
+        "event": "jdk.GarbageCollection",
+        "thread": "<global>",
+        "count": 1,
+        "totalMs": 6.60422,
+        "maxMs": 6.60422
+      }
+    ]
+  }
+}

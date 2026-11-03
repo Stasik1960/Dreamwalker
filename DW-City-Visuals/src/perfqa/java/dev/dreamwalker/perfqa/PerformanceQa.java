@@ -60,10 +60,10 @@ public final class PerformanceQa implements ClientModInitializer {
             require(plan.get("schema").getAsInt()==1,"Performance plan schema must be 1");
             rounds=plan.has("rounds")?plan.get("rounds").getAsInt():2;
             require(rounds==2,"This comparison requires two complete visits");
-            readyTimeout=number("readyTimeoutSeconds",90,10,120);
+            readyTimeout=number("readyTimeoutSeconds",90,10,240);
             steadySeconds=number("steadySeconds",15,10,30);
             settleSeconds=number("settleSeconds",2,2,5);
-            totalTimeout=number("totalTimeoutSeconds",840,60,900);
+            totalTimeout=number("totalTimeoutSeconds",840,60,3600);
             JsonArray sites=plan.getAsJsonArray("cameras");require(sites!=null&&sites.size()==6,"Exactly six locked camera sites required");
             Set<String> names=new HashSet<>();
             for(JsonElement element:sites){
@@ -129,7 +129,7 @@ public final class PerformanceQa implements ClientModInitializer {
                 }return;
             }
             if(c.world==null||c.player==null||c.getServer()==null){
-                require((now-bootAt)/1e9<240,"No integrated world within startup deadline");return;
+                require((now-bootAt)/1e9<Double.parseDouble(System.getProperty("dw.perf.startupTimeoutSeconds","240")),"No integrated world within startup deadline");return;
             }
             if(stage==Stage.BOOT||stage==Stage.WAITING_FOCUS){
                 if(!c.isWindowFocused()||c.currentScreen!=null||c.getOverlay()!=null||c.isPaused()){

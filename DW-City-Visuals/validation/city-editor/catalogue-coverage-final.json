@@ -1,0 +1,45 @@
+{
+  "status": "PASS",
+  "scope": "Combined exact-key placement/break/cleanup and empty appearance-mismatch records; not one fresh whole-catalogue run",
+  "canonicalEntries": 4699,
+  "verifiedBlockForms": 4606,
+  "nonBlockItemsIncludingBrush": 93,
+  "reports": [
+    {
+      "run": "functional-alt-9",
+      "reportSha256": "c7aa98181267912a70fdfcc5f2b85c409d1d2679aacdb7cc0e41949003f428dd",
+      "verifiedBlockForms": 4102,
+      "nonBlockRecords": 92,
+      "statusCounts": {
+        "PASS": 4102,
+        "SKIP": 92,
+        "FAIL": 495,
+        "UNSUPPORTED": 1
+      }
+    },
+    {
+      "run": "functional-alt-11",
+      "reportSha256": "8cd76150295713f93a780aebf792d6e45c067047e4633a34331e609fa4030bbd",
+      "verifiedBlockForms": 499,
+      "nonBlockRecords": 93,
+      "statusCounts": {
+        "SKIP": 92,
+        "PASS": 500,
+        "FAIL": 5
+      }
+    },
+    {
+      "run": "persistence-original-12",
+      "reportSha256": "69a2f3a762c93a297850b3bd7a78a50892ea9f5878195c61fea284cf0987ab44",
+      "verifiedBlockForms": 5,
+      "nonBlockRecords": 0,
+      "statusCounts": {
+        "PASS": 5
+      }
+    }
+  ],
+  "finalCanonicalAuditPass": true,
+  "finalProductionCandidate": 11,
+  "ordinaryStatueInstallationKeysRetested": 4,
+  "uiAndPerformanceAcceptance": "reported separately"
+}

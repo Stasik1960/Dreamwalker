@@ -1,0 +1,299 @@
+{
+  "status": "INVESTIGATE",
+  "budget": "15% for each frame, memory and stutter-rate row; zero baseline requires zero candidate; noise is informational only",
+  "strictBudgetPass": true,
+  "noStutterWorsening": false,
+  "baseline": {
+    "meanMs": 35.12056553816284,
+    "meanFps": 28.4733455932928,
+    "p95Ms": 58.8788,
+    "p99Ms": 80.47502000000019,
+    "p999Ms": 133.5591240000006,
+    "maxMs": 191.7953,
+    "worst": {
+      "elapsedSeconds": 92.3259723,
+      "tick": 1846,
+      "lap": 1,
+      "segment": 8,
+      "position": {
+        "x": 344.7116676534686,
+        "y": 134.47116676534685,
+        "z": -844.2306658772251
+      }
+    },
+    "seconds": 289.4285806,
+    "over50msCount": 1003,
+    "over50msPerMinute": 207.92694306569115,
+    "over100msCount": 36,
+    "over100msPerMinute": 7.4629810073428535,
+    "over250msCount": 0,
+    "over250msPerMinute": 0.0,
+    "over1000msCount": 0,
+    "over1000msPerMinute": 0.0,
+    "laps": [
+      {
+        "lap": 1,
+        "samples": 4059,
+        "seconds": 144.6591353,
+        "p99Ms": 81.77998200000002,
+        "maxMs": 191.7953,
+        "over50msPerMinute": 234.3439972159159,
+        "over100msPerMinute": 7.465826459976081,
+        "over250msPerMinute": 0.0,
+        "over1000msPerMinute": 0.0
+      },
+      {
+        "lap": 2,
+        "samples": 4180,
+        "seconds": 144.6578382,
+        "p99Ms": 75.47634800000002,
+        "maxMs": 190.7127,
+        "over50msPerMinute": 180.84052911002235,
+        "over100msPerMinute": 7.465893403624776,
+        "over250msPerMinute": 0.0,
+        "over1000msPerMinute": 0.0
+      }
+    ],
+    "heapPeakBytes": 5725459760,
+    "heapMedianBytes": 4810286884.0,
+    "gcCountDelta": 149,
+    "gcTimeMsDelta": 3977,
+    "processMemory": {
+      "samples": 290,
+      "peakWorkingSetBytes": 8873414656,
+      "peakPrivateBytes": 9862057984,
+      "medianWorkingSetBytes": 8610918400.0,
+      "medianPrivateBytes": 9592258560.0
+    },
+    "serverPositionCoverage": {
+      "samples": 287,
+      "firstTick": 0,
+      "lastTick": 5760
+    }
+  },
+  "candidate": {
+    "meanMs": 35.7088663869694,
+    "meanFps": 28.004249397424505,
+    "p95Ms": 60.98836499999998,
+    "p99Ms": 83.48342700000008,
+    "p999Ms": 143.96309759999994,
+    "maxMs": 202.2616,
+    "worst": {
+      "elapsedSeconds": 50.9472228,
+      "tick": 1015,
+      "lap": 1,
+      "segment": 2,
+      "position": {
+        "x": -23.60246901440528,
+        "y": 130.83143871144503,
+        "z": -945.6992541631456
+      }
+    },
+    "seconds": 289.3846532,
+    "over50msCount": 1124,
+    "over50msPerMinute": 233.04622154026515,
+    "over100msCount": 40,
+    "over100msPerMinute": 8.293459841290575,
+    "over250msCount": 0,
+    "over250msPerMinute": 0.0,
+    "over1000msCount": 0,
+    "over1000msPerMinute": 0.0,
+    "laps": [
+      {
+        "lap": 1,
+        "samples": 3857,
+        "seconds": 144.6261134,
+        "p99Ms": 86.90854000000002,
+        "maxMs": 202.2616,
+        "over50msPerMinute": 272.5648852290875,
+        "over100msPerMinute": 10.371570975231641,
+        "over250msPerMinute": 0.0,
+        "over1000msPerMinute": 0.0
+      },
+      {
+        "lap": 2,
+        "samples": 4245,
+        "seconds": 144.6747293,
+        "p99Ms": 79.75376000000063,
+        "maxMs": 176.8685,
+        "over50msPerMinute": 193.6758419080726,
+        "over100msPerMinute": 6.220851453150084,
+        "over250msPerMinute": 0.0,
+        "over1000msPerMinute": 0.0
+      }
+    ],
+    "heapPeakBytes": 5823529984,
+    "heapMedianBytes": 4736581112,
+    "gcCountDelta": 144,
+    "gcTimeMsDelta": 3990,
+    "processMemory": {
+      "samples": 290,
+      "peakWorkingSetBytes": 9098756096,
+      "peakPrivateBytes": 9804849152,
+      "medianWorkingSetBytes": 8595609600.0,
+      "medianPrivateBytes": 9526843392.0
+    },
+    "serverPositionCoverage": {
+      "samples": 286,
+      "firstTick": 0,
+      "lastTick": 5760
+    }
+  },
+  "rows": [
+    {
+      "metric": "meanMs",
+      "baseline": 35.12056553816284,
+      "candidate": 35.7088663869694,
+      "ratio": 1.0167508933808964,
+      "baselineZero": false,
+      "within15Percent": true,
+      "budgetRatio": 1.15
+    },
+    {
+      "metric": "p95Ms",
+      "baseline": 58.8788,
+      "candidate": 60.98836499999998,
+      "ratio": 1.0358289401278555,
+      "baselineZero": false,
+      "within15Percent": true,
+      "budgetRatio": 1.15
+    },
+    {
+      "metric": "p99Ms",
+      "baseline": 80.47502000000019,
+      "candidate": 83.48342700000008,
+      "ratio": 1.0373831159035423,
+      "baselineZero": false,
+      "within15Percent": true,
+      "budgetRatio": 1.15
+    },
+    {
+      "metric": "p999Ms",
+      "baseline": 133.5591240000006,
+      "candidate": 143.96309759999994,
+      "ratio": 1.0778978873805678,
+      "baselineZero": false,
+      "within15Percent": true,
+      "budgetRatio": 1.15
+    },
+    {
+      "metric": "maxMs",
+      "baseline": 191.7953,
+      "candidate": 202.2616,
+      "ratio": 1.0545701589142173,
+      "baselineZero": false,
+      "within15Percent": true,
+      "budgetRatio": 1.15
+    },
+    {
+      "metric": "heapPeakBytes",
+      "baseline": 5725459760,
+      "candidate": 5823529984,
+      "ratio": 1.017128794561644,
+      "baselineZero": false,
+      "within15Percent": true,
+      "budgetRatio": 1.15
+    },
+    {
+      "metric": "heapMedianBytes",
+      "baseline": 4810286884.0,
+      "candidate": 4736581112,
+      "ratio": 0.9846774685632242,
+      "baselineZero": false,
+      "within15Percent": true,
+      "budgetRatio": 1.15
+    },
+    {
+      "metric": "peakWorkingSetBytes",
+      "baseline": 8873414656,
+      "candidate": 9098756096,
+      "ratio": 1.0253951211270882,
+      "baselineZero": false,
+      "within15Percent": true,
+      "budgetRatio": 1.15
+    },
+    {
+      "metric": "medianWorkingSetBytes",
+      "baseline": 8610918400.0,
+      "candidate": 8595609600.0,
+      "ratio": 0.998222164084147,
+      "baselineZero": false,
+      "within15Percent": true,
+      "budgetRatio": 1.15
+    },
+    {
+      "metric": "peakPrivateBytes",
+      "baseline": 9862057984,
+      "candidate": 9804849152,
+      "ratio": 0.9941990979881872,
+      "baselineZero": false,
+      "within15Percent": true,
+      "budgetRatio": 1.15
+    },
+    {
+      "metric": "medianPrivateBytes",
+      "baseline": 9592258560.0,
+      "candidate": 9526843392.0,
+      "ratio": 0.9931804206912455,
+      "baselineZero": false,
+      "within15Percent": true,
+      "budgetRatio": 1.15
+    },
+    {
+      "metric": "over50msPerMinute",
+      "baseline": 207.92694306569115,
+      "candidate": 233.04622154026515,
+      "ratio": 1.1208081939945511,
+      "baselineZero": false,
+      "within15Percent": true,
+      "budgetRatio": 1.15,
+      "baselineCount": 1003,
+      "candidateCount": 1124,
+      "noCountWorsening": false,
+      "informationalNoiseAllowanceCounts": 90.40129532336132
+    },
+    {
+      "metric": "over100msPerMinute",
+      "baseline": 7.4629810073428535,
+      "candidate": 8.293459841290575,
+      "ratio": 1.1112797732073296,
+      "baselineZero": false,
+      "within15Percent": true,
+      "budgetRatio": 1.15,
+      "baselineCount": 36,
+      "candidateCount": 40,
+      "noCountWorsening": false,
+      "informationalNoiseAllowanceCounts": 17.088249022850775
+    },
+    {
+      "metric": "over250msPerMinute",
+      "baseline": 0.0,
+      "candidate": 0.0,
+      "ratio": null,
+      "baselineZero": true,
+      "within15Percent": true,
+      "budgetRatio": 1.15,
+      "baselineCount": 0,
+      "candidateCount": 0,
+      "noCountWorsening": true,
+      "informationalNoiseAllowanceCounts": 0.0
+    },
+    {
+      "metric": "over1000msPerMinute",
+      "baseline": 0.0,
+      "candidate": 0.0,
+      "ratio": null,
+      "baselineZero": true,
+      "within15Percent": true,
+      "budgetRatio": 1.15,
+      "baselineCount": 0,
+      "candidateCount": 0,
+      "noCountWorsening": true,
+      "informationalNoiseAllowanceCounts": 0.0
+    }
+  ],
+  "baselineProductionSha256": "3b5f9466f8bd414cbb4895c9ac671271c4a99a6b9dccf64c4d4e3f47410e258e",
+  "candidateProductionSha256": "7805d91c09758af14453ac6e201d7475a14ca7aec44c6e10b0951003d55234b1",
+  "planSha256": "a479d1c7f08049e92503a3c02cecbeb3177578ebaed66667244540dc74fcd7c4",
+  "qaSha256": "64a82bbf886e6be255d065340efeadd0e095e51f1e647e64a8763feb72fe7a58"
+}

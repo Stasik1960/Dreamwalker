@@ -1,0 +1,54 @@
+{
+  "scope": "Environment review. Recorded hardware/pool evidence from paired diagnostic flights and isolated sameJDK default probe; no production edits and no causal acceptance conclusion.",
+  "hardwareBothJfr": {
+    "cpu": "Intel Core i5-1038NG7",
+    "sockets": 1,
+    "cores": 4,
+    "hwThreads": 8
+  },
+  "previousJvmBothJfr": {
+    "ActiveProcessorCount": 16,
+    "parallelGCThreads": 13,
+    "concurrentGCThreads": 3,
+    "usesDynamicGCThreads": true
+  },
+  "observedSodiumBothRuns": {
+    "consoleStartedWorkerThreads": 10,
+    "jfrNames": "Chunk Render Task Executor #0 through #9"
+  },
+  "observedCompilerNamesBothRuns": "C1 CompilerThread0..3 and C2 CompilerThread0..7; creation records do not prove every thread runnable simultaneously.",
+  "forkJoinEvidence": "Many Worker-Main thread names occur in both recordings. Their name suffixes and lifetime-created totals are not evidence of simultaneous Minecraft pool parallelism. Isolated default-common-pool parallelism was measured separately below.",
+  "sameJdkDefaultProbe": {
+    "ActiveProcessorCount16": {
+      "availableProcessors": 16,
+      "commonPoolParallelism": 15,
+      "ParallelGCThreads": 13,
+      "ConcGCThreads": 3,
+      "CICompilerCount": 12
+    },
+    "ActiveProcessorCount8": {
+      "availableProcessors": 8,
+      "commonPoolParallelism": 7,
+      "ParallelGCThreads": 8,
+      "ConcGCThreads": 2,
+      "CICompilerCount": 4
+    }
+  },
+  "contentionEvidence": "Earlier matchingflight JFR showed~99.9% totalCPU,10 Sodium workers active inCPU samples, main/server/native mesh/JIT/GC work. Oversized JVM-derived pools plausibly increase scheduler competition and sampling delay; this does not prove the cause of each longframe or memorysampler gap.",
+  "fairComparisonRequirements": [
+    "Apply actual8 toBOTH v8 andcandidate16; keep exactproductionJARs,world,route,options,modpack,QA,stuttergates andmemorycoveragegates unchanged.",
+    "Record actual newSodium worker log and JVMargs; do not assume Sodium count fromJDK alone.",
+    "Compare fresh8-versus8 pair only. Keep16-versus16 results as historical evidence, never mix oneoldrun withonefresh run.",
+    "Use same revised sampler forboth, recordPID/timing/exceptions/exitstatus; sampler correction mustnot manufacture missing observations or relaxcoveragegates.",
+    "No performancePASS before correctedpair passes existinggates; CPUoverride mismatch alone doesnot establish allpreviousregression was environmental."
+  ],
+  "recommendation": "Proceed with matched actual8 environment. No production renderer rewrite is supported by this evidence. Ifstuttersstillregress, retain failures and investigate observedframe-specific work under correctedconfiguration.",
+  "artifacts": [
+    "flight-v8-environment.txt",
+    "flight-c16-environment.txt",
+    "jvm-pools-16.txt",
+    "jvm-pools-8.txt",
+    "JfrEnvironment.java",
+    "JvmPoolDefaults.java"
+  ]
+}

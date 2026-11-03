@@ -1,0 +1,19 @@
+{
+  "status": "APPROVED_NOT_RUN",
+  "createdUtc": "2026-11-03T10:36:30.823691+00:00",
+  "scope": "Final unprofiled continuous flight, painted50k world, ALT",
+  "plan": "D:\\DreamWalker\\.local\\editor-validation\\flight-plan-v2.json",
+  "planSha256": "a479d1c7f08049e92503a3c02cecbeb3177578ebaed66667244540dc74fcd7c4",
+  "qaSha256": "64a82bbf886e6be255d065340efeadd0e095e51f1e647e64a8763feb72fe7a58",
+  "comparatorFile": "flight_compare-frozen-v2.py",
+  "comparatorSha256": "cf49ab35ea3e4e6b7bfc4546478c95504e1a9df19f994af1334739db098d65a0",
+  "laps": 2,
+  "ticksPerLap": 2893,
+  "blocksPerLap": 1668.916,
+  "speedBlocksPerSecond": 11.538,
+  "sourceWorld": "D:/DreamWalker/.local/editor-validation/stress-fixtures/painted50k-v1",
+  "sourceWorldFilesSha256": "aa6d9bec7656e46481079e91c473b76be3fbebb28d3d5271519a9545684193f9",
+  "reasonForRouteChange": "Original route collided with saved native_physics_0 part6 near117,141,-708 in both versions; offline audit found447 intersections. Preserve failed diagnostic v1runs; no gate weakened.",
+  "offlineClearance": "0 saved nonair intersections and0 missingchunks at0.5block spacing, expanded1block margin. Runtimeoverhang/entitycollision check stillmandatory.",
+  "acceptance": "Original frozen comparator, <=15percent allframe/memorymetrics and noincreasedstuttercount; noJFR/observer addon."
+}

@@ -1,0 +1,17 @@
+{
+  "onlyServerEditorClassFamilyChanged": true,
+  "changedClasses": [
+    "dev/dreamwalker/bloodbornedw/editor/CityEditorServer.class"
+  ],
+  "inheritedOriginalPerformance": "candidate9 has identical render/snapshot/palette/data/catalogue/clientcontrol binaries; candidate10 changes only fill selection in server class. Dedicated mask regression pending.",
+  "candidate10Sha256": "e0effc2ca60d9e5826ead41e444d4935590b8dee47480aa7dca6b78b636cb168",
+  "changedSymbolicMethods": [
+    "private static java.util.List<net.minecraft.class_2338> collect(net.minecraft.class_3218, net.minecraft.class_2338, net.minecraft.class_2350, dev.dreamwalker.bloodbornedw.editor.CityEditorServer$Session, java.lang.String);"
+  ],
+  "allOtherServerMethodsIdenticalAfterConstantPoolNormalization": true,
+  "fillSelectionRegression": {
+    "status": "PASS",
+    "report": "runs/server-fill-qa4/serverqa-result.json",
+    "normalSaveAndExitCode": 0
+  }
+}

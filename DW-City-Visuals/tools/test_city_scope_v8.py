@@ -143,8 +143,9 @@ def compiled_region_predicate(data):
     return predicate
 
 
-def method_body(text,name):
-    match=re.search(r'\b'+re.escape(name)+r'\s*\([^)]*\)\s*\{',text)
+def method_body(text,name,parameters=None):
+    matches=re.finditer(r'\b'+re.escape(name)+r'\s*\(([^)]*)\)\s*\{',text)
+    match=next((m for m in matches if parameters is None or parameters in m.group(1)),None)
     if not match:raise ValueError('Missing method '+name)
     start=match.end();depth=1;index=start
     while depth and index<len(text):
@@ -228,9 +229,11 @@ def main():
     materials=strip_comments((JAVA/'FacadeMaterials.java').read_text(encoding='utf-8'))
     role_body=method_body(materials,'role')
     require('source-alt-dimension-bounded-lookup','!CityVisualClient.isAlt()' in role_body and 'c.role(pos)' in role_body and '.equals(c.dimension)' in role_body,'All material routes ultimately use the sparse inclusive region lookup')
-    quad=method_body(materials,'quad');transform=method_body(materials,'transform')
-    require('vanilla-pavement-guard-precedes-recolour','if(role==0)return source;' in quad and 'source.getFace()==Direction.UP||source.getFace()==Direction.DOWN' in quad and quad.index('source.getFace()==Direction.UP')<quad.index('int[] data='),'Unchanged role-zero quads and horizontal house floor faces retain the original resource')
-    require('fabric-pavement-guard-precedes-recolour','if(role==0)return true;' in transform and 'horizontal(quad)' in transform and transform.index('horizontal(quad)')<transform.index('Identifier targetId='),'Fabric nominal UP/DOWN and geometric flat faces are protected before material substitution')
+    quad=method_body(materials,'quad','boolean manual');transform=method_body(materials,'transform','boolean manual')
+    require('automatic-quad-default-keeps-pavement-guard','return quad(source,role,false);' in method_body(materials,'quad'),'Existing automatic callers select the protected path')
+    require('automatic-fabric-default-keeps-pavement-guard','return transform(quad,role,false);' in method_body(materials,'transform'),'Existing automatic callers select the protected path')
+    require('vanilla-pavement-guard-precedes-recolour','if(role==0)return source;' in quad and 'if(!manual&&role==4&&(source.getFace()==Direction.UP||source.getFace()==Direction.DOWN))return source;' in quad and quad.index('source.getFace()==Direction.UP')<quad.index('int[] data='),'Automatic horizontal house floors retain their resource; explicit brush colors may cover eligible masonry')
+    require('fabric-pavement-guard-precedes-recolour','if(role==0)return true;' in transform and 'if(!manual&&role==4&&' in transform and 'horizontal(quad)' in transform and transform.index('horizontal(quad)')<transform.index('Identifier targetId='),'Automatic Fabric flat faces remain protected before substitution')
     client=strip_comments((JAVA/'CityFacadesClient.java').read_text(encoding='utf-8'))
     for method,position in [('staticModel','root'),('visibleModel','root'),('terrainModel','pos')]:
         body=method_body(client,method)

@@ -30,7 +30,7 @@ def main():
     ap.add_argument('--seconds',type=int,default=900)
     ap.add_argument('--interval',type=float,default=1)
     args=ap.parse_args()
-    if args.pid<=0 or not 1<=args.seconds<=1200 or not .25<=args.interval<=5:
+    if args.pid<=0 or not 1<=args.seconds<=4000 or not .25<=args.interval<=5:
         ap.error('Explicit positive PID and bounded seconds/interval required')
     args.output.parent.mkdir(parents=True,exist_ok=True)
     if args.output.exists():raise FileExistsError('Preserve existing process measurements')
@@ -44,10 +44,12 @@ def main():
     psapi.GetProcessMemoryInfo.argtypes=[wintypes.HANDLE,ctypes.c_void_p,wintypes.DWORD]
     handle=kernel.OpenProcess(0x0410,False,args.pid)
     if not handle:raise ctypes.WinError(ctypes.get_last_error())
-    started=time.monotonic();next_sample=started
+    started=time.monotonic();next_sample=started;previous_write_flush_ns=None
     try:
         with args.output.open('x',encoding='utf-8') as stream:
             while time.monotonic()-started<args.seconds:
+                schedule_late_ns=max(0,int((time.monotonic()-next_sample)*1e9))
+                query_started_ns=time.perf_counter_ns()
                 code=wintypes.DWORD()
                 if not kernel.GetExitCodeProcess(handle,ctypes.byref(code)) or code.value!=259:break
                 c=Counters();c.cb=ctypes.sizeof(c)
@@ -55,14 +57,20 @@ def main():
                     raise ctypes.WinError(ctypes.get_last_error())
                 m=MemoryStatus();m.length=ctypes.sizeof(m)
                 if not kernel.GlobalMemoryStatusEx(ctypes.byref(m)):raise ctypes.WinError(ctypes.get_last_error())
+                native_query_ns=time.perf_counter_ns()-query_started_ns
                 row={'utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),
                      'epochMillis':time.time_ns()/1e6,'samplerElapsedSeconds':time.monotonic()-started,
+                     'scheduleLateNs':schedule_late_ns,'nativeQueryNs':native_query_ns,
+                     'previousWriteFlushNs':previous_write_flush_ns,
                      'pid':args.pid,'workingSetBytes':c.WorkingSetSize,'privateBytes':c.PrivateUsage,
                      'processLifetimePeakWorkingSetBytes':c.PeakWorkingSetSize,
+                     'processLifetimePeakPagefileUsageBytes':c.PeakPagefileUsage,
                      'pageFaultCount':c.PageFaultCount,'systemAvailablePhysicalBytes':m.availablePhysical,
                      'systemAvailableCommitBytes':m.availablePageFile,
                      'source':'GetProcessMemoryInfo(PROCESS_MEMORY_COUNTERS_EX); Working Set and Private Bytes are different measures'}
+                write_started_ns=time.perf_counter_ns()
                 stream.write(json.dumps(row,separators=(',',':'))+'\n');stream.flush()
+                previous_write_flush_ns=time.perf_counter_ns()-write_started_ns
                 next_sample+=args.interval
                 time.sleep(max(0,next_sample-time.monotonic()))
     finally:kernel.CloseHandle(handle)

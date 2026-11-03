@@ -1,0 +1,14 @@
+{
+  "status": "PREPARED_NOT_RUN",
+  "qaSha256": "64a82bbf886e6be255d065340efeadd0e095e51f1e647e64a8763feb72fe7a58",
+  "planSha256": "c76168570eda836e18dc5dfcee43fd6738727a54d37b17482c7fb0e04587b3e0",
+  "comparatorSha256": "cf49ab35ea3e4e6b7bfc4546478c95504e1a9df19f994af1334739db098d65a0",
+  "comparatorFile": "flight_compare-frozen-v2.py",
+  "sourceWorldFilesSha256": "2774aa89657b0d5762e73e0c02b0047bab515f1839d7770744e8ebf95e2bb88c",
+  "laps": 2,
+  "ticksPerLap": 2400,
+  "targetSpeedBlocksPerSecond": 11.54,
+  "baselineRun": "flight-v8-alt-1",
+  "candidateRun": "flight-editor16-alt-1",
+  "acceptance": "Each frame/memory metric and stutter rate within 15%; no increased stutter count at 50/100/250/1000ms. Noise statistics informational only. Any flag requires investigation. Actual focus/collision/server movement/full raw timeline enforced. Initial FULL/native idle only; streaming frames included."
+}
