@@ -2,9 +2,7 @@
   "required": true,
   "package": "dev.dreamwalker.cornerqa.mixin",
   "compatibilityLevel": "JAVA_17",
-  "client": [
-    "CornerLightingReferenceMixin"
-  ],
+  "client": ["CornerLightingProbeMixin", "CornerCellClipperReferenceMixin", "CompositeCornerReferenceMixin"],
   "injectors": {
     "defaultRequire": 1
   }

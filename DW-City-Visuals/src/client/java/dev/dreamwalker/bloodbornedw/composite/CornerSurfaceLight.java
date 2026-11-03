@@ -1,5 +1,6 @@
 package dev.dreamwalker.bloodbornedw.composite;
 import dev.dreamwalker.bloodbornedw.composite.overlaymixin.StaticLightingViewAccess;
+import dev.dreamwalker.bloodbornedw.composite.overlaymixin.CompositeLightingViewAccess;
 import net.minecraft.client.render.LightmapTextureManager;
 import net.minecraft.client.render.model.BakedQuad;
 import net.minecraft.util.math.BlockPos;
@@ -18,6 +19,13 @@ public final class CornerSurfaceLight {
  public float[] brightness(){return levels;}
  public int[] lights(){return lights;}
  public boolean sample(BakedQuad quad,StaticLightingViewAccess view,int[] nativeLights){
+  return sampleInternal(quad,view,nativeLights,false);
+ }
+ /** Only for children produced by the strictly qualified cell clipper. */
+ public boolean sampleQualified(BakedQuad quad,StaticLightingViewAccess view,int[] nativeLights){
+  return sampleInternal(quad,view,nativeLights,true);
+ }
+ private boolean sampleInternal(BakedQuad quad,StaticLightingViewAccess view,int[] nativeLights,boolean qualified){
   mixedCornerMask=-1;
   if(nativeLights==null||nativeLights.length!=4)return false;
   int[] data=quad.getVertexData();
@@ -32,7 +40,7 @@ public final class CornerSurfaceLight {
   boolean localOblique=CornerQuadGeometry.shouldCorrect(n.x,n.y,n.z,edge1.x,edge1.y,edge1.z,edge2.x,edge2.y,edge2.z);
   view.dw$normals().transform(n);
   view.dw$transform().transformDirection(edge1);view.dw$transform().transformDirection(edge2);
-  if(!n.isFinite()||!edge1.isFinite()||!edge2.isFinite()||(!localOblique&&!CornerQuadGeometry.shouldCorrect(n.x,n.y,n.z,edge1.x,edge1.y,edge1.z,edge2.x,edge2.y,edge2.z))){return false;}
+  if(!n.isFinite()||!edge1.isFinite()||!edge2.isFinite()||(!qualified&&!localOblique&&!CornerQuadGeometry.shouldCorrect(n.x,n.y,n.z,edge1.x,edge1.y,edge1.z,edge2.x,edge2.y,edge2.z))){return false;}
   if(!Float.isFinite(n.lengthSquared())||n.lengthSquared()<1e-10f){return false;}
   n.normalize();
   localCenter.zero();for(Vector3f point:p)localCenter.add(point);localCenter.mul(.25f);
@@ -40,8 +48,8 @@ public final class CornerSurfaceLight {
   view.dw$transform().transformPosition(center);
   near.set(center).add(n.x*.001f,n.y*.001f,n.z*.001f);
   if(!center.isFinite()||!near.isFinite()){return false;}
-  BlockPos root=view.dw$root();BlockPos sample=BlockPos.ofFloored(root.getX()+near.x,root.getY()+near.y,root.getZ()+near.z);
-  var world=view.dw$delegate();
+  BlockPos root=view.dw$root();BlockPos sample=position(root,near,qualified);
+  var world=view.dw$delegate();track(view,sample);
   if(world.getBlockState(sample).getOpacity(world,sample)<15){
    int light=LightmapTextureManager.pack(world.getLightLevel(LightType.BLOCK,sample),world.getLightLevel(LightType.SKY,sample));
    java.util.Arrays.fill(lights,light);
@@ -51,7 +59,7 @@ public final class CornerSurfaceLight {
     Vector3f point=p[i];
     near.set(point);view.dw$transform().transformPosition(near);near.lerp(center,.01f).add(n.x*.001f,n.y*.001f,n.z*.001f);
     if(!near.isFinite()){valid=false;continue;}
-    BlockPos corner=BlockPos.ofFloored(root.getX()+near.x,root.getY()+near.y,root.getZ()+near.z);
+    BlockPos corner=position(root,near,qualified);track(view,corner);
     if(world.getBlockState(corner).getOpacity(world,corner)>=15){valid=false;continue;}
     mask|=1<<i;block+=world.getLightLevel(LightType.BLOCK,corner);sky+=world.getLightLevel(LightType.SKY,corner);
    }
@@ -63,4 +71,9 @@ public final class CornerSurfaceLight {
   java.util.Arrays.fill(levels,shade);
   return true;
  }
+ private static BlockPos position(BlockPos root,Vector3f point,boolean qualified){
+  if(qualified)return BlockPos.ofFloored((double)root.getX()+point.x,(double)root.getY()+point.y,(double)root.getZ()+point.z);
+  return BlockPos.ofFloored(root.getX()+point.x,root.getY()+point.y,root.getZ()+point.z);
+ }
+ private static void track(StaticLightingViewAccess view,BlockPos pos){if(view instanceof CompositeLightingViewAccess composite)composite.dw$dependency(pos);}
 }

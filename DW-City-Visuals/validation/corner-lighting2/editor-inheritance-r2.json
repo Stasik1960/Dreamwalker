@@ -1,0 +1,36 @@
+{
+  "status": "PASS",
+  "base": "releases\\City-Editor1-20261103\\DreamWalker-v22-City-Editor1-20261103.jar",
+  "jar": ".local\\corner-lighting-20261103\\candidate-cornerlight2-r2.jar",
+  "baseSha256": "7805d91c09758af14453ac6e201d7475a14ca7aec44c6e10b0951003d55234b1",
+  "jarSha256": "1dac47beb172a16b64280802be36048605e9b7e697234795011fbf3c09d7e5c4",
+  "unchangedEditorClasses": 864,
+  "unchangedAssets": 9510,
+  "changedEntries": [
+    "assets/bloodborne_dw/visuals/profile-fingerprints.json",
+    "fabric.mod.json"
+  ],
+  "addedEntries": [
+    "dev/dreamwalker/bloodbornedw/composite/CompositeCornerLighting.class",
+    "dev/dreamwalker/bloodbornedw/composite/CornerLightingContext.class",
+    "dev/dreamwalker/bloodbornedw/composite/CornerQuadCellClipper.class",
+    "dev/dreamwalker/bloodbornedw/composite/CornerQuadGeometry.class",
+    "dev/dreamwalker/bloodbornedw/composite/CornerQuadParentScope$Node.class",
+    "dev/dreamwalker/bloodbornedw/composite/CornerQuadParentScope.class",
+    "dev/dreamwalker/bloodbornedw/composite/CornerQuadSplitter$Piece.class",
+    "dev/dreamwalker/bloodbornedw/composite/CornerQuadSplitter$Split.class",
+    "dev/dreamwalker/bloodbornedw/composite/CornerQuadSplitter.class",
+    "dev/dreamwalker/bloodbornedw/composite/CornerSurfaceLight.class",
+    "dev/dreamwalker/bloodbornedw/composite/overlaymixin/CompositeCornerContextMixin.class",
+    "dev/dreamwalker/bloodbornedw/composite/overlaymixin/CompositeCornerLightMixin.class",
+    "dev/dreamwalker/bloodbornedw/composite/overlaymixin/CompositeLightingViewAccess.class",
+    "dev/dreamwalker/bloodbornedw/composite/overlaymixin/CornerBinaryCacheGuardMixin.class",
+    "dev/dreamwalker/bloodbornedw/composite/overlaymixin/CornerOpaqueCacheGuardMixin.class",
+    "dev/dreamwalker/bloodbornedw/composite/overlaymixin/StaticCornerContextMixin.class",
+    "dev/dreamwalker/bloodbornedw/composite/overlaymixin/StaticCornerLightMixin.class",
+    "dev/dreamwalker/bloodbornedw/composite/overlaymixin/StaticLightingViewAccess.class",
+    "dw-corner-surface-light.mixins.json"
+  ],
+  "allPreviousEntriesRetained": true,
+  "qaExcluded": true
+}

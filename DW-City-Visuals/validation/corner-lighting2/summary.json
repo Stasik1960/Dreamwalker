@@ -1,0 +1,20 @@
+{
+  "status": "PASS",
+  "scope": "Nine requested scenes in Original and ALT at noon and midnight, with separate visual review; not an exhaustive audit of every city surface.",
+  "productionSha256": "1dac47beb172a16b64280802be36048605e9b7e697234795011fbf3c09d7e5c4",
+  "version": "0.1.0-v12.7.4-visual-physics.8-building-water.3-stutter.1-visual.4-rc3-dwfix.22-cityeditor.1-cornerlight.2",
+  "baseCommit": "8999bc84e424c2c79263f11fff8cbcf039eaeced",
+  "baseRelease": "City-Editor1-CornerLight1-20261103",
+  "acceptedCaptures": 72,
+  "unchangedEditorClasses": 864,
+  "unchangedAssets": 9510,
+  "sourceWorldSha256": "3cc850b848d6616f308e3c08e4c0079dc853f120dddee103aedc4fcd18f8d898",
+  "sourceWorldUnchanged": true,
+  "reference": "CornerLight1; new composite correction and cell clipper disabled by isolated QA only. Both terrain and composite mesh caches reset each phase.",
+  "nightReview": "No apparent fullbright/self-light at the nine inspected views per mode; own-cell packed light and opaque native fallback checked.",
+  "performance": "No new controlled performance benchmark. Existing editor result remains INVESTIGATE (strictBudgetPass=true, noStutterWorsening=false).",
+  "excludedTrials": [
+    "old CornerLight1 diagnostic4 frames (reproduction only)",
+    "r1 cancelled pre-world for revisionSuffix metadata correction"
+  ]
+}

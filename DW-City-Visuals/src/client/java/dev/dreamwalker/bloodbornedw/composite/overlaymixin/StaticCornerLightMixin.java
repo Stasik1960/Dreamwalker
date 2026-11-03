@@ -3,6 +3,7 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import dev.dreamwalker.bloodbornedw.composite.CornerLightingContext;
 import dev.dreamwalker.bloodbornedw.composite.CornerQuadSplitter;
+import dev.dreamwalker.bloodbornedw.composite.CornerQuadCellClipper;
 import dev.dreamwalker.bloodbornedw.composite.CornerQuadParentScope;
 import dev.dreamwalker.bloodbornedw.composite.CornerSurfaceLight;
 import net.minecraft.client.render.VertexConsumer;
@@ -25,13 +26,24 @@ public abstract class StaticCornerLightMixin implements CornerLightingContext {
   if(dw$context==null||!dw$surfaceLight.sample(quad,dw$context,light)){
    original.call(delegate,matrix,quad,brightness,r,g,b,light,overlay,useColor);return;
   }
-  var split=CornerQuadSplitter.split(quad,dw$context,dw$surfaceLight.mixedCornerMask(),brightness,light);
-  if(split==null){original.call(delegate,matrix,quad,dw$surfaceLight.brightness(),r,g,b,dw$surfaceLight.lights(),overlay,useColor);return;}
+  int mask=dw$surfaceLight.mixedCornerMask();
+  var split=CornerQuadSplitter.split(quad,dw$context,mask,brightness,light);
+  if(split==null){
+   var cells=CornerQuadCellClipper.clip(quad,dw$context,mask,brightness,light);
+   if(cells==null){original.call(delegate,matrix,quad,dw$surfaceLight.brightness(),r,g,b,dw$surfaceLight.lights(),overlay,useColor);return;}
+   for(var piece:cells)dw$emitCell(quad,piece,delegate,matrix,r,g,b,overlay,useColor,original);
+   return;
+  }
   dw$emit(quad,split.first(),delegate,matrix,r,g,b,overlay,useColor,original);
   dw$emit(quad,split.second(),delegate,matrix,r,g,b,overlay,useColor,original);
  }
  @Unique private void dw$emit(BakedQuad parent,CornerQuadSplitter.Piece piece,VertexConsumer delegate,MatrixStack.Entry matrix,float r,float g,float b,int overlay,boolean useColor,Operation<Void> original){
   boolean corrected=dw$surfaceLight.sample(piece.quad(),dw$context,piece.light());
+  float[] levels=corrected?dw$surfaceLight.brightness():piece.brightness();int[] lights=corrected?dw$surfaceLight.lights():piece.light();
+  CornerQuadParentScope.emit(piece.quad(),parent,()->original.call(delegate,matrix,piece.quad(),levels,r,g,b,lights,overlay,useColor));
+ }
+ @Unique private void dw$emitCell(BakedQuad parent,CornerQuadSplitter.Piece piece,VertexConsumer delegate,MatrixStack.Entry matrix,float r,float g,float b,int overlay,boolean useColor,Operation<Void> original){
+  boolean corrected=dw$surfaceLight.sampleQualified(piece.quad(),dw$context,piece.light());
   float[] levels=corrected?dw$surfaceLight.brightness():piece.brightness();int[] lights=corrected?dw$surfaceLight.lights():piece.light();
   CornerQuadParentScope.emit(piece.quad(),parent,()->original.call(delegate,matrix,piece.quad(),levels,r,g,b,lights,overlay,useColor));
  }
