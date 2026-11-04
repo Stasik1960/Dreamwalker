@@ -66,9 +66,7 @@ public final class EditorQa implements ClientModInitializer {
     private enum Phase {
         START, PREPARE, PLACE_FIXTURE, PENDING_REPLACEMENT, WAIT_PENDING_REPLACEMENT, QUICK_PREPARE, QUICK_CLICK, WAIT_QUICK_CLICK, QUICK_UNDO, WAIT_QUICK_UNDO, QUICK_UNDO_FIRST, WAIT_QUICK_UNDO_FIRST, AUTO_SAMPLE_CONFIG,AUTO_SAMPLE,SINGLE_CONFIG, SINGLE_PAINT, WAIT_SINGLE, SAMPLE_CONFIG, SAMPLE,
         RESET, WAIT_RESET, UNDO, WAIT_UNDO, REDO, WAIT_REDO, FIRST, SECOND, AREA_CONFIG, AREA_PAINT,
-        WAIT_AREA, PLANE_CONFIG,PLANE_PAINT,WAIT_PLANE,PLANE_UNDO,WAIT_PLANE_UNDO,FILL_CONFIG, FILL, WAIT_FILL, NOISE_CONFIG, NOISE, WAIT_NOISE, STAMP_SOURCE_CONFIG,
-        STAMP_SOURCE_PAINT, WAIT_STAMP_SOURCE, STAMP_CAPTURE, STAMP_CLEAR_SOURCE, STAMP_PLACE, WAIT_STAMP,
-        STAMP_UNDO, WAIT_STAMP_UNDO, STAMP_REDO, WAIT_STAMP_REDO, STROKE_CONFIG, STROKE_PAINT_A, STROKE_WAIT_A,
+        WAIT_AREA, PLANE_CONFIG,PLANE_PAINT,WAIT_PLANE,PLANE_UNDO,WAIT_PLANE_UNDO,FILL_CONFIG, FILL, WAIT_FILL, NOISE_CONFIG, NOISE, WAIT_NOISE, REJECT_STAMP, STROKE_CONFIG, STROKE_PAINT_A, STROKE_WAIT_A,
         STROKE_PAINT_B, STROKE_WAIT_B, STROKE_END, STROKE_WAIT_END, STROKE_UNDO, STROKE_WAIT_UNDO, STROKE_REDO, STROKE_WAIT_REDO,
         INTERRUPT_PREPARE, WAIT_INTERRUPT_READY, INTERRUPT_CONFIG, INTERRUPT_FIRST, INTERRUPT_SECOND, INTERRUPT_PAINT,
         WAIT_INTERRUPT_PAINT, INTERRUPT_UNDO, WAIT_INTERRUPT, STALE_UNDO, WAIT_STALE_UNDO, CLEAR_GRID,
@@ -88,7 +86,6 @@ public final class EditorQa implements ClientModInitializer {
     private int waitTicks, cursor, placed, cleared, fixtureCursor, catalogueAttempts, pendingReplacementTick;
     private int lastActionTick = -100, nativeIndexBeforePaint;
     private BlockState stateBeforePaint;
-    private BlockState stampSourceState;
     private List<ItemStack> catalogue = List.of();
     private List<ItemStack> catalogueRun = List.of();
     private final Set<String> catalogueExcludedVerified = new LinkedHashSet<>();
@@ -116,7 +113,7 @@ public final class EditorQa implements ClientModInitializer {
     private final List<BlockPos> gridFloors = new ArrayList<>(130), gridTargets = new ArrayList<>(130);
     private List<SectionFixture> fixtureBaseline = List.of();
     private List<SectionFixture> catalogBaseline = List.of();
-    private BlockPos baseFloor, sampleTarget, stampTarget, autoSamplePos, catalogSupport, catalogFloor, catalogTarget, interruptedPos, pendingPos;
+    private BlockPos baseFloor, sampleTarget, autoSamplePos, catalogSupport, catalogFloor, catalogTarget, interruptedPos, pendingPos;
     private BlockPos catalogTemporarySide;
     private BlockPos catalogTemporaryStairNeighbor;
     private final List<BlockPos> catalogTemporaryCleared = new ArrayList<>();
@@ -602,7 +599,7 @@ public final class EditorQa implements ClientModInitializer {
                     BlockPos floor = new BlockPos(baseX + x, baseFloor.getY(), baseZ + z);
                     gridFloors.add(floor); gridTargets.add(floor.up());
                 }
-                sampleTarget = gridTargets.get(0); stampTarget = gridTargets.get(2);
+                sampleTarget = gridTargets.get(0);
                 player.setStackInHand(Hand.MAIN_HAND,new ItemStack(CityEditorServer.BRUSH));
                 autoSamplePos=findAutoSample(world,player);
                 if(autoSamplePos==null)throw new IllegalStateException("no unpainted DreamWalker cell found in the reviewed rose-city region");
@@ -746,34 +743,22 @@ public final class EditorQa implements ClientModInitializer {
             case NOISE -> { setAim(player, sampleTarget); invoke(player, request("paint")); waitTicks = 0; phase = Phase.WAIT_NOISE; }
             case WAIT_NOISE -> {
                 int expected = noiseStyle(gridTargets.get(0), 1), expectedSecond=noiseStyle(gridTargets.get(1),1);
-                if (style(world, gridTargets.get(0)) == expected && style(world,gridTargets.get(1))==expectedSecond && !jobActive(player)) { check(true, "noise palette is deterministic across the selected fixture cells"); phase = Phase.STAMP_SOURCE_CONFIG; }
+                if (style(world, gridTargets.get(0)) == expected && style(world,gridTargets.get(1))==expectedSecond && !jobActive(player)) { check(true, "noise palette is deterministic across the selected fixture cells"); phase = Phase.REJECT_STAMP; }
                 else timeout("noise operation did not finish");
             }
-            case STAMP_SOURCE_CONFIG -> { invoke(player, config(2, 0, "single")); phase = Phase.STAMP_SOURCE_PAINT; }
-            case STAMP_SOURCE_PAINT -> { setAim(player, stampTarget); invoke(player, request("paint")); waitTicks = 0; phase = Phase.WAIT_STAMP_SOURCE; }
-            case WAIT_STAMP_SOURCE -> { if (style(world, stampTarget) == 2 && !jobActive(player)) { check(true, "stamp source style prepared"); phase = Phase.STAMP_CAPTURE; } else timeout("stamp source paint incomplete"); }
-            case STAMP_CAPTURE -> { stampSourceState=world.getBlockState(stampTarget);setAim(player, stampTarget); invoke(player, request("stamp")); check("stamp".equals(sessionString(player, "mode")), "stamp action captures block and style"); phase = Phase.STAMP_CLEAR_SOURCE; }
-            case STAMP_CLEAR_SOURCE -> { if (!physicalBreak(player, stampTarget)) throw new IllegalStateException("Could not break stamp source through player interaction manager"); check(style(world, stampTarget) == -1, "normal break clears source editor style"); phase = Phase.STAMP_PLACE; }
-            case STAMP_PLACE -> { if(!world.getBlockState(gridTargets.get(3)).isAir())physicalBreak(player,gridTargets.get(3));setAim(player, gridTargets.get(3)); invoke(player, request("paint")); waitTicks = 0; phase = Phase.WAIT_STAMP; }
-            case WAIT_STAMP -> {
-                BlockState placedState = world.getBlockState(gridTargets.get(3));
-                if (CityEditorServer.supported(placedState) && placedState.getBlock()==stampSourceState.getBlock() && style(world, gridTargets.get(3)) == 2 && !jobActive(player)) {
-                    check(true, "stamp places captured block and style"); phase = Phase.STAMP_UNDO;
-                } else timeout("stamp placement incomplete");
-            }
-            case STAMP_UNDO -> { invoke(player, request("undo")); waitTicks = 0; phase = Phase.WAIT_STAMP_UNDO; }
-            case WAIT_STAMP_UNDO -> { if (world.getBlockState(gridTargets.get(3)).isAir()) { check(style(world, gridTargets.get(3)) == -1, "stamp undo breaks placed object and metadata"); phase = Phase.STAMP_REDO; } else timeout("stamp undo incomplete"); }
-            case STAMP_REDO -> { invoke(player, request("redo")); waitTicks = 0; phase = Phase.WAIT_STAMP_REDO; }
-            case WAIT_STAMP_REDO -> {
-                if (CityEditorServer.supported(world.getBlockState(gridTargets.get(3))) && world.getBlockState(gridTargets.get(3)).getBlock()==stampSourceState.getBlock() && style(world, gridTargets.get(3)) == 2) {
-                    check(true, "stamp redo restores object and style");
-                    for (BlockPos candidate : gridTargets) if (CityEditorServer.supported(world.getBlockState(candidate)) && style(world,candidate) != 4) {
-                        if (strokeA == null) { strokeA=candidate.toImmutable(); strokeBeforeA=style(world,candidate); }
-                        else if (!candidate.equals(strokeA)) { strokeB=candidate.toImmutable(); strokeBeforeB=style(world,candidate); break; }
-                    }
-                    if (strokeA == null || strokeB == null) throw new IllegalStateException("Could not find two supported stroke fixture cells whose prior styles differ from 4");
-                    strokeUndoCount = ((java.util.Deque<?>)field(session(player),"undo")).size(); phase = Phase.STROKE_CONFIG;
-                } else timeout("stamp redo incomplete");
+            case REJECT_STAMP -> {
+                invoke(player, config(2, 0, "single"));
+                invoke(player, config(2, 0, "stamp"));
+                check("single".equals(sessionString(player,"mode")), "legacy stamp config cannot switch brush mode");
+                setAim(player, sampleTarget);
+                invoke(player, request("stamp"));
+                check("single".equals(sessionString(player,"mode")), "legacy stamp action cannot switch brush mode");
+                for (BlockPos candidate : gridTargets) if (CityEditorServer.supported(world.getBlockState(candidate)) && style(world,candidate) != 4) {
+                    if (strokeA == null) { strokeA=candidate.toImmutable(); strokeBeforeA=style(world,candidate); }
+                    else if (!candidate.equals(strokeA)) { strokeB=candidate.toImmutable(); strokeBeforeB=style(world,candidate); break; }
+                }
+                if (strokeA == null || strokeB == null) throw new IllegalStateException("Could not find two supported stroke fixture cells whose prior styles differ from 4");
+                strokeUndoCount = ((java.util.Deque<?>)field(session(player),"undo")).size(); phase = Phase.STROKE_CONFIG;
             }
             case STROKE_CONFIG -> { invoke(player,config(4,0,"single"));phase=Phase.STROKE_PAINT_A; }
             case STROKE_PAINT_A -> { setAim(player,strokeA);invoke(player,strokeRequest("paint"));waitTicks=0;phase=Phase.STROKE_WAIT_A; }
@@ -1207,8 +1192,8 @@ public final class EditorQa implements ClientModInitializer {
 
     private static boolean usesEditorAction(Phase phase) {
         return switch (phase) {
-            case AUTO_SAMPLE,SINGLE_PAINT,SAMPLE,RESET,UNDO,REDO,FIRST,SECOND,AREA_PAINT,FILL,NOISE,STAMP_SOURCE_PAINT,
-                PLANE_PAINT,PLANE_UNDO,STAMP_CAPTURE,STAMP_PLACE,STAMP_UNDO,STAMP_REDO,STROKE_PAINT_A,STROKE_PAINT_B,STROKE_END,
+            case AUTO_SAMPLE,SINGLE_PAINT,SAMPLE,RESET,UNDO,REDO,FIRST,SECOND,AREA_PAINT,FILL,NOISE,
+                PLANE_PAINT,PLANE_UNDO,STROKE_PAINT_A,STROKE_PAINT_B,STROKE_END,
                 STROKE_UNDO,STROKE_REDO,INTERRUPT_FIRST,INTERRUPT_SECOND,INTERRUPT_PAINT,INTERRUPT_UNDO,STALE_UNDO -> true;
             default -> false;
         };

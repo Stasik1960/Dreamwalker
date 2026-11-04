@@ -11,13 +11,15 @@ import net.minecraft.util.math.ChunkPos;
 
 /** Sparse immutable palette overrides. Missing cells use automatic city coloring. */
 public final class EditorCells {
+    public static final int MAX_DELTA_CELLS = 128;
     public static final EditorCells EMPTY = new EditorCells(new long[0], new byte[0]);
     private final long[] positions;
     private final byte[] styles;
     private EditorCells(long[] positions, byte[] styles) { this.positions = positions; this.styles = styles; }
-    public int style(BlockPos pos) {
+    public int style(BlockPos pos) { return style(pos.asLong()); }
+    public int style(long pos) {
         if (positions.length == 0) return -1;
-        int i = Arrays.binarySearch(positions, pos.asLong());
+        int i = Arrays.binarySearch(positions, pos);
         return i < 0 ? -1 : styles[i];
     }
     public int size() { return positions.length; }
@@ -39,6 +41,33 @@ public final class EditorCells {
         }
         return positions.length==0?EMPTY:new EditorCells(positions.clone(),styles.clone());
     }
+    NbtCompound packDelta(long[] changed) {
+        byte[] values = new byte[changed.length];
+        for (int i = 0; i < changed.length; i++) values[i] = (byte)style(changed[i]);
+        NbtCompound nbt = new NbtCompound();
+        nbt.putLongArray("Positions", changed.clone());
+        nbt.putByteArray("Styles", values);
+        return nbt;
+    }
+
+    static Map<Long,Integer> readDelta(NbtCompound nbt, ChunkPos chunk, int bottomY, int topY) {
+        if (!nbt.contains("Positions", NbtElement.LONG_ARRAY_TYPE) || !nbt.contains("Styles", NbtElement.BYTE_ARRAY_TYPE))
+            throw new IllegalArgumentException("Invalid editor delta arrays");
+        long[] positions = nbt.getLongArray("Positions");
+        byte[] styles = nbt.getByteArray("Styles");
+        if (positions.length != styles.length || positions.length == 0 || positions.length > MAX_DELTA_CELLS)
+            throw new IllegalArgumentException("Editor delta budget");
+        Map<Long,Integer> updates = new HashMap<>();
+        for (int i = 0; i < positions.length; i++) {
+            BlockPos pos = BlockPos.fromLong(positions[i]);
+            int style = styles[i];
+            if (pos.getX() >> 4 != chunk.x || pos.getZ() >> 4 != chunk.z || pos.getY() < bottomY
+                    || pos.getY() >= topY || style < -1 || style > 4 || updates.put(positions[i],style) != null)
+                throw new IllegalArgumentException("Invalid editor delta entry");
+        }
+        return updates;
+    }
+
     public Map<Long, Byte> entries() {
         Map<Long, Byte> result = new HashMap<>();
         for (int i = 0; i < positions.length; i++) result.put(positions[i], styles[i]);

@@ -15,10 +15,10 @@ import net.minecraft.world.BlockRenderView;
  * No world/position cache or frame-loop lookup is introduced. */
 final class ShutterSubstrate {
     static final int BRICK_ROLE=4;
-    private static final Map<BakedModel,Boolean> SHUTTERS=new IdentityHashMap<>();
+    private static volatile Map<BakedModel,Boolean> shutters=new IdentityHashMap<>();
     private record Context(java.util.Set<Identifier> models,java.util.Set<Identifier> sources){}
     private static volatile Context context;
-    static synchronized void reload(){SHUTTERS.clear();}
+    static void reload(){shutters=new IdentityHashMap<>();}
     static boolean source(BlockState state){
         var id=Registries.BLOCK.getId(state.getBlock());
         return sourceId(id);
@@ -40,12 +40,24 @@ final class ShutterSubstrate {
     }
     static boolean sourceId(Identifier id){return context().sources.contains(id)||id.getPath().contains("shutter");}
     static boolean modelId(Identifier id){return context().models.contains(id)||id.getPath().contains("interactions/shutter");}
-    static synchronized boolean model(BakedModel model,BlockState state){
-        return SHUTTERS.computeIfAbsent(model,ignored->{
-            for(int side=-1;side<6;side++)for(var quad:model.getQuads(state,side<0?null:Direction.values()[side],Random.create(42)))
-                if(quad.getSprite().getContents().getId().getPath().endsWith("/roof_1")||quad.getSprite().getContents().getId().getPath().endsWith("/window_surround")||quad.getSprite().getContents().getId().getPath().endsWith("/spirelamp_0010"))return true;
-            return false;
-        });
+    static boolean model(BakedModel model,BlockState state){
+        Map<BakedModel,Boolean> cache=shutters;
+        synchronized (cache) {
+            Boolean cached=cache.get(model);
+            if(cached!=null)return cached;
+        }
+        boolean result=inspect(model,state);
+        synchronized (cache) {
+            Boolean cached=cache.get(model);
+            if(cached!=null)return cached;
+            cache.put(model,result);
+            return result;
+        }
+    }
+    private static boolean inspect(BakedModel model,BlockState state){
+        for(int side=-1;side<6;side++)for(var quad:model.getQuads(state,side<0?null:Direction.values()[side],Random.create(42)))
+            if(quad.getSprite().getContents().getId().getPath().endsWith("/roof_1")||quad.getSprite().getContents().getId().getPath().endsWith("/window_surround")||quad.getSprite().getContents().getId().getPath().endsWith("/spirelamp_0010"))return true;
+        return false;
     }
     static int role(BlockRenderView world,BlockPos pos){
         // Red masonry is an explicitly reviewed house facade, never inferred

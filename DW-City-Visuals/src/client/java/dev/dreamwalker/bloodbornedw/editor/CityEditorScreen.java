@@ -10,7 +10,6 @@ final class CityEditorScreen extends Screen {
     private int left, top;
     private final ButtonWidget[] palette = new ButtonWidget[5];
     private ButtonWidget mode, size, undo, redo;
-    private static final String[] MODES = {"single", "plane", "area", "fill", "noise"};
     private static final String[] NAMES = {"База", "Роза", "Шалфей", "Песок", "Красный"};
     CityEditorScreen() { super(Text.literal("Редактор фасадов")); }
     @Override protected void init() {
@@ -20,8 +19,8 @@ final class CityEditorScreen extends Screen {
             palette[i]=addDrawableChild(ButtonWidget.builder(Text.empty(), b -> { CityEditorClient.setMaterial(value); refresh(); }).dimensions(left+i*60, top, 58, 20).build());
         }
         mode=addDrawableChild(ButtonWidget.builder(Text.empty(), b -> {
-            int i=java.util.Arrays.asList(MODES).indexOf(CityEditorClient.mode());
-            CityEditorClient.setMode(MODES[(i+1)%MODES.length]); refresh();
+            int i=EditorProtocol.MODES.indexOf(CityEditorClient.mode());
+            CityEditorClient.setMode(EditorProtocol.MODES.get((i+1)%EditorProtocol.MODES.size())); refresh();
         }).dimensions(left,top+28,145,20).build());
         size=addDrawableChild(ButtonWidget.builder(Text.empty(), b -> { CityEditorClient.setRadius((CityEditorClient.radius()+1)%5); refresh(); }).dimensions(left+155,top+28,145,20).build());
         undo=addDrawableChild(ButtonWidget.builder(Text.empty(), b -> CityEditorClient.request("undo")).dimensions(left,top+56,145,20).build());

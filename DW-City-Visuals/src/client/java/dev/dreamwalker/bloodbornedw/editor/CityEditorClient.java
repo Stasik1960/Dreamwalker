@@ -21,6 +21,8 @@ import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.Box;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.ChunkPos;
@@ -59,8 +61,9 @@ public final class CityEditorClient implements ClientModInitializer {
             if (state == null || buf.isReadable()) return;
             client.execute(() -> {
                 if (client.getNetworkHandler() != handler) return;
-                material = state.getInt("material"); mode = state.getString("mode"); radius = state.getInt("radius");
-                if (mode.equals("stamp")) mode = "single";
+                String serverMode = state.getString("mode");
+                if (!EditorProtocol.MODES.contains(serverMode)) return;
+                material = state.getInt("material"); mode = serverMode; radius = state.getInt("radius");
                 hasFirst = state.getBoolean("hasFirst"); hasSecond = state.getBoolean("hasSecond");
                 first = state.getLong("first"); second = state.getLong("second"); selectionDimension = state.getString("selectionDimension");
                 secondary = clampMaterial(state.getInt("secondary")); accent = clampMaterial(state.getInt("accent"));
@@ -83,24 +86,40 @@ public final class CityEditorClient implements ClientModInitializer {
         });
         ClientPlayNetworking.registerGlobalReceiver(CityEditorServer.UPDATE, (client, handler, buf, sender) -> {
             Identifier dimension = buf.readIdentifier(); int chunkX = buf.readInt(), chunkZ = buf.readInt(); NbtCompound packet = buf.readNbt();
-            if (packet == null || buf.isReadable() || !packet.contains("Editor", 10)) return;
+            if (packet == null || buf.isReadable()) return;
             client.execute(() -> {
                 if (client.getNetworkHandler() != handler || client.world == null || !client.world.getRegistryKey().getValue().equals(dimension)) return;
+                boolean delta = packet.contains("Delta", NbtElement.COMPOUND_TYPE);
+                if (delta == packet.contains("Editor", NbtElement.COMPOUND_TYPE)) return;
                 var chunk = client.world.getChunkManager().getChunk(chunkX, chunkZ, ChunkStatus.FULL, false);
                 if (chunk == null) return;
                 try {
-                    EditorCells cells = EditorCells.readPacked(packet.getCompound("Editor"), new ChunkPos(chunkX, chunkZ), client.world.getBottomY(), client.world.getTopY());
                     NativeVisualData data = RetainedFrames.data(chunk);
                     EditorCells oldCells = ((RetainedFrameData)(Object)data).dw$editor();
-                    java.util.Set<RebuildSection> changed = changedSections(oldCells, cells);
+                    ChunkPos pos = new ChunkPos(chunkX,chunkZ);
+                    var deltaChanges = delta ? EditorCells.readDelta(packet.getCompound("Delta"),pos,
+                            client.world.getBottomY(),client.world.getTopY()) : null;
+                    EditorCells cells = delta ? oldCells.withAll(deltaChanges)
+                            : EditorCells.readPacked(packet.getCompound("Editor"),pos,client.world.getBottomY(),client.world.getTopY());
+                    if (cells == oldCells) return;
+                    java.util.Set<RebuildSection> changed = delta ? changedSections(oldCells,deltaChanges) : changedSections(oldCells,cells);
                     if (changed.isEmpty()) return;
                     NativeVisualData replacement = ((RetainedFrameData)(Object)data).dw$withEditor(cells);
                     if (replacement != data) {
                         dev.dreamwalker.bloodbornedw.composite.NativeVisuals.data(chunk, replacement);
-                        for (var entity : chunk.getBlockEntities().values()) {
-                            if (entity instanceof CompositeBlockEntity owner
-                                    && oldCells.style(owner.getPos()) != cells.style(owner.getPos())) {
-                                EditorMeshUpdates.changed(owner);
+                        if (delta) {
+                            for (var entry : deltaChanges.entrySet()) {
+                                if (oldCells.style(entry.getKey()) != entry.getValue()
+                                        && chunk.getBlockEntities().get(BlockPos.fromLong(entry.getKey())) instanceof CompositeBlockEntity owner) {
+                                    EditorMeshUpdates.changed(owner);
+                                }
+                            }
+                        } else {
+                            for (var entity : chunk.getBlockEntities().values()) {
+                                if (entity instanceof CompositeBlockEntity owner
+                                        && oldCells.style(owner.getPos()) != cells.style(owner.getPos())) {
+                                    EditorMeshUpdates.changed(owner);
+                                }
                             }
                         }
                         for (RebuildSection section : changed) {
@@ -114,7 +133,7 @@ public final class CityEditorClient implements ClientModInitializer {
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             strokeTick++;
             while (open.wasPressed()) if (client.player != null && heldBrush(client)) {
-                if (mode.equals("stamp")) mode="single"; secondary=0; accent=0; primaryWeight=85; secondaryWeight=15;
+                secondary=0; accent=0; primaryWeight=85; secondaryWeight=15;
                 config(); client.setScreen(new CityEditorScreen());
             }
             if (client.player == null || client.currentScreen != null || !heldBrush(client)) { clearCorner(); resetStroke(); return; }
@@ -131,7 +150,7 @@ public final class CityEditorClient implements ClientModInitializer {
             }
             if (!attackHeld) { releaseAfterQueued=true; pressActive=false; }
             if (!(client.crosshairTarget instanceof BlockHitResult hit)) return;
-            boolean oneShot = mode.equals("area") || mode.equals("fill") || mode.equals("noise") || mode.equals("stamp");
+            boolean oneShot = mode.equals("area") || mode.equals("fill") || mode.equals("noise");
             if(!oneShot&&strokeId.isEmpty())strokeId=java.util.UUID.randomUUID().toString();
             long pos=hit.getBlockPos().asLong();
             boolean retryRequest=retryPosition!=Long.MIN_VALUE;
@@ -212,7 +231,17 @@ public final class CityEditorClient implements ClientModInitializer {
     }
     static String message() { return message; }
     static String materialName(int value) { return switch (value) { case 0 -> "Базовый"; case 1 -> "Розовый"; case 2 -> "Шалфей"; case 3 -> "Песочный"; case 4 -> "Красный"; default -> "?"; }; }
-    static String modeName(String value) { return switch(value) { case "single" -> "одиночный"; case "area" -> "область"; case "plane" -> "плоскость"; case "fill" -> "заливка"; case "noise" -> "шум"; case "stamp" -> "штамп"; default -> value; }; }
+    private static java.util.Set<RebuildSection> changedSections(EditorCells previous, java.util.Map<Long,Integer> delta) {
+        java.util.Set<RebuildSection> sections = new java.util.HashSet<>();
+        for (var entry : delta.entrySet()) {
+            if (previous.style(entry.getKey()) == entry.getValue()) continue;
+            BlockPos pos = BlockPos.fromLong(entry.getKey());
+            sections.add(new RebuildSection(pos.getX() >> 4,pos.getY() >> 4,pos.getZ() >> 4));
+        }
+        return sections;
+    }
+
+    static String modeName(String value) { return switch(value) { case "single" -> "одиночный"; case "area" -> "область"; case "plane" -> "плоскость"; case "fill" -> "заливка"; case "noise" -> "шум"; default -> value; }; }
     static boolean heldBrush(MinecraftClient client) { return client.player != null && client.player.getMainHandStack().isOf(CityEditorServer.BRUSH); }
     private static long nextRequestId() { long value=++requestSequence; return value==0L?++requestSequence:value; }
     private static boolean sendTrackedPaint(long pos, boolean oneShot,long generation) {

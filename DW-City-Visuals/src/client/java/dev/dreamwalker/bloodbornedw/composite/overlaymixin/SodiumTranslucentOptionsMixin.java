@@ -1,6 +1,7 @@
 package dev.dreamwalker.bloodbornedw.composite.overlaymixin;
 
 import java.lang.reflect.InvocationTargetException;
+import dev.dreamwalker.bloodbornedw.composite.SodiumCompatibility;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Pseudo;
 import org.spongepowered.asm.mixin.injection.At;
@@ -24,7 +25,8 @@ public abstract class SodiumTranslucentOptionsMixin {
         } catch (ReflectiveOperationException failure) {
             Throwable cause = failure instanceof InvocationTargetException invocation && invocation.getCause() != null
                     ? invocation.getCause() : failure;
-            throw new IllegalStateException("Unable to configure Sodium translucent shader", cause);
+            throw new IllegalStateException("Unable to configure the Sodium translucent shader. Installed "
+                    + SodiumCompatibility.installed() + "; verified with Sodium 0.5.13+mc1.20.1.", cause);
         }
     }
 }

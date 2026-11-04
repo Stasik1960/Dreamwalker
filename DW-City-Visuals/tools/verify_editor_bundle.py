@@ -8,10 +8,11 @@ def verify(reference,candidate):
         names=set(new.namelist());meta=json.loads(new.read('fabric.mod.json'))
         for name in old.namelist():
             if name not in names:
-                # Private record used only by the removed creative-state expansion;
-                # Neither this helper nor the removed creative-only fence appender is a registered or saved type.
+                # Removed implementation types have no registered or saved identity.
                 if name not in {
                     'dev/dreamwalker/bloodbornedw/editor/catalogue/EditorCatalogue$SourcePalette.class',
+                    'dev/dreamwalker/bloodbornedw/editor/CityEditorServer$Placement.class',
+                    'dev/dreamwalker/bloodbornedw/visual/FacadeMaterials$1.class',
                     'dev/dreamwalker/bloodbornedw/composite/overlaymixin/FenceUnifiedCatalogueMixin.class',
                 }:
                     failures.append('Removed reference entry: '+name)

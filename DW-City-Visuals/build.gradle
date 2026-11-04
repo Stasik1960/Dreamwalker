@@ -2,7 +2,7 @@ plugins { id 'fabric-loom' version '1.6.12' }
 
 def baseline = providers.gradleProperty('baselineJar').orElse(file('baseline/mod.jar').path)
 def pythonExecutable = providers.gradleProperty('pythonExecutable').orElse('python')
-version = '20261103-cityeditor.2-cornerlight.2'
+version = '20261104-cityeditor.2.1-cornerlight.2'
 group = 'dev.dreamwalker'
 base { archivesName = 'dw-altvisual-overlay' }
 layout.buildDirectory = new File(projectDir, 'build')
@@ -48,9 +48,50 @@ tasks.withType(AbstractArchiveTask).configureEach {
 }
 java { withSourcesJar() }
 
+// These resources are finalized by prepareRevisionAssets after palette materialization.
+def revisionProfileAsset = { profile, path ->
+    file("src/main/resources/dw_city_visuals/${profile}/assets/bloodborne_dw/${path}")
+}
+def revisionGeneratedFiles = []
+['tree_1', 'tree_2', 'tree_3'].each { name ->
+    revisionGeneratedFiles.add(file("src/main/resources/dw_city_visuals/alt/assets/bloodborne_rp/geo/${name}.geo.json"))
+}
+revisionGeneratedFiles.add(file('src/main/resources/dw_city_visuals/alt/assets/bloodborne_rp/textures/entities/decorations/tree_3.png'))
+['tree_1', 'tree_2'].each { name ->
+    revisionGeneratedFiles.add(revisionProfileAsset('alt', "textures/block/remaining/source/minecraft/block/addon/${name}.png"))
+}
+['bricks', 'bricks_0', 'bricks_1', 'bricks_2'].each { name ->
+    revisionGeneratedFiles.add(revisionProfileAsset('alt', "textures/block/autumn_c3/accent/base_${name}.png"))
+    revisionGeneratedFiles.add(revisionProfileAsset('alt', "textures/block/remaining/source/minecraft/block/${name}.png"))
+    revisionGeneratedFiles.add(revisionProfileAsset('alt', "textures/block/autumn_c3/accent/red_${name}.png"))
+}
+[
+    'textures/block/remaining/source/minecraft/block/addon/roof_1.png',
+    'textures/block/autumn_c3/window_surround.png',
+    'textures/block/autumn_c3/accent/brick_window_surround.png',
+    'textures/block/autumn_c3/accent/window_surround.png',
+    'textures/block/autumn_c3/accent/base_window_surround.png',
+    'textures/block/autumn_c3/accent/brick_wall_0010.png'
+].each { path -> revisionGeneratedFiles.add(revisionProfileAsset('alt', path)) }
+['original', 'alt'].each { profile ->
+    revisionGeneratedFiles.add(revisionProfileAsset(profile, 'textures/block/remaining/source/minecraft/block/addon/spirelamp_0018.png'))
+    revisionGeneratedFiles.add(revisionProfileAsset(profile, 'models/remaining/source/minecraft/block/addon/gray_glazed_terracotta_0.json'))
+}
+revisionGeneratedFiles.add(file('src/main/resources/assets/bloodborne_dw/visuals/contextual-masonry.json'))
+
+// The source archive contains one generated sprite. Update that entry before the
+// palette compiler snapshots the archive, so consecutive builds stay incremental.
+tasks.register('prepareSpritePaletteArchive', Exec) {
+    inputs.files('tools/tree-sprite-inputs.zip', 'tools/repair_sprite_tree.py')
+    inputs.property('pythonExecutable', pythonExecutable)
+    outputs.file('tools/v12-palette-inputs.zip')
+    outputs.doNotCacheIf('The archive also contains manually maintained source entries') { true }
+    commandLine pythonExecutable.get(), file('tools/repair_sprite_tree.py').path, '--archive-only'
+}
+
 // Compile small ALT texture assets once at build time from immutable source pixels.
 tasks.register('materializeV12Palettes', Exec) {
-    dependsOn tasks.named('verifyBaseline')
+    dependsOn tasks.named('verifyBaseline'), tasks.named('prepareSpritePaletteArchive')
     inputs.files('tools/MaterializeV12Palettes.java', 'tools/v12-baked-palettes.json', 'tools/v12-palette-inputs.zip', 'tools/family-baked-palettes.json')
     inputs.file(baseline)
     outputs.files(providers.provider {
@@ -65,7 +106,7 @@ tasks.register('materializeV12Palettes', Exec) {
                     images.add(file('src/main/resources/dw_city_visuals/' + mode + '/assets/' + rule.sprite.replace(':', '/textures/') + '.png'))
             }
         }
-        images.unique()
+        images.unique().findAll { !revisionGeneratedFiles.contains(it) }
     })
     outputs.file('build/reports/v12-palette-assets.json')
     doFirst {
@@ -125,7 +166,8 @@ tasks.register('generateVisualResourceIndex', Exec) {
 // Keep the handshake identity in sync without hashing resources on either game thread.
 tasks.register('generateVisualFingerprints', Exec) {
     dependsOn tasks.named('generateVisualResourceIndex'), tasks.named('generateEditor2NativeFlags'), tasks.named('generateEditor2PoseFlags'), tasks.named('generateEditor2SlabFlags')
-    inputs.files(fileTree('src') { exclude '**/profile-fingerprints.json' })
+    inputs.files(fileTree('src/main/java') { include '**/*.java' }, fileTree('src/client/java') { include '**/*.java' })
+    inputs.files(fileTree('src/main/resources') { exclude '**/profile-fingerprints.json' })
     inputs.file('tools/prepare_visual_fingerprints.py')
     outputs.file('src/main/resources/assets/bloodborne_dw/visuals/profile-fingerprints.json')
     commandLine pythonExecutable.get(),
@@ -135,6 +177,16 @@ tasks.named('processResources') { dependsOn tasks.named('generateVisualFingerpri
 
 tasks.register('prepareRevisionAssets', Exec) {
     dependsOn tasks.named('materializeV12Palettes')
+    inputs.files(
+        'tools/prepare_revision_assets.py', 'tools/import_tree_project.py',
+        'tools/repair_sprite_tree.py', 'tools/repair_facade_assets.py',
+        'inputs/trees/DreamWalker-trees.dwtree.json', 'tools/tree-sprite-inputs.zip',
+        'tools/facade-inputs.zip', 'tools/v12-baked-palettes.json', 'baseline/mod.jar'
+    )
+    inputs.property('pythonExecutable', pythonExecutable)
+    outputs.files(revisionGeneratedFiles)
+    outputs.files('validation/tree-import-v7.json',
+        'validation/sprite-tree-v7.json', 'validation/facade-v7-assets.json')
     commandLine pythonExecutable.get(), file('tools/prepare_revision_assets.py').path
 }
 
@@ -299,4 +351,9 @@ tasks.register('cornerScopeTest', JavaExec) {
     dependsOn tasks.named('testClasses')
     classpath = sourceSets.test.runtimeClasspath
     mainClass = 'dev.dreamwalker.bloodbornedw.composite.CornerQuadParentScopeTest'
+}
+tasks.register('editorAuditTest', JavaExec) {
+    dependsOn tasks.named('testClasses')
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass = 'dev.dreamwalker.bloodbornedw.editor.EditorAuditTest'
 }

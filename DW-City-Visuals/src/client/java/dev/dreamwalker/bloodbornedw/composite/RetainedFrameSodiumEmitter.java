@@ -39,8 +39,10 @@ public final class RetainedFrameSodiumEmitter {
                     Class<?> indium = Class.forName("link.infra.indium.renderer.render.TerrainRenderContext");
                     INDIUM_GET = indium.getMethod("get", build); INDIUM_RENDER = indium.getMethod("tessellateBlock", context);
                 } else { INDIUM_GET = null; INDIUM_RENDER = null; }
-            } catch (ReflectiveOperationException failure) {
-                throw new IllegalStateException("Unsupported Sodium/Indium frame meshing API", failure);
+            } catch (ReflectiveOperationException | LinkageError failure) {
+                throw new IllegalStateException("Unsupported Sodium/Indium frame meshing API. Installed "
+                        + SodiumCompatibility.installed() + "; verified with Sodium 0.5.13+mc1.20.1 "
+                        + "and Indium 1.0.36+mc1.20.1.", failure);
             }
         }
     }

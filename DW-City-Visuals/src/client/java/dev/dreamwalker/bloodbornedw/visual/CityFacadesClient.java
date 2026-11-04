@@ -21,31 +21,44 @@ import java.util.IdentityHashMap;
 import java.util.Map;
 
 public final class CityFacadesClient implements ClientModInitializer {
-    private static final Map<BakedModel,BakedModel[]> MODELS=new IdentityHashMap<>();
-    private static final Map<BakedModel,BakedModel[]> MANUAL_MODELS=new IdentityHashMap<>();
-    private static final Map<BakedModel,BakedModel> BASE_MODELS=new IdentityHashMap<>();
-    static synchronized void clearCache() { MODELS.clear(); MANUAL_MODELS.clear(); BASE_MODELS.clear(); ShutterSubstrate.reload(); }
-    private static synchronized BakedModel fixed(BakedModel model,int role) {
+    private static final class ModelCaches {
+        final Map<BakedModel,BakedModel[]> regional=new IdentityHashMap<>();
+        final Map<BakedModel,BakedModel[]> manual=new IdentityHashMap<>();
+        final Map<BakedModel,BakedModel> base=new IdentityHashMap<>();
+    }
+    private static volatile ModelCaches caches=new ModelCaches();
+    static void clearCache() {
+        caches=new ModelCaches();
+        ShutterSubstrate.reload();
+    }
+    private static BakedModel fixed(BakedModel model,int role) {
         return fixed(model,role,false);
     }
-    private static synchronized BakedModel fixed(BakedModel model,int role,boolean manual) {
+    private static BakedModel fixed(BakedModel model,int role,boolean manual) {
+        ModelCaches generation=caches;
         if(model instanceof FacadeModel facade) {
             if(facade.resolved()&&facade.role()==role&&facade.manualStyle()==manual)return model;
             model=facade.delegate();
         }
-        Map<BakedModel,BakedModel[]> cache=manual?MANUAL_MODELS:MODELS;
-        BakedModel[] variants=cache.computeIfAbsent(model,ignored->new BakedModel[5]);
-        if(variants[role]==null)variants[role]=new FacadeModel(model,role,false,manual,true);
-        return variants[role];
+        Map<BakedModel,BakedModel[]> cache=manual?generation.manual:generation.regional;
+        synchronized (generation) {
+            BakedModel[] variants=cache.computeIfAbsent(model,ignored->new BakedModel[5]);
+            if(variants[role]==null)variants[role]=new FacadeModel(model,role,false,manual,true);
+            return variants[role];
+        }
     }
-    private static synchronized BakedModel fixedBase(BakedModel model) {
+    private static BakedModel fixedBase(BakedModel model) {
+        ModelCaches generation=caches;
         if(model instanceof FacadeModel facade) model=facade.delegate();
         BakedModel key=model;
-        return BASE_MODELS.computeIfAbsent(key,ignored->new FacadeModel(key,0,true,false,true));
+        synchronized (generation) {
+            return generation.base.computeIfAbsent(key,ignored->new FacadeModel(key,0,true,false,true));
+        }
     }
     private static boolean brick(String path) { return path.equals("source_assembly_brick_wall") || path.equals("source_bricks") || ShutterSubstrate.sourceId(new Identifier("bloodborne_dw",path)); }
     public static boolean contextualPart(Identifier id){return ShutterSubstrate.modelId(id);}
     @Override public void onInitializeClient() {
+        dev.dreamwalker.bloodbornedw.composite.SodiumCompatibility.checkTranslucentTargets();
         CityVisualClient.registerReloadListener(FacadeMaterials::reload);
         ResourceManagerHelper.get(ResourceType.CLIENT_RESOURCES).registerReloadListener(new SimpleSynchronousResourceReloadListener() {
             public Identifier getFabricId() { return new Identifier("bloodborne_dw","city_facades"); }

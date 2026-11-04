@@ -14,9 +14,22 @@ import net.minecraft.util.math.Direction;
 
 final class FacadeMaterials {
     private static volatile FacadeConfig config;
-    private static final Map<BakedQuad,BakedQuad[]> CACHE = new IdentityHashMap<>();
-    private static final Map<BakedQuad,BakedQuad[]> MANUAL_CACHE = new LinkedHashMap<>(256, .75f, true) { protected boolean removeEldestEntry(Map.Entry<BakedQuad,BakedQuad[]> e) { return size() > 8192; } };
-    static synchronized void reload() { config=null; ManualStonePalette.reload(); CACHE.clear(); MANUAL_CACHE.clear(); CityFacadesClient.clearCache(); }
+    private static final class QuadCaches {
+        final Map<BakedQuad, BakedQuad[]> regional = new IdentityHashMap<>();
+        final Map<BakedQuad, BakedQuad[]> manual = new LinkedHashMap<>(256, .75f, true) {
+            @Override protected boolean removeEldestEntry(Map.Entry<BakedQuad, BakedQuad[]> entry) {
+                return size() > 8192;
+            }
+        };
+    }
+    private static volatile QuadCaches caches = new QuadCaches();
+    static synchronized void reload() {
+        config = null;
+        ManualStonePalette.reload();
+        // In-flight work may finish against the previous generation, which is no longer retained here.
+        caches = new QuadCaches();
+        CityFacadesClient.clearCache();
+    }
     static FacadeConfig config() { FacadeConfig c=config; if(c==null) synchronized(FacadeMaterials.class) { if(config==null)config=FacadeConfig.load(); c=config; } return c; }
     static int role(BlockPos pos) {
         if(!CityVisualClient.isAlt())return 0;
@@ -24,12 +37,13 @@ final class FacadeMaterials {
         FacadeConfig c=config(); return world.getRegistryKey().getValue().equals(c.dimension)?c.role(pos):0;
     }
     private static SpriteAtlasTexture atlas() { return (SpriteAtlasTexture) MinecraftClient.getInstance().getTextureManager().getTexture(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE); }
-    static synchronized BakedQuad quad(BakedQuad source,int role) {
+    static BakedQuad quad(BakedQuad source,int role) {
         return quad(source,role,false);
     }
-    static synchronized BakedQuad quad(BakedQuad source,int role,boolean manual) {
+    static BakedQuad quad(BakedQuad source,int role,boolean manual) {
         if(role==0)return source;
-        Sprite sprite=source.getSprite(); Identifier id=sprite.getContents().getId(); if(manual)return manualQuad(source,role,sprite,id);
+        QuadCaches generation = caches;
+        Sprite sprite=source.getSprite(); Identifier id=sprite.getContents().getId(); if(manual)return manualQuad(generation,source,role,sprite,id);
         FacadeConfig c=config();
         if(role==4&&!c.brickWindow.containsKey(id))return source;
         // A facade correction must never recolour horizontal pavements or
@@ -40,14 +54,14 @@ final class FacadeMaterials {
         // Regional wall colours must affect only its upper masonry half.
         if(id.getPath().endsWith("/roof_1")&&!wallHalf(source.getVertexData(),sprite))return source;
         if(id.getPath().endsWith("/spirelamp_0010")&&(source.getFace()==Direction.UP||source.getFace()==Direction.DOWN))return source;
-        Map<BakedQuad,BakedQuad[]> cache=manual?MANUAL_CACHE:CACHE;
-        BakedQuad[] variants=cache.computeIfAbsent(source,k->new BakedQuad[5]);if(variants[role]!=null)return variants[role];
-        int slot=role;
+        Map<BakedQuad, BakedQuad[]> cache = generation.regional;
+        BakedQuad cached = cached(cache, source, role);
+        if (cached != null) return cached;
         Sprite target=role==4?atlas().getSprite(c.brickWindow.get(id)):role==1&&c.rose.containsKey(id)?atlas().getSprite(c.rose.get(id)):
             role>1&&c.accentBase.containsKey(id)?atlas().getSprite(c.accentBase.get(id)):sprite;
         int[] data=source.getVertexData().clone();
         for(int i=0;i<4;i++) { int p=i*8; if(target!=sprite) { data[p+4]=Float.floatToRawIntBits(map(Float.intBitsToFloat(data[p+4]),sprite.getMinU(),sprite.getMaxU(),target.getMinU(),target.getMaxU())); data[p+5]=Float.floatToRawIntBits(map(Float.intBitsToFloat(data[p+5]),sprite.getMinV(),sprite.getMaxV(),target.getMinV(),target.getMaxV())); } if(role>1&&role<4) { int color=data[p+3]; float[] m=c.multipliers[role]; data[p+3]=(color&0xff000000)|((int)((color&255)*m[0]))|((int)(((color>>>8)&255)*m[1])<<8)|((int)(((color>>>16)&255)*m[2])<<16); } }
-        return variants[slot]=new BakedQuad(data,source.getColorIndex(),source.getFace(),target,source.hasShade());
+        return cache(cache, source, role, new BakedQuad(data,source.getColorIndex(),source.getFace(),target,source.hasShade()));
     }
     static boolean transform(MutableQuadView quad,int role) {
         return transform(quad,role,false);
@@ -66,16 +80,34 @@ final class FacadeMaterials {
         if(role>1&&role<4) { float[] m=c.multipliers[role]; for(int i=0;i<4;i++){ int color=quad.color(i); quad.color(i,(color&0xff000000)|((int)(((color>>>16)&255)*m[0])<<16)|((int)(((color>>>8)&255)*m[1])<<8)|(int)((color&255)*m[2])); } }
         return true;
     }
-    private static BakedQuad manualQuad(BakedQuad source,int role,Sprite sprite,Identifier id) {
+    private static BakedQuad manualQuad(QuadCaches generation,BakedQuad source,int role,Sprite sprite,Identifier id) {
         Identifier targetId=ManualStonePalette.target(id,role); if(targetId==null)return source;
         boolean transientQuad=dev.dreamwalker.bloodbornedw.composite.CornerQuadParentScope.parentFor(source)!=null;
-        BakedQuad[] variants=transientQuad?null:MANUAL_CACHE.computeIfAbsent(source,k->new BakedQuad[5]);
-        if(variants!=null&&variants[role]!=null)return variants[role];
+        if (!transientQuad) {
+            BakedQuad cached = cached(generation.manual, source, role);
+            if (cached != null) return cached;
+        }
         Sprite target=atlas().getSprite(targetId); int[] data=source.getVertexData().clone();
         for(int i=0;i<4;i++){int p=i*8;data[p+4]=Float.floatToRawIntBits(map(Float.intBitsToFloat(data[p+4]),sprite.getMinU(),sprite.getMaxU(),target.getMinU(),target.getMaxU()));data[p+5]=Float.floatToRawIntBits(map(Float.intBitsToFloat(data[p+5]),sprite.getMinV(),sprite.getMaxV(),target.getMinV(),target.getMaxV()));}
         BakedQuad result=new BakedQuad(data,source.getColorIndex(),source.getFace(),target,source.hasShade());
-        if(transientQuad)dev.dreamwalker.bloodbornedw.composite.CornerQuadParentScope.alias(source,result);
-        if(variants!=null)variants[role]=result; return result;
+        if(transientQuad) {
+            dev.dreamwalker.bloodbornedw.composite.CornerQuadParentScope.alias(source,result);
+            return result;
+        }
+        return cache(generation.manual, source, role, result);
+    }
+    private static BakedQuad cached(Map<BakedQuad, BakedQuad[]> cache, BakedQuad source, int role) {
+        synchronized (cache) {
+            BakedQuad[] variants = cache.get(source);
+            return variants == null ? null : variants[role];
+        }
+    }
+    private static BakedQuad cache(Map<BakedQuad, BakedQuad[]> cache, BakedQuad source, int role, BakedQuad result) {
+        synchronized (cache) {
+            BakedQuad[] variants = cache.computeIfAbsent(source, ignored -> new BakedQuad[5]);
+            if (variants[role] == null) variants[role] = result;
+            return variants[role];
+        }
     }
     private static float map(float v,float a,float b,float c,float d) { return c+(v-a)*(d-c)/(b-a); }
     private static boolean wallHalf(int[] vertices,Sprite sprite) { float v=0;for(int i=0;i<4;i++)v+=Float.intBitsToFloat(vertices[i*8+5]);return v/4<=sprite.getMinV()+(sprite.getMaxV()-sprite.getMinV())*.5F; }
