@@ -29,7 +29,12 @@ abstract class ObjectExtentMixin {
 
     @Inject(method = "setBlock", at = @At("HEAD"), remap = false)
     private void dw$validate(BlockVector3 vector, BlockStateHolder<?> value, CallbackInfoReturnable<Boolean> cir) throws InputParseException {
-        if (!outsideHistory && !AppearanceTag.valid(value.toBaseBlock())) throw new InputParseException("Invalid city editor clipboard appearance");
+        if (outsideHistory) return;
+        if (!AppearanceTag.valid(value.toBaseBlock())) throw new InputParseException("Invalid city editor clipboard appearance");
+        var pos = new BlockPos(vector.getX(),vector.getY(),vector.getZ());
+        if (world.getServer().isOnThread() && value.getBlockType().getId().startsWith("bloodborne_dw:")
+                && !CityEditorServer.canQueueAppearance(world,pos))
+            throw new InputParseException("Очередь цветов DreamWalker занята. Повторите вставку после обработки.");
     }
 
     // Return ordinal 1 is the bridge's explicit selected-empty no-op; ordinal 0 is the outer adapter.

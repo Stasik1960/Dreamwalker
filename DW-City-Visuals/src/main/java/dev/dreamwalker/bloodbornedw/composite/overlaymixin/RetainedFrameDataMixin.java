@@ -89,9 +89,27 @@ public abstract class RetainedFrameDataMixin implements RetainedFrameData {
     private static void dw$readFrames(NbtCompound nbt, Chunk chunk, CallbackInfoReturnable<NativeVisualData> cir) {
         boolean hasVersion = nbt.contains("CityEditorVersion"), hasCells = nbt.contains("CityEditorCells");
         if (hasVersion || hasCells) {
-            if (!nbt.contains("CityEditorVersion", NbtElement.INT_TYPE) || nbt.getInt("CityEditorVersion") != 2 || !nbt.contains("CityEditorCells", NbtElement.COMPOUND_TYPE))
-                throw new IllegalArgumentException("Invalid editor version or list");
-            EditorCells cells = EditorCells.readPacked(nbt.getCompound("CityEditorCells"), chunk.getPos(), chunk.getBottomY(), chunk.getTopY());
+            if (!hasCells) throw new IllegalArgumentException("Missing editor cells");
+            EditorCells cells;
+            if (hasVersion) {
+                if (!nbt.contains("CityEditorVersion", NbtElement.INT_TYPE))
+                    throw new IllegalArgumentException("Invalid editor version tag");
+                int version = nbt.getInt("CityEditorVersion");
+                if (version == 1 && nbt.contains("CityEditorCells", NbtElement.LIST_TYPE)) {
+                    cells = EditorCells.read((NbtList) nbt.get("CityEditorCells"),
+                            chunk.getPos(), chunk.getBottomY(), chunk.getTopY());
+                } else if (version == 2 && nbt.contains("CityEditorCells", NbtElement.COMPOUND_TYPE)) {
+                    cells = EditorCells.readPacked(nbt.getCompound("CityEditorCells"), chunk.getPos(),
+                            chunk.getBottomY(), chunk.getTopY());
+                } else {
+                    throw new IllegalArgumentException("Invalid editor version or payload");
+                }
+            } else if (nbt.contains("CityEditorCells", NbtElement.LIST_TYPE)) {
+                cells = EditorCells.read((NbtList) nbt.get("CityEditorCells"),
+                        chunk.getPos(), chunk.getBottomY(), chunk.getTopY());
+            } else {
+                throw new IllegalArgumentException("Unversioned editor payload must be a legacy list");
+            }
             if (cells.size() != 0) cir.setReturnValue(((RetainedFrameData)(Object)cir.getReturnValue()).dw$withEditor(cells));
         }
         if (!nbt.contains("Source63Frames")) return;

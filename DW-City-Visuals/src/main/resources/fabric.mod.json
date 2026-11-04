@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "environment": "*",
   "custom": {
-    "dreamwalker:revisionSuffix": "cityeditor.2.1-cornerlight.2"
+    "dreamwalker:revisionSuffix": "cityeditor.2.1-cornerlight.2-rgb.1"
   },
   "entrypoints": {
     "main": [
@@ -12,7 +12,8 @@
       "dev.dreamwalker.bloodbornedw.editor.CityEditorServer",
       "dev.dreamwalker.bloodbornedw.composite.StandardLanternGameplay",
       "dev.dreamwalker.bloodbornedw.composite.RetainedFramePlacement",
-      "dev.dreamwalker.bloodbornedw.composite.AutoStoneFence"
+      "dev.dreamwalker.bloodbornedw.composite.AutoStoneFence",
+      "dev.dreamwalker.bloodbornedw.item.NrpPickaxe"
     ],
     "client": [
       "dev.dreamwalker.bloodbornedw.visual.CityVisualClient",
@@ -23,6 +24,12 @@
     ]
   },
   "mixins": [
+    {
+      "config": "dw-nrp-combat.mixins.json"
+    },
+    {
+      "config": "dw-nrp-mining.mixins.json"
+    },
     {
       "config": "dw-editor.mixins.json"
     },

@@ -16,7 +16,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockRenderView;
 import dev.dreamwalker.bloodbornedw.composite.NativeGridBlock;
 import dev.dreamwalker.bloodbornedw.composite.NativePhysicsBlock;
+import dev.dreamwalker.bloodbornedw.editor.EditorCells;
 import dev.dreamwalker.bloodbornedw.editor.EditorRenderScope;
+import dev.dreamwalker.bloodbornedw.editor.RgbProfiles;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.IdentityHashMap;
 import java.util.Map;
 
@@ -57,33 +61,73 @@ public final class CityFacadesClient implements ClientModInitializer {
     }
     private static boolean brick(String path) { return path.equals("source_assembly_brick_wall") || path.equals("source_bricks") || ShutterSubstrate.sourceId(new Identifier("bloodborne_dw",path)); }
     public static boolean contextualPart(Identifier id){return ShutterSubstrate.modelId(id);}
+    private record RgbGeneration(long id, Set<RgbProfiles.Profile> active) {}
+    private static volatile RgbGeneration rgbGeneration = new RgbGeneration(0,Set.of());
+
+    private static void loadRgb(ResourceManager manager) {
+        RgbResourceGuard.Generation verified = RgbResourceGuard.reload(manager,RgbProfiles.assets());
+        Set<RgbProfiles.Profile> enabled = new HashSet<>();
+        for (var profile : RgbProfiles.profiles())
+            if (verified.verifiesAll(profile.assets().keySet())) enabled.add(profile);
+        rgbGeneration = new RgbGeneration(verified.id(),Set.copyOf(enabled));
+    }
+
+    static boolean currentRgbGeneration(long generation) { return rgbGeneration.id == generation; }
+    static RgbProfiles.Profile activeRgb(RgbProfiles.Profile profile) {
+        return profile != null && rgbGeneration.active.contains(profile) ? profile : null;
+    }
+
+    private static BakedModel rgbModel(BakedModel model, RgbProfiles.Profile profile, Identifier part, int painted) {
+        RgbGeneration generation = rgbGeneration;
+        if (profile == null || !generation.active.contains(profile) || part != null && !profile.hasModel(part)) return null;
+        if (model instanceof FacadeModel wrapped) model = wrapped.delegate();
+        return new FacadeModel(model,profile,painted & 0xffffff,generation.id);
+    }
+
     @Override public void onInitializeClient() {
         dev.dreamwalker.bloodbornedw.composite.SodiumCompatibility.checkTranslucentTargets();
         CityVisualClient.registerReloadListener(FacadeMaterials::reload);
         ResourceManagerHelper.get(ResourceType.CLIENT_RESOURCES).registerReloadListener(new SimpleSynchronousResourceReloadListener() {
             public Identifier getFabricId() { return new Identifier("bloodborne_dw","city_facades"); }
-            public void reload(ResourceManager manager) { FacadeMaterials.reload(); }
+            public void reload(ResourceManager manager) {
+                loadRgb(manager);
+                FacadeMaterials.reload();
+            }
         });
         ModelLoadingPlugin.register(plugin->plugin.modifyModelAfterBake().register(ModelModifier.WRAP_PHASE,(model,context)-> {
             if(context.id() instanceof ModelIdentifier id && id.getNamespace().equals("bloodborne_dw") && id.getVariant().contains("compact=true") && brick(id.getPath())) return new FacadeModel(model,0);
             return model;
         }));
     }
-    public static BakedModel staticModel(BakedModel model, BlockPos root, BlockState state,BlockRenderView world) {
+    public static BakedModel staticModel(BakedModel model, BlockPos root, BlockState state,BlockRenderView world,Identifier part) {
         if(!CityVisualClient.isAlt())return model;
         Identifier id=Registries.BLOCK.getId(state.getBlock());
         if(!id.getNamespace().equals("bloodborne_dw"))return model;
         int painted=EditorRenderScope.style(world,root);
+        if (EditorCells.isRgb(painted)) {
+            BakedModel rgb = rgbModel(model,RgbProfiles.source(state),part,painted);
+            if (rgb != null) return rgb;
+            painted = -1;
+        }
         int role=painted>=0?painted:(ShutterSubstrate.source(state)||ShutterSubstrate.model(model,state)?ShutterSubstrate.role(world,root):FacadeMaterials.role(root));
         if(painted==0)return fixedBase(model);
         return role==0?model:fixed(model,role,painted>0);
     }
     /** visible() returns a fresh, world-bound occlusion view. Never retain or probe it. */
     public static BakedModel visibleModel(BakedModel model, BlockPos root, BlockState state,BlockRenderView world,boolean shutterPart) {
+        return visibleModel(model,root,state,world,shutterPart,null);
+    }
+    public static BakedModel visibleModel(BakedModel model, BlockPos root, BlockState state,BlockRenderView world,boolean shutterPart,Identifier part) {
         if(!CityVisualClient.isAlt())return model;
         Identifier id=Registries.BLOCK.getId(state.getBlock());
         if(!id.getNamespace().equals("bloodborne_dw"))return model;
         int painted=EditorRenderScope.style(world,root);
+        if (EditorCells.isRgb(painted)) {
+            // The native mount path does not carry a reviewed part identifier.
+            BakedModel rgb = part == null ? null : rgbModel(model,RgbProfiles.source(state),part,painted);
+            if (rgb != null) return rgb;
+            painted = -1;
+        }
         int role=painted>=0?painted:(ShutterSubstrate.source(state)||shutterPart?ShutterSubstrate.role(world,root):FacadeMaterials.role(root));
         if(painted==0)return new FacadeModel(model,0,true,false,true);
         return role==0?model:new FacadeModel(model,role,false,painted>0,true);
@@ -96,6 +140,11 @@ public final class CityFacadesClient implements ClientModInitializer {
         Identifier id=Registries.BLOCK.getId(state.getBlock());
         if(!id.getNamespace().equals("bloodborne_dw"))return model;
         int painted=EditorRenderScope.style(world,pos);
+        if (EditorCells.isRgb(painted)) {
+            BakedModel rgb = rgbModel(model,RgbProfiles.at(world,pos,state),null,painted);
+            if (rgb != null) return rgb;
+            painted = -1;
+        }
         if(painted>=0) {
             if(model instanceof FacadeModel facade) {
                 if(facade.resolved()&&facade.role()==painted&&facade.manualStyle()==(painted>0))return model;

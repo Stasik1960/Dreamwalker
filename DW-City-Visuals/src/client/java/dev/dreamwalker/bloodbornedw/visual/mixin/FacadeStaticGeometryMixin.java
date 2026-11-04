@@ -14,7 +14,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 abstract class FacadeStaticGeometryMixin {
     @Inject(method="visible",at=@At("RETURN"),cancellable=true,remap=false)
     private static void dw$facades(StaticArchitectureCatalog.Pose pose,int index,BlockRenderView world,BlockPos root,CallbackInfoReturnable<BakedModel> cir) {
-        cir.setReturnValue(CityFacadesClient.visibleModel(cir.getReturnValue(),root,pose.state(),world,CityFacadesClient.contextualPart(pose.parts().get(index).model())));
+        var partModel=pose.parts().get(index).model();
+        cir.setReturnValue(CityFacadesClient.visibleModel(cir.getReturnValue(),root,pose.state(),world,
+                CityFacadesClient.contextualPart(partModel),partModel));
     }
 }
 

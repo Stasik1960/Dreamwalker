@@ -17,6 +17,7 @@ import net.fabricmc.fabric.api.networking.v1.*;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.*;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtTagSizeTracker;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.registry.*;
@@ -33,7 +34,7 @@ import net.minecraft.world.chunk.*;
 
 /** Server-owned bounded editing. Untouched city cells have no editor entries. */
 public final class CityEditorServer implements ModInitializer {
-    public static final Identifier REQUEST=id("editor_request"), STATE=id("editor_state"), UPDATE=id("editor_update");
+    public static final Identifier REQUEST=id("editor_request_rgb1"), STATE=id("editor_state_rgb1"), UPDATE=id("editor_update_rgb1");
     public static final Item BRUSH=new Item(new Item.Settings().maxCount(1));
     public static final int MAX_CELLS=4096, MAX_HISTORY_CELLS=32768;
     private static final Map<UUID,Session> SESSIONS=new HashMap<>();
@@ -41,8 +42,12 @@ public final class CityEditorServer implements ModInitializer {
     private static final Map<WorldChunk,Map<Long,Integer>> EXTERNAL_UPDATES=new LinkedHashMap<>();
     private static final Map<WorldChunk, Set<Long>> DIRTY_CELLS = new LinkedHashMap<>();
     private static final int CELLS_PER_TICK = 128, RECIPIENTS_PER_TICK = 32;
+    private static final int MAX_EXTERNAL_PENDING = 8192, MAX_UNPUBLISHED = 16_384;
+    private static final List<String> CONFIG_INTS = List.of("material","radius","secondary","accent","primaryWeight","secondaryWeight");
     private static final long TICK_NANOS = 1_500_000;
     private static Publication publication;
+    private static long publicationSequence;
+    private static int externalPending, unpublished;
     private static final ThreadLocal<Integer> PLACING=ThreadLocal.withInitial(()->0);
     private static final ThreadLocal<Map<WorldChunk,Map<Long,Integer>>> PLACEMENT_UPDATES=new ThreadLocal<>();
     private static List<Region> regions;
@@ -63,13 +68,14 @@ public final class CityEditorServer implements ModInitializer {
         }
     }
     private static final class Session {
-        int material=1,radius=0,lastRequest=-100,secondary=0,accent=0,primaryWeight=85,secondaryWeight=15; String mode="single",message="Готово";
+        int material=1,radius=0,lastRequest=-100,lastAltWarning=-100,secondary=0,accent=0,primaryWeight=85,secondaryWeight=15; String mode="single",message="Готово";
         BlockPos first,second;
         RegistryKey<net.minecraft.world.World> selectionDimension;
         final Deque<Edit> undo=new ArrayDeque<>(),redo=new ArrayDeque<>(); Job job;
         String stroke="";RegistryKey<net.minecraft.world.World> strokeDimension;boolean endingStroke;
         long requestId;boolean accepted,retry;
         final Map<Long,Change> strokeChanges=new LinkedHashMap<>();
+        BrushColors colors() { return new BrushColors(material,secondary,accent,primaryWeight,secondaryWeight); }
     }
     private static final class Publication {
         final WorldChunk chunk;
@@ -85,13 +91,106 @@ public final class CityEditorServer implements ModInitializer {
         }
     }
     private static final class Job {
-        Edit edit; final int direction; final List<Change> done=new ArrayList<>(); int index;String error;
+        Edit edit; Preparation preparation; final int direction; final List<Change> done=new ArrayList<>(); int index, historyCheck;String error;
         Job(Edit edit,int direction){this.edit=edit;this.direction=direction;}
+    }
+    private static final class Preparation {
+        final String mode;
+        final boolean reset;
+        final BlockPos origin, min, max;
+        final BrushColors colors;
+        final Direction.Axis axis;
+        final Iterator<BlockPos> scan;
+        final BlockState initialState;
+        final int initialNative, initialAppearance;
+        final Deque<BlockPos> flood = new ArrayDeque<>();
+        final Set<BlockPos> visited = new HashSet<>();
+        final Set<BlockPos> roots = new HashSet<>();
+        final Map<Long,List<Change>> byChunk = new LinkedHashMap<>();
+
+        Preparation(ServerWorld world, BlockPos origin, Direction side, Session session, String mode, boolean reset) {
+            this.mode = mode;
+            this.reset = reset;
+            this.origin = origin;
+            colors = session.colors();
+            axis = side.getAxis();
+            boolean bounded = mode.equals("area") || mode.equals("fill") || mode.equals("noise");
+            if (bounded) {
+                if (session.first == null || session.second == null || !world.getRegistryKey().equals(session.selectionDimension))
+                    throw new IllegalArgumentException("Сначала задайте обе точки выделения в этом измерении");
+                BlockPos a = session.first, b = session.second;
+                min = new BlockPos(Math.min(a.getX(),b.getX()),Math.min(a.getY(),b.getY()),Math.min(a.getZ(),b.getZ()));
+                max = new BlockPos(Math.max(a.getX(),b.getX()),Math.max(a.getY(),b.getY()),Math.max(a.getZ(),b.getZ()));
+                long count = ((long)max.getX()-min.getX()+1)*((long)max.getY()-min.getY()+1)*((long)max.getZ()-min.getZ()+1);
+                int dx = Math.max(Math.abs(origin.getX()-min.getX()),Math.abs(origin.getX()-max.getX()));
+                int dy = Math.max(Math.abs(origin.getY()-min.getY()),Math.abs(origin.getY()-max.getY()));
+                int dz = Math.max(Math.abs(origin.getZ()-min.getZ()),Math.abs(origin.getZ()-max.getZ()));
+                if (count > MAX_CELLS || (long)dx*dx + (long)dy*dy + (long)dz*dz > 128*128)
+                    throw new IllegalArgumentException("Выделение: максимум 4096 клеток в пределах 128 блоков");
+            } else {
+                int r = mode.equals("plane") ? session.radius : 0;
+                int x = axis == Direction.Axis.X ? 0 : r;
+                int y = axis == Direction.Axis.Y ? 0 : r;
+                int z = axis == Direction.Axis.Z ? 0 : r;
+                min = origin.add(-x,-y,-z);
+                max = origin.add(x,y,z);
+            }
+            scan = BlockPos.iterate(min,max).iterator();
+            if (mode.equals("fill")) {
+                if (!inside(origin,min,max)) throw new IllegalArgumentException("Цель заливки вне выделения");
+                flood.add(origin);
+                visited.add(origin);
+                initialState = world.getBlockState(origin);
+                initialNative = NativeVisuals.index(world,origin);
+                initialAppearance = effectiveStyle(world,origin);
+            } else {
+                initialState = null;
+                initialNative = initialAppearance = 0;
+            }
+        }
+
+        boolean pending() { return scan.hasNext() || !flood.isEmpty(); }
+
+        void step(ServerWorld world, ServerPlayerEntity player) {
+            boolean scanning = scan.hasNext();
+            BlockPos hit = scanning ? scan.next() : flood.removeFirst();
+            if (loaded(world,hit) == null) {
+                if (mode.equals("plane")) return;
+                throw new IllegalArgumentException("Выделение содержит незагруженный чанк");
+            }
+            if (mode.equals("fill")) {
+                if (scanning || world.getBlockState(hit) != initialState || NativeVisuals.index(world,hit) != initialNative
+                        || effectiveStyle(world,hit) != initialAppearance) return;
+                for (Direction direction : Direction.values()) {
+                    if (direction.getAxis() == axis) continue;
+                    BlockPos neighbor = hit.offset(direction);
+                    if (inside(neighbor,min,max) && visited.add(neighbor)) flood.addLast(neighbor);
+                }
+            }
+            BlockPos root = resolveTarget(world,hit,colors,mode,reset);
+            if (root == null) return;
+            requireEdit(world,player,hit,root);
+            if (!roots.add(root)) return;
+            WorldChunk chunk = loaded(world,root);
+            if (chunk == null) return;
+            int before = style(chunk,root), after = reset ? -1 : colors.value(root,mode);
+            if (before != after) {
+                byChunk.computeIfAbsent(chunk.getPos().toLong(), ignored -> new ArrayList<>())
+                        .add(new Change(root.toImmutable(),world.getBlockState(root),NativeVisuals.index(world,root),before,after));
+            }
+        }
+
+        Edit complete(ServerWorld world) {
+            List<Change> changes = new ArrayList<>();
+            for (List<Change> chunk : byChunk.values()) changes.addAll(chunk);
+            return new Edit(world.getRegistryKey(),changes);
+        }
     }
     private static Identifier id(String path){return new Identifier("bloodborne_dw",path);}
     @Override public void onInitialize(){
         Registry.register(Registries.ITEM,id("editor_brush"),BRUSH);
         StonePaletteSupport.initialize();
+        RgbProfiles.initialize();
         ServerPlayNetworking.registerGlobalReceiver(REQUEST,(server,player,handler,buf,sender)->{
             Ingress ingress=INGRESS.computeIfAbsent(player.getUuid(),ignored->new Ingress());
             if(!ingress.acquire()){handler.disconnect(Text.literal("Слишком много запросов редактора"));return;}
@@ -99,17 +198,20 @@ public final class CityEditorServer implements ModInitializer {
             NbtCompound request;
             try{request=buf.readNbt(new NbtTagSizeTracker(4096));if(request==null||buf.isReadable()){ingress.release();return;}}
             catch(RuntimeException bad){ingress.release();return;}
-            server.execute(()->{try{if(!player.isDisconnected())safeRequest(player,request);}finally{ingress.release();}});
+            server.execute(()->{try{if(!player.isDisconnected() && ServerPlayNetworking.canSend(player,STATE)
+                    && ServerPlayNetworking.canSend(player,UPDATE)
+                    && (player.getMainHandStack().isOf(BRUSH) || request.getString("action").equals("endStroke"))) safeRequest(player,request);}finally{ingress.release();}});
         });
         ServerTickEvents.END_SERVER_TICK.register(CityEditorServer::tick);
         ServerPlayConnectionEvents.DISCONNECT.register((handler,server)->{SESSIONS.remove(handler.player.getUuid());INGRESS.remove(handler.player.getUuid());});
         ServerChunkEvents.CHUNK_UNLOAD.register((world, chunk) -> {
             flushBeforeSave(chunk);
-            DIRTY_CELLS.remove(chunk);
+            Set<Long> removed = DIRTY_CELLS.remove(chunk);
+            if (removed != null) unpublished -= removed.size();
             if (publication != null && publication.chunk == chunk) publication = null;
         });
         ServerLifecycleEvents.SERVER_STOPPED.register(server->{
-            SESSIONS.clear(); INGRESS.clear(); EXTERNAL_UPDATES.clear(); DIRTY_CELLS.clear(); publication=null;
+            SESSIONS.clear(); INGRESS.clear(); EXTERNAL_UPDATES.clear(); DIRTY_CELLS.clear(); publication=null; publicationSequence=0; externalPending=unpublished=0;
             PLACING.remove(); PLACEMENT_UPDATES.remove();
         });
         CommandRegistrationCallback.EVENT.register((dispatcher,access,environment)->{
@@ -130,8 +232,8 @@ public final class CityEditorServer implements ModInitializer {
     public static void placed(ServerWorld world,BlockPos pos){
         WorldChunk chunk=loaded(world,pos);if(chunk==null||!supported(world.getBlockState(pos)))return;
         discardExternal(chunk,pos.asLong());
-        if(PLACING.get()>0){var pending=PLACEMENT_UPDATES.get();if(pending==null){pending=new LinkedHashMap<>();PLACEMENT_UPDATES.set(pending);}pending.computeIfAbsent(chunk,k->new LinkedHashMap<>()).put(pos.asLong(),0);}
-        else applyUpdates(Map.of(chunk,Map.of(pos.asLong(),0)));
+        if(PLACING.get()>0){var pending=PLACEMENT_UPDATES.get();if(pending==null){pending=new LinkedHashMap<>();PLACEMENT_UPDATES.set(pending);}pending.computeIfAbsent(chunk,k->new LinkedHashMap<>()).put(pos.asLong(),-1);}
+        else applyUpdates(Map.of(chunk,Map.of(pos.asLong(),-1)));
         invalidateAt(world,pos);
     }
     /** Called after a committed physical replacement, never on a model/profile switch. */
@@ -141,7 +243,7 @@ public final class CityEditorServer implements ModInitializer {
         var data=NativeVisuals.data(chunk);var attachment=(RetainedFrameData)(Object)data;
         int oldStyle=attachment.dw$editor().style(pos);
         var pending=PLACEMENT_UPDATES.get();if(pending!=null&&pending.containsKey(chunk)&&pending.get(chunk).containsKey(pos.asLong()))oldStyle=pending.get(chunk).get(pos.asLong());
-        int newStyle=PLACING.get()>0&&supported(next)?0:-1;
+        int newStyle=-1;
         if(oldStyle!=newStyle){
             if(PLACING.get()>0){if(pending==null){pending=new LinkedHashMap<>();PLACEMENT_UPDATES.set(pending);}pending.computeIfAbsent(chunk,k->new LinkedHashMap<>()).put(pos.asLong(),newStyle);}
             else applyUpdates(Map.of(chunk,Map.of(pos.asLong(),newStyle)));
@@ -151,7 +253,8 @@ public final class CityEditorServer implements ModInitializer {
     // Bounded histories are the only place we track object identity. No world-sized generation map.
     private static void invalidateAt(ServerWorld world,BlockPos pos){
         for(Session s:SESSIONS.values()){
-            if(s.job!=null&&s.job.edit.dimension.equals(world.getRegistryKey())&&touches(s.job.edit,pos)){s.message="Операция остановлена: блок заменён";finish(s);}
+            if(s.job!=null&&s.job.edit.dimension.equals(world.getRegistryKey())&&(touches(s.job.edit,pos)
+                    || s.job.preparation != null && (pos.equals(s.job.preparation.origin) || s.job.preparation.roots.contains(pos)))){s.message="Операция остановлена: блок заменён";finish(s);}
             s.undo.removeIf(e->e.dimension.equals(world.getRegistryKey())&&touches(e,pos));
             s.redo.removeIf(e->e.dimension.equals(world.getRegistryKey())&&touches(e,pos));
             if(world.getRegistryKey().equals(s.strokeDimension))s.strokeChanges.remove(pos.asLong());
@@ -161,7 +264,7 @@ public final class CityEditorServer implements ModInitializer {
     private static void discardExternal(WorldChunk chunk, long pos) {
         Map<Long,Integer> pending = EXTERNAL_UPDATES.get(chunk);
         if (pending == null) return;
-        pending.remove(pos);
+        if (pending.remove(pos) != null) externalPending--;
         if (pending.isEmpty()) EXTERNAL_UPDATES.remove(chunk);
     }
     public static int pendingStyle(ServerWorld world,BlockPos pos){
@@ -169,22 +272,35 @@ public final class CityEditorServer implements ModInitializer {
     }
     public static int effectiveStyle(ServerWorld world,BlockPos pos){
         if(!CityVisualModeState.isAlt(world.getServer()))return 0;
-        pos=StonePaletteSupport.paintTarget(world,pos);if(pos==null)return 0;
+        BlockPos legacy = StonePaletteSupport.paintTarget(world,pos);
+        if (legacy != null) pos = legacy;
+        else {
+            pos = RgbProfiles.paintTarget(world,pos);
+            if (pos == null) return 0;
+        }
+        return appearanceAt(world,pos);
+    }
+    private static int appearanceAt(ServerWorld world, BlockPos pos) {
         WorldChunk chunk=loaded(world,pos);if(chunk==null)return 0;
         int value=style(chunk,pos);if(value>=0)return value;
         int role=regional(pos,world);
         return (StonePaletteSupport.automaticRoles(world,pos)&(1<<role))!=0?role:0;
     }
+    public static boolean canQueueAppearance(ServerWorld world, BlockPos pos) {
+        return externalPending < MAX_EXTERNAL_PENDING || pendingStyle(world,pos) != -2;
+    }
     public static void queueAppearance(ServerWorld world,BlockPos pos,int value){
         if(!world.getServer().isOnThread())throw new IllegalStateException("Editor writes require the server thread");
-        if(value< -1||value>4||pos.getY()<world.getBottomY()||pos.getY()>=world.getTopY())throw new IllegalArgumentException("Invalid editor appearance");
+        if((value != -1 && !EditorCells.isStored(value))||pos.getY()<world.getBottomY()||pos.getY()>=world.getTopY())throw new IllegalArgumentException("Invalid editor appearance");
         WorldChunk chunk=loaded(world,pos);if(chunk==null)throw new IllegalArgumentException("Editor target chunk is not loaded");
-        invalidateAt(world,pos);
+        if (EditorCells.isRgb(value) && RgbProfiles.at(world,pos,chunk.getBlockState(pos)) == null) value = -1;
         if (style(chunk,pos) == value) return;
+        invalidateAt(world,pos);
         if (cells(chunk).style(pos) == value) {
             discardExternal(chunk,pos.asLong());
         } else {
-            EXTERNAL_UPDATES.computeIfAbsent(chunk,k->new LinkedHashMap<>()).put(pos.asLong(),value);
+            var pending = EXTERNAL_UPDATES.computeIfAbsent(chunk,k->new LinkedHashMap<>());
+            if (pending.put(pos.asLong(),value) == null) externalPending++;
             chunk.setNeedsSaving(true);
         }
     }
@@ -202,84 +318,112 @@ public final class CityEditorServer implements ModInitializer {
         if(!EditorProtocol.acceptsAction(action)){s.message="Неизвестное действие";state(p,s);return;}
         if(action.equals("endStroke")){s.endingStroke=true;if(s.job==null)flushStroke(s,false);state(p,s);return;}
         if(action.equals("config")){
+            for (String key : CONFIG_INTS) {
+                if (request.contains(key) && !request.contains(key,NbtElement.INT_TYPE))
+                    throw new IllegalArgumentException("Недопустимые настройки редактора");
+            }
+            if (request.contains("mode") && !request.contains("mode",NbtElement.STRING_TYPE))
+                throw new IllegalArgumentException("Недопустимый режим редактора");
             int material=request.contains("material")?request.getInt("material"):s.material,radius=request.contains("radius")?request.getInt("radius"):s.radius;
             int secondary=request.contains("secondary")?request.getInt("secondary"):s.secondary,accent=request.contains("accent")?request.getInt("accent"):s.accent;
             int primaryWeight=request.contains("primaryWeight")?request.getInt("primaryWeight"):s.primaryWeight,secondaryWeight=request.contains("secondaryWeight")?request.getInt("secondaryWeight"):s.secondaryWeight;
             String mode=request.contains("mode")?request.getString("mode"):s.mode;
-            if(material<0||material>4||radius<0||radius>4||secondary<0||secondary>4||accent<0||accent>4||primaryWeight<0||secondaryWeight<0||primaryWeight+secondaryWeight>100||!EditorProtocol.MODES.contains(mode)){s.message="Недопустимые настройки редактора";state(p,s);return;}
+            if(!EditorCells.isStored(material)||radius<0||radius>4||!EditorCells.isStored(secondary)||!EditorCells.isStored(accent)||primaryWeight<0||primaryWeight>100||secondaryWeight<0||secondaryWeight>100-primaryWeight||!EditorProtocol.MODES.contains(mode)){s.message="Недопустимые настройки редактора";state(p,s);return;}
             s.endingStroke=true;if(s.job==null)flushStroke(s,false);
             s.material=material;s.radius=radius;s.mode=mode;s.secondary=secondary;s.accent=accent;s.primaryWeight=primaryWeight;s.secondaryWeight=secondaryWeight;
             state(p,s);return;
         }
+        boolean needsAlt = !action.equals("first") && !action.equals("second") && !action.equals("cancel");
+        if (needsAlt && !CityVisualModeState.isAlt(p.getServer())) {
+            s.message = "Для покраски требуется ALT-вид";
+            if (now - s.lastAltWarning >= 20) {
+                p.sendMessage(Text.literal(s.message),false);
+                s.lastAltWarning = now;
+            }
+            state(p,s);
+            return;
+        }
         if(now-s.lastRequest<2){s.retry=true;state(p,s);return;}s.lastRequest=now;
         if(action.equals("cancel")){s.endingStroke=true;if(s.job!=null){s.message="Остановлено; применённая часть доступна для отмены";finish(s);}else{s.first=s.second=null;s.message="Выделение снято";}flushStroke(s,false);state(p,s);return;}
-        boolean append=s.job!=null&&action.equals("paint")&&s.job.direction==0&&!s.endingStroke&&!s.stroke.isEmpty()&&s.stroke.equals(request.getString("stroke"))&&(s.mode.equals("single")||s.mode.equals("plane"));
-        if(s.job!=null&&!append){s.retry=true;s.message="Дождитесь завершения или отмените операцию";state(p,s);return;}
+        if(s.job!=null){s.retry=true;s.message="Дождитесь завершения или отмените операцию";state(p,s);return;}
         if(action.equals("undo")||action.equals("redo")){flushStroke(s,false);history(p,s,action.equals("redo"));state(p,s);return;}
         BlockHitResult hit=target(p);if(hit==null){s.message="Под прицелом нет блока";state(p,s);return;}
-        BlockPos pos=hit.getBlockPos();ServerWorld world=p.getServerWorld();WorldChunk chunk=loaded(world,pos);
-        boolean selection=action.equals("first")||action.equals("second");
+        BlockPos pos=hit.getBlockPos();
+        if (request.contains("expectedTarget") && (!request.contains("expectedTarget",NbtElement.LONG_TYPE)
+                || request.getLong("expectedTarget") != pos.asLong())) {
+            s.message = "Цель под прицелом изменилась";
+            state(p,s);
+            return;
+        }
+        ServerWorld world=p.getServerWorld();WorldChunk chunk=loaded(world,pos);
         if(chunk==null){s.message="Цель не загружена";state(p,s);return;}
-        if(!selection&&!StonePaletteSupport.paintable(world,pos)){s.message="Выберите каменный блок DreamWalker или города";state(p,s);return;}
         switch(action){
-            case "sample"->{s.material=effectiveStyle(world,pos);s.message="Цвет скопирован: "+switch(s.material){case 1->"розовый";case 2->"шалфей";case 3->"песочный";case 4->"красный";default->"базовый";};}
+            case "sample" -> {
+                BlockPos root = RgbProfiles.paintTarget(world,pos);
+                if (root == null) throw new IllegalArgumentException("Для этой цели нет проверенного RGB-профиля");
+                requireEdit(world,p,pos,root);
+                int value = style(loaded(world,root),root);
+                int rgb = EditorCells.isRgb(value) ? value & 0xffffff
+                        : RgbProfiles.sample(world,hit,root,value < 0 ? regional(root,world) : value,value >= 0);
+                if (rgb < 0) throw new IllegalArgumentException("Наведите пипетку на разрешённую поверхность материала");
+                s.material = EditorCells.rgb(rgb);
+                s.message = String.format("Цвет скопирован: #%06X",rgb);
+            }
             case "first"->{s.first=pos.toImmutable();s.second=null;s.selectionDimension=world.getRegistryKey();s.message="Первая точка выделения";}
             case "second"->{if(!world.getRegistryKey().equals(s.selectionDimension))throw new IllegalArgumentException("Выберите первую точку в этом измерении");s.second=pos.toImmutable();s.message="Вторая точка выделения";}
             case "paint","reset","fill","noise"->{
                 String stroke=request.getString("stroke");
                 if(!stroke.isEmpty()&&!stroke.matches("[0-9a-f-]{36}"))return;
                 if(!stroke.equals(s.stroke)||(!stroke.isEmpty()&&!world.getRegistryKey().equals(s.strokeDimension))){flushStroke(s,false);s.stroke=stroke;s.strokeDimension=world.getRegistryKey();s.endingStroke=false;}
-                if(!CityVisualModeState.isAlt(p.getServer())){s.message="Покраска доступна в ALT; Original сохраняет исходный вид";break;}
                 String mode=action.equals("fill")?"fill":action.equals("noise")?"noise":s.mode;
-                List<BlockPos> cells=collect(world,pos,hit.getSide(),s,mode);
-                List<Change> changes=new ArrayList<>();
-                Set<BlockPos> roots=new HashSet<>();
-                for(BlockPos hitCell:cells){
-                    BlockPos cell=StonePaletteSupport.paintTarget(world,hitCell);if(cell==null||!roots.add(cell))continue;
-                    var c=loaded(world,cell);if(c==null)continue;
-                    if(!dev.dreamwalker.bloodbornedw.architecture.BuildPermissions.canEdit(world,p,hitCell)||!dev.dreamwalker.bloodbornedw.architecture.BuildPermissions.canEdit(world,p,cell))throw new IllegalArgumentException("Участок защищён от редактирования");
-                    int before=style(c,cell),after=action.equals("reset")?0:s.material;
-                    if(mode.equals("noise")&&!action.equals("reset")){long random=MathHelper.hashCode(cell.getX(),cell.getY(),cell.getZ());int v=Math.floorMod(random,100);after=v<s.primaryWeight?s.material:v<s.primaryWeight+s.secondaryWeight?s.secondary:s.accent;}
-                    if(before!=after)changes.add(new Change(cell.toImmutable(),world.getBlockState(cell),NativeVisuals.index(world,cell),before,after));}
-                if(append){
-                    List<Change> combined=new ArrayList<>(s.job.edit.changes);for(Change change:changes)if(!touches(s.job.edit,change.pos))combined.add(change);
-                    if(combined.size()>MAX_CELLS){s.retry=true;s.message="Очередь мазка заполнена; дождитесь обработки";break;}
-                    s.job.edit=new Edit(world.getRegistryKey(),combined);s.accepted=true;s.message="В очереди: "+(combined.size()-s.job.index)+" клеток";
-                }else if(changes.isEmpty()){s.accepted=true;s.message="Нет подходящих изменений";}
-                else{s.job=new Job(new Edit(world.getRegistryKey(),List.copyOf(changes)),0);s.redo.clear();s.accepted=true;s.message="Обработка: "+changes.size()+" клеток";}
+                BlockPos aim = resolveTarget(world,pos,s.colors(),mode,action.equals("reset"));
+                if (aim == null) throw new IllegalArgumentException("Выберите поддерживаемую поверхность DreamWalker для этой краски");
+                requireEdit(world,p,pos,aim);
+                Job job = new Job(new Edit(world.getRegistryKey(),List.of()),0);
+                job.preparation = new Preparation(world,pos,hit.getSide(),s,mode,action.equals("reset"));
+                s.job = job;
+                s.accepted = true;
+                s.message = "Подготовка покраски";
             }
             default->s.message="Неизвестное действие";
         }
         state(p,s);
     }
+    private static void requireEdit(ServerWorld world, ServerPlayerEntity player, BlockPos hit, BlockPos root) {
+        if (!dev.dreamwalker.bloodbornedw.architecture.BuildPermissions.canEdit(world,player,hit)
+                || !dev.dreamwalker.bloodbornedw.architecture.BuildPermissions.canEdit(world,player,root)) {
+            throw new IllegalArgumentException("Участок защищён от редактирования");
+        }
+    }
+    private record BrushColors(int primary, int secondary, int accent, int primaryWeight, int secondaryWeight) {
+        int value(BlockPos pos, String mode) {
+            if (!mode.equals("noise")) return primary;
+            long random = MathHelper.hashCode(pos.getX(),pos.getY(),pos.getZ());
+            int weight = Math.floorMod(random,100);
+            if (weight < primaryWeight) return primary;
+            return weight < primaryWeight + secondaryWeight ? secondary : accent;
+        }
+    }
+    private static BlockPos resolveTarget(ServerWorld world, BlockPos pos, BrushColors colors, String mode, boolean reset) {
+        if (reset) {
+            BlockPos root = RgbProfiles.paintTarget(world,pos);
+            return root != null ? root : StonePaletteSupport.paintTarget(world,pos);
+        }
+        if (!mode.equals("noise"))
+            return EditorCells.isRgb(colors.primary) ? RgbProfiles.paintTarget(world,pos) : StonePaletteSupport.paintTarget(world,pos);
+        BlockPos rgb = RgbProfiles.paintTarget(world,pos);
+        if (rgb != null && EditorCells.isRgb(colors.value(rgb,mode))) return rgb;
+        BlockPos legacy = StonePaletteSupport.paintTarget(world,pos);
+        return legacy != null && !EditorCells.isRgb(colors.value(legacy,mode)) ? legacy : null;
+    }
     private static void safeRequest(ServerPlayerEntity p,NbtCompound request){
         try{request(p,request);}catch(IllegalArgumentException bad){Session s=session(p);s.message=bad.getMessage();state(p,s);}
-    }
-    private static List<BlockPos> collect(ServerWorld world,BlockPos origin,Direction side,Session s,String mode){
-        if(mode.equals("single"))return List.of(origin);
-        if(mode.equals("plane")){List<BlockPos> out=new ArrayList<>();for(int a=-s.radius;a<=s.radius;a++)for(int b=-s.radius;b<=s.radius;b++)out.add(switch(side.getAxis()){case X->origin.add(0,a,b);case Y->origin.add(a,0,b);case Z->origin.add(a,b,0);});return out;}
-        if(s.first==null||s.second==null||!world.getRegistryKey().equals(s.selectionDimension))throw new IllegalArgumentException("Сначала задайте обе точки выделения в этом измерении");
-        BlockPos min=new BlockPos(Math.min(s.first.getX(),s.second.getX()),Math.min(s.first.getY(),s.second.getY()),Math.min(s.first.getZ(),s.second.getZ()));
-        BlockPos max=new BlockPos(Math.max(s.first.getX(),s.second.getX()),Math.max(s.first.getY(),s.second.getY()),Math.max(s.first.getZ(),s.second.getZ()));
-        long count=((long)max.getX()-min.getX()+1)*((long)max.getY()-min.getY()+1)*((long)max.getZ()-min.getZ()+1);
-        if(count>MAX_CELLS||min.getSquaredDistance(origin)>128*128||max.getSquaredDistance(origin)>128*128)throw new IllegalArgumentException("Выделение: максимум 4096 клеток в пределах 128 блоков");
-        List<BlockPos> all=new ArrayList<>();for(BlockPos p:BlockPos.iterate(min,max)){if(loaded(world,p)==null)throw new IllegalArgumentException("Выделение содержит незагруженный чанк");all.add(p.toImmutable());}
-        if(!mode.equals("fill"))return all;
-        if(!inside(origin,min,max))throw new IllegalArgumentException("Цель заливки вне выделения");
-        int initial=effectiveStyle(world,origin),startNative=NativeVisuals.index(world,origin);BlockState start=world.getBlockState(origin);
-        Set<BlockPos> seen=new HashSet<>();ArrayDeque<BlockPos> queue=new ArrayDeque<>();List<BlockPos> filled=new ArrayList<>();queue.add(origin);
-        while(!queue.isEmpty()){BlockPos p=queue.removeFirst();if(!seen.add(p)||!inside(p,min,max))continue;
-            if(world.getBlockState(p)!=start||NativeVisuals.index(world,p)!=startNative||effectiveStyle(world,p)!=initial)continue;filled.add(p);
-            for(Direction d:Direction.values())if(d.getAxis()!=side.getAxis())queue.add(p.offset(d));}
-        return filled;
     }
     private static boolean inside(BlockPos p,BlockPos a,BlockPos b){return p.getX()>=a.getX()&&p.getX()<=b.getX()&&p.getY()>=a.getY()&&p.getY()<=b.getY()&&p.getZ()>=a.getZ()&&p.getZ()<=b.getZ();}
     private static void history(ServerPlayerEntity p,Session s,boolean redo){
         Deque<Edit> from=redo?s.redo:s.undo;Edit e=from.peekLast();
         if(e==null){s.message="История пуста";return;}
         if(!e.dimension.equals(p.getServerWorld().getRegistryKey())){s.message="Перейдите в измерение изменения";return;}
-        for(Change c:e.changes){WorldChunk chunk=loaded(p.getServerWorld(),c.pos);int expected=redo?c.before:c.after;
-            if(chunk==null||p.getServerWorld().getBlockState(c.pos)!=c.state||NativeVisuals.index(p.getServerWorld(),c.pos)!=c.nativeIndex||style(chunk,c.pos)!=expected){s.message="Отмена отклонена: участок изменён или не загружен";return;}}
         from.removeLast();s.job=new Job(e,redo?1:-1);s.message=redo?"Повтор":"Отмена";
     }
     private static void tick(MinecraftServer server) {
@@ -294,6 +438,7 @@ public final class CityEditorServer implements ModInitializer {
             if (active == null) active = new ArrayList<>();
             active.add(entry);
         }
+        if (unpublished >= MAX_UNPUBLISHED) return;
         if (active == null) {
             drainExternal(CELLS_PER_TICK, deadline);
         } else if (EXTERNAL_UPDATES.isEmpty()) {
@@ -338,6 +483,7 @@ public final class CityEditorServer implements ModInitializer {
                 batch.put(edit.getKey(),edit.getValue());
                 edits.remove();
                 consumed++;
+                externalPending--;
             }
             if (!pending.isEmpty()) EXTERNAL_UPDATES.put(chunk,pending);
             if (batch.isEmpty()) break;
@@ -349,13 +495,44 @@ public final class CityEditorServer implements ModInitializer {
     private static int advanceJob(MinecraftServer server, ServerPlayerEntity player, Session session, int limit, long deadline) {
         Job job = session.job;
         ServerWorld world = server.getWorld(job.edit.dimension);
-        if (world == null || player.getServerWorld() != world || !editable(player)) {
+        if (world == null || player.getServerWorld() != world || !editable(player) || !CityVisualModeState.isAlt(server)) {
             session.message = "Операция остановлена";
             finish(session);
             state(player,session);
             return 0;
         }
         int consumed = 0;
+        if (job.direction != 0) {
+            while (job.historyCheck < job.edit.changes.size() && consumed < limit && System.nanoTime() < deadline) {
+                Change change = job.edit.changes.get(job.historyCheck++);
+                WorldChunk chunk = loaded(world,change.pos);
+                consumed++;
+                if (!stillValid(world,player,job,change,chunk)) {
+                    session.message = "Отмена отклонена: участок изменён, защищён или выгружен";
+                    finish(session);
+                    state(player,session);
+                    return consumed;
+                }
+            }
+            if (job.historyCheck < job.edit.changes.size()) return consumed;
+        }
+        if (job.preparation != null) {
+            try {
+                while (job.preparation.pending() && consumed < limit && System.nanoTime() < deadline) {
+                    job.preparation.step(world,player);
+                    consumed++;
+                }
+                if (job.preparation.pending()) return consumed;
+                job.edit = job.preparation.complete(world);
+                job.preparation = null;
+                if (!job.edit.changes.isEmpty()) session.redo.clear();
+            } catch (IllegalArgumentException error) {
+                session.message = error.getMessage();
+                finish(session);
+                state(player,session);
+                return consumed;
+            }
+        }
         while (job.index < job.edit.changes.size() && consumed < limit && System.nanoTime() < deadline) {
             WorldChunk batchChunk = null;
             Map<Long,Integer> batch = new LinkedHashMap<>();
@@ -365,10 +542,7 @@ public final class CityEditorServer implements ModInitializer {
                         || batchChunk.getPos().z != (change.pos.getZ() >> 4))) break;
                 WorldChunk chunk = batchChunk == null ? loaded(world,change.pos) : batchChunk;
                 consumed++;
-                int expected = job.direction == -1 ? change.after : change.before;
-                if (chunk == null || world.getBlockState(change.pos) != change.state
-                        || NativeVisuals.index(world,change.pos) != change.nativeIndex || style(chunk,change.pos) != expected
-                        || !dev.dreamwalker.bloodbornedw.architecture.BuildPermissions.canEdit(world,player,change.pos)) {
+                if (!stillValid(world,player,job,change,chunk)) {
                     job.error = "Остановлено: цель изменена, защищена или выгружена";
                     job.index = job.edit.changes.size();
                     break;
@@ -390,6 +564,12 @@ public final class CityEditorServer implements ModInitializer {
             state(player,session);
         }
         return consumed;
+    }
+    private static boolean stillValid(ServerWorld world, ServerPlayerEntity player, Job job, Change change, WorldChunk chunk) {
+        int expected = job.direction == -1 ? change.after : change.before;
+        return chunk != null && world.getBlockState(change.pos) == change.state
+                && NativeVisuals.index(world,change.pos) == change.nativeIndex && style(chunk,change.pos) == expected
+                && dev.dreamwalker.bloodbornedw.architecture.BuildPermissions.canEdit(world,player,change.pos);
     }
     private static void finish(Session s){
         Job j=s.job;if(j==null)return;s.job=null;
@@ -427,14 +607,17 @@ public final class CityEditorServer implements ModInitializer {
         chunk.setNeedsSaving(true);
         Set<Long> changed = DIRTY_CELLS.computeIfAbsent(chunk, ignored -> new LinkedHashSet<>());
         for (var entry : updates.entrySet()) {
-            if (previous.style(entry.getKey()) != entry.getValue()) changed.add(entry.getKey());
+            if (previous.style(entry.getKey()) != entry.getValue() && changed.add(entry.getKey())) unpublished++;
         }
     }
 
     /** The disk snapshot must contain queued WorldEdit changes even if its tick budget has not reached them. */
     public static void flushBeforeSave(WorldChunk chunk) {
         Map<Long,Integer> pending = EXTERNAL_UPDATES.remove(chunk);
-        if (pending != null) applyChunkUpdates(chunk,pending);
+        if (pending != null) {
+            externalPending -= pending.size();
+            applyChunkUpdates(chunk,pending);
+        }
     }
 
     private static void publishNext(long deadline) {
@@ -448,6 +631,7 @@ public final class CityEditorServer implements ModInitializer {
                 WorldChunk chunk = entry.getKey();
                 Set<Long> dirty = entry.getValue();
                 iterator.remove();
+                unpublished -= dirty.size();
                 if (!(chunk.getWorld() instanceof ServerWorld world) || !isCurrent(world,chunk)) continue;
                 var tracking = PlayerLookup.tracking(world,chunk.getPos());
                 if (tracking.isEmpty()) continue;
@@ -457,7 +641,10 @@ public final class CityEditorServer implements ModInitializer {
                     positions[i] = changes.next();
                     changes.remove();
                 }
-                if (!dirty.isEmpty()) DIRTY_CELLS.put(chunk,dirty);
+                if (!dirty.isEmpty()) {
+                    DIRTY_CELLS.put(chunk,dirty);
+                    unpublished += dirty.size();
+                }
                 publication = new Publication(chunk,positions,tracking);
                 recipientsLeft -= sendPublication(world,tracking,recipientsLeft,deadline);
             } else {
@@ -500,12 +687,8 @@ public final class CityEditorServer implements ModInitializer {
     private static byte[] encodeDelta(ServerWorld world, ChunkPos pos, EditorCells cells, long[] positions) {
         var buf = PacketByteBufs.create();
         try {
-            buf.writeIdentifier(world.getRegistryKey().getValue());
-            buf.writeInt(pos.x);
-            buf.writeInt(pos.z);
-            NbtCompound packet = new NbtCompound();
-            packet.put("Delta",cells.packDelta(positions));
-            buf.writeNbt(packet);
+            EditorDelta.write(buf, world.getRegistryKey().getValue(), pos,
+                    ++publicationSequence, cells, positions);
             byte[] payload = new byte[buf.readableBytes()];
             buf.readBytes(payload);
             return payload;

@@ -2,7 +2,7 @@ plugins { id 'fabric-loom' version '1.6.12' }
 
 def baseline = providers.gradleProperty('baselineJar').orElse(file('baseline/mod.jar').path)
 def pythonExecutable = providers.gradleProperty('pythonExecutable').orElse('python')
-version = '20261104-cityeditor.2.1-cornerlight.2'
+version = '20261104-cityeditor.2.1-cornerlight.2-rgb.1'
 group = 'dev.dreamwalker'
 base { archivesName = 'dw-altvisual-overlay' }
 layout.buildDirectory = new File(projectDir, 'build')
@@ -133,6 +133,18 @@ tasks.register('generateEditor2Palette', Exec) {
     commandLine pythonExecutable.get(), file('tools/generate_editor2_palette.py').path
 }
 
+tasks.register('generateRgbPhase1', Exec) {
+    dependsOn tasks.named('generateEditor2Palette')
+    inputs.file(baseline)
+    inputs.file('tools/generate_rgb_phase1.py')
+    inputs.files('tools/editor2-palette-inputs/classification.json', 'tools/editor2-palette-inputs/masks/024.png',
+        'src/main/resources/assets/bloodborne_dw/visuals/facades.json')
+    inputs.files(fileTree('src/main/resources/dw_city_visuals/alt') { exclude '**/editor2_rgb/**' })
+    outputs.file('src/main/resources/bloodborne_dw/rgb-phase1.json')
+    outputs.dir('src/main/resources/dw_city_visuals/alt/assets/bloodborne_dw/textures/block/editor2_rgb')
+    commandLine pythonExecutable.get(), file('tools/generate_rgb_phase1.py').path, '--baseline', baseline.get()
+}
+
 tasks.register('generateEditor2NativeFlags', Exec) {
     dependsOn tasks.named('verifyBaseline')
     inputs.file(baseline)
@@ -155,7 +167,7 @@ tasks.register('generateEditor2SlabFlags', Exec) {
 }
 
 tasks.register('generateVisualResourceIndex', Exec) {
-    dependsOn tasks.named('generateEditor2Palette')
+    dependsOn tasks.named('generateEditor2Palette'), tasks.named('generateRgbPhase1')
     inputs.files(fileTree('src/main/resources/dw_city_visuals'))
     inputs.file('tools/prepare_resource_index.py')
     outputs.file('src/main/resources/assets/bloodborne_dw/visuals/resource-index.json')
@@ -356,4 +368,10 @@ tasks.register('editorAuditTest', JavaExec) {
     dependsOn tasks.named('testClasses')
     classpath = sourceSets.test.runtimeClasspath
     mainClass = 'dev.dreamwalker.bloodbornedw.editor.EditorAuditTest'
+}
+
+tasks.register('rgbTintAuditTest', JavaExec) {
+    dependsOn tasks.named('testClasses')
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass = 'dev.dreamwalker.bloodbornedw.visual.RgbTintAuditTest'
 }

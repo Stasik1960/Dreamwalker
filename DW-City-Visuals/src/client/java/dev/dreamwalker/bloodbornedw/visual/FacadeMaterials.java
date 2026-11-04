@@ -1,6 +1,8 @@
 package dev.dreamwalker.bloodbornedw.visual;
 
 import java.util.*;
+import dev.dreamwalker.bloodbornedw.composite.CornerQuadParentScope;
+import dev.dreamwalker.bloodbornedw.editor.RgbProfiles;
 import net.fabricmc.fabric.api.renderer.v1.mesh.MutableQuadView;
 import net.fabricmc.fabric.api.renderer.v1.model.SpriteFinder;
 import net.minecraft.client.MinecraftClient;
@@ -79,6 +81,49 @@ final class FacadeMaterials {
         if(targetId!=null) { Sprite target=atlas().getSprite(targetId); for(int i=0;i<4;i++)quad.uv(i,map(quad.u(i),sprite.getMinU(),sprite.getMaxU(),target.getMinU(),target.getMaxU()),map(quad.v(i),sprite.getMinV(),sprite.getMaxV(),target.getMinV(),target.getMaxV())); }
         if(role>1&&role<4) { float[] m=c.multipliers[role]; for(int i=0;i<4;i++){ int color=quad.color(i); quad.color(i,(color&0xff000000)|((int)(((color>>>16)&255)*m[0])<<16)|((int)(((color>>>8)&255)*m[1])<<8)|(int)((color&255)*m[2])); } }
         return true;
+    }
+    static BakedQuad rgbQuad(BakedQuad source,int rgb,RgbProfiles.Profile profile) {
+        Sprite from = source.getSprite();
+        Sprite to = neutral(from,profile);
+        if (to == null) return source;
+        int[] data = source.getVertexData().clone();
+        for (int i = 0; i < 4; i++) {
+            int offset = i*8;
+            data[offset+3] = tint(data[offset+3],rgb,true);
+            data[offset+4] = Float.floatToRawIntBits(map(Float.intBitsToFloat(data[offset+4]),from.getMinU(),from.getMaxU(),to.getMinU(),to.getMaxU()));
+            data[offset+5] = Float.floatToRawIntBits(map(Float.intBitsToFloat(data[offset+5]),from.getMinV(),from.getMaxV(),to.getMinV(),to.getMaxV()));
+        }
+        BakedQuad result = new BakedQuad(data,source.getColorIndex(),source.getFace(),to,source.hasShade());
+        if (CornerQuadParentScope.parentFor(source) != null) CornerQuadParentScope.alias(source,result);
+        return result;
+    }
+
+    static boolean transformRgb(MutableQuadView quad,int rgb,RgbProfiles.Profile profile) {
+        Sprite from = SpriteFinder.get(atlas()).find(quad);
+        Sprite to = neutral(from,profile);
+        if (to == null) return true;
+        for (int i = 0; i < 4; i++) {
+            quad.uv(i,map(quad.u(i),from.getMinU(),from.getMaxU(),to.getMinU(),to.getMaxU()),
+                    map(quad.v(i),from.getMinV(),from.getMaxV(),to.getMinV(),to.getMaxV()));
+            quad.color(i,tint(quad.color(i),rgb,false));
+        }
+        return true;
+    }
+
+    private static Sprite neutral(Sprite from,RgbProfiles.Profile profile) {
+        Identifier id = profile.neutral(from.getContents().getId());
+        if (id == null) return null;
+        Sprite sprite = atlas().getSprite(id);
+        return id.equals(sprite.getContents().getId()) ? sprite : null;
+    }
+
+    /** BakedQuad serializes ABGR. FRAPI exposes vertex colors as ARGB. */
+    static int tint(int original,int rgb,boolean abgr) {
+        int redShift = abgr ? 0 : 16, blueShift = 16-redShift;
+        int red = ((original >>> redShift) & 255) * ((rgb >>> 16) & 255) / 255;
+        int green = ((original >>> 8) & 255) * ((rgb >>> 8) & 255) / 255;
+        int blue = ((original >>> blueShift) & 255) * (rgb & 255) / 255;
+        return (original & 0xff000000) | (red << redShift) | (green << 8) | (blue << blueShift);
     }
     private static BakedQuad manualQuad(QuadCaches generation,BakedQuad source,int role,Sprite sprite,Identifier id) {
         Identifier targetId=ManualStonePalette.target(id,role); if(targetId==null)return source;

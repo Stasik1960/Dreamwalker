@@ -24,7 +24,7 @@ abstract class FacadeStaticSourceMixin {
             VertexConsumer vertices, int overlay, @Coerce Object block, BlockState state,
             @Coerce Object shift, double mountY, List<?> parts, @Coerce Object pose,
             @Coerce Object owner, boolean wholeSourceOptics) {
-        return CityFacadesClient.staticModel(manager.getModel(id),root,state,world);
+        return CityFacadesClient.staticModel(manager.getModel(id),root,state,world,id);
     }
 }
 
