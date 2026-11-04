@@ -67,6 +67,8 @@ public final class CityEditorClient implements ClientModInitializer {
     private static final AtomicInteger INCOMING = new AtomicInteger();
     private static final Map<WorldChunk,Map<Long,Integer>> PATCHES = new LinkedHashMap<>();
     private static final Set<RebuildSection> DIRTY_SECTIONS = new LinkedHashSet<>();
+    private static final Map<RebuildSection,Long> RECENT_REBUILDS = new LinkedHashMap<>();
+    private static final long STROKE_COALESCE_NANOS = 100_000_000L;
     private static final Set<CompositeBlockEntity> DIRTY_OWNERS = new LinkedHashSet<>();
     private static ClientWorld updateWorld;
     private static long lastRevision, latestConfigRequest;
@@ -164,6 +166,7 @@ public final class CityEditorClient implements ClientModInitializer {
             discardPatch(chunk);
             DIRTY_OWNERS.removeAll(chunk.getBlockEntities().values());
             DIRTY_SECTIONS.removeIf(section -> section.x == chunk.getPos().x && section.z == chunk.getPos().z);
+            RECENT_REBUILDS.keySet().removeIf(section -> section.x == chunk.getPos().x && section.z == chunk.getPos().z);
         });
         ClientPlayConnectionEvents.DISCONNECT.register((handler,client) -> {
             trackWorld(null);
@@ -375,6 +378,7 @@ public final class CityEditorClient implements ClientModInitializer {
         updateWorld = world;
         PATCHES.clear();
         DIRTY_SECTIONS.clear();
+        RECENT_REBUILDS.clear();
         DIRTY_OWNERS.clear();
         pendingCells = 0;
         lastRevision = 0;
@@ -389,8 +393,14 @@ public final class CityEditorClient implements ClientModInitializer {
         ClientWorld world = client.world;
         trackWorld(world);
         if (world == null) return;
+        boolean coalesce = serverBusy || !strokeId.isEmpty();
+        if (!coalesce && !RECENT_REBUILDS.isEmpty()) RECENT_REBUILDS.clear();
+        if (PATCHES.isEmpty() && DIRTY_OWNERS.isEmpty() && DIRTY_SECTIONS.isEmpty()
+                && RECENT_REBUILDS.isEmpty()) return;
         long start = System.nanoTime();
         long deadline = start + 1_000_000;
+        if (!RECENT_REBUILDS.isEmpty())
+            RECENT_REBUILDS.values().removeIf(last -> start - last >= STROKE_COALESCE_NANOS);
         // Drain invalidations at the same rate as patches so a scattered edit cannot grow the queue indefinitely.
         var patches = PATCHES.entrySet().iterator();
         while (DIRTY_SECTIONS.size() < 4096 && DIRTY_OWNERS.size() < 4096
@@ -433,12 +443,17 @@ public final class CityEditorClient implements ClientModInitializer {
             owners.remove();
         }
         var sections = DIRTY_SECTIONS.iterator();
-        for (int i = 0; i < 2 && sections.hasNext() && System.nanoTime() < deadline; i++) {
+        int scheduled = 0;
+        while (scheduled < 2 && sections.hasNext() && System.nanoTime() < deadline) {
             RebuildSection section = sections.next();
+            if (coalesce && RECENT_REBUILDS.containsKey(section)) continue;
             sections.remove();
             if (section.y >= world.getBottomSectionCoord() && section.y < world.getTopSectionCoord()
-                    && world.getChunkManager().getChunk(section.x,section.z,ChunkStatus.FULL,false) != null)
+                    && world.getChunkManager().getChunk(section.x,section.z,ChunkStatus.FULL,false) != null) {
                 client.worldRenderer.scheduleBlockRender(section.x,section.y,section.z);
+                if (coalesce) RECENT_REBUILDS.put(section,start);
+                scheduled++;
+            }
         }
     }
 

@@ -2,7 +2,7 @@ plugins { id 'fabric-loom' version '1.6.12' }
 
 def baseline = providers.gradleProperty('baselineJar').orElse(file('baseline/mod.jar').path)
 def pythonExecutable = providers.gradleProperty('pythonExecutable').orElse('python')
-version = '20261104-cityeditor.2.1-cornerlight.2-rgb.1-altfix.1'
+version = '20261104-cityeditor.2.1-cornerlight.2-rgb.2-altfix.1'
 group = 'dev.dreamwalker'
 base { archivesName = 'dw-altvisual-overlay' }
 layout.buildDirectory = new File(projectDir, 'build')
@@ -136,7 +136,9 @@ tasks.register('generateEditor2Palette', Exec) {
 tasks.register('generateRgbPhase1', Exec) {
     dependsOn tasks.named('generateEditor2Palette')
     inputs.file(baseline)
-    inputs.file('tools/generate_rgb_phase1.py')
+    inputs.files('tools/generate_rgb_phase1.py', 'tools/rgb_catalogue.py', 'tools/rgb_native_catalogue.py',
+        'tools/rgb-catalogue-input.json', 'tools/rgb-material-keep.json')
+    inputs.files(fileTree('tools/editor2-palette-inputs/masks'))
     inputs.files('tools/editor2-palette-inputs/classification.json', 'tools/editor2-palette-inputs/masks/024.png',
         'src/main/resources/assets/bloodborne_dw/visuals/facades.json')
     inputs.files(fileTree('src/main/resources/dw_city_visuals/alt') { exclude '**/editor2_rgb/**' })

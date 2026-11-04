@@ -57,13 +57,21 @@ final class FacadeMaterials {
         if(id.getPath().endsWith("/roof_1")&&!wallHalf(source.getVertexData(),sprite))return source;
         if(id.getPath().endsWith("/spirelamp_0010")&&(source.getFace()==Direction.UP||source.getFace()==Direction.DOWN))return source;
         Map<BakedQuad, BakedQuad[]> cache = generation.regional;
-        BakedQuad cached = cached(cache, source, role);
-        if (cached != null) return cached;
+        boolean transientQuad = CornerQuadParentScope.parentFor(source) != null;
+        if (!transientQuad) {
+            BakedQuad cached = cached(cache, source, role);
+            if (cached != null) return cached;
+        }
         Sprite target=role==4?atlas().getSprite(c.brickWindow.get(id)):role==1&&c.rose.containsKey(id)?atlas().getSprite(c.rose.get(id)):
             role>1&&c.accentBase.containsKey(id)?atlas().getSprite(c.accentBase.get(id)):sprite;
         int[] data=source.getVertexData().clone();
         for(int i=0;i<4;i++) { int p=i*8; if(target!=sprite) { data[p+4]=Float.floatToRawIntBits(map(Float.intBitsToFloat(data[p+4]),sprite.getMinU(),sprite.getMaxU(),target.getMinU(),target.getMaxU())); data[p+5]=Float.floatToRawIntBits(map(Float.intBitsToFloat(data[p+5]),sprite.getMinV(),sprite.getMaxV(),target.getMinV(),target.getMaxV())); } if(role>1&&role<4) { int color=data[p+3]; float[] m=c.multipliers[role]; data[p+3]=(color&0xff000000)|((int)((color&255)*m[0]))|((int)(((color>>>8)&255)*m[1])<<8)|((int)(((color>>>16)&255)*m[2])<<16); } }
-        return cache(cache, source, role, new BakedQuad(data,source.getColorIndex(),source.getFace(),target,source.hasShade()));
+        BakedQuad result = new BakedQuad(data,source.getColorIndex(),source.getFace(),target,source.hasShade());
+        if (transientQuad) {
+            CornerQuadParentScope.alias(source,result);
+            return result;
+        }
+        return cache(cache, source, role, result);
     }
     static boolean transform(MutableQuadView quad,int role) {
         return transform(quad,role,false);
@@ -83,10 +91,32 @@ final class FacadeMaterials {
         return true;
     }
     static BakedQuad rgbQuad(BakedQuad source,int rgb,RgbProfiles.Profile profile) {
+        if (source.getColorIndex() >= 0) return source;
         Sprite from = source.getSprite();
-        Sprite to = neutral(from,profile);
+        RgbProfiles.Paint paint = profile.paint(from.getContents().getId());
+        if (paint == null) return source;
+        Object parent = CornerQuadParentScope.parentFor(source);
+        int[] data = source.getVertexData();
+        if (!paint.whole()) {
+            // Corner lighting may emit only a clipped piece of a KEEP face.
+            // Eligibility belongs to the complete source face.
+            int[] reviewed = data;
+            if (parent != null) {
+                if (!(parent instanceof BakedQuad original) || original.getSprite() != from) return source;
+                reviewed = original.getVertexData();
+            }
+            float minU = Float.POSITIVE_INFINITY, minV = Float.POSITIVE_INFINITY;
+            float maxU = Float.NEGATIVE_INFINITY, maxV = Float.NEGATIVE_INFINITY;
+            for (int vertex = 0; vertex < 4; vertex++) {
+                float u = Float.intBitsToFloat(reviewed[vertex*8+4]), v = Float.intBitsToFloat(reviewed[vertex*8+5]);
+                minU = Math.min(minU,u); maxU = Math.max(maxU,u);
+                minV = Math.min(minV,v); maxV = Math.max(maxV,v);
+            }
+            if (!covers(paint,from,minU,minV,maxU,maxV)) return source;
+        }
+        Sprite to = neutral(paint);
         if (to == null) return source;
-        int[] data = source.getVertexData().clone();
+        data = data.clone();
         for (int i = 0; i < 4; i++) {
             int offset = i*8;
             data[offset+3] = tint(data[offset+3],rgb,true);
@@ -94,14 +124,27 @@ final class FacadeMaterials {
             data[offset+5] = Float.floatToRawIntBits(map(Float.intBitsToFloat(data[offset+5]),from.getMinV(),from.getMaxV(),to.getMinV(),to.getMaxV()));
         }
         BakedQuad result = new BakedQuad(data,source.getColorIndex(),source.getFace(),to,source.hasShade());
-        if (CornerQuadParentScope.parentFor(source) != null) CornerQuadParentScope.alias(source,result);
+        if (parent != null) CornerQuadParentScope.alias(source,result);
         return result;
     }
 
     static boolean transformRgb(MutableQuadView quad,int rgb,RgbProfiles.Profile profile) {
+        if (quad.colorIndex() >= 0) return false;
         Sprite from = SpriteFinder.get(atlas()).find(quad);
-        Sprite to = neutral(from,profile);
-        if (to == null) return true;
+        RgbProfiles.Paint paint = profile.paint(from.getContents().getId());
+        if (paint == null) return false;
+        if (!paint.whole()) {
+            float minU = Float.POSITIVE_INFINITY, minV = Float.POSITIVE_INFINITY;
+            float maxU = Float.NEGATIVE_INFINITY, maxV = Float.NEGATIVE_INFINITY;
+            for (int vertex = 0; vertex < 4; vertex++) {
+                float u = quad.u(vertex), v = quad.v(vertex);
+                minU = Math.min(minU,u); maxU = Math.max(maxU,u);
+                minV = Math.min(minV,v); maxV = Math.max(maxV,v);
+            }
+            if (!covers(paint,from,minU,minV,maxU,maxV)) return false;
+        }
+        Sprite to = neutral(paint);
+        if (to == null) return false;
         for (int i = 0; i < 4; i++) {
             quad.uv(i,map(quad.u(i),from.getMinU(),from.getMaxU(),to.getMinU(),to.getMaxU()),
                     map(quad.v(i),from.getMinV(),from.getMaxV(),to.getMinV(),to.getMaxV()));
@@ -110,9 +153,13 @@ final class FacadeMaterials {
         return true;
     }
 
-    private static Sprite neutral(Sprite from,RgbProfiles.Profile profile) {
-        Identifier id = profile.neutral(from.getContents().getId());
-        if (id == null) return null;
+    private static boolean covers(RgbProfiles.Paint paint, Sprite from, float minU, float minV, float maxU, float maxV) {
+        return paint.covers(map(minU,from.getMinU(),from.getMaxU(),0,16),map(minV,from.getMinV(),from.getMaxV(),0,16),
+                map(maxU,from.getMinU(),from.getMaxU(),0,16),map(maxV,from.getMinV(),from.getMaxV(),0,16));
+    }
+
+    private static Sprite neutral(RgbProfiles.Paint paint) {
+        Identifier id = paint.neutral();
         Sprite sprite = atlas().getSprite(id);
         return id.equals(sprite.getContents().getId()) ? sprite : null;
     }

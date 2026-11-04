@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "environment": "*",
   "custom": {
-    "dreamwalker:revisionSuffix": "cityeditor.2.1-cornerlight.2-rgb.1-altfix.1"
+    "dreamwalker:revisionSuffix": "cityeditor.2.1-cornerlight.2-rgb.2-altfix.1"
   },
   "entrypoints": {
     "main": [
@@ -34,6 +34,10 @@
     },
     {
       "config": "dw-nrp-mining.mixins.json"
+    },
+    {
+      "config": "dw-nrp-mining-client.mixins.json",
+      "environment": "client"
     },
     {
       "config": "dw-editor.mixins.json"

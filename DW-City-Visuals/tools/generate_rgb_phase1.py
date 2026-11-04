@@ -11,6 +11,8 @@ import json
 import struct
 
 from PIL import Image
+from rgb_catalogue import Inspector, candidates
+from rgb_native_catalogue import extend_native
 
 MODULE = Path(__file__).resolve().parents[1]
 RESOURCES = MODULE / "src/main/resources"
@@ -112,9 +114,235 @@ def neutral(image, zone):
     return result
 
 
+
+def uv_bounds(uv):
+    return min(uv[0], uv[2]), min(uv[1], uv[3]), max(uv[0], uv[2]), max(uv[1], uv[3])
+
+
+def contains(outer, inner):
+    return (outer[0] <= inner[0] and outer[1] <= inner[1]
+            and inner[2] <= outer[2] and inner[3] <= outer[3])
+
+
+def catalogue_variants(inspector, inherited):
+    """Yield exact source variants, keeping independently separable faces only."""
+    for row in candidates():
+        audit = inspector.inspect(row, scan_all=True)
+        for variant in audit["variants"]:
+            models, model_assets, by_sprite = {}, set(), {}
+            for parts in variant["poses"].values():
+                for part in parts:
+                    if "error" in part or part["model"] in models:
+                        continue
+                    counts = Counter(face["zone"] for face in part["faces"])
+                    models[part["model"]] = dict(counts)
+                    models[part["sourceModel"]] = dict(counts)
+                    model_assets.update(part["parents"])
+                    model_assets.add(asset(part["sourceModel"], "models", ".json"))
+                    for face in part["faces"]:
+                        by_sprite.setdefault(face["sprite"], []).append((part["model"], face))
+            zones, texels, examples = {}, {}, []
+            for sprite, faces in by_sprite.items():
+                paint = [f for _, f in faces if f["zone"] == "PAINT"]
+                keep = [uv_bounds(f["uv"]) for _, f in faces if f["zone"] != "PAINT"
+                        and f["reason"] != "no visible texels in sampled UV"]
+                # A cropped render quad must never turn an intersecting KEEP
+                # island into a painted face. Classify actual texels offline.
+                safe = [f for f in paint if not any(contains(uv_bounds(f["uv"]), guard) for guard in keep)]
+                if safe:
+                    zones[sprite] = sorted({uv_bounds(f["uv"]) for f in safe})
+                    texels[sprite] = {p for f in safe
+                                     for p in uv_texels(f["uv"], *inspector.image(sprite)[0].size)}
+                for model, face in faces:
+                    if face["zone"] == "KEEP" and len(examples) < 16:
+                        examples.append({"model": model, **face})
+                if paint and not safe:
+                    examples.append({"sprite": sprite, "reason": "protected UV footprint lies inside every paint zone",
+                                     "paint": [f["uv"] for f in paint], "keep": keep})
+            block, number = row["id"], variant["variant"]
+            recorded = "variant" not in row or row["variant"] == number
+            status = "UNRESOLVED" if variant["review"] == "UNRESOLVED" else (
+                "READY_FOR_GAME_CHECK" if zones else "EXCLUDED_WITH_EVIDENCE")
+            geometry = {"variant": number, "recorded": recorded, "status": status,
+                        "models": models, "poseParts": {
+                            pose: [{k: v for k, v in part.items() if k not in ("faces", "parents")}
+                                   for part in parts]
+                            for pose, parts in variant["poses"].items()},
+                        "faceCounts": variant["faceCounts"], "directional": variant["directional"]}
+            if examples and (status != "READY_FOR_GAME_CHECK" or recorded):
+                geometry["keepEvidence"] = examples
+            if (block, number) in inherited:
+                geometry.update({"status": "READY_FOR_GAME_CHECK", "profile": inherited[(block, number)]})
+                zones = {}
+            yield row, audit, geometry, models, model_assets, by_sprite, zones, texels
+
+
+def extend_catalogue(baseline, profiles, manual, facades, evidence_path):
+    inspector = Inspector(baseline)
+    inherited = {(p["block"], number): key for key, p in profiles.items() for number in p["variants"]}
+    inspected = list(catalogue_variants(inspector, inherited))
+    source_texels = {}
+    for _, _, _, _, _, _, zones, texels in inspected:
+        for sprite in zones:
+            source_texels.setdefault(sprite, set()).update(texels[sprite])
+
+    # Neutral atlas entries belong to materials, not the chosen RGB or pose.
+    # Reuse previously shipped sprites with the same encoded image.
+    known_images = {}
+    for p in profiles.values():
+        for info in p["paints"].values():
+            identifier = info["neutral"]
+            known_images[sha256(inspector.read(asset(identifier, "textures", ".png"))).hexdigest()] = identifier
+    outputs = {}
+    for sprite, pixels in sorted(source_texels.items()):
+        source = asset(sprite, "textures", ".png")
+        try:
+            inspector.read(source + ".mcmeta")
+        except FileNotFoundError:
+            pass
+        else:
+            raise ValueError("Animated RGB source needs a per-frame review: " + sprite)
+        image = inspector.image(sprite)[0]
+        gray = neutral(image, pixels)
+        assert gray.getchannel("A").tobytes() == image.getchannel("A").tobytes()
+        for mip in range(min(image.size).bit_length()):
+            size = tuple(max(1, extent >> mip) for extent in image.size)
+            mip_pixels = gray.resize(size, Image.Resampling.BOX)
+            assert mip_pixels.getchannel("R").tobytes() == mip_pixels.getchannel("G").tobytes()
+            assert mip_pixels.getchannel("G").tobytes() == mip_pixels.getchannel("B").tobytes()
+            assert mip_pixels.getchannel("A").tobytes() == image.resize(size, Image.Resampling.BOX).getchannel("A").tobytes()
+        encoded = BytesIO()
+        gray.save(encoded, format="PNG", optimize=True)
+        data = encoded.getvalue()
+        digest = sha256(data).hexdigest()
+        target = known_images.get(digest)
+        if target is None:
+            target = "bloodborne_dw:block/editor2_rgb/catalogue/" + digest[:24]
+            out = ALT / asset(target, "textures", ".png")
+            out.parent.mkdir(parents=True, exist_ok=True)
+            if not out.is_file() or out.read_bytes() != data:
+                out.write_bytes(data)
+            known_images[digest] = target
+        outputs[sprite] = (target, digest)
+
+    generated = {asset(identifier, "textures", ".png") for identifier, _ in outputs.values()}
+    output_dir = ALT / "assets/bloodborne_dw/textures/block/editor2_rgb/catalogue"
+    for prior in output_dir.glob("*.png"):
+        # Only remove orphan files owned by this compiler's content-addressed output.
+        if (prior.relative_to(ALT).as_posix() not in generated
+                and sha256(prior.read_bytes()).hexdigest()[:24] == prior.stem):
+            prior.unlink()
+
+    expected_hashes = {}
+    def fingerprint(path, manifest):
+        if path not in expected_hashes:
+            try:
+                expected_hashes[path] = sha256(inspector.read(path)).hexdigest()
+            except FileNotFoundError:
+                if not path.endswith(".mcmeta"):
+                    raise
+                expected_hashes[path] = ""
+        manifest[asset_id(path)] = expected_hashes[path]
+
+    grouped, evidence, reviewed = {}, {}, {}
+    for row, audit, geometry, models, model_assets, by_sprite, zones, texels in inspected:
+        block = row["id"]
+        if block not in evidence:
+            evidence[block] = {"id": block, "catalogueKey": row["catalogueKey"], "displayName": row["displayName"],
+                               "sourceVariantCount": audit["sourceVariantCount"],
+                               "specSha256": sha256(inspector.read(audit["specPath"])).hexdigest(), "variants": []}
+        evidence[block]["variants"].append(geometry)
+        inherited_key = geometry.get("profile")
+        if inherited_key:
+            if len(profiles[inherited_key]["variants"]) == 1:
+                reviewed[inherited_key] = reviewed_rectangles(by_sprite, profiles[inherited_key]["paints"])
+        if not zones or geometry["status"] != "READY_FOR_GAME_CHECK":
+            continue
+        expected, paints = {}, {}
+        model_assets.add(asset(block, "blockstates", ".json"))
+        for path in model_assets:
+            fingerprint(path, expected)
+        for source in by_sprite:
+            path = asset(source, "textures", ".png")
+            fingerprint(path, expected)
+            fingerprint(path + ".mcmeta", expected)
+        for source, bounds in zones.items():
+            target, target_hash = outputs[source]
+            target_path = asset(target, "textures", ".png")
+            expected[asset_id(target_path)] = target_hash
+            fingerprint(target_path + ".mcmeta", expected)
+            image = inspector.image(source)[0]
+            pixels = texels[source]
+            base = tone(image, pixels)
+            stored_tones, regional_tones = [base], [base]
+            for role in range(1, 5):
+                targets = manual.get(source)
+                legacy = targets[role-1] if targets else source
+                regional, multiplier = regional_sprite(facades, source, role)
+                for used in (legacy, regional):
+                    used_path = asset(used, "textures", ".png")
+                    fingerprint(used_path, expected)
+                    fingerprint(used_path + ".mcmeta", expected)
+                    assert inspector.image(used)[0].size == image.size, (source, used)
+                stored_tones.append(tone(inspector.image(legacy)[0], pixels))
+                regional_tones.append(tone(inspector.image(regional)[0], pixels, multiplier))
+            paint = {"neutral": target, "manual": stored_tones, "regional": regional_tones,
+                     "size": list(image.size), "texels": len(pixels),
+                     "mipLevels": min(image.size).bit_length()-1}
+            # Runtime checks all four UVs for split surfaces. Whole entries
+            # are used only when every visible face of this sprite was safe.
+            if any(f["zone"] != "PAINT" for _, f in by_sprite[source]) or (
+                    set(bounds) != {uv_bounds(f["uv"]) for _, f in by_sprite[source]}):
+                paint["zones"] = bounds
+            paints[source] = paint
+        unambiguous = len(paints) == 1 and all(f["zone"] == "PAINT" or f["reason"] == "no visible texels in sampled UV"
+                for faces in by_sprite.values() for _, f in faces)
+        definition = {"block": block, "assets": expected, "models": models, "paints": paints,
+                      "nativeMeshes": [], "sampleUnambiguous": unambiguous}
+        if not unambiguous:
+            directions = {side: source for side, source in geometry["directional"].items() if source in paints}
+            if directions:
+                definition["sampleFaces"] = directions
+        signature = json.dumps(definition, sort_keys=True, separators=(",", ":"))
+        key = grouped.get(signature)
+        number = geometry["variant"]
+        if key is None:
+            key = block.split(":", 1)[1] + "_v" + str(number)
+            grouped[signature] = key
+            profiles[key] = {**definition, "variants": []}
+            reviewed[key] = reviewed_rectangles(by_sprite, paints)
+        profiles[key]["variants"].append(number)
+        geometry["profile"] = key
+    if evidence_path:
+        evidence_path.parent.mkdir(parents=True, exist_ok=True)
+        evidence_path.write_text(json.dumps({"schema": 1, "items": list(evidence.values())},
+                                            ensure_ascii=False, separators=(",", ":")) + "\n",
+                                 encoding="utf-8", newline="\n")
+    summary = Counter(v["status"] for item in evidence.values() for v in item["variants"] if v["recorded"])
+    print(f"Recorded catalogue geometry: {dict(summary)}; {len(outputs)} shared new material mappings")
+    return reviewed
+
+
+def reviewed_rectangles(by_sprite, paints):
+    result = {}
+    for sprite, faces in by_sprite.items():
+        allowed = paints.get(sprite)
+        paint = []
+        keep = []
+        for _, face in faces:
+            bounds = uv_bounds(face["uv"])
+            if allowed and face["zone"] == "PAINT" and (
+                    "zones" not in allowed or any(contains(z, bounds) for z in allowed["zones"])):
+                paint.append(bounds)
+            else:
+                keep.append(bounds)
+        result[sprite] = {"paint": sorted(set(paint)), "keep": sorted(set(keep))}
+    return result
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--baseline", type=Path, default=MODULE / "baseline/mod.jar")
+    parser.add_argument("--catalogue-evidence", type=Path)
     args = parser.parse_args()
     with ZipFile(args.baseline) as baseline:
         names = set(baseline.namelist())
@@ -238,11 +466,39 @@ def main():
             profiles[key] = {"block": "bloodborne_dw:" + registry, "variants": list(variants),
                              "assets": expected, "models": faces, "paints": paints,
                              "nativeMeshes": list(indices)}
+        reviewed = extend_catalogue(baseline, profiles, manual, facades, args.catalogue_evidence)
+        native_catalogue = extend_native(baseline, profiles, reviewed)
+        if args.catalogue_evidence:
+            path = args.catalogue_evidence.with_name("native-geometry.json")
+            path.write_text(json.dumps(native_catalogue, separators=(",", ":"), sort_keys=True) + "\n",
+                            encoding="utf-8", newline="\n")
+        for profile in profiles.values():
+            if not profile.get("nativeCells"):
+                profile.pop("nativeCells", None)
+        assets = {}
+        for profile in profiles.values():
+            required = profile.pop("assets")
+            for path, digest in required.items():
+                if assets.setdefault(path, digest) != digest:
+                    raise ValueError("Conflicting expected RGB asset hashes: " + path)
+            profile["assets"] = sorted(required)
         output_file = RESOURCES / "bloodborne_dw/rgb-phase1.json"
-        output_file.write_text(json.dumps({"schema": 1, "profiles": profiles, "nativeAudit": native_evidence},
-                                          indent=2, sort_keys=True) + "\n", encoding="utf-8", newline="\n")
-        print(f"RGB: {len(profiles)} profiles, {sum(len(p['paints']) for p in profiles.values())} neutral sprites, "
-              f"{len(native_evidence)} audited native meshes")
+        policy = {"schema": 2, "assets": assets, "profiles": profiles, "nativeAudit": native_evidence}
+        catalogue_dir = ALT / "assets/bloodborne_dw/textures/block/editor2_rgb/catalogue"
+        wanted = {asset(paint["neutral"], "textures", ".png")
+                  for profile in profiles.values() for paint in profile["paints"].values()}
+        if catalogue_dir.is_dir():
+            for path in catalogue_dir.glob("*.png"):
+                if path.relative_to(ALT).as_posix() in wanted:
+                    continue
+                if len(path.stem) != 24 or any(c not in "0123456789abcdef" for c in path.stem):
+                    raise ValueError(f"Unexpected file in generated RGB directory: {path}")
+                path.unlink()
+        output_file.write_text(json.dumps(policy, separators=(",", ":"), sort_keys=True) + "\n",
+                               encoding="utf-8", newline="\n")
+        unique_sprites = {paint["neutral"] for profile in profiles.values() for paint in profile["paints"].values()}
+        print(f"RGB: {len(profiles)} profiles, {len(unique_sprites)} neutral sprites, "
+              f"{native_catalogue['acceptedCells']} exact native cells / {native_catalogue['acceptedMeshes']} meshes")
 
 
 def regional_sprite(facades, sprite, role):

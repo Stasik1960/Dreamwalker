@@ -68,7 +68,7 @@ public final class CityFacadesClient implements ClientModInitializer {
         RgbResourceGuard.Generation verified = RgbResourceGuard.reload(manager,RgbProfiles.assets());
         Set<RgbProfiles.Profile> enabled = new HashSet<>();
         for (var profile : RgbProfiles.profiles())
-            if (verified.verifiesAll(profile.assets().keySet())) enabled.add(profile);
+            if (verified.verifiesAll(profile.assets())) enabled.add(profile);
         rgbGeneration = new RgbGeneration(verified.id(),Set.copyOf(enabled));
     }
 
@@ -77,11 +77,11 @@ public final class CityFacadesClient implements ClientModInitializer {
         return profile != null && rgbGeneration.active.contains(profile) ? profile : null;
     }
 
-    private static BakedModel rgbModel(BakedModel model, RgbProfiles.Profile profile, Identifier part, int painted) {
+    private static BakedModel rgbModel(BakedModel model, RgbProfiles.Profile profile, Identifier part, int painted, int automaticRole) {
         RgbGeneration generation = rgbGeneration;
         if (profile == null || !generation.active.contains(profile) || part != null && !profile.hasModel(part)) return null;
         if (model instanceof FacadeModel wrapped) model = wrapped.delegate();
-        return new FacadeModel(model,profile,painted & 0xffffff,generation.id);
+        return new FacadeModel(model,profile,painted & 0xffffff,generation.id,automaticRole);
     }
 
     @Override public void onInitializeClient() {
@@ -105,13 +105,15 @@ public final class CityFacadesClient implements ClientModInitializer {
         Identifier id=Registries.BLOCK.getId(state.getBlock());
         if(!id.getNamespace().equals("bloodborne_dw"))return model;
         int painted=EditorRenderScope.style(world,root);
-        BakedModel authored = AutomaticAltMaterials.apply(model,state,world,root,part,painted);
-        if (authored != model) return authored;
         if (EditorCells.isRgb(painted)) {
-            BakedModel rgb = rgbModel(model,RgbProfiles.source(state),part,painted);
+            int automaticRole = ShutterSubstrate.source(state) || ShutterSubstrate.model(model,state)
+                    ? ShutterSubstrate.role(world,root) : FacadeMaterials.role(root);
+            BakedModel rgb = rgbModel(model,RgbProfiles.source(state),part,painted,automaticRole);
             if (rgb != null) return rgb;
             painted = -1;
         }
+        BakedModel authored = AutomaticAltMaterials.apply(model,state,world,root,part,painted);
+        if (authored != model) return authored;
         int role=painted>=0?painted:(ShutterSubstrate.source(state)||ShutterSubstrate.model(model,state)?ShutterSubstrate.role(world,root):FacadeMaterials.role(root));
         if(painted==0)return fixedBase(model);
         return role==0?model:fixed(model,role,painted>0);
@@ -125,14 +127,16 @@ public final class CityFacadesClient implements ClientModInitializer {
         Identifier id=Registries.BLOCK.getId(state.getBlock());
         if(!id.getNamespace().equals("bloodborne_dw"))return model;
         int painted=EditorRenderScope.style(world,root);
-        BakedModel authored = AutomaticAltMaterials.apply(model,state,world,root,part,painted);
-        if (authored != model) return authored;
         if (EditorCells.isRgb(painted)) {
             // The native mount path does not carry a reviewed part identifier.
-            BakedModel rgb = part == null ? null : rgbModel(model,RgbProfiles.source(state),part,painted);
+            int automaticRole = ShutterSubstrate.source(state) || shutterPart
+                    ? ShutterSubstrate.role(world,root) : FacadeMaterials.role(root);
+            BakedModel rgb = part == null ? null : rgbModel(model,RgbProfiles.source(state),part,painted,automaticRole);
             if (rgb != null) return rgb;
             painted = -1;
         }
+        BakedModel authored = AutomaticAltMaterials.apply(model,state,world,root,part,painted);
+        if (authored != model) return authored;
         int role=painted>=0?painted:(ShutterSubstrate.source(state)||shutterPart?ShutterSubstrate.role(world,root):FacadeMaterials.role(root));
         if(painted==0)return new FacadeModel(model,0,true,false,true);
         return role==0?model:new FacadeModel(model,role,false,painted>0,true);
@@ -145,13 +149,14 @@ public final class CityFacadesClient implements ClientModInitializer {
         Identifier id=Registries.BLOCK.getId(state.getBlock());
         if(!id.getNamespace().equals("bloodborne_dw"))return model;
         int painted=EditorRenderScope.style(world,pos);
-        BakedModel authored = AutomaticAltMaterials.apply(model,state,world,pos,null,painted);
-        if (authored != model) return authored;
         if (EditorCells.isRgb(painted)) {
-            BakedModel rgb = rgbModel(model,RgbProfiles.at(world,pos,state),null,painted);
+            int automaticRole = automaticTerrainRole(model,pos,state,world);
+            BakedModel rgb = rgbModel(model,RgbProfiles.at(world,pos,state),null,painted,automaticRole);
             if (rgb != null) return rgb;
             painted = -1;
         }
+        BakedModel authored = AutomaticAltMaterials.apply(model,state,world,pos,null,painted);
+        if (authored != model) return authored;
         if(painted>=0) {
             if(model instanceof FacadeModel facade) {
                 if(facade.resolved()&&facade.role()==painted&&facade.manualStyle()==(painted>0))return model;
@@ -167,6 +172,12 @@ public final class CityFacadesClient implements ClientModInitializer {
         int role=ShutterSubstrate.model(model,state)?ShutterSubstrate.role(world,pos):FacadeMaterials.role(pos);
         return role==0?model:fixed(model,role);
     }
+    private static int automaticTerrainRole(BakedModel model,BlockPos pos,BlockState state,BlockRenderView world) {
+        if (model instanceof FacadeModel facade) return facade.automaticRole(world,state,pos);
+        if (!(state.getBlock() instanceof NativeGridBlock) && !(state.getBlock() instanceof NativePhysicsBlock)) return 0;
+        return ShutterSubstrate.model(model,state) ? ShutterSubstrate.role(world,pos) : FacadeMaterials.role(pos);
+    }
+
     public static BakedModel legacyTerrainModel(BakedModel model,BlockPos pos,BlockState state) {
         var world=net.minecraft.client.MinecraftClient.getInstance().world;
         return state.getBlock() instanceof NativeGridBlock && world!=null ? terrainModel(model,pos,state,world) : model;

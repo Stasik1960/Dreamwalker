@@ -2,6 +2,7 @@ package dev.dreamwalker.bloodbornedw.visual;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.IdentityHashMap;
 import java.util.function.Supplier;
 import net.fabricmc.fabric.api.renderer.v1.model.FabricBakedModel;
 import net.fabricmc.fabric.api.renderer.v1.render.RenderContext;
@@ -16,6 +17,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.BlockRenderView;
+import dev.dreamwalker.bloodbornedw.composite.CornerQuadParentScope;
 import dev.dreamwalker.bloodbornedw.editor.EditorCells;
 import dev.dreamwalker.bloodbornedw.editor.EditorRenderScope;
 import dev.dreamwalker.bloodbornedw.editor.RgbProfiles;
@@ -30,14 +32,16 @@ final class FacadeModel implements BakedModel, FabricBakedModel {
     private final RgbProfiles.Profile rgbProfile;
     private final int rgbColor;
     private final long rgbGeneration;
+    // This map lives only with a resolved RGB model used by the current bake.
+    private final IdentityHashMap<BakedQuad,BakedQuad> rgbQuads;
     FacadeModel(BakedModel delegate,int fixedRole) { this(delegate,fixedRole,false,false); }
     FacadeModel(BakedModel delegate,int fixedRole,boolean forceBase) { this(delegate,fixedRole,forceBase,false); }
     FacadeModel(BakedModel delegate,int fixedRole,boolean forceBase,boolean manualStyle) { this(delegate,fixedRole,forceBase,manualStyle,false); }
     FacadeModel(BakedModel delegate,int fixedRole,boolean forceBase,boolean manualStyle,boolean resolved) {
         this(delegate,fixedRole,forceBase,manualStyle,resolved,null,0,0);
     }
-    FacadeModel(BakedModel delegate,RgbProfiles.Profile profile,int color,long generation) {
-        this(delegate,0,false,false,true,profile,color,generation);
+    FacadeModel(BakedModel delegate,RgbProfiles.Profile profile,int color,long generation,int automaticRole) {
+        this(delegate,automaticRole,false,false,true,profile,color,generation);
     }
     private FacadeModel(BakedModel delegate,int fixedRole,boolean forceBase,boolean manualStyle,boolean resolved,
                         RgbProfiles.Profile profile,int color,long generation) {
@@ -49,11 +53,17 @@ final class FacadeModel implements BakedModel, FabricBakedModel {
         this.rgbProfile=profile;
         this.rgbColor=color;
         this.rgbGeneration=generation;
+        this.rgbQuads=profile == null ? null : new IdentityHashMap<>();
     }
     BakedModel delegate() { return delegate; }
     int role() { return fixedRole; }
     boolean manualStyle() { return manualStyle; }
     boolean resolved() { return resolved; }
+    int automaticRole(BlockRenderView world,BlockState state,BlockPos pos) {
+        if (resolved || fixedRole != 0) return fixedRole;
+        if (forceBase) return 0;
+        return ShutterSubstrate.source(state) ? ShutterSubstrate.role(world,pos) : FacadeMaterials.role(pos);
+    }
     @Override public List<BakedQuad> getQuads(BlockState state,Direction side,Random random) {
         List<BakedQuad> quads=delegate.getQuads(state,side,random);
         if(!CityVisualClient.isAlt())return quads;
@@ -62,8 +72,8 @@ final class FacadeModel implements BakedModel, FabricBakedModel {
         List<BakedQuad> changed=null;
         for(int i=0;i<quads.size();i++) {
             BakedQuad source = quads.get(i);
-            BakedQuad result = rgb ? FacadeMaterials.rgbQuad(source,rgbColor,rgbProfile)
-                    : FacadeMaterials.quad(source,fixedRole,manualStyle);
+            BakedQuad result = rgb ? rgbQuad(source) : source;
+            if (result == source && fixedRole != 0) result = FacadeMaterials.quad(source,fixedRole,manualStyle);
             if(result!=source) {
                 if(changed==null)changed=new ArrayList<>(quads);
                 changed.set(i,result);
@@ -71,21 +81,31 @@ final class FacadeModel implements BakedModel, FabricBakedModel {
         }
         return changed==null?quads:changed;
     }
+    private BakedQuad rgbQuad(BakedQuad source) {
+        if (CornerQuadParentScope.parentFor(source) != null)
+            return FacadeMaterials.rgbQuad(source,rgbColor,rgbProfile);
+        // SourceFlatLight records root quads by identity before submitting them.
+        synchronized (rgbQuads) {
+            return rgbQuads.computeIfAbsent(source,quad -> FacadeMaterials.rgbQuad(quad,rgbColor,rgbProfile));
+        }
+    }
+
     @Override public boolean isVanillaAdapter() {
-        return fixedRole!=0 || !CityVisualClient.isAlt() ? ((FabricBakedModel) delegate).isVanillaAdapter() : false;
+        return (rgbProfile == null && fixedRole != 0 || !CityVisualClient.isAlt())
+                && ((FabricBakedModel) delegate).isVanillaAdapter();
     }
     @Override public void emitBlockQuads(BlockRenderView world,BlockState state,BlockPos pos,Supplier<Random> random,RenderContext context) {
         FabricBakedModel fabric=(FabricBakedModel)delegate;
         if(!CityVisualClient.isAlt()) { fabric.emitBlockQuads(world,state,pos,random,context); return; }
         if (rgbProfile != null && CityFacadesClient.currentRgbGeneration(rgbGeneration)) {
-            emitRgb(fabric,world,state,pos,random,context,rgbProfile,rgbColor);
+            emitRgb(fabric,world,state,pos,random,context,rgbProfile,rgbColor,fixedRole);
             return;
         }
         int painted=resolved?-1:EditorRenderScope.style(world,pos);
         if (EditorCells.isRgb(painted)) {
             RgbProfiles.Profile profile = CityFacadesClient.activeRgb(RgbProfiles.at(world,pos,state));
             if (profile != null) {
-                emitRgb(fabric,world,state,pos,random,context,profile,painted & 0xffffff);
+                emitRgb(fabric,world,state,pos,random,context,profile,painted & 0xffffff,automaticRole(world,state,pos));
                 return;
             }
             painted = -1;
@@ -97,8 +117,12 @@ final class FacadeModel implements BakedModel, FabricBakedModel {
         try { fabric.emitBlockQuads(world,state,pos,random,context); } finally { context.popTransform(); }
     }
     private static void emitRgb(FabricBakedModel fabric,BlockRenderView world,BlockState state,BlockPos pos,
-                                Supplier<Random> random,RenderContext context,RgbProfiles.Profile profile,int color) {
-        context.pushTransform(quad -> FacadeMaterials.transformRgb(quad,color,profile));
+                                Supplier<Random> random,RenderContext context,RgbProfiles.Profile profile,int color,int automaticRole) {
+        context.pushTransform(quad -> {
+            if (!FacadeMaterials.transformRgb(quad,color,profile) && automaticRole != 0)
+                FacadeMaterials.transform(quad,automaticRole);
+            return true;
+        });
         try { fabric.emitBlockQuads(world,state,pos,random,context); } finally { context.popTransform(); }
     }
     @Override public void emitItemQuads(ItemStack stack,Supplier<Random> random,RenderContext context) { ((FabricBakedModel)delegate).emitItemQuads(stack,random,context); }
