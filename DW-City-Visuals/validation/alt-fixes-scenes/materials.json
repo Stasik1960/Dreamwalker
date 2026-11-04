@@ -1,0 +1,1626 @@
+{
+  "schema": 1,
+  "sourceJar": "baseline\\mod.jar",
+  "referenceRgb": [
+    118,
+    111,
+    97
+  ],
+  "uvConvention": "Minecraft model UV 0..16 scaled by texture width/16 and height/16",
+  "targetCells": [
+    {
+      "screenshot": "05",
+      "position": [
+        206,
+        61,
+        -961
+      ],
+      "block": "bloodborne_dw:static_architecture_15",
+      "part": 67,
+      "model": "bloodborne_dw:remaining/source/minecraft/block/_wall_dec_out"
+    },
+    {
+      "screenshot": "06",
+      "position": [
+        190,
+        60,
+        -965
+      ],
+      "block": "bloodborne_dw:static_architecture_0",
+      "part": 55,
+      "model": "bloodborne_dw:remaining/source/minecraft/block/_wall_dec_out"
+    },
+    {
+      "screenshot": "08",
+      "position": [
+        88,
+        21,
+        -856
+      ],
+      "block": "bloodborne_dw:static_architecture_1",
+      "part": 49,
+      "model": "bloodborne_dw:remaining/source/minecraft/block/_wall_dec_top_1"
+    },
+    {
+      "screenshot": "10",
+      "position": [
+        12,
+        -5,
+        -1032
+      ],
+      "block": "bloodborne_dw:static_architecture_43",
+      "part": 50,
+      "model": "bloodborne_dw:remaining/source/minecraft/block/oak_stairs_out"
+    },
+    {
+      "screenshot": "11",
+      "position": [
+        14,
+        -6,
+        -1032
+      ],
+      "block": "bloodborne_dw:static_architecture_38",
+      "part": 89,
+      "model": "bloodborne_dw:remaining/source/minecraft/block/_wall_dec_bottom"
+    }
+  ],
+  "referenceNote": "Target RGB is the audited nearby ALT stone reference from screenshot 09. Only model-used source UV regions are scaled; this is an authored ALT tone, not a render measurement.",
+  "cases": [
+    {
+      "screenshots": "05-06",
+      "model": "assets/bloodborne_dw/models/remaining/source/minecraft/block/_wall_dec_out.json",
+      "modelSha256": "2c8f87893eac705beb8b6b0f5f15bd5efe872f7b1bdbd9848a94063cd8a22b91",
+      "textureKey": "#0",
+      "keptModelTextures": {
+        "3": "bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_009",
+        "4": "bloodborne_dw:block/remaining/source/minecraft/block/addon/window_2"
+      },
+      "sourceSprite": "bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_001",
+      "sourceFile": "src\\main\\resources\\dw_city_visuals\\alt\\assets\\bloodborne_dw\\textures\\block\\remaining\\source\\minecraft\\block\\addon\\spirelamp_001.png",
+      "sourceSha256": "5c62d25fdccad1d418d5e6f55b71002f0c9b4a7c2ffb2d1becac9c0bef9edcee",
+      "targetSprite": "bloodborne_dw:block/city_altfix/scene05_06_stone_a",
+      "targetFile": "src\\main\\resources\\dw_city_visuals\\alt\\assets\\bloodborne_dw\\textures\\block\\city_altfix\\scene05_06_stone_a.png",
+      "targetSha256": "285b7328020de8840363dc1702040f65054d06c7e84bc4af4ac59cf4b865f570",
+      "dimensions": [
+        128,
+        128
+      ],
+      "sourceMedianOnModelUv": [
+        134,
+        129,
+        113
+      ],
+      "targetMedianOnModelUv": [
+        118,
+        111,
+        97
+      ],
+      "targetRgb": [
+        118,
+        111,
+        97
+      ],
+      "channelScale": [
+        0.8805970149253731,
+        0.8604651162790697,
+        0.8584070796460177
+      ],
+      "usedPixelCount": 1084,
+      "opaqueUsedPixelCount": 1060,
+      "clippedUsedPixelCount": 0,
+      "alphaEqual": true,
+      "outsideUvPixelsEqual": true,
+      "uvs": [
+        {
+          "element": 0,
+          "face": "north",
+          "uv": [
+            8,
+            1,
+            10,
+            2
+          ],
+          "pixels": [
+            64,
+            8,
+            80,
+            16
+          ]
+        },
+        {
+          "element": 0,
+          "face": "east",
+          "uv": [
+            8,
+            1,
+            10,
+            2
+          ],
+          "pixels": [
+            64,
+            8,
+            80,
+            16
+          ]
+        },
+        {
+          "element": 0,
+          "face": "south",
+          "uv": [
+            8,
+            1,
+            10,
+            2
+          ],
+          "pixels": [
+            64,
+            8,
+            80,
+            16
+          ]
+        },
+        {
+          "element": 0,
+          "face": "west",
+          "uv": [
+            8,
+            1,
+            10,
+            2
+          ],
+          "pixels": [
+            64,
+            8,
+            80,
+            16
+          ]
+        },
+        {
+          "element": 0,
+          "face": "down",
+          "uv": [
+            8,
+            4,
+            10,
+            6
+          ],
+          "pixels": [
+            64,
+            32,
+            80,
+            48
+          ]
+        },
+        {
+          "element": 2,
+          "face": "north",
+          "uv": [
+            6,
+            8,
+            7.625,
+            8.875
+          ],
+          "pixels": [
+            48,
+            64,
+            61,
+            71
+          ]
+        },
+        {
+          "element": 2,
+          "face": "west",
+          "uv": [
+            6.375,
+            8,
+            8,
+            8.875
+          ],
+          "pixels": [
+            51,
+            64,
+            64,
+            71
+          ]
+        },
+        {
+          "element": 3,
+          "face": "north",
+          "uv": [
+            3,
+            15.625,
+            5.625,
+            16
+          ],
+          "pixels": [
+            24,
+            125,
+            45,
+            128
+          ]
+        },
+        {
+          "element": 3,
+          "face": "east",
+          "uv": [
+            3,
+            15.5,
+            5.625,
+            15.875
+          ],
+          "pixels": [
+            24,
+            124,
+            45,
+            127
+          ]
+        },
+        {
+          "element": 3,
+          "face": "south",
+          "uv": [
+            3,
+            15.625,
+            5.625,
+            16
+          ],
+          "pixels": [
+            24,
+            125,
+            45,
+            128
+          ]
+        },
+        {
+          "element": 3,
+          "face": "west",
+          "uv": [
+            5.875,
+            4,
+            6.25,
+            6.625
+          ],
+          "pixels": [
+            47,
+            32,
+            50,
+            53
+          ]
+        },
+        {
+          "element": 3,
+          "face": "up",
+          "uv": [
+            0,
+            13.375,
+            2.625,
+            16
+          ],
+          "pixels": [
+            0,
+            107,
+            21,
+            128
+          ]
+        },
+        {
+          "element": 3,
+          "face": "down",
+          "uv": [
+            0,
+            13.375,
+            2.625,
+            16
+          ],
+          "pixels": [
+            0,
+            107,
+            21,
+            128
+          ]
+        }
+      ]
+    },
+    {
+      "screenshots": "05-06",
+      "model": "assets/bloodborne_dw/models/remaining/source/minecraft/block/_wall_dec_out.json",
+      "modelSha256": "2c8f87893eac705beb8b6b0f5f15bd5efe872f7b1bdbd9848a94063cd8a22b91",
+      "textureKey": "#3",
+      "keptModelTextures": {
+        "0": "bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_001",
+        "4": "bloodborne_dw:block/remaining/source/minecraft/block/addon/window_2"
+      },
+      "sourceSprite": "bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_009",
+      "sourceFile": "src\\main\\resources\\dw_city_visuals\\alt\\assets\\bloodborne_dw\\textures\\block\\remaining\\source\\minecraft\\block\\addon\\spirelamp_009.png",
+      "sourceSha256": "77610e3b092b8a84a42d7383a72f7fafe4d69bec7f8d7a9b003cd006e041baa7",
+      "targetSprite": "bloodborne_dw:block/city_altfix/scene05_06_stone_b",
+      "targetFile": "src\\main\\resources\\dw_city_visuals\\alt\\assets\\bloodborne_dw\\textures\\block\\city_altfix\\scene05_06_stone_b.png",
+      "targetSha256": "eb736c785621e6ef1b73d1bf324a00576c651bcf97278ba7ebefbde0225c622d",
+      "dimensions": [
+        128,
+        128
+      ],
+      "sourceMedianOnModelUv": [
+        120,
+        115,
+        102
+      ],
+      "targetMedianOnModelUv": [
+        118,
+        111,
+        97
+      ],
+      "targetRgb": [
+        118,
+        111,
+        97
+      ],
+      "channelScale": [
+        0.9833333333333333,
+        0.9652173913043478,
+        0.9509803921568627
+      ],
+      "usedPixelCount": 476,
+      "opaqueUsedPixelCount": 476,
+      "clippedUsedPixelCount": 0,
+      "alphaEqual": true,
+      "outsideUvPixelsEqual": true,
+      "uvs": [
+        {
+          "element": 1,
+          "face": "up",
+          "uv": [
+            16,
+            12.25,
+            13.5,
+            14.75
+          ],
+          "pixels": [
+            108,
+            98,
+            128,
+            118
+          ]
+        },
+        {
+          "element": 1,
+          "face": "down",
+          "uv": [
+            13.25,
+            12.5,
+            15.75,
+            15
+          ],
+          "pixels": [
+            106,
+            100,
+            126,
+            120
+          ]
+        }
+      ]
+    },
+    {
+      "screenshots": "08",
+      "model": "assets/bloodborne_dw/models/remaining/source/minecraft/block/_wall_dec_top_1.json",
+      "modelSha256": "c3a90696cb5c3592c34580f24e970c7eba2d25e8764ab04804ff5e30e00d3d68",
+      "textureKey": "#0",
+      "keptModelTextures": {},
+      "sourceSprite": "bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0028",
+      "sourceFile": "src\\main\\resources\\dw_city_visuals\\alt\\assets\\bloodborne_dw\\textures\\block\\remaining\\source\\minecraft\\block\\addon\\spirelamp_0028.png",
+      "sourceSha256": "14c267c8300718e77ba25ddcc31c72e8fba883862b5c7386eb8ae82647fde0a3",
+      "targetSprite": "bloodborne_dw:block/city_altfix/scene08_triangle",
+      "targetFile": "src\\main\\resources\\dw_city_visuals\\alt\\assets\\bloodborne_dw\\textures\\block\\city_altfix\\scene08_triangle.png",
+      "targetSha256": "d1fbdb75d36b4f24d669e77188c9348ca7e4363f0e909c0b31c89f18201fea67",
+      "dimensions": [
+        128,
+        128
+      ],
+      "sourceMedianOnModelUv": [
+        101,
+        97,
+        86
+      ],
+      "targetMedianOnModelUv": [
+        118,
+        111,
+        97
+      ],
+      "targetRgb": [
+        118,
+        111,
+        97
+      ],
+      "channelScale": [
+        1.1683168316831682,
+        1.1443298969072164,
+        1.127906976744186
+      ],
+      "usedPixelCount": 1161,
+      "opaqueUsedPixelCount": 1137,
+      "clippedUsedPixelCount": 0,
+      "alphaEqual": true,
+      "outsideUvPixelsEqual": true,
+      "uvs": [
+        {
+          "element": 0,
+          "face": "north",
+          "uv": [
+            8,
+            0,
+            10,
+            1
+          ],
+          "pixels": [
+            64,
+            0,
+            80,
+            8
+          ]
+        },
+        {
+          "element": 0,
+          "face": "down",
+          "uv": [
+            8,
+            0,
+            10,
+            0.5
+          ],
+          "pixels": [
+            64,
+            0,
+            80,
+            4
+          ]
+        },
+        {
+          "element": 1,
+          "face": "north",
+          "uv": [
+            6,
+            8,
+            8,
+            8.875
+          ],
+          "pixels": [
+            48,
+            64,
+            64,
+            71
+          ]
+        },
+        {
+          "element": 2,
+          "face": "north",
+          "uv": [
+            6,
+            13,
+            6.5,
+            12.625
+          ],
+          "pixels": [
+            48,
+            101,
+            52,
+            104
+          ]
+        },
+        {
+          "element": 2,
+          "face": "east",
+          "uv": [
+            5.375,
+            13,
+            8,
+            12.625
+          ],
+          "pixels": [
+            43,
+            101,
+            64,
+            104
+          ]
+        },
+        {
+          "element": 2,
+          "face": "south",
+          "uv": [
+            7.25,
+            13,
+            7.75,
+            12.625
+          ],
+          "pixels": [
+            58,
+            101,
+            62,
+            104
+          ]
+        },
+        {
+          "element": 2,
+          "face": "west",
+          "uv": [
+            4.125,
+            13,
+            6.75,
+            12.625
+          ],
+          "pixels": [
+            33,
+            101,
+            54,
+            104
+          ]
+        },
+        {
+          "element": 2,
+          "face": "up",
+          "uv": [
+            13.625,
+            10,
+            14.125,
+            12.625
+          ],
+          "pixels": [
+            109,
+            80,
+            113,
+            101
+          ]
+        },
+        {
+          "element": 2,
+          "face": "down",
+          "uv": [
+            4.125,
+            4.25,
+            4.625,
+            6.875
+          ],
+          "pixels": [
+            33,
+            34,
+            37,
+            55
+          ]
+        },
+        {
+          "element": 3,
+          "face": "north",
+          "uv": [
+            5.5,
+            13,
+            7,
+            12.625
+          ],
+          "pixels": [
+            44,
+            101,
+            56,
+            104
+          ]
+        },
+        {
+          "element": 3,
+          "face": "east",
+          "uv": [
+            4.25,
+            13,
+            6.75,
+            12.625
+          ],
+          "pixels": [
+            34,
+            101,
+            54,
+            104
+          ]
+        },
+        {
+          "element": 3,
+          "face": "south",
+          "uv": [
+            6.25,
+            4.125,
+            5.875,
+            5.625
+          ],
+          "pixels": [
+            47,
+            33,
+            50,
+            45
+          ]
+        },
+        {
+          "element": 3,
+          "face": "up",
+          "uv": [
+            12.125,
+            10,
+            13.625,
+            12.5
+          ],
+          "pixels": [
+            97,
+            80,
+            109,
+            100
+          ]
+        },
+        {
+          "element": 4,
+          "face": "north",
+          "uv": [
+            8,
+            0,
+            10,
+            2
+          ],
+          "pixels": [
+            64,
+            0,
+            80,
+            16
+          ]
+        },
+        {
+          "element": 4,
+          "face": "east",
+          "uv": [
+            8,
+            4,
+            10,
+            6
+          ],
+          "pixels": [
+            64,
+            32,
+            80,
+            48
+          ]
+        },
+        {
+          "element": 4,
+          "face": "south",
+          "uv": [
+            8,
+            0,
+            10,
+            2
+          ],
+          "pixels": [
+            64,
+            0,
+            80,
+            16
+          ]
+        },
+        {
+          "element": 4,
+          "face": "west",
+          "uv": [
+            8,
+            4,
+            10,
+            6
+          ],
+          "pixels": [
+            64,
+            32,
+            80,
+            48
+          ]
+        },
+        {
+          "element": 4,
+          "face": "up",
+          "uv": [
+            8,
+            4,
+            10,
+            6
+          ],
+          "pixels": [
+            64,
+            32,
+            80,
+            48
+          ]
+        },
+        {
+          "element": 4,
+          "face": "down",
+          "uv": [
+            8,
+            4,
+            10,
+            6
+          ],
+          "pixels": [
+            64,
+            32,
+            80,
+            48
+          ]
+        },
+        {
+          "element": 5,
+          "face": "east",
+          "uv": [
+            8.025,
+            0,
+            10,
+            1
+          ],
+          "pixels": [
+            64,
+            0,
+            80,
+            8
+          ]
+        },
+        {
+          "element": 6,
+          "face": "west",
+          "uv": [
+            8,
+            0,
+            9.975,
+            1
+          ],
+          "pixels": [
+            64,
+            0,
+            80,
+            8
+          ]
+        },
+        {
+          "element": 7,
+          "face": "down",
+          "uv": [
+            12.125,
+            10,
+            13.625,
+            10.00625
+          ],
+          "pixels": [
+            97,
+            80,
+            109,
+            81
+          ]
+        }
+      ]
+    },
+    {
+      "screenshots": "10",
+      "model": "assets/bloodborne_dw/models/remaining/source/minecraft/block/oak_stairs_out.json",
+      "modelSha256": "590027602c1303357183fa3361f5a4c6b44abde7e9902a73f3ea08c41c426bde",
+      "textureKey": "#0",
+      "keptModelTextures": {
+        "particle": "bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0018"
+      },
+      "sourceSprite": "bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0018",
+      "sourceFile": "src\\main\\resources\\dw_city_visuals\\alt\\assets\\bloodborne_dw\\textures\\block\\remaining\\source\\minecraft\\block\\addon\\spirelamp_0018.png",
+      "sourceSha256": "fcc8502954a755bb149b5b684239baa1329a4dbf168f86584559e481a369fa8f",
+      "targetSprite": "bloodborne_dw:block/city_altfix/scene10_masonry",
+      "targetFile": "src\\main\\resources\\dw_city_visuals\\alt\\assets\\bloodborne_dw\\textures\\block\\city_altfix\\scene10_masonry.png",
+      "targetSha256": "e0f4d0edf172c3efafc876e0b1389ebec3ca8aebee6b308aa7817abbd3f2488d",
+      "dimensions": [
+        128,
+        128
+      ],
+      "sourceMedianOnModelUv": [
+        135,
+        135,
+        121
+      ],
+      "targetMedianOnModelUv": [
+        118,
+        111,
+        97
+      ],
+      "targetRgb": [
+        118,
+        111,
+        97
+      ],
+      "channelScale": [
+        0.8740740740740741,
+        0.8222222222222222,
+        0.8016528925619835
+      ],
+      "usedPixelCount": 2055,
+      "opaqueUsedPixelCount": 2055,
+      "clippedUsedPixelCount": 0,
+      "alphaEqual": true,
+      "outsideUvPixelsEqual": true,
+      "uvs": [
+        {
+          "element": 0,
+          "face": "north",
+          "uv": [
+            13.75,
+            10.875,
+            16,
+            12
+          ],
+          "pixels": [
+            110,
+            87,
+            128,
+            96
+          ]
+        },
+        {
+          "element": 0,
+          "face": "east",
+          "uv": [
+            13.75,
+            10.875,
+            16,
+            12
+          ],
+          "pixels": [
+            110,
+            87,
+            128,
+            96
+          ]
+        },
+        {
+          "element": 0,
+          "face": "south",
+          "uv": [
+            13.75,
+            10.875,
+            16,
+            12
+          ],
+          "pixels": [
+            110,
+            87,
+            128,
+            96
+          ]
+        },
+        {
+          "element": 0,
+          "face": "west",
+          "uv": [
+            13.75,
+            10.875,
+            16,
+            12
+          ],
+          "pixels": [
+            110,
+            87,
+            128,
+            96
+          ]
+        },
+        {
+          "element": 0,
+          "face": "up",
+          "uv": [
+            0,
+            0,
+            0.375,
+            0.375
+          ],
+          "pixels": [
+            0,
+            0,
+            3,
+            3
+          ]
+        },
+        {
+          "element": 0,
+          "face": "down",
+          "uv": [
+            13.75,
+            9.75,
+            16,
+            12
+          ],
+          "pixels": [
+            110,
+            78,
+            128,
+            96
+          ]
+        },
+        {
+          "element": 1,
+          "face": "north",
+          "uv": [
+            11.375,
+            2.5,
+            8.125,
+            2.25
+          ],
+          "pixels": [
+            65,
+            18,
+            91,
+            20
+          ]
+        },
+        {
+          "element": 1,
+          "face": "east",
+          "uv": [
+            16,
+            2.5,
+            12.75,
+            2.25
+          ],
+          "pixels": [
+            102,
+            18,
+            128,
+            20
+          ]
+        },
+        {
+          "element": 1,
+          "face": "south",
+          "uv": [
+            15.375,
+            2.5,
+            12.125,
+            2.25
+          ],
+          "pixels": [
+            97,
+            18,
+            123,
+            20
+          ]
+        },
+        {
+          "element": 1,
+          "face": "west",
+          "uv": [
+            13.125,
+            2.5,
+            9.875,
+            2.25
+          ],
+          "pixels": [
+            79,
+            18,
+            105,
+            20
+          ]
+        },
+        {
+          "element": 1,
+          "face": "up",
+          "uv": [
+            16,
+            15.25,
+            12.75,
+            12
+          ],
+          "pixels": [
+            102,
+            96,
+            128,
+            122
+          ]
+        },
+        {
+          "element": 1,
+          "face": "down",
+          "uv": [
+            16,
+            15.375,
+            12.75,
+            12.125
+          ],
+          "pixels": [
+            102,
+            97,
+            128,
+            123
+          ]
+        },
+        {
+          "element": 2,
+          "face": "north",
+          "uv": [
+            10,
+            1.875,
+            12.875,
+            2.5
+          ],
+          "pixels": [
+            80,
+            15,
+            103,
+            20
+          ]
+        },
+        {
+          "element": 2,
+          "face": "east",
+          "uv": [
+            10,
+            1.875,
+            12.875,
+            2.5
+          ],
+          "pixels": [
+            80,
+            15,
+            103,
+            20
+          ]
+        },
+        {
+          "element": 2,
+          "face": "south",
+          "uv": [
+            10,
+            1.875,
+            12.875,
+            2.5
+          ],
+          "pixels": [
+            80,
+            15,
+            103,
+            20
+          ]
+        },
+        {
+          "element": 2,
+          "face": "west",
+          "uv": [
+            10,
+            1.875,
+            12.875,
+            2.5
+          ],
+          "pixels": [
+            80,
+            15,
+            103,
+            20
+          ]
+        },
+        {
+          "element": 2,
+          "face": "up",
+          "uv": [
+            0,
+            0,
+            0.375,
+            0.375
+          ],
+          "pixels": [
+            0,
+            0,
+            3,
+            3
+          ]
+        },
+        {
+          "element": 2,
+          "face": "down",
+          "uv": [
+            12,
+            12,
+            14.875,
+            14.875
+          ],
+          "pixels": [
+            96,
+            96,
+            119,
+            119
+          ]
+        },
+        {
+          "element": 3,
+          "face": "north",
+          "uv": [
+            0,
+            0,
+            0.625,
+            0.5
+          ],
+          "pixels": [
+            0,
+            0,
+            5,
+            4
+          ]
+        },
+        {
+          "element": 3,
+          "face": "east",
+          "uv": [
+            0,
+            0,
+            0.625,
+            0.5
+          ],
+          "pixels": [
+            0,
+            0,
+            5,
+            4
+          ]
+        },
+        {
+          "element": 3,
+          "face": "south",
+          "uv": [
+            0,
+            0,
+            0.625,
+            0.5
+          ],
+          "pixels": [
+            0,
+            0,
+            5,
+            4
+          ]
+        },
+        {
+          "element": 3,
+          "face": "west",
+          "uv": [
+            0,
+            0,
+            0.625,
+            0.5
+          ],
+          "pixels": [
+            0,
+            0,
+            5,
+            4
+          ]
+        },
+        {
+          "element": 3,
+          "face": "up",
+          "uv": [
+            12.5,
+            4.5,
+            15.75,
+            7.75
+          ],
+          "pixels": [
+            100,
+            36,
+            126,
+            62
+          ]
+        },
+        {
+          "element": 3,
+          "face": "down",
+          "uv": [
+            12.5,
+            4.5,
+            15.75,
+            7.75
+          ],
+          "pixels": [
+            100,
+            36,
+            126,
+            62
+          ]
+        }
+      ]
+    },
+    {
+      "screenshots": "11",
+      "model": "assets/bloodborne_dw/models/remaining/source/minecraft/block/_wall_dec_bottom.json",
+      "modelSha256": "d6f8ca2ffdc007de7ce5687b777a9900373b3aadbf0634ffe7fa609b53af277f",
+      "textureKey": "#0",
+      "keptModelTextures": {},
+      "sourceSprite": "bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_002",
+      "sourceFile": "src\\main\\resources\\dw_city_visuals\\alt\\assets\\bloodborne_dw\\textures\\block\\remaining\\source\\minecraft\\block\\addon\\spirelamp_002.png",
+      "sourceSha256": "428523858b13dd049742b37b39c95a81ec4b64ded4508ef3f94a0344df97b64e",
+      "targetSprite": "bloodborne_dw:block/city_altfix/scene11_hanging",
+      "targetFile": "src\\main\\resources\\dw_city_visuals\\alt\\assets\\bloodborne_dw\\textures\\block\\city_altfix\\scene11_hanging.png",
+      "targetSha256": "56c052be8821c4e6a79b4b1f65bc0a97e8b9024485e1de78d05519ba9cc554b0",
+      "dimensions": [
+        128,
+        128
+      ],
+      "sourceMedianOnModelUv": [
+        134,
+        129,
+        113
+      ],
+      "targetMedianOnModelUv": [
+        118,
+        111,
+        97
+      ],
+      "targetRgb": [
+        118,
+        111,
+        97
+      ],
+      "channelScale": [
+        0.8805970149253731,
+        0.8604651162790697,
+        0.8584070796460177
+      ],
+      "usedPixelCount": 1744,
+      "opaqueUsedPixelCount": 1647,
+      "clippedUsedPixelCount": 0,
+      "alphaEqual": true,
+      "outsideUvPixelsEqual": true,
+      "uvs": [
+        {
+          "element": 0,
+          "face": "north",
+          "uv": [
+            6,
+            8,
+            8,
+            9.25
+          ],
+          "pixels": [
+            48,
+            64,
+            64,
+            74
+          ]
+        },
+        {
+          "element": 1,
+          "face": "north",
+          "uv": [
+            2.125,
+            8.125,
+            3.875,
+            9.25
+          ],
+          "pixels": [
+            17,
+            65,
+            31,
+            74
+          ]
+        },
+        {
+          "element": 1,
+          "face": "east",
+          "uv": [
+            0,
+            6,
+            1.75,
+            7.125
+          ],
+          "pixels": [
+            0,
+            48,
+            14,
+            57
+          ]
+        },
+        {
+          "element": 1,
+          "face": "west",
+          "uv": [
+            0,
+            6,
+            1.75,
+            7.125
+          ],
+          "pixels": [
+            0,
+            48,
+            14,
+            57
+          ]
+        },
+        {
+          "element": 1,
+          "face": "down",
+          "uv": [
+            0,
+            6,
+            1.75,
+            7.125
+          ],
+          "pixels": [
+            0,
+            48,
+            14,
+            57
+          ]
+        },
+        {
+          "element": 2,
+          "face": "north",
+          "uv": [
+            8,
+            0,
+            10,
+            1
+          ],
+          "pixels": [
+            64,
+            0,
+            80,
+            8
+          ]
+        },
+        {
+          "element": 2,
+          "face": "east",
+          "uv": [
+            6,
+            0,
+            7,
+            1
+          ],
+          "pixels": [
+            48,
+            0,
+            56,
+            8
+          ]
+        },
+        {
+          "element": 2,
+          "face": "west",
+          "uv": [
+            6,
+            0,
+            7,
+            1
+          ],
+          "pixels": [
+            48,
+            0,
+            56,
+            8
+          ]
+        },
+        {
+          "element": 2,
+          "face": "up",
+          "uv": [
+            6,
+            1.125,
+            8,
+            2.125
+          ],
+          "pixels": [
+            48,
+            9,
+            64,
+            17
+          ]
+        },
+        {
+          "element": 2,
+          "face": "down",
+          "uv": [
+            6,
+            0,
+            8,
+            1
+          ],
+          "pixels": [
+            48,
+            0,
+            64,
+            8
+          ]
+        },
+        {
+          "element": 3,
+          "face": "north",
+          "uv": [
+            8,
+            0,
+            10,
+            2
+          ],
+          "pixels": [
+            64,
+            0,
+            80,
+            16
+          ]
+        },
+        {
+          "element": 3,
+          "face": "east",
+          "uv": [
+            8,
+            4,
+            10,
+            6.05
+          ],
+          "pixels": [
+            64,
+            32,
+            80,
+            49
+          ]
+        },
+        {
+          "element": 3,
+          "face": "south",
+          "uv": [
+            8,
+            0,
+            10,
+            2
+          ],
+          "pixels": [
+            64,
+            0,
+            80,
+            16
+          ]
+        },
+        {
+          "element": 3,
+          "face": "west",
+          "uv": [
+            8,
+            4,
+            10,
+            6
+          ],
+          "pixels": [
+            64,
+            32,
+            80,
+            48
+          ]
+        },
+        {
+          "element": 3,
+          "face": "up",
+          "uv": [
+            8,
+            4,
+            10,
+            6
+          ],
+          "pixels": [
+            64,
+            32,
+            80,
+            48
+          ]
+        },
+        {
+          "element": 3,
+          "face": "down",
+          "uv": [
+            8,
+            4,
+            10,
+            6
+          ],
+          "pixels": [
+            64,
+            32,
+            80,
+            48
+          ]
+        },
+        {
+          "element": 4,
+          "face": "north",
+          "uv": [
+            6.375,
+            4,
+            5.875,
+            6
+          ],
+          "pixels": [
+            47,
+            32,
+            51,
+            48
+          ]
+        },
+        {
+          "element": 4,
+          "face": "east",
+          "uv": [
+            6.375,
+            4,
+            5.875,
+            7.125
+          ],
+          "pixels": [
+            47,
+            32,
+            51,
+            57
+          ]
+        },
+        {
+          "element": 4,
+          "face": "south",
+          "uv": [
+            6.25,
+            4.125,
+            6.75,
+            6.125
+          ],
+          "pixels": [
+            50,
+            33,
+            54,
+            49
+          ]
+        },
+        {
+          "element": 4,
+          "face": "west",
+          "uv": [
+            5.875,
+            4,
+            6.375,
+            7.125
+          ],
+          "pixels": [
+            47,
+            32,
+            51,
+            57
+          ]
+        },
+        {
+          "element": 4,
+          "face": "up",
+          "uv": [
+            0.25,
+            12.875,
+            2.25,
+            16
+          ],
+          "pixels": [
+            2,
+            103,
+            18,
+            128
+          ]
+        },
+        {
+          "element": 4,
+          "face": "down",
+          "uv": [
+            0.25,
+            12.875,
+            2.25,
+            16
+          ],
+          "pixels": [
+            2,
+            103,
+            18,
+            128
+          ]
+        }
+      ]
+    }
+  ]
+}

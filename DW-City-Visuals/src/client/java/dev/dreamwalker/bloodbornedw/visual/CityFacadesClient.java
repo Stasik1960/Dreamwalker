@@ -92,6 +92,7 @@ public final class CityFacadesClient implements ClientModInitializer {
             public void reload(ResourceManager manager) {
                 loadRgb(manager);
                 FacadeMaterials.reload();
+                AutomaticAltMaterials.reload();
             }
         });
         ModelLoadingPlugin.register(plugin->plugin.modifyModelAfterBake().register(ModelModifier.WRAP_PHASE,(model,context)-> {
@@ -104,6 +105,8 @@ public final class CityFacadesClient implements ClientModInitializer {
         Identifier id=Registries.BLOCK.getId(state.getBlock());
         if(!id.getNamespace().equals("bloodborne_dw"))return model;
         int painted=EditorRenderScope.style(world,root);
+        BakedModel authored = AutomaticAltMaterials.apply(model,state,world,root,part,painted);
+        if (authored != model) return authored;
         if (EditorCells.isRgb(painted)) {
             BakedModel rgb = rgbModel(model,RgbProfiles.source(state),part,painted);
             if (rgb != null) return rgb;
@@ -122,6 +125,8 @@ public final class CityFacadesClient implements ClientModInitializer {
         Identifier id=Registries.BLOCK.getId(state.getBlock());
         if(!id.getNamespace().equals("bloodborne_dw"))return model;
         int painted=EditorRenderScope.style(world,root);
+        BakedModel authored = AutomaticAltMaterials.apply(model,state,world,root,part,painted);
+        if (authored != model) return authored;
         if (EditorCells.isRgb(painted)) {
             // The native mount path does not carry a reviewed part identifier.
             BakedModel rgb = part == null ? null : rgbModel(model,RgbProfiles.source(state),part,painted);
@@ -140,6 +145,8 @@ public final class CityFacadesClient implements ClientModInitializer {
         Identifier id=Registries.BLOCK.getId(state.getBlock());
         if(!id.getNamespace().equals("bloodborne_dw"))return model;
         int painted=EditorRenderScope.style(world,pos);
+        BakedModel authored = AutomaticAltMaterials.apply(model,state,world,pos,null,painted);
+        if (authored != model) return authored;
         if (EditorCells.isRgb(painted)) {
             BakedModel rgb = rgbModel(model,RgbProfiles.at(world,pos,state),null,painted);
             if (rgb != null) return rgb;

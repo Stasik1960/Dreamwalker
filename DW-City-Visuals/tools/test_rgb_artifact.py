@@ -18,13 +18,14 @@ def main():
     parser.add_argument("--jar", type=Path, required=True)
     parser.add_argument("--previous", type=Path, required=True)
     parser.add_argument("--report", type=Path, required=True)
+    parser.add_argument("--revision-suffix", default="-rgb.1")
     args = parser.parse_args()
     with ZipFile(args.jar) as jar, ZipFile(args.previous) as previous:
         assert jar.testzip() is None, "Invalid ZIP CRC"
         names = set(jar.namelist())
         old_names = set(previous.namelist())
         mod = json.loads(jar.read("fabric.mod.json"))
-        assert mod["id"] == "bloodborne_dw" and mod["version"].endswith("-rgb.1")
+        assert mod["id"] == "bloodborne_dw" and mod["version"].endswith(args.revision_suffix)
         assert not any("dw-editorqa" in name or "/editorqa/" in name for name in names)
         item_model = json.loads(jar.read("assets/bloodborne_dw/models/item/nrp_pickaxe.json"))
         assert item_model["parent"] == "minecraft:item/handheld"
@@ -51,6 +52,12 @@ def main():
             assert jar.read(name) == previous.read(name), name
         policy = json.loads(jar.read(POLICY))
         assert policy["schema"] == 1
+        if POLICY in old_names:
+            previous_policy = json.loads(previous.read(POLICY))
+            def scope(table):
+                return {key: (row["block"], row["variants"], row["nativeMeshes"], row["models"], set(row["paints"]))
+                        for key, row in table["profiles"].items()}
+            assert scope(policy) == scope(previous_policy), "RGB profile scope changed"
         materials = set()
         rgba_mips = 0
         for profile in policy["profiles"].values():

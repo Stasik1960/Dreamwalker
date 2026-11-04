@@ -16,6 +16,7 @@ import dev.dreamwalker.bloodbornedw.composite.NativeVisuals;
 import dev.dreamwalker.bloodbornedw.composite.StaticArchitectureBlock;
 import dev.dreamwalker.bloodbornedw.composite.StaticArchitectureCatalog;
 import dev.dreamwalker.bloodbornedw.runtime.ObjectInstance;
+import dev.dreamwalker.bloodbornedw.visual.ObsidianBandAlt;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
@@ -132,8 +133,10 @@ public final class RgbProfiles {
         if (role < 0 || role > 4) return -1;
         WorldChunk chunk = loaded(world,root);
         if (chunk == null) return -1;
-        Profile profile = at(world,root,chunk.getBlockState(root));
+        BlockState state = chunk.getBlockState(root);
+        Profile profile = at(world,root,state);
         if (profile == null || profile.unambiguous == null) return -1;
+        if (!stored && ObsidianBandAlt.matches(state)) return ObsidianBandAlt.REFERENCE_RGB;
         return profile.unambiguous.sample(role,stored,hit.getSide().getAxis() == Direction.Axis.Y);
     }
 
