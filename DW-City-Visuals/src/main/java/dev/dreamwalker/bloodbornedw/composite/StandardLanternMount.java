@@ -14,6 +14,11 @@ public final class StandardLanternMount {
         var clicked = net.minecraft.util.math.BlockPos.ofFloored(context.getHitPos().subtract(context.getSide().getOffsetX() * 0.001, context.getSide().getOffsetY() * 0.001, context.getSide().getOffsetZ() * 0.001));
         var clickedId = Registries.BLOCK.getId(context.getWorld().getBlockState(clicked).getBlock()).toString();
         var target = context.getPlayer() == null ? null : CompositeRuntime.target(context.getWorld(), clicked, context.getPlayer());
+        // The combined outline can be hit while the owner-specific ray misses a
+        // thin post face. Only accept the existing unambiguous, live owner.
+        if (target == null && context.getPlayer() != null) {
+            target = CompositeRuntime.soleNativeOwner(context.getWorld(), clicked);
+        }
         boolean postTarget = target != null && target.registryId().equals("bloodborne_dw:source_street_lamp_post");
         boolean post = postTarget || clickedId.equals("bloodborne_dw:source_street_lamp_post");
         boolean standing = context.getSide() == Direction.UP && !post;
