@@ -116,6 +116,11 @@ public final class StonePaletteSupport {
         var chunk=server.getChunkManager().getChunk(pos.getX()>>4,pos.getZ()>>4,ChunkStatus.FULL,false);
         if(!(chunk instanceof WorldChunk))return null;
         BlockState state=chunk.getBlockState(pos);
+        if (state.getBlock() instanceof StaticArchitectureBlock
+                && StaticArchitectureCatalog.recipe(state).fragments().size() == 1) {
+            BlockPos root = RgbProfiles.staticPaintRoot(server, pos, state);
+            return root != null && (flags(world, root) & 1) != 0 ? root.toImmutable() : null;
+        }
         if(!(state.getBlock() instanceof dev.dreamwalker.bloodbornedw.composite.CompositeCellBlock))return (flags(world,pos)&1)!=0?pos.toImmutable():null;
         dev.dreamwalker.bloodbornedw.runtime.ObjectInstance.Owner owner=null;
         for(var entry:dev.dreamwalker.bloodbornedw.composite.CompositeRuntime.contributions(world,pos)){

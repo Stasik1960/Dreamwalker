@@ -165,18 +165,22 @@ public final class RgbProfiles {
             if (chunk == null || !(chunk.getBlockEntity(pos) instanceof CompositeBlockEntity entity)
                     || !owner.equals(entity.resident())) return null;
         } else if (chunk.getBlockState(pos).getBlock() instanceof StaticArchitectureBlock) {
-            var fragments = StaticArchitectureCatalog.recipe(chunk.getBlockState(pos)).fragments();
-            if (fragments.size() != 1) return null;
-            var fragment = fragments.get(0);
-            var origin = fragment.origin();
-            pos = pos.add(origin.x(), origin.y(), origin.z());
+            pos = staticPaintRoot(world, pos, chunk.getBlockState(pos));
+            if (pos == null) return null;
             chunk = loaded(world,pos);
-            if (chunk == null) return null;
-            BlockState rootState = chunk.getBlockState(pos);
-            if (!(rootState.getBlock() instanceof StaticArchitectureBlock)
-                    || !StaticArchitectureCatalog.matchesRoot(rootState, fragment.pose())) return null;
         }
         return at(world,pos,chunk.getBlockState(pos)) == null ? null : pos.toImmutable();
+    }
+
+    static BlockPos staticPaintRoot(ServerWorld world, BlockPos hit, BlockState state) {
+        var fragments = StaticArchitectureCatalog.recipe(state).fragments();
+        if (fragments.size() != 1) return null;
+        var fragment = fragments.get(0);
+        var origin = fragment.origin();
+        BlockPos root = hit.add(origin.x(), origin.y(), origin.z());
+        WorldChunk chunk = loaded(world, root);
+        if (chunk == null || !StaticArchitectureCatalog.matchesRoot(chunk.getBlockState(root), fragment.pose())) return null;
+        return root;
     }
 
     /** The collision outline cannot distinguish the stone and glazing of a mixed window. */
