@@ -2,6 +2,8 @@ package dev.dreamwalker.serverqa;
 
 import com.mojang.authlib.GameProfile;
 import dev.dreamwalker.bloodbornedw.composite.CompositeRuntime;
+import dev.dreamwalker.bloodbornedw.composite.NativePlayerBreak;
+import dev.dreamwalker.bloodbornedw.composite.StaticArchitectureCatalog;
 import dev.dreamwalker.bloodbornedw.runtime.TransactionCore;
 import dev.dreamwalker.bloodbornedw.tool.BbHorizontalMoves;
 import dev.dreamwalker.bloodbornedw.tool.BbToolItem;
@@ -71,8 +73,21 @@ public final class CityFollowupQa implements ModInitializer {
             BbToolService.apply(player, target);
             require(world.getBlockState(west).isAir() && owner.equals(ToolTarget.block(world, from, player).uuid()), "Right shift");
             BbToolItem.cycle(player);
-            require(BbHorizontalMoves.mode(stack) == 0 && BbToolItem.mode(stack) == BbToolItem.Mode.UP, "Right must cycle to up");
-            result = "PASS: left/right item modes, UUID, protected occupied destination and ordinary cycle";
+            require(BbHorizontalMoves.mode(stack) == 0 && BbToolItem.mode(stack) == BbToolItem.Mode.SPECIAL_NPC,
+                    "Right must resume the original mode cycle at Special NPC");
+            BlockPos window = new BlockPos(208, 72, -940);
+            world.getChunk(window);
+            require(StaticArchitectureCatalog.contains(world.getBlockState(window)), "Window fixture");
+            player.refreshPositionAndAngles(208.469, 72.036, -936.369, 180, 19.1f);
+            var scope = NativePlayerBreak.begin(world, player, window);
+            boolean removed = false;
+            try {
+                removed = Boolean.TRUE.equals(NativePlayerBreak.remove(world, window));
+            } finally {
+                NativePlayerBreak.end(scope, removed);
+            }
+            require(removed && !StaticArchitectureCatalog.contains(world.getBlockState(window)), "Screenshot window Creative break");
+            result = "PASS: left/right item modes, UUID, occupied destination, ordinary cycle and Creative window break";
         } catch (Throwable failure) {
             result = "FAIL: " + failure;
             failure.printStackTrace();
