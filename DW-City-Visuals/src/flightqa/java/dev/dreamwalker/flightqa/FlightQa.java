@@ -36,6 +36,7 @@ public final class FlightQa implements ClientModInitializer {
     private Path output; private JsonObject report=new JsonObject(),plan; private JsonArray points, memory=new JsonArray(),positions=new JsonArray();
     private CompletableFuture<Void> job; private int state; // 0 boot, 1 initial load, 2 flight, 3 saving
     private WaterSurfaceQa waterProbe;
+    private CityFinishQa cityFinish;
     private double x,y,z; private long fixedTime, loadingAt; private double routeLength; private double[] lengths;
     @Override public void onInitializeClient(){
         instance=this;boot=System.nanoTime();
@@ -53,6 +54,7 @@ public final class FlightQa implements ClientModInitializer {
             report.addProperty("productionSha256",modSha("bloodborne_dw"));report.addProperty("qaSha256",modSha("dw_flight_qa"));
             check(report.get("productionSha256").getAsString().equals(required("dw.flight.expectedSha256")),"production SHA mismatch");
             report.addProperty("variantLabel",required("dw.flight.variant"));report.add("memorySamples",memory);report.add("positions",positions);
+            if (Boolean.getBoolean("dw.flight.cityFinish")) cityFinish = new CityFinishQa(output);
             if (Boolean.getBoolean("dw.flight.waterProbe")) waterProbe = new WaterSurfaceQa(output);
             JsonArray mods=new JsonArray();FabricLoader.getInstance().getAllMods().stream().sorted(Comparator.comparing(m->m.getMetadata().getId())).forEach(m->{JsonObject a=new JsonObject();a.addProperty("id",m.getMetadata().getId());a.addProperty("version",m.getMetadata().getVersion().getFriendlyString());mods.add(a);});report.add("loadedMods",mods);
             ClientTickEvents.END_CLIENT_TICK.register(this::onTick);save();
@@ -78,6 +80,7 @@ public final class FlightQa implements ClientModInitializer {
                 return;
             }
             if(c.world==null||c.player==null||c.getServer()==null){check(now-boot<1_800_000_000_000L,"startup timeout");return;}
+            if (cityFinish != null) { cityFinish.tick(c); return; }
             if (waterProbe != null) { waterProbe.tick(c); return; }
             if(state==0){
                 if(!c.isWindowFocused()||c.currentScreen!=null||c.getOverlay()!=null||c.isPaused())return;
@@ -112,7 +115,7 @@ public final class FlightQa implements ClientModInitializer {
         }catch(Throwable e){fail(e);}
     }
     private JsonObject frames(){JsonObject out=new JsonObject();JsonArray raw=new JsonArray(),times=new JsonArray(),frameTicks=new JsonArray();long total=0;for(int i=0;i<count;i++){raw.add(intervals[i]);times.add(elapsed[i]);frameTicks.add(ticks[i]);total+=intervals[i];}out.add("rawIntervalsNs",raw);out.add("elapsedNs",times);out.add("ticks",frameTicks);out.addProperty("samples",count);out.addProperty("totalNs",total);out.addProperty("clock","RenderSystem.flipFrame HEAD; CPU presentation intervals");return out;}
-    private static boolean full(MinecraftClient c){int cx=c.player.getBlockX()>>4,cz=c.player.getBlockZ()>>4,d=c.options.getViewDistance().getValue();for(int x=cx-d-2;x<=cx+d+2;x++)for(int z=cz-d-2;z<=cz+d+2;z++)if(ThreadedAnvilChunkStorage.isWithinDistance(x,z,cx,cz,d)&&c.world.getChunkManager().getChunk(x,z,ChunkStatus.FULL,false)==null)return false;return true;}
+    static boolean full(MinecraftClient c){int cx=c.player.getBlockX()>>4,cz=c.player.getBlockZ()>>4,d=c.options.getViewDistance().getValue();for(int x=cx-d-2;x<=cx+d+2;x++)for(int z=cz-d-2;z<=cz+d+2;z++)if(ThreadedAnvilChunkStorage.isWithinDistance(x,z,cx,cz,d)&&c.world.getChunkManager().getChunk(x,z,ChunkStatus.FULL,false)==null)return false;return true;}
     private static JsonObject options(MinecraftClient c){JsonObject o=new JsonObject();o.addProperty("renderDistance",c.options.getViewDistance().getValue());o.addProperty("simulationDistance",c.options.getSimulationDistance().getValue());o.addProperty("maxFps",c.options.getMaxFps().getValue());o.addProperty("vsync",c.options.getEnableVsync().getValue());o.addProperty("fov",c.options.getFov().getValue());o.addProperty("mipmapLevels",c.options.getMipmapLevels().getValue());o.addProperty("framebufferWidth",c.getWindow().getFramebufferWidth());o.addProperty("framebufferHeight",c.getWindow().getFramebufferHeight());o.addProperty("resourcePacks",c.options.resourcePacks.toString());o.addProperty("graphics",c.options.getGraphicsMode().getValue().toString());o.addProperty("gamma",c.options.getGamma().getValue());return o;}
     private static JsonObject memory(){JsonObject o=new JsonObject();var h=ManagementFactory.getMemoryMXBean().getHeapMemoryUsage();o.addProperty("heapUsedBytes",h.getUsed());o.addProperty("heapCommittedBytes",h.getCommitted());o.addProperty("heapMaxBytes",h.getMax());long n=0,t=0;for(var g:ManagementFactory.getGarbageCollectorMXBeans()){n+=Math.max(0,g.getCollectionCount());t+=Math.max(0,g.getCollectionTime());}o.addProperty("gcCount",n);o.addProperty("gcTimeMs",t);return o;}
     private void fail(Throwable e){if(done)return;done=true;recording=false;e.printStackTrace();try{if(output!=null){report.addProperty("status","FAIL");report.addProperty("error",e.toString());report.addProperty("stage",state);report.addProperty("correctionCount",correctionCount);report.add("frames",frames());save();}}catch(Throwable ignored){ignored.printStackTrace();}MinecraftClient.getInstance().scheduleStop();}
