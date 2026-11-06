@@ -17,6 +17,7 @@ BLOCK = "remaining/source/minecraft/block/"
 SILL = ([-5, -14, 0], [21, -8, 8])
 SHUTTER_ROOF = "bloodborne_dw:block/" + BLOCK + "addon/roof_1"
 SHUTTER_HEADER = "bloodborne_dw:block/city_followup/shutter_upper_frame"
+SHUTTER_RIM = "bloodborne_dw:block/city_followup/shutter_upper_rim"
 
 
 def texture_path(sprite):
@@ -82,23 +83,38 @@ def shutter_header(base):
     assert result.getchannel("A").tobytes() == source.getchannel("A").tobytes()
     result.save(PROFILES / profile / texture_path(SHUTTER_HEADER))
 
+    rim = set()
     for name in ("shutter_0", "shutter_1"):
         path = PROFILES / profile / f"{NAMESPACE}/models/interactions/{name}.json"
         model = json.loads(path.read_bytes())
         model["textures"]["city_header"] = SHUTTER_HEADER
+        model["textures"]["city_rim"] = SHUTTER_RIM
         changed = 0
         for element in model["elements"][3:]:
-            for face in element["faces"].values():
+            for direction, face in element["faces"].items():
                 if face["texture"] != "#0":
                     continue
                 u0, v0, u1, v1 = face["uv"]
                 left, right = sorted((u0 * 8, u1 * 8))
                 top, bottom = sorted((v0 * 8, v1 * 8))
+                # The bevel can be seen from above, through the front cutout.
+                # It needs its own sprite to leave the tracery on the front alone.
+                if direction not in ("north", "south") and element["from"][1] >= 14:
+                    rim.update((x, y, x + 1, y + 1)
+                               for x in range(floor(left), ceil(right))
+                               for y in range(floor(top), ceil(bottom))
+                               if source.getpixel((x, y))[0] >= 100)
+                    face["texture"] = "#city_rim"
+                    continue
                 if any(left < x1 and x0 < right and top < y1 and y0 < bottom for x0, y0, x1, y1 in stone):
                     face["texture"] = "#city_header"
                     changed += 1
         assert changed > 0, name
-        path.write_text(json.dumps(model, ensure_ascii=False, separators=(",", ":")) + "\n", encoding="utf-8")
+        path.write_text(json.dumps(model, ensure_ascii=False, separators=(",", ":")) + "\n", encoding="utf-8", newline="\n")
+    assert rim
+    edge = transfer(source, reference, rim)
+    assert edge.getchannel("A").tobytes() == source.getchannel("A").tobytes()
+    edge.save(PROFILES / profile / texture_path(SHUTTER_RIM))
 
 
 def main():

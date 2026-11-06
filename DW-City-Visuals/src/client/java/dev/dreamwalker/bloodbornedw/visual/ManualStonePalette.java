@@ -12,6 +12,7 @@ final class ManualStonePalette {
     private static final Identifier RESOURCE = new Identifier("bloodborne_dw", "visuals/editor2-palette.json");
     private static final Identifier SHUTTER_ROOF = new Identifier("bloodborne_dw", "block/remaining/source/minecraft/block/addon/roof_1");
     private static final Identifier SHUTTER_HEADER = new Identifier("bloodborne_dw", "block/city_followup/shutter_upper_frame");
+    private static final Identifier SHUTTER_RIM = new Identifier("bloodborne_dw", "block/city_followup/shutter_upper_rim");
     private static volatile Map<Identifier, Identifier[]> sprites;
     private ManualStonePalette() {}
     // Resource reload runs before world rendering: the first painted chunk only does a map lookup.
@@ -41,7 +42,10 @@ final class ManualStonePalette {
                 result.put(new Identifier(entry.getKey()), ids);
             }
             Identifier[] shutterPresets = result.get(SHUTTER_ROOF);
-            if (shutterPresets != null) result.put(SHUTTER_HEADER, shutterPresets);
+            if (shutterPresets != null) {
+                result.put(SHUTTER_HEADER, shutterPresets);
+                result.put(SHUTTER_RIM, shutterPresets);
+            }
             return Map.copyOf(result);
         } catch (Exception ex) { throw new IllegalStateException("Cannot load " + RESOURCE, ex); }
     }
