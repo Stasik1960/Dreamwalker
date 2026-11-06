@@ -38,7 +38,6 @@ import dev.dreamwalker.bloodbornedw.visual.ObsidianBandAlt;
  */
 public final class AutomaticAltMaterials {
     private static final Identifier OVERWORLD = new Identifier("minecraft", "overworld");
-    private static final Identifier STATIC_15 = id("static_architecture_15");
     private static final Identifier STATIC_0 = id("static_architecture_0");
     private static final Identifier STATIC_1 = id("static_architecture_1");
     private static final Identifier STATIC_43 = id("static_architecture_43");
@@ -85,10 +84,6 @@ public final class AutomaticAltMaterials {
         BlockState targetState = world.getBlockState(pos);
         Identifier block = Registries.BLOCK.getId(targetState.getBlock());
         String modelPath = part == null ? "" : part.getPath();
-        if (cell(pos,targetState,block,STATIC_15,66,modelPath,"remaining/source/minecraft/block/stairs/sandstone_stairs_bottom")) {
-            model = wrap(model, id(FOLLOWUP + "sandstone_stairs_bottom_0"), id(FOLLOWUP + "railing_stone_city_0"));
-            return wrap(model, id(FOLLOWUP + "sandstone_stairs_bottom_2"), id(FOLLOWUP + "railing_stone_city_2"));
-        }
         if (cell(pos,targetState,block,STATIC_0,55,modelPath,"remaining/source/minecraft/block/_wall_dec_out")) {
             model = wrap(model, id(SOURCE + "spirelamp_001"), id(FOLLOWUP + "column_trim_0"));
             model = wrap(model, id(SOURCE + "spirelamp_009"), id(FOLLOWUP + "column_trim_3"));
@@ -116,11 +111,8 @@ public final class AutomaticAltMaterials {
 
     private static Identifier id(String value) { return new Identifier("bloodborne_dw", value); }
     private static boolean position(BlockPos pos,int x,int y,int z) { return pos.getX()==x && pos.getY()==y && pos.getZ()==z; }
-    private static boolean railingPosition(BlockPos pos) {
-        return position(pos,207,61,-961) || position(pos,207,61,-964);
-    }
     private static boolean scenePosition(BlockPos pos) {
-        return railingPosition(pos) || position(pos,190,60,-965) || position(pos,88,21,-856)
+        return position(pos,190,60,-965) || position(pos,88,21,-856)
                 || position(pos,12,-5,-1032) || position(pos,14,-6,-1032)
                 || position(pos,65,31,-929) || position(pos,29,-10,-1002);
     }
@@ -130,7 +122,6 @@ public final class AutomaticAltMaterials {
                 && (actualModel.isEmpty() || actualModel.equals(modelPath));
     }
     private static boolean positionMatches(BlockPos pos,Identifier blockId,int part) {
-        if (blockId.equals(STATIC_15)) return railingPosition(pos);
         if (blockId.equals(STATIC_0)) return position(pos,190,60,-965);
         if (blockId.equals(STATIC_1)) return position(pos,88,21,-856);
         if (blockId.equals(STATIC_43)) return position(pos,12,-5,-1032);

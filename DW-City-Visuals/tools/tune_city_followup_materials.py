@@ -40,8 +40,8 @@ def change_model(base, profile, model_id, selected_faces, reference):
             zones.setdefault(key, []).append(face["uv"])
             face["texture"] = "#city_" + key
     assert zones, model_id
-    reference_path = texture_path("bloodborne_dw:block/" + BLOCK + reference)
-    target = image(base, profile, reference_path)
+    target = (image(base, profile, texture_path("bloodborne_dw:block/" + BLOCK + reference))
+              if isinstance(reference, str) else reference)
     for key, rects in zones.items():
         sprite = model["textures"][key]
         source = image(base, profile, texture_path(sprite))
@@ -107,8 +107,14 @@ def main():
         for model in ("addon/wall_deco_5", "addon/wall_deco_6", "crimson_trapdoor_top"):
             change_model(base, "alt", BLOCK + model, lambda e: True, "stone_bricks")
         for profile in ("original", "alt"):
+            adjacent = image(base, profile, texture_path("bloodborne_dw:block/" + BLOCK + "addon/spirelamp_0028"))
+            assert adjacent.size == (128, 128)
+            front = adjacent.crop((64, 0, 80, 8))
+            # Both corbel models use shade:false. Match their lit neighboring rail.
+            front.putdata([(*(round(value * 0.76) for value in pixel[:3]), pixel[3])
+                           for pixel in front.getdata()])
             for model in ("sandstone_stairs_bottom", "sandstone_stairs_outer"):
-                change_model(base, profile, BLOCK + "stairs/" + model, lambda e: True, "stone_bricks")
+                change_model(base, profile, BLOCK + "stairs/" + model, lambda e: True, front)
 
 
 if __name__ == "__main__":
