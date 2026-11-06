@@ -24,6 +24,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.GameMode;
 
 public final class CityFollowupQa implements ModInitializer {
     private boolean pending;
@@ -41,8 +42,8 @@ public final class CityFollowupQa implements ModInitializer {
         try {
             var world = server.getOverworld();
             var player = FakePlayer.get(world, new GameProfile(UUID.randomUUID(), "DreamWalkerQA"));
-            player.getAbilities().creativeMode = true;
-            player.getAbilities().allowModifyWorld = true;
+            player.changeGameMode(GameMode.CREATIVE);
+            require(player.isCreative() && player.getAbilities().allowModifyWorld, "Creative game mode fixture");
             player.setYaw(180);
             BlockPos from = new BlockPos(140, 222, -938);
             BlockPos west = from.west();
