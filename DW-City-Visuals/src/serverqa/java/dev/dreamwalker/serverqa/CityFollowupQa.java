@@ -1,7 +1,10 @@
 package dev.dreamwalker.serverqa;
 
 import com.mojang.authlib.GameProfile;
+import dev.dreamwalker.bloodbornedw.composite.CompositeBlockEntity;
+import dev.dreamwalker.bloodbornedw.composite.CompositeRootBlock;
 import dev.dreamwalker.bloodbornedw.composite.CompositeRuntime;
+import dev.dreamwalker.bloodbornedw.composite.CompositeSourceShift;
 import dev.dreamwalker.bloodbornedw.composite.NativePlayerBreak;
 import dev.dreamwalker.bloodbornedw.composite.StaticArchitectureCatalog;
 import dev.dreamwalker.bloodbornedw.composite.StaticArchitectureRuntime;
@@ -22,11 +25,14 @@ import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.GameMode;
 
 public final class CityFollowupQa implements ModInitializer {
+    private static final BlockPos SHIFT_ROOT = new BlockPos(144, 222, -938);
+    private static final UUID SHIFT_OWNER = UUID.fromString("a49d55c8-471d-4f22-9467-62c7630015bf");
     private boolean pending;
 
     @Override public void onInitialize() {
@@ -44,39 +50,62 @@ public final class CityFollowupQa implements ModInitializer {
             var player = FakePlayer.get(world, new GameProfile(UUID.randomUUID(), "DreamWalkerQA"));
             player.changeGameMode(GameMode.CREATIVE);
             require(player.isCreative() && player.getAbilities().allowModifyWorld, "Creative game mode fixture");
+            if (Boolean.getBoolean("dw.cityfollowup.reload")) {
+                world.getChunk(SHIFT_ROOT);
+                world.getChunk(SHIFT_ROOT.west());
+                checkShift(world, -0.5);
+                require(CompositeRuntime.contributions(world, SHIFT_ROOT.west()).stream()
+                        .anyMatch(part -> SHIFT_OWNER.equals(part.owner().instanceId())), "Cross-chunk contribution after reload");
+                Files.writeString(Path.of(System.getProperty("dw.cityfollowup.qa")), "PASS: half-block shift survives server restart");
+                server.stop(false);
+                return;
+            }
             player.setYaw(180);
-            BlockPos from = new BlockPos(140, 222, -938);
+            BlockPos from = SHIFT_ROOT;
             BlockPos west = from.west();
             world.getChunk(from);
             world.getChunk(west);
             require(world.getBlockState(from).isAir() && world.getBlockState(west).isAir(), "Fixture must start in air");
-            var grass = Registries.BLOCK.get(new Identifier("bloodborne_dw", "source_addon_grass_0")).getDefaultState();
-            UUID owner = UUID.randomUUID();
-            require(CompositeRuntime.place(world, from, grass, owner, player).outcome() == TransactionCore.Outcome.COMMITTED,
+            var brick = Registries.BLOCK.get(new Identifier("bloodborne_dw", "source_stone_bricks"))
+                    .getDefaultState().with(CompositeRootBlock.ROTATION, 2);
+            require(CompositeRuntime.place(world, from, brick, SHIFT_OWNER, player).outcome() == TransactionCore.Outcome.COMMITTED,
                     "Fixture placement");
             var stack = new ItemStack(BbToolService.ITEM);
-            stack.getOrCreateNbt().putInt("BBMode", BbToolItem.Mode.ROTATE.ordinal());
+            stack.getOrCreateNbt().putInt("BBMode", BbToolItem.Mode.UP.ordinal());
             player.equipStack(EquipmentSlot.MAINHAND, stack);
             BbToolItem.cycle(player);
-            require(BbHorizontalMoves.mode(stack) == BbHorizontalMoves.LEFT, "Rotate must cycle to left");
+            require(BbToolItem.mode(stack) == BbToolItem.Mode.DOWN && BbHorizontalMoves.mode(stack) == 0,
+                    "Up must cycle to down");
+            BbToolItem.cycle(player);
+            require(BbHorizontalMoves.mode(stack) == BbHorizontalMoves.LEFT, "Down must cycle to left");
             var target = ToolTarget.block(world, from, player);
-            require(target != null && owner.equals(target.uuid()), "Fixture ownership");
+            require(target != null && SHIFT_OWNER.equals(target.uuid()), "Fixture ownership");
+            world.setBlockState(west, Blocks.STONE.getDefaultState());
             BbToolService.apply(player, target);
-            require(world.getBlockState(from).isAir() && owner.equals(ToolTarget.block(world, west, player).uuid()), "Left shift");
+            checkShift(world, -0.5);
+            require(world.getBlockState(west).isOf(Blocks.STONE), "Intersected block is preserved");
+            require(CompositeRuntime.contributions(world, west).stream().anyMatch(part -> SHIFT_OWNER.equals(part.owner().instanceId())
+                    && !part.shape().collision().isEmpty() && !part.shape().selection().isEmpty()),
+                    "Shifted collision and selection cross the chunk boundary");
 
             BbToolItem.cycle(player);
             require(BbHorizontalMoves.mode(stack) == BbHorizontalMoves.RIGHT, "Left must cycle to right");
-            world.setBlockState(from, Blocks.STONE.getDefaultState());
-            target = ToolTarget.block(world, west, player);
             BbToolService.apply(player, target);
-            require(world.getBlockState(from).isOf(Blocks.STONE) && owner.equals(ToolTarget.block(world, west, player).uuid()),
-                    "Occupied root must leave both cells intact");
-            world.setBlockState(from, Blocks.AIR.getDefaultState());
-            BbToolService.apply(player, target);
-            require(world.getBlockState(west).isAir() && owner.equals(ToolTarget.block(world, from, player).uuid()), "Right shift");
+            checkShift(world, 0);
+            require(world.getBlockState(west).isOf(Blocks.STONE) && CompositeRuntime.contributions(world, west).stream()
+                    .noneMatch(part -> SHIFT_OWNER.equals(part.owner().instanceId())), "Right shift cleans previous contribution");
             BbToolItem.cycle(player);
-            require(BbHorizontalMoves.mode(stack) == 0 && BbToolItem.mode(stack) == BbToolItem.Mode.SPECIAL_NPC,
-                    "Right must resume the original mode cycle at Special NPC");
+            require(BbHorizontalMoves.mode(stack) == 0 && BbToolItem.mode(stack) == BbToolItem.Mode.SPECIAL,
+                    "Right must resume the original mode cycle at Special");
+            stack.getOrCreateNbt().putInt("BBMode", BbToolItem.Mode.ROTATE.ordinal());
+            stack.getOrCreateNbt().putInt("BBHorizontalMode", 1);
+            require(BbHorizontalMoves.mode(stack) == 0, "Legacy whole-block setting is ignored");
+            BbToolItem.cycle(player);
+            require(BbToolItem.mode(stack) == BbToolItem.Mode.SPECIAL_NPC, "Rotate resumes its standard mode");
+            stack.getOrCreateNbt().putInt("BBMode", BbToolItem.Mode.DOWN.ordinal());
+            BbToolItem.cycle(player);
+            BbToolService.apply(player, target);
+            checkShift(world, -0.5);
             BlockPos window = new BlockPos(208, 72, -940);
             for (int x = -16; x <= 16; x += 16) {
                 for (int z = -16; z <= 16; z += 16) world.getChunk(window.add(x, 0, z));
@@ -100,7 +129,7 @@ public final class CityFollowupQa implements ModInitializer {
             require(removed && !StaticArchitectureCatalog.contains(world.getBlockState(window)), "Screenshot window Creative break");
             require(CompositeRuntime.contributions(world, guestCell).isEmpty(),
                     "Creative cleanup must remove the guests of the clicked shared carrier");
-            result = "PASS: left/right item modes, UUID, occupied destination, ordinary cycle and Creative shared-cell break";
+            result = "PASS: vertical/horizontal mode order, half-block X/Z with rotation, root UUID, occupied cell, cross-chunk collision and selection, Creative shared-cell break";
         } catch (Throwable failure) {
             result = "FAIL: " + failure;
             failure.printStackTrace();
@@ -112,6 +141,17 @@ public final class CityFollowupQa implements ModInitializer {
         } finally {
             server.stop(false);
         }
+    }
+
+    private static void checkShift(ServerWorld world, double x) {
+        var state = world.getBlockState(SHIFT_ROOT);
+        require(state.getBlock() instanceof CompositeRootBlock && state.get(CompositeRootBlock.ROTATION) == 2,
+                "Root block and its rotation are retained");
+        var root = (CompositeBlockEntity) world.getBlockEntity(SHIFT_ROOT);
+        require(root != null && root.resident() != null && SHIFT_OWNER.equals(root.resident().instanceId()), "Root UUID is retained");
+        var shift = CompositeSourceShift.world(state, root.payload());
+        require(Math.abs(shift.x() - x) < 1e-8 && Math.abs(shift.z()) < 1e-8 && shift.y() == 0,
+                "Expected world-space horizontal offset " + x + ", found " + shift);
     }
 
     private static void require(boolean condition, String message) {

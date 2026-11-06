@@ -3,9 +3,12 @@ package dev.dreamwalker.bloodbornedw.tool.mixin;
 import dev.dreamwalker.bloodbornedw.tool.BbHorizontalMoves;
 import dev.dreamwalker.bloodbornedw.tool.BbToolItem;
 import dev.dreamwalker.bloodbornedw.tool.BbToolService;
+import java.util.List;
+import net.minecraft.client.item.TooltipContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
+import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -17,7 +20,7 @@ abstract class BbHorizontalModeMixin {
     @Inject(method = "cycle(Lnet/minecraft/class_3222;)V", at = @At("HEAD"), cancellable = true, remap = false)
     private static void dw$cycleHorizontal(ServerPlayerEntity player, CallbackInfo ci) {
         ItemStack stack = player.getMainHandStack();
-        if (!(stack.getItem() instanceof BbToolItem) || BbToolItem.mode(stack) != BbToolItem.Mode.ROTATE
+        if (!(stack.getItem() instanceof BbToolItem) || BbToolItem.mode(stack) != BbToolItem.Mode.DOWN
                 || !BbToolService.canEdit(player)) return;
         int mode = BbHorizontalMoves.mode(stack);
         if (mode == BbHorizontalMoves.RIGHT) {
@@ -36,5 +39,12 @@ abstract class BbHorizontalModeMixin {
     private void dw$horizontalName(ItemStack stack, CallbackInfoReturnable<Text> cir) {
         int mode = BbHorizontalMoves.mode(stack);
         if (mode != 0) cir.setReturnValue(Text.literal("Инструмент BB · " + BbHorizontalMoves.title(mode)));
+    }
+
+    @Inject(method = "appendTooltip", at = @At("RETURN"))
+    private void dw$horizontalTooltip(ItemStack stack, World world, List<Text> tooltip,
+                                     TooltipContext context, CallbackInfo ci) {
+        int mode = BbHorizontalMoves.mode(stack);
+        if (mode != 0) tooltip.set(tooltip.size() - 2, Text.literal("Режим: " + BbHorizontalMoves.title(mode)));
     }
 }

@@ -26,7 +26,7 @@ abstract class BbHorizontalActionMixin {
             shifted = false;
         }
         player.sendMessage(Text.literal(shifted ? "BB · " + BbHorizontalMoves.title(mode)
-                : "BB · Эта конструкция или клетка назначения не допускает сдвиг."), true);
+                : "BB · Сдвиг этой конструкции недоступен."), true);
         ci.cancel();
     }
 }
