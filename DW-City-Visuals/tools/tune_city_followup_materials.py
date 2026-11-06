@@ -15,6 +15,8 @@ PROFILES = ROOT / "src/main/resources/dw_city_visuals"
 NAMESPACE = "assets/bloodborne_dw"
 BLOCK = "remaining/source/minecraft/block/"
 SILL = ([-5, -14, 0], [21, -8, 8])
+SHUTTER_ROOF = "bloodborne_dw:block/" + BLOCK + "addon/roof_1"
+SHUTTER_HEADER = "bloodborne_dw:block/city_followup/shutter_upper_frame"
 
 
 def texture_path(sprite):
@@ -60,11 +62,48 @@ def change_model(base, profile, model_id, selected_faces, reference):
     output.write_text(json.dumps(model, ensure_ascii=False, separators=(",", ":")) + "\n", encoding="utf-8")
 
 
+def shutter_header(base):
+    profile = "alt"
+    source = image(base, profile, texture_path(SHUTTER_ROOF))
+    assert source.size == (128, 128)
+    # The outside of the arch occupies the top corners of this atlas island.
+    # Keep its dark outline, the centre tracery and the wooden leaves intact.
+    widths = (19, 7, 6, 5, 3, 2, 1)
+    stone = []
+    for y, width in enumerate(widths, start=81):
+        for x in range(95, 114):
+            if (x < 95 + width or x >= 114 - width) and source.getpixel((x, y))[0] >= 100:
+                stone.append((x, y, x + 1, y + 1))
+    reference = image(base, profile, texture_path("bloodborne_dw:block/" + BLOCK + "stone_bricks"))
+    result = transfer(source, reference, stone)
+    assert result.getchannel("A").tobytes() == source.getchannel("A").tobytes()
+    result.save(PROFILES / profile / texture_path(SHUTTER_HEADER))
+
+    for name in ("shutter_0", "shutter_1"):
+        path = PROFILES / profile / f"{NAMESPACE}/models/interactions/{name}.json"
+        model = json.loads(path.read_bytes())
+        model["textures"]["city_header"] = SHUTTER_HEADER
+        changed = 0
+        for element in model["elements"][3:]:
+            for face in element["faces"].values():
+                if face["texture"] != "#0":
+                    continue
+                u0, v0, u1, v1 = face["uv"]
+                left, right = sorted((u0 * 8, u1 * 8))
+                top, bottom = sorted((v0 * 8, v1 * 8))
+                if any(left < x1 and x0 < right and top < y1 and y0 < bottom for x0, y0, x1, y1 in stone):
+                    face["texture"] = "#city_header"
+                    changed += 1
+        assert changed > 0, name
+        path.write_text(json.dumps(model, ensure_ascii=False, separators=(",", ":")) + "\n", encoding="utf-8")
+
+
 def main():
     with ZipFile(ROOT / "baseline/mod.jar") as base:
         for model in ("shutter_0", "shutter_1"):
             change_model(base, "alt", f"interactions/{model}",
                          lambda e: (e["from"], e["to"]) == SILL, "stone_bricks")
+        shutter_header(base)
         for model in ("addon/wall_deco_5", "addon/wall_deco_6", "crimson_trapdoor_top"):
             change_model(base, "alt", BLOCK + model, lambda e: True, "stone_bricks")
         for profile in ("original", "alt"):
