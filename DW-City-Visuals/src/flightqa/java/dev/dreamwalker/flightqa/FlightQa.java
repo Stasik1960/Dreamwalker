@@ -35,6 +35,7 @@ public final class FlightQa implements ClientModInitializer {
     private volatile ServerPosition serverPosition=new ServerPosition(-1,0,0,0);
     private Path output; private JsonObject report=new JsonObject(),plan; private JsonArray points, memory=new JsonArray(),positions=new JsonArray();
     private CompletableFuture<Void> job; private int state; // 0 boot, 1 initial load, 2 flight, 3 saving
+    private WaterSurfaceQa waterProbe;
     private double x,y,z; private long fixedTime, loadingAt; private double routeLength; private double[] lengths;
     @Override public void onInitializeClient(){
         instance=this;boot=System.nanoTime();
@@ -52,6 +53,7 @@ public final class FlightQa implements ClientModInitializer {
             report.addProperty("productionSha256",modSha("bloodborne_dw"));report.addProperty("qaSha256",modSha("dw_flight_qa"));
             check(report.get("productionSha256").getAsString().equals(required("dw.flight.expectedSha256")),"production SHA mismatch");
             report.addProperty("variantLabel",required("dw.flight.variant"));report.add("memorySamples",memory);report.add("positions",positions);
+            if (Boolean.getBoolean("dw.flight.waterProbe")) waterProbe = new WaterSurfaceQa(output);
             JsonArray mods=new JsonArray();FabricLoader.getInstance().getAllMods().stream().sorted(Comparator.comparing(m->m.getMetadata().getId())).forEach(m->{JsonObject a=new JsonObject();a.addProperty("id",m.getMetadata().getId());a.addProperty("version",m.getMetadata().getVersion().getFriendlyString());mods.add(a);});report.add("loadedMods",mods);
             ClientTickEvents.END_CLIENT_TICK.register(this::onTick);save();
         }catch(Throwable e){fail(e);}
@@ -76,6 +78,7 @@ public final class FlightQa implements ClientModInitializer {
                 return;
             }
             if(c.world==null||c.player==null||c.getServer()==null){check(now-boot<1_800_000_000_000L,"startup timeout");return;}
+            if (waterProbe != null) { waterProbe.tick(c); return; }
             if(state==0){
                 if(!c.isWindowFocused()||c.currentScreen!=null||c.getOverlay()!=null||c.isPaused())return;
                 JsonObject options=options(c);report.add("actualOptions",options);report.addProperty("glRenderer",GL11.glGetString(GL11.GL_RENDERER));report.addProperty("glVendor",GL11.glGetString(GL11.GL_VENDOR));report.addProperty("glVersion",GL11.glGetString(GL11.GL_VERSION));report.addProperty("focusedAtStart",true);for(var e:plan.getAsJsonObject("expectedOptions").entrySet())check(options.has(e.getKey())&&options.get(e.getKey()).equals(e.getValue()),"option mismatch "+e.getKey());
