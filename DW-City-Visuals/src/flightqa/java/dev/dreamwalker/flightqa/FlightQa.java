@@ -12,6 +12,8 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.screen.BackupPromptScreen;
+import dev.dreamwalker.flightqa.mixin.FlightBackupPromptAccessor;
 import net.minecraft.server.world.ThreadedAnvilChunkStorage;
 import net.minecraft.world.GameMode;
 import net.minecraft.world.GameRules;
@@ -28,7 +30,7 @@ public final class FlightQa implements ClientModInitializer {
     private final long[] intervals=new long[LIMIT], elapsed=new long[LIMIT];
     private final int[] ticks=new int[LIMIT];
     private int count, tick, segment; private long previous, flightStart, boot, stable, nextMemory;
-    private boolean recording, done, placed, renderedInitial, closing, captureDone; private int correctionCount; private long flightEnd,flightEndEpoch; private volatile Throwable serverError;
+    private boolean recording, done, placed, renderedInitial, closing, captureDone, backedUp; private int correctionCount; private long flightEnd,flightEndEpoch; private volatile Throwable serverError;
     private record ServerPosition(int tick,double x,double y,double z) {}
     private volatile ServerPosition serverPosition=new ServerPosition(-1,0,0,0);
     private Path output; private JsonObject report=new JsonObject(),plan; private JsonArray points, memory=new JsonArray(),positions=new JsonArray();
@@ -66,6 +68,13 @@ public final class FlightQa implements ClientModInitializer {
         try{
             long now=System.nanoTime();check(now-boot<3_600_000_000_000L,"total timeout");if(serverError!=null)throw new IllegalStateException("server task",serverError);
             if(state==3){if(job.isDone()){job.join();report.addProperty("saved",true);report.addProperty("status","PASS");report.addProperty("finishedUtc",Instant.now().toString());done=true;save();c.scheduleStop();}return;}
+            if (state == 0 && !backedUp && Boolean.getBoolean("dw.flight.backupDisposableCopy")
+                    && c.currentScreen instanceof BackupPromptScreen screen
+                    && Files.isRegularFile(output.getParent().resolve("disposable-flight-world.marker"))) {
+                backedUp = true;
+                ((FlightBackupPromptAccessor)(Object)screen).dw$backupCallback().proceed(true, false);
+                return;
+            }
             if(c.world==null||c.player==null||c.getServer()==null){check(now-boot<1_800_000_000_000L,"startup timeout");return;}
             if(state==0){
                 if(!c.isWindowFocused()||c.currentScreen!=null||c.getOverlay()!=null||c.isPaused())return;
