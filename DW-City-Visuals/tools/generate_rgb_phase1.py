@@ -94,15 +94,18 @@ def neutral(image, zone):
     pixels = image.load()
     # Extend the verified stone relief around the UV islands before Minecraft
     # makes its mip chain. Protected details continue using the original sprite.
-    ref = round(median(luminance(pixels[p]) for p in zone if pixels[p][3]))
-    assert ref > 0
+    # The selected RGB is the highlight color. Scaling by the brightest
+    # visible texel keeps all source luminance levels distinct; scaling by
+    # the median clipped the brighter half of the relief to the same white.
+    peak = max(luminance(pixels[p]) for p in zone if pixels[p][3])
     result = Image.new("RGBA", image.size)
     out = result.load()
     seen = set(zone)
     queue = deque(sorted(zone))
     for x, y in queue:
-        shade = min(255, round(luminance(pixels[x, y]) * 255 / ref))
-        out[x, y] = (shade, shade, shade, pixels[x, y][3])
+        alpha = pixels[x, y][3]
+        shade = round(luminance(pixels[x, y]) * 255 / peak) if alpha and peak else 0
+        out[x, y] = (shade, shade, shade, alpha)
     while queue:
         x, y = queue.popleft()
         shade = out[x, y][0]
