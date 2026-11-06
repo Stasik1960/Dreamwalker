@@ -4,9 +4,17 @@ import dev.dreamwalker.bloodbornedw.architecture.NoCollidePlacement;
 import dev.dreamwalker.bloodbornedw.composite.overlaymixin.NoCollideDepthAccessor;
 import dev.dreamwalker.bloodbornedw.runtime.ObjectInstance.Owner;
 import java.util.function.Supplier;
+import net.minecraft.block.BlockState;
 
 public final class CompositeOverlapEdit {
+    public static final String OPEN_WITH_OVERLAP = "OpenWithBlockOverlap";
+
     private CompositeOverlapEdit() {}
+
+    public static boolean isDoor(BlockState state) {
+        return state.getBlock() instanceof CompositeRootBlock block && block.spec.openable
+                && (block.spec.functionalDoorPhysics || block.spec.id.getPath().endsWith("_door"));
+    }
 
     public static <T> T run(Owner owner, Supplier<T> transaction) {
         var depth = NoCollideDepthAccessor.dw$depth();

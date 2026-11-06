@@ -50,6 +50,12 @@ public final class CityFollowupQa implements ModInitializer {
             var player = FakePlayer.get(world, new GameProfile(UUID.randomUUID(), "DreamWalkerQA"));
             player.changeGameMode(GameMode.CREATIVE);
             require(player.isCreative() && player.getAbilities().allowModifyWorld, "Creative game mode fixture");
+            if (Boolean.getBoolean("dw.cityfollowup.doors")) {
+                DoorOverlapQa.verify(world, player);
+                Files.writeString(Path.of(System.getProperty("dw.cityfollowup.qa")), "PASS: ordinary door is blocked; no-collide door opens and preserves the obstruction");
+                server.stop(false);
+                return;
+            }
             if (Boolean.getBoolean("dw.cityfollowup.reload")) {
                 world.getChunk(SHIFT_ROOT);
                 world.getChunk(SHIFT_ROOT.west());
