@@ -1,5 +1,6 @@
 package dev.dreamwalker.bloodbornedw.item.mixin;
 
+import dev.dreamwalker.bloodbornedw.DreamwalkerBb;
 import dev.dreamwalker.bloodbornedw.composite.StaticArchitectureCatalog;
 import dev.dreamwalker.bloodbornedw.composite.StaticArchitectureRuntime;
 import dev.dreamwalker.bloodbornedw.runtime.TransactionCore;
@@ -28,15 +29,31 @@ abstract class StaticCreativeBreakMixin {
             boolean drop, CallbackInfoReturnable<TransactionCore.Result> cir) {
         if (player == null || !player.isCreative() || drop) return;
         var result = cir.getReturnValue();
-        if (result.outcome() != TransactionCore.Outcome.REJECTED || result.reason() == null
-                || !result.reason().startsWith("static_component_cell_replaced:")) return;
+        if (result.outcome() != TransactionCore.Outcome.REJECTED || result.reason() == null) return;
+
+        String reason = result.reason();
+        if (!reason.startsWith("static_component_cell_replaced:")
+                && !reason.startsWith("static_component_recipe_mismatch:")
+                && !reason.equals("static_root_missing")
+                && !reason.equals("no_static_part_at_hit")) return;
 
         var target = StaticArchitectureRuntime.target(world, hit, player);
+        if (target == null && reason.equals("no_static_part_at_hit")) {
+            var state = world.getBlockState(hit);
+            if (StaticArchitectureCatalog.contains(state)
+                    && StaticArchitectureCatalog.recipe(state).fragments().size() == 1) {
+                target = StaticArchitectureRuntime.target(world, hit, null);
+            }
+        }
         if (target == null) return;
-        var root = target.root();
-        var chunk = world.getChunkManager().getWorldChunk(root.getX() >> 4, root.getZ() >> 4);
-        if (chunk == null || !StaticArchitectureCatalog.matchesRoot(chunk.getBlockState(root), target.pose())) return;
 
-        cir.setReturnValue(remove(world, root, target.pose(), true));
+        // The cleanup transaction only removes the matching fragment of this
+        // pose at each cell. It retains the normal protection and loaded-chunk checks.
+        var cleanup = remove(world, target.root(), target.pose(), true);
+        if (cleanup.outcome() == TransactionCore.Outcome.COMMITTED) {
+            DreamwalkerBb.LOG.debug("Creative architecture cleanup at {} (root {}): {}",
+                    hit, target.root(), reason);
+        }
+        cir.setReturnValue(cleanup);
     }
 }

@@ -267,6 +267,10 @@ public final class CityEditorServer implements ModInitializer {
         if (pending.remove(pos) != null) externalPending--;
         if (pending.isEmpty()) EXTERNAL_UPDATES.remove(chunk);
     }
+    public static int storedAppearance(ServerWorld world, BlockPos pos) {
+        WorldChunk chunk = loaded(world, pos);
+        return chunk == null ? -1 : style(chunk, pos);
+    }
     public static int pendingStyle(ServerWorld world,BlockPos pos){
         if(EXTERNAL_UPDATES.isEmpty())return -2;WorldChunk chunk=loaded(world,pos);if(chunk==null)return -2;Map<Long,Integer> pending=EXTERNAL_UPDATES.get(chunk);return pending==null? -2:pending.getOrDefault(pos.asLong(),-2);
     }
@@ -359,6 +363,16 @@ public final class CityEditorServer implements ModInitializer {
         if(chunk==null){s.message="Цель не загружена";state(p,s);return;}
         switch(action){
             case "sample" -> {
+                BlockPos paletteRoot = StonePaletteSupport.paintTarget(world, pos);
+                if (paletteRoot != null) {
+                    int preset = style(loaded(world, paletteRoot), paletteRoot);
+                    if (preset >= 0 && !EditorCells.isRgb(preset)) {
+                        requireEdit(world, p, pos, paletteRoot);
+                        s.material = preset;
+                        s.message = "Скопирован готовый материал";
+                        break;
+                    }
+                }
                 BlockPos root = RgbProfiles.paintTarget(world,pos);
                 if (root == null) throw new IllegalArgumentException("Для этой цели нет проверенного RGB-профиля");
                 requireEdit(world,p,pos,root);

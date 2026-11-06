@@ -101,6 +101,14 @@ class Inspector:
             value = textures[value[1:]]
         return value if ":" in value else "minecraft:" + value
 
+    # These private recolours preserve the source sprite's dimensions, UVs
+    # and alpha exactly, so the existing reviewed paint/keep masks still apply.
+    FOLLOWUP_SPRITES = {
+        "wall_deco_5_0": "spirelamp_0042",
+        "wall_deco_6_0": "spirelamp_0042",
+        "crimson_trapdoor_top_0": "spirelamp_0012",
+    }
+
     @cache
     def classify(self, block, sprite, uv, tint, explicit_glass):
         if tint != -1:
@@ -112,7 +120,12 @@ class Inspector:
             return "KEEP", "no visible texels in sampled UV", box
         if explicit_glass:
             return "KEEP", "glazing model and transparent window geometry", box
-        for row in self.keep.get((block, sprite), ()):
+        policy_sprite = sprite
+        prefix = "bloodborne_dw:block/city_followup/"
+        if sprite.startswith(prefix) and sprite.removeprefix(prefix) in self.FOLLOWUP_SPRITES:
+            original = self.FOLLOWUP_SPRITES[sprite.removeprefix(prefix)]
+            policy_sprite = "bloodborne_dw:block/remaining/source/minecraft/block/addon/" + original
+        for row in self.keep.get((block, policy_sprite), ()):
             region = row.get("texels")
             if region is None or all(box[k] < region[k+2] and region[k] < box[k+2] for k in (0, 1)):
                 return "KEEP", row["reason"], box
@@ -121,7 +134,7 @@ class Inspector:
             return "KEEP", "visible partial-alpha texels are protected", box
         if any(v < 0 or v > 16 for v in uv):
             return "UNKNOWN", "UV outside normal sprite coordinates", box
-        policy = self.policies.get(sprite)
+        policy = self.policies.get(policy_sprite)
         if not policy:
             return "UNKNOWN", "sprite absent from historical classifier", box
         kind = policy["classification"]
