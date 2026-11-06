@@ -32,7 +32,7 @@ import net.minecraft.state.property.Property;
 import dev.dreamwalker.bloodbornedw.visual.ObsidianBandAlt;
 
 /**
- * Position/profile scoped ALT sprite substitutions. This deliberately does
+ * Position/profile scoped sprite substitutions. This deliberately does
  * not alter an atlas sprite or shared source model, so unrelated consumers of
  * the same source material retain their existing appearance.
  */
@@ -45,8 +45,8 @@ public final class AutomaticAltMaterials {
     private static final Identifier STATIC_38 = id("static_architecture_38");
     private static final Identifier PHYSICS_1 = id("native_physics_1");
     private static final Identifier PHYSICS_11 = id("native_physics_11");
-    private static final Identifier SCENE05_A = id("block/city_altfix/scene05_06_stone_a");
-    private static final Identifier SCENE05_B = id("block/city_altfix/scene05_06_stone_b");
+    private static final String SOURCE = "block/remaining/source/minecraft/block/addon/";
+    private static final String FOLLOWUP = "block/city_followup/";
     private static final Identifier SCENE08 = id("block/city_altfix/scene08_triangle");
     private static final Identifier SCENE10 = id("block/city_altfix/scene10_masonry");
     private static final Identifier SCENE11 = id("block/city_altfix/scene11_hanging");
@@ -73,8 +73,9 @@ public final class AutomaticAltMaterials {
     /** Exact automatic ALT selectors. Explicit legacy/RGB values always win. */
     public static BakedModel apply(BakedModel model, BlockState state, BlockRenderView world,
                                    BlockPos pos, Identifier part, int painted) {
-        if (!CityVisualClient.isAlt() || painted != -1 || state == null) return model;
-        if (ObsidianBandAlt.matches(state)) return wrap(model, ObsidianBandAlt.SOURCE, ObsidianBandAlt.TARGET);
+        if (painted != -1 || state == null) return model;
+        boolean alt = CityVisualClient.isAlt();
+        if (alt && ObsidianBandAlt.matches(state)) return wrap(model, ObsidianBandAlt.SOURCE, ObsidianBandAlt.TARGET);
         if (world == null || pos == null || !scenePosition(pos)) return model;
         var clientWorld = MinecraftClient.getInstance().world;
         if (clientWorld == null || !OVERWORLD.equals(clientWorld.getRegistryKey().getValue())) return model;
@@ -84,11 +85,16 @@ public final class AutomaticAltMaterials {
         BlockState targetState = world.getBlockState(pos);
         Identifier block = Registries.BLOCK.getId(targetState.getBlock());
         String modelPath = part == null ? "" : part.getPath();
-        if (cell(pos,targetState,block,STATIC_15,67,modelPath,"remaining/source/minecraft/block/_wall_dec_out")
-                || cell(pos,targetState,block,STATIC_0,55,modelPath,"remaining/source/minecraft/block/_wall_dec_out")) {
-            model = wrap(model, id("block/remaining/source/minecraft/block/addon/spirelamp_001"), SCENE05_A);
-            return wrap(model, id("block/remaining/source/minecraft/block/addon/spirelamp_009"), SCENE05_B);
+        if (cell(pos,targetState,block,STATIC_15,66,modelPath,"remaining/source/minecraft/block/stairs/sandstone_stairs_bottom")) {
+            model = wrap(model, id(FOLLOWUP + "sandstone_stairs_bottom_0"), id(FOLLOWUP + "railing_stone_city_0"));
+            return wrap(model, id(FOLLOWUP + "sandstone_stairs_bottom_2"), id(FOLLOWUP + "railing_stone_city_2"));
         }
+        if (cell(pos,targetState,block,STATIC_0,55,modelPath,"remaining/source/minecraft/block/_wall_dec_out")) {
+            model = wrap(model, id(SOURCE + "spirelamp_001"), id(FOLLOWUP + "column_trim_0"));
+            model = wrap(model, id(SOURCE + "spirelamp_009"), id(FOLLOWUP + "column_trim_3"));
+            return wrap(model, id(SOURCE + "window_2"), id(FOLLOWUP + "column_trim_4"));
+        }
+        if (!alt) return model;
         if (cell(pos,targetState,block,STATIC_1,49,modelPath,"remaining/source/minecraft/block/_wall_dec_top_1"))
             return wrap(model, id("block/remaining/source/minecraft/block/addon/spirelamp_0028"), SCENE08);
         if (cell(pos,targetState,block,STATIC_43,50,modelPath,"remaining/source/minecraft/block/oak_stairs_out"))
@@ -110,8 +116,11 @@ public final class AutomaticAltMaterials {
 
     private static Identifier id(String value) { return new Identifier("bloodborne_dw", value); }
     private static boolean position(BlockPos pos,int x,int y,int z) { return pos.getX()==x && pos.getY()==y && pos.getZ()==z; }
+    private static boolean railingPosition(BlockPos pos) {
+        return position(pos,207,61,-961) || position(pos,207,61,-964);
+    }
     private static boolean scenePosition(BlockPos pos) {
-        return position(pos,206,61,-961) || position(pos,190,60,-965) || position(pos,88,21,-856)
+        return railingPosition(pos) || position(pos,190,60,-965) || position(pos,88,21,-856)
                 || position(pos,12,-5,-1032) || position(pos,14,-6,-1032)
                 || position(pos,65,31,-929) || position(pos,29,-10,-1002);
     }
@@ -121,7 +130,7 @@ public final class AutomaticAltMaterials {
                 && (actualModel.isEmpty() || actualModel.equals(modelPath));
     }
     private static boolean positionMatches(BlockPos pos,Identifier blockId,int part) {
-        if (blockId.equals(STATIC_15)) return position(pos,206,61,-961);
+        if (blockId.equals(STATIC_15)) return railingPosition(pos);
         if (blockId.equals(STATIC_0)) return position(pos,190,60,-965);
         if (blockId.equals(STATIC_1)) return position(pos,88,21,-856);
         if (blockId.equals(STATIC_43)) return position(pos,12,-5,-1032);
@@ -159,7 +168,6 @@ public final class AutomaticAltMaterials {
         }
 
         @Override public List<BakedQuad> getQuads(BlockState state, Direction side, Random random) {
-            if (!CityVisualClient.isAlt()) return delegate.getQuads(state, side, random);
             SpriteAtlasTexture atlas = atlas();
             Sprite to = atlas.getSprite(target);
             if (!loaded(to, target)) return delegate.getQuads(state, side, random);
@@ -195,10 +203,6 @@ public final class AutomaticAltMaterials {
         @Override public boolean isVanillaAdapter() { return ((FabricBakedModel) delegate).isVanillaAdapter(); }
         @Override public void emitBlockQuads(BlockRenderView world, BlockState state, BlockPos pos,
                 Supplier<Random> random, RenderContext context) {
-            if (!CityVisualClient.isAlt()) {
-                ((FabricBakedModel) delegate).emitBlockQuads(world, state, pos, random, context);
-                return;
-            }
             SpriteAtlasTexture atlas = atlas();
             Sprite to = atlas.getSprite(target);
             if (!loaded(to, target)) {

@@ -101,7 +101,7 @@ public final class CityFacadesClient implements ClientModInitializer {
         }));
     }
     public static BakedModel staticModel(BakedModel model, BlockPos root, BlockState state,BlockRenderView world,Identifier part) {
-        if(!CityVisualClient.isAlt())return model;
+        if(!CityVisualClient.isAlt())return AutomaticAltMaterials.apply(model,state,world,root,part,-1);
         Identifier id=Registries.BLOCK.getId(state.getBlock());
         if(!id.getNamespace().equals("bloodborne_dw"))return model;
         int painted=EditorRenderScope.style(world,root);
