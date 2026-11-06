@@ -82,20 +82,25 @@ public final class CityFollowupQa implements ModInitializer {
                 for (int z = -16; z <= 16; z += 16) world.getChunk(window.add(x, 0, z));
             }
             require(StaticArchitectureCatalog.contains(world.getBlockState(window)), "Window fixture");
+            var guestCell = window.west();
+            var guests = CompositeRuntime.contributions(world, guestCell).stream().map(part -> part.owner()).toList();
+            require(!guests.isEmpty(), "Fixture must contain independent guests");
             player.refreshPositionAndAngles(208.469, 72.036, -936.369, 180, 19.1f);
-            var scope = NativePlayerBreak.begin(world, player, window);
+            var scope = NativePlayerBreak.begin(world, player, guestCell);
             boolean removed = false;
             try {
-                removed = Boolean.TRUE.equals(NativePlayerBreak.remove(world, window));
+                removed = Boolean.TRUE.equals(NativePlayerBreak.remove(world, guestCell));
                 if (!removed) {
-                    var refusal = StaticArchitectureRuntime.breakAt(world, window, player, false);
+                    var refusal = StaticArchitectureRuntime.breakAt(world, guestCell, player, false);
                     throw new AssertionError("Screenshot window rejected: " + refusal);
                 }
             } finally {
                 NativePlayerBreak.end(scope, removed);
             }
             require(removed && !StaticArchitectureCatalog.contains(world.getBlockState(window)), "Screenshot window Creative break");
-            result = "PASS: left/right item modes, UUID, occupied destination, ordinary cycle and Creative window break";
+            require(CompositeRuntime.contributions(world, guestCell).isEmpty(),
+                    "Creative cleanup must remove the guests of the clicked shared carrier");
+            result = "PASS: left/right item modes, UUID, occupied destination, ordinary cycle and Creative shared-cell break";
         } catch (Throwable failure) {
             result = "FAIL: " + failure;
             failure.printStackTrace();

@@ -1,8 +1,10 @@
 package dev.dreamwalker.bloodbornedw.item.mixin;
 
 import dev.dreamwalker.bloodbornedw.DreamwalkerBb;
+import dev.dreamwalker.bloodbornedw.architecture.BuildPermissions;
 import dev.dreamwalker.bloodbornedw.composite.StaticArchitectureCatalog;
 import dev.dreamwalker.bloodbornedw.composite.StaticArchitectureRuntime;
+import dev.dreamwalker.bloodbornedw.composite.StaticGuestCleanup;
 import dev.dreamwalker.bloodbornedw.runtime.TransactionCore;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.world.ServerWorld;
@@ -34,6 +36,7 @@ abstract class StaticCreativeBreakMixin {
         String reason = result.reason();
         if (!reason.startsWith("static_component_cell_replaced:")
                 && !reason.startsWith("static_component_recipe_mismatch:")
+                && !foreignData(reason)
                 && !reason.equals("static_root_missing")
                 && !reason.equals("no_static_part_at_hit")) return;
 
@@ -45,15 +48,22 @@ abstract class StaticCreativeBreakMixin {
                 target = StaticArchitectureRuntime.target(world, hit, null);
             }
         }
-        if (target == null) return;
-
-        // The cleanup transaction only removes the matching fragment of this
-        // pose at each cell. It retains the normal protection and loaded-chunk checks.
-        var cleanup = remove(world, target.root(), target.pose(), true);
+        var cleanup = target == null || foreignData(reason)
+                ? result : remove(world, target.root(), target.pose(), true);
+        if (cleanup.outcome() == TransactionCore.Outcome.REJECTED && BuildPermissions.canEdit(world, player, hit)) {
+            if (foreignData(cleanup.reason()) || target == null && reason.equals("no_static_part_at_hit")) {
+                var shared = StaticGuestCleanup.removeSharedCell(world, hit);
+                if (shared != null) cleanup = shared;
+                else if (target != null) cleanup = StaticGuestCleanup.remove(world, target);
+            }
+        }
         if (cleanup.outcome() == TransactionCore.Outcome.COMMITTED) {
-            DreamwalkerBb.LOG.debug("Creative architecture cleanup at {} (root {}): {}",
-                    hit, target.root(), reason);
+            DreamwalkerBb.LOG.debug("Creative architecture cleanup at {}: {}", hit, reason);
         }
         cir.setReturnValue(cleanup);
+    }
+
+    private static boolean foreignData(String reason) {
+        return reason != null && reason.startsWith("static_part_has_foreign_data:");
     }
 }
