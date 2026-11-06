@@ -66,15 +66,18 @@ def shutter_header(base):
     profile = "alt"
     source = image(base, profile, texture_path(SHUTTER_ROOF))
     assert source.size == (128, 128)
-    # The outside of the arch occupies the top corners of this atlas island.
-    # Keep its dark outline, the centre tracery and the wooden leaves intact.
-    widths = (19, 7, 6, 5, 3, 2, 1)
+    # Cover the masonry and the light stepped rim of the arch. The left
+    # and right edges of the atlas island have slightly different widths.
+    widths = ((19, 19), (19, 19), (7, 8), (5, 6), (3, 4), (2, 4),
+              (1, 3), (1, 3), (1, 3), (1, 3), (1, 3))
     stone = []
-    for y, width in enumerate(widths, start=81):
+    for y, (left, right) in enumerate(widths, start=81):
         for x in range(95, 114):
-            if (x < 95 + width or x >= 114 - width) and source.getpixel((x, y))[0] >= 100:
+            if (x < 95 + left or x >= 114 - right) and source.getpixel((x, y))[0] >= 100:
                 stone.append((x, y, x + 1, y + 1))
     reference = image(base, profile, texture_path("bloodborne_dw:block/" + BLOCK + "stone_bricks"))
+    reference.putdata([(*(round(value * 0.94) for value in pixel[:3]), pixel[3])
+                       for pixel in reference.getdata()])
     result = transfer(source, reference, stone)
     assert result.getchannel("A").tobytes() == source.getchannel("A").tobytes()
     result.save(PROFILES / profile / texture_path(SHUTTER_HEADER))
