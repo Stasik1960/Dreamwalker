@@ -4,15 +4,17 @@ import com.mojang.authlib.GameProfile;
 import dev.dreamwalker.bloodbornedw.composite.CompositeBlockEntity;
 import dev.dreamwalker.bloodbornedw.composite.CompositeRootBlock;
 import dev.dreamwalker.bloodbornedw.composite.CompositeRuntime;
-import dev.dreamwalker.bloodbornedw.composite.CompositeSourceShift;
 import dev.dreamwalker.bloodbornedw.composite.NativePlayerBreak;
 import dev.dreamwalker.bloodbornedw.composite.StaticArchitectureCatalog;
 import dev.dreamwalker.bloodbornedw.composite.StaticArchitectureRuntime;
 import dev.dreamwalker.bloodbornedw.runtime.TransactionCore;
-import dev.dreamwalker.bloodbornedw.tool.BbHorizontalMoves;
 import dev.dreamwalker.bloodbornedw.tool.BbToolItem;
 import dev.dreamwalker.bloodbornedw.tool.BbToolService;
+import dev.dreamwalker.bloodbornedw.tool.DebugAdjustments;
+import dev.dreamwalker.bloodbornedw.tool.DebugToolModes;
 import dev.dreamwalker.bloodbornedw.tool.ToolTarget;
+import dev.dreamwalker.bloodbornerp.mob.MobRegistry;
+import dev.dreamwalker.bloodbornerp.object.ObjectRegistry;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.UUID;
@@ -21,8 +23,10 @@ import net.fabricmc.fabric.api.entity.FakePlayer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.ShapeContext;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.Registries;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ServerWorld;
@@ -59,10 +63,10 @@ public final class CityFollowupQa implements ModInitializer {
             if (Boolean.getBoolean("dw.cityfollowup.reload")) {
                 world.getChunk(SHIFT_ROOT);
                 world.getChunk(SHIFT_ROOT.west());
-                checkShift(world, -0.5);
-                require(CompositeRuntime.contributions(world, SHIFT_ROOT.west()).stream()
-                        .anyMatch(part -> SHIFT_OWNER.equals(part.owner().instanceId())), "Cross-chunk contribution after reload");
-                Files.writeString(Path.of(System.getProperty("dw.cityfollowup.qa")), "PASS: half-block shift survives server restart");
+                checkShift(world, -0.5, 1);
+                require(DebugAdjustments.playersDisabled(world, SHIFT_ROOT)
+                        && DebugAdjustments.blocksDisabled(world, SHIFT_ROOT), "Independent flags survive restart");
+                Files.writeString(Path.of(System.getProperty("dw.cityfollowup.qa")), "PASS: visual pose and collision switches survive server restart");
                 server.stop(false);
                 return;
             }
@@ -77,41 +81,92 @@ public final class CityFollowupQa implements ModInitializer {
             require(CompositeRuntime.place(world, from, brick, SHIFT_OWNER, player).outcome() == TransactionCore.Outcome.COMMITTED,
                     "Fixture placement");
             var stack = new ItemStack(BbToolService.ITEM);
-            stack.getOrCreateNbt().putInt("BBMode", BbToolItem.Mode.UP.ordinal());
+            checkCycle(player, stack, DebugToolModes.Tool.MODEL);
+            var extra = DebugToolModes.extraItems();
+            require(extra.size() == 2, "Two separate registered tool items");
+            checkCycle(player, extra.get(0), DebugToolModes.Tool.BLOCK);
+            checkCycle(player, extra.get(1), DebugToolModes.Tool.NPC);
+            require(extra.get(0).isOf(Registries.ITEM.get(new Identifier("bloodborne_dw", "bb_block_tool")))
+                    && extra.get(1).isOf(Registries.ITEM.get(new Identifier("bloodborne_dw", "bb_npc_tool"))),
+                    "New items have stable registry IDs");
             player.equipStack(EquipmentSlot.MAINHAND, stack);
-            BbToolItem.cycle(player);
-            require(BbToolItem.mode(stack) == BbToolItem.Mode.DOWN && BbHorizontalMoves.mode(stack) == 0,
-                    "Up must cycle to down");
-            BbToolItem.cycle(player);
-            require(BbHorizontalMoves.mode(stack) == BbHorizontalMoves.LEFT, "Down must cycle to left");
+            var before = world.getBlockState(from).getCollisionShape(world, from, ShapeContext.of(player)).getBoundingBoxes();
+            require(!before.isEmpty(), "Fixture has physical collision");
+            setMode(stack, DebugToolModes.Action.LEFT);
             var target = ToolTarget.block(world, from, player);
             require(target != null && SHIFT_OWNER.equals(target.uuid()), "Fixture ownership");
             world.setBlockState(west, Blocks.STONE.getDefaultState());
             BbToolService.apply(player, target);
-            checkShift(world, -0.5);
+            checkShift(world, -0.5, 0);
             require(world.getBlockState(west).isOf(Blocks.STONE), "Intersected block is preserved");
-            require(CompositeRuntime.contributions(world, west).stream().anyMatch(part -> SHIFT_OWNER.equals(part.owner().instanceId())
-                    && !part.shape().collision().isEmpty() && !part.shape().selection().isEmpty()),
-                    "Shifted collision and selection cross the chunk boundary");
+            require(world.getBlockState(from).getCollisionShape(world, from, ShapeContext.of(player)).getBoundingBoxes().equals(before),
+                    "Visual movement preserves the physical shape");
 
-            BbToolItem.cycle(player);
-            require(BbHorizontalMoves.mode(stack) == BbHorizontalMoves.RIGHT, "Left must cycle to right");
+            setMode(stack, DebugToolModes.Action.RIGHT);
             BbToolService.apply(player, target);
-            checkShift(world, 0);
+            checkShift(world, 0, 0);
             require(world.getBlockState(west).isOf(Blocks.STONE) && CompositeRuntime.contributions(world, west).stream()
-                    .noneMatch(part -> SHIFT_OWNER.equals(part.owner().instanceId())), "Right shift cleans previous contribution");
-            BbToolItem.cycle(player);
-            require(BbHorizontalMoves.mode(stack) == 0 && BbToolItem.mode(stack) == BbToolItem.Mode.SPECIAL,
-                    "Right must resume the original mode cycle at Special");
-            stack.getOrCreateNbt().putInt("BBMode", BbToolItem.Mode.ROTATE.ordinal());
-            stack.getOrCreateNbt().putInt("BBHorizontalMode", 1);
-            require(BbHorizontalMoves.mode(stack) == 0, "Legacy whole-block setting is ignored");
-            BbToolItem.cycle(player);
-            require(BbToolItem.mode(stack) == BbToolItem.Mode.SPECIAL_NPC, "Rotate resumes its standard mode");
-            stack.getOrCreateNbt().putInt("BBMode", BbToolItem.Mode.DOWN.ordinal());
-            BbToolItem.cycle(player);
+                    .noneMatch(part -> SHIFT_OWNER.equals(part.owner().instanceId())), "Visual shifts do not publish physical contributions");
+            setMode(stack, DebugToolModes.Action.LEFT);
             BbToolService.apply(player, target);
-            checkShift(world, -0.5);
+            setMode(stack, DebugToolModes.Action.VISUAL_ROTATE);
+            BbToolService.apply(player, target);
+            checkShift(world, -0.5, 1);
+            var blockTool = extra.get(0);
+            player.equipStack(EquipmentSlot.MAINHAND, blockTool);
+            setMode(blockTool, DebugToolModes.Action.PLAYER_COLLISION);
+            BbToolService.apply(player, target);
+            require(DebugAdjustments.playersDisabled(world, from) && !DebugAdjustments.blocksDisabled(world, from),
+                    "Player collision switch is independent");
+            require(world.getBlockState(from).getCollisionShape(world, from, ShapeContext.of(player)).isEmpty(),
+                    "Disabled player shape");
+            require(!world.getBlockState(from).getCollisionShape(world, from, ShapeContext.absent()).isEmpty(),
+                    "Untargeted collision is unchanged");
+            setMode(blockTool, DebugToolModes.Action.BLOCK_COLLISION);
+            BbToolService.apply(player, target);
+            require(DebugAdjustments.blocksDisabled(world, from), "Block placement switch");
+            BlockPos secondRoot = from.east(4);
+            require(CompositeRuntime.place(world, secondRoot, brick, UUID.randomUUID(), player).outcome()
+                    == TransactionCore.Outcome.COMMITTED, "Second rotation fixture");
+            setMode(blockTool, DebugToolModes.Action.BLOCK_ROTATE);
+            BbToolService.apply(player, ToolTarget.block(world, secondRoot, player));
+            require(world.getBlockState(secondRoot).get(CompositeRootBlock.ROTATION) == 3, "Physical block turns by one 45-degree step");
+            var npc = MobRegistry.TYPES.values().iterator().next().create(world);
+            require(npc != null, "NPC fixture exists");
+            npc.refreshPositionAndAngles(from.getX() + 0.5, from.getY(), from.getZ() + 4.5, 0, 0);
+            require(world.spawnEntity(npc), "NPC fixture is available by UUID");
+            var npcTool = extra.get(1);
+            player.equipStack(EquipmentSlot.MAINHAND, npcTool);
+            setMode(npcTool, DebugToolModes.Action.NPC_CLOCKWISE);
+            BbToolService.apply(player, ToolTarget.entity(npc));
+            require(npc.getYaw() == 45 && npc.bodyYaw == 45 && npc.headYaw == 45, "NPC clockwise yaw");
+            setMode(npcTool, DebugToolModes.Action.NPC_COUNTERCLOCKWISE);
+            BbToolService.apply(player, ToolTarget.entity(npc));
+            require(npc.getYaw() == 0 && npc.bodyYaw == 0 && npc.headYaw == 0, "NPC counterclockwise yaw");
+            npc.discard();
+            var objectType = ObjectRegistry.TYPES.values().iterator().next();
+            var object = objectType.create(world);
+            require(object != null, "RP decor fixture exists");
+            object.refreshPositionAndAngles(from.getX() + 0.5, from.getY(), from.getZ() + 4.5, 0, 0);
+            require(world.spawnEntity(object), "RP decor fixture is available by UUID");
+            player.equipStack(EquipmentSlot.MAINHAND, stack);
+            setMode(stack, DebugToolModes.Action.UP);
+            BbToolService.apply(player, ToolTarget.entity(object));
+            int objectSettings = DebugAdjustments.objectSettings(object);
+            require(DebugAdjustments.y(objectSettings) == 0.5 && object.getY() == from.getY(),
+                    "RP decor moves visually and retains the world position");
+            var savedObject = object.writeNbt(new NbtCompound());
+            var restored = objectType.create(world);
+            require(restored != null, "RP reload fixture exists");
+            restored.readNbt(savedObject);
+            require(DebugAdjustments.objectSettings(restored) == objectSettings, "RP decor debug NBT round trip");
+            object.discard();
+            if (Boolean.getBoolean("dw.cityfollowup.toolsOnly")) {
+                Files.writeString(Path.of(System.getProperty("dw.cityfollowup.qa")),
+                        "PASS: three item cycles, visual movement into stone, independent shape switches, model-only yaw, physical yaw, NPC yaw in both directions");
+                server.stop(false);
+                return;
+            }
             BlockPos window = new BlockPos(208, 72, -940);
             for (int x = -16; x <= 16; x += 16) {
                 for (int z = -16; z <= 16; z += 16) world.getChunk(window.add(x, 0, z));
@@ -135,7 +190,7 @@ public final class CityFollowupQa implements ModInitializer {
             require(removed && !StaticArchitectureCatalog.contains(world.getBlockState(window)), "Screenshot window Creative break");
             require(CompositeRuntime.contributions(world, guestCell).isEmpty(),
                     "Creative cleanup must remove the guests of the clicked shared carrier");
-            result = "PASS: vertical/horizontal mode order, half-block X/Z with rotation, root UUID, occupied cell, cross-chunk collision and selection, Creative shared-cell break";
+            result = "PASS: three tool cycles, visual transform with independent physical state and flags, Creative shared-cell break";
         } catch (Throwable failure) {
             result = "FAIL: " + failure;
             failure.printStackTrace();
@@ -149,15 +204,33 @@ public final class CityFollowupQa implements ModInitializer {
         }
     }
 
-    private static void checkShift(ServerWorld world, double x) {
+    private static void checkCycle(net.minecraft.server.network.ServerPlayerEntity player, ItemStack stack,
+            DebugToolModes.Tool tool) {
+        player.equipStack(EquipmentSlot.MAINHAND, stack);
+        require(DebugToolModes.tool(stack) == tool, "Tool identity");
+        for (var action : tool.actions) {
+            require(DebugToolModes.action(stack) == action, "Expected " + action);
+            BbToolItem.cycle(player);
+        }
+        require(DebugToolModes.action(stack) == tool.actions.get(0), "Mode cycle wraps");
+    }
+
+    private static void setMode(ItemStack stack, DebugToolModes.Action action) {
+        var index = DebugToolModes.tool(stack).actions.indexOf(action);
+        require(index >= 0, "Wrong tool for " + action);
+        stack.getOrCreateNbt().putInt(DebugToolModes.MODE_KEY, index);
+    }
+
+    private static void checkShift(ServerWorld world, double x, int turns) {
         var state = world.getBlockState(SHIFT_ROOT);
         require(state.getBlock() instanceof CompositeRootBlock && state.get(CompositeRootBlock.ROTATION) == 2,
                 "Root block and its rotation are retained");
         var root = (CompositeBlockEntity) world.getBlockEntity(SHIFT_ROOT);
         require(root != null && root.resident() != null && SHIFT_OWNER.equals(root.resident().instanceId()), "Root UUID is retained");
-        var shift = CompositeSourceShift.world(state, root.payload());
-        require(Math.abs(shift.x() - x) < 1e-8 && Math.abs(shift.z()) < 1e-8 && shift.y() == 0,
-                "Expected world-space horizontal offset " + x + ", found " + shift);
+        int pose = DebugAdjustments.renderPose(world, SHIFT_ROOT, state);
+        require(DebugAdjustments.x(pose) == x && DebugAdjustments.z(pose) == 0 && DebugAdjustments.y(pose) == 0
+                        && DebugAdjustments.turns(pose) == turns,
+                "Expected world-space horizontal offset " + x + " and turns " + turns + ", found " + pose);
     }
 
     private static void require(boolean condition, String message) {

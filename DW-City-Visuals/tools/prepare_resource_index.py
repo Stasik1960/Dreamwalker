@@ -8,22 +8,24 @@ ROOT = Path(__file__).resolve().parents[1]
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--check', action='store_true')
+    parser.add_argument('--additional-root', type=Path, default=ROOT / 'build/generated/requested-models')
     args = parser.parse_args()
     resources = ROOT / 'src/main/resources'
     output = resources / 'assets/bloodborne_dw/visuals/resource-index.json'
     index = {}
     for mode in ('original', 'alt'):
-        profile = resources / 'dw_city_visuals' / mode
-        paths = []
-        for path in profile.rglob('*'):
-            if not path.is_file():
-                continue
-            relative = path.relative_to(profile).as_posix()
-            if not relative.startswith('assets/'):
-                continue
-            if not path.resolve().is_relative_to(profile.resolve()) or '..' in path.relative_to(profile).parts:
-                raise RuntimeError('Unsafe profile asset: ' + str(path))
-            paths.append(relative)
+        paths = set()
+        for root in (resources, args.additional_root):
+            profile = root / 'dw_city_visuals' / mode
+            for path in (profile / 'assets').rglob('*'):
+                if not path.is_file():
+                    continue
+                relative = path.relative_to(profile).as_posix()
+                if not path.resolve().is_relative_to(profile.resolve()) or '..' in path.relative_to(profile).parts:
+                    raise RuntimeError('Unsafe profile asset: ' + str(path))
+                if relative in paths:
+                    raise RuntimeError('Duplicate profile asset: ' + relative)
+                paths.add(relative)
         index[mode] = sorted(paths)
     if args.check:
         current = json.loads(output.read_text(encoding='utf8'))

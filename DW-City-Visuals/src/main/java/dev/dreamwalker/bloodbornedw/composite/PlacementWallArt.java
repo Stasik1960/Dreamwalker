@@ -21,7 +21,7 @@ public final class PlacementWallArt {
         int material = PrototypeWallItem.material(working);
         boolean diagonal = PlacementRotation.diagonal(context);
         // Wall artwork's zero-facing convention is opposite the player's yaw.
-        int yaw = (PlacementRotation.yaw(context.getPlayerYaw(), context) + 4) & 7;
+        int yaw = (PlacementRotation.perpendicular(context.getPlayerYaw(), context) + 4) & 7;
         tag.putString("rotation", Integer.toString(yaw));
         if (material == 0 && diagonal) {
             if (!"manual".equals(tag.getString("connections"))) {

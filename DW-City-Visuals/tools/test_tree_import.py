@@ -13,6 +13,7 @@ import math
 from pathlib import Path
 import zipfile
 from PIL import Image
+from import_tree_project import separate_foliage
 
 WORK = Path(__file__).resolve().parents[1]
 ASSETS = WORK / 'src/main/resources'
@@ -65,9 +66,11 @@ def main() -> None:
             path = model['assetPath']
             alt = resource('dw_city_visuals/alt/' + path)
             original = resource('dw_city_visuals/original/' + path)
-            check(model['id'] + '-exact-editor-geometry', json.loads(alt) == model['geometry'], 'All bones/cubes/UV/transform values equal the uploaded editor project')
+            geometry = separate_foliage(model)
+            check(model['id'] + '-exact-editor-geometry', json.loads(alt) == geometry,
+                  'All data match the editor project after the targeted foliage depth correction')
             check(model['id'] + '-original-preserved', original == base.read(path), 'Original profile remains byte-identical to the pinned original geometry')
-            vertices=list(rotated_vertices(model['geometry']))
+            vertices=list(rotated_vertices(geometry))
             minimum=[min(v[i] for v in vertices) for i in range(3)]
             maximum=[max(v[i] for v in vertices) for i in range(3)]
             check(model['id'] + '-finite-render-envelope', all(-16 <= v[0] <= 16 and -3 <= v[1] <= 27 and -16 <= v[2] <= 16 for v in vertices), f'All rotated cube corners fit the declared ALT render envelope: min={minimum}, max={maximum}')

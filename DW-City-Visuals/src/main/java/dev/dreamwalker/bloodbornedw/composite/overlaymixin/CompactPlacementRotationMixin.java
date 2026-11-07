@@ -1,6 +1,9 @@
 package dev.dreamwalker.bloodbornedw.composite.overlaymixin;
 
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import com.llamalad7.mixinextras.sugar.Local;
 import dev.dreamwalker.bloodbornedw.composite.PlacementRotation;
+import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemPlacementContext;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -15,5 +18,10 @@ public abstract class CompactPlacementRotationMixin {
     }, at = @At(value = "INVOKE", target = "Ljava/lang/Math;round(F)I", remap = false), remap = false, require = 2)
     private int dw$rotation(float steps, ItemPlacementContext context) {
         return PlacementRotation.steps(steps, context);
+    }
+
+    @ModifyExpressionValue(method = "method_7707", at = @At(value = "INVOKE", target = "Ljava/lang/Math;floorMod(II)I"))
+    private int dw$fitCompactModel(int rotation, @Local BlockState state) {
+        return PlacementRotation.fitModel(rotation, state);
     }
 }

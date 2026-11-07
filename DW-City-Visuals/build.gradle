@@ -6,6 +6,7 @@ version = '20261104-cityeditor.2.1-cornerlight.2-rgb.2-altfix.1-cityfollowup.1-r
 group = 'dev.dreamwalker'
 base { archivesName = 'dw-altvisual-overlay' }
 layout.buildDirectory = new File(projectDir, 'build')
+def requestedModelResources = layout.buildDirectory.dir('generated/requested-models')
 loom {
     splitEnvironmentSourceSets()
     mods {
@@ -168,13 +169,25 @@ tasks.register('generateEditor2SlabFlags', Exec) {
     commandLine pythonExecutable.get(), file('tools/generate_editor2_slab_flags.py').path
 }
 
+tasks.register('prepareRequestedModels', Exec) {
+    dependsOn tasks.named('verifyBaseline')
+    inputs.file(baseline)
+    inputs.file('tools/repair_requested_models.py')
+    inputs.property('pythonExecutable', pythonExecutable)
+    outputs.dir(requestedModelResources)
+    commandLine pythonExecutable.get(), file('tools/repair_requested_models.py').path,
+        '--baseline', baseline.get(), '--resources', requestedModelResources.get().asFile.path
+}
+sourceSets.main.resources.srcDir(tasks.named('prepareRequestedModels'))
+
 tasks.register('generateVisualResourceIndex', Exec) {
-    dependsOn tasks.named('generateEditor2Palette'), tasks.named('generateRgbPhase1')
+    dependsOn tasks.named('generateEditor2Palette'), tasks.named('generateRgbPhase1'), tasks.named('prepareRequestedModels')
     inputs.files(fileTree('src/main/resources/dw_city_visuals'))
+    inputs.dir(requestedModelResources)
     inputs.file('tools/prepare_resource_index.py')
     outputs.file('src/main/resources/assets/bloodborne_dw/visuals/resource-index.json')
     commandLine pythonExecutable.get(),
-        file('tools/prepare_resource_index.py').path
+        file('tools/prepare_resource_index.py').path, '--additional-root', requestedModelResources.get().asFile.path
 }
 
 // Keep the handshake identity in sync without hashing resources on either game thread.
@@ -182,10 +195,11 @@ tasks.register('generateVisualFingerprints', Exec) {
     dependsOn tasks.named('generateVisualResourceIndex'), tasks.named('generateEditor2NativeFlags'), tasks.named('generateEditor2PoseFlags'), tasks.named('generateEditor2SlabFlags')
     inputs.files(fileTree('src/main/java') { include '**/*.java' }, fileTree('src/client/java') { include '**/*.java' })
     inputs.files(fileTree('src/main/resources') { exclude '**/profile-fingerprints.json' })
+    inputs.dir(requestedModelResources)
     inputs.file('tools/prepare_visual_fingerprints.py')
     outputs.file('src/main/resources/assets/bloodborne_dw/visuals/profile-fingerprints.json')
     commandLine pythonExecutable.get(),
-        file('tools/prepare_visual_fingerprints.py').path
+        file('tools/prepare_visual_fingerprints.py').path, '--additional-root', requestedModelResources.get().asFile.path
 }
 tasks.named('processResources') { dependsOn tasks.named('generateVisualFingerprints') }
 

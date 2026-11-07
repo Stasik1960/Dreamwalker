@@ -2,6 +2,7 @@ package dev.dreamwalker.bloodbornedw.editor.catalogue.mixin;
 
 import dev.dreamwalker.bloodbornedw.editor.catalogue.EditorCatalogue;
 import dev.dreamwalker.bloodbornedw.debug.UnifiedCreativeCatalogue;
+import dev.dreamwalker.bloodbornedw.tool.DebugToolModes;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -18,6 +19,9 @@ public abstract class EditorCatalogueMixin {
     private static List<ItemStack> dw$completeOriginalCatalogue(Stream<ItemStack> stream) {
         List<ItemStack> items = new ArrayList<>(stream.toList());
         EditorCatalogue.fill(items);
+        for (var stack : DebugToolModes.extraItems()) {
+            if (items.stream().noneMatch(item -> item.isOf(stack.getItem()))) items.add(stack);
+        }
         return List.copyOf(items);
     }
 }

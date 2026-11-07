@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""Import the user's editor project without changing any geometry or atlas pixels."""
+"""Import the user's editor project and separate confirmed coplanar foliage."""
 from __future__ import annotations
 import argparse
 import base64
+from copy import deepcopy
 import hashlib
 import json
 import math
@@ -12,6 +13,25 @@ from pathlib import Path, PurePosixPath
 WORK = Path(__file__).resolve().parents[1]
 PROJECT = WORK / 'inputs/trees/DreamWalker-trees.dwtree.json'
 ALT = WORK / 'src/main/resources/dw_city_visuals/alt'
+COPLANAR_FOLIAGE = {
+    'tree_2': (17, 20, 21, 22, 27, 28, 30, 31, 41),
+    'tree_3': (18, 19, 21, 22, 23, 24, 25, 26, 28, 30, 32, 33),
+}
+
+
+def separate_foliage(model):
+    geometry = deepcopy(model['geometry'])
+    indices = COPLANAR_FOLIAGE.get(model['id'], ())
+    if indices:
+        bone = next(b for b in geometry['minecraft:geometry'][0]['bones'] if b['name'] == model['id'])
+        for index in indices:
+            cube = bone['cubes'][index]
+            if cube['size'][2] != 0 or set(cube['uv']) != {'north'}:
+                raise ValueError('Recheck coplanar foliage after updating the source tree project')
+            # Local Z is the card's normal before cube/bone rotations. The
+            # adjacent cards already separated by a quarter unit keep their pose.
+            cube['origin'][2] -= .5
+    return geometry
 
 
 def validate(project: dict) -> list[dict]:
@@ -79,10 +99,12 @@ def main() -> None:
     for model in models:
         target = ALT / PurePosixPath(model['assetPath'])
         target.parent.mkdir(parents=True, exist_ok=True)
-        target.write_text(json.dumps(model['geometry'], ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
-        assert json.loads(target.read_text(encoding='utf-8')) == model['geometry']
+        geometry = separate_foliage(model)
+        target.write_text(json.dumps(geometry, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+        assert json.loads(target.read_text(encoding='utf-8')) == geometry
         report['models'].append({'asset': model['assetPath'], 'boneCount': len(model['geometry']['minecraft:geometry'][0]['bones']),
-                                 'cubeCount': sum(len(b.get('cubes', [])) for b in model['geometry']['minecraft:geometry'][0]['bones']), 'exactGeometryEquality': True})
+                                 'cubeCount': sum(len(b.get('cubes', [])) for b in model['geometry']['minecraft:geometry'][0]['bones']),
+                                 'separatedFoliageCards': list(COPLANAR_FOLIAGE.get(model['id'], ()))})
     for texture in project['textures'].values():
         png = base64.b64decode(texture['dataURL'].split(',', 1)[1], validate=True)
         target = ALT / PurePosixPath(texture['assetPath'])

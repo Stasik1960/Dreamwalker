@@ -4,12 +4,13 @@
   "version": "1.0.0",
   "environment": "*",
   "custom": {
-    "dreamwalker:revisionSuffix": "cityeditor.2.1-cornerlight.2-rgb.2-altfix.1-cityfollowup.1-rgbrelief.1-bbhalf.1"
+    "dreamwalker:revisionSuffix": "cityeditor.2.1-cornerlight.2-rgb.2-altfix.1-cityfollowup.1-rgbrelief.1-bbhalf.1-builder.1"
   },
   "entrypoints": {
     "main": [
       "dev.dreamwalker.bloodbornedw.visual.CityVisualMode",
       "dev.dreamwalker.bloodbornedw.architecture.WhitenessBlock",
+      "dev.dreamwalker.bloodbornedw.architecture.PlainWoodDoor$Registration",
       "dev.dreamwalker.bloodbornedw.editor.CityEditorServer",
       "dev.dreamwalker.bloodbornedw.composite.StandardLanternGameplay",
       "dev.dreamwalker.bloodbornedw.composite.RetainedFramePlacement",
