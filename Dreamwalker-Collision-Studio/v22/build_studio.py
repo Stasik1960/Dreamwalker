@@ -8,7 +8,6 @@ from itertools import product
 import json
 from math import cos, radians, sin
 from pathlib import Path
-import re
 import struct
 from zipfile import ZIP_DEFLATED, ZipFile
 
@@ -40,7 +39,6 @@ RETIRED_EDITOR_MODELS = {
     "bloodborne_dw:source_shutter_window_surround",
     *SHUTTER_LAYOUT_SOURCES,
 }
-WINDOW = re.compile(r"window|остекл|витраж|окн[аоеу]|окон|подокон", re.IGNORECASE)
 ZERO = [0, 0, 0]
 PIVOT = [8, 8, 8]
 FACES = {"east", "west", "up", "down", "south", "north"}
@@ -105,6 +103,10 @@ class Assets:
         return self.vanilla.read(path)
 
     def resolve_model(self, identifier, profile, chain=()):
+        if identifier in ("builtin/generated", "minecraft:builtin/generated"):
+            return {"generated": True}
+        if identifier in ("builtin/entity", "minecraft:builtin/entity"):
+            return {}
         if identifier in chain:
             raise ValueError(f"Circular model inheritance: {chain + (identifier,)}")
         doc = json.loads(self.load(resource(identifier, "models", "json"), profile))
@@ -116,13 +118,15 @@ class Assets:
     def register_texture(self, name, profile):
         key = f"v22:{profile}:{name}"
         if key not in self.textures:
-            raw = self.load(resource(name, "textures", "png"), profile)
-            width, height = struct.unpack(">II", raw[16:24])
-            self.textures[key] = {
-                "source": "data:image/png;base64," + base64.b64encode(raw).decode("ascii"),
-                "width": width, "height": height, "name": name,
-            }
+            self.register_png(key, name, self.load(resource(name, "textures", "png"), profile))
         return key
+
+    def register_png(self, key, name, raw):
+        width, height = struct.unpack(">II", raw[16:24])
+        self.textures[key] = {
+            "source": "data:image/png;base64," + base64.b64encode(raw).decode("ascii"),
+            "width": width, "height": height, "name": name,
+        }
 
     def register_model(self, identifier, profile):
         key = f"v22:{profile}:{identifier}"
@@ -130,7 +134,13 @@ class Assets:
             return key
         doc = self.resolve_model(identifier, profile)
         cubes = []
-        for element in doc.get("elements", []):
+        elements = doc.get("elements", [])
+        if doc.get("generated") and "layer0" in doc.get("textures", {}):
+            elements = [{"from": [0, 0, 8], "to": [16, 16, 8], "faces": {
+                "north": {"texture": "#layer0", "uv": [0, 0, 16, 16]},
+                "south": {"texture": "#layer0", "uv": [16, 0, 0, 16]},
+            }}]
+        for element in elements:
             low, high = element["from"], element["to"]
             pivot = element.get("rotation", {})
             rotation = [0, 0, 0]
@@ -154,8 +164,6 @@ class Assets:
                 faces[direction] = {"texture": texture, "uv": uv, "rotation": face.get("rotation", 0)}
             cubes.append({"from": low, "to": high, "origin": pivot.get("origin", ZERO),
                           "rotation": rotation, "rescale": pivot.get("rescale", False), "faces": faces})
-        if not cubes:
-            raise ValueError(f"Model has no renderable elements: {identifier}")
         self.models[key] = {"kind": "java", "groups": [], "cubes": cubes}
         return key
 
@@ -258,8 +266,67 @@ def rp_cube_bounds(model, scale):
             corners = [around(point, group["origin"], group["rotation"]) for point in corners]
             group = groups.get(group.get("parent"))
         axes = list(zip(*corners))
-        bounds.append({"from": [min(axis) * scale for axis in axes], "to": [max(axis) * scale for axis in axes]})
+        bounds.append({"from": [min(axis) * scale for axis in axes], "to": [max(axis) * scale for axis in axes],
+                       "bone": cube.get("group")})
     return bounds
+
+
+def rp_geo(geometry, texture):
+    """Normalize Bedrock cube coordinates and UVs like the editor's GEO import."""
+    groups, cubes = [], []
+    for bone in geometry["bones"]:
+        px, py, pz = bone.get("pivot", ZERO)
+        rx, ry, rz = bone.get("rotation", ZERO)
+        groups.append({"name": bone["name"], "parent": bone.get("parent"), "origin": [-px, py, pz],
+                       "rotation": [-rx, -ry, rz]})
+        for cube in bone.get("cubes", []):
+            x, y, z = cube["size"]
+            ox, oy, oz = cube["origin"]
+            px, py, pz = cube.get("pivot", ZERO)
+            rx, ry, rz = cube.get("rotation", ZERO)
+            inflate = cube.get("inflate", bone.get("inflate", 0))
+            uv = cube.get("uv", [0, 0])
+            faces = {}
+            if isinstance(uv, list):
+                u, v = uv
+                rects = {
+                    "east": [u, v+z, u+z, v+z+y], "north": [u+z, v+z, u+z+x, v+z+y],
+                    "west": [u+z+x, v+z, u+2*z+x, v+z+y],
+                    "south": [u+2*z+x, v+z, u+2*z+2*x, v+z+y],
+                    "up": [u+z+x, v+z, u+z, v], "down": [u+z+2*x, v, u+z+x, v+z],
+                }
+                if cube.get("mirror", bone.get("mirror", False)):
+                    rects["east"], rects["west"] = rects["west"], rects["east"]
+                    rects = {face: [u1, v0, u0, v1] for face, (u0, v0, u1, v1) in rects.items()}
+                faces = {face: {"texture": texture, "uv": rect} for face, rect in rects.items()}
+            else:
+                for face, value in uv.items():
+                    u, v = value["uv"]
+                    if face in ("up", "down"):
+                        w, h = value.get("uv_size", [x, z])
+                        rect = [u+w, v+h, u, v]
+                    else:
+                        w, h = value.get("uv_size", [z if face in ("east", "west") else x, y])
+                        rect = [u, v, u+w, v+h]
+                    faces[face] = {"texture": texture, "uv": rect, "rotation": value.get("uv_rotation", 0)}
+            cubes.append({"name": bone["name"], "group": bone["name"], "origin": [-px, py, pz],
+                          "rotation": [-rx, -ry, rz], "from": [-ox-x-inflate, oy-inflate, oz-inflate],
+                          "to": [-ox+inflate, oy+y+inflate, oz+z+inflate], "faces": faces})
+    return {"kind": "geo", "groups": groups, "cubes": cubes}
+
+
+def new_rp_entry(row, info, assets):
+    model = "bloodborne_rp:" + info["model"]
+    texture = "bloodborne_rp:" + info["texture"]
+    if texture not in assets.textures:
+        assets.register_png(texture, info["texture"], assets.read("assets/bloodborne_rp/" + info["texture"]))
+    if model not in assets.models:
+        geometry = json.loads(assets.read("assets/bloodborne_rp/" + info["model"]))["minecraft:geometry"][0]
+        assets.models[model] = rp_geo(geometry, texture)
+    return {"id": row["registryId"], "kind": "rp", "aliases": row.get("aliases", []), "asset": info, "states": [
+        {"key": "default", "label": "Обычное", "selector": {}, "clip": None, "time": 0,
+         "parts": [{"model": model, "offset": ZERO, "pivot": ZERO, "rotation": ZERO}]}
+    ]}
 
 
 def rp_entry(row, entry, jar, data):
@@ -279,24 +346,102 @@ def rp_entry(row, entry, jar, data):
     half_width, height = max(.1, info["width"]) * 8, max(.1, info["height"]) * 16
     low, high = [-half_width, 0, -half_width], [half_width, height, half_width]
     mechanisms = identifier.startswith("lever_") or identifier in {"chest", "ladder", "cage_obj_1", "cage_obj_2", "cage_obj_3"}
-    if identifier not in passages and not mechanisms and not info["clips"]:
+    if visual and identifier not in passages and not mechanisms and not info["clips"]:
         clipped_low = [max(value, min(box["from"][axis] for box in visual)) for axis, value in enumerate(low)]
         clipped_high = [min(value, max(box["to"][axis] for box in visual)) for axis, value in enumerate(high)]
         if all(a < b for a, b in zip(clipped_low, clipped_high)):
             low, high = clipped_low, clipped_high
     for state in entry["states"]:
+        opened = state["selector"].get("Open", False)
         player = reviewed.get(identifier, [{"from": low, "to": high}])
-        if identifier in non_colliding or (identifier in passages and state["selector"].get("Open")):
+        outline = visual
+        if identifier == "stairs":
+            player = [bounds for bounds in visual if bounds["bone"] == "stairs"]
+            outline = player
+        elif identifier == "ladder":
+            y, z = (0, 0) if opened else (228, -2)
+            platform = {"from": [-11, 11, -24], "to": [11, 12, 24]}
+            player = [{"from": [-9, -192, -25.75], "to": [9, 14, -23.75]},
+                      {"from": [-9, -473+y, -25.75+z], "to": [9, -192+y, -23.75+z]}, platform]
+            outline = [{"from": [-12, -192, -29], "to": [12, 14, -20]},
+                       {"from": [-12, -473+y, -29+z], "to": [12, -192+y, -20+z]}, platform]
+        elif identifier in reviewed:
+            outline = player
+        elif row["kind"] == "rp_item" or identifier in non_colliding or (identifier in passages and opened):
             player = []
-        # RP placement may overlap blocks. Targeting uses movement boxes if
-        # present, otherwise it follows the actual individual source parts.
-        state["baseline"] = baseline_objects(player, [], player or visual)
+        if state.get("hiddenBones"):
+            outline = [box for box in outline if box.get("bone") not in state["hiddenBones"]]
+        # RP props may overlap blocks. The ordinary selection geometry follows
+        # each source cube, with separately reviewed shapes for custom props.
+        state["baseline"] = baseline_objects(player, [], outline)
     entry["name"] = row["name"]
     entry["number"] = row["temporaryId"]
     if info.get("animation"):
         raw = json.loads(jar.read("assets/bloodborne_rp/" + info["animation"]))
         data["animations"][info["animation"]] = raw["animations"]
     return entry
+
+
+def native_entry(row, assets):
+    registry = row["registryId"]
+    variants = json.loads(assets.read(resource(registry, "blockstates", "json")))["variants"]
+    states, seen = [], set()
+    for key, value in variants.items():
+        selector = dict(pair.split("=") for pair in key.split(",") if pair)
+        if any(selector.get(k, default) != default for k, default in {
+            "facing": "north", "profile": "base", "waterlogged": "false",
+            "diagonal": "false", "source_clone": "false", "freestanding": "false",
+        }.items()):
+            continue
+        part = {"model": value["model"], "yaw": value.get("y", 0), "pitch": value.get("x", 0)}
+        identity = tuple(part.values())
+        if identity in seen:
+            continue
+        seen.add(identity)
+        model = assets.part(part, "original")
+        if "ladder" in registry:
+            shape = [{"from": [0, 0, 13], "to": [16, 16, 16]}]
+            baseline = baseline_objects([], shape, shape)
+        else:
+            shape = [{"from": [4, 0, 4], "to": [12, 16, 12]}]
+            baseline = baseline_objects(shape, shape, shape)
+        selector = {k: v for k, v in selector.items() if k in ("facing", "variant")}
+        states.append({"key": key or "default", "label": f"Вариант {len(states) + 1}",
+                       "selector": selector, "parts": [model], "baseline": baseline})
+    return {"id": registry, "number": row["temporaryId"], "name": row["name"], "kind": "native",
+            "states": states}
+
+
+def applied_baseline(entries, project, retired):
+    indexed = {entry["id"]: entry for entry in entries}
+    for model in project["models"]:
+        registry = model["registryId"]
+        entry = indexed.get(registry)
+        if entry is None:
+            if registry in RETIRED_EDITOR_MODELS:
+                continue
+            raise ValueError(f"Applied layout has no model: {registry}")
+        entry["previouslyEdited"] = True
+        if "anchorCell" in model:
+            entry["baselineAnchorCell"] = model["anchorCell"]
+        states = {state["key"]: state for state in entry["states"]}
+        for saved in model["states"]:
+            key = saved["key"]
+            if key in retired.get(registry, ()):
+                continue
+            if key not in states:
+                raise ValueError(f"Applied layout has no state: {registry} / {key}")
+            state = states[key]
+            state["baselineModelOffset"] = saved.get("modelOffset", ZERO)
+            state["baseline"] = [
+                {"id": box["id"], "type": "box", "mode": box["mode"], "name": box["name"],
+                 "position": box["center"], "size": box["size"], "rotation": box["rotation"]}
+                for box in saved["colliders"]
+            ] + [
+                {"id": seat["id"], "type": "seat", "name": seat["name"],
+                 "position": seat["surfaceCenter"], "size": project["seatSize"], "rotation": seat["rotation"]}
+                for seat in saved["seats"]
+            ]
 
 
 def plain_door_entry(row, assets):
@@ -359,31 +504,49 @@ def build_data(upstream, jar, vanilla, jar_sha, resources=None):
         if registry in known or resource(registry, "blockstates", "json") not in assets.files:
             continue
         recipe = json.loads(assets.read(recipe_path))
-        if WINDOW.search(registry + " " + recipe.get("displayName", "")):
-            current.append({"registryId": registry, "temporaryId": None,
-                            "name": recipe["displayName"], "kind": "architecture"})
+        current.append({"registryId": registry, "temporaryId": None,
+                        "name": recipe["displayName"], "kind": "architecture"})
     old = {entry["id"]: entry for entry in data["entries"]}
+    rp_catalogue = json.loads(jar.read("assets/bloodborne_rp/catalog.json"))
+    item_assets = {"boom_hammer": "boomhammer_false", "saw_cleaver": "sawcleaver_false",
+                   "saw_spear": "sawspear_false"}
     entries = []
     retired_states = {}
     for row in current:
         registry = row["registryId"]
-        if registry in RETIRED_EDITOR_MODELS:
+        if registry in RETIRED_EDITOR_MODELS or registry in hidden_components:
             continue
-        if registry != PLAIN_DOOR and row["temporaryId"] not in REQUESTED and not WINDOW.search(registry + " " + row["name"]):
+        kind = row["kind"]
+        if kind not in {"architecture", "rp_object", "rp_mob", "rp_item"}:
             continue
         name = registry.split(":", 1)[1]
         recipe_path = f"bloodborne_dw/composite/{name}.json"
         if registry == PLAIN_DOOR:
             entry = plain_door_entry(row, assets)
         elif recipe_path in assets.files:
-            entry = composite_entry(row, json.loads(assets.read(recipe_path)), assets,
-                                    installation_poses.get(registry, ()), registry in hidden_components)
-        elif row["kind"] == "rp_object" and registry in old:
-            entry = rp_entry(row, old[registry], jar, data)
+            recipe = json.loads(assets.read(recipe_path))
+            if not any(pose["parts"] for variant in recipe["variants"] for pose in variant["poses"].values()):
+                continue
+            entry = composite_entry(row, recipe, assets, installation_poses.get(registry, ()))
+        elif kind in ("rp_object", "rp_mob") or name in item_assets:
+            entry = old.get(registry) or new_rp_entry(row, rp_catalogue[item_assets.get(name, name)], assets)
+            entry = rp_entry(row, entry, jar, data)
+        elif kind == "rp_item":
+            part = assets.part({"model": f"bloodborne_rp:item/{name}"}, "original")
+            entry = {"id": registry, "name": row["name"], "number": row["temporaryId"], "kind": "item",
+                     "states": [{"key": "default", "label": "Обычное", "selector": {}, "parts": [part]}]}
         elif registry in old:
             entry = old[registry]
+            entry["states"] = [state for state in entry["states"] if state["selector"].get("profile", "base") == "base"]
+            for state in entry["states"]:
+                state["selector"].pop("profile", None)
+                state["key"] = ",".join(part for part in state["key"].split(",") if not part.startswith("profile="))
+        elif kind == "architecture":
+            entry = native_entry(row, assets)
         else:
             raise ValueError(f"Missing recipe and source model for {registry}")
+        if not any(assets.models[part["model"]]["cubes"] for state in entry["states"] for part in state["parts"]):
+            continue
         if registry == WHOLE_WINDOW:
             obsolete = {state["selector"]["variant"] for state in entry["states"]} - set(installation_poses.get(registry, (2,)))
         elif registry == SHUTTER_WINDOW:
@@ -401,10 +564,18 @@ def build_data(upstream, jar, vanilla, jar_sha, resources=None):
     data["entries"] = sorted(entries, key=lambda entry: (entry.get("number") or "99999", entry["id"]))
     data["retiredLayouts"] = {"models": sorted(RETIRED_EDITOR_MODELS), "states": retired_states}
     data["shutterLayoutMigration"] = {"target": SHUTTER_WINDOW, "sources": SHUTTER_LAYOUT_SOURCES}
+    layout_path = "bloodborne_dw/studio-layouts-v22.json"
+    layout_raw = assets.read(layout_path) if layout_path in assets.files else None
+    if layout_raw:
+        applied = json.loads(layout_raw)
+        applied_baseline(entries, applied, retired_states)
+        data["previousProjectSource"] = applied["source"]
     data["source"] = {"repository": "https://github.com/Stasik1960/Dreamwalker",
                       "commit": "v22:" + jar_sha + ":shared-profiles", "jarSha256": jar_sha,
                       "release": json.loads(jar.read("fabric.mod.json"))["version"],
                       "studioBaseCommit": "0ae6314a3e5b02f58cfaf05c265251c19b3803af"}
+    if layout_raw:
+        data["source"]["appliedLayoutsSha256"] = hashlib.sha256(layout_raw).hexdigest()
     if patch_sha := assets.patch_digest():
         data["source"]["modelPatchSha256"] = patch_sha
         data["source"]["commit"] += ":" + patch_sha

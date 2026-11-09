@@ -20,12 +20,38 @@ const DW_PROJECT = (() => {
     }
 
     function stateChanged(state, layout) {
-        return !!layout && layoutKey(layout) !== layoutKey({objects: state.baseline || []});
+        return !!layout && layoutKey(layout) !== layoutKey({
+            objects: state.baseline || [], modelOffset: state.baselineModelOffset,
+        });
+    }
+
+    function sameCell(left, right) {
+        return left.every((value, axis) => value === right[axis]);
+    }
+
+    function anchorCell(model, anchors) {
+        return anchors.get(model.id) || model.baselineAnchorCell || origin;
+    }
+
+    function anchorChanged(model, anchors) {
+        return !sameCell(anchorCell(model, anchors), model.baselineAnchorCell || origin);
     }
 
     function modelChanged(model, projects, anchors) {
-        return anchors.has(model.id) || model.kind === 'import' || model.states.some(state =>
+        return anchorChanged(model, anchors) || model.kind === 'import' || model.states.some(state =>
             state.selector?.authoringPose || stateChanged(state, projects[model.id]?.[state.key]));
+    }
+
+    function changedLayouts(entries, projects) {
+        const result = {};
+        for (const entry of entries) {
+            const layouts = projects[entry.id];
+            if (!layouts) continue;
+            for (const state of entry.states) {
+                if (stateChanged(state, layouts[state.key])) (result[entry.id] ||= {})[state.key] = layouts[state.key];
+            }
+        }
+        return result;
     }
 
     function writeState(state, layout, seatSize, forCodex) {
@@ -77,11 +103,11 @@ const DW_PROJECT = (() => {
                 const layout = projects[entry.id]?.[state.key];
                 if (stateChanged(state, layout)) states.push(writeState(state, layout, contract.seatSize, forCodex));
             }
-            const anchorCell = anchors.get(entry.id);
-            if (states.length || anchorCell) models.push({
+            const changedAnchor = anchorChanged(entry, anchors) ? anchorCell(entry, anchors) : undefined;
+            if (states.length || changedAnchor) models.push({
                 registryId: entry.id, displayName: entry.name, source: entry.source,
                 aliases: entry.aliases || [], kind: entry.kind, states,
-                ...(anchorCell ? {anchorCell} : {}),
+                ...(changedAnchor ? {anchorCell: changedAnchor} : {}),
             });
         }
         const customAssets = custom.filter(include);
@@ -278,12 +304,12 @@ const DW_PROJECT = (() => {
             if (!entry) throw Error('Неизвестная модель ' + model.registryId);
             if (Object.hasOwn(model, 'anchorCell')) {
                 const cell = model.anchorCell;
-                const current = anchors.get(entry.id) || origin;
-                const same = cell.every((value, axis) => value === current[axis]);
+                const current = anchorCell(entry, anchors);
+                const baseline = entry.baselineAnchorCell || origin;
                 const target = {key: 'anchorCell', label: 'опорная клетка'};
-                if (!same && (!anchors.has(entry.id) || choose(entry, target, 'anchor'))) {
-                    if (cell.some(value => value !== 0)) nextAnchors.set(entry.id, cell);
-                    else nextAnchors.delete(entry.id);
+                if (!sameCell(cell, baseline) && !sameCell(cell, current)
+                        && (!anchorChanged(entry, anchors) || choose(entry, target, 'anchor'))) {
+                    nextAnchors.set(entry.id, cell);
                     loadedAnchors.push(entry.id);
                 }
             }
@@ -335,7 +361,7 @@ const DW_PROJECT = (() => {
         return member.async('string');
     }
 
-    return {stateChanged, modelChanged, embeddedAssets, exportProject, mergeProject, projectText,
+    return {stateChanged, modelChanged, changedLayouts, embeddedAssets, exportProject, mergeProject, projectText,
         migrateShutterLayouts, skipRetiredLayouts,
-        validAnchorCell, anchorLimit};
+        validAnchorCell, anchorCell, anchorLimit};
 })();

@@ -341,7 +341,7 @@ class Migration:
         self.static_changes[cell] = state_tag(f"bloodborne_dw:static_architecture_{index // 128}",
                                               {"part": str(index % 128), "waterlogged": wet})
 
-    def apply_dynamic(self, removals, additions):
+    def apply_dynamic(self, removals, additions, preserve_protected=False):
         old_roots = {old for old, _, _, _ in self.moved.values()}
         for cell in sorted(removals.keys() | additions.keys()):
             shard = self.shard(cell)
@@ -371,10 +371,14 @@ class Migration:
                         chunk.set_state(cell, state_tag(HELPER))
                     chunk.set_entity(cell, rewrite_be(cell, be, resident, payload, entries))
                 else:
-                    require(set(fields) <= {"id", "x", "y", "z", "resident", "payload", "owners", "OwnerDataV1"},
-                            f"Cannot erase protected carrier payload at {cell}")
-                    chunk.set_state(cell, state_tag("minecraft:air"))
-                    chunk.set_entity(cell, None)
+                    structural = {"id", "x", "y", "z", "resident", "payload", "owners", "OwnerDataV1", "keepPacked"}
+                    if set(fields) <= structural and not compound(payload):
+                        chunk.set_state(cell, state_tag("minecraft:air"))
+                        chunk.set_entity(cell, None)
+                    else:
+                        require(preserve_protected, f"Cannot erase protected carrier payload at {cell}")
+                        chunk.set_entity(cell, rewrite_be(cell, be, None, payload, entries))
+                        self.count["protected_carriers_preserved"] += 1
             elif block in AIR and entries and cell not in self.static_changes:
                 chunk.set_state(cell, state_tag(HELPER))
                 chunk.set_entity(cell, rewrite_be(cell, None, None, EMPTY, entries))

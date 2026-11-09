@@ -20,17 +20,25 @@ import net.minecraft.util.math.Vec3d;
 public final class StudioLayouts {
     public record Seat(Vec3d contact, Vec3d forward) {}
     public record Pose(Vec3d offset, List<Box> players, List<Box> blocks, List<Box> outline, List<Seat> seats) {}
-    public record Model(Vec3d anchor, Map<Integer, Pose> poses) {
+    public record Model(Vec3d anchor, Map<Integer, Pose> poses, Map<Boolean, Pose> dogVisibility) {
         public Pose pose(int variant, boolean open) {
             Pose exact = poses.get(variant * 2 + (open ? 1 : 0));
             return exact != null ? exact : poses.get(-1);
+        }
+
+        public Pose pose(RpObjectEntity object) {
+            if (object.supportsDogVisibility() && !dogVisibility.isEmpty()) {
+                Pose exact = dogVisibility.get(object.dogsVisible());
+                if (exact != null) return exact;
+            }
+            return pose(0, object.isOpen());
         }
     }
 
     private static final Map<String, Model> MODELS = load();
     private static final Map<CompositeSpec, Model> COMPOSITES = new java.util.concurrent.ConcurrentHashMap<>();
     private static final Map<List<CompositeSpec.Part>, Map<Vec3d, List<CompositeSpec.Part>>> ART = new IdentityHashMap<>();
-    private static final Model UNEDITED = new Model(Vec3d.ZERO, Map.of());
+    private static final Model UNEDITED = new Model(Vec3d.ZERO, Map.of(), Map.of());
 
     private StudioLayouts() {}
 
@@ -51,7 +59,7 @@ public final class StudioLayouts {
 
     public static Pose pose(RpObjectEntity object) {
         Model model = model(object);
-        return model == null ? null : model.pose(0, object.isOpen());
+        return model == null ? null : model.pose(object);
     }
 
     public static List<CompositeSpec.Part> art(List<CompositeSpec.Part> original, Model model, Pose pose, boolean placedStatic) {
@@ -84,18 +92,26 @@ public final class StudioLayouts {
             Map<String, Model> models = new HashMap<>();
             for (var item : data.getAsJsonArray("models")) {
                 var model = item.getAsJsonObject();
+                String registry = model.get("registryId").getAsString();
                 var anchor = model.has("anchorCell") ? vector(model.getAsJsonArray("anchorCell"), 1) : Vec3d.ZERO;
                 Map<Integer, Pose> poses = new HashMap<>();
+                Map<Boolean, Pose> dogVisibility = new HashMap<>();
                 for (var element : model.getAsJsonArray("states")) {
                     var state = element.getAsJsonObject();
                     var selector = state.getAsJsonObject("selector");
+                    if (selector.has("DogsVisible")) {
+                        if (!registry.startsWith("bloodborne_rp:") || selector.size() != 1
+                                || dogVisibility.putIfAbsent(selector.get("DogsVisible").getAsBoolean(), readPose(state)) != null)
+                            throw new IOException("Invalid Studio dog visibility pose for " + registry + " " + selector);
+                        continue;
+                    }
                     int key = selector.has("variant") ? 2 * selector.get("variant").getAsInt() : 0;
                     var open = selector.has("open") ? selector.get("open") : selector.get("Open");
                     key = open == null ? -1 : key + (open.getAsBoolean() ? 1 : 0);
                     if (poses.putIfAbsent(key, readPose(state)) != null)
                         throw new IOException("Repeated Studio pose for " + model.get("registryId") + " " + selector);
                 }
-                if (models.putIfAbsent(model.get("registryId").getAsString(), new Model(anchor, Map.copyOf(poses))) != null)
+                if (models.putIfAbsent(registry, new Model(anchor, Map.copyOf(poses), Map.copyOf(dogVisibility))) != null)
                     throw new IOException("Repeated Studio model");
             }
             return Map.copyOf(models);

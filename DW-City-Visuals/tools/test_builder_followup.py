@@ -11,12 +11,16 @@ from repair_builder_followup import (COMPOSITES, DARKEN, REGISTRIES, RETIRED_SHU
                                      Source, resolve_texture, uv_rect)
 
 
-def opaque(source, model, element, directions, profile):
+def opaque(source, model, element, directions, profile, full_texture=True):
     for direction in directions:
         face = element["faces"][direction]
         texture = source.image(resolve_texture(model, face["texture"]), profile)
-        assert face["uv"] == [0, 0, 16, 16]
+        if full_texture:
+            assert face["uv"] == [0, 0, 16, 16]
         assert texture.getchannel("A").getextrema() == (255, 255), direction
+        if not full_texture:
+            side = texture.crop(uv_rect(face, texture.size))
+            assert any(len(set(side.crop((0, y, side.width, y + 1)).getdata())) > 1 for y in range(side.height))
 
 
 def geometry(model):
@@ -131,7 +135,7 @@ def check(jar, resources):
                             count = 2 if new_part["model"].endswith("/door_90986_frame") else 1
                             for index in range(count):
                                 assert old["elements"][index]["faces"]["north"] == new["elements"][index]["faces"]["north"]
-                                opaque(after, new, new["elements"][index], directions, profile)
+                                opaque(after, new, new["elements"][index], directions, profile, number == "90001")
                         elif number == "93066":
                             kept = [element for index, element in enumerate(old["elements"])
                                     if index != 5 and index < 7]

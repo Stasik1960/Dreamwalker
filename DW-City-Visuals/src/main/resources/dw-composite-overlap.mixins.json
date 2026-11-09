@@ -3,6 +3,7 @@
   "package": "dev.dreamwalker.bloodbornedw.composite.overlaymixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": ["NoCollideDepthAccessor", "CompositeDoorOverlapMixin", "WindowSurroundRetirementMixin", "WindowSurroundShapeMixin",
-    "RetiredShutterRegistrationMixin", "RetiredSurroundCollisionMixin"],
+    "RetiredShutterRegistrationMixin", "RetiredSurroundCollisionMixin",
+    "ForcedCompositePlacementMixin", "ForcedPlacementPhysicsMixin"],
   "injectors": { "defaultRequire": 1 }
 }

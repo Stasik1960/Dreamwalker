@@ -1,6 +1,8 @@
 package dev.dreamwalker.bloodbornedw.visual;
 
 import com.google.gson.*;
+import dev.dreamwalker.bloodbornedw.composite.CompositeArchitecture;
+import dev.dreamwalker.bloodbornedw.composite.ShutterGlassLayers;
 import dev.dreamwalker.qacommon.NativeReadiness;
 import dev.dreamwalker.bloodbornedw.visual.mixin.IntegratedVisualReloadAccessor;
 import net.fabricmc.api.ModInitializer;
@@ -12,7 +14,12 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.TitleScreen;
+import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.VertexConsumer;
+import net.minecraft.client.render.VertexConsumers;
 import net.minecraft.client.render.model.BakedModel;
+import net.minecraft.client.texture.Sprite;
+import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.ScreenshotRecorder;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.DoorBlock;
@@ -27,6 +34,8 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.Identifier;
 import net.minecraft.text.TranslatableTextContent;
 import java.nio.file.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /** Finite visual evidence recorder, excluded from the production mod. */
 public final class VisualRevisionQa implements ModInitializer, ClientModInitializer {
@@ -50,6 +59,7 @@ public final class VisualRevisionQa implements ModInitializer, ClientModInitiali
     private static final Path OUT=Path.of(System.getProperty("dw.visualqa.output"));
     private static final Gson JSON=new GsonBuilder().setPrettyPrinting().create();
     private static final boolean REQUESTED_MODELS = Boolean.getBoolean("dw.visualqa.requestedModels");
+    private static final boolean VERIFY_SHUTTER = Boolean.getBoolean("dw.visualqa.shutter");
     private static final double[][] VIEWS = loadViews();
     private final JsonArray rows=new JsonArray();
     private int index,polls;
@@ -104,7 +114,7 @@ public final class VisualRevisionQa implements ModInitializer, ClientModInitiali
         });
     }
     @Override public void onInitializeClient(){
-        if (REQUESTED_MODELS) ClientLifecycleEvents.CLIENT_STARTED.register(c -> clientReadyAt = System.nanoTime());
+        if (REQUESTED_MODELS || VERIFY_SHUTTER) ClientLifecycleEvents.CLIENT_STARTED.register(c -> clientReadyAt = System.nanoTime());
         WorldRenderEvents.END.register(context->{
             MinecraftClient c=MinecraftClient.getInstance();
             if(started&&!finished&&atTarget(c)) {
@@ -119,7 +129,7 @@ public final class VisualRevisionQa implements ModInitializer, ClientModInitiali
         ClientTickEvents.END_CLIENT_TICK.register(this::tick);
     }
     private void tick(MinecraftClient c){
-        if (REQUESTED_MODELS && !openRequested && clientReadyAt != 0
+        if ((REQUESTED_MODELS || VERIFY_SHUTTER) && !openRequested && clientReadyAt != 0
                 && System.nanoTime() - clientReadyAt > 3_000_000_000L && c.getOverlay() == null && c.world == null) {
             if (!Boolean.getBoolean("dw.visualqa.disposable"))
                 throw new IllegalStateException("Model route requires a disposable test world");
@@ -198,6 +208,7 @@ public final class VisualRevisionQa implements ModInitializer, ClientModInitiali
     private void begin(MinecraftClient c)throws Exception{
         if(index==0){
             if (REQUESTED_MODELS) verifyRequestedModels(c);
+            if (VERIFY_SHUTTER) verifyShutterLayers(c);
             int[][] negatives={{161,88,-1022},{184,57,-943},{182,64,-943},{200,64,-944},{183,71,-943}};
             for(int[] q:negatives){BlockPos b=new BlockPos(q[0],q[1],q[2]);
                 if(FacadeMaterials.role(b)==4||ShutterSubstrate.role(c.world,b)==4)throw new IllegalStateException("Red leaked outside house at "+b);
@@ -216,6 +227,32 @@ public final class VisualRevisionQa implements ModInitializer, ClientModInitiali
                 p.teleport(p.getServerWorld(),v[0],v[1],v[2],(float)v[3],(float)v[4]);p.setVelocity(0,0,0);teleported=true;
             }catch(Throwable error){serverError=error;}
         });
+    }
+
+    private static void verifyShutterLayers(MinecraftClient client) throws java.io.IOException {
+        var atlas = client.getSpriteAtlas(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE);
+        var pane = atlas.apply(new Identifier("bloodborne_dw", "block/builder_followup/93241/base/shutter_glass_glass"));
+        var frame = atlas.apply(new Identifier("bloodborne_dw", "block/builder_followup/93241/base/shutter_0_frame"));
+        if (pane.getContents().getId().getPath().equals("missingno") || frame.getContents().getId().getPath().equals("missingno"))
+            throw new IllegalStateException("Missing shutter sprite in the loaded block atlas");
+        List<RenderLayer> layers = new ArrayList<>();
+        var discard = VertexConsumers.union(new VertexConsumer[0]);
+        var consumer = ShutterGlassLayers.consumer(layer -> {
+            layers.add(layer);
+            return discard;
+        }, RenderLayer.getSolid(), CompositeArchitecture.kindBlock("source_shutter_window"));
+        sample(consumer, frame);
+        sample(consumer, pane);
+        sample(consumer, frame);
+        if (!layers.equals(List.of(RenderLayer.getCutout(), RenderLayer.getTranslucent(), RenderLayer.getCutout())))
+            throw new IllegalStateException("Shutter glass did not switch to the translucent buffer");
+        Files.writeString(OUT.resolve("shutter-layers.json"), "{\"status\":\"PASS\",\"frame\":\"cutout\",\"glass\":\"translucent\"}");
+    }
+
+    private static void sample(VertexConsumer consumer, Sprite sprite) {
+        float u = (sprite.getMinU() + sprite.getMaxU()) / 2;
+        float v = (sprite.getMinV() + sprite.getMaxV()) / 2;
+        consumer.vertex(0, 0, 0, 1, 1, 1, 1, u, v, 0, 0, 0, 1, 0);
     }
 
     private double percentile(int fraction) {

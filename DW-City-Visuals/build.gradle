@@ -172,7 +172,8 @@ tasks.register('generateEditor2SlabFlags', Exec) {
 tasks.register('prepareRequestedModels', Exec) {
     dependsOn tasks.named('verifyBaseline'), tasks.named('generateRgbPhase1')
     inputs.file(baseline)
-    inputs.files('tools/repair_requested_models.py', 'tools/repair_builder_followup.py', 'tools/repair_facade_assets.py')
+    inputs.files('tools/repair_requested_models.py', 'tools/repair_builder_followup.py',
+        'tools/repair_city_screenshot_assets.py', 'tools/repair_facade_assets.py')
     inputs.files(fileTree('tools') { include 'studio-static-append.json' })
     inputs.dir('tools/builder-followup-inputs')
     inputs.files(fileTree('src/main/resources/dw_city_visuals'))

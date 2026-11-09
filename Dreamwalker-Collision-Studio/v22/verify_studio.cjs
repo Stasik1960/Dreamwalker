@@ -87,16 +87,18 @@ async function verifyModelControls(browser, url, directory, errors) {
         const offset = () => page.evaluate(() => window.DW_TEST.work().modelOffset);
         const layout = () => page.evaluate(() => window.DW_TEST.work().objects);
         const initial = await layout();
+        const baseOffset = await offset();
+        const lifted = [baseOffset[0], baseOffset[1] + 8, baseOffset[2]];
         await page.locator('#pickModel').click();
         assert.equal(await page.locator('#pickModel').getAttribute('aria-pressed'), 'true');
         assert.equal(await page.evaluate(() => window.DW_V22.moveModel.object === window.DW_TEST.modelRoot), true);
         await dragAxis(page, 'moveModel', 'Y', 8);
-        assert.deepEqual(await offset(), [0, 8, 0]);
+        assert.deepEqual(await offset(), lifted);
         assert.deepEqual(await layout(), initial);
         assert.deepEqual(await guides(), [[0, 16, 0]]);
         await dragAxis(page, 'moveModel', 'X', 4, true);
-        assert.deepEqual(await offset(), [0, 8, 0]);
-        assert.deepEqual(await page.evaluate(() => window.DW_TEST.modelRoot.position.toArray()), [0, 8, 0]);
+        assert.deepEqual(await offset(), lifted);
+        assert.deepEqual(await page.evaluate(() => window.DW_TEST.modelRoot.position.toArray()), lifted);
         await page.keyboard.press('Delete');
         assert.equal(await volumePresent(), true);
         assert.deepEqual(await guides(), [[0, 16, 0]]);
@@ -115,9 +117,9 @@ async function verifyModelControls(browser, url, directory, errors) {
         await page.keyboard.press('Control+z');
         assert.deepEqual(await guides(), [[0, 16, 0]]);
         await page.locator('canvas').dispatchEvent('keydown', {key: 'я', code: 'KeyZ', ctrlKey: true, bubbles: true});
-        assert.deepEqual(await offset(), [0, 0, 0]);
+        assert.deepEqual(await offset(), baseOffset);
         await page.keyboard.press('Control+y');
-        assert.deepEqual(await offset(), [0, 8, 0]);
+        assert.deepEqual(await offset(), lifted);
         await page.keyboard.press('Control+y');
         assert.deepEqual(await guides(), []);
 
@@ -133,16 +135,16 @@ async function verifyModelControls(browser, url, directory, errors) {
         const y = page.getByRole('spinbutton', {name: 'Смещение модели (1 блок = 16) Y'});
         await y.fill('9');
         await y.press('Control+z');
-        assert.deepEqual(await offset(), [0, 8, 0]);
+        assert.deepEqual(await offset(), lifted);
         await page.keyboard.press('Control+y');
-        assert.deepEqual(await offset(), [0, 9, 0]);
+        assert.deepEqual(await offset(), [baseOffset[0], 9, baseOffset[2]]);
         await page.evaluate(() => window.DW_TEST.selectEntry('bloodborne_dw:prototype_double_door'));
         await page.keyboard.press('Control+z');
         assert.equal(await page.evaluate(() => window.DW_TEST.entry.id), model);
-        assert.deepEqual(await offset(), [0, 8, 0]);
+        assert.deepEqual(await offset(), lifted);
         const project = await page.evaluate(() => window.DW_TEST.exportProject());
         assert.equal(project.models.length, 1);
-        assert.deepEqual(project.models[0].states[0].modelOffset, [0, 8, 0]);
+        assert.deepEqual(project.models[0].states[0].modelOffset, lifted);
     } finally {
         await page.close();
     }
@@ -172,24 +174,27 @@ async function verifyPlacementAnchors(browser, url, directory, errors) {
             art: window.DW_TEST.modelRoot.position.toArray(),
         }));
         const before = await layout();
-        assert.deepEqual(await cell(page), [0, 0, 0]);
-        assert.deepEqual(await marker(), [8, 8, 8]);
+        const baseCell = await cell(page);
+        const shiftedX = [baseCell[0] + 1, baseCell[1], baseCell[2]];
+        const moved = [baseCell[0] + 1, baseCell[1] - 1, baseCell[2]];
+        const markerFor = cell => cell.map(value => 8 + 16 * value);
+        assert.deepEqual(await marker(), markerFor(baseCell));
         await dragAxis(page, 'moveAnchor', 'X', 16);
         await dragAxis(page, 'moveAnchor', 'Y', -16);
-        assert.deepEqual(await cell(page), [1, -1, 0]);
-        assert.deepEqual(await marker(), [24, -8, 8]);
+        assert.deepEqual(await cell(page), moved);
+        assert.deepEqual(await marker(), markerFor(moved));
         assert.deepEqual(await layout(), before);
         await page.keyboard.press('Control+z');
-        assert.deepEqual(await cell(page), [1, 0, 0]);
+        assert.deepEqual(await cell(page), shiftedX);
         await page.keyboard.press('Control+y');
-        assert.deepEqual(await cell(page), [1, -1, 0]);
+        assert.deepEqual(await cell(page), moved);
         await page.locator('#state').selectOption('variant=0,open=true');
-        assert.deepEqual(await cell(page), [1, -1, 0]);
-        assert.deepEqual(await marker(), [24, -8, 8]);
+        assert.deepEqual(await cell(page), moved);
+        assert.deepEqual(await marker(), markerFor(moved));
         const draft = await page.evaluate(() => window.DW_TEST.exportProject());
         assert.equal(draft.models.length, 1);
         assert.equal(draft.models[0].registryId, model);
-        assert.deepEqual(draft.models[0].anchorCell, [1, -1, 0]);
+        assert.deepEqual(draft.models[0].anchorCell, moved);
         assert.deepEqual(draft.models[0].states, []);
         await page.locator('#excludeModel').check();
         assert.equal(await page.evaluate(() => window.DW_TEST.exportProject(true).models.length), 0);
@@ -201,7 +206,7 @@ async function verifyPlacementAnchors(browser, url, directory, errors) {
 
         await page.reload();
         await page.waitForFunction(() => window.DW_V22);
-        assert.deepEqual(await cell(page), [1, -1, 0]);
+        assert.deepEqual(await cell(page), moved);
         await page.evaluate(() => {
             const studio = window.DW_TEST;
             studio.selectEntry(studio.listEntries().find(entry => entry.kind === 'rp').id);
@@ -230,7 +235,7 @@ async function verifyPlacementAnchors(browser, url, directory, errors) {
         await conflict.getByRole('combobox').selectOption('replace');
         await conflict.getByRole('button', {name: 'Применить выбранное'}).click();
         await peer.waitForFunction(() => !document.getElementById('importProject').disabled);
-        assert.deepEqual(await cell(peer), [1, -1, 0]);
+        assert.deepEqual(await cell(peer), moved);
     } finally {
         await page.close();
         await peer.close();
@@ -239,6 +244,8 @@ async function verifyPlacementAnchors(browser, url, directory, errors) {
 
 async function verifyEditing(page, directory) {
     const controls = page.locator('#volumeSettings');
+    const modelPosition = () => page.evaluate(() => window.DW_TEST.modelRoot.position.toArray());
+    const originalPosition = await modelPosition();
     assert.equal(await controls.getAttribute('open'), null);
     assert.equal(await page.locator('#objects').evaluate(el => getComputedStyle(el).overflow), 'visible');
     await page.locator('#addBox').click();
@@ -288,7 +295,7 @@ async function verifyEditing(page, directory) {
     await page.evaluate(() => window.DW_TEST.fitSelection([-8, 8, 8], [22, 24, 32]));
     await page.locator('#fitGrid').click();
     assert.deepEqual(await geometry(), {position: [-8, 8, 8], size: [16, 16, 32]});
-    assert.deepEqual(await page.evaluate(() => window.DW_TEST.modelRoot.position.toArray()), [0, 0, 0]);
+    assert.deepEqual(await modelPosition(), originalPosition);
     const gridCases = await page.evaluate(() => {
         const zero = [0, 0, 0];
         const fit = (position, size, rotation = zero, origin = zero) => DW_RESIZE.fitToGrid({position, size, rotation}, origin);
@@ -312,7 +319,7 @@ async function verifyEditing(page, directory) {
         {position: [8, 8, 8], size: [22, 16, 22]},
     ]);
     await page.locator('#delete').click();
-    assert.equal(await page.locator('.modelItem.selected .model-star').count(), 0);
+    assert.equal(await page.locator('.modelItem.selected .model-star.changed').count(), 0);
     await controls.locator('summary').click();
     assert.equal(await controls.getAttribute('open'), null);
 }
@@ -322,10 +329,11 @@ async function verifyWindowTrim(page) {
         const editor = window.DW_TEST;
         const previous = [editor.entry.id, editor.state.key];
         editor.selectEntry('bloodborne_dw:prototype_wood_window', 'variant=0,open=true');
+        editor.add('box', 'players');
+        editor.fitSelection([43.548, 8, -0.0213448741], [7.097, 16, 4.787]);
         return previous;
     });
     const settings = page.locator('#volumeSettings summary');
-    await page.getByRole('button', {name: '□ Игроки 5', exact: true}).click();
     await settings.click();
     const box = () => page.evaluate(() => {
         const {position, size} = window.DW_TEST.selected;
@@ -355,6 +363,7 @@ async function verifyWindowTrim(page) {
     assert.deepEqual(await box(), centered);
     await page.keyboard.press('Control+z');
     assert.deepEqual(await box(), before);
+    await page.locator('#delete').click();
     await settings.click();
     await page.evaluate(([id, key]) => window.DW_TEST.selectEntry(id, key), previous);
 }
@@ -396,7 +405,7 @@ async function verifyMerge(browser, url, errors) {
         await edit(a, door, 1, 4);
         await edit(a, skipped, 0, 1);
         await edit(a, skipped, 1, 2);
-        assert.equal(await star(a, skipped).getAttribute('class'), 'model-star');
+        assert.equal(await star(a, skipped).getAttribute('class'), 'model-star changed');
         await a.locator('#excludeModel').check();
         assert.equal(await star(a, skipped).getAttribute('class'), 'model-star excluded');
         await createModel(a, customSent);
@@ -517,6 +526,7 @@ async function verifyCoordinateRoundTrip(browser, url, directory, errors) {
         await source.waitForFunction(() => window.DW_V22);
         await modelButton(source).click();
         assert.equal(await source.locator('#state').inputValue(), defaultKey);
+        const defaultOffset = (await sceneState(source)).modelOffset;
         await source.locator('#state').selectOption(editedKey);
         await source.locator('#volumeSettings summary').click();
         for (const edit of edits) {
@@ -596,7 +606,7 @@ async function verifyCoordinateRoundTrip(browser, url, directory, errors) {
                 assert.deepEqual(await reader.evaluate(() => window.DW_V22.moveAnchor.object
                     .getWorldPosition(new THREE.Vector3()).toArray()), [-24, 24, 56]);
                 await reader.locator('#state').selectOption(defaultKey);
-                assert.deepEqual((await sceneState(reader)).modelOffset, [0, 0, 0]);
+                assert.deepEqual((await sceneState(reader)).modelOffset, defaultOffset);
                 await modelButton(reader).click();
                 assert.deepEqual(await sceneState(reader), authored);
             } finally {
@@ -732,10 +742,9 @@ async function verify(directory, executablePath) {
             let states = 0;
             for (const model of studio.listEntries()) {
                 for (const state of model.states) {
-                    studio.selectEntry(model.id, state.key);
                     states++;
-                    if (!studio.modelRoot.children.length || !Array.isArray(studio.work().objects)
-                            || state.selector?.profile || state.parts.some(part => part.model.startsWith('v22:alt:'))) {
+                    if (state.selector?.profile || state.parts.some(part =>
+                        !DW_DATA.models[part.model] || part.model.startsWith('v22:alt:'))) {
                         failed.push(model.id + ' ' + state.key);
                     }
                 }
@@ -748,6 +757,8 @@ async function verify(directory, executablePath) {
         assert.deepEqual(results.failed, []);
         assert.equal(results.untouched, 0);
         assert.equal(results.has90841, true);
+        const applied = await page.evaluate(() => DW_DATA.entries.filter(model => model.previouslyEdited).length);
+        assert.equal(await page.locator('.model-star.applied').count(), applied);
         const woodWindow = await page.evaluate(() => {
             const editor = window.DW_TEST;
             const wood = editor.listEntries().find(model => model.number === '90007');
@@ -795,14 +806,15 @@ async function verify(directory, executablePath) {
             const twoPoses = ['93152', '93153', '93241'].map(number => visibleEntries.find(model => model.number === number)
                 .states.map(state => state.key));
             const rp = visibleEntries.filter(model => model.kind === 'rp');
-            const prop = rp.find(model => model.id.endsWith(':babycart')).states[0].baseline;
-            const gate = rp.find(model => model.id.endsWith(':main_gate')).states;
+            const prop = rp.find(model => model.id.endsWith(':furniture_3')).states[0].baseline;
+            const gate = rp.find(model => model.id.endsWith(':small_gate')).states;
             const entityPhysics = {
-                prop: prop.map(box => box.mode),
+                prop: [...new Set(prop.map(box => box.mode))],
                 gateClosed: gate[0].baseline.find(box => box.mode === 'players').size,
                 gateOpenPlayers: gate[1].baseline.filter(box => box.mode === 'players').length,
                 gateOpenOutline: gate[1].baseline.filter(box => box.mode === 'outline').length,
-                noPlacement: rp.every(model => model.states.every(state => state.baseline.every(box => box.mode !== 'blocks'))),
+                noPlacement: rp.every(model => model.states.filter(state => !state.baselineModelOffset)
+                    .every(state => state.baseline.every(box => box.mode !== 'blocks'))),
             };
             studio.selectEntry('bloodborne_dw:source_shutter_window');
             return {stainedGlass, assemblies, whole, windows, twoPoses, entityPhysics};
@@ -815,7 +827,7 @@ async function verify(directory, executablePath) {
         assert.deepEqual(previews.windows, []);
         for (const poses of previews.twoPoses) assert.deepEqual(poses, ['variant=0,open=false', 'variant=0,open=true']);
         assert.deepEqual(previews.entityPhysics.prop, ['players', 'outline']);
-        assert.deepEqual(previews.entityPhysics.gateClosed, [76, 200, 76]);
+        assert.deepEqual(previews.entityPhysics.gateClosed, [40, 96, 40]);
         assert.equal(previews.entityPhysics.gateOpenPlayers, 0);
         assert.ok(previews.entityPhysics.gateOpenOutline > 1 && previews.entityPhysics.noPlacement);
         assert.equal(await page.evaluate(() => window.DW_V22.references.children.length), 0);
@@ -875,6 +887,7 @@ async function verify(directory, executablePath) {
         assert.equal(await page.locator('#scale').isDisabled(), true);
         await page.getByText('Смещение модели', {exact: true}).click();
         const modelY = page.getByRole('spinbutton', {name: 'Смещение модели (1 блок = 16) Y', exact: true});
+        const modelOffset = await page.evaluate(() => DW_TEST.work().modelOffset);
         await modelY.fill('8');
         await modelY.press('Tab');
         assert.deepEqual(await worldPositions(), [[24, 24, -8]]);
@@ -884,7 +897,7 @@ async function verify(directory, executablePath) {
         assert.equal(exported.models.length, 1);
         const state = exported.models[0].states[0];
         assert.equal(state.selector.profile, undefined);
-        assert.deepEqual(state.modelOffset, [0, 8, 0]);
+        assert.deepEqual(state.modelOffset, [modelOffset[0], 8, modelOffset[2]]);
         assert.ok(state.colliders.some(box => box.mode === 'outline'));
         assert.ok(state.colliders.some(box => box.mode === 'players'));
         assert.ok(state.colliders.some(box => box.mode === 'blocks'));

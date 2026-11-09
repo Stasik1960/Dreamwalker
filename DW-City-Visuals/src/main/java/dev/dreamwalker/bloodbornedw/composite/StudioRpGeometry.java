@@ -67,7 +67,7 @@ public final class StudioRpGeometry {
     public static Vec3d renderOffset(RpObjectEntity object, float yaw, float pitch) {
         var model = StudioLayouts.model(object);
         if (model == null) return Vec3d.ZERO;
-        var pose = model.pose(0, object.isOpen());
+        var pose = model.pose(object);
         var delta = (pose == null ? Vec3d.ZERO : pose.offset()).subtract(model.anchor());
         if (delta.equals(Vec3d.ZERO)) return delta;
         return direction(orientation(yaw, pitch, object.asset().scale() * object.objectScale()), delta);

@@ -480,18 +480,23 @@
     }
 
     function upgradeProject(project) {
-        const source = window.DW_DATA.source;
+        const {source, previousProjectSource} = window.DW_DATA;
         if (project.schemaVersion !== 4) return project;
         const previousVisualPatches = [
             '6ead4394329586250dfd16cc0778e79ba1b094aab8aaf25defd8a7937b4a40b6',
             '502b18d246f1a1f4ab7b193ec4272c7c913fa64ab3688c135016cc6815d764c5',
             'd5c592dcb429c8dde72ef838548ea7a08942bca9eb8b9924e1a12b943df7e0b1',
         ];
-        if (previousVisualPatches.some(hash => project.source?.commit === `v22:${source.jarSha256}:shared-profiles:${hash}`)) {
+        const supportedJars = [source.jarSha256, previousProjectSource?.jarSha256].filter(Boolean);
+        const commit = project.source?.commit;
+        if (commit && (commit === previousProjectSource?.commit || supportedJars.some(jar => {
+            const shared = `v22:${jar}:shared-profiles`;
+            return commit === shared || previousVisualPatches.some(hash => commit === `${shared}:${hash}`);
+        }))) {
             project.source = source;
             return project;
         }
-        if (project.source?.commit !== 'v22:' + source.jarSha256) return project;
+        if (!supportedJars.some(jar => commit === 'v22:' + jar)) return project;
         for (const model of project.models) {
             const entry = window.DW_DATA.entries.find(candidate => candidate.id === model.registryId);
             const retiredShutter = Object.hasOwn(window.DW_DATA.shutterLayoutMigration.sources, model.registryId);
@@ -527,7 +532,7 @@
     }
 
     const help = document.createElement('p');
-    help.textContent = 'Фиолетовый объём останавливает игрока, синий резервирует место для блоков, красный задаёт обводку, жёлтая стрелка показывает направление сидения. В режиме размера каждая стрелка двигает одну грань. Подгонка к сетке срезает выступы меньше половины клетки и сохраняет ненулевой размер. Красная звёздочка отмечает правки, жёлтая — модели, исключённые из пакета для Codex.';
+    help.textContent = 'Фиолетовый объём останавливает игрока, синий резервирует место для блоков, красный задаёт обводку, жёлтая стрелка показывает направление сидения. В режиме размера каждая стрелка двигает одну грань. Подгонка к сетке срезает выступы меньше половины клетки и сохраняет ненулевой размер. Синяя звёздочка отмечает уже применённую разметку, красная — новые правки, жёлтая — исключение из пакета для Codex.';
     document.getElementById('helpDialog').append(help);
     window.DW_V22 = {
         refresh, refreshVolumes, refreshModelOffset, refreshModelControl, refreshAnchor, cancelTranslation,

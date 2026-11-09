@@ -17,6 +17,17 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(BlockItem.class)
 public abstract class StudioOrdinaryPlacementMixin {
+    @Inject(method = "canPlace", at = @At("HEAD"), cancellable = true)
+    private void dw$allowForcedNativePlacement(ItemPlacementContext context, BlockState state,
+            CallbackInfoReturnable<Boolean> result) {
+        if (!NoCollidePlacement.ignoringBlocks()) return;
+        var world = context.getWorld();
+        var pos = context.getBlockPos();
+        var player = context.getPlayer();
+        result.setReturnValue(player != null && player.getAbilities().allowModifyWorld && world.isInBuildLimit(pos)
+                && world.getWorldBorder().contains(pos) && world.isChunkLoaded(pos) && world.canPlayerModifyAt(player, pos));
+    }
+
     @Inject(method = "canPlace", at = @At("RETURN"), cancellable = true)
     private void dw$checkReviewedReservation(ItemPlacementContext context, BlockState state,
             CallbackInfoReturnable<Boolean> result) {

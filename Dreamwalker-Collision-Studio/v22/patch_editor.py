@@ -131,6 +131,53 @@ function selectEntry(id, key) {
     loadState(true);
 }
 """.lstrip())
+    app = replace_section(app, "function renderLibrary(){", "function hasLayoutEdits(", """
+const libraryButtons = new Map();
+let visibleLibraryIds = [];
+function renderLibrary() {
+    const query = $('search').value.toLowerCase();
+    const root = $('modelList');
+    const matches = listEntries().filter(model =>
+        [model.name, model.id, model.number || ''].join(' ').toLowerCase().includes(query));
+    const buttons = matches.map(model => {
+        let button = libraryButtons.get(model.id);
+        if (!button) {
+            button = document.createElement('button');
+            button.className = 'modelItem';
+            button.dataset.modelId = model.id;
+            button.append(document.createTextNode(''), document.createElement('span'), document.createElement('small'));
+            button.onclick = () => selectEntry(model.id);
+            libraryButtons.set(model.id, button);
+        }
+        button.classList.toggle('selected', entry?.id === model.id);
+        if (button.firstChild.data !== model.name) button.firstChild.data = model.name;
+        const star = button.children[0];
+        const excluded = excludedModels.has(model.id);
+        const changed = DW_PROJECT.modelChanged(model, projects, anchors);
+        const status = excluded ? 'excluded' : changed ? 'changed' : model.previouslyEdited ? 'applied' : '';
+        if (status && star.dataset.status !== status) {
+            star.className = 'model-star ' + status;
+            star.title = {excluded: 'Не применять изменения этой модели', changed: 'Есть новые правки',
+                applied: 'Разметка применена в предыдущей сборке'}[status];
+            star.textContent = ' ★';
+        } else if (!status && star.dataset.status) {
+            star.className = '';
+            star.title = '';
+            star.textContent = '';
+        }
+        star.dataset.status = status;
+        const label = (model.number ? model.number + ' · ' : '') + model.id;
+        if (button.lastChild.textContent !== label) button.lastChild.textContent = label;
+        return button;
+    });
+    if (buttons.length !== visibleLibraryIds.length
+            || buttons.some((button, index) => button.dataset.modelId !== visibleLibraryIds[index])) {
+        root.replaceChildren(...buttons);
+        visibleLibraryIds = buttons.map(button => button.dataset.modelId);
+    }
+    $('count').textContent = buttons.length;
+}
+""".lstrip())
     app = replace_section(app, "function updateStats(){", "for(const key of ['position','size','rotation'])", """
 function updateStats() {
     let states = 0;
@@ -186,11 +233,13 @@ $('copyConfirm').onclick = () => {
     if (!variant || (destination.id === entry.id && variant.key === state.key)) return;
     const sameModel = destination.id === entry.id;
     const previous = projects[destination.id]?.[variant.key];
-    const replaced = sameModel ? previous : previous && {objects: previous.objects};
+    const replaced = sameModel ? previous : previous && {
+        objects: previous.objects, modelOffset: variant.baselineModelOffset,
+    };
     if (DW_PROJECT.stateChanged(variant, replaced) && !confirm('Заменить правки разметки выбранного варианта?')) return;
     const copied = clone(work());
     if (!sameModel) {
-        copied.modelOffset = [...(previous?.modelOffset || [0, 0, 0])];
+        copied.modelOffset = [...(previous?.modelOffset || variant.baselineModelOffset || [0, 0, 0])];
         copied.reviewed = false;
     }
     rememberLayout(previous ? clone(previous) : undefined, destination.id, variant.key);
@@ -284,7 +333,7 @@ window.addEventListener('keydown', event => {
         "let projects={},custom=[],entry,state,":
             "let projects={},custom=[],excludedModels=new Set(),anchors=new Map(),entry,state,",
         "{objects:[],reviewed:false,edited:false}":
-            "{objects:clone(state.baseline||[]),modelOffset:[0,0,0],reviewed:false,edited:false}",
+            "{objects:clone(state.baseline||[]),modelOffset:clone(state.baselineModelOffset||[0,0,0]),reviewed:false,edited:false}",
         "selected=null;history=[];future=[];playing=false;":
             "window.DW_V22?.cancelTranslation();selected=null;playing=false;",
         "else if(dragStart){history.push(dragStart);future=[];dragStart=null;changed();}":
@@ -368,17 +417,6 @@ window.addEventListener('keydown', event => {
     }, JSON.stringify([id, null]));
     apply(value);
 };""",
-        "b.textContent=e.name;const s=document.createElement('small');":
-            """b.dataset.modelId=e.id;b.textContent=e.name;
-    const excluded=excludedModels.has(e.id);
-    if(excluded||DW_PROJECT.modelChanged(e,projects,anchors)){
-        const star=document.createElement('span');
-        star.className='model-star'+(excluded?' excluded':'');
-        star.title=excluded?'Не применять изменения этой модели':'Модель отличается от исходной';
-        star.textContent=' ★';
-        b.append(star);
-    }
-    const s=document.createElement('small');""",
         "$(m).classList.toggle('active',m===mode);}":
             "$(m).classList.toggle('active',m===mode);if(selected)attach();}",
         "function setMode(mode){if(mode==='scale'":
@@ -403,7 +441,7 @@ window.addEventListener('keydown', event => {
         "projects=saved.projects||{};restoreCustom":
             "projects=saved.projects||{};excludedModels=new Set(saved.excludedModels||[]);anchors=new Map(saved.anchorCells||[]);restoreCustom",
         "const p=exportProject();localStorage.setItem(STORAGE,JSON.stringify({projects,custom,assets:p.importedGeometry,":
-            "localStorage.setItem(STORAGE,JSON.stringify({projects,custom,excludedModels:[...excludedModels],"
+            "localStorage.setItem(STORAGE,JSON.stringify({projects:DW_PROJECT.changedLayouts(listEntries(),projects),custom,excludedModels:[...excludedModels],"
             "anchorCells:[...anchors],assets:DW_PROJECT.embeddedAssets(custom),",
         "renderer.domElement.addEventListener('pointerdown',e=>":
             """function eventPointer(event) {
@@ -414,15 +452,16 @@ renderer.domElement.addEventListener('pointerdown',e=>""",
         "window.DW_TEST={exportProject":
             """syncHistoryButtons();
 window.DW_TEST={
-    anchorCell(){return anchors.get(entry.id) || [0, 0, 0];},
+    anchorCell(){return DW_PROJECT.anchorCell(entry, anchors);},
     setAnchorCell(value){
         if (!DW_PROJECT.validAnchorCell(value)) return;
         const id = entry.id;
-        const zero = [0, 0, 0];
-        let saved = anchors.get(id) || zero;
+        const model = entry;
+        const baseline = model.baselineAnchorCell || [0, 0, 0];
+        let saved = DW_PROJECT.anchorCell(model, anchors);
         if (value.every((cell, axis) => cell === saved[axis])) return;
         const apply = cell => {
-            if (cell.some(value => value !== 0)) anchors.set(id, [...cell]);
+            if (cell.some((value, axis) => value !== baseline[axis])) anchors.set(id, [...cell]);
             else anchors.delete(id);
             if (entry.id !== id) selectEntry(id);
             else {
@@ -432,7 +471,7 @@ window.DW_TEST={
             saveLocal();
         };
         recordEdit(() => {
-            const current = anchors.get(id) || zero;
+            const current = DW_PROJECT.anchorCell(model, anchors);
             apply(saved);
             saved = current;
         }, JSON.stringify([id, null, 'anchorCell']));

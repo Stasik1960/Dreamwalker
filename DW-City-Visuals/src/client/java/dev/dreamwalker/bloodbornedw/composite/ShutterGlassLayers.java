@@ -10,24 +10,38 @@ import net.minecraft.util.Identifier;
 
 /** Keep shutter frames cutout and only their glass blended in cached owner/item rendering. */
 public final class ShutterGlassLayers {
-    private static final Identifier GLASS = new Identifier("bloodborne_dw", "block/interactions/shutter_glass");
+    private static final Identifier GLASS = new Identifier("bloodborne_dw", "block/builder_followup/93241/base/shutter_glass_glass");
     private static Sprite sprite;
     private ShutterGlassLayers() {}
     public static void clear() { sprite = null; }
     public static VertexConsumer consumer(VertexConsumerProvider provider, RenderLayer fallback, CompositeRootBlock block) {
         if (!block.spec.id.getPath().equals("source_shutter_window")) return provider.getBuffer(fallback);
         if (sprite == null) sprite = MinecraftClient.getInstance().getSpriteAtlas(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE).apply(GLASS);
-        return new Routed(provider.getBuffer(RenderLayer.getCutout()), provider.getBuffer(RenderLayer.getTranslucent()), sprite);
+        return new Routed(provider, sprite);
     }
     private static final class Routed implements VertexConsumer {
-        private final VertexConsumer frame, glass;
+        private final VertexConsumerProvider provider;
         private final float minU, maxU, minV, maxV;
+        private VertexConsumer active;
+        private boolean glass;
         private double x,y,z; private float u,v,nx,ny,nz;
         private int r=255,g=255,b=255,a=255,overlay,light; private boolean fixed;
-        Routed(VertexConsumer frame, VertexConsumer glass, Sprite sprite) {
-            this.frame=frame;this.glass=glass;minU=sprite.getMinU();maxU=sprite.getMaxU();minV=sprite.getMinV();maxV=sprite.getMaxV();
+        Routed(VertexConsumerProvider provider, Sprite sprite) {
+            this.provider = provider;
+            minU = sprite.getMinU();
+            maxU = sprite.getMaxU();
+            minV = sprite.getMinV();
+            maxV = sprite.getMaxV();
         }
-        private VertexConsumer select(float U,float V) { return U>=minU&&U<=maxU&&V>=minV&&V<=maxV?glass:frame; }
+        private VertexConsumer select(float u, float v) {
+            boolean isGlass = u >= minU && u <= maxU && v >= minV && v <= maxV;
+            // An immediate provider may reuse one backing buffer across layers.
+            if (active == null || glass != isGlass) {
+                active = provider.getBuffer(isGlass ? RenderLayer.getTranslucent() : RenderLayer.getCutout());
+                glass = isGlass;
+            }
+            return active;
+        }
         @Override public void vertex(float X,float Y,float Z,float R,float G,float B,float A,float U,float V,int O,int L,float NX,float NY,float NZ) {
             select(U,V).vertex(X,Y,Z,R,G,B,A,U,V,O,L,NX,NY,NZ);
         }

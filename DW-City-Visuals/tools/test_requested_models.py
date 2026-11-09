@@ -44,7 +44,12 @@ def verify(base, generated, minecraft):
             face = element["faces"][direction]
             textures = read(MODELS + IMPORTED + name + ".json")["textures"]
             image_name = TEXTURES + textures[face["texture"][1:]].split(":")[1] + ".png"
-            image = Image.open(BytesIO(base.read(image_name))).convert("RGBA")
+            if name == "green_stained_glass":
+                assert image_name.endswith("/green_stained_glass_city_masonry_cap.png")
+                image = Image.open(BytesIO(generated(image_name))).convert("RGBA")
+                assert image.getchannel("A").getextrema() == (255, 255)
+            else:
+                image = Image.open(BytesIO(base.read(image_name))).convert("RGBA")
             crop = [round(value * axis / 16) for value, axis in zip(face["uv"], image.size * 2)]
             assert image.crop(crop).getchannel("A").getextrema()[1] > 0
 

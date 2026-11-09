@@ -282,8 +282,10 @@ def main():
         update_catalogue(base, args.resources)
         if args.profile_resources:
             from repair_builder_followup import generate
+            from repair_city_screenshot_assets import generate as repair_screenshots
 
             generate(base, args.resources, args.profile_resources, not args.omit_studio_map)
+            repair_screenshots(base, args.resources, args.profile_resources)
 
 
 if __name__ == "__main__":

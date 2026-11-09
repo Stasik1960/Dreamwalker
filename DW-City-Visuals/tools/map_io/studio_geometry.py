@@ -67,7 +67,7 @@ def intersects(polygon, x0, z0, x1, z1):
     return True
 
 
-def boxes_for(collider, anchor, yaw, offset):
+def boxes_for(collider, anchor, yaw, offset, grid=16):
     if any(collider["rotation"]):
         raise ValueError("This reviewed archive contains only axis-aligned authoring volumes")
     center = subtract(tuple(v / 16 for v in collider["center"]), anchor)
@@ -80,15 +80,16 @@ def boxes_for(collider, anchor, yaw, offset):
         return [(*add((x0, lo[1], z0), offset), *add((x1, hi[1], z1), offset))]
     polygon = [(x, z) for x, _, z in vertices]
     strips = []
-    for z in range(floor(z0 * 16), ceil(z1 * 16)):
+    for z in range(floor(z0 * grid), ceil(z1 * grid)):
         first = None
-        end = ceil(x1 * 16)
-        for x in range(floor(x0 * 16), end + 1):
-            occupied = x < end and intersects(polygon, x / 16, z / 16, (x + 1) / 16, (z + 1) / 16)
+        end = ceil(x1 * grid)
+        for x in range(floor(x0 * grid), end + 1):
+            occupied = x < end and intersects(polygon, x / grid, z / grid, (x + 1) / grid, (z + 1) / grid)
             if occupied and first is None:
                 first = x
             if not occupied and first is not None:
-                strips.append((*add((first / 16, lo[1], z / 16), offset), *add((x / 16, hi[1], (z + 1) / 16), offset)))
+                strips.append((*add((first / grid, lo[1], z / grid), offset),
+                               *add((x / grid, hi[1], (z + 1) / grid), offset)))
                 first = None
     return strips
 

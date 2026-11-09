@@ -49,10 +49,12 @@ abstract class CompositeDoorOverlapMixin {
             at = @At(value = "INVOKE", target = "Ldev/dreamwalker/bloodbornedw/composite/CompositeRuntime;transitionInternal(Lnet/minecraft/class_3218;Ldev/dreamwalker/bloodbornedw/runtime/ObjectInstance$Owner;Lnet/minecraft/class_2680;Lnet/minecraft/class_1657;)Ldev/dreamwalker/bloodbornedw/runtime/TransactionCore$Result;"))
     private static Result dw$openThroughBlocks(ServerWorld world, Owner owner, BlockState state, PlayerEntity actor) {
         BlockPos pos = CompositeData.pos(owner.root());
-        if (CompositeOverlapEdit.isDoor(state) && state.get(CompositeRootBlock.OPEN) && world.isChunkLoaded(pos)
+        boolean shutter = CompositeOverlapEdit.isShutter(state);
+        if ((shutter || CompositeOverlapEdit.isDoor(state) && state.get(CompositeRootBlock.OPEN)) && world.isChunkLoaded(pos)
                 && world.getBlockEntity(pos) instanceof CompositeBlockEntity root && owner.equals(root.resident())
-                && world.getBlockState(pos).isOf(state.getBlock()) && !world.getBlockState(pos).get(CompositeRootBlock.OPEN)
-                && root.payload().getBoolean(CompositeOverlapEdit.OPEN_WITH_OVERLAP)) {
+                && world.getBlockState(pos).isOf(state.getBlock())
+                && world.getBlockState(pos).get(CompositeRootBlock.OPEN) != state.get(CompositeRootBlock.OPEN)
+                && (shutter || root.payload().getBoolean(CompositeOverlapEdit.OPEN_WITH_OVERLAP))) {
             return CompositeOverlapEdit.run(owner, () -> transitionInternal(world, owner, state, actor));
         }
         return transitionInternal(world, owner, state, actor);
