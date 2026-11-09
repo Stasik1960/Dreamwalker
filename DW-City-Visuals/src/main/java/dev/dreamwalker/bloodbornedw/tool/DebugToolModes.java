@@ -23,16 +23,17 @@ public final class DebugToolModes {
         RIGHT("Сдвинуть модель вправо на 0,5 блока"),
         FORWARD("Сдвинуть модель вперёд на 0,5 блока"),
         BACK("Сдвинуть модель назад на 0,5 блока"),
-        VISUAL_ROTATE("Повернуть модель на 45° вправо"),
+        VISUAL_ROTATE("Повернуть модель по часовой стрелке"),
         SPECIAL("Особое действие блока", BbToolItem.Mode.SPECIAL),
         COMMANDS("Привязать команды", BbToolItem.Mode.COMMANDS),
         CLEAR("Удалить связи и команды", BbToolItem.Mode.CLEAR),
-        BLOCK_ROTATE("Повернуть блок на 45° вправо"),
+        BLOCK_ROTATE("Повернуть блок по часовой стрелке"),
         PLAYER_COLLISION("Переключить коллизию для игроков"),
         BLOCK_COLLISION("Переключить коллизию для блоков"),
         NPC_SPECIAL("Особое действие NPC", BbToolItem.Mode.SPECIAL_NPC),
-        NPC_CLOCKWISE("Повернуть NPC на 45° вправо"),
-        NPC_COUNTERCLOCKWISE("Повернуть NPC на 45° влево");
+        NPC_CLOCKWISE("Повернуть NPC по часовой стрелке"),
+        NPC_COUNTERCLOCKWISE("Повернуть NPC против часовой стрелки"),
+        BLOCK_ROTATE_BACK("Повернуть блок против часовой стрелки");
 
         public final String title;
         public final BbToolItem.Mode legacy;
@@ -46,7 +47,8 @@ public final class DebugToolModes {
 
     public enum Tool {
         MODEL("Инструмент BB", List.of(Action.UP, Action.DOWN, Action.LEFT, Action.RIGHT, Action.FORWARD, Action.BACK, Action.VISUAL_ROTATE)),
-        BLOCK("Печатка смотрителя", List.of(Action.SPECIAL, Action.COMMANDS, Action.CLEAR, Action.BLOCK_ROTATE, Action.PLAYER_COLLISION, Action.BLOCK_COLLISION)),
+        BLOCK("Печатка смотрителя", List.of(Action.SPECIAL, Action.COMMANDS, Action.CLEAR, Action.BLOCK_ROTATE,
+                Action.PLAYER_COLLISION, Action.BLOCK_COLLISION, Action.BLOCK_ROTATE_BACK)),
         NPC("Жезл постановщика", List.of(Action.NPC_SPECIAL, Action.NPC_CLOCKWISE, Action.NPC_COUNTERCLOCKWISE));
 
         public final String title;
@@ -129,7 +131,7 @@ public final class DebugToolModes {
             case FORWARD -> block && DebugAdjustments.move(player, target, player.getHorizontalFacing());
             case BACK -> block && DebugAdjustments.move(player, target, player.getHorizontalFacing().getOpposite());
             case VISUAL_ROTATE -> block && DebugAdjustments.rotate(player, target);
-            case BLOCK_ROTATE -> block && BbToolRotations.rotate(player, target);
+            case BLOCK_ROTATE, BLOCK_ROTATE_BACK -> block && DebugBlockRotation.apply(player, target, action == Action.BLOCK_ROTATE);
             case PLAYER_COLLISION -> block && DebugAdjustments.toggle(player, target, true);
             case BLOCK_COLLISION -> block && DebugAdjustments.toggle(player, target, false);
             case NPC_CLOCKWISE -> rotateNpc(entity, true);

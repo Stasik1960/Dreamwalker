@@ -269,6 +269,9 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--baseline", type=Path, required=True)
     parser.add_argument("--resources", type=Path, required=True)
+    parser.add_argument("--profile-resources", type=Path)
+    parser.add_argument("--omit-studio-map", action="store_true",
+                        help="Generate the exact pre-migration static catalogue for the offline map converter")
     args = parser.parse_args()
     with ZipFile(args.baseline) as base:
         repaint_alts(base, args.resources)
@@ -277,6 +280,10 @@ def main():
         repair_arched_door(base, args.resources)
         vanilla_door(base, args.resources)
         update_catalogue(base, args.resources)
+        if args.profile_resources:
+            from repair_builder_followup import generate
+
+            generate(base, args.resources, args.profile_resources, not args.omit_studio_map)
 
 
 if __name__ == "__main__":

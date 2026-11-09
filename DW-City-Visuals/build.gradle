@@ -170,13 +170,18 @@ tasks.register('generateEditor2SlabFlags', Exec) {
 }
 
 tasks.register('prepareRequestedModels', Exec) {
-    dependsOn tasks.named('verifyBaseline')
+    dependsOn tasks.named('verifyBaseline'), tasks.named('generateRgbPhase1')
     inputs.file(baseline)
-    inputs.file('tools/repair_requested_models.py')
+    inputs.files('tools/repair_requested_models.py', 'tools/repair_builder_followup.py', 'tools/repair_facade_assets.py')
+    inputs.files(fileTree('tools') { include 'studio-static-append.json' })
+    inputs.dir('tools/builder-followup-inputs')
+    inputs.files(fileTree('src/main/resources/dw_city_visuals'))
+    inputs.files(fileTree('src/main/resources/assets/bloodborne_dw/models'), fileTree('src/main/resources/assets/bloodborne_dw/textures'))
     inputs.property('pythonExecutable', pythonExecutable)
     outputs.dir(requestedModelResources)
     commandLine pythonExecutable.get(), file('tools/repair_requested_models.py').path,
-        '--baseline', baseline.get(), '--resources', requestedModelResources.get().asFile.path
+        '--baseline', baseline.get(), '--resources', requestedModelResources.get().asFile.path,
+        '--profile-resources', file('src/main/resources').path
 }
 sourceSets.main.resources.srcDir(tasks.named('prepareRequestedModels'))
 

@@ -1,0 +1,83 @@
+.pick-mode {
+    display: inline-flex;
+    gap: 3px;
+    margin-left: 5px;
+}
+
+.model-star {
+    color: #ff7e84;
+    font-weight: 700;
+}
+
+.model-star.excluded {
+    color: #ffd468;
+}
+
+#viewport canvas.resize-face {
+    cursor: grab;
+}
+
+#volumeSettings {
+    margin: 12px 0 3px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 7px 9px;
+}
+
+#volumeSettings summary {
+    cursor: pointer;
+}
+
+#fitGrid {
+    width: 100%;
+    margin-top: 8px;
+}
+
+.volume-filters label {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 8px;
+    white-space: nowrap;
+}
+
+.anchor-controls {
+    margin: 12px 0;
+    border: 1px solid #7d6540;
+}
+
+.anchor-controls legend {
+    color: var(--gold);
+}
+
+#objects {
+    height: auto;
+    overflow: visible;
+}
+
+#volumeSettings[open] ~ #objects {
+    max-height: min(40vh, 360px);
+    overflow: auto;
+}
+
+.review {
+    margin-top: 12px;
+}
+
+#mergeChoices {
+    max-height: min(50vh, 420px);
+    overflow: auto;
+    margin: 12px 0 16px;
+}
+
+#mergeChoices label {
+    display: grid;
+    grid-template-columns: minmax(180px, 1fr) max-content;
+    align-items: center;
+    gap: 12px;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--line);
+}
+
+#mergeChoices span {
+    overflow-wrap: anywhere;
+}

@@ -59,16 +59,32 @@ def verify(base, generated, minecraft):
     static_path = "bloodborne_dw/static-architecture-v1274.json"
     before = json.loads(base.read(static_path))
     after = read(static_path)
-    assert len(before["recipes"]) == len(after["recipes"])
+    count = len(before["recipes"])
+    if len(after["recipes"]) > count:
+        append = json.loads(Path(__file__).with_name("studio-static-append.json").read_bytes())
+        assert append["baseRecipes"] == count
+        assert after["recipes"][count:] == append["recipes"]
+        assert after["poses"][len(before["poses"]):] == append["poses"]
+    else:
+        assert len(after["recipes"]) == count
     shortened_poses = {pose["key"] for pose in before["poses"]
                        if pose["registryId"].split(":")[1] in GLASS_CUBES}
+    from repair_builder_followup import RETIRED_SHUTTERS, RETIRED_SURROUND
+    retired_poses = {pose["key"] for pose in before["poses"]
+                     if pose["registryId"].split(":")[1] in RETIRED_SHUTTERS}
+    for pose in after["poses"]:
+        if pose["key"] in retired_poses:
+            assert pose["registryId"] == f"bloodborne_dw:{RETIRED_SURROUND}"
     shortened_cells = 0
     for old, new in zip(before["recipes"], after["recipes"]):
-        assert {k: v for k, v in old.items() if k not in {"collision", "selection"}} == {
+        expected = old
+        if any(fragment["pose"] in retired_poses for fragment in old["fragments"]):
+            expected = {**old, "physicalFromPoses": True}
+        assert {k: v for k, v in expected.items() if k not in {"collision", "selection"}} == {
             k: v for k, v in new.items() if k not in {"collision", "selection"}}
         removed_part = any(f["pose"] in shortened_poses and f["origin"][1] == -1 for f in old["fragments"])
         if not removed_part:
-            assert old == new
+            assert expected == new
         else:
             assert new["collision"] != old["collision"] or new["selection"] != old["selection"]
             shortened_cells += 1
@@ -84,7 +100,8 @@ def verify(base, generated, minecraft):
     path = COMPOSITES + "source_stairs_dark_prismarine_stairs_inner_right.json"
     old_door = json.loads(base.read(path))["variants"][0]["poses"]
     new_door = read(path)["variants"][0]["poses"]
-    assert old_door["closed"] == new_door["closed"]
+    assert old_door["closed"].keys() == new_door["closed"].keys()
+    assert new_door["closed"]["collision"] == new_door["closed"]["selection"]
     old_open, new_open = old_door["open"], new_door["open"]
     leaf = next(part for part in new_open["parts"] if part["model"].endswith("door_90986_leaf"))
     assert leaf["pivot"][2] + leaf["offset"][2] == 8
@@ -110,7 +127,7 @@ def verify(base, generated, minecraft):
     path = "bloodborne_dw/debug_catalogue.json"
     before = json.loads(base.read(path))["entries"]
     after = read(path)["entries"]
-    assert before == after[:-2]
+    assert [row for row in before if row["registryId"].split(":")[1] not in RETIRED_SHUTTERS] == after[:-2]
     assert [(e["temporaryId"], e["registryId"]) for e in after[-2:]] == [
         ("93241", "bloodborne_dw:source_shutter_window"), ("93242", f"bloodborne_dw:{PLAIN_DOOR}")]
     return {"model_contract": "PASS", "static_glass_cells_corrected": shortened_cells, "plain_door_states": len(states)}

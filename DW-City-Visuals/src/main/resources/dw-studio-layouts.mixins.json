@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "package": "dev.dreamwalker.bloodbornedw.composite.studiomixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "dw-altvisual-overlay-refmap.json",
+  "mixins": [
+    "StudioRasterInvoker", "StudioCompositeMixin", "StudioImportedOutlineMixin",
+    "StudioCompositeArtMixin", "StudioCellPlacementMixin",
+    "StudioStaticRecipeMixin", "StudioStaticPoseMixin", "StudioStaticBlockMixin", "StudioStaticRemovalMixin",
+    "StudioPlacementMixin", "StudioOrdinaryPlacementMixin", "StudioRpMixin", "StudioSeatMixin", "StudioForeignShapesMixin", "StudioForeignBreakMixin"
+  ],
+  "client": ["StudioRpArtMixin"],
+  "injectors": { "defaultRequire": 1 }
+}

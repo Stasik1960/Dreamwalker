@@ -34,7 +34,13 @@ public final class FlightQa implements ClientModInitializer {
     private record ServerPosition(int tick,double x,double y,double z) {}
     private volatile ServerPosition serverPosition=new ServerPosition(-1,0,0,0);
     private Path output; private JsonObject report=new JsonObject(),plan; private JsonArray points, memory=new JsonArray(),positions=new JsonArray();
-    private CompletableFuture<Void> job; private int state; // 0 boot, 1 initial load, 2 flight, 3 saving
+    private CompletableFuture<Void> job; private int state; // 0 boot, 1 prepare, 2 flight, 3 save, 4 camera, 5 wait for window
+    private JsonArray cameras, stationary = new JsonArray(), stationaryMemory;
+    private JsonObject destination;
+    private boolean diagonal;
+    private int camera;
+    private int windowRetries;
+    private long stationaryEpoch;
     private WaterSurfaceQa waterProbe;
     private CityFinishQa cityFinish;
     private double x,y,z; private long fixedTime, loadingAt; private double routeLength; private double[] lengths;
@@ -42,11 +48,20 @@ public final class FlightQa implements ClientModInitializer {
         instance=this;boot=System.nanoTime();
         try {
             byte[] bytes=Files.readAllBytes(Path.of(required("dw.flight.plan")));plan=JsonParser.parseString(new String(bytes,java.nio.charset.StandardCharsets.UTF_8)).getAsJsonObject();
-            check(plan.get("schema").getAsInt()==1,"plan schema");points=plan.getAsJsonArray("points");check(points.size()>=3,"route points");
-            check(plan.get("laps").getAsInt()==2 && plan.get("ticksPerLap").getAsInt()>=2400,"two laps of at least 120 seconds each");
+            check(plan.get("schema").getAsInt()==1,"plan schema");points=plan.getAsJsonArray("points");
+            cameras=plan.getAsJsonArray("cameras");diagonal=cameras!=null;
+            if(diagonal) {
+                check(cameras.size()==4 && points.size()==2 && plan.get("laps").getAsInt()==1
+                        && plan.get("ticksPerLap").getAsInt()>=800,"four cameras and one uninterrupted diagonal");
+                report.add("stationary",stationary);
+                report.addProperty("restartsInterruptedStages", true);
+            } else {
+                check(points.size()>=3,"route points");
+                check(plan.get("laps").getAsInt()==2 && plan.get("ticksPerLap").getAsInt()>=2400,"two laps of at least 120 seconds each");
+            }
             for(JsonElement e:points){JsonObject p=e.getAsJsonObject();for(String key:List.of("x","y","z"))check(Double.isFinite(p.get(key).getAsDouble()),"finite coordinates");}
-            lengths=new double[points.size()];
-            for(int i=0;i<points.size();i++){JsonObject a=points.get(i).getAsJsonObject(),b=points.get((i+1)%points.size()).getAsJsonObject();double dx=b.get("x").getAsDouble()-a.get("x").getAsDouble(),dy=b.get("y").getAsDouble()-a.get("y").getAsDouble(),dz=b.get("z").getAsDouble()-a.get("z").getAsDouble();lengths[i]=Math.sqrt(dx*dx+dy*dy+dz*dz);check(lengths[i]>0,"zero length segment");routeLength+=lengths[i];}
+            lengths=new double[points.size()-(diagonal?1:0)];
+            for(int i=0;i<lengths.length;i++){JsonObject a=points.get(i).getAsJsonObject(),b=points.get((i+1)%points.size()).getAsJsonObject();double dx=b.get("x").getAsDouble()-a.get("x").getAsDouble(),dy=b.get("y").getAsDouble()-a.get("y").getAsDouble(),dz=b.get("z").getAsDouble()-a.get("z").getAsDouble();lengths[i]=Math.sqrt(dx*dx+dy*dy+dz*dz);check(lengths[i]>0,"zero length segment");routeLength+=lengths[i];}
             check(routeLength*20/plan.get("ticksPerLap").getAsInt()<=12,"route exceeds 12 blocks per second");
             fixedTime=plan.get("fixedTime").getAsLong();output=Path.of(required("dw.flight.output"));Files.createDirectories(output);check(!Files.exists(output.resolve("flight.json")),"output already exists");
             report.addProperty("schema",1);report.addProperty("status","STARTING");report.addProperty("startedUtc",Instant.now().toString());report.addProperty("planSha256",sha(bytes));report.add("plan",plan.deepCopy());
@@ -63,8 +78,35 @@ public final class FlightQa implements ClientModInitializer {
     public static void presentation(){
         FlightQa q=instance;if(q==null)return;if(q.state==1 && q.placed)q.renderedInitial=true;if(!q.recording)return;
         MinecraftClient c=MinecraftClient.getInstance();
-        if(!c.isWindowFocused()||c.currentScreen!=null||c.getOverlay()!=null||c.isPaused()){q.fail(new IllegalStateException("focus or visible world lost during flight"));return;}
+        if(!visibleWorld(c)){q.interruptWindow(c);return;}
         long now=System.nanoTime();if(q.previous!=0){if(q.count>=LIMIT){q.fail(new IllegalStateException("frame buffer overflow"));return;}q.intervals[q.count]=now-q.previous;q.elapsed[q.count]=now-q.flightStart;q.ticks[q.count]=q.tick;q.count++;}q.previous=now;if(q.closing){q.flightEnd=now;q.flightEndEpoch=System.currentTimeMillis();q.recording=false;q.captureDone=true;}
+    }
+    private static boolean visibleWorld(MinecraftClient client) {
+        return client.isWindowFocused() && client.currentScreen == null && client.getOverlay() == null && !client.isPaused();
+    }
+
+    private void interruptWindow(MinecraftClient client) {
+        if (!diagonal) {
+            fail(new IllegalStateException("focus or visible world lost during flight"));
+            return;
+        }
+        recording = false;
+        if (state == 2) {
+            positions = new JsonArray();
+            memory = new JsonArray();
+            report.add("positions", positions);
+            report.add("memorySamples", memory);
+            closing = false;
+            captureDone = false;
+            serverPosition = new ServerPosition(-1, 0, 0, 0);
+        }
+        state = 5;
+        report.addProperty("status", "WAITING_FOR_WINDOW");
+        report.addProperty("windowRetries", ++windowRetries);
+        report.addProperty("lastWindowInterruption", !client.isWindowFocused() ? "focus"
+                : client.currentScreen != null ? client.currentScreen.getClass().getName() : "overlay or pause");
+        try { save(); }
+        catch (Exception failure) { fail(failure); }
     }
     public static void correction(){FlightQa q=instance;if(q!=null)MinecraftClient.getInstance().execute(()->{if(q.state==2&&!q.done){q.correctionCount++;q.fail(new IllegalStateException("server position correction during flight"));}});}
     private void onTick(MinecraftClient c){
@@ -83,24 +125,51 @@ public final class FlightQa implements ClientModInitializer {
             if (cityFinish != null) { cityFinish.tick(c); return; }
             if (waterProbe != null) { waterProbe.tick(c); return; }
             if(state==0){
-                if(!c.isWindowFocused()||c.currentScreen!=null||c.getOverlay()!=null||c.isPaused())return;
+                if(!visibleWorld(c)){
+                    if(diagonal && !report.get("status").getAsString().equals("WAITING_FOR_WINDOW")){
+                        report.addProperty("status","WAITING_FOR_WINDOW");save();
+                    }
+                    return;
+                }
                 JsonObject options=options(c);report.add("actualOptions",options);report.addProperty("glRenderer",GL11.glGetString(GL11.GL_RENDERER));report.addProperty("glVendor",GL11.glGetString(GL11.GL_VENDOR));report.addProperty("glVersion",GL11.glGetString(GL11.GL_VERSION));report.addProperty("focusedAtStart",true);for(var e:plan.getAsJsonObject("expectedOptions").entrySet())check(options.has(e.getKey())&&options.get(e.getKey()).equals(e.getValue()),"option mismatch "+e.getKey());
-                c.options.hudHidden=true;c.options.pauseOnLostFocus=false;JsonObject first=points.get(0).getAsJsonObject();state=1;loadingAt=now;
-                c.getServer().execute(()->{try{var s=c.getServer();var p=s.getPlayerManager().getPlayer(c.player.getUuid());check(p!=null,"server player missing");var w=s.getOverworld();w.setTimeOfDay(fixedTime);w.getGameRules().get(GameRules.DO_DAYLIGHT_CYCLE).set(false,s);w.getGameRules().get(GameRules.DO_WEATHER_CYCLE).set(false,s);w.setWeather(0,0,false,false);p.stopRiding();p.changeGameMode(GameMode.CREATIVE);p.getAbilities().flying=true;p.sendAbilitiesUpdate();p.setNoGravity(true);p.teleport(w,first.get("x").getAsDouble(),first.get("y").getAsDouble(),first.get("z").getAsDouble(),0,15);p.setVelocity(0,0,0);placed=true;}catch(Throwable e){serverError=e;}});return;
+                c.options.hudHidden=true;c.options.pauseOnLostFocus=false;
+                prepareView(c,now);
+                return;
             }
-            check(c.isWindowFocused()&&c.currentScreen==null&&c.getOverlay()==null&&!c.isPaused(),"focus or visible world lost");
+            if(state==5){
+                if(visibleWorld(c))prepareView(c,now);
+                return;
+            }
+            if(!visibleWorld(c)){interruptWindow(c);return;}
             if(state==1){
-                check(now-loadingAt<240_000_000_000L,"initial readiness timeout");if(!placed)return;JsonObject first=points.get(0).getAsJsonObject();if(c.player.squaredDistanceTo(first.get("x").getAsDouble(),first.get("y").getAsDouble(),first.get("z").getAsDouble())>.01)return;
+                check(now-loadingAt<240_000_000_000L,"view readiness timeout");if(!placed)return;
+                if(c.player.squaredDistanceTo(destination.get("x").getAsDouble(),destination.get("y").getAsDouble(),destination.get("z").getAsDouble())>.01)return;
                 if(tick++%5!=0)return;boolean ready=renderedInitial&&full(c)&&c.worldRenderer.isTerrainRenderComplete()&&NativeReadiness.idle(NativeReadiness.sample(c.world));
                 if(!ready){stable=0;return;}if(stable==0){stable=now;return;}if(now-stable<2_000_000_000L)return;
+                if (diagonal && camera<cameras.size()) {
+                    state=4;count=0;tick=0;previous=0;flightStart=now;nextMemory=now;
+                    stationaryEpoch=System.currentTimeMillis();stationaryMemory=new JsonArray();recording=true;
+                    report.addProperty("status","MEASURING_"+destination.get("name").getAsString());save();
+                    return;
+                }
                 report.addProperty("initialTerrainComplete",true);report.addProperty("initialFullChunks",true);report.addProperty("initialRendered",renderedInitial);report.addProperty("initialStage","cold initial view; first lap streams, second lap revisits");report.add("initialNativeReadiness",NativeReadiness.sample(c.world));report.addProperty("initialStableSeconds",(now-stable)/1e9);
                 memory(); // Initialize the same management collectors before recording, without adding a sample.
-                tick=0;report.addProperty("flightStartEpochMillis",System.currentTimeMillis());report.addProperty("status","FLYING");save();state=2;flightStart=System.nanoTime();report.addProperty("flightStartNanoTime",flightStart);previous=flightStart;nextMemory=flightStart;recording=true;return;
+                count=0;tick=0;report.addProperty("flightStartEpochMillis",System.currentTimeMillis());report.addProperty("status","FLYING");save();state=2;flightStart=System.nanoTime();report.addProperty("flightStartNanoTime",flightStart);previous=flightStart;nextMemory=flightStart;recording=true;return;
             }
-            int duration=plan.get("ticksPerLap").getAsInt(),total=duration*2;
+            if(state==4){
+                if(now>=nextMemory){stationaryMemory.add(memorySample(now));nextMemory=now+1_000_000_000L;}
+                if(now-flightStart<15_000_000_000L)return;
+                recording=false;
+                check(count>60&&full(c)&&c.worldRenderer.isTerrainRenderComplete(),"steady camera lost readiness");
+                JsonObject measurement=new JsonObject();measurement.add("camera",destination);
+                measurement.addProperty("startEpochMillis",stationaryEpoch);measurement.addProperty("endEpochMillis",System.currentTimeMillis());
+                measurement.add("frames",frames());measurement.add("memorySamples",stationaryMemory);stationary.add(measurement);
+                camera++;save();prepareView(c,now);return;
+            }
+            int duration=plan.get("ticksPerLap").getAsInt(),total=duration*plan.get("laps").getAsInt();
             if(tick>=total){if(!closing){closing=true;return;}if(!captureDone)return;report.addProperty("flightEndEpochMillis",flightEndEpoch);report.addProperty("flightEndNanoTime",flightEnd);report.addProperty("wallSeconds",(flightEnd-flightStart)/1e9);report.addProperty("correctionCount",correctionCount);report.add("frames",frames());check(count>=1000,"too few frames");check(serverPosition.tick()>=total-40,"no recent server position");state=3;job=new CompletableFuture<>();c.getServer().execute(()->{try{c.getServer().save(false,true,true);job.complete(null);}catch(Throwable e){job.completeExceptionally(e);}});report.addProperty("status","SAVING");save();return;}
             // Equal distance per tick; move through vanilla collision handling and fail on obstruction.
-            double distance=(tick%duration)*routeLength/duration;segment=0;
+            double distance=(tick%duration)*routeLength/(diagonal?duration-1:duration);segment=0;
             while(segment<lengths.length-1 && distance>=lengths[segment]){distance-=lengths[segment];segment++;}
             double f=distance/lengths[segment];JsonObject a=points.get(segment).getAsJsonObject(),b=points.get((segment+1)%points.size()).getAsJsonObject();
             x=lerp(a,b,"x",f);y=lerp(a,b,"y",f);z=lerp(a,b,"z",f);
@@ -111,8 +180,28 @@ public final class FlightQa implements ClientModInitializer {
             if(tick%20==0){int sampleTick=tick;double sx=x,sy=y,sz=z;c.getServer().execute(()->{try{var p=c.getServer().getPlayerManager().getPlayer(c.player.getUuid());check(p!=null,"server player missing");ServerPosition sample=new ServerPosition(sampleTick,p.getX(),p.getY(),p.getZ());serverPosition=sample;check((sample.x()-sx)*(sample.x()-sx)+(sample.y()-sy)*(sample.y()-sy)+(sample.z()-sz)*(sample.z()-sz)<100,"server movement diverged");}catch(Throwable e){serverError=e;}});
                 ServerPosition sample=serverPosition;JsonObject pos=new JsonObject();pos.addProperty("tick",tick);pos.addProperty("elapsedSeconds",(now-flightStart)/1e9);pos.addProperty("segment",segment);pos.addProperty("x",x);pos.addProperty("y",y);pos.addProperty("z",z);pos.addProperty("serverSampleTick",sample.tick());pos.addProperty("serverX",sample.x());pos.addProperty("serverY",sample.y());pos.addProperty("serverZ",sample.z());positions.add(pos);
             }
-            if(now>=nextMemory){JsonObject m=memory();m.addProperty("elapsedSeconds",(now-flightStart)/1e9);m.addProperty("epochMillis",System.currentTimeMillis());m.addProperty("nanoTime",now);memory.add(m);nextMemory=now+1_000_000_000L;}tick++;
+            if(now>=nextMemory){memory.add(memorySample(now));nextMemory=now+1_000_000_000L;}tick++;
         }catch(Throwable e){fail(e);}
+    }
+    private void prepareView(MinecraftClient c,long now) {
+        JsonObject next=diagonal&&camera<cameras.size()?cameras.get(camera).getAsJsonObject():points.get(0).getAsJsonObject();
+        destination=next;state=1;loadingAt=now;placed=false;renderedInitial=false;stable=0;
+        c.getServer().execute(()->{try{
+            var server=c.getServer();var player=server.getPlayerManager().getPlayer(c.player.getUuid());
+            check(player!=null,"server player missing");var world=server.getOverworld();world.setTimeOfDay(fixedTime);
+            world.getGameRules().get(GameRules.DO_DAYLIGHT_CYCLE).set(false,server);
+            world.getGameRules().get(GameRules.DO_WEATHER_CYCLE).set(false,server);
+            world.setWeather(0,0,false,false);player.stopRiding();player.changeGameMode(GameMode.CREATIVE);
+            player.getAbilities().flying=true;player.sendAbilitiesUpdate();player.setNoGravity(true);
+            player.teleport(world,next.get("x").getAsDouble(),next.get("y").getAsDouble(),next.get("z").getAsDouble(),
+                    next.has("yaw")?next.get("yaw").getAsFloat():0,next.has("pitch")?next.get("pitch").getAsFloat():15);
+            player.setVelocity(0,0,0);placed=true;
+        }catch(Throwable e){serverError=e;}});
+    }
+    private JsonObject memorySample(long now) {
+        JsonObject sample=memory();sample.addProperty("elapsedSeconds",(now-flightStart)/1e9);
+        sample.addProperty("epochMillis",System.currentTimeMillis());sample.addProperty("nanoTime",now);
+        return sample;
     }
     private JsonObject frames(){JsonObject out=new JsonObject();JsonArray raw=new JsonArray(),times=new JsonArray(),frameTicks=new JsonArray();long total=0;for(int i=0;i<count;i++){raw.add(intervals[i]);times.add(elapsed[i]);frameTicks.add(ticks[i]);total+=intervals[i];}out.add("rawIntervalsNs",raw);out.add("elapsedNs",times);out.add("ticks",frameTicks);out.addProperty("samples",count);out.addProperty("totalNs",total);out.addProperty("clock","RenderSystem.flipFrame HEAD; CPU presentation intervals");return out;}
     static boolean full(MinecraftClient c){int cx=c.player.getBlockX()>>4,cz=c.player.getBlockZ()>>4,d=c.options.getViewDistance().getValue();for(int x=cx-d-2;x<=cx+d+2;x++)for(int z=cz-d-2;z<=cz+d+2;z++)if(ThreadedAnvilChunkStorage.isWithinDistance(x,z,cx,cz,d)&&c.world.getChunkManager().getChunk(x,z,ChunkStatus.FULL,false)==null)return false;return true;}

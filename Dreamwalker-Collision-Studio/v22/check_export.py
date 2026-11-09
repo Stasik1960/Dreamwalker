@@ -43,16 +43,23 @@ def validate(project, catalogue):
     require(project.get("source") == catalogue.get("source"), "Different release catalogue")
     policy = project.get("policy", {})
     require(policy.get("scope") == "per_collider" and policy.get("operation") == "replace_per_exact_state"
-            and policy.get("instanceScope") == "new_placements_only", "Invalid replacement policy")
+            and policy.get("instanceScope") == "new_placements_only" and policy.get("profileScope") == "all",
+            "Invalid replacement policy")
     require(project.get("coordinates", {}).get("rotationOrder") == "ZYX", "Unknown rotation order")
     known = {row["id"]: row["states"] for row in catalogue["models"]}
     models = set()
-    counts = {"models": 0, "states": 0, "unreviewed": 0, "colliders": 0, "seats": 0}
+    counts = {"models": 0, "states": 0, "anchors": 0, "unreviewed": 0, "colliders": 0, "seats": 0}
     for model in project["models"]:
         identifier = model["registryId"]
         require(identifier in known and identifier not in models, f"Unknown or duplicate model: {identifier}")
         models.add(identifier)
         counts["models"] += 1
+        if "anchorCell" in model:
+            cell = model["anchorCell"]
+            require(isinstance(cell, list) and len(cell) == 3
+                    and all(type(axis) is int and abs(axis) <= 255 for axis in cell),
+                    f"Invalid placement anchor: {identifier}")
+            counts["anchors"] += 1
         states = set()
         for state in model["states"]:
             key = state["key"]
@@ -80,7 +87,7 @@ def validate(project, catalogue):
                         and seat.get("front") == [0, 0, -1] and seat.get("capacity") == 1
                         and seat.get("trigger") == "right_click_surface", f"Invalid seat in {label}")
                 counts["seats"] += 1
-    require(counts["states"] > 0, "No release state was edited")
+    require(counts["states"] or counts["anchors"], "No release state or placement anchor was edited")
     return counts
 
 
