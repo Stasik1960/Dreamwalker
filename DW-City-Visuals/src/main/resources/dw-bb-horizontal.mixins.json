@@ -11,8 +11,11 @@
     "RpObjectDebugDataMixin",
     "NativePlayerDebugCollisionMixin",
     "CompositePlayerDebugCollisionMixin",
-    "RpPlayerDebugCollisionMixin"
+    "RpPlayerDebugCollisionMixin",
+    "PlainDoorTargetMixin",
+    "PlainDoorBridgeMixin",
+    "PlainDoorUseMixin",
+    "PlainDoorRemovalMixin"
   ],
-  "client": ["DebugClientInitMixin", "DebugFacadeModelMixin", "RpDebugRenderMixin"],
   "injectors": { "defaultRequire": 1 }
 }

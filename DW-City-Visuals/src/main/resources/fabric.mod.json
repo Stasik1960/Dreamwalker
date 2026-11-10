@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "environment": "*",
   "custom": {
-    "dreamwalker:revisionSuffix": "cityeditor.2.1-cornerlight.2-rgb.2-altfix.1-cityfollowup.1-rgbrelief.1-bbhalf.1-builder.1.studio.2-nocollide.1"
+    "dreamwalker:revisionSuffix": "cityeditor.2.1-cornerlight.2-rgb.2-altfix.1-cityfollowup.1-rgbrelief.1-bbhalf.1-builder.1.studio.2-nocollide.1-builder-polish.1"
   },
   "entrypoints": {
     "main": [
@@ -30,6 +30,7 @@
   },
   "mixins": [
     { "config": "dw-bb-horizontal.mixins.json" },
+    { "config": "dw-bb-tool-client.mixins.json", "environment": "client" },
     { "config": "dw-composite-overlap.mixins.json" },
     { "config": "dw-studio-layouts.mixins.json" },
     { "config": "dw-artificial-water-surface.mixins.json", "environment": "client" },

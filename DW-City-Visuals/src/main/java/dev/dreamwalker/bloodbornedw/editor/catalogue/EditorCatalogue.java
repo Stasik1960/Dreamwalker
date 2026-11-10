@@ -27,6 +27,7 @@ import dev.dreamwalker.bloodbornedw.composite.ImportedAssemblyV126;
 import dev.dreamwalker.bloodbornedw.composite.ImportedTypeAliases;
 import dev.dreamwalker.bloodbornedw.composite.ImportedStyleRetirements;
 import dev.dreamwalker.bloodbornedw.debug.UnifiedCreativeCatalogue;
+import dev.dreamwalker.bloodbornedw.debug.DebugCatalogue;
 import dev.dreamwalker.bloodbornedw.editor.CityEditorServer;
 import dev.dreamwalker.bloodbornedw.repair.CityRepair;
 import java.util.ArrayList;
@@ -35,6 +36,13 @@ import java.util.List;
 import java.util.Set;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.DoorBlock;
+import net.minecraft.block.FenceBlock;
+import net.minecraft.block.FenceGateBlock;
+import net.minecraft.block.PaneBlock;
+import net.minecraft.block.StairsBlock;
+import net.minecraft.block.TrapdoorBlock;
+import net.minecraft.block.WallBlock;
 import net.minecraft.state.property.Property;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.item.BlockItem;
@@ -123,34 +131,111 @@ public final class EditorCatalogue {
     public static void fill(List<ItemStack> items) {
         java.util.Map<String, String> original = new java.util.LinkedHashMap<>();
         Set<String> ids = new HashSet<>();
+        Set<String> variants = new HashSet<>();
         for (var it = items.listIterator(); it.hasNext();) {
             ItemStack stack = creativeStack(it.next());
             String id = Registries.ITEM.getId(stack.getItem()).toString();
-            if (stack.isEmpty() || technicalStack(stack) || handledByPinnedRepair(stack, id) || !ids.add(id)) it.remove();
-            else { it.set(stack); original.put(id, key(stack)); }
+            if (stack.isEmpty() || technicalStack(stack) || handledByPinnedRepair(stack, id) || !variants.add(key(stack))) it.remove();
+            else { ids.add(id); it.set(stack); original.putIfAbsent(id, key(stack)); }
+        }
+        // The debug catalogue identifies independent authored types. Their old
+        // registered items can map to a shared current block and art state.
+        for (var mapping : ImportedTypeAliases.mappings()) {
+            if (mapping.oldVariant() != 0 || mapping.oldRegistryId().equals(mapping.newRegistryId())) continue;
+            Identifier sourceId = new Identifier(mapping.oldRegistryId());
+            var entry = DebugCatalogue.entry(sourceId);
+            String sourcePath = sourceId.getPath();
+            // Open gate/door/trapdoor models describe interaction states, not
+            // independently placeable designs.
+            if (sourcePath.contains("fence_gate_open") || sourcePath.contains("trapdoor_open")
+                    || sourcePath.contains("door_open")) continue;
+            if (entry == null || !entry.registryId().equals(sourceId) || !entry.kind().equals("architecture")
+                    || ImportedAssemblyV126.hidden(sourceId.getPath()) || !Registries.ITEM.containsId(sourceId)) continue;
+            Item source = Registries.ITEM.get(sourceId);
+            if (!(source instanceof BlockItem) || FenceCatalogue.hidden(new ItemStack(source))) continue;
+            ItemStack old = new ItemStack(source);
+            old.getOrCreateSubNbt("BlockStateTag").putString("variant", "0");
+            ItemStack stack = FenceCatalogue.compact(FenceCatalogue.canonical(CatalogueMigration.canonicalStack(
+                ImportedAssemblyV126.canonicalStack(ImportedTypeAliases.canonicalStack(old)))));
+            if (!stack.isEmpty() && !technicalStack(stack) && !handledByPinnedRepair(stack, Registries.ITEM.getId(stack.getItem()).toString())
+                    && variants.add(key(stack))) items.add(stack);
+        }
+        for (ItemStack stack : FenceCatalogue.specialItems()) {
+            if (variants.add(key(stack))) items.add(stack);
         }
         String brush = Registries.ITEM.getId(CityEditorServer.BRUSH).toString();
         if (ids.add(brush)) items.add(new ItemStack(CityEditorServer.BRUSH));
         original.remove(brush);
         lastOriginal = java.util.Map.copyOf(original);
     }
+    /** Each item belongs to exactly one tab; all tabs draw from the same canonical list. */
+    public enum Category { BUILDING, OPENINGS, STAIRS, BOUNDARIES, DECOR, ITEMS, TOOLS }
+    public static Category category(ItemStack stack) {
+        Identifier id = Registries.ITEM.getId(stack.getItem());
+        String path = id.getPath();
+        if (stack.isOf(CityEditorServer.BRUSH) || path.equals("nrp_pickaxe")
+                || path.equals("bb_tool") || path.equals("bb_block_tool") || path.equals("bb_npc_tool")) return Category.TOOLS;
+        if (id.getNamespace().equals("bloodborne_rp")) {
+            if (path.endsWith("_placer")) return Category.DECOR;
+            return Category.ITEMS;
+        }
+        if (!(stack.getItem() instanceof BlockItem item)) return Category.ITEMS;
+        Block block = item.getBlock();
+        if (block instanceof DoorBlock || block instanceof TrapdoorBlock || block instanceof FenceGateBlock
+                || block instanceof CompositeRootBlock root && root.spec.openable
+                || path.contains("window") || path.contains("glass_pane") || block instanceof PaneBlock)
+            return Category.OPENINGS;
+        if (block instanceof WallBlock || block instanceof FenceBlock
+                || path.startsWith("source_assembly_") && (path.endsWith("_wall") || path.endsWith("_fence")))
+            return Category.BOUNDARIES;
+        if (block instanceof ImportedStairBlock || block instanceof StairsBlock
+                || path.contains("stairs") || path.contains("roof"))
+            return Category.STAIRS;
+        return Category.BUILDING;
+    }
+    public static List<ItemStack> categoryItems(Category category) {
+        return UnifiedCreativeCatalogue.canonicalItems().stream().filter(stack -> category(stack) == category).toList();
+    }
+    private static boolean tabsRegistered;
+    public static void registerTabs() {
+        if (tabsRegistered) return;
+        tabsRegistered = true;
+        registerTab("catalogue_openings", "DreamWalker — двери и окна", Items.OAK_DOOR, Category.OPENINGS);
+        registerTab("catalogue_stairs", "DreamWalker — лестницы и крыши", Items.STONE_BRICK_STAIRS, Category.STAIRS);
+        registerTab("catalogue_boundaries", "DreamWalker — стены и ограды", Items.STONE_BRICK_WALL, Category.BOUNDARIES);
+        registerTab("catalogue_decor", "DreamWalker — декор", Items.PAINTING, Category.DECOR);
+        registerTab("catalogue_items", "DreamWalker — предметы", Items.BOOK, Category.ITEMS);
+        registerTab("catalogue_tools", "DreamWalker — инструменты", Items.IRON_PICKAXE, Category.TOOLS);
+    }
+    private static void registerTab(String path, String title, Item icon, Category category) {
+        net.minecraft.registry.Registry.register(Registries.ITEM_GROUP, new Identifier("bloodborne_dw", path),
+            net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup.builder()
+                .displayName(net.minecraft.text.Text.literal(title)).icon(() -> new ItemStack(icon))
+                .entries((context, entries) -> categoryItems(category).forEach(entries::add)).build());
+    }
     public static JsonObject audit() {
         List<ItemStack> actual = UnifiedCreativeCatalogue.canonicalItems();
-        Set<String> ids = new HashSet<>(); JsonArray duplicates = new JsonArray(), technical = new JsonArray();
-        JsonArray originals = new JsonArray(), changed = new JsonArray(); int brushes = 0;
+        Set<String> ids = new HashSet<>(); Set<String> variantKeys = new HashSet<>(); JsonArray duplicates = new JsonArray(), technical = new JsonArray();
+        JsonArray originals = new JsonArray(), changed = new JsonArray(); Set<String> foundOriginals = new HashSet<>(); int brushes = 0;
+        java.util.EnumMap<Category, Integer> counts = new java.util.EnumMap<>(Category.class);
         for (ItemStack stack : actual) {
+            counts.merge(category(stack), 1, Integer::sum);
             String id = Registries.ITEM.getId(stack.getItem()).toString();
-            if (!ids.add(id)) duplicates.add(id);
+            ids.add(id);
+            if (!variantKeys.add(key(stack))) duplicates.add(id);
             if (technicalStack(stack)) technical.add(id);
             if (stack.isOf(CityEditorServer.BRUSH)) brushes++;
             String expected = lastOriginal.get(id);
-            if (expected != null && !expected.equals(key(stack))) changed.add(id);
+            if (expected != null && expected.equals(key(stack))) foundOriginals.add(id);
         }
         lastOriginal.keySet().stream().sorted().forEach(originals::add);
-        for (String id : lastOriginal.keySet()) if (!ids.contains(id)) changed.add(id);
+        for (String id : lastOriginal.keySet()) if (!foundOriginals.contains(id)) changed.add(id);
         JsonObject out = new JsonObject();
+        JsonObject categoryCounts = new JsonObject();
+        for (Category category : Category.values()) categoryCounts.addProperty(category.name(), counts.getOrDefault(category, 0));
+        out.add("categories", categoryCounts); out.addProperty("uniqueRegistryIds", ids.size());
         out.addProperty("catalogueItems", actual.size()); out.add("originalItemIds", originals);
-        out.add("duplicateItemIds", duplicates); out.add("technical", technical);
+        out.add("duplicateItemStacks", duplicates); out.add("technical", technical);
         out.add("changedInstallationItems", changed); out.addProperty("brushCount", brushes);
         out.addProperty("pass", duplicates.size() == 0 && technical.size() == 0 && changed.size() == 0 && brushes == 1);
         return out;

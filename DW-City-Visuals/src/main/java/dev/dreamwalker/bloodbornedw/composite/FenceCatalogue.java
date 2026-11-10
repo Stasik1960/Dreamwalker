@@ -112,14 +112,19 @@ public final class FenceCatalogue {
     }
     public static java.util.List<ItemStack> specialItems() {
         java.util.List<ItemStack> result = new java.util.ArrayList<>();
+        int index = 0;
+        String[] names = {"Ограда из булыжного глубинного сланца", "Ограда из эндернякового кирпича",
+            "Гранитная ограда", "Белая стеклянная панель", "Красная стеклянная панель"};
         for (Target target : java.util.List.of(new Target("bloodborne_dw:source_andesite_slab_top", 4),
                 new Target("bloodborne_dw:source_cut_copper", 1),
                 new Target("bloodborne_dw:source_assembly_deepslate_brick_wall", 12),
                 new Target("bloodborne_dw:source_assembly_orange_stained_glass_pane", 14),
                 new Target("bloodborne_dw:source_assembly_orange_stained_glass_pane", 7))) {
             Identifier id = new Identifier(target.id());
+            String name = names[index++];
             if (!Registries.ITEM.containsId(id) || !(Registries.ITEM.get(id) instanceof BlockItem)) continue;
             ItemStack stack = new ItemStack(Registries.ITEM.get(id));
+            stack.setCustomName(net.minecraft.text.Text.literal(name));
             stack.getOrCreateSubNbt("BlockStateTag").putString("variant", Integer.toString(target.variant()));
             stack.getOrCreateNbt().putInt(ImportedTypeAliases.VERSION_KEY, ImportedTypeAliases.VERSION);
             result.add(compact(stack));

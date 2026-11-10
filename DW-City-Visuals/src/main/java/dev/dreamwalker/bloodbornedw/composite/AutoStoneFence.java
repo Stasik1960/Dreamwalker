@@ -19,13 +19,16 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FenceBlock;
+import net.minecraft.block.FenceGateBlock;
+import net.minecraft.block.PaneBlock;
+import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 
 /** Sparse authored-fence updates; no city scans, chunk loading or client tick work. */
 public final class AutoStoneFence implements ModInitializer {
-    private record Group(int[] poses, Set<Integer> compatible) {}
+    private record Group(int[] poses, Set<Integer> compatible, boolean wall, int straight) {}
     private static final int[] MASKS = {0, 1, 5, 3, 7, 15};
     private static final Map<String, List<Group>> FAMILIES = load();
     private static final Direction[] SIDES = {Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST};
@@ -49,7 +52,9 @@ public final class AutoStoneFence implements ModInitializer {
                     int[] poses = new int[array.size()]; for (int i = 0; i < poses.length; i++) poses[i] = array.get(i).getAsInt();
                     Set<Integer> compatible = new HashSet<>();
                     for (var pose : group.getAsJsonArray("compatible")) compatible.add(pose.getAsInt());
-                    groups.add(new Group(poses, Set.copyOf(compatible)));
+                    int straight = group.has("straight") ? group.get("straight").getAsInt() : -1;
+                    boolean wall = family.getKey().endsWith("_wall");
+                    groups.add(new Group(poses, Set.copyOf(compatible), wall, straight));
                 }
                 result.put(family.getKey(), List.copyOf(groups));
             }
@@ -60,7 +65,7 @@ public final class AutoStoneFence implements ModInitializer {
         if (!(state.getBlock() instanceof CompositeRootBlock block) || block.spec == null) return null;
         List<Group> groups = FAMILIES.get(block.spec.id.toString()); if (groups == null) return null;
         int pose = ImportedArtworkBlock.variant(state);
-        for (Group group : groups) if (group.compatible().contains(pose)) return group;
+        for (Group group : groups) if (group.straight() == pose || group.compatible().contains(pose)) return group;
         return null;
     }
     public static boolean matches(BlockState state) { return group(state) != null; }
@@ -96,14 +101,24 @@ public final class AutoStoneFence implements ModInitializer {
                 return state;
             }
             BlockState neighbor = chunk.getBlockState(neighborPos);
-            boolean connected = matches(neighbor) || ((FenceBlock)Blocks.NETHER_BRICK_FENCE).canConnect(neighbor,
-                    neighbor.isSideSolidFullSquare(world, neighborPos, side.getOpposite()), side);
+            boolean solidFace = neighbor.isSideSolidFullSquare(world, neighborPos, side.getOpposite());
+            Group neighborGroup = group(neighbor);
+            boolean connected;
+            if (group.wall()) {
+                connected = neighborGroup != null && neighborGroup.wall() || neighbor.isIn(BlockTags.WALLS)
+                    || neighbor.getBlock() instanceof PaneBlock
+                    || neighbor.getBlock() instanceof FenceGateBlock && FenceGateBlock.canWallConnect(neighbor, side)
+                    || solidFace && !Block.cannotConnect(neighbor);
+            } else {
+                connected = neighborGroup != null && !neighborGroup.wall()
+                    || ((FenceBlock) Blocks.NETHER_BRICK_FENCE).canConnect(neighbor, solidFace, side);
+            }
             if (connected) mask |= 1 << direction;
         }
         for (int form = 0; form < MASKS.length; form++) for (int turns = 0; turns < 4; turns++) {
             int rotated = ((MASKS[form] << turns) | (MASKS[form] >>> (4 - turns))) & 15;
             if (rotated != mask) continue;
-            int pose = group.poses()[form];
+            int pose = form == 2 && group.straight() >= 0 ? group.straight() : group.poses()[form];
             BlockState next = state.with(CompositeRootBlock.VARIANT, pose % 16)
                 .with(CompositeRootBlock.ROTATION, turns * 2);
             var bank = ImportedArtworkBlock.bankProperty(next);

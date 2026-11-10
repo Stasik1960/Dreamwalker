@@ -78,6 +78,27 @@ def stone_materials(source, root, profile):
     return result
 
 
+def darken_balustrade_pillar(source, root, profile):
+    # The model owning the bright geometry at (-84, 29, -868) is birch_fence.
+    # Clone its sprites so other pieces of the spirelamp atlas keep their palette.
+    name = (MODEL + "birch_fence").split(":", 1)[1]
+    model = source.model(MODEL + "birch_fence", profile)
+    art = Art(source, root, name, profile, model)
+    neighbor = source.model(MODEL + "spruce_fence", profile)
+    face = neighbor["elements"][0]["faces"]["east"]
+    target = opaque_median(crop(source.image(resolve_texture(neighbor, face["texture"]), profile), face["uv"]))
+    for key, face in (("2", model["elements"][0]["faces"]["west"]),
+                      ("1", model["elements"][1]["faces"]["west"])):
+        image = art.face_image(face)
+        factor = min(0.90, target / opaque_median(crop(image, face["uv"])))
+        shaded = ImageEnhance.Brightness(image.convert("RGB")).enhance(factor)
+        shaded.putalpha(image.getchannel("A"))
+        art.add_texture(key, shaded)
+    art.save()
+    if profile == "original":
+        write_json(root, profile_path(profile, MODELS + name + ".json"), model)
+
+
 def opaque_tile(image, width, height):
     if image.getchannel("A").getextrema() != (255, 255):
         raise ValueError("Side material contains a transparent pixel")
@@ -100,10 +121,19 @@ def door_sides(source, root, profile):
         name = identifier.split(":", 1)[1]
         model = source.model(identifier, profile)
         art = Art(source, root, name, profile, model)
-        for element in model["elements"]:
+        for index, element in enumerate(model["elements"]):
+            faces = element["faces"]
+            # The solid jamb pieces with front and back only need side caps.
+            # Keep the cutout arch overlays and intentional single planes open.
+            uncapped = (faces.keys() == {"north", "south"}
+                        and all(a < b for a, b in zip(element["from"], element["to"]))
+                        and all(crop(art.face_image(face), face["uv"]).getchannel("A").getextrema() == (255, 255)
+                                for face in faces.values()))
             for direction in ("west", "east"):
-                face = element["faces"].get(direction)
-                if face is None or not face["texture"].startswith("#edge_"):
+                face = faces.get(direction)
+                if face is None and not uncapped:
+                    continue
+                if face is not None and not face["texture"].startswith("#edge_"):
                     continue
                 # Keep the original face geometry. Replace the stretched one-column
                 # edge with a fully textured side at the original pixel scale.
@@ -113,7 +143,7 @@ def door_sides(source, root, profile):
                 area = opaque_tile(material, width, height)
                 size = (max(16, 1 << (width - 1).bit_length()), max(16, 1 << (height - 1).bit_length()))
                 padded = opaque_tile(area, *size)
-                key = face["texture"][1:]
+                key = face["texture"][1:] if face is not None else f"edge_{index}_{direction}"
                 end_u, end_v = 16 * width / size[0], 16 * height / size[1]
                 element["faces"][direction] = {
                     "texture": art.add_texture(key, padded),
@@ -159,6 +189,7 @@ def generate(jar, root, profile_resources=None):
         print("Photographed masonry median luminance before/after:", json.dumps(receipt, sort_keys=True))
     for profile in PROFILES:
         door_sides(source, root, profile)
+        darken_balustrade_pillar(source, root, profile)
         stained_glass_caps(source, root, profile)
 
 

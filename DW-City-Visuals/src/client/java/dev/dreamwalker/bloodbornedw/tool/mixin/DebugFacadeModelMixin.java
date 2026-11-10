@@ -17,13 +17,8 @@ abstract class DebugFacadeModelMixin {
     @Inject(method = "terrainModel", at = @At("RETURN"), cancellable = true)
     private static void dw$terrainPose(BakedModel model, BlockPos root, BlockState state, BlockRenderView world,
             CallbackInfoReturnable<BakedModel> cir) {
-        cir.setReturnValue(DebugModels.apply(cir.getReturnValue(), root, state));
-    }
-
-    @Inject(method = "staticModel", at = @At("RETURN"), cancellable = true)
-    private static void dw$staticPose(BakedModel model, BlockPos root, BlockState state, BlockRenderView world,
-            Identifier part, CallbackInfoReturnable<BakedModel> cir) {
-        cir.setReturnValue(DebugModels.apply(cir.getReturnValue(), root, state));
+        if (!(state.getBlock() instanceof dev.dreamwalker.bloodbornedw.composite.CompositeRootBlock))
+            cir.setReturnValue(DebugModels.apply(cir.getReturnValue(), root, state));
     }
 
     @Inject(method = "visibleModel(Lnet/minecraft/class_1087;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_1920;ZLnet/minecraft/class_2960;)Lnet/minecraft/class_1087;",

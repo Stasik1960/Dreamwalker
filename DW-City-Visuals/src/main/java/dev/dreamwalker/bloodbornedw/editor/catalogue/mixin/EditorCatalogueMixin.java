@@ -10,9 +10,17 @@ import net.minecraft.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(value = UnifiedCreativeCatalogue.class, remap = false)
 public abstract class EditorCatalogueMixin {
+    @Inject(method = "initialize", at = @At("RETURN"), remap = false)
+    private static void dw$registerTabs(CallbackInfo ci) { EditorCatalogue.registerTabs(); }
+
+    @Redirect(method = "lambda$initialize$1", at = @At(value = "INVOKE", target = "Ldev/dreamwalker/bloodbornedw/debug/UnifiedCreativeCatalogue;canonicalItems()Ljava/util/List;"), remap = false)
+    private static List<ItemStack> dw$buildingTab() { return EditorCatalogue.categoryItems(EditorCatalogue.Category.BUILDING); }
+
     // Normalize the original list before the pinned lantern repair's cancellable RETURN.
     // No competing RETURN callback or thread-local intermediate list is needed.
     @Redirect(method = "canonicalItems", at = @At(value = "INVOKE", target = "Ljava/util/stream/Stream;toList()Ljava/util/List;"), remap = false)

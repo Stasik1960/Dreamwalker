@@ -76,6 +76,10 @@ public final class DebugToolModes {
         return blockTool == null ? List.of() : List.of(blockTool.getDefaultStack(), npcTool.getDefaultStack());
     }
 
+    public static boolean isModelTool(ItemStack stack) {
+        return stack.getItem() instanceof BbToolItem && tool(stack) == Tool.MODEL;
+    }
+
     public static Tool tool(ItemStack stack) {
         if (stack.isOf(blockTool)) return Tool.BLOCK;
         if (stack.isOf(npcTool)) return Tool.NPC;
@@ -96,6 +100,7 @@ public final class DebugToolModes {
         }
         ItemStack stack = player.getMainHandStack();
         if (!(stack.getItem() instanceof BbToolItem)) return;
+        if (tool(stack) == Tool.MODEL && !ClickRateLimit.accept(player, 1)) return;
         Tool tool = tool(stack);
         int next = (index(stack) + 1) % tool.actions.size();
         stack.getOrCreateNbt().putInt(MODE_KEY, next);
@@ -108,6 +113,7 @@ public final class DebugToolModes {
         ItemStack stack = player.getMainHandStack();
         if (!(stack.getItem() instanceof BbToolItem)) return false;
         Action action = action(stack);
+        if (tool(stack) == Tool.MODEL && !ClickRateLimit.accept(player, 0)) return true;
         if (!BbToolService.canEdit(player) || target == null || !target.valid(player.getServer())
                 || target.world(player.getServer()) != player.getServerWorld()
                 || !player.getServerWorld().canPlayerModifyAt(player, BlockPos.ofFloored(target.position(player.getServer())))) return true;
