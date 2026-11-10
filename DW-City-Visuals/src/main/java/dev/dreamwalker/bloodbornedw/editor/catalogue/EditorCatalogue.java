@@ -128,6 +128,48 @@ public final class EditorCatalogue {
         String variant = state.getString("variant");
         return !variant.isEmpty() && !variant.equals("0");
     }
+    // Explicitly reviewed art only: distinct closed-model geometry, excluding
+    // rotations, shifted city poses, connection parts and technical carriers.
+    private record AuthoredFamily(String path, String label, List<Integer> poses) {}
+    private static final List<AuthoredFamily> AUTHORED_FAMILIES = List.of(
+        new AuthoredFamily("source_addon_bag_0", "Широкий мешок", List.of(2)),
+        new AuthoredFamily("source_addon_barrel_0", "Большая бочка", List.of(6)),
+        new AuthoredFamily("source_addon_new_statue_1", "Статуя", List.of(1, 2)),
+        new AuthoredFamily("source_hold_statue", "Статуя, серия 2", List.of(1, 2, 4)));
+
+    private static int artIndex(ItemStack stack) {
+        var state = stack.getSubNbt("BlockStateTag");
+        if (state == null) return 0;
+        try {
+            int variant = state.contains("variant", 8) ? Integer.parseInt(state.getString("variant")) : 0;
+            int bank = state.contains("art_bank", 8) ? Integer.parseInt(state.getString("art_bank")) : 0;
+            return bank * 16 + variant;
+        } catch (NumberFormatException invalid) { return -1; }
+    }
+    private static void addAuthoredFamilies(List<ItemStack> items, Set<String> keys) {
+        for (AuthoredFamily family : AUTHORED_FAMILIES) {
+            Identifier id = new Identifier("bloodborne_dw", family.path());
+            if (!Registries.ITEM.containsId(id)) continue;
+            Item item = Registries.ITEM.get(id);
+            if (!(item instanceof BlockItem blockItem) || !(blockItem.getBlock() instanceof CompositeRootBlock root)
+                    || !root.getDefaultState().contains(CompositeRootBlock.VARIANT)) continue;
+            ItemStack template = items.stream().filter(stack -> stack.isOf(item)).findFirst().orElse(null);
+            if (template == null) continue;
+            for (int pose : family.poses()) {
+                if (pose >= root.spec.variants.size()) continue;
+                final int selectedPose = pose;
+                if (items.stream().anyMatch(stack -> stack.isOf(item) && artIndex(stack) == selectedPose)) continue;
+                ItemStack stack = template.copy();
+                var state = stack.getOrCreateSubNbt("BlockStateTag");
+                state.putString("variant", Integer.toString(pose % 16));
+                if (pose >= 16) state.putString("art_bank", Integer.toString(pose / 16));
+                else state.remove("art_bank");
+                stack.getOrCreateNbt().putInt(ImportedTypeAliases.VERSION_KEY, ImportedTypeAliases.VERSION);
+                stack.setCustomName(net.minecraft.text.Text.literal(family.label() + " — форма " + (pose + 1)));
+                if (keys.add(key(stack))) items.add(stack);
+            }
+        }
+    }
     public static void fill(List<ItemStack> items) {
         java.util.Map<String, String> original = new java.util.LinkedHashMap<>();
         Set<String> ids = new HashSet<>();
@@ -160,6 +202,7 @@ public final class EditorCatalogue {
             if (!stack.isEmpty() && !technicalStack(stack) && !handledByPinnedRepair(stack, Registries.ITEM.getId(stack.getItem()).toString())
                     && variants.add(key(stack))) items.add(stack);
         }
+        addAuthoredFamilies(items, variants);
         for (ItemStack stack : FenceCatalogue.specialItems()) {
             if (variants.add(key(stack))) items.add(stack);
         }
@@ -170,17 +213,27 @@ public final class EditorCatalogue {
     }
     /** Each item belongs to exactly one tab; all tabs draw from the same canonical list. */
     public enum Category { BUILDING, OPENINGS, STAIRS, BOUNDARIES, DECOR, ITEMS, TOOLS }
+    private static final List<String> DECOR_NAMES = List.of(
+        "statue", "tombstone", "gargoyle", "lantern", "spirelamp", "street_lamp", "hunter_lamp",
+        "candel", "candle", "books", "barrel", "bag_", "cases_", "chain", "bloodviles",
+        "prototype_tree", "source_addon_grass", "source_addon_leaves");
+
     public static Category category(ItemStack stack) {
         Identifier id = Registries.ITEM.getId(stack.getItem());
         String path = id.getPath();
         if (stack.isOf(CityEditorServer.BRUSH) || path.equals("nrp_pickaxe")
                 || path.equals("bb_tool") || path.equals("bb_block_tool") || path.equals("bb_npc_tool")) return Category.TOOLS;
         if (id.getNamespace().equals("bloodborne_rp")) {
-            if (path.endsWith("_placer")) return Category.DECOR;
-            return Category.ITEMS;
+            if (!path.endsWith("_placer")) return Category.ITEMS;
+            if (path.contains("door") || path.contains("gate") || path.contains("window") || path.contains("curtain"))
+                return Category.OPENINGS;
+            if (path.contains("stairs") || path.contains("ladder")) return Category.STAIRS;
+            return Category.DECOR;
         }
         if (!(stack.getItem() instanceof BlockItem item)) return Category.ITEMS;
         Block block = item.getBlock();
+        if (AUTHORED_FAMILIES.stream().anyMatch(family -> family.path().equals(path))
+                || DECOR_NAMES.stream().anyMatch(path::contains)) return Category.DECOR;
         if (block instanceof DoorBlock || block instanceof TrapdoorBlock || block instanceof FenceGateBlock
                 || block instanceof CompositeRootBlock root && root.spec.openable
                 || path.contains("window") || path.contains("glass_pane") || block instanceof PaneBlock)
@@ -189,7 +242,7 @@ public final class EditorCatalogue {
                 || path.startsWith("source_assembly_") && (path.endsWith("_wall") || path.endsWith("_fence")))
             return Category.BOUNDARIES;
         if (block instanceof ImportedStairBlock || block instanceof StairsBlock
-                || path.contains("stairs") || path.contains("roof"))
+                || path.contains("stairs") || path.contains("roof") || path.contains("ladder"))
             return Category.STAIRS;
         return Category.BUILDING;
     }
@@ -231,6 +284,25 @@ public final class EditorCatalogue {
         lastOriginal.keySet().stream().sorted().forEach(originals::add);
         for (String id : lastOriginal.keySet()) if (!foundOriginals.contains(id)) changed.add(id);
         JsonObject out = new JsonObject();
+        JsonArray authored = new JsonArray();
+        for (AuthoredFamily family : AUTHORED_FAMILIES) {
+            Identifier id = new Identifier("bloodborne_dw", family.path());
+            Item item = Registries.ITEM.get(id);
+            JsonObject detail = new JsonObject();
+            detail.addProperty("id", id.toString());
+            if (item instanceof BlockItem blockItem) {
+                Block block = blockItem.getBlock();
+                detail.addProperty("blockClass", block.getClass().getName());
+                detail.addProperty("variantProperty", block.getDefaultState().contains(CompositeRootBlock.VARIANT));
+                if (block instanceof CompositeRootBlock root) detail.addProperty("specVariants", root.spec.variants.size());
+            }
+            JsonArray missing = new JsonArray();
+            for (int pose : family.poses())
+                if (actual.stream().noneMatch(stack -> stack.isOf(item) && artIndex(stack) == pose)) missing.add(pose);
+            detail.add("missingPoses", missing);
+            authored.add(detail);
+        }
+        out.add("authoredFamilies", authored);
         JsonObject categoryCounts = new JsonObject();
         for (Category category : Category.values()) categoryCounts.addProperty(category.name(), counts.getOrDefault(category, 0));
         out.add("categories", categoryCounts); out.addProperty("uniqueRegistryIds", ids.size());

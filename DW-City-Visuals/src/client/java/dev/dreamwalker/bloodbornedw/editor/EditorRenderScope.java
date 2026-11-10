@@ -13,6 +13,10 @@ public final class EditorRenderScope {
     private EditorRenderScope() {}
     public static void begin(EditorView view) { CURRENT.set(view != null && !view.dw$hasEditorCells() ? EMPTY : view); }
     public static void end() { CURRENT.remove(); }
+    public static boolean canResolveStyle(BlockRenderView view) {
+        return view instanceof EditorView || view instanceof net.minecraft.world.World || CURRENT.get() != null;
+    }
+
     public static int style(BlockRenderView view, BlockPos pos) {
         if (view instanceof EditorView snapshot) return snapshot.dw$hasEditorCells() ? snapshot.dw$editorStyle(pos) : -1;
         EditorView snapshot = CURRENT.get();

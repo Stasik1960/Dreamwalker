@@ -5,6 +5,10 @@ import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin;
 import net.fabricmc.fabric.api.client.model.loading.v1.ModelModifier;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
+import dev.dreamwalker.bloodbornedw.composite.MultipartBuilderData;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.render.model.BasicBakedModel;
+import net.minecraft.client.render.model.MultipartBakedModel;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.block.BlockState;
 import net.minecraft.registry.Registries;
@@ -172,6 +176,32 @@ public final class CityFacadesClient implements ClientModInitializer {
         int role=ShutterSubstrate.model(model,state)?ShutterSubstrate.role(world,pos):FacadeMaterials.role(pos);
         return role==0?model:fixed(model,role);
     }
+    /** Resolve fixed compact geometry for a neighboring mesh's opacity test. */
+    public static BakedModel compactOccluder(BakedModel model, BlockPos pos, BlockState state, BlockRenderView world) {
+        if (CityVisualClient.isAlt()
+                && (!EditorRenderScope.canResolveStyle(world) || EditorRenderScope.style(world, pos) >= 0)) return null;
+        BakedModel selected = terrainModel(model, pos, state, world);
+        if (fixedCompactGeometry(selected, state)) return selected;
+        if (!(selected instanceof FacadeModel facade) || !fixedCompactGeometry(facade.delegate(), state)) return null;
+        int role = CityVisualClient.isAlt() ? facade.automaticRole(world, state, pos) : 0;
+        return role == 0 ? facade.delegate() : new FacadeModel(facade.delegate(), role);
+    }
+
+    private static boolean fixedCompactGeometry(BakedModel model, BlockState state) {
+        BakedModel missing = MinecraftClient.getInstance().getBakedModelManager().getMissingModel();
+        if (model == missing || model.isBuiltin()) return false;
+        if (model.getClass() == BasicBakedModel.class) return true;
+        if (model.getClass() != MultipartBakedModel.class || !(model instanceof MultipartBuilderData graph)) return false;
+        boolean found = false;
+        for (var component : graph.dreamwalker$components()) {
+            if (!component.getLeft().test(state)) continue;
+            BakedModel child = component.getRight();
+            if (child == null || child == missing || child.getClass() != BasicBakedModel.class || child.isBuiltin()) return false;
+            found = true;
+        }
+        return found;
+    }
+
     private static int automaticTerrainRole(BakedModel model,BlockPos pos,BlockState state,BlockRenderView world) {
         if (model instanceof FacadeModel facade) return facade.automaticRole(world,state,pos);
         if (!(state.getBlock() instanceof NativeGridBlock) && !(state.getBlock() instanceof NativePhysicsBlock)) return 0;

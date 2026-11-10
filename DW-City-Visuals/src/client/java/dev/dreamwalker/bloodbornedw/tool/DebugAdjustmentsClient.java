@@ -2,6 +2,7 @@ package dev.dreamwalker.bloodbornedw.tool;
 
 import dev.dreamwalker.bloodbornedw.composite.CompositeBlockEntity;
 import dev.dreamwalker.bloodbornedw.composite.EditorMeshUpdates;
+import dev.dreamwalker.bloodbornedw.composite.ImportedCompactBlock;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
@@ -43,7 +44,14 @@ public final class DebugAdjustmentsClient {
     private static void rebuild(MinecraftClient client, Identifier dimension, BlockPos root) {
         if (client.world == null || !client.world.getRegistryKey().getValue().equals(dimension)
                 || !client.world.getChunkManager().isChunkLoaded(root.getX() >> 4, root.getZ() >> 4)) return;
-        if (client.world.getBlockEntity(root) instanceof CompositeBlockEntity composite) EditorMeshUpdates.changed(composite);
+        if (client.world.getBlockEntity(root) instanceof CompositeBlockEntity composite) {
+            EditorMeshUpdates.changed(composite);
+        } else {
+            var state = client.world.getBlockState(root);
+            if (state.getBlock() instanceof ImportedCompactBlock && state.get(ImportedCompactBlock.COMPACT)) {
+                EditorMeshUpdates.changedAt(root);
+            }
+        }
         client.worldRenderer.scheduleBlockRenders(root.getX() - 1, root.getY() - 1, root.getZ() - 1,
                 root.getX() + 1, root.getY() + 1, root.getZ() + 1);
     }

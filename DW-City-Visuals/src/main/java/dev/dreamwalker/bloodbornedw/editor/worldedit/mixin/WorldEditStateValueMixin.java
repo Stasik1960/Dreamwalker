@@ -4,15 +4,26 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import java.util.Locale;
 import java.util.Optional;
+import net.minecraft.block.BlockState;
+import net.minecraft.registry.Registries;
 import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.Property;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Pseudo;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Pseudo
 @Mixin(targets = "dev.dreamwalker.bloodbornedw.compat.worldedit.WorldEditBridge", remap = false)
 abstract class WorldEditStateValueMixin {
+    @Inject(method = "stateToken", at = @At("HEAD"), cancellable = true)
+    private static void dw$bareIdForPropertylessBlock(BlockState state, CallbackInfoReturnable<String> cir) {
+        if (state.getEntries().isEmpty()) {
+            cir.setReturnValue(Registries.BLOCK.getId(state.getBlock()).toString());
+        }
+    }
+
     @WrapOperation(method = "with", at = @At(value = "INVOKE",
         target = "Lnet/minecraft/class_2769;method_11900(Ljava/lang/String;)Ljava/util/Optional;"))
     private static Optional<?> dw$parseEnumValue(Property<?> property, String value, Operation<Optional<?>> original) {

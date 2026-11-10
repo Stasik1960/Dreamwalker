@@ -3,6 +3,7 @@ package dev.dreamwalker.bloodbornedw.composite.overlaymixin;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import dev.dreamwalker.bloodbornedw.composite.CompositeCornerLighting;
+import dev.dreamwalker.bloodbornedw.composite.CoplanarQuads;
 import dev.dreamwalker.bloodbornedw.composite.CornerLightingContext;
 import dev.dreamwalker.bloodbornedw.composite.CornerQuadCellClipper;
 import dev.dreamwalker.bloodbornedw.composite.CornerQuadParentScope;
@@ -22,6 +23,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(targets="dev.dreamwalker.bloodbornedw.composite.CompositeWorldMesh$Recorder",remap=false)
 public abstract class CompositeCornerLightMixin implements CornerLightingContext {
  @Unique private final CornerSurfaceLight dw$surfaceLight=new CornerSurfaceLight();
+ @Unique private final CoplanarQuads dw$coplanar = new CoplanarQuads();
  @Unique private StaticLightingViewAccess dw$context;
  @Override public void dw$setCornerContext(StaticLightingViewAccess view){dw$context=view;}
  @Inject(method="flatLighting",at=@At("HEAD"),remap=false)
@@ -29,13 +31,13 @@ public abstract class CompositeCornerLightMixin implements CornerLightingContext
  @WrapOperation(method="method_22920",at=@At(value="INVOKE",target="Lnet/minecraft/class_4588;method_22920(Lnet/minecraft/class_4587$class_4665;Lnet/minecraft/class_777;[FFFF[IIZ)V",remap=false),remap=false)
  private void dw$corner(@Coerce VertexConsumer delegate,MatrixStack.Entry matrix,BakedQuad quad,float[] brightness,float r,float g,float b,int[] light,int overlay,boolean useColor,Operation<Void> original){
   if(dw$context==null||!CompositeCornerLighting.sample(dw$surfaceLight,quad,dw$context,light)){
-   original.call(delegate,matrix,quad,brightness,r,g,b,light,overlay,useColor);return;
+   dw$write(delegate,matrix,quad,brightness,r,g,b,light,overlay,useColor,original);return;
   }
   int mask=dw$surfaceLight.mixedCornerMask();
   var split=CornerQuadSplitter.split(quad,dw$context,mask,brightness,light);
   if(split==null){
    var cells=CornerQuadCellClipper.clip(quad,dw$context,mask,brightness,light);
-   if(cells==null){original.call(delegate,matrix,quad,dw$surfaceLight.brightness(),r,g,b,dw$surfaceLight.lights(),overlay,useColor);return;}
+   if(cells==null){dw$write(delegate,matrix,quad,dw$surfaceLight.brightness(),r,g,b,dw$surfaceLight.lights(),overlay,useColor,original);return;}
    for(var piece:cells)dw$emit(quad,piece,true,delegate,matrix,r,g,b,overlay,useColor,original);
    return;
   }
@@ -45,6 +47,23 @@ public abstract class CompositeCornerLightMixin implements CornerLightingContext
  @Unique private void dw$emit(BakedQuad parent,CornerQuadSplitter.Piece piece,boolean qualified,VertexConsumer delegate,MatrixStack.Entry matrix,float r,float g,float b,int overlay,boolean useColor,Operation<Void> original){
   boolean corrected=qualified?dw$surfaceLight.sampleQualified(piece.quad(),dw$context,piece.light()):dw$surfaceLight.sample(piece.quad(),dw$context,piece.light());
   float[] levels=corrected?dw$surfaceLight.brightness():piece.brightness();int[] lights=corrected?dw$surfaceLight.lights():piece.light();
-  CornerQuadParentScope.emit(piece.quad(),parent,()->original.call(delegate,matrix,piece.quad(),levels,r,g,b,lights,overlay,useColor));
+  CornerQuadParentScope.emit(piece.quad(),parent,()->dw$write(delegate,matrix,piece.quad(),levels,r,g,b,lights,overlay,useColor,original));
+ }
+
+ @Unique
+ private void dw$write(VertexConsumer delegate, MatrixStack.Entry matrix, BakedQuad quad, float[] brightness,
+                       float red, float green, float blue, int[] lights, int overlay, boolean useColor,
+                       Operation<Void> original) {
+  var pieces = dw$coplanar.clip(matrix.getPositionMatrix(), quad, brightness, lights, dw$context);
+  if (pieces == null) {
+   original.call(delegate, matrix, quad, brightness, red, green, blue, lights, overlay, useColor);
+   return;
+  }
+  Object source = CornerQuadParentScope.parentFor(quad);
+  Object parent = source == null ? quad : source;
+  for (var piece : pieces) {
+   CornerQuadParentScope.emit(piece.quad(), parent, () ->
+       original.call(delegate, matrix, piece.quad(), piece.brightness(), red, green, blue, piece.light(), overlay, useColor));
+  }
  }
 }
