@@ -2,8 +2,10 @@ package dev.dreamwalker.bloodbornedw.composite;
 
 import dev.dreamwalker.bloodbornedw.composite.overlaymixin.CompositeLightingViewAccess;
 import dev.dreamwalker.bloodbornedw.composite.overlaymixin.StaticLightingViewAccess;
+import dev.dreamwalker.bloodbornedw.editor.EditorRenderScope;
 import dev.dreamwalker.bloodbornedw.tool.DebugAdjustments;
 import dev.dreamwalker.bloodbornedw.visual.CityFacadesClient;
+import dev.dreamwalker.bloodbornedw.visual.CityVisualClient;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,7 +28,7 @@ public final class CoplanarQuads {
     private static final int MAX_PER_BUCKET = 64;
     private static final int MAX_PIECES = 32;
 
-    private final Map<PlaneKey, List<Face>> planes = new HashMap<>();
+    private final Map<PlaneKey, Face> planes = new HashMap<>();
     private final double[] coordinates = new double[12];
     private Map<Neighbor, List<Face>> compactFaces;
     private int tracked;
@@ -34,19 +36,60 @@ public final class CoplanarQuads {
     private record Neighbor(BlockPos pos, Direction side) {}
 
     private record PlaneKey(int axis, int winding, long slopeU, long slopeV, long offset) {}
-    private record Point(double u, double v, double depth) {}
-    private record Face(PlaneKey key, Point[] points, double slopeU, double slopeV, double offset,
-                        double minU, double maxU, double minV, double maxV, BakedQuad opacitySource) {
+    private static final class Face {
+        final PlaneKey key;
+        final double[] points;
+        final int size;
+        final double slopeU, slopeV, offset;
+        final double minU, maxU, minV, maxV;
+        final BakedQuad opacitySource;
+        Face previous;
+        int bucketSize = 1;
+
+        Face(PlaneKey key, double[] points, int size, double slopeU, double slopeV, double offset,
+             double minU, double maxU, double minV, double maxV, BakedQuad opacitySource) {
+            this.key = key;
+            this.points = points;
+            this.size = size;
+            this.slopeU = slopeU;
+            this.slopeV = slopeV;
+            this.offset = offset;
+            this.minU = minU;
+            this.maxU = maxU;
+            this.minV = minV;
+            this.maxV = maxV;
+            this.opacitySource = opacitySource;
+        }
+
+        double u(int i) { return points[i * 3]; }
+        double v(int i) { return points[i * 3 + 1]; }
+        double depth(int i) { return points[i * 3 + 2]; }
+
         boolean overlaps(Face other) {
-            if (minU >= other.maxU || maxU <= other.minU || minV >= other.maxV || maxV <= other.minV) {
-                return false;
+            return minU < other.maxU && maxU > other.minU && minV < other.maxV && maxV > other.minV
+                    && liesOn(other) && other.liesOn(this);
+        }
+
+        boolean sameBoundary(Face other) {
+            if (size != other.size || minU != other.minU || maxU != other.maxU
+                    || minV != other.minV || maxV != other.maxV) return false;
+            for (int start = 0; start < size; start++) {
+                if (!samePoint(0, other, start)) continue;
+                for (int i = 1; i < size; i++) {
+                    if (!samePoint(i, other, (start + i) % size)) return false;
+                }
+                return true;
             }
-            for (Point point : points) {
-                double distance = point.depth - (other.offset + other.slopeU * point.u + other.slopeV * point.v);
-                if (Math.abs(distance) > PLANE_EPSILON) return false;
-            }
-            for (Point point : other.points) {
-                double distance = point.depth - (offset + slopeU * point.u + slopeV * point.v);
+            return false;
+        }
+
+        private boolean samePoint(int i, Face other, int j) {
+            return u(i) == other.u(j) && v(i) == other.v(j);
+        }
+
+        private boolean liesOn(Face other) {
+            for (int i = 0; i < size; i++) {
+                double distance = depth(i) - (other.offset + other.slopeU * u(i) + other.slopeV * v(i));
                 if (Math.abs(distance) > PLANE_EPSILON) return false;
             }
             return true;
@@ -79,20 +122,28 @@ public final class CoplanarQuads {
         Object parent = CornerQuadParentScope.parentFor(quad);
         Face face = project(matrix, data, parent instanceof BakedQuad original ? original : quad);
         if (face == null) return null;
-        List<Face> earlier = planes.get(face.key);
+        Face earlier = planes.get(face.key);
         List<Face> neighbors = compactNeighbors(face, matrix, view);
         boolean opaque = false;
         List<List<Vertex>> remaining = null;
-        int neighborCount = neighbors.size();
-        int count = neighborCount + (earlier == null ? 0 : earlier.size());
-        for (int i = 0; i < count; i++) {
-            Face other = i < neighborCount ? neighbors.get(i) : earlier.get(i - neighborCount);
-            if (!face.overlaps(other) || !StaticArchitectureGeometry.opaqueQuad(other.opacitySource)) continue;
+        int neighborIndex = 0;
+        Face previous = earlier;
+        while (neighborIndex < neighbors.size() || previous != null) {
+            Face other;
+            if (neighborIndex < neighbors.size()) {
+                other = neighbors.get(neighborIndex++);
+            } else {
+                other = previous;
+                previous = previous.previous;
+                if (!face.overlaps(other)) continue;
+            }
+            if (!StaticArchitectureGeometry.opaqueQuad(other.opacitySource)) continue;
             if (!opaque) {
                 if (!StaticArchitectureGeometry.opaqueQuad(quad)) return null;
                 opaque = true;
             }
-            List<List<Vertex>> input = remaining == null ? triangles(face.points) : remaining;
+            if (face.sameBoundary(other)) return List.of();
+            List<List<Vertex>> input = remaining == null ? triangles(face) : remaining;
             List<List<Vertex>> next = new ArrayList<>();
             boolean removed = false;
             for (List<Vertex> polygon : input) {
@@ -135,6 +186,7 @@ public final class CoplanarQuads {
         if (view == null || Math.abs(face.slopeU) > PLANE_EPSILON || Math.abs(face.slopeV) > PLANE_EPSILON) {
             return List.of();
         }
+        if (CityVisualClient.isAlt() && !EditorRenderScope.canResolveStyle(view.dw$delegate())) return List.of();
         Matrix4f pose = view.dw$transform();
         if (pose == null || !sameBasis(matrix, pose)) return List.of();
         float x = matrix.m30() - pose.m30();
@@ -144,8 +196,12 @@ public final class CoplanarQuads {
         double depth = axis == 0 ? x : axis == 1 ? y : z;
         double u = axis == 0 ? y : axis == 1 ? z : x;
         double v = axis == 0 ? z : axis == 1 ? x : y;
-        int normalCell = (int) Math.floor(face.offset - depth - face.key.winding * PLANE_EPSILON);
+        double localPlane = face.offset - depth;
+        int normalCell = (int) Math.floor(localPlane - face.key.winding * PLANE_EPSILON);
         if (normalCell < -1 || normalCell > 1) return List.of();
+        // Interior planes only need a wall lookup when they extend into its cell
+        // along the normal. Boundary planes can also meet a lateral neighbor.
+        if (normalCell == 0 && Math.abs(localPlane - Math.rint(localPlane)) > PLANE_EPSILON) return List.of();
         int minU = Math.max(-1, (int) Math.floor(face.minU - u + PLANE_EPSILON));
         int maxU = Math.min(1, (int) Math.ceil(face.maxU - u - PLANE_EPSILON) - 1);
         int minV = Math.max(-1, (int) Math.floor(face.minV - v + PLANE_EPSILON));
@@ -232,10 +288,13 @@ public final class CoplanarQuads {
                 && a.m20() == b.m20() && a.m21() == b.m21() && a.m22() == b.m22();
     }
 
-    private void remember(Face face, List<Face> earlier) {
-        if (tracked >= MAX_TRACKED || earlier != null && earlier.size() >= MAX_PER_BUCKET) return;
-        if (earlier == null) earlier = planes.computeIfAbsent(face.key, ignored -> new ArrayList<>(4));
-        earlier.add(face);
+    private void remember(Face face, Face earlier) {
+        if (tracked >= MAX_TRACKED || earlier != null && earlier.bucketSize >= MAX_PER_BUCKET) return;
+        if (earlier != null) {
+            face.previous = earlier;
+            face.bucketSize = earlier.bucketSize + 1;
+        }
+        planes.put(face.key, face);
         tracked++;
     }
 
@@ -263,7 +322,7 @@ public final class CoplanarQuads {
         double slopeV = -(axis == 0 ? nz : axis == 1 ? nx : ny) / normal;
         double offset = coordinates[d] - slopeU * coordinates[u] - slopeV * coordinates[v];
         int size = coordinates[u + 2] == coordinates[u + 3] && coordinates[v + 2] == coordinates[v + 3] && coordinates[d + 2] == coordinates[d + 3] ? 3 : 4;
-        Point[] points = new Point[size];
+        double[] points = new double[size * 3];
         double minU = coordinates[u], maxU = coordinates[u], minV = coordinates[v], maxV = coordinates[v];
         for (int i = 0; i < size; i++) {
             int next = (i + 1) % size;
@@ -271,41 +330,45 @@ public final class CoplanarQuads {
             double cross = (coordinates[u + next] - coordinates[u + i]) * (coordinates[v + after] - coordinates[v + i]) - (coordinates[v + next] - coordinates[v + i]) * (coordinates[u + after] - coordinates[u + i]);
             if (cross * winding <= AREA_EPSILON
                     || Math.abs(coordinates[d + i] - (offset + slopeU * coordinates[u + i] + slopeV * coordinates[v + i])) > PLANE_EPSILON) return null;
-            points[i] = new Point(coordinates[u + i], coordinates[v + i], coordinates[d + i]);
+            points[i * 3] = coordinates[u + i];
+            points[i * 3 + 1] = coordinates[v + i];
+            points[i * 3 + 2] = coordinates[d + i];
             minU = Math.min(minU, coordinates[u + i]);
             maxU = Math.max(maxU, coordinates[u + i]);
             minV = Math.min(minV, coordinates[v + i]);
             maxV = Math.max(maxV, coordinates[v + i]);
         }
         PlaneKey key = new PlaneKey(axis, winding, bucket(slopeU), bucket(slopeV), bucket(offset));
-        return new Face(key, points, slopeU, slopeV, offset, minU, maxU, minV, maxV, opacitySource);
+        return new Face(key, points, size, slopeU, slopeV, offset, minU, maxU, minV, maxV, opacitySource);
     }
 
     private static long bucket(double value) {
         return Math.round(value * 2048);
     }
 
-    private static List<List<Vertex>> triangles(Point[] points) {
-        Vertex a = new Vertex(points[0].u, points[0].v, 1, 0, 0, 0);
-        Vertex b = new Vertex(points[1].u, points[1].v, 0, 1, 0, 0);
-        Vertex c = new Vertex(points[2].u, points[2].v, 0, 0, 1, 0);
-        if (points.length == 3) return List.of(List.of(a, b, c));
-        Vertex d = new Vertex(points[3].u, points[3].v, 0, 0, 0, 1);
+    private static List<List<Vertex>> triangles(Face face) {
+        Vertex a = new Vertex(face.u(0), face.v(0), 1, 0, 0, 0);
+        Vertex b = new Vertex(face.u(1), face.v(1), 0, 1, 0, 0);
+        Vertex c = new Vertex(face.u(2), face.v(2), 0, 0, 1, 0);
+        if (face.size == 3) return List.of(List.of(a, b, c));
+        Vertex d = new Vertex(face.u(3), face.v(3), 0, 0, 0, 1);
         return List.of(List.of(a, b, c), List.of(a, c, d));
     }
 
     private static boolean subtract(List<Vertex> polygon, Face occluder, List<List<Vertex>> result) {
         List<List<Vertex>> outside = new ArrayList<>(4);
         List<Vertex> inside = polygon;
-        Point[] points = occluder.points;
-        for (int i = 0; i < points.length; i++) {
-            Point a = points[i], b = points[(i + 1) % points.length];
+        for (int i = 0; i < occluder.size; i++) {
+            int end = (i + 1) % occluder.size;
+            double u = occluder.u(i), v = occluder.v(i);
+            double du = occluder.u(end) - u, dv = occluder.v(end) - v;
+            int winding = occluder.key.winding;
             List<Vertex> next = new ArrayList<>();
             List<Vertex> strip = new ArrayList<>();
             Vertex previous = inside.get(inside.size() - 1);
-            double prevDistance = side(previous, a, b, occluder.key.winding);
+            double prevDistance = side(previous, u, v, du, dv, winding);
             for (Vertex vertex : inside) {
-                double distance = side(vertex, a, b, occluder.key.winding);
+                double distance = side(vertex, u, v, du, dv, winding);
                 if (distance * prevDistance < 0) {
                     Vertex cut = previous.interpolate(vertex, prevDistance / (prevDistance - distance));
                     next.add(cut);
@@ -339,8 +402,8 @@ public final class CoplanarQuads {
         return false;
     }
 
-    private static double side(Vertex vertex, Point a, Point b, int winding) {
-        return winding * ((b.u - a.u) * (vertex.v - a.v) - (b.v - a.v) * (vertex.u - a.u));
+    private static double side(Vertex vertex, double u, double v, double du, double dv, int winding) {
+        return winding * (du * (vertex.v - v) - dv * (vertex.u - u));
     }
 
     private static CornerQuadSplitter.Piece piece(BakedQuad quad, int[] source, float[] brightness, int[] lights,
