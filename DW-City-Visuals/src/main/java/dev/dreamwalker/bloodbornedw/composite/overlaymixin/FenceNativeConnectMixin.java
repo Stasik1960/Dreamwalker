@@ -16,7 +16,8 @@ public abstract class FenceNativeConnectMixin {
     @Inject(method = "canConnect", at = @At("HEAD"), cancellable = true)
     private void dw$connectReviewedFence(BlockState neighbor, boolean solid, Direction direction,
                                          CallbackInfoReturnable<Boolean> cir) {
-        if (AutoStoneFence.matches(neighbor) && !neighbor.isIn(BlockTags.WALLS))
-            cir.setReturnValue(!((FenceBlock)(Object)this).getDefaultState().isIn(BlockTags.WOODEN_FENCES));
+        if (AutoStoneFence.matches(neighbor))
+            cir.setReturnValue(!neighbor.isIn(BlockTags.WALLS)
+                && !((FenceBlock)(Object)this).getDefaultState().isIn(BlockTags.WOODEN_FENCES));
     }
 }
