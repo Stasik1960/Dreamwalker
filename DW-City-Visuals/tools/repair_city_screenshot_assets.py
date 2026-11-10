@@ -181,6 +181,9 @@ def stained_glass_caps(source, root, profile):
 def generate(jar, root, profile_resources=None):
     roots = (root, profile_resources) if profile_resources is not None else (root,)
     source = Source(jar, roots)
+    # Each profile must sample the unmodified pillar model. The ALT fallback
+    # must not read the Original sprite just written to the output directory.
+    pillar_source = Source(jar, (profile_resources,) if profile_resources is not None else ())
     if profile_resources is None:
         # Standalone previews start from the older release. The game build
         # already has these six atlas overrides in its profile resource tree.
@@ -189,7 +192,7 @@ def generate(jar, root, profile_resources=None):
         print("Photographed masonry median luminance before/after:", json.dumps(receipt, sort_keys=True))
     for profile in PROFILES:
         door_sides(source, root, profile)
-        darken_balustrade_pillar(source, root, profile)
+        darken_balustrade_pillar(pillar_source, root, profile)
         stained_glass_caps(source, root, profile)
 
 
