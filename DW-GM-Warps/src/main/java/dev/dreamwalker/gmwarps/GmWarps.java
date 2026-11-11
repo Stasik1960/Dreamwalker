@@ -81,7 +81,7 @@ public final class GmWarps implements ModInitializer {
         List<String> names = WarpData.get(source.getServer()).warpNames();
         String message = names.isEmpty() ? "Сохранённых варпов пока нет."
                 : "Варпы (" + names.size() + "): " + String.join(", ", names);
-        source.sendFeedback(() -> Text.literal(message), false);
+        source.sendMessage(Text.literal(message));
         return names.size();
     }
 
@@ -91,7 +91,7 @@ public final class GmWarps implements ModInitializer {
         ServerPlayerEntity player = source.getPlayerOrThrow();
         boolean replaced = WarpData.get(source.getServer()).setWarp(name, WarpLocation.capture(player));
         String message = replaced ? "Варп «" + name + "» обновлён." : "Варп «" + name + "» сохранён.";
-        source.sendFeedback(() -> Text.literal(message), true);
+        reportChange(source, Text.literal(message));
         return 1;
     }
 
@@ -99,8 +99,15 @@ public final class GmWarps implements ModInitializer {
         String name = input.trim();
         if (!WarpData.validName(name)) throw INVALID_NAME.create();
         if (!WarpData.get(source.getServer()).removeWarp(name)) throw UNKNOWN_WARP.create(name);
-        source.sendFeedback(() -> Text.literal("Варп «" + name + "» удалён."), true);
+        reportChange(source, Text.literal("Варп «" + name + "» удалён."));
         return 1;
+    }
+
+    private static void reportChange(ServerCommandSource source, Text message) {
+        source.sendFeedback(() -> message, true);
+        // Keep the normal operator audit and deliver the result in worlds that mute command feedback.
+        ServerPlayerEntity player = source.getPlayer();
+        if (player != null && !player.shouldReceiveFeedback()) source.sendMessage(message);
     }
 
     private static int warp(ServerCommandSource source, String input) throws CommandSyntaxException {
@@ -121,7 +128,7 @@ public final class GmWarps implements ModInitializer {
             moved++;
         }
         int count = moved;
-        source.sendFeedback(() -> Text.literal("Телепортировано игроков: " + count + "."), false);
+        source.sendMessage(Text.literal("Телепортировано игроков: " + count + "."));
         return moved;
     }
 
@@ -188,7 +195,7 @@ public final class GmWarps implements ModInitializer {
         ServerWorld world = findWorld(source, location);
         teleport(player, world, location, location.yaw(), location.pitch());
         data.clearBack(player.getUuid());
-        source.sendFeedback(() -> Text.literal("Вы вернулись на позицию до варпа."), false);
+        source.sendMessage(Text.literal("Вы вернулись на позицию до варпа."));
         return 1;
     }
 
