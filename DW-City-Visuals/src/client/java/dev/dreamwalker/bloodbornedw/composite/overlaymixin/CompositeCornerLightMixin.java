@@ -54,7 +54,7 @@ public abstract class CompositeCornerLightMixin implements CornerLightingContext
  private void dw$write(VertexConsumer delegate, MatrixStack.Entry matrix, BakedQuad quad, float[] brightness,
                        float red, float green, float blue, int[] lights, int overlay, boolean useColor,
                        Operation<Void> original) {
-  var pieces = dw$coplanar.clip(matrix.getPositionMatrix(), quad, brightness, lights, dw$context);
+  var pieces = dw$coplanar.clip(matrix.getPositionMatrix(), quad, brightness, lights);
   if (pieces == null) {
    original.call(delegate, matrix, quad, brightness, red, green, blue, lights, overlay, useColor);
    return;

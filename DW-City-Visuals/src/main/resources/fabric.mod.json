@@ -29,6 +29,7 @@
     ]
   },
   "mixins": [
+    { "config": "dw-terrain-priority.mixins.json", "environment": "client" },
     { "config": "dw-bb-horizontal.mixins.json" },
     { "config": "dw-bb-tool-client.mixins.json", "environment": "client" },
     { "config": "dw-composite-overlap.mixins.json" },

@@ -1,5 +1,7 @@
 package dev.dreamwalker.bloodbornedw.tool.mixin;
 
+import dev.dreamwalker.bloodbornedw.composite.CompositeRootBlock;
+import dev.dreamwalker.bloodbornedw.composite.ImportedCompactBlock;
 import dev.dreamwalker.bloodbornedw.tool.DebugModels;
 import dev.dreamwalker.bloodbornedw.visual.CityFacadesClient;
 import net.minecraft.block.BlockState;
@@ -17,8 +19,10 @@ abstract class DebugFacadeModelMixin {
     @Inject(method = "terrainModel", at = @At("RETURN"), cancellable = true)
     private static void dw$terrainPose(BakedModel model, BlockPos root, BlockState state, BlockRenderView world,
             CallbackInfoReturnable<BakedModel> cir) {
-        if (!(state.getBlock() instanceof dev.dreamwalker.bloodbornedw.composite.CompositeRootBlock))
+        // Compact source blocks inherit CompositeRootBlock, but render as terrain.
+        if (!(state.getBlock() instanceof CompositeRootBlock) || ImportedCompactBlock.compact(state)) {
             cir.setReturnValue(DebugModels.apply(cir.getReturnValue(), root, state));
+        }
     }
 
     @Inject(method = "visibleModel(Lnet/minecraft/class_1087;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_1920;ZLnet/minecraft/class_2960;)Lnet/minecraft/class_1087;",

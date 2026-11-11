@@ -21,12 +21,17 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 /** Vanilla and FRAPI share this exact source-quad dispatcher. */
 @Mixin(targets = "dev.dreamwalker.bloodbornedw.composite.StaticArchitectureClient$QuadLayerConsumer", remap = false)
 public abstract class StaticQuadLayerMixin implements CornerLightingContext {
-    @Unique private final CoplanarQuads dw$coplanar = new CoplanarQuads();
+    @Unique private CoplanarQuads dw$coplanar = new CoplanarQuads();
     @Unique private boolean dw$emittingClips;
-    @Unique private StaticLightingViewAccess dw$view;
+    @Unique private long dw$lastRoot = Long.MIN_VALUE;
 
     @Override public void dw$setCornerContext(StaticLightingViewAccess view) {
-        dw$view = view;
+        if (view == null) return;
+        long root = view.dw$root().asLong();
+        if (dw$lastRoot != root) {
+            dw$coplanar = new CoplanarQuads();
+            dw$lastRoot = root;
+        }
     }
 
     @Shadow @Final private Function<RenderLayer, VertexConsumer> factory;
@@ -36,7 +41,7 @@ public abstract class StaticQuadLayerMixin implements CornerLightingContext {
     private void dw$binaryLayer(MatrixStack.Entry matrix, BakedQuad quad, float[] brightness,
             float red, float green, float blue, int[] lights, int overlay, boolean useColor, CallbackInfo ci) {
         if (dw$emittingClips) return;
-        var pieces = dw$coplanar.clip(matrix.getPositionMatrix(), quad, brightness, lights, dw$view);
+        var pieces = dw$coplanar.clip(matrix.getPositionMatrix(), quad, brightness, lights);
         if (pieces != null) {
             ci.cancel();
             Object parent = CornerQuadParentScope.parentFor(quad);

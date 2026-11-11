@@ -1,23 +1,10 @@
 package dev.dreamwalker.bloodbornedw.composite;
 
-import dev.dreamwalker.bloodbornedw.composite.overlaymixin.CompositeLightingViewAccess;
-import dev.dreamwalker.bloodbornedw.composite.overlaymixin.StaticLightingViewAccess;
-import dev.dreamwalker.bloodbornedw.editor.EditorRenderScope;
-import dev.dreamwalker.bloodbornedw.tool.DebugAdjustments;
-import dev.dreamwalker.bloodbornedw.visual.CityFacadesClient;
-import dev.dreamwalker.bloodbornedw.visual.CityVisualClient;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockRenderType;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.model.BakedQuad;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkSectionPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.random.Random;
 import org.joml.Matrix4f;
 
 /** Subtracts earlier opaque faces from later faces on the same side of a plane during a mesh build. */
@@ -30,10 +17,8 @@ public final class CoplanarQuads {
 
     private final Map<PlaneKey, Face> planes = new HashMap<>();
     private final double[] coordinates = new double[12];
-    private Map<Neighbor, List<Face>> compactFaces;
     private int tracked;
 
-    private record Neighbor(BlockPos pos, Direction side) {}
 
     private record PlaneKey(int axis, int winding, long slopeU, long slopeV, long offset) {}
     private static final class Face {
@@ -110,11 +95,6 @@ public final class CoplanarQuads {
 
     /** Null keeps the source quad, an empty list drops it, and other results replace it. */
     public List<CornerQuadSplitter.Piece> clip(Matrix4f matrix, BakedQuad quad, float[] brightness, int[] lights) {
-        return clip(matrix, quad, brightness, lights, null);
-    }
-
-    public List<CornerQuadSplitter.Piece> clip(Matrix4f matrix, BakedQuad quad, float[] brightness, int[] lights,
-                                               StaticLightingViewAccess view) {
         int[] data = quad.getVertexData();
         if (data.length != 32) return null;
         // Alpha-cut quads cannot occlude another surface. Avoid scanning their sprites here.
@@ -123,20 +103,10 @@ public final class CoplanarQuads {
         Face face = project(matrix, data, parent instanceof BakedQuad original ? original : quad);
         if (face == null) return null;
         Face earlier = planes.get(face.key);
-        List<Face> neighbors = compactNeighbors(face, matrix, view);
         boolean opaque = false;
         List<List<Vertex>> remaining = null;
-        int neighborIndex = 0;
-        Face previous = earlier;
-        while (neighborIndex < neighbors.size() || previous != null) {
-            Face other;
-            if (neighborIndex < neighbors.size()) {
-                other = neighbors.get(neighborIndex++);
-            } else {
-                other = previous;
-                previous = previous.previous;
-                if (!face.overlaps(other)) continue;
-            }
+        for (Face other = earlier; other != null; other = other.previous) {
+            if (!face.overlaps(other)) continue;
             if (!StaticArchitectureGeometry.opaqueQuad(other.opacitySource)) continue;
             if (!opaque) {
                 if (!StaticArchitectureGeometry.opaqueQuad(quad)) return null;
@@ -179,113 +149,6 @@ public final class CoplanarQuads {
             }
         }
         return result;
-    }
-
-    /** A visible compact wall face wins over overhanging decoration, regardless of mesh order. */
-    private List<Face> compactNeighbors(Face face, Matrix4f matrix, StaticLightingViewAccess view) {
-        if (view == null || Math.abs(face.slopeU) > PLANE_EPSILON || Math.abs(face.slopeV) > PLANE_EPSILON) {
-            return List.of();
-        }
-        if (CityVisualClient.isAlt() && !EditorRenderScope.canResolveStyle(view.dw$delegate())) return List.of();
-        Matrix4f pose = view.dw$transform();
-        if (pose == null || !sameBasis(matrix, pose)) return List.of();
-        float x = matrix.m30() - pose.m30();
-        float y = matrix.m31() - pose.m31();
-        float z = matrix.m32() - pose.m32();
-        int axis = face.key.axis;
-        double depth = axis == 0 ? x : axis == 1 ? y : z;
-        double u = axis == 0 ? y : axis == 1 ? z : x;
-        double v = axis == 0 ? z : axis == 1 ? x : y;
-        double localPlane = face.offset - depth;
-        int normalCell = (int) Math.floor(localPlane - face.key.winding * PLANE_EPSILON);
-        if (normalCell < -1 || normalCell > 1) return List.of();
-        // Interior planes only need a wall lookup when they extend into its cell
-        // along the normal. Boundary planes can also meet a lateral neighbor.
-        if (normalCell == 0 && Math.abs(localPlane - Math.rint(localPlane)) > PLANE_EPSILON) return List.of();
-        int minU = Math.max(-1, (int) Math.floor(face.minU - u + PLANE_EPSILON));
-        int maxU = Math.min(1, (int) Math.ceil(face.maxU - u - PLANE_EPSILON) - 1);
-        int minV = Math.max(-1, (int) Math.floor(face.minV - v + PLANE_EPSILON));
-        int maxV = Math.min(1, (int) Math.ceil(face.maxV - v - PLANE_EPSILON) - 1);
-        if (minU > maxU || minV > maxV || normalCell == 0 && minU == 0 && maxU == 0 && minV == 0 && maxV == 0) {
-            return List.of();
-        }
-        List<Face> result = null;
-        BlockPos root = view.dw$root();
-        Direction.Axis directionAxis = axis == 0 ? Direction.Axis.X : axis == 1 ? Direction.Axis.Y : Direction.Axis.Z;
-        Direction side = Direction.from(directionAxis, face.key.winding > 0
-                ? Direction.AxisDirection.POSITIVE : Direction.AxisDirection.NEGATIVE);
-        for (int a = minU; a <= maxU; a++) {
-            for (int b = minV; b <= maxV; b++) {
-                if (normalCell == 0 && a == 0 && b == 0) continue;
-                int dx = axis == 0 ? normalCell : axis == 1 ? b : a;
-                int dy = axis == 0 ? a : axis == 1 ? normalCell : b;
-                int dz = axis == 0 ? b : axis == 1 ? a : normalCell;
-                Neighbor key = new Neighbor(root.add(dx, dy, dz), side);
-                if (compactFaces == null) compactFaces = new HashMap<>();
-                List<Face> compact = compactFaces.get(key);
-                if (compact == null) {
-                    compact = readCompactFaces(view, key, x + dx, y + dy, z + dz);
-                    compactFaces.put(key, compact);
-                }
-                for (Face candidate : compact) {
-                    if (candidate.key.axis != axis || candidate.key.winding != face.key.winding
-                            || !face.overlaps(candidate)) continue;
-                    if (result == null) result = new ArrayList<>(4);
-                    result.add(candidate);
-                }
-            }
-        }
-        return result == null ? List.of() : result;
-    }
-
-    private List<Face> readCompactFaces(StaticLightingViewAccess view, Neighbor key, float x, float y, float z) {
-        var world = view.dw$delegate();
-        BlockPos pos = key.pos;
-        if (view instanceof CompositeLightingViewAccess snapshot) snapshot.dw$dependency(pos);
-        var state = world.getBlockState(pos);
-        if (!(state.getBlock() instanceof ImportedCompactBlock block) || !state.get(ImportedCompactBlock.COMPACT)
-                || block.spec.translucent || state.getRenderType() != BlockRenderType.MODEL) return List.of();
-        var client = MinecraftClient.getInstance();
-        if (client.world == null || DebugAdjustments.hasPose(DebugAdjustments.renderPose(client.world, pos, state))) return List.of();
-        var model = CityFacadesClient.compactOccluder(client.getBlockRenderManager().getModel(state), pos, state, world);
-        if (model == null) return List.of();
-        BlockPos outside = pos.offset(key.side);
-        if (view instanceof CompositeLightingViewAccess snapshot) snapshot.dw$dependency(outside);
-        var offset = state.getModelOffset(world, pos);
-        Matrix4f transform = new Matrix4f().translation(x + (float) offset.x, y + (float) offset.y, z + (float) offset.z);
-        long seed = state.getRenderingSeed(pos);
-        List<Face> faces = new ArrayList<>();
-        addCompactFaces(faces, model.getQuads(state, null, Random.create(seed)), transform);
-        if (cullingDependencyVisible(view, outside) && Block.shouldDrawSide(state, world, pos, key.side, outside)) {
-            addCompactFaces(faces, model.getQuads(state, key.side, Random.create(seed)), transform);
-        }
-        return faces;
-    }
-
-    private static boolean cullingDependencyVisible(StaticLightingViewAccess view, BlockPos outside) {
-        if (view instanceof CompositeLightingViewAccess) return true;
-        BlockPos root = view.dw$root();
-        // Native terrain automatically rebuilds its own section and sections
-        // within one block of the changed culling neighbor.
-        return ChunkSectionPos.from(root).asLong() == ChunkSectionPos.from(outside).asLong()
-                || Math.abs(outside.getX() - root.getX()) <= 1 && Math.abs(outside.getY() - root.getY()) <= 1
-                        && Math.abs(outside.getZ() - root.getZ()) <= 1;
-    }
-
-    private void addCompactFaces(List<Face> faces, List<BakedQuad> quads, Matrix4f matrix) {
-        if (quads.size() > MAX_PER_BUCKET) return;
-        for (BakedQuad quad : quads) {
-            int[] data = quad.getVertexData();
-            if (data.length != 32 || (data[3] & data[11] & data[19] & data[27]) >>> 24 != 255) continue;
-            Face face = project(matrix, data, quad);
-            if (face != null) faces.add(face);
-        }
-    }
-
-    private static boolean sameBasis(Matrix4f a, Matrix4f b) {
-        return a.m00() == b.m00() && a.m01() == b.m01() && a.m02() == b.m02()
-                && a.m10() == b.m10() && a.m11() == b.m11() && a.m12() == b.m12()
-                && a.m20() == b.m20() && a.m21() == b.m21() && a.m22() == b.m22();
     }
 
     private void remember(Face face, Face earlier) {

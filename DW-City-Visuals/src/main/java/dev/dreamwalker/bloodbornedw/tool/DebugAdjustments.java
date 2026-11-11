@@ -41,7 +41,8 @@ public final class DebugAdjustments {
     private static final int POSE_MASK = (1 << (TURN_SHIFT + 3)) - 1;
     private static final int NO_PLAYERS = 1 << (TURN_SHIFT + 3);
     private static final int NO_BLOCKS = NO_PLAYERS << 1;
-    private static final int SETTINGS_MASK = POSE_MASK | NO_PLAYERS | NO_BLOCKS;
+    private static final int RENDER_PRIORITY = NO_BLOCKS << 1;
+    private static final int SETTINGS_MASK = POSE_MASK | NO_PLAYERS | NO_BLOCKS | RENDER_PRIORITY;
     private static final Map<ServerWorld, Saved> SERVER = new ConcurrentHashMap<>();
     private static final Map<Identifier, Map<Long, Entry>> CLIENT = new ConcurrentHashMap<>();
 
@@ -69,7 +70,7 @@ public final class DebugAdjustments {
 
     public static int sanitize(int value) {
         if (Math.abs(axis(value, 0)) > MAX_HALF_STEPS || Math.abs(axis(value, Y_SHIFT)) > MAX_HALF_STEPS
-                || Math.abs(axis(value, Z_SHIFT)) > MAX_HALF_STEPS) return value & (NO_PLAYERS | NO_BLOCKS);
+                || Math.abs(axis(value, Z_SHIFT)) > MAX_HALF_STEPS) return value & (NO_PLAYERS | NO_BLOCKS | RENDER_PRIORITY);
         return value & SETTINGS_MASK;
     }
 
@@ -117,6 +118,28 @@ public final class DebugAdjustments {
     public static int renderPose(World world, BlockPos root, BlockState state) {
         Entry entry = entry(world, root.asLong());
         return entry != null && matches(entry, state) ? entry.value() : 0;
+    }
+
+    public static int renderPriority(World world, BlockPos root, BlockState state) {
+        return hasRenderPriority(renderPose(world, root, state)) ? 1 : 0;
+    }
+
+    public static boolean renderPriority(World world, ObjectInstance.Owner owner) {
+        return hasRenderPriority(at(world, owner));
+    }
+
+    public static boolean hasRenderPriority(int value) {
+        return (value & RENDER_PRIORITY) != 0;
+    }
+
+    public static boolean toggleRenderPriority(ServerPlayerEntity player, ToolTarget target) {
+        if (target.entity(player.getServer()) != null) return false;
+        return edit(player, target, value -> {
+            int changed = value ^ RENDER_PRIORITY;
+            player.sendMessage(Text.literal(hasRenderPriority(changed)
+                    ? "Приоритет отображения повышен." : "Обычный приоритет отображения."), true);
+            return changed;
+        });
     }
 
     private static boolean matches(Entry entry, BlockState state) {

@@ -30,7 +30,10 @@ public final class DebugAdjustmentsClient {
                     if (reset) DebugAdjustments.resetClient(dimension);
                     entries.forEach((root, entry) -> {
                         var old = DebugAdjustments.installClient(dimension, root, entry);
-                        if (DebugAdjustments.hasPose(entry.value()) || old != null && DebugAdjustments.hasPose(old.value())) {
+                        boolean priorityChanged = !entry.equals(old) && (DebugAdjustments.hasRenderPriority(entry.value())
+                                || old != null && DebugAdjustments.hasRenderPriority(old.value()));
+                        if (priorityChanged || DebugAdjustments.hasPose(entry.value())
+                                || old != null && DebugAdjustments.hasPose(old.value())) {
                             rebuild(client, dimension, BlockPos.fromLong(root));
                         }
                     });

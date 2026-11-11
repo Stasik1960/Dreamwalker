@@ -24,6 +24,7 @@ public final class DebugToolModes {
         FORWARD("Сдвинуть модель вперёд на 0,5 блока"),
         BACK("Сдвинуть модель назад на 0,5 блока"),
         VISUAL_ROTATE("Повернуть модель по часовой стрелке"),
+        RENDER_PRIORITY("Переключить приоритет отображения"),
         SPECIAL("Особое действие блока", BbToolItem.Mode.SPECIAL),
         COMMANDS("Привязать команды", BbToolItem.Mode.COMMANDS),
         CLEAR("Удалить связи и команды", BbToolItem.Mode.CLEAR),
@@ -46,7 +47,7 @@ public final class DebugToolModes {
     }
 
     public enum Tool {
-        MODEL("Инструмент BB", List.of(Action.UP, Action.DOWN, Action.LEFT, Action.RIGHT, Action.FORWARD, Action.BACK, Action.VISUAL_ROTATE)),
+        MODEL("Инструмент BB", List.of(Action.UP, Action.DOWN, Action.LEFT, Action.RIGHT, Action.FORWARD, Action.BACK, Action.VISUAL_ROTATE, Action.RENDER_PRIORITY)),
         BLOCK("Печатка смотрителя", List.of(Action.SPECIAL, Action.COMMANDS, Action.CLEAR, Action.BLOCK_ROTATE,
                 Action.PLAYER_COLLISION, Action.BLOCK_COLLISION, Action.BLOCK_ROTATE_BACK)),
         NPC("Жезл постановщика", List.of(Action.NPC_SPECIAL, Action.NPC_CLOCKWISE, Action.NPC_COUNTERCLOCKWISE));
@@ -137,6 +138,7 @@ public final class DebugToolModes {
             case FORWARD -> block && DebugAdjustments.move(player, target, player.getHorizontalFacing());
             case BACK -> block && DebugAdjustments.move(player, target, player.getHorizontalFacing().getOpposite());
             case VISUAL_ROTATE -> block && DebugAdjustments.rotate(player, target);
+            case RENDER_PRIORITY -> block && DebugAdjustments.toggleRenderPriority(player, target);
             case BLOCK_ROTATE, BLOCK_ROTATE_BACK -> block && DebugBlockRotation.apply(player, target, action == Action.BLOCK_ROTATE);
             case PLAYER_COLLISION -> block && DebugAdjustments.toggle(player, target, true);
             case BLOCK_COLLISION -> block && DebugAdjustments.toggle(player, target, false);
@@ -144,7 +146,7 @@ public final class DebugToolModes {
             case NPC_COUNTERCLOCKWISE -> rotateNpc(entity, false);
             default -> false;
         };
-        if (action != Action.PLAYER_COLLISION && action != Action.BLOCK_COLLISION || !changed) {
+        if (action != Action.PLAYER_COLLISION && action != Action.BLOCK_COLLISION && action != Action.RENDER_PRIORITY || !changed) {
             player.sendMessage(Text.literal(changed ? action.title : "Действие недоступно для этой цели."), true);
         }
         return true;
