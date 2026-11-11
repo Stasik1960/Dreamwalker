@@ -18,7 +18,8 @@ public abstract class CompassNavigationMixin {
         var server = FabricWorldEdit.LIFECYCLED_SERVER.valueOrThrow();
         var nativePlayer = server.getPlayerManager().getPlayer(player.getUniqueId());
         if (nativePlayer != null && nativePlayer.getMainHandStack().isOf(Items.COMPASS)) {
-            if (!dev.dreamwalker.bloodbornedw.tool.ClickRateLimit.accept(nativePlayer, 2)) return false;
+            // Consume the duplicate without WorldEdit reporting a failed traversal.
+            if (!dev.dreamwalker.bloodbornedw.tool.ClickRateLimit.accept(nativePlayer, 2)) return true;
             var outcome = CompassPassage.teleport(nativePlayer, maxDistance);
             if (outcome != CompassPassage.Outcome.VANILLA) return outcome == CompassPassage.Outcome.TELEPORTED;
         }
