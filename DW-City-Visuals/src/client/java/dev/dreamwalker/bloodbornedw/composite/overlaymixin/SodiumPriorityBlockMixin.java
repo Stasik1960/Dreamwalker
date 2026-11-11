@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.Coerce;
 public abstract class SodiumPriorityBlockMixin {
  @WrapMethod(method="renderModel",remap=false)
  private void dw$priority(@Coerce Object context,@Coerce Object buffers,Operation<Void> original) {
-  float previous=TerrainPriorityScope.begin(context);
+  int previous=TerrainPriorityScope.begin(context);
   try { original.call(context,buffers); } finally { TerrainPriorityScope.end(previous); }
  }
 }

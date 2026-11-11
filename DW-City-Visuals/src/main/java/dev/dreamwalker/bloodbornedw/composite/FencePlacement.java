@@ -24,12 +24,13 @@ import net.minecraft.world.World;
 public final class FencePlacement {
     private static final VoxelShape UPPER_HALF = VoxelShapes.cuboid(-4, 1, -4, 5, 5, 5);
     private static final Map<VoxelShape, VoxelShape> CAPPED = new ConcurrentHashMap<>();
+    private static final Map<VoxelShape, VoxelShape> MOVEMENT = new ConcurrentHashMap<>();
 
     private FencePlacement() {}
 
     public static boolean isFence(BlockState state) {
         if (state.getBlock() instanceof FenceBlock || state.getBlock() instanceof FenceGateBlock) return true;
-        if (state.getBlock() instanceof PrototypeWallBlock) return PrototypeWallBlock.retainedFence(state);
+        if (state.getBlock() instanceof PrototypeWallBlock) return true;
         if (state.getBlock() instanceof SourceFallbackCarrierV1271) return isFence(SourceFallbackCarrierV1271.source(state));
         var id = Registries.BLOCK.getId(state.getBlock());
         return id.getNamespace().equals("bloodborne_dw") && (id.getPath().contains("_fence")
@@ -42,6 +43,21 @@ public final class FencePlacement {
         if (CAPPED.size() >= 512) return VoxelShapes.combineAndSimplify(shape, UPPER_HALF, BooleanBiFunction.ONLY_FIRST);
         return CAPPED.computeIfAbsent(shape,
                 value -> VoxelShapes.combineAndSimplify(value, UPPER_HALF, BooleanBiFunction.ONLY_FIRST));
+    }
+
+    /** Older saved fence poses can still contain one-block collision boxes. */
+    public static VoxelShape movement(VoxelShape shape) {
+        if (shape.isEmpty() || shape.getMax(net.minecraft.util.math.Direction.Axis.Y) >= 1.5) return shape;
+        if (MOVEMENT.size() >= 512) return extendMovement(shape);
+        return MOVEMENT.computeIfAbsent(shape, FencePlacement::extendMovement);
+    }
+
+    private static VoxelShape extendMovement(VoxelShape shape) {
+        VoxelShape result = shape;
+        for (Box box : shape.getBoundingBoxes()) {
+            result = VoxelShapes.union(result, VoxelShapes.cuboid(box.minX, 0, box.minZ, box.maxX, 1.5, box.maxZ));
+        }
+        return result;
     }
 
     public static VoxelShape nativeShape(World world, BlockPos pos, VoxelShape shape) {

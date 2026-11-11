@@ -18,6 +18,6 @@ public abstract class FenceCatalogueCreativeMixin {
     @Inject(method = "creativeVariants", at = @At("RETURN"), cancellable = true, remap = false)
     private static void dw$compactFenceItem(ItemStack stack, CallbackInfoReturnable<List<ItemStack>> cir) {
         if (!cir.getReturnValue().isEmpty())
-            cir.setReturnValue(cir.getReturnValue().stream().map(FenceCatalogue::compact).toList());
+            cir.setReturnValue(cir.getReturnValue().stream().filter(item -> !FenceCatalogue.generatedWallPose(item)).map(FenceCatalogue::compact).toList());
     }
 }

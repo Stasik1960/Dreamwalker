@@ -30,6 +30,7 @@ public final class StandardLanternGameplay implements ModInitializer {
         return state.contains(CompositeRootBlock.VARIANT) && state.get(CompositeRootBlock.VARIANT) == 1;
     }
     @Override public void onInitialize() {
+        HoldLanternGameplay.initialize();
         AttackBlockCallback.EVENT.register((player, world, hand, pos, direction) -> {
             if (!world.isClient || player.isSpectator() || player.isCreative()) return ActionResult.PASS;
             var owner = CompositeRuntime.target(world, pos, player);

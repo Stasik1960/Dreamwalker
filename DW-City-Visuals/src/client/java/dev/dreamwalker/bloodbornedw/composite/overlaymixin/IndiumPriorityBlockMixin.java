@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.Coerce;
 public abstract class IndiumPriorityBlockMixin {
  @WrapMethod(method="tessellateBlock",remap=false)
  private void dw$priority(@Coerce Object context,Operation<Void> original) {
-  float previous=TerrainPriorityScope.begin(context);
+  int previous=TerrainPriorityScope.begin(context);
   try { original.call(context); } finally { TerrainPriorityScope.end(previous); }
  }
 }

@@ -137,9 +137,18 @@ def check(jar, resources):
                                 assert old["elements"][index]["faces"]["north"] == new["elements"][index]["faces"]["north"]
                                 opaque(after, new, new["elements"][index], directions, profile, number == "90001")
                         elif number == "93066":
-                            kept = [element for index, element in enumerate(old["elements"])
-                                    if index != 5 and index < 7]
-                            assert new["elements"] == kept
+                            kept = [element for index, element in enumerate(old["elements"]) if index != 5]
+                            assert len(new["elements"]) == len(kept)
+                            assert new["elements"][:5] == kept[:5]
+                            assert new["elements"][5] == kept[5]
+                            for old_arch, new_arch in zip(kept[6:], new["elements"][6:], strict=True):
+                                assert old_arch["from"] == new_arch["from"] and old_arch["to"] == new_arch["to"]
+                                assert old_arch.get("rotation") == new_arch.get("rotation")
+                                assert old_arch["faces"].keys() == new_arch["faces"].keys()
+                                for face in new_arch["faces"].values():
+                                    assert face["texture"] == "#1" and face["uv"] == [2, 6, 3.75, 10]
+                                    image = after.image(resolve_texture(new, face["texture"]), profile)
+                                    assert image.crop(uv_rect(face, image.size)).getchannel("A").getextrema() == (255, 255)
                         elif number == "93241":
                             check_shutter(after, before, old_part, old, new, profile)
                         else:
@@ -150,6 +159,28 @@ def check(jar, resources):
                                 assert source.getchannel("A").tobytes() == target.getchannel("A").tobytes()
                                 expected = ImageEnhance.Brightness(source.convert("RGB")).enhance(DARKEN[number])
                                 assert ImageChops.difference(expected, target.convert("RGB")).getbbox() is None
+    lantern_id = "bloodborne_dw:remaining/source/minecraft/block/hold/lanterns"
+    old_lantern = json.loads(jar.read(COMPOSITES + "source_hold_lanterns.json"))
+    lantern = json.loads(after.read(COMPOSITES + "source_hold_lanterns.json"))
+    for original_variant, variant in zip(old_lantern["variants"], lantern["variants"], strict=True):
+        closed, lit = variant["poses"]["closed"], variant["poses"]["open"]
+        assert closed == original_variant["poses"]["closed"]
+        assert {k: v for k, v in closed.items() if k != "parts"} == {k: v for k, v in lit.items() if k != "parts"}
+        assert lit["parts"][0]["model"] == "bloodborne_dw:builder_followup/90588/lit/lanterns"
+        for profile in ("original", "alt"):
+            old_model = before.model(lantern_id, profile)
+            lit_model = after.model(lit["parts"][0]["model"], profile)
+            original_texture = before.image(resolve_texture(old_model, "#0"), profile)
+            lit_texture = after.image(resolve_texture(lit_model, "#glass_lit"), profile)
+            bounds = uv_rect({"uv": [8.375, 1.75, 8.875, 2.625]}, original_texture.size)
+            assert original_texture.getchannel("A").tobytes() == lit_texture.getchannel("A").tobytes()
+            assert ImageChops.difference(original_texture.crop(bounds).convert("RGB"), lit_texture.crop(bounds).convert("RGB")).getbbox()
+            for index, (old_element, new_element) in enumerate(zip(old_model["elements"], lit_model["elements"], strict=True)):
+                if index not in (2, 6, 10, 14, 18):
+                    assert old_element == new_element
+                else:
+                    assert all(face["texture"] == "#glass_lit" for face in new_element["faces"].values())
+
     window = json.loads(after.read(COMPOSITES + REGISTRIES["93241"] + ".json"))
     assert window["layer"] == "translucent"
     assert window["openable"]

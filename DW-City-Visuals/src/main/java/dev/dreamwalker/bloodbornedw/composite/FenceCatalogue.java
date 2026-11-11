@@ -1,6 +1,7 @@
 package dev.dreamwalker.bloodbornedw.composite;
 
 import java.util.Map;
+import net.minecraft.block.BlockState;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
@@ -96,18 +97,36 @@ public final class FenceCatalogue {
         next.getOrCreateNbt().putInt(ImportedTypeAliases.VERSION_KEY, ImportedTypeAliases.VERSION);
         return next;
     }
-    /** Inspect the selected art state: some canonical source IDs also hold non-fence art. */
-    public static ItemStack compact(ItemStack stack) {
-        if (!(stack.getItem() instanceof BlockItem item) || !(item.getBlock() instanceof ImportedCompactBlock block)) return stack;
-        var state = block.getDefaultState(); var art = stack.getSubNbt("BlockStateTag");
+    /** Some canonical source IDs also hold unrelated artwork. */
+    private static BlockState selectedArt(ItemStack stack) {
+        if (!(stack.getItem() instanceof BlockItem item) || !(item.getBlock() instanceof ImportedCompactBlock block)) return null;
+        var state = block.getDefaultState();
+        var art = stack.getSubNbt("BlockStateTag");
+        if (art == null) return state;
         try {
-            if (art != null && art.contains("variant", 8)) state = state.with(CompositeRootBlock.VARIANT, Integer.parseInt(art.getString("variant")));
+            if (art.contains("variant", 8)) state = state.with(CompositeRootBlock.VARIANT, Integer.parseInt(art.getString("variant")));
             var bank = ImportedArtworkBlock.bankProperty(state);
-            if (bank != null && art != null && art.contains("art_bank", 8)) state = state.with(bank, Integer.parseInt(art.getString("art_bank")));
-        } catch (IllegalArgumentException invalid) { return stack; }
-        if (!AutoStoneFence.matches(state)) return stack;
+            if (bank != null && art.contains("art_bank", 8)) state = state.with(bank, Integer.parseInt(art.getString("art_bank")));
+            return state;
+        } catch (IllegalArgumentException invalid) {
+            return null;
+        }
+    }
+
+    public static boolean automaticWallItem(ItemStack stack) {
+        var art = stack.getSubNbt("BlockStateTag");
+        if (art != null && "false".equals(art.getString("compact"))) return false;
+        var state = selectedArt(stack);
+        return state != null && AutoStoneFence.wallLike(state);
+    }
+
+    public static ItemStack compact(ItemStack stack) {
+        var state = selectedArt(stack);
+        if (state == null || !AutoStoneFence.matches(state)) return stack;
+        var art = stack.getSubNbt("BlockStateTag");
         if (art != null && "true".equals(art.getString("compact"))) return stack;
-        ItemStack copy = stack.copy(); copy.getOrCreateSubNbt("BlockStateTag").putString("compact", "true");
+        ItemStack copy = stack.copy();
+        copy.getOrCreateSubNbt("BlockStateTag").putString("compact", "true");
         return copy;
     }
     public static java.util.List<ItemStack> specialItems() {
@@ -130,6 +149,34 @@ public final class FenceCatalogue {
             result.add(compact(stack));
         }
         return java.util.List.copyOf(result);
+    }
+    /** Internal wall connection poses are not extra catalogue items. */
+    public static boolean generatedWallPose(ItemStack stack) {
+        if (!(stack.getItem() instanceof BlockItem item)) return false;
+        var id = Registries.BLOCK.getId(item.getBlock());
+        if (!id.getNamespace().equals("bloodborne_dw")) return false;
+        var art = stack.getSubNbt("BlockStateTag");
+        if (art == null) return false;
+        try {
+            int pose = art.contains("variant", 8) ? Integer.parseInt(art.getString("variant")) : 0;
+            int bank = art.contains("art_bank", 8) ? Integer.parseInt(art.getString("art_bank")) : 0;
+            return generatedWallPose(id.getPath(), pose + 16 * bank);
+        } catch (NumberFormatException ignored) { return false; }
+    }
+    public static boolean generatedWallPose(String path, int pose) {
+        int first = switch (path) {
+            case "source_assembly_brick_wall" -> 471;
+            case "source_assembly_cobblestone_wall" -> 71;
+            case "source_assembly_deepslate_brick_wall" -> 146;
+            case "source_assembly_mossy_cobblestone_wall" -> 94;
+            case "source_assembly_prismarine_wall" -> 92;
+            case "source_assembly_stone_brick_wall" -> 127;
+            case "source_assembly_cobbled_deepslate_wall", "source_assembly_granite_wall", "source_assembly_end_stone_brick_wall" -> 12;
+            case "source_andesite_slab_top" -> 92;
+            case "source_cut_copper" -> 83;
+            default -> Integer.MAX_VALUE;
+        };
+        return pose >= first;
     }
     private FenceCatalogue() {}
 }

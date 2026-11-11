@@ -2,6 +2,7 @@ package dev.dreamwalker.bloodbornedw.composite.overlaymixin;
 
 import dev.dreamwalker.bloodbornedw.composite.SodiumCompatibility;
 import dev.dreamwalker.bloodbornedw.composite.SodiumShaderPatch;
+import dev.dreamwalker.bloodbornedw.composite.SurfaceDepthShaders;
 import java.util.concurrent.atomic.AtomicBoolean;
 import net.minecraft.util.Identifier;
 import org.slf4j.LoggerFactory;
@@ -20,6 +21,10 @@ public abstract class SodiumTranslucentShaderMixin {
 
     @Inject(method = "getShaderSource", at = @At("RETURN"), cancellable = true, remap = false)
     private static void dw$zeroAlpha(Identifier id, CallbackInfoReturnable<String> cir) {
+        if (id.toString().equals("sodium:blocks/block_layer_opaque.vsh")) {
+            cir.setReturnValue(SurfaceDepthShaders.sodium(cir.getReturnValue()));
+            return;
+        }
         if (!id.toString().equals("sodium:blocks/block_layer_opaque.fsh")) return;
         String versions = SodiumCompatibility.installed();
         if (!SodiumCompatibility.verifiedClient() && dw$warnedUnverified.compareAndSet(false, true)) {

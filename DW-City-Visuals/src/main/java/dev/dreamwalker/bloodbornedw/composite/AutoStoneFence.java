@@ -8,8 +8,10 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayDeque;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.IdentityHashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Predicate;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
@@ -21,14 +23,18 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.FenceBlock;
 import net.minecraft.block.FenceGateBlock;
 import net.minecraft.block.PaneBlock;
+import net.minecraft.block.enums.WallShape;
+import dev.dreamwalker.bloodbornedw.architecture.wall.PrototypeWallBlock;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.world.chunk.WorldChunk;
 
-/** Sparse authored-fence updates; no city scans, chunk loading or client tick work. */
+/** Updates authored fences in loaded chunks and queues saved poses from the old wall rules. */
 public final class AutoStoneFence implements ModInitializer {
-    private record Group(int[] poses, Set<Integer> compatible, boolean wall, int straight) {}
+    private record WallPose(int[] sides, boolean up, int pose, int baseTurn) {}
+    private record Group(int[] poses, Set<Integer> compatible, boolean wall, int straight, List<WallPose> wallStates) {}
     private static final int[] MASKS = {0, 1, 5, 3, 7, 15};
     private static final Map<String, List<Group>> FAMILIES = load();
     private static final Direction[] SIDES = {Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST};
@@ -53,8 +59,18 @@ public final class AutoStoneFence implements ModInitializer {
                     Set<Integer> compatible = new HashSet<>();
                     for (var pose : group.getAsJsonArray("compatible")) compatible.add(pose.getAsInt());
                     int straight = group.has("straight") ? group.get("straight").getAsInt() : -1;
-                    boolean wall = family.getKey().endsWith("_wall");
-                    groups.add(new Group(poses, Set.copyOf(compatible), wall, straight));
+                    boolean wall = family.getKey().endsWith("_wall") || group.get("post").getAsString().endsWith("_wall_post");
+                    List<WallPose> wallStates = new ArrayList<>();
+                    if (group.has("wallStates")) for (var rawState : group.getAsJsonArray("wallStates")) {
+                        var value = rawState.getAsJsonObject(); var sides = value.getAsJsonArray("sides");
+                        if (sides.size() != 4) throw new IllegalStateException("Invalid wall sides");
+                        int[] heights = new int[4]; for (int i = 0; i < 4; i++) heights[i] = sides.get(i).getAsInt();
+                        int pose = value.get("pose").getAsInt();
+                        compatible.add(pose);
+                        wallStates.add(new WallPose(heights, value.get("up").getAsBoolean(),
+                                pose, value.get("baseTurn").getAsInt()));
+                    }
+                    groups.add(new Group(poses, Set.copyOf(compatible), wall, straight, List.copyOf(wallStates)));
                 }
                 result.put(family.getKey(), List.copyOf(groups));
             }
@@ -69,6 +85,55 @@ public final class AutoStoneFence implements ModInitializer {
         return null;
     }
     public static boolean matches(BlockState state) { return group(state) != null; }
+    /** A mixed artwork registry is classified by its reviewed pose, not broad block tags. */
+    public static boolean wallLike(BlockState state) {
+        if (state.getBlock() instanceof PrototypeWallBlock) return true;
+        Group group = group(state);
+        return group != null && group.wall();
+    }
+    public static boolean fenceLike(BlockState state) {
+        Group group = group(state);
+        if (group == null || group.wall()) return false;
+        String id = ((CompositeRootBlock) state.getBlock()).spec.id.getPath();
+        return !id.contains("_pane") && !id.endsWith("_bars");
+    }
+    public static boolean knownFamily(BlockState state) {
+        return state.getBlock() instanceof CompositeRootBlock block && block.spec != null
+            && FAMILIES.containsKey(block.spec.id.toString());
+    }
+    /** Decode canonical poses to cached vanilla wall shapes without world or neighbor reads. */
+    public static BlockState canonicalWall(BlockState state) {
+        Group group = group(state);
+        if (group == null || !group.wall() || (state.get(CompositeRootBlock.ROTATION) & 1) != 0) return null;
+        int pose = ImportedArtworkBlock.variant(state), form = -1;
+        int savedTurns = state.get(CompositeRootBlock.ROTATION) / 2;
+        for (WallPose value : group.wallStates()) if (value.pose() == pose) {
+            int turns = (savedTurns - value.baseTurn()) & 3;
+            BlockState wall = Blocks.COBBLESTONE_WALL.getDefaultState().with(net.minecraft.block.WallBlock.UP, value.up());
+            for (int i = 0; i < 4; i++) {
+                int height = value.sides()[(i - turns + 4) & 3];
+                wall = wall.with(PrototypeWallBlock.property(SIDES[i]),
+                        height == 0 ? WallShape.NONE : height == 1 ? WallShape.LOW : WallShape.TALL);
+            }
+            return wall;
+        }
+        boolean post = true;
+        if (group.straight() == pose) { form = 2; post = false; }
+        else for (int i = 0; i < group.poses().length; i++) if (group.poses()[i] == pose) { form = i; break; }
+        if (form < 0) return null;
+        int base = MASKS[form];
+        int mask = ((base << savedTurns) | (base >>> (4 - savedTurns))) & 15;
+        BlockState wall = Blocks.COBBLESTONE_WALL.getDefaultState().with(net.minecraft.block.WallBlock.UP, post);
+        for (int i = 0; i < 4; i++) wall = wall.with(PrototypeWallBlock.property(SIDES[i]),
+                (mask & (1 << i)) == 0 ? WallShape.NONE : WallShape.LOW);
+        return wall;
+    }
+    public static void defer(ServerWorld world, BlockPos waiting, BlockPos missing) {
+        PENDING.computeIfAbsent(world, ignored -> new HashMap<>())
+            .computeIfAbsent(ChunkPos.toLong(missing.getX() >> 4, missing.getZ() >> 4), ignored -> new HashSet<>())
+            .add(waiting.toImmutable());
+    }
+
     public static void enqueue(ServerWorld world, BlockPos pos) {
         Queue queue = QUEUES.computeIfAbsent(world, ignored -> new Queue());
         BlockPos copy = pos.toImmutable();
@@ -90,35 +155,61 @@ public final class AutoStoneFence implements ModInitializer {
         if ((yaw & 1) != 0) return state;
         Group group = group(state); if (group == null) return state;
         int mask = 0;
+        BlockState nativeWall = Blocks.COBBLESTONE_WALL.getDefaultState();
         for (int direction = 0; direction < 4; direction++) {
             Direction side = SIDES[direction];
             BlockPos neighborPos = pos.offset(side);
             var chunk = world.getChunkManager().getWorldChunk(neighborPos.getX() >> 4, neighborPos.getZ() >> 4);
             if (chunk == null) {
-                PENDING.computeIfAbsent(world, ignored -> new HashMap<>())
-                    .computeIfAbsent(ChunkPos.toLong(neighborPos.getX() >> 4, neighborPos.getZ() >> 4), ignored -> new HashSet<>())
-                    .add(pos.toImmutable());
+                defer(world, pos, neighborPos);
                 return state;
             }
             BlockState neighbor = chunk.getBlockState(neighborPos);
             boolean solidFace = neighbor.isSideSolidFullSquare(world, neighborPos, side.getOpposite());
-            Group neighborGroup = group(neighbor);
             boolean connected;
             if (group.wall()) {
-                connected = neighborGroup != null && neighborGroup.wall() || neighbor.isIn(BlockTags.WALLS)
-                    || neighbor.getBlock() instanceof PaneBlock
-                    || neighbor.getBlock() instanceof FenceGateBlock && FenceGateBlock.canWallConnect(neighbor, side)
-                    || solidFace && !Block.cannotConnect(neighbor);
+                nativeWall = nativeWall.getStateForNeighborUpdate(side, neighbor, world, pos, neighborPos);
+                connected = nativeWall.get(PrototypeWallBlock.property(side)) != WallShape.NONE;
+            } else if (fenceLike(state)) {
+                connected = fenceLike(neighbor)
+                    || ((FenceBlock) Blocks.NETHER_BRICK_FENCE).canConnect(neighbor, solidFace, side);
             } else {
+                Group neighborGroup = group(neighbor);
                 connected = neighborGroup != null && !neighborGroup.wall()
                     || ((FenceBlock) Blocks.NETHER_BRICK_FENCE).canConnect(neighbor, solidFace, side);
             }
             if (connected) mask |= 1 << direction;
         }
+        if (group.wall()) {
+            BlockPos above = pos.up();
+            if (!world.isChunkLoaded(above)) { defer(world, pos, above); return state; }
+            nativeWall = nativeWall.getStateForNeighborUpdate(Direction.UP, world.getBlockState(above), world, pos, above);
+        }
+        if (group.wall() && !group.wallStates().isEmpty()) {
+            int[] heights = new int[4];
+            for (int i = 0; i < 4; i++) {
+                WallShape shape = nativeWall.get(PrototypeWallBlock.property(SIDES[i]));
+                heights[i] = shape == WallShape.NONE ? 0 : shape == WallShape.LOW ? 1 : 2;
+            }
+            for (WallPose value : group.wallStates()) {
+                if (value.up() != nativeWall.get(net.minecraft.block.WallBlock.UP)) continue;
+                for (int turns = 0; turns < 4; turns++) {
+                    boolean same = true;
+                    for (int i = 0; i < 4; i++) if (heights[i] != value.sides()[(i - turns + 4) & 3]) { same = false; break; }
+                    if (!same) continue;
+                    int pose = value.pose();
+                    BlockState next = state.with(CompositeRootBlock.VARIANT, pose % 16)
+                            .with(CompositeRootBlock.ROTATION, ((turns + value.baseTurn()) & 3) * 2);
+                    var bank = ImportedArtworkBlock.bankProperty(next);
+                    return bank == null ? next : next.with(bank, pose / 16);
+                }
+            }
+            throw new IllegalStateException("Wall connection height combination missing");
+        }
         for (int form = 0; form < MASKS.length; form++) for (int turns = 0; turns < 4; turns++) {
             int rotated = ((MASKS[form] << turns) | (MASKS[form] >>> (4 - turns))) & 15;
             if (rotated != mask) continue;
-            int pose = form == 2 && group.straight() >= 0 ? group.straight() : group.poses()[form];
+            int pose = form == 2 && group.straight() >= 0 && group.wall() && !nativeWall.get(net.minecraft.block.WallBlock.UP) ? group.straight() : group.poses()[form];
             BlockState next = state.with(CompositeRootBlock.VARIANT, pose % 16)
                 .with(CompositeRootBlock.ROTATION, turns * 2);
             var bank = ImportedArtworkBlock.bankProperty(next);
@@ -130,6 +221,11 @@ public final class AutoStoneFence implements ModInitializer {
         var chunk = world.getChunkManager().getWorldChunk(pos.getX() >> 4, pos.getZ() >> 4);
         if (chunk == null) return;
         BlockState state = chunk.getBlockState(pos);
+        if (state.getBlock() instanceof PrototypeWallBlock block) {
+            BlockState next = block.reconnect(state, world, pos);
+            if (!next.equals(state)) world.setBlockState(pos, next, Block.NOTIFY_ALL);
+            return;
+        }
         if (!matches(state)) return;
         BlockState next = reconnect(world, pos, state);
         if (next.equals(state)) return;

@@ -283,9 +283,13 @@ def main():
         if args.profile_resources:
             from repair_builder_followup import generate
             from repair_city_screenshot_assets import generate as repair_screenshots
+            from generate_wall_straights import generate as generate_wall_straights
+            from generate_wall_tall import generate as generate_wall_tall
 
             generate(base, args.resources, args.profile_resources, not args.omit_studio_map)
             repair_screenshots(base, args.resources, args.profile_resources)
+            generate_wall_straights(base, args.resources, args.profile_resources)
+            generate_wall_tall(base, args.resources, args.profile_resources)
 
 
 if __name__ == "__main__":

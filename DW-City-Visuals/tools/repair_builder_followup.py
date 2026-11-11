@@ -1,5 +1,6 @@
 """Scoped Builder art edits, usable with the build inputs or the published JAR."""
 import argparse
+from copy import deepcopy
 import hashlib
 from io import BytesIO
 import json
@@ -155,7 +156,32 @@ def edge_strip(front, direction):
 def fix_door(art, number):
     model = art.model
     framed = art.name.endswith("/door_90986_frame")
+    leaf = art.name.endswith("/door_90986_leaf")
     indices = (0, 1) if framed else (0,)
+    if number == "90986" and not leaf:
+        atlas = art.source.image(resolve_texture(model, "#0"), art.profile)
+        # This opaque stone is already used on the frame's broad top face.
+        stone = atlas.crop(uv_rect({"uv": [0, 6.875, 4.25, 9.125]}, atlas.size))
+        stone = stone.resize((32, 16), Image.Resampling.NEAREST)
+        texture = art.add_texture("arch_stone", stone)
+        for index in indices:
+            for direction in ("west", "east"):
+                model["elements"][index]["faces"][direction] = {"texture": texture, "uv": [0, 0, 16, 16]}
+        # The arch thickness is a sequence of coplanar strips. Use one
+        # continuous projection so each strip samples the neighboring stone.
+        for element in model["elements"]:
+            faces = element["faces"]
+            if len(faces) != 1 or element["to"][2] - element["from"][2] < 15:
+                continue
+            direction = next(iter(faces))
+            if direction in ("east", "west"):
+                uv = [0, (element["from"][1] + 16) / 3, 16, (element["to"][1] + 16) / 3]
+            elif direction in ("up", "down"):
+                uv = [(element["from"][0] + 16) / 3, 0, (element["to"][0] + 16) / 3, 16]
+            else:
+                continue
+            faces[direction] = {"texture": texture, "uv": uv}
+        return
     directions = ("west", "east", "up", "down") if number == "90001" else ("west", "east")
     for index in indices:
         element = model["elements"][index]
@@ -169,12 +195,48 @@ def fix_door(art, number):
 
 def strip_window_bricks(art):
     elements = art.model["elements"]
-    right = art.name.endswith("_right_top2")
-    # Keep the glazing, tracery, molded frame and sill. The upper part also
-    # has nine depth faces belonging to the rough outer brick arch.
-    assert len(elements) == (16 if right else 7)
-    art.model["elements"] = [element for index, element in enumerate(elements)
-                             if index != 5 and (not right or index < 7)]
+    upper = art.name.endswith("_right_top2")
+    assert len(elements) == (16 if upper else 7)
+    # Remove the old flat brick backing. Keep the depth faces of the arch,
+    # and sample the same stone as the vertical side of the window frame.
+    for element in elements[7:]:
+        for face in element["faces"].values():
+            face["texture"] = "#1"
+            face["uv"] = [2, 6, 3.75, 10]
+    art.model["elements"] = [element for index, element in enumerate(elements) if index != 5]
+
+
+def add_hold_lantern(jar, output, profile_resources):
+    source = Source(jar, (output, profile_resources) if profile_resources else ())
+    registry = "source_hold_lanterns"
+    path = COMPOSITES + registry + ".json"
+    recipe = json.loads(jar.read(path))
+    identifier = "bloodborne_dw:remaining/source/minecraft/block/hold/lanterns"
+    alias = "builder_followup/90588/lit/lanterns"
+    for profile in ("original", "alt"):
+        art = Art(source, output, alias, profile, source.model(identifier, profile))
+        image = art.source.image(resolve_texture(art.model, "#0"), profile)
+        bounds = uv_rect({"uv": [8.375, 1.75, 8.875, 2.625]}, image.size)
+        lit = image.copy()
+        for y in range(bounds[1], bounds[3]):
+            for x in range(bounds[0], bounds[2]):
+                red, green, blue, alpha = image.getpixel((x, y))
+                luminance = (red * 3 + green * 6 + blue) // 10
+                lit.putpixel((x, y), (min(255, 70 + luminance * 3 // 4),
+                                      min(255, 45 + luminance * 2 // 3),
+                                      min(255, 6 + luminance // 4), alpha))
+        texture = art.add_texture("glass_lit", lit)
+        for index in (2, 6, 10, 14, 18):
+            for face in art.model["elements"][index]["faces"].values():
+                face["texture"] = texture
+        art.save()
+    for variant in recipe["variants"]:
+        lit_pose = deepcopy(variant["poses"]["closed"])
+        for part in lit_pose["parts"]:
+            if part["model"] == identifier:
+                part["model"] = f"{NAMESPACE}:{alias}"
+        variant["poses"]["open"] = lit_pose
+    write_json(output, path, recipe)
 
 
 def shutter_texture(art, key, image, faces, atlas_size, bounds):
@@ -413,6 +475,7 @@ def generate(jar, output, profile_resources=None, include_studio_map=True):
                     replace(part, number)
         write_json(output, path, recipe)
 
+    add_hold_lantern(jar, output, profile_resources)
     retire_window_surround(jar, output)
     if profile_resources:
         retire_duplicate_shutters(jar, output, include_studio_map)

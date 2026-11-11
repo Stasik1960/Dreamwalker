@@ -40,6 +40,10 @@ abstract class BbHorizontalModeMixin {
     private void dw$toolTooltip(ItemStack stack, World world, List<Text> tooltip,
                                 TooltipContext context, CallbackInfo ci) {
         tooltip.add(Text.literal("ПКМ — следующий режим. ЛКМ — применить к цели."));
+        if (DebugToolModes.action(stack) == DebugToolModes.Action.RENDER_PRIORITY) {
+            tooltip.add(Text.literal("ЛКМ выводит выбранный блок вперёд, где его грани перекрываются с другими."));
+            tooltip.add(Text.literal("Повторный ЛКМ возвращает автоматический приоритет."));
+        }
         if (DebugToolModes.tool(stack) == DebugToolModes.Tool.BLOCK) {
             tooltip.add(Text.literal("Привязка консольных команд доступна OP4."));
         }

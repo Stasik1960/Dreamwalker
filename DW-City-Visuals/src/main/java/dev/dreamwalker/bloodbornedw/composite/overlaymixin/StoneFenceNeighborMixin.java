@@ -17,7 +17,7 @@ public abstract class StoneFenceNeighborMixin {
     @Inject(method = "method_9559", at = @At("RETURN"), remap = false)
     private void dw$fenceNeighbor(BlockState state, Direction side, BlockState neighbor, WorldAccess world,
             BlockPos pos, BlockPos neighborPos, CallbackInfoReturnable<BlockState> cir) {
-        if (side.getAxis().isHorizontal() && AutoStoneFence.matches(state) && world instanceof ServerWorld server)
+        if ((side.getAxis().isHorizontal() || side == Direction.UP) && AutoStoneFence.matches(state) && world instanceof ServerWorld server)
             AutoStoneFence.enqueue(server, pos);
     }
 }

@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.Coerce;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-/** Applies priority to the recorded positions before the mesh can be shared or uploaded. */
+/** Applies priority to the recorded vertex metadata before the mesh can be shared or uploaded. */
 @Mixin(targets = "dev.dreamwalker.bloodbornedw.composite.CompositeWorldMesh", remap = false)
 public abstract class CompositeMeshPriorityMixin {
     @Inject(method = "bakePrepared", at = @At("RETURN"), remap = false)
@@ -33,7 +33,7 @@ public abstract class CompositeMeshPriorityMixin {
             var resident = CompositeShapeSnapshots.owner(view, root);
             if (resident != null && CompositeData.pos(resident.root()).equals(root)) owner = resident;
         }
-        SurfacePriority.composite(mesh.dw$priorityVertices(), block, root, state, owner);
+        SurfacePriority.composite(mesh.dw$priorityLights(), block, root, state, owner);
     }
 
     @Inject(method = "bake", at = @At("RETURN"), remap = false)
@@ -42,7 +42,7 @@ public abstract class CompositeMeshPriorityMixin {
                                                  int light, Map<Long, Long> dependencies,
                                                  CallbackInfoReturnable<Object> result) {
         if (result.getReturnValue() instanceof CompositeRecordedMeshAccess mesh) {
-            SurfacePriority.composite(mesh.dw$priorityVertices(), block, owner.getPos(), state, owner.resident());
+            SurfacePriority.composite(mesh.dw$priorityLights(), block, owner.getPos(), state, owner.resident());
         }
     }
 }

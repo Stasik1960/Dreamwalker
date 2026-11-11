@@ -136,8 +136,9 @@ public final class DebugAdjustments {
         if (target.entity(player.getServer()) != null) return false;
         return edit(player, target, value -> {
             int changed = value ^ RENDER_PRIORITY;
-            player.sendMessage(Text.literal(hasRenderPriority(changed)
-                    ? "Приоритет отображения повышен." : "Обычный приоритет отображения."), true);
+            String priority = hasRenderPriority(changed) ? "Повышенный" : "Автоматический";
+            player.sendMessage(Text.literal(priority + " приоритет перекрытия · "
+                    + BlockPos.fromLong(target.root()).toShortString()), true);
             return changed;
         });
     }

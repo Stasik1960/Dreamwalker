@@ -24,7 +24,7 @@ public final class DebugToolModes {
         FORWARD("Сдвинуть модель вперёд на 0,5 блока"),
         BACK("Сдвинуть модель назад на 0,5 блока"),
         VISUAL_ROTATE("Повернуть модель по часовой стрелке"),
-        RENDER_PRIORITY("Переключить приоритет отображения"),
+        RENDER_PRIORITY("Приоритет перекрытия"),
         SPECIAL("Особое действие блока", BbToolItem.Mode.SPECIAL),
         COMMANDS("Привязать команды", BbToolItem.Mode.COMMANDS),
         CLEAR("Удалить связи и команды", BbToolItem.Mode.CLEAR),
