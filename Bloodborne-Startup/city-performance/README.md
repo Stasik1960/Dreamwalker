@@ -17,3 +17,5 @@ python package.py Editing-Fix.jar City-Performance.jar --dependency minecraft-in
 ## Проверка
 
 `run_client_qa.py` запускает один и тот же автоматизированный маршрут из трёх неподвижных ракурсов на копии переданного мира. Скрипт использует подготовленный профиль Fabric с `bb-editing-client-qa.jar`. `run_server_qa.py` открывает отдельную копию карты в Fabric dedicated server, проверяет указанные блоки в сохранённых измерениях и ждёт штатного сохранения.
+
+[Игровые замеры](PERFORMANCE.md) · [Правила миграции карты](MIGRATION.md)
