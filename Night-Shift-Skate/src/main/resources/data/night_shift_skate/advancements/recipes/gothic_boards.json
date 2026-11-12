@@ -1,0 +1,10 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_skateboard": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {"items": [{"items": ["night_shift_skate:skateboard"]}]}
+    }
+  },
+  "rewards": {"recipes": ["night_shift_skate:iron_vespers", "night_shift_skate:grave_procession"]}
+}

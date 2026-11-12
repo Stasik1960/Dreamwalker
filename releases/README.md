@@ -16,6 +16,7 @@ Java 17 и Fabric API; дополнительные требования ука�
 | DW Languages 0.1.0 | [Скачать](DW_Languages/dw-languages-0.1.0.jar) · [SHA-256](DW_Languages/dw-languages-0.1.0.jar.sha256) | [Языки](../DW_Languages/README.md) |
 | MC-Pool 0.1.14 | [Скачать](MC-Pool/pool-billiards-0.1.14.jar) · [SHA-256](MC-Pool/pool-billiards-0.1.14.jar.sha256) | [Бильярд](../MC-Pool/README.md) |
 | Model Props 1.3.1 | [Скачать](Model-Props/modelprops-fabric-1.20.1-1.3.1.jar) · [SHA-256](Model-Props/modelprops-fabric-1.20.1-1.3.1.jar.sha256) | [Модели, анимации и звуки](../Model-Props/README_RU.md) |
+| Night Shift Skate 0.3.0 | [Скачать](Night-Shift-Skate/night-shift-skate-0.3.0.jar) · [SHA-256](Night-Shift-Skate/night-shift-skate-0.3.0.jar.sha256) | [Скейтборды и трюки](../Night-Shift-Skate/README.md) |
 
 Для раций и языков используйте RP Chat 0.1.16+. JAR RP Chat, DW Magic Connect и
 DW Languages предоставлены пользователем и опубликованы без пересборки.

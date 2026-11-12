@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "id": "night_shift_skate",
+  "version": "${version}",
+  "name": "Night Shift Skate",
+  "description": "Ride, ollie, flip and grind with the Night Shift skateboard.",
+  "environment": "*",
+  "entrypoints": {
+    "main": ["dev.nightshift.skate.NightShiftSkate"],
+    "client": ["dev.nightshift.skate.client.NightShiftClient"]
+  },
+  "mixins": [{"config": "night_shift_skate.client.mixins.json", "environment": "client"}],
+  "depends": {
+    "fabricloader": ">=0.16.10",
+    "fabric-api": "*",
+    "minecraft": "1.20.1",
+    "java": ">=17"
+  }
+}

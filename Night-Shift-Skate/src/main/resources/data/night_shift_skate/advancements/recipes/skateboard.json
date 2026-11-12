@@ -1,0 +1,15 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_slime_ball": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {"items": [{"items": ["minecraft:slime_ball"]}]}
+    },
+    "has_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {"recipe": "night_shift_skate:skateboard"}
+    }
+  },
+  "requirements": [["has_slime_ball", "has_recipe"]],
+  "rewards": {"recipes": ["night_shift_skate:skateboard"]}
+}
