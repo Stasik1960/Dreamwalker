@@ -1,5 +1,5 @@
 param(
-    [string]$SourceArtwork = (Join-Path $PSScriptRoot '../artwork/deck-print.png')
+    [string]$SourceArtwork = (Join-Path $PSScriptRoot '../../Skateboard/.build/deck-print.png')
 )
 
 $ErrorActionPreference = 'Stop'

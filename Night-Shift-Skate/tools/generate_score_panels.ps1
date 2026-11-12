@@ -4,7 +4,7 @@ $ErrorActionPreference = 'Stop'
 Add-Type -AssemblyName System.Drawing
 
 $assetRoot = Join-Path $PSScriptRoot '../src/main/resources/assets/night_shift_skate'
-$output = Join-Path $assetRoot 'textures/gui'
+$output = Join-Path $PSScriptRoot '../build/legacy-score-panels'
 New-Item -ItemType Directory -Path $output -Force | Out-Null
 
 function Tone([string]$Hex) {
@@ -72,16 +72,12 @@ function New-Plate([int]$Width, [int]$Height, [float[]]$Outline, [string]$Name, 
         $canvas.Restore($side)
     }
 
-    if ($Name -eq 'score_panel.png') {
-        $canvas.DrawLine($etch, 34, 39, 174, 39)
-        $canvas.DrawLine($etch, 104, 12, 104, 34)
-        $seal = Polygon-Path @(100,24, 104,19, 108,24, 104,29)
-        $canvas.FillPath($garnet, $seal)
-        $canvas.DrawPath($ornament, $seal)
-        $seal.Dispose()
-    } else {
-        $canvas.DrawLine($etch, 57, 13, 57, 35)
-    }
+    $canvas.DrawLine($etch, 34, 39, 174, 39)
+    $canvas.DrawLine($etch, 104, 12, 104, 34)
+    $seal = Polygon-Path @(100,24, 104,19, 108,24, 104,29)
+    $canvas.FillPath($garnet, $seal)
+    $canvas.DrawPath($ornament, $seal)
+    $seal.Dispose()
 
     $image.Save((Join-Path $output $Name), [Drawing.Imaging.ImageFormat]::Png)
     foreach ($resource in @($fill, $shadow, $bevel, $etch, $ornament, $gold, $garnet, $shape, $canvas, $image)) {
@@ -92,22 +88,18 @@ function New-Plate([int]$Width, [int]$Height, [float[]]$Outline, [string]$Name, 
 New-Plate 208 62 @(3,28, 12,19, 22,18, 27,10, 39,8, 74,8, 88,4, 120,4, 134,8, 169,8, 181,10,
     186,18, 196,19, 205,28, 198,40, 188,42, 183,52, 170,55, 148,55, 143,59, 65,59, 60,55, 38,55, 25,52,
     20,42, 10,40) 'score_panel.png' '#221e21' '#210d14'
-New-Plate 144 48 @(3,22, 13,15, 22,14, 29,7, 48,7, 56,3, 88,3, 96,7, 115,7, 122,14, 131,15, 141,22,
-    133,32, 123,33, 116,40, 97,40, 88,45, 56,45, 47,40, 28,40, 21,33, 11,32) 'rank_plate.png' '#282025' '#2d0e19'
 
 if ($PreviewPath) {
     $fonts = [Drawing.Text.PrivateFontCollection]::new()
     $fonts.AddFontFile((Join-Path $assetRoot 'font/cormorant_garamond_bold.ttf'))
-    $preview = [Drawing.Bitmap]::new(1040, 510)
+    $preview = [Drawing.Bitmap]::new(1040, 332)
     $canvas = [Drawing.Graphics]::FromImage($preview)
     $canvas.Clear((Tone '#161419'))
     $canvas.SmoothingMode = [Drawing.Drawing2D.SmoothingMode]::AntiAlias
     $canvas.TextRenderingHint = [Drawing.Text.TextRenderingHint]::AntiAliasGridFit
     $canvas.InterpolationMode = [Drawing.Drawing2D.InterpolationMode]::HighQualityBicubic
     $frame = [Drawing.Image]::FromFile((Join-Path $output 'score_panel.png'))
-    $award = [Drawing.Image]::FromFile((Join-Path $output 'rank_plate.png'))
     $canvas.DrawImage($frame, 104, 54, 832, 248)
-    $canvas.DrawImage($award, 232, 306, 576, 192)
 
     function Write-Sample([string]$Value, [int]$X, [int]$Y, [int]$Size, [string]$Hex) {
         $font = [Drawing.Font]::new($fonts.Families[0], $Size, [Drawing.FontStyle]::Bold, [Drawing.GraphicsUnit]::Pixel)
@@ -132,9 +124,6 @@ if ($PreviewPath) {
     $canvas.FillRectangle($rim, 320, 254, 400, 20)
     $canvas.FillRectangle($track, 324, 258, 392, 12)
     $canvas.FillRectangle($blood, 324, 258, 282, 12)
-    Write-Sample 'S' 399 342 100 '#e7a477'
-    Write-Sample '+1 680' 616 345 68 '#f1dfbf'
-    Write-Sample 'ЗАЧТЕНО' 616 418 30 '#bd9b80'
     $preview.Save($PreviewPath, [Drawing.Imaging.ImageFormat]::Png)
-    foreach ($resource in @($blood, $track, $rim, $award, $frame, $canvas, $preview, $fonts)) { $resource.Dispose() }
+    foreach ($resource in @($blood, $track, $rim, $frame, $canvas, $preview, $fonts)) { $resource.Dispose() }
 }

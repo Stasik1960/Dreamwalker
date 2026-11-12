@@ -1,0 +1,66 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_board": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "night_shift_skate:skateboard",
+              "night_shift_skate:iron_vespers",
+              "night_shift_skate:grave_procession"
+            ]
+          }
+        ]
+      }
+    },
+    "has_workbench": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "night_shift_skate:skate_workbench"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_board",
+      "has_workbench"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "night_shift_skate:skate_workbench",
+      "night_shift_skate:part_deck_night_shift",
+      "night_shift_skate:part_deck_iron_vespers",
+      "night_shift_skate:part_deck_grave_procession",
+      "night_shift_skate:part_deck_cathedral_spire",
+      "night_shift_skate:part_deck_moon_sickle",
+      "night_shift_skate:part_deck_hunter_reliquary",
+      "night_shift_skate:part_deck_rose_window",
+      "night_shift_skate:part_deck_gargoyle_wing",
+      "night_shift_skate:part_trucks_night_shift",
+      "night_shift_skate:part_trucks_iron_vespers",
+      "night_shift_skate:part_trucks_grave_procession",
+      "night_shift_skate:part_trucks_flying_buttress",
+      "night_shift_skate:part_trucks_chalice_yoke",
+      "night_shift_skate:part_trucks_ribcage",
+      "night_shift_skate:part_trucks_iron_gate",
+      "night_shift_skate:part_trucks_gargoyle_claw",
+      "night_shift_skate:part_wheels_night_shift",
+      "night_shift_skate:part_wheels_iron_vespers",
+      "night_shift_skate:part_wheels_grave_procession",
+      "night_shift_skate:part_wheels_rosary_bead",
+      "night_shift_skate:part_wheels_rose_cog",
+      "night_shift_skate:part_wheels_stained_glass",
+      "night_shift_skate:part_wheels_tomb_roller",
+      "night_shift_skate:part_wheels_moon_hub"
+    ]
+  }
+}

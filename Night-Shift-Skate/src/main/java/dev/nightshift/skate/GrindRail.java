@@ -3,6 +3,7 @@ package dev.nightshift.skate;
 import net.minecraft.block.Block;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.TagKey;
+import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
@@ -23,16 +24,20 @@ record GrindRail(BlockPos pos, Direction.Axis axis, double height) {
         if (!state.isIn(GRINDABLE)) {
             return null;
         }
-        boolean x = world.getBlockState(pos.west()).isIn(GRINDABLE) || world.getBlockState(pos.east()).isIn(GRINDABLE);
-        boolean z = world.getBlockState(pos.north()).isIn(GRINDABLE) || world.getBlockState(pos.south()).isIn(GRINDABLE);
-        if (x == z) {
-            return null;
+        Direction.Axis axis;
+        if (state.contains(Properties.HORIZONTAL_AXIS)) {
+            axis = state.get(Properties.HORIZONTAL_AXIS);
+        } else {
+            boolean x = world.getBlockState(pos.west()).isIn(GRINDABLE) || world.getBlockState(pos.east()).isIn(GRINDABLE);
+            boolean z = world.getBlockState(pos.north()).isIn(GRINDABLE) || world.getBlockState(pos.south()).isIn(GRINDABLE);
+            if (x == z) return null;
+            axis = x ? Direction.Axis.X : Direction.Axis.Z;
         }
         VoxelShape shape = state.getCollisionShape(world, pos);
         if (shape.isEmpty()) {
             return null;
         }
-        return new GrindRail(pos.toImmutable(), x ? Direction.Axis.X : Direction.Axis.Z,
+        return new GrindRail(pos.toImmutable(), axis,
                 pos.getY() + shape.getMax(Direction.Axis.Y));
     }
 

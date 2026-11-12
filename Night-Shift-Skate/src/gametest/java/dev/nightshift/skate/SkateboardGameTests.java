@@ -1,18 +1,25 @@
 package dev.nightshift.skate;
 
+import java.util.ArrayList;
+import java.util.List;
 import net.fabricmc.fabric.api.gametest.v1.FabricGameTest;
+import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.state.property.Properties;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.screen.slot.SlotActionType;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.test.GameTest;
 import net.minecraft.test.TestContext;
+import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.hit.BlockHitResult;
@@ -32,6 +39,136 @@ public final class SkateboardGameTests implements FabricGameTest {
     @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE, tickLimit = 40, batchId = "night_shift_models")
     public void graveProcessionKeepsItsItemAndModelAfterLoading(TestContext context) {
         verifyBoardRoundTrip(context, NightShiftSkate.GRAVE_PROCESSION, BoardStyle.GRAVE_PROCESSION, true);
+    }
+
+    @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE, batchId = "night_shift_workbench")
+    public void workbenchSwapsPartsAndTheAssemblySurvivesPlacementAndPickup(TestContext context) {
+        BlockPos workbench = new BlockPos(1, 1, 1);
+        BlockPos surface = new BlockPos(2, 1, 2);
+        context.setBlockState(workbench, SkateParts.WORKBENCH);
+        context.setBlockState(surface, Blocks.SMOOTH_STONE);
+        BlockPos benchPos = context.getAbsolutePos(workbench);
+        BlockPos surfacePos = context.getAbsolutePos(surface);
+        ServerPlayerEntity player = context.createMockCreativeServerPlayerInWorld();
+        player.getAbilities().creativeMode = false;
+        player.getAbilities().allowModifyWorld = true;
+        player.refreshPositionAndAngles(surfacePos.getX() + 0.5, surfacePos.getY() + 1,
+                surfacePos.getZ() - 0.5, 0, 0);
+        var benchState = context.getWorld().getBlockState(benchPos);
+        var benchHit = new BlockHitResult(Vec3d.ofCenter(benchPos), Direction.UP, benchPos, false);
+        ActionResult opened = benchState.onUse(context.getWorld(), player, Hand.MAIN_HAND, benchHit);
+        context.assertTrue(opened.isAccepted() && player.currentScreenHandler instanceof SkateWorkbenchScreenHandler,
+                "interacting with the workbench must open its assembly menu");
+        SkateWorkbenchScreenHandler handler = (SkateWorkbenchScreenHandler) player.currentScreenHandler;
+        ItemStack original = new ItemStack(NightShiftSkate.IRON_VESPERS);
+        original.setCustomName(Text.literal("Mixed Night"));
+        original.getOrCreateNbt().putInt("Sentinel", 42);
+        BoardSetup old = BoardSetup.preset(BoardStyle.IRON_VESPERS);
+        BoardSetup mixed = new BoardSetup(SkatePart.Deck.GRAVE_PROCESSION, SkatePart.Trucks.FLYING_BUTTRESS,
+                SkatePart.Wheels.STAINED_GLASS);
+
+        handler.getSlot(SkateWorkbenchScreenHandler.BOARD).setStack(original);
+        handler.getSlot(1).setStack(new ItemStack(SkateParts.item(old.deck()), 2));
+        context.assertTrue(!handler.getSlot(SkateWorkbenchScreenHandler.OUTPUT).hasStack(),
+                "replacing a part with itself must not create a result");
+        for (SkatePart.Type type : SkatePart.Type.values()) {
+            handler.getSlot(1 + type.ordinal()).setStack(new ItemStack(SkateParts.item(mixed.part(type)), 2));
+        }
+        ItemStack preview = handler.getSlot(SkateWorkbenchScreenHandler.OUTPUT).getStack().copy();
+        context.assertTrue(BoardSetup.fromStack(preview).equals(mixed) && preview.getName().equals(original.getName())
+                && preview.getNbt().getInt("Sentinel") == 42, "preview must keep the original item data and show all swaps");
+
+        handler.onSlotClick(SkateWorkbenchScreenHandler.OUTPUT, 0, SlotActionType.QUICK_MOVE, player);
+        context.assertTrue(!handler.getSlot(0).hasStack() && !handler.getSlot(SkateWorkbenchScreenHandler.OUTPUT).hasStack(),
+                "taking a result must consume the original board and clear the output");
+        for (SkatePart.Type type : SkatePart.Type.values()) {
+            context.assertTrue(handler.getSlot(1 + type.ordinal()).getStack().getCount() == 1,
+                    "exactly one replacement must be consumed per slot");
+            context.assertTrue(player.getInventory().contains(new ItemStack(SkateParts.item(old.part(type)))),
+                    "the previous part must be returned to inventory");
+        }
+
+        ItemStack assembled = preview.copy();
+        context.assertTrue(player.getInventory().contains(assembled), "shift-click must deliver the assembly to inventory");
+        player.closeHandledScreen();
+        for (SkatePart.Type type : SkatePart.Type.values()) {
+            context.assertTrue(player.getInventory().contains(new ItemStack(SkateParts.item(mixed.part(type)))),
+                    "closing the workbench must return all unused inputs");
+        }
+        for (int slot = 0; slot < player.getInventory().size(); slot++) {
+            if (ItemStack.canCombine(player.getInventory().getStack(slot), assembled)) {
+                player.getInventory().removeStack(slot);
+                break;
+            }
+        }
+        player.setStackInHand(Hand.MAIN_HAND, assembled);
+        var hit = new BlockHitResult(Vec3d.ofCenter(surfacePos).add(0, 0.5, 0), Direction.UP, surfacePos, false);
+        context.assertTrue(assembled.getItem().useOnBlock(new ItemUsageContext(player, Hand.MAIN_HAND, hit)).isAccepted()
+                && assembled.isEmpty(), "survival placement must consume the assembled board");
+        var boards = context.getWorld().getEntitiesByType(NightShiftSkate.SKATEBOARD_ENTITY,
+                new Box(surfacePos).expand(2), entity -> true);
+        context.assertTrue(boards.size() == 1 && boards.get(0).getSetup().equals(mixed), "placed board must track its parts");
+        SkateboardEntity placed = boards.get(0);
+        NbtCompound saved = placed.writeNbt(new NbtCompound());
+        saved.remove("UUID");
+        placed.discard();
+        SkateboardEntity loaded = NightShiftSkate.SKATEBOARD_ENTITY.create(context.getWorld());
+        loaded.readNbt(saved);
+        context.assertTrue(loaded.getSetup().equals(mixed), "reload must restore the complete assembly");
+        context.assertTrue(context.getWorld().spawnEntity(loaded), "restored assembly must spawn");
+        player.setSneaking(true);
+        context.assertTrue(loaded.interact(player, Hand.MAIN_HAND).isAccepted()
+                && player.getInventory().contains(preview), "pickup must return the assembly and its original NBT");
+        context.complete();
+    }
+
+    @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE, batchId = "night_shift_workbench")
+    public void allPartsHaveRecipesAndUnknownIdsFallBackToTheOriginal(TestContext context) {
+        var manager = context.getWorld().getRecipeManager();
+        context.assertTrue(manager.get(NightShiftSkate.id("skate_workbench")).isPresent(), "the workbench must be craftable");
+        context.assertTrue(SkateParts.all().size() == 24, "all eight parts of each category must be registered");
+        for (SkatePart part : SkateParts.all()) {
+            context.assertTrue(manager.get(NightShiftSkate.id(part.itemId())).isPresent(), "missing recipe for " + part.itemId());
+        }
+        ItemStack damaged = new ItemStack(NightShiftSkate.GRAVE_PROCESSION);
+        NbtCompound data = damaged.getOrCreateSubNbt("NightShiftParts");
+        data.putString("deck", "unknown_part");
+        data.putString("wheels", SkatePart.Wheels.MOON_HUB.id());
+        BoardSetup expected = BoardSetup.preset(BoardStyle.GRAVE_PROCESSION).with(SkatePart.Wheels.MOON_HUB);
+        context.assertTrue(BoardSetup.fromStack(damaged).equals(expected), "unknown parts must only reset the affected slot");
+        context.complete();
+    }
+
+    @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE, tickLimit = 45, batchId = "night_shift_part_physics")
+    public void fittedWheelsAndDeckChangeAccelerationAndOllie(TestContext context) {
+        makeFloor(context, 1, 1, 8, 20);
+        SkateboardEntity stock = spawnBoard(context, new Vec3d(2.5, 2.05, 2.5), 0);
+        SkateboardEntity tuned = spawnBoard(context, new Vec3d(5.5, 2.05, 2.5), 0);
+        tuned.setBoardStack(BoardSetup.DEFAULT.with(SkatePart.Deck.CATHEDRAL_SPIRE).with(SkatePart.Wheels.ROSARY_BEAD)
+                .applyTo(new ItemStack(NightShiftSkate.SKATEBOARD)));
+        mount(context, stock);
+        mount(context, tuned);
+        for (int tick = 1; tick <= 11; tick += 5) {
+            context.runAtTick(tick, () -> {
+                stock.acceptControls(SkateControls.ACCELERATE);
+                tuned.acceptControls(SkateControls.ACCELERATE);
+            });
+        }
+        context.runAtTick(12, () -> {
+            context.assertTrue(tuned.getVelocity().horizontalLength() > stock.getVelocity().horizontalLength() * 1.10,
+                    "Rosary Bead wheels must accelerate faster than the stock wheels");
+            stock.acceptControls(SkateControls.JUMP);
+            tuned.acceptControls(SkateControls.JUMP);
+        });
+        context.runAtTick(17, () -> {
+            stock.acceptControls(0);
+            tuned.acceptControls(0);
+        });
+        context.runAtTick(18, () -> {
+            context.assertTrue(stock.getVelocity().y > 0.20 && tuned.getVelocity().y > stock.getVelocity().y * 1.10,
+                    "Cathedral Spire must give a stronger ollie than the stock deck");
+            context.complete();
+        });
     }
 
     private static void verifyBoardRoundTrip(TestContext context, Item item, BoardStyle style, boolean reload) {
@@ -132,6 +269,49 @@ public final class SkateboardGameTests implements FabricGameTest {
         });
     }
 
+    @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE, tickLimit = 205, batchId = "night_shift_coasting")
+    public void releasingThrottleKeepsMomentumOnPavement(TestContext context) {
+        // The test's long lane extends past the test structure and the spawn simulation area.
+        for (int x = 1; x <= 4; x++) {
+            for (int z = 1; z <= 125; z++) {
+                context.setBlockState(new BlockPos(x, 20, z), Blocks.SMOOTH_STONE);
+            }
+        }
+        ChunkPos firstChunk = new ChunkPos(context.getAbsolutePos(new BlockPos(2, 20, 1)));
+        ChunkPos lastChunk = new ChunkPos(context.getAbsolutePos(new BlockPos(2, 20, 125)));
+        List<ChunkPos> forcedByTest = new ArrayList<>();
+        for (int z = firstChunk.z; z <= lastChunk.z; z++) {
+            if (context.getWorld().setChunkForced(firstChunk.x, z, true)) {
+                forcedByTest.add(new ChunkPos(firstChunk.x, z));
+            }
+        }
+        SkateboardEntity board = spawnBoard(context, new Vec3d(2.5, 21.05, 2.5), 0.0F);
+        mount(context, board);
+        for (int tick = 1; tick <= 25; tick += 5) {
+            context.runAtTick(tick, () -> board.acceptControls(SkateControls.ACCELERATE));
+        }
+        double[] release = new double[2];
+        context.runAtTick(26, () -> {
+            release[0] = board.getVelocity().horizontalLength();
+            release[1] = board.getZ();
+            context.assertTrue(release[0] > 0.55, "the board must be at cruising speed before release");
+            board.acceptControls(0);
+        });
+        context.runAtTick(186, () -> {
+            for (ChunkPos chunk : forcedByTest) {
+                context.getWorld().setChunkForced(chunk.x, chunk.z, false);
+            }
+            double speed = board.getVelocity().horizontalLength();
+            double retained = speed / release[0];
+            context.assertTrue(retained >= 0.69 && retained <= 0.71,
+                    "eight seconds of coasting must retain 70% speed, before=" + release[0]
+                            + ", after=" + speed + ", retained=" + retained);
+            context.assertTrue(board.getZ() - release[1] > 75.0,
+                    "eight seconds of coasting must carry the board at least 75 blocks without another push");
+            context.complete();
+        });
+    }
+
     @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE, tickLimit = 60, batchId = "night_shift_movement")
     public void chargedJumpLaunchesOnSpaceRelease(TestContext context) {
         makeFloor(context, 1, 1, 8, 5);
@@ -145,6 +325,194 @@ public final class SkateboardGameTests implements FabricGameTest {
         context.runAtTick(11, () -> {
             context.assertTrue(board.getVelocity().y > 0.22,
                     "releasing a charged Space must produce upward board velocity, got " + board.getVelocity().y);
+            context.complete();
+        });
+    }
+
+    @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE, tickLimit = 40, batchId = "night_shift_low_ramp")
+    public void lowRampRollsOntoHalfDeckWithoutAnOllie(TestContext context) {
+        makeFloor(context, 1, 1, 4, 17);
+        context.setBlockState(new BlockPos(2, 2, 6),
+                SkateParkBlocks.LOW_RAMP.getDefaultState().with(SkateRampBlock.FACING, Direction.SOUTH));
+        for (int z = 7; z <= 15; z++) {
+            context.setBlockState(new BlockPos(2, 2, z), SkateParkBlocks.DECK.getDefaultState());
+        }
+        SkateboardEntity board = spawnBoard(context, new Vec3d(2.5, 2.05, 4.55), 0.0f);
+        mount(context, board);
+        double originY = context.getAbsolutePos(BlockPos.ORIGIN).getY();
+        double originZ = context.getAbsolutePos(BlockPos.ORIGIN).getZ();
+        context.runAtTick(3, () -> board.setVelocity(0, 0, 0.32));
+        boolean[] followedSlope = {false};
+        for (int tick = 6; tick <= 12; tick++) {
+            context.runAtTick(tick, () -> {
+                double z = board.getZ() - originZ;
+                if (z > 6.05 && z < 6.70 && board.getY() > originY + 2.12 && board.getY() < originY + 2.5) {
+                    followedSlope[0] |= board.isOnGround() && board.getRampPitch() > 8.0f;
+                }
+            });
+        }
+        context.runAtTick(17, () -> {
+            context.assertTrue(followedSlope[0], "the wheels must climb an intermediate part of the ramp while grounded");
+            context.assertTrue(board.getZ() > originZ + 7.5 && board.isOnGround()
+                            && Math.abs(board.getY() - originY - 2.5) < 0.03,
+                    "the low ramp must lead onto a half deck without a jump");
+            context.complete();
+        });
+    }
+
+    @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE, tickLimit = 40, batchId = "night_shift_ramp_launch")
+    public void steepRampCarriesSpeedIntoAnAerialAtTheLip(TestContext context) {
+        makeFloor(context, 1, 1, 4, 20);
+        context.setBlockState(new BlockPos(2, 2, 6),
+                SkateParkBlocks.STEEP_RAMP.getDefaultState().with(SkateRampBlock.FACING, Direction.SOUTH));
+        SkateboardEntity board = spawnBoard(context, new Vec3d(2.5, 2.05, 4.3), 0.0f);
+        mount(context, board);
+        double originY = context.getAbsolutePos(BlockPos.ORIGIN).getY();
+        double originZ = context.getAbsolutePos(BlockPos.ORIGIN).getZ();
+        context.runAtTick(3, () -> board.setVelocity(0, 0, 0.75));
+        boolean[] launched = {false};
+        for (int tick = 6; tick <= 12; tick++) {
+            context.runAtTick(tick, () -> launched[0] |= !board.isOnGround() && board.getY() > originY + 3.06
+                    && board.getVelocity().y > 0.20 && board.getVelocity().horizontalLength() > 0.60);
+        }
+        context.runAtTick(13, () -> {
+            context.assertTrue(launched[0] && board.getZ() > originZ + 8,
+                    "a fast board must carry its horizontal speed off the exposed top of the ramp");
+            context.complete();
+        });
+    }
+
+    @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE, tickLimit = 40, batchId = "night_shift_ramp_descent")
+    public void downhillRampAddsSpeedWithoutThrottle(TestContext context) {
+        makeFloor(context, 1, 1, 4, 16);
+        context.setBlockState(new BlockPos(2, 2, 6),
+                SkateParkBlocks.STEEP_RAMP.getDefaultState().with(SkateRampBlock.FACING, Direction.SOUTH));
+        for (int z = 7; z <= 12; z++) {
+            context.setBlockState(new BlockPos(2, 2, z), SkateParkBlocks.PAVING);
+        }
+        SkateboardEntity board = spawnBoard(context, new Vec3d(2.5, 3.03, 8.15), 180.0f);
+        mount(context, board);
+        double originY = context.getAbsolutePos(BlockPos.ORIGIN).getY();
+        double originZ = context.getAbsolutePos(BlockPos.ORIGIN).getZ();
+        context.runAtTick(3, () -> board.setVelocity(0, 0, -0.22));
+        context.runAtTick(19, () -> {
+            double speed = board.getVelocity().horizontalLength();
+            context.assertTrue(board.isOnGround() && board.getY() < originY + 2.05 && board.getZ() < originZ + 5.5,
+                    "the board must roll down onto the lower paving");
+            context.assertTrue(speed > 0.31, "gravity must add speed during the descent, got " + speed);
+            context.complete();
+        });
+    }
+
+    @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE, tickLimit = 35, batchId = "night_shift_modular_rail")
+    public void parkRailUsesItsPlacedAxis(TestContext context) {
+        for (String id : List.of("park_paving", "park_deck", "low_ramp", "steep_ramp", "park_rail", "park_ledge")) {
+            context.assertTrue(context.getWorld().getRecipeManager().get(NightShiftSkate.id(id)).isPresent(),
+                    "the park component " + id + " must have a loaded crafting recipe");
+        }
+        verifyModularRail(context, SkateParkBlocks.RAIL, Direction.Axis.Z);
+    }
+
+    @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE, tickLimit = 35, batchId = "night_shift_modular_ledge")
+    public void stoneLedgeCanBeGrindedAcrossItsPlacedAxis(TestContext context) {
+        verifyModularRail(context, SkateParkBlocks.LEDGE, Direction.Axis.X);
+    }
+
+    private static void verifyModularRail(TestContext context, Block block, Direction.Axis axis) {
+        boolean alongX = axis == Direction.Axis.X;
+        var state = block.getDefaultState().with(Properties.HORIZONTAL_AXIS, axis);
+        for (int i = 2; i <= 10; i++) {
+            context.setBlockState(new BlockPos(alongX ? i : 4, 2, alongX ? 4 : i), state);
+        }
+        BlockPos start = context.getAbsolutePos(new BlockPos(alongX ? 2 : 4, 2, alongX ? 4 : 2));
+        double height = state.getCollisionShape(context.getWorld(), start).getMax(Direction.Axis.Y);
+        SkateboardEntity board = spawnBoard(context,
+                new Vec3d(alongX ? 2.65 : 4.5, 2 + height + 0.08, alongX ? 4.5 : 2.65), alongX ? -90 : 0);
+        mount(context, board);
+        board.setVelocity(alongX ? 0.21 : 0, -0.10, alongX ? 0 : 0.21);
+        context.runAtTick(6, () -> {
+            context.assertTrue(board.isGrinding() && Math.abs(board.getY() - start.getY() - height) < 0.02,
+                    "park rails and ledges must use their real collision height and placed axis");
+            context.complete();
+        });
+    }
+
+    @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE, tickLimit = 50, batchId = "night_shift_grabs")
+    public void nosegrabAfterAnOllieEarnsPointsOnLanding(TestContext context) {
+        makeFloor(context, 1, 1, 4, 20);
+        SkateboardEntity board = spawnBoard(context, new Vec3d(2.5, 2.05, 2.5), 0.0F);
+        ServerPlayerEntity rider = mount(context, board);
+        int initial = SkateCombo.totalPoints(rider);
+        context.runAtTick(2, () -> board.acceptControls(SkateControls.JUMP));
+        context.runAtTick(11, () -> board.acceptControls(SkateControls.ACCELERATE | SkateControls.GRAB));
+        context.runAtTick(14, () -> {
+            context.assertTrue(board.isAirborne() && board.getTrickId() == SkateTrick.NOSEGRAB.ordinal(),
+                    "W + G on takeoff must start the nosegrab and track airborne state");
+            context.assertTrue(SkateCombo.totalPoints(rider) == initial, "a grab must not pay before landing");
+        });
+        context.runAtTick(33, () -> {
+            context.assertTrue(!board.isAirborne() && board.getTrickId() == 0,
+                    "a clean landing must end the grab and the airborne pose");
+            rider.stopRiding();
+            context.assertTrue(SkateCombo.totalPoints(rider) - initial == SkateTrick.NOSEGRAB.points(),
+                    "the landed nosegrab must add to the combo once");
+            context.complete();
+        });
+    }
+
+    @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE, tickLimit = 45, batchId = "night_shift_manual")
+    public void manualAndNoseManualTiltOppositeWaysAndAwardPoints(TestContext context) {
+        makeFloor(context, 1, 1, 4, 24);
+        SkateboardEntity board = spawnBoard(context, new Vec3d(2.5, 2.05, 2.5), 0.0F);
+        ServerPlayerEntity rider = mount(context, board);
+        int initial = SkateCombo.totalPoints(rider);
+        context.runAtTick(3, () -> {
+            board.setVelocity(0.0, 0.0, 0.43);
+            board.acceptControls(SkateControls.GRAB);
+        });
+        context.runAtTick(10, () -> {
+            context.assertTrue(board.getManualPitch() > 6.0f, "a grounded G press must lift the nose");
+            board.acceptControls(SkateControls.GRAB);
+        });
+        context.runAtTick(16, () -> {
+            context.assertTrue(Math.abs(board.getManualPitch()) < 2.0f, "a second G press must level the board");
+            board.acceptControls(SkateControls.ACCELERATE | SkateControls.GRAB);
+        });
+        context.runAtTick(25, () -> {
+            context.assertTrue(board.getManualPitch() < -6.0f, "grounded W + G must lift the tail instead");
+            rider.stopRiding();
+            context.assertTrue(SkateCombo.totalPoints(rider) - initial > 140,
+                    "both sustained manuals must contribute points");
+            context.complete();
+        });
+    }
+
+    @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE, tickLimit = 40, batchId = "night_shift_wallride")
+    public void wallRideFollowsWallAndJumpsAway(TestContext context) {
+        makeFloor(context, 3, 1, 7, 22);
+        for (int z = 1; z <= 20; z++) {
+            for (int y = 2; y <= 4; y++) {
+                context.setBlockState(new BlockPos(3, y, z), Blocks.SMOOTH_STONE);
+            }
+        }
+        SkateboardEntity board = spawnBoard(context, new Vec3d(4.58, 3.40, 2.5), 0.0F);
+        ServerPlayerEntity rider = mount(context, board);
+        int initial = SkateCombo.totalPoints(rider);
+        board.setVelocity(0.0, 0.0, 0.50);
+        context.runAtTick(2, () -> board.acceptControls(SkateControls.RIGHT | SkateControls.GRAB));
+        context.runAtTick(7, () -> {
+            context.assertTrue(board.getWallRideLean() > 0.75f && board.getTrickId() == 0,
+                    "G toward a close side wall must enter a wallride instead of a grab");
+            context.assertTrue(Math.abs(board.getX() - context.getAbsolutePos(new BlockPos(4, 0, 0)).getX() - 0.42) < 0.06,
+                    "the wallride must track the wall face at riding clearance");
+            board.acceptControls(SkateControls.JUMP);
+        });
+        context.runAtTick(9, () -> {
+            context.assertTrue(board.getVelocity().x > 0.20 && board.getVelocity().y > 0.20,
+                    "Space must launch upward and away from the wall");
+            rider.stopRiding();
+            context.assertTrue(SkateCombo.totalPoints(rider) - initial == 250,
+                    "a sustained wallride must score once");
             context.complete();
         });
     }

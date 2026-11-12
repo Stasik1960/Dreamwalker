@@ -10,12 +10,16 @@ import net.minecraft.item.ItemGroups;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
+import net.minecraft.sound.SoundEvent;
 
 public final class NightShiftSkate implements ModInitializer {
     public static final String ID = "night_shift_skate";
     public static final Identifier CONTROLS = id("controls");
     public static final Identifier DISMOUNT = id("dismount");
     public static final Identifier SCORE = id("score");
+    public static final Identifier TRICK_AWARD = id("trick_award");
+    public static final SoundEvent SKATE_ROLL = SoundEvent.of(id("skate_roll"));
+    public static final SoundEvent SKATE_GRIND = SoundEvent.of(id("skate_grind"));
 
     public static final EntityType<SkateboardEntity> SKATEBOARD_ENTITY = Registry.register(
             Registries.ENTITY_TYPE, id("skateboard"), EntityType.Builder
@@ -39,6 +43,10 @@ public final class NightShiftSkate implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        SkateParkBlocks.register();
+        SkateParts.register();
+        Registry.register(Registries.SOUND_EVENT, id("skate_roll"), SKATE_ROLL);
+        Registry.register(Registries.SOUND_EVENT, id("skate_grind"), SKATE_GRIND);
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.TOOLS).register(entries -> {
             entries.add(SKATEBOARD);
             entries.add(IRON_VESPERS);

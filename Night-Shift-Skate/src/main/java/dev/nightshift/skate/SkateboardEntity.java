@@ -19,26 +19,36 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
 
 import static dev.nightshift.skate.SkateControls.*;
 
 public final class SkateboardEntity extends Entity {
-    public static final int TRICK_DURATION = 8;
+    private static final int GRAB_DURATION = 8;
     public static final int PUSH_CYCLE_TICKS = 14;
     public static final double MAX_SPEED = 1.12;
     private static final double MAX_GRIND_SPEED = 1.40;
     private static final double GRIND_ACCELERATION = 0.035;
     private static final double STOP_SPEED = 0.018;
+    private static final double LOW_COAST_SPEED = 0.12;
+    private static final double LOW_SPEED_ROLLING_RESISTANCE = 0.0014;
+    private static final double MIN_MANUAL_SPEED = 0.12;
+    private static final double MIN_WALL_SPEED = 0.23;
+    private static final int WALL_RIDE_TICKS = 14;
     private static final double GRAVITY = 0.065;
+    private static final double RAMP_STEP_LENGTH = 0.18;
+    private static final double RAMP_MAX_STEP = 0.31;
+    private static final double RAMP_CONTACT_EPSILON = 0.025;
     private static final int MAX_CHARGE = 9;
 
     private static final TrackedData<Integer> TRICK_ID = DataTracker.registerData(SkateboardEntity.class, TrackedDataHandlerRegistry.INTEGER);
@@ -51,12 +61,20 @@ public final class SkateboardEntity extends Entity {
     private static final TrackedData<Float> RIDE_SPEED = DataTracker.registerData(SkateboardEntity.class, TrackedDataHandlerRegistry.FLOAT);
     private static final TrackedData<Integer> PUSH_CYCLE_START = DataTracker.registerData(SkateboardEntity.class, TrackedDataHandlerRegistry.INTEGER);
     private static final TrackedData<Byte> BOARD_STYLE = DataTracker.registerData(SkateboardEntity.class, TrackedDataHandlerRegistry.BYTE);
+    private static final TrackedData<Boolean> AIRBORNE = DataTracker.registerData(SkateboardEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    private static final TrackedData<Integer> OLLIE_START = DataTracker.registerData(SkateboardEntity.class, TrackedDataHandlerRegistry.INTEGER);
+    private static final TrackedData<Float> MANUAL_PITCH = DataTracker.registerData(SkateboardEntity.class, TrackedDataHandlerRegistry.FLOAT);
+    private static final TrackedData<Float> WALL_RIDE_LEAN = DataTracker.registerData(SkateboardEntity.class, TrackedDataHandlerRegistry.FLOAT);
+    private static final TrackedData<Integer> BOARD_SETUP = DataTracker.registerData(SkateboardEntity.class, TrackedDataHandlerRegistry.INTEGER);
+    private static final TrackedData<Boolean> DECK_REVERSED = DataTracker.registerData(SkateboardEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    private static final TrackedData<Float> RAMP_PITCH = DataTracker.registerData(SkateboardEntity.class, TrackedDataHandlerRegistry.FLOAT);
+    private static final TrackedData<Float> RAMP_DROP = DataTracker.registerData(SkateboardEntity.class, TrackedDataHandlerRegistry.FLOAT);
 
     private final SkateCombo combo = new SkateCombo();
     private ItemStack boardStack = ItemStack.EMPTY;
     private int controls;
     private int lastInputTick = -20;
-    private int pendingTrick;
+    private int pendingAction;
     private int jumpCharge;
     private boolean wasJumpHeld;
     private int ticksSinceGround = 10;
@@ -68,6 +86,13 @@ public final class SkateboardEntity extends Entity {
     private int railTicks;
     private double railDistance;
     private int railPointsAwarded;
+    private int manualDirection;
+    private double manualDistance;
+    private int manualPointsAwarded;
+    private Direction wallFace;
+    private int wallSide;
+    private int wallTicks;
+    private int wallCooldown;
 
     private Vec3d interpolationTarget = Vec3d.ZERO;
     private float interpolationYaw;
@@ -90,14 +115,54 @@ public final class SkateboardEntity extends Entity {
         dataTracker.startTracking(RIDE_SPEED, 0.0f);
         dataTracker.startTracking(PUSH_CYCLE_START, 0);
         dataTracker.startTracking(BOARD_STYLE, BoardStyle.NIGHT_SHIFT.networkId());
+        dataTracker.startTracking(AIRBORNE, false);
+        dataTracker.startTracking(OLLIE_START, Integer.MIN_VALUE);
+        dataTracker.startTracking(MANUAL_PITCH, 0.0f);
+        dataTracker.startTracking(WALL_RIDE_LEAN, 0.0f);
+        dataTracker.startTracking(BOARD_SETUP, BoardSetup.DEFAULT.packed());
+        dataTracker.startTracking(DECK_REVERSED, false);
+        dataTracker.startTracking(RAMP_PITCH, 0.0f);
+        dataTracker.startTracking(RAMP_DROP, 0.0f);
     }
 
     public int getTrickId() {
         return dataTracker.get(TRICK_ID);
     }
 
+    public SkateTrick getTrick() {
+        return SkateTrick.fromId(getTrickId());
+    }
+
     public int getTrickStartAge() {
         return dataTracker.get(TRICK_START);
+    }
+
+    public boolean isAirborne() {
+        return dataTracker.get(AIRBORNE);
+    }
+
+    public int getOllieStartAge() {
+        return dataTracker.get(OLLIE_START);
+    }
+
+    public float getManualPitch() {
+        return dataTracker.get(MANUAL_PITCH);
+    }
+
+    public float getWallRideLean() {
+        return dataTracker.get(WALL_RIDE_LEAN);
+    }
+
+    public boolean isDeckReversed() {
+        return dataTracker.get(DECK_REVERSED);
+    }
+
+    public float getRampPitch() {
+        return dataTracker.get(RAMP_PITCH);
+    }
+
+    public float getRampDrop() {
+        return dataTracker.get(RAMP_DROP);
     }
 
     public boolean isGrinding() {
@@ -132,9 +197,18 @@ public final class SkateboardEntity extends Entity {
         return BoardStyle.fromNetworkId(dataTracker.get(BOARD_STYLE));
     }
 
+    public BoardSetup getSetup() {
+        return BoardSetup.fromPacked(dataTracker.get(BOARD_SETUP));
+    }
+
+    public int getTrickDuration() {
+        return getTrick().isGrab() ? GRAB_DURATION : getSetup().deck().flipTicks();
+    }
+
     private void rememberBoard(ItemStack stack) {
         boardStack = stack.getItem() instanceof SkateboardItem ? stack.copyWithCount(1) : ItemStack.EMPTY;
         dataTracker.set(BOARD_STYLE, BoardStyle.fromStack(boardStack).networkId());
+        dataTracker.set(BOARD_SETUP, BoardSetup.fromStack(boardStack).packed());
     }
 
     void setBoardStack(ItemStack stack) {
@@ -145,10 +219,12 @@ public final class SkateboardEntity extends Entity {
     @Override
     protected void readCustomDataFromNbt(NbtCompound nbt) {
         rememberBoard(ItemStack.fromNbt(nbt.getCompound("BoardItem")));
+        dataTracker.set(DECK_REVERSED, nbt.getBoolean("DeckReversed"));
     }
 
     @Override
     protected void writeCustomDataToNbt(NbtCompound nbt) {
+        nbt.putBoolean("DeckReversed", isDeckReversed());
         if (!boardStack.isEmpty()) {
             nbt.put("BoardItem", boardStack.writeNbt(new NbtCompound()));
         }
@@ -185,8 +261,8 @@ public final class SkateboardEntity extends Entity {
     }
 
     private double riderHeight() {
-        BoardStyle style = getStyle();
-        return style.riderHeight() - (isGrinding() ? style.boardslideDrop() : 0);
+        BoardSetup setup = getSetup();
+        return setup.riderHeight() - (isGrinding() ? setup.deckBase() : getRampDrop());
     }
 
     @Override
@@ -214,14 +290,20 @@ public final class SkateboardEntity extends Entity {
             if (rail != null) {
                 stopGrinding(passenger instanceof PlayerEntity player ? player : null, false);
             }
+            finishManual(passenger instanceof PlayerEntity player ? player : null);
             if (passenger instanceof ServerPlayerEntity rider) {
                 combo.bank(rider);
             }
             clearControls();
+            stopWallRide();
             dataTracker.set(TRICK_ID, 0);
             dataTracker.set(CROUCHING, false);
             dataTracker.set(PUSHING, false);
             dataTracker.set(STEERING_LEAN, 0.0f);
+            dataTracker.set(AIRBORNE, false);
+            dataTracker.set(OLLIE_START, Integer.MIN_VALUE);
+            dataTracker.set(MANUAL_PITCH, 0.0f);
+            dataTracker.set(WALL_RIDE_LEAN, 0.0f);
         }
     }
 
@@ -269,18 +351,8 @@ public final class SkateboardEntity extends Entity {
     void acceptControls(int input) {
         controls = input & CONTINUOUS;
         lastInputTick = age;
-        if (pressed(input, TRICK)) {
-            if (pressed(input, CROUCH)) {
-                pendingTrick = 5;
-            } else if (pressed(input, BRAKE)) {
-                pendingTrick = 4;
-            } else {
-                pendingTrick = switch (steer(input)) {
-                    case -1 -> 2;
-                    case 1 -> 3;
-                    default -> 1;
-                };
-            }
+        if ((input & (TRICK | GRAB)) != 0) {
+            pendingAction = input;
         }
     }
 
@@ -288,7 +360,7 @@ public final class SkateboardEntity extends Entity {
         controls = 0;
         wasJumpHeld = false;
         jumpCharge = 0;
-        pendingTrick = 0;
+        pendingAction = 0;
         lastInputTick = age - 20;
     }
 
@@ -320,12 +392,16 @@ public final class SkateboardEntity extends Entity {
         if (railCooldown > 0) {
             railCooldown--;
         }
+        if (wallCooldown > 0) {
+            wallCooldown--;
+        }
         boolean jumpHeld = pressed(controls, JUMP);
         boolean grounded = isOnGround();
         ticksSinceGround = grounded ? 0 : Math.min(ticksSinceGround + 1, 10);
         boolean crouching = pressed(controls, CROUCH) || (grounded && jumpHeld);
         dataTracker.set(CROUCHING, crouching);
-        boolean pushing = rail == null && grounded && !crouching && pressed(controls, ACCELERATE) && !pressed(controls, BRAKE);
+        boolean pushing = rail == null && grounded && !crouching && manualDirection == 0
+                && !pressed(pendingAction, GRAB) && pressed(controls, ACCELERATE) && !pressed(controls, BRAKE);
         int now = (int) getWorld().getTime();
         if (pushing && (!isPushing() || now - getPushCycleStart() >= PUSH_CYCLE_TICKS)) {
             dataTracker.set(PUSH_CYCLE_START, now);
@@ -336,31 +412,60 @@ public final class SkateboardEntity extends Entity {
 
         if (rail != null) {
             tickGrinding(rider, jumpHeld);
-        } else {
+        } else if (wallFace == null || !tickWallRide(rider, jumpHeld)) {
             tickRolling(rider, grounded, jumpHeld);
         }
         double speed = getVelocity().horizontalLength();
         dataTracker.set(RIDE_SPEED, (float) speed);
+        updateRampPose();
+        boolean airborne = rider != null && !isOnGround() && rail == null;
+        if (!airborne) {
+            dataTracker.set(OLLIE_START, Integer.MIN_VALUE);
+        }
+        dataTracker.set(AIRBORNE, airborne);
+        updateManual(rider);
+        float wallLean = MathHelper.lerp(0.42f, getWallRideLean(), wallSide);
+        dataTracker.set(WALL_RIDE_LEAN, Math.abs(wallLean) < 0.015f ? 0.0f : wallLean);
         if (rider instanceof ServerPlayerEntity serverRider) {
             combo.tick(serverRider, rail == null && isOnGround() && speed < STOP_SPEED);
         }
         wasJumpHeld = jumpHeld;
-        pendingTrick = 0;
+        pendingAction = 0;
     }
 
     private void tickRolling(PlayerEntity rider, boolean grounded, boolean jumpHeld) {
         double speed = getVelocity().horizontalLength();
         double vertical = hasNoGravity() ? getVelocity().y : Math.max(-0.85, getVelocity().y - GRAVITY);
+        boolean jumping = !jumpHeld && wasJumpHeld && jumpCharge > 0 && ticksSinceGround <= 2;
+        RampSurface ramp = grounded ? RampSurface.under(getWorld(), getBoundingBox(), getY() - 0.05, getY() + 0.14) : null;
+        if (rider == null || !grounded || jumpHeld || jumping || speed < MIN_MANUAL_SPEED || pressed(controls, BRAKE)) {
+            finishManual(rider);
+        } else if (pressed(pendingAction, GRAB)) {
+            toggleManual(rider);
+        }
+        BoardSetup setup = getSetup();
+        double topSpeed = setup.topSpeed();
         if (grounded) {
-            double friction = surfaceFriction();
+            RollSurface surface = ramp == null ? rollSurface() : RollSurface.FIRM;
             if (pressed(controls, BRAKE)) {
-                speed = Math.max(0, speed - 0.075) * friction;
-            } else if (pressed(controls, ACCELERATE) && speed <= MAX_SPEED) {
-                double acceleration = MathHelper.lerp(speed / MAX_SPEED, 0.040, 0.020);
-                double poweredFriction = MathHelper.lerp(0.30, 1.0, friction);
-                speed = Math.min(MAX_SPEED, (speed + acceleration) * poweredFriction);
+                speed = Math.max(0, speed - 0.075) * surface.poweredFriction;
+            } else if (pressed(controls, ACCELERATE) && speed <= topSpeed && manualDirection == 0) {
+                double acceleration = MathHelper.lerp(speed / topSpeed, 0.040, 0.020) * setup.wheels().acceleration();
+                double poweredFriction = MathHelper.lerp(0.30, 1.0, surface.poweredFriction);
+                speed = Math.min(topSpeed, (speed + acceleration) * poweredFriction);
             } else {
-                speed *= friction;
+                speed *= setup.coastRetention(surface.coastRetention);
+                if (speed < LOW_COAST_SPEED) {
+                    speed -= LOW_SPEED_ROLLING_RESISTANCE * (1.0 - speed / LOW_COAST_SPEED);
+                }
+            }
+            if (ramp != null && !jumping && !pressed(controls, BRAKE)) {
+                double grade = ramp.grade(direction());
+                if (grade < 0) {
+                    speed = Math.min(MAX_GRIND_SPEED, speed - grade * 0.043);
+                } else {
+                    speed = Math.max(0, speed - grade * 0.016);
+                }
             }
             vertical = hasNoGravity() ? 0.0 : -GRAVITY;
         } else {
@@ -370,28 +475,35 @@ public final class SkateboardEntity extends Entity {
             speed *= 0.60;
             vertical = Math.max(-0.12, vertical * 0.55);
         }
-        if (speed < 0.009) {
+        if (speed < STOP_SPEED) {
             speed = 0;
         }
 
-        float turn = grounded ? MathHelper.lerp(Math.min(1.0f, (float) (speed / MAX_SPEED)), 11.0f, 3.4f) : 1.3f;
+        float turn = grounded ? (float) setup.trucks().steering()
+                * MathHelper.lerp(Math.min(1.0f, (float) (speed / topSpeed)), 11.0f, 3.4f) : 1.3f;
         setYaw(MathHelper.wrapDegrees(getYaw() + turn * getSteeringLean()));
 
         if (jumpHeld && grounded) {
             jumpCharge = Math.min(jumpCharge + 1, MAX_CHARGE);
         }
-        boolean jumping = !jumpHeld && wasJumpHeld && jumpCharge > 0 && ticksSinceGround <= 2;
         if (jumping) {
-            vertical = 0.33 + 0.165 * jumpCharge / MAX_CHARGE;
+            vertical = (0.33 + 0.165 * jumpCharge / MAX_CHARGE) * setup.deck().pop();
             fallDistance = 0;
+            dataTracker.set(OLLIE_START, (int) getWorld().getTime());
             playBoardSound(SoundEvents.BLOCK_WOOD_HIT, 0.68f, 0.85f);
         }
         if (!jumpHeld) {
             jumpCharge = 0;
         }
 
-        if (rider != null && (!grounded || jumping) && getTrickId() == 0 && pendingTrick != 0) {
-            startTrick(pendingTrick);
+        if (rider != null && (!grounded || jumping) && getTrickId() == 0) {
+            if (!grounded && pressed(pendingAction, GRAB) && startWallRide(rider, speed, jumpHeld)) {
+                return;
+            }
+            SkateTrick trick = SkateTrick.select(pendingAction);
+            if (trick != SkateTrick.NONE) {
+                startTrick(trick);
+            }
         }
         Vec3d travel = direction().multiply(speed).add(0, vertical, 0);
         if (rider != null && !grounded && railCooldown == 0) {
@@ -400,27 +512,216 @@ public final class SkateboardEntity extends Entity {
                 return;
             }
         }
-        moveBoard(rider, travel);
+        if (grounded && !jumping && (ramp != null || RampSurface.crosses(getWorld(), getBoundingBox(), travel))) {
+            moveAcrossRamp(rider, travel, ramp);
+        } else {
+            moveBoard(rider, travel);
+        }
         if (!grounded && isOnGround()) {
             boolean clean = finishTrick(rider);
             if (!clean) {
                 setVelocity(getVelocity().multiply(0.56, 1, 0.56));
             }
             playBoardSound(SoundEvents.BLOCK_WOOD_HIT, 0.52f, 1.24f);
-        } else if (rider != null && grounded && speed > 0.14 && age % (speed > 0.78 ? 3 : 5) == 0) {
-            playBoardSound(SoundEvents.BLOCK_STONE_STEP, (float) (0.16 + speed * 0.32), (float) (1.02 + speed * 0.46));
         }
     }
 
-    private double surfaceFriction() {
+    private void moveAcrossRamp(PlayerEntity rider, Vec3d travel, RampSurface support) {
+        Vec3d start = getPos();
+        int steps = Math.max(1, MathHelper.ceil(travel.horizontalLength() / RAMP_STEP_LENGTH));
+        Vec3d step = travel.multiply(1.0 / steps);
+        double vertical = travel.y;
+
+        for (int i = 0; i < steps; i++) {
+            Box nextFootprint = getBoundingBox().offset(step.x, 0, step.z);
+            RampSurface next = RampSurface.under(getWorld(), nextFootprint, getY() - RAMP_MAX_STEP, getY() + RAMP_MAX_STEP);
+            if (next == null) {
+                double grade = support == null ? 0 : support.grade(direction());
+                if (grade > 0.08 && travel.horizontalLength() >= 0.24 && !hasLandingAt(nextFootprint)) {
+                    vertical = Math.min(0.55, travel.horizontalLength() * grade * 0.78);
+                    int stepsLeft = steps - i;
+                    moveBoard(rider, new Vec3d(step.x * stepsLeft, vertical * stepsLeft / steps, step.z * stepsLeft));
+                    if (getVelocity().y > 0) {
+                        fallDistance = 0;
+                        dataTracker.set(OLLIE_START, (int) getWorld().getTime());
+                    } else {
+                        vertical = 0;
+                    }
+                    break;
+                }
+                moveBoard(rider, step);
+                support = null;
+                continue;
+            }
+
+            // Rise before crossing a tread; descend after moving past the tread supporting us.
+            moveBoard(rider, new Vec3d(step.x, Math.max(0, next.height() - getY()), step.z));
+            support = RampSurface.under(getWorld(), getBoundingBox(), getY() - RAMP_MAX_STEP,
+                    getY() + RAMP_CONTACT_EPSILON);
+            if (support != null && support.height() <= getY()) {
+                moveBoard(rider, new Vec3d(0, support.height() - getY(), 0));
+            }
+            if (support != null && Math.abs(getY() - support.height()) <= RAMP_CONTACT_EPSILON) {
+                setOnGround(true);
+                fallDistance = 0;
+            }
+        }
+        Vec3d moved = getPos().subtract(start);
+        setVelocity(moved.x, isOnGround() ? 0 : vertical, moved.z);
+    }
+
+    private boolean hasLandingAt(Box footprint) {
+        double reach = 0.15;
+        Vec3d allowed = Entity.adjustMovementForCollisions(this, new Vec3d(0, -reach, 0),
+                footprint, getWorld(), List.of());
+        return allowed.y > -reach + 0.0001;
+    }
+
+    private void updateRampPose() {
+        RampSurface ramp = isOnGround() && rail == null
+                ? RampSurface.under(getWorld(), getBoundingBox(), getY() - 0.05, getY() + 0.14) : null;
+        float targetPitch = ramp == null ? 0 : (float) (Math.atan(ramp.grade(direction())) * MathHelper.DEGREES_PER_RADIAN);
+        float pitch = MathHelper.lerp(0.56f, getRampPitch(), targetPitch);
+        dataTracker.set(RAMP_PITCH, Math.abs(pitch) < 0.05f ? 0.0f : pitch);
+        float drop = ramp == null ? 0 : (float) Math.max(0, getY() - ramp.centerHeight());
+        dataTracker.set(RAMP_DROP, drop);
+    }
+
+    private RollSurface rollSurface() {
         var state = getWorld().getBlockState(getVelocityAffectingPos());
         if (state.isIn(BlockTags.SAND) || state.isOf(Blocks.GRAVEL) || state.isOf(Blocks.SNOW_BLOCK)) {
-            return 0.86;
+            return RollSurface.LOOSE;
         }
         if (state.isIn(BlockTags.DIRT) || state.isIn(BlockTags.WOOL) || state.isOf(Blocks.SNOW)) {
-            return 0.92;
+            return RollSurface.SOFT;
         }
-        return state.isIn(BlockTags.ICE) ? 0.994 : 0.979;
+        return state.isIn(BlockTags.ICE) ? RollSurface.ICE : RollSurface.FIRM;
+    }
+
+    private enum RollSurface {
+        LOOSE(0.86, 0.990),
+        SOFT(0.92, 0.9965),
+        FIRM(0.979, BoardSetup.FIRM_COAST_RETENTION),
+        ICE(0.994, 0.9992);
+
+        private final double poweredFriction;
+        private final double coastRetention;
+
+        RollSurface(double poweredFriction, double coastRetention) {
+            this.poweredFriction = poweredFriction;
+            this.coastRetention = coastRetention;
+        }
+    }
+
+    private void toggleManual(PlayerEntity rider) {
+        if (manualDirection != 0) {
+            finishManual(rider);
+            return;
+        }
+        manualDirection = pressed(pendingAction, ACCELERATE) ? -1 : 1;
+        manualDistance = 0;
+        manualPointsAwarded = 0;
+    }
+
+    private void finishManual(PlayerEntity rider) {
+        if (manualDirection == 0) return;
+        SkateCombo.announce(rider, manualDirection > 0 ? SkateTrick.MANUAL : SkateTrick.NOSE_MANUAL,
+                manualPointsAwarded);
+        manualDirection = 0;
+    }
+
+    private void updateManual(PlayerEntity rider) {
+        double speed = getVelocity().horizontalLength();
+        if (!isOnGround() || speed < MIN_MANUAL_SPEED || isTouchingWater()) {
+            finishManual(rider);
+        }
+        float pitch = MathHelper.lerp(0.34f, getManualPitch(), manualDirection * 10.0f);
+        dataTracker.set(MANUAL_PITCH, Math.abs(pitch) < 0.05f ? 0.0f : pitch);
+        if (manualDirection == 0 || !(rider instanceof ServerPlayerEntity serverRider)) {
+            return;
+        }
+        manualDistance += speed;
+        if (manualDistance >= 1.4 && age % 5 == 0) {
+            int earned = 70 + (int) (manualDistance * 14);
+            combo.add(serverRider, earned - manualPointsAwarded);
+            manualPointsAwarded = earned;
+        }
+    }
+
+    private boolean startWallRide(PlayerEntity rider, double speed, boolean jumpHeld) {
+        int side = steer(pendingAction);
+        if (wallCooldown > 0 || side == 0 || speed < MIN_WALL_SPEED || isTouchingWater()) {
+            return false;
+        }
+        Vec3d heading = direction();
+        Vec3d towardWall = new Vec3d(-heading.z, 0, heading.x).multiply(side);
+        BlockHitResult wall = findWall(towardWall);
+        if (wall == null || Math.abs(heading.dotProduct(Vec3d.of(wall.getSide().getVector()))) > 0.55) {
+            return false;
+        }
+        wallFace = wall.getSide();
+        wallSide = side;
+        wallTicks = 0;
+        fallDistance = 0;
+        return tickWallRide(rider, jumpHeld);
+    }
+
+    private boolean tickWallRide(PlayerEntity rider, boolean jumpHeld) {
+        Vec3d normal = Vec3d.of(wallFace.getVector());
+        double speed = getVelocity().horizontalLength();
+        BlockHitResult wall = findWall(normal.negate());
+        if (rider == null || isOnGround() || isTouchingWater() || speed < MIN_WALL_SPEED
+                || wallTicks >= WALL_RIDE_TICKS || wall == null || wall.getSide() != wallFace) {
+            stopWallRide();
+            return false;
+        }
+        Vec3d heading = direction();
+        Vec3d tangent = heading.subtract(normal.multiply(heading.dotProduct(normal))).normalize();
+        if (jumpHeld && !wasJumpHeld) {
+            stopWallRide();
+            Vec3d exit = tangent.multiply(speed).add(normal.multiply(0.28));
+            setYaw((float) Math.toDegrees(Math.atan2(-exit.x, exit.z)));
+            dataTracker.set(OLLIE_START, (int) getWorld().getTime());
+            moveBoard(rider, exit.add(0, 0.36, 0));
+            return true;
+        }
+        double clearance = getPos().subtract(wall.getPos()).dotProduct(normal);
+        double correction = MathHelper.clamp(0.42 - clearance, -0.22, 0.22);
+        double vertical = wallTicks == 0 ? 0.13 : Math.max(-0.24, getVelocity().y - 0.028);
+        setYaw((float) Math.toDegrees(Math.atan2(-tangent.x, tangent.z)));
+        moveBoard(rider, tangent.multiply(speed * 0.98).add(normal.multiply(correction)).add(0, vertical, 0));
+        if (++wallTicks == 3 && rider instanceof ServerPlayerEntity serverRider) {
+            combo.add(serverRider, SkateTrick.WALLRIDE);
+        }
+        return true;
+    }
+
+    private BlockHitResult findWall(Vec3d towardWall) {
+        Vec3d start = getPos().add(0, 0.25, 0);
+        Vec3d reach = towardWall.multiply(0.78);
+        BlockHitResult lower = traceWall(start, reach);
+        if (lower.getType() != HitResult.Type.BLOCK || lower.getSide().getAxis() == Direction.Axis.Y) {
+            return null;
+        }
+        BlockHitResult upper = traceWall(start.add(0, 0.80, 0), reach);
+        if (upper.getType() != HitResult.Type.BLOCK || upper.getSide() != lower.getSide()) {
+            return null;
+        }
+        Vec3d normal = Vec3d.of(lower.getSide().getVector());
+        return Math.abs(upper.getPos().subtract(lower.getPos()).dotProduct(normal)) <= 0.04 ? lower : null;
+    }
+
+    private BlockHitResult traceWall(Vec3d start, Vec3d reach) {
+        return getWorld().raycast(new RaycastContext(start, start.add(reach),
+                RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, this));
+    }
+
+    private void stopWallRide() {
+        if (wallFace != null) {
+            wallFace = null;
+            wallSide = 0;
+            wallCooldown = 14;
+        }
     }
 
     private void moveBoard(PlayerEntity rider, Vec3d travel) {
@@ -439,7 +740,7 @@ public final class SkateboardEntity extends Entity {
     }
 
     private boolean riderFits(PlayerEntity rider, Vec3d boardPosition) {
-        Box riderBox = rider.getDimensions(EntityPose.STANDING).getBoxAt(boardPosition.add(0, getStyle().riderHeight(), 0));
+        Box riderBox = rider.getDimensions(EntityPose.STANDING).getBoxAt(boardPosition.add(0, getSetup().riderHeight(), 0));
         return !getWorld().getBlockCollisions(rider, riderBox).iterator().hasNext();
     }
 
@@ -448,29 +749,23 @@ public final class SkateboardEntity extends Entity {
         return new Vec3d(-MathHelper.sin(angle), 0, MathHelper.cos(angle));
     }
 
-    private void startTrick(int trick) {
+    private void startTrick(SkateTrick trick) {
         dataTracker.set(TRICK_START, (int) getWorld().getTime());
-        dataTracker.set(TRICK_ID, trick);
+        dataTracker.set(TRICK_ID, trick.ordinal());
     }
 
     private boolean finishTrick(PlayerEntity rider) {
-        int trick = getTrickId();
-        if (trick == 0) {
+        SkateTrick trick = getTrick();
+        if (trick == SkateTrick.NONE) {
             return true;
         }
-        boolean clean = (int) getWorld().getTime() - getTrickStartAge() >= TRICK_DURATION;
+        boolean clean = (int) getWorld().getTime() - getTrickStartAge() >= getTrickDuration();
         dataTracker.set(TRICK_ID, 0);
-        if (clean && rider instanceof ServerPlayerEntity serverRider) {
-            combo.add(serverRider, switch (trick) {
-                case 1 -> 100;
-                case 2, 3 -> 200;
-                case 4 -> 300;
-                case 5 -> 350;
-                default -> throw new IllegalStateException("Unknown skate trick: " + trick);
-            });
+        if (clean && trick.reversesDeck()) {
+            dataTracker.set(DECK_REVERSED, !isDeckReversed());
         }
-        if (rider != null) {
-            rider.sendMessage(Text.translatable("night_shift_skate.trick." + (clean ? trick : "bail")), true);
+        if (clean && rider instanceof ServerPlayerEntity serverRider) {
+            combo.add(serverRider, trick);
         }
         return clean;
     }
@@ -481,7 +776,7 @@ public final class SkateboardEntity extends Entity {
         Vec3d snap = entryPoint.subtract(getPos());
         Vec3d allowed = Entity.adjustMovementForCollisions(this, snap, getBoundingBox(), getWorld(), List.of());
         if (allowed.squaredDistanceTo(snap) > 0.0001
-                || !riderFits(rider, entryPoint.add(0, -getStyle().boardslideDrop(), 0))
+                || !riderFits(rider, entryPoint.add(0, -getSetup().deckBase(), 0))
                 || !getWorld().isSpaceEmpty(this, getBoundingBox().offset(snap))) {
             return false;
         }
@@ -500,8 +795,7 @@ public final class SkateboardEntity extends Entity {
         setOnGround(false);
         fallDistance = 0;
         dataTracker.set(GRINDING, true);
-        rider.sendMessage(Text.translatable("night_shift_skate.grind.start"), true);
-        playBoardSound(SoundEvents.BLOCK_CHAIN_STEP, 0.75f, 1.45f);
+        playBoardSound(NightShiftSkate.SKATE_GRIND, 0.70f, 1.08f);
         return true;
     }
 
@@ -512,11 +806,12 @@ public final class SkateboardEntity extends Entity {
         }
         railTicks++;
         railSpeed = pressed(controls, BRAKE) ? railSpeed * 0.90 : Math.min(MAX_GRIND_SPEED, railSpeed + GRIND_ACCELERATION);
-        balance += 0.021f * ((getId() & 1) == 0 ? 1 : -1)
-                + MathHelper.sin(age * 0.18f) * 0.015f + steer(controls) * 0.064f;
+        float balanceDrift = 0.021f * ((getId() & 1) == 0 ? 1 : -1) + MathHelper.sin(age * 0.18f) * 0.015f;
+        balance += balanceDrift / (float) getSetup().trucks().balance() + steer(controls) * 0.064f;
         dataTracker.set(GRIND_LEAN, MathHelper.clamp(balance, -1.0f, 1.0f));
         if (jumpHeld && !wasJumpHeld) {
             stopGrinding(rider, true);
+            dataTracker.set(OLLIE_START, (int) getWorld().getTime());
             setVelocity(direction().multiply(railSpeed).add(0, 0.38, 0));
             moveBoard(rider, getVelocity());
             playBoardSound(SoundEvents.BLOCK_WOOD_HIT, 0.63f, 1.0f);
@@ -533,7 +828,6 @@ public final class SkateboardEntity extends Entity {
             moveBoard(rider, exitVelocity);
             if (lostBalance) {
                 rider.damage(getDamageSources().fall(), 2.0f);
-                rider.sendMessage(Text.translatable("night_shift_skate.grind.balance_lost"), true);
             }
             return;
         }
@@ -554,7 +848,7 @@ public final class SkateboardEntity extends Entity {
             awardGrindPoints(rider);
         }
         if (railTicks % 5 == 0) {
-            playBoardSound(SoundEvents.BLOCK_CHAIN_STEP, 0.42f, 1.22f);
+            playBoardSound(NightShiftSkate.SKATE_GRIND, (float) (0.30 + railSpeed * 0.16), (float) (0.92 + railSpeed * 0.22));
         }
     }
 
@@ -574,8 +868,8 @@ public final class SkateboardEntity extends Entity {
         railCooldown = 9;
         dataTracker.set(GRINDING, false);
         dataTracker.set(GRIND_LEAN, 0.0f);
-        if (cleanExit && rider != null && railPointsAwarded > 0) {
-            rider.sendMessage(Text.translatable("night_shift_skate.grind.finish"), true);
+        if (cleanExit) {
+            SkateCombo.announce(rider, SkateTrick.BOARDSLIDE, railPointsAwarded);
         }
     }
 

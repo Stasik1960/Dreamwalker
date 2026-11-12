@@ -2,6 +2,7 @@ package dev.nightshift.skate;
 
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.scoreboard.Scoreboard;
 import net.minecraft.scoreboard.ScoreboardCriterion;
 import net.minecraft.scoreboard.ScoreboardObjective;
@@ -25,6 +26,23 @@ final class SkateCombo {
         points = (int) Math.min(Integer.MAX_VALUE, (long) points + award);
         expiresAt = rider.getWorld().getTime() + WINDOW_TICKS;
         sync(rider);
+    }
+
+    void add(ServerPlayerEntity rider, SkateTrick trick) {
+        add(rider, trick.points());
+        announce(rider, trick, trick.points());
+    }
+
+    static void announce(PlayerEntity rider, SkateTrick trick, int earned) {
+        if (earned <= 0 || !(rider instanceof ServerPlayerEntity serverRider)
+                || serverRider.networkHandler == null
+                || !ServerPlayNetworking.canSend(serverRider, NightShiftSkate.TRICK_AWARD)) {
+            return;
+        }
+        var buf = PacketByteBufs.create();
+        buf.writeVarInt(trick.ordinal());
+        buf.writeVarInt(earned);
+        ServerPlayNetworking.send(serverRider, NightShiftSkate.TRICK_AWARD, buf);
     }
 
     void tick(ServerPlayerEntity rider, boolean stopped) {

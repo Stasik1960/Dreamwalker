@@ -1,6 +1,9 @@
 package dev.nightshift.skate.client;
 
+import dev.nightshift.skate.BoardSetup;
 import dev.nightshift.skate.BoardStyle;
+import dev.nightshift.skate.SkatePart;
+import dev.nightshift.skate.SkateTrick;
 import dev.nightshift.skate.SkateboardEntity;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.RenderLayer;
@@ -68,15 +71,74 @@ public final class SkateboardRenderer extends EntityRenderer<SkateboardEntity> {
     public void render(SkateboardEntity entity, float yaw, float tickDelta, MatrixStack matrices,
                        VertexConsumerProvider vertexConsumers, int light) {
         matrices.push();
-        matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(180.0F - yaw));
-        BoardStyle style = entity.getStyle();
-        applyTrickTransform(entity, style, tickDelta, matrices);
-        renderBoard(style, matrices, vertexConsumers, light);
+        matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(180.0F - SkatePose.travelYaw(entity, tickDelta)));
+        BoardSetup setup = entity.getSetup();
+        applyTrickTransform(entity, setup, tickDelta, matrices);
+        renderBoard(setup, matrices, vertexConsumers, light);
         matrices.pop();
         super.render(entity, yaw, tickDelta, matrices, vertexConsumers, light);
     }
 
-    static void renderBoard(BoardStyle style, MatrixStack matrices,
+    static void renderBoard(BoardSetup setup, MatrixStack matrices,
+                            VertexConsumerProvider vertexConsumers, int light) {
+        BoardStyle preset = setup.matchingPreset();
+        if (preset != null) {
+            renderPreset(preset, matrices, vertexConsumers, light);
+            return;
+        }
+
+        matrices.push();
+        matrices.translate(0, setup.deckBase(), 0);
+        renderPart(setup.deck(), matrices, vertexConsumers, light);
+        for (int end = -1; end <= 1; end += 2) {
+            matrices.push();
+            matrices.translate(0, 0, end * BoardSetup.WHEELBASE_HALF);
+            if (end == -1) matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(180));
+            renderPart(setup.trucks(), matrices, vertexConsumers, light);
+            for (int side = -1; side <= 1; side += 2) {
+                matrices.push();
+                matrices.translate(side * setup.trucks().halfTrack(), -setup.trucks().axleDrop(), 0);
+                if (side == -1) matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(180));
+                renderPart(setup.wheels(), matrices, vertexConsumers, light);
+                matrices.pop();
+            }
+            matrices.pop();
+        }
+        matrices.pop();
+    }
+
+    static void renderPart(SkatePart part, MatrixStack matrices, VertexConsumerProvider vertices, int light) {
+        matrices.push();
+        if (part.id().equals("night_shift")) {
+            VertexConsumer consumer = vertices.getBuffer(RenderLayer.getEntityCutoutNoCull(TEXTURE));
+            switch (part.type()) {
+                case DECK -> {
+                    matrices.translate(0, -DECK_BOTTOM, 0);
+                    renderDeck(matrices, consumer, light);
+                    renderBolts(matrices, consumer, light, (float) -BoardSetup.WHEELBASE_HALF);
+                    renderBolts(matrices, consumer, light, (float) BoardSetup.WHEELBASE_HALF);
+                }
+                case TRUCKS -> {
+                    matrices.translate(0, -DECK_BOTTOM, 0);
+                    renderTruckHardware(matrices, consumer, light, 0);
+                }
+                case WHEELS -> wheel(matrices, consumer, light, 0, 0, 0);
+            }
+        } else {
+            BoardMesh mesh = BoardMesh.Library.get(part);
+            if (part instanceof SkatePart.Trucks trucks) {
+                matrices.scale(1, (float) (trucks.axleDrop() / 0.065), 1);
+            } else if (part instanceof SkatePart.Wheels wheels) {
+                float scale = (float) (wheels.radius() / mesh.groundRadius());
+                matrices.scale(1, scale, scale);
+            }
+            VertexConsumer consumer = vertices.getBuffer(RenderLayer.getEntityCutoutNoCull(WHITE_TEXTURE));
+            mesh.render(matrices, consumer, light);
+        }
+        matrices.pop();
+    }
+
+    private static void renderPreset(BoardStyle style, MatrixStack matrices,
                             VertexConsumerProvider vertexConsumers, int light) {
         if (style != BoardStyle.NIGHT_SHIFT) {
             VertexConsumer consumer = vertexConsumers.getBuffer(RenderLayer.getEntityCutoutNoCull(WHITE_TEXTURE));
@@ -89,38 +151,66 @@ public final class SkateboardRenderer extends EntityRenderer<SkateboardEntity> {
         renderTruck(matrices, consumer, light, 0.285F);
     }
 
-    private static void applyTrickTransform(SkateboardEntity entity, BoardStyle style,
+    private static void applyTrickTransform(SkateboardEntity entity, BoardSetup setup,
                                             float tickDelta, MatrixStack matrices) {
-        int trick = entity.getTrickId();
-        if (trick != 0) {
-            int elapsedTicks = (int) entity.getWorld().getTime() - entity.getTrickStartAge();
-            float progress = MathHelper.clamp((elapsedTicks + tickDelta) / SkateboardEntity.TRICK_DURATION, 0.0F, 1.0F);
-            float eased = progress * progress * (3.0F - 2.0F * progress);
-            matrices.translate(0, 0.10F, 0);
-            if (trick == 1) {
-                matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(180.0F * eased));
-            } else if (trick == 2) {
-                matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(360.0F * eased));
-            } else if (trick == 3) {
-                matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(-360.0F * eased));
-            } else if (trick == 4) {
-                matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(360.0F * eased));
-            } else if (trick == 5) {
-                matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(180.0F * eased));
-                matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(360.0F * eased));
-            }
-            matrices.translate(0, -0.10F, 0);
-        }
         if (entity.isGrinding()) {
             // Roll around the travel axis before turning the deck across the rail. Positive balance is
             // steer-right, so the negative roll lowers travel-right. The last translation keeps the
             // original deck-bottom centre on the rail through both rotations.
             matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(-entity.getGrindLean() * 12.0F));
             matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(90.0F));
-            matrices.translate(0, -style.boardslideDrop(), 0);
+            matrices.translate(0, -setup.deckBase(), 0);
         } else {
-            matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(-entity.getSteeringLean() * 4.0F));
+            matrices.translate(0, -entity.getRampDrop(), 0);
+            matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(entity.getRampPitch()));
+            SkatePose.wallTilt(matrices, entity.getWallRideLean(), 0.0f);
+            float manual = entity.getManualPitch();
+            if (manual != 0.0f) {
+                float axle = Math.copySign(SkatePose.manualAxle(setup), manual);
+                matrices.translate(0, 0, axle);
+                matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(manual));
+                matrices.translate(0, 0, -axle);
+            } else {
+                matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(-entity.getSteeringLean() * 4.0f));
+            }
+            float ollie = SkatePose.ollieProgress(entity, tickDelta);
+            if (ollie < 1.0f) {
+                float pitch = MathHelper.sin(ollie * MathHelper.TAU) * (1.0f - ollie) * 30.0f;
+                matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(pitch));
+            }
+            animateAirTrick(entity, setup, tickDelta, matrices);
         }
+        if (entity.isDeckReversed()) {
+            matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(180.0f));
+        }
+    }
+
+    private static void animateAirTrick(SkateboardEntity board, BoardSetup setup, float tickDelta, MatrixStack matrices) {
+        SkateTrick trick = board.getTrick();
+        if (trick == SkateTrick.NONE) return;
+
+        float progress = SkatePose.trickProgress(board, tickDelta);
+        float rotation = SkatePose.smoothStep(progress);
+        float grab = trick.isGrab() ? SkatePose.grabAmount(progress) : 0.0f;
+        double pivot = setup.riderHeight() * 0.70;
+        matrices.translate(0, pivot + grab * 0.17f, 0);
+        switch (trick) {
+            case POP_SHOVE_IT -> matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(180.0f * rotation));
+            case KICKFLIP -> matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(360.0f * rotation));
+            case HEELFLIP -> matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(-360.0f * rotation));
+            case SHOVE_IT_360 -> matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(360.0f * rotation));
+            case VARIAL_KICKFLIP, FLIP_360 -> {
+                float spin = trick == SkateTrick.FLIP_360 ? 360.0f : 180.0f;
+                matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(spin * rotation));
+                matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(360.0f * rotation));
+            }
+            case INDY -> matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(26.0f * grab));
+            case MELON -> matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(-30.0f * grab));
+            case NOSEGRAB -> matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(27.0f * grab));
+            case TAILGRAB -> matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(-30.0f * grab));
+            default -> {}
+        }
+        matrices.translate(0, -pivot, 0);
     }
 
     private static float deckBottom(float z) {
@@ -183,13 +273,21 @@ public final class SkateboardRenderer extends EntityRenderer<SkateboardEntity> {
     }
 
     private static void renderTruck(MatrixStack matrices, VertexConsumer consumer, int light, float z) {
+        renderTruckHardware(matrices, consumer, light, z);
+        wheel(matrices, consumer, light, -0.108F, 0.035F, z);
+        wheel(matrices, consumer, light, 0.108F, 0.035F, z);
+        renderBolts(matrices, consumer, light, z);
+    }
+
+    private static void renderTruckHardware(MatrixStack matrices, VertexConsumer consumer, int light, float z) {
         box(matrices, consumer, light, CAST, -0.043F, 0.110F, z - 0.041F, 0.086F, 0.017F, 0.082F);
         box(matrices, consumer, light, CAST, -0.087F, 0.028F, z - 0.020F, 0.174F, 0.026F, 0.040F);
         cylinderX(matrices, consumer, light, STEEL, 0.0F, 0.035F, z, 0.008F, 0.266F, 10);
         cylinderY(matrices, consumer, light, BUSHING, 0.0F, 0.082F, z, 0.021F, 0.060F, 10);
 
-        wheel(matrices, consumer, light, -0.108F, 0.035F, z);
-        wheel(matrices, consumer, light, 0.108F, 0.035F, z);
+    }
+
+    private static void renderBolts(MatrixStack matrices, VertexConsumer consumer, int light, float z) {
         for (int side = -1; side <= 1; side += 2) {
             float x = 0.027F * side;
             bolt(matrices, consumer, light, x, z - 0.031F);

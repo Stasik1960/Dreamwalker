@@ -1,0 +1,20 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "top": "minecraft:block/polished_deepslate",
+    "side": "minecraft:block/deepslate_bricks",
+    "bottom": "minecraft:block/deepslate_tiles",
+    "particle": "minecraft:block/polished_deepslate"
+  },
+  "elements": [{
+    "from": [0, 0, 0], "to": [16, 16, 16],
+    "faces": {
+      "down": {"texture": "#bottom", "cullface": "down"},
+      "up": {"texture": "#top", "cullface": "up"},
+      "north": {"texture": "#side", "cullface": "north"},
+      "south": {"texture": "#side", "cullface": "south"},
+      "west": {"texture": "#side", "cullface": "west"},
+      "east": {"texture": "#side", "cullface": "east"}
+    }
+  }]
+}

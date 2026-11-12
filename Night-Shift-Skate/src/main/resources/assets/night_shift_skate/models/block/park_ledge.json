@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {"stone":"minecraft:block/polished_blackstone_bricks","cap":"minecraft:block/polished_deepslate","particle":"minecraft:block/polished_blackstone_bricks"},
+  "elements": [
+    {"from":[0,0,3],"to":[16,8,13],"faces":{"down":{"texture":"#stone"},"up":{"texture":"#stone"},"north":{"texture":"#stone"},"south":{"texture":"#stone"},"west":{"texture":"#stone"},"east":{"texture":"#stone"}}},
+    {"from":[0,8,2],"to":[16,9,14],"faces":{"down":{"texture":"#stone"},"up":{"texture":"#cap"},"north":{"texture":"#cap"},"south":{"texture":"#cap"},"west":{"texture":"#cap"},"east":{"texture":"#cap"}}}
+  ]
+}

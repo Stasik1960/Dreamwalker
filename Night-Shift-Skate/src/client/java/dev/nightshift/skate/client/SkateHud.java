@@ -2,6 +2,7 @@ package dev.nightshift.skate.client;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import dev.nightshift.skate.NightShiftSkate;
+import dev.nightshift.skate.SkateTrick;
 import dev.nightshift.skate.SkateboardEntity;
 import java.util.Locale;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
@@ -18,13 +19,17 @@ import net.minecraft.util.math.MathHelper;
 /** Client-owned display state. Scores arrive from the authoritative server. */
 final class SkateHud {
     private static final int COMBO_WINDOW_TICKS = 100;
-    private static final int PANEL_WIDTH = 208;
-    private static final int PANEL_HEIGHT = 62;
+    private static final int TRICK_BANNER_TICKS = 32;
+    private static final int PANEL_WIDTH = 192;
+    private static final int PANEL_HEIGHT = 40;
+    private static final int AWARD_TOP = 52;
+    private static final int TIMER_BAR_GAP = 9;
+    private static final int TIMER_BAR_HALF_WIDTH = 60;
     private static final int AWARD_WIDTH = 144;
     private static final int AWARD_HEIGHT = 48;
     private static final Identifier SCORE_PANEL = NightShiftSkate.id("textures/gui/score_panel.png");
-    private static final Identifier RANK_PLATE = NightShiftSkate.id("textures/gui/rank_plate.png");
     private static final Style LETTERING = Style.EMPTY.withFont(NightShiftSkate.id("score_serif"));
+    private static final Style POPUP_LETTERING = Style.EMPTY.withFont(NightShiftSkate.id("popup_gothic"));
     private static final int IVORY = 0xFFF2DFBE;
     private static final int ANTIQUE_GOLD = 0xFFC5AD8C;
     private static int totalScore;
@@ -33,11 +38,14 @@ final class SkateHud {
     private static int awardScore;
     private static int awardRank;
     private static int awardTicks;
+    private static SkateTrick latestTrick = SkateTrick.NONE;
+    private static int trickPoints;
+    private static int trickTicks;
 
     private SkateHud() {
     }
 
-    static void initialize() {
+    static void initialize(SkateGuide guide) {
         ClientPlayNetworking.registerGlobalReceiver(NightShiftSkate.SCORE,
                 (client, handler, buffer, responseSender) -> {
                     int total = buffer.readVarInt();
@@ -47,13 +55,23 @@ final class SkateHud {
                     int rank = buffer.readVarInt();
                     client.execute(() -> acceptScore(total, combo, remaining, banked, rank));
                 });
+        ClientPlayNetworking.registerGlobalReceiver(NightShiftSkate.TRICK_AWARD,
+                (client, handler, buffer, responseSender) -> {
+                    SkateTrick trick = SkateTrick.fromId(buffer.readVarInt());
+                    int earned = buffer.readVarInt();
+                    if (trick != SkateTrick.NONE && earned > 0) {
+                        client.execute(() -> acceptTrick(trick, earned));
+                    }
+                });
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
+            guide.tick(client.player != null, client.player != null && client.currentScreen == null);
             if (client.player == null) {
                 totalScore = 0;
                 comboScore = 0;
                 remainingTicks = 0;
                 awardScore = 0;
                 awardTicks = 0;
+                trickTicks = 0;
                 return;
             }
             if (!client.isPaused() && remainingTicks > 0) {
@@ -62,8 +80,17 @@ final class SkateHud {
             if (!client.isPaused() && awardTicks > 0) {
                 awardTicks--;
             }
+            if (!client.isPaused() && trickTicks > 0) {
+                trickTicks--;
+            }
         });
-        HudRenderCallback.EVENT.register(SkateHud::render);
+        HudRenderCallback.EVENT.register((context, tickDelta) -> render(context, tickDelta, guide));
+    }
+
+    private static void acceptTrick(SkateTrick trick, int earned) {
+        latestTrick = trick;
+        trickPoints = earned;
+        trickTicks = TRICK_BANNER_TICKS;
     }
 
     private static void acceptScore(int total, int combo, int remaining, int banked, int rank) {
@@ -77,7 +104,7 @@ final class SkateHud {
         }
     }
 
-    private static void render(DrawContext context, float tickDelta) {
+    private static void render(DrawContext context, float tickDelta, SkateGuide guide) {
         MinecraftClient client = MinecraftClient.getInstance();
         if (client.player == null || client.options.hudHidden) {
             return;
@@ -85,12 +112,19 @@ final class SkateHud {
         TextRenderer text = client.textRenderer;
         boolean riding = client.player.getVehicle() instanceof SkateboardEntity;
         boolean showAward = awardTicks > 0 && awardScore > 0;
-        if (!riding && !showAward) {
-            return;
+        if (riding || showAward) {
+            renderTopPanel(context, text, tickDelta, riding, showAward);
         }
+        int sidebarWidth = guide.render(context, text, client.options);
+        if (trickTicks > 0) {
+            renderTrick(context, text, tickDelta, sidebarWidth);
+        }
+    }
 
+    private static void renderTopPanel(DrawContext context, TextRenderer text, float tickDelta,
+                                       boolean riding, boolean showAward) {
         float screenScale = Math.min(1.0f, Math.min((context.getScaledWindowWidth() - 10) / (float) PANEL_WIDTH,
-                (context.getScaledWindowHeight() * 0.5f - 12) / (PANEL_HEIGHT + AWARD_HEIGHT + 9)));
+                (context.getScaledWindowHeight() * 0.5f - 12) / (AWARD_TOP + AWARD_HEIGHT + 5)));
         if (screenScale <= 0) {
             return;
         }
@@ -101,32 +135,61 @@ final class SkateHud {
             renderScore(context, text, tickDelta);
         }
         if (showAward) {
-            renderAward(context, text, riding ? PANEL_HEIGHT + 4 : 0, tickDelta);
+            renderAward(context, text, riding ? AWARD_TOP : 0, tickDelta);
         }
         context.getMatrices().pop();
     }
 
+    private static void renderTrick(DrawContext context, TextRenderer font, float tickDelta, int sidebarWidth) {
+        float life = trickTicks - tickDelta;
+        float elapsed = TRICK_BANNER_TICKS - life;
+        float opacity = MathHelper.clamp(Math.min(elapsed / 2f, life / 7f), 0.0f, 1.0f);
+        if (opacity < 0.07f) return;
+
+        int width = context.getScaledWindowWidth();
+        int height = context.getScaledWindowHeight();
+        int maxWidth = Math.max(24, Math.min(width * 3 / 4, width - 2 * sidebarWidth - 16));
+        Text name = popupText(latestTrick.englishName());
+        int nameWidth = font.getWidth(name);
+        float pop = 1.0f + 0.16f * (1.0f - MathHelper.clamp(elapsed / 6.0f, 0, 1));
+        float nameScale = Math.min(MathHelper.clamp(height / 85f, 2.2f, 4.3f) * pop,
+                maxWidth / (float) Math.max(1, nameWidth));
+        float pointsScale = Math.min(2.1f, nameScale * 0.82f);
+        int nameHeight = Math.round(font.fontHeight * nameScale);
+        int pointsHeight = Math.round(font.fontHeight * pointsScale);
+        int top = -(nameHeight + pointsHeight + 9) / 2;
+        context.getMatrices().push();
+        context.getMatrices().translate(width * 0.5f, height * 0.5f, 0);
+        drawCentered(context, font, name, 0, top, nameScale, maxWidth, fade(IVORY, opacity));
+        drawCentered(context, font, popupText("+" + formatScore(trickPoints)), 0, top + nameHeight + 6,
+                pointsScale, maxWidth, fade(0xFFE7BF83, opacity));
+        context.getMatrices().pop();
+    }
+
+    private static int fade(int color, float opacity) {
+        return (Math.round((color >>> 24) * opacity) << 24) | (color & 0x00FFFFFF);
+    }
+
     private static void renderScore(DrawContext context, TextRenderer font, float tickDelta) {
         drawPlate(context, SCORE_PANEL, PANEL_WIDTH, PANEL_HEIGHT);
-        center(context, font, Text.translatable("night_shift_skate.hud.total"), -47, 11, 1, 65, ANTIQUE_GOLD);
-        center(context, font, Text.translatable("night_shift_skate.hud.combo"), 47, 11, 1, 65, ANTIQUE_GOLD);
-        center(context, font, Text.literal(formatScore(totalScore)), -47, 21, 1.65f, 72, IVORY);
+        center(context, font, Text.translatable("night_shift_skate.hud.total"), -40, 13, 1, 65, ANTIQUE_GOLD);
+        center(context, font, Text.translatable("night_shift_skate.hud.combo"), 40, 13, 1, 65, ANTIQUE_GOLD);
+        center(context, font, Text.literal(formatScore(totalScore)), -40, 18, 1.4f, 66, IVORY);
 
         boolean active = comboScore > 0 && remainingTicks > 0;
         Text combo = Text.literal(active ? "+" + formatScore(comboScore) : "—");
-        center(context, font, combo, 47, 21, 1.65f, 72, active ? IVORY : 0xFF978378);
+        center(context, font, combo, 40, 18, 1.4f, 66, active ? IVORY : 0xFF978378);
 
-        context.fill(-50, 50, 50, 55, 0xFF795346);
-        context.fill(-49, 51, 49, 54, 0xFF1C1118);
         if (active) {
             float time = Math.max(0, remainingTicks - tickDelta);
-            int filled = Math.round(98 * time / COMBO_WINDOW_TICKS);
+            int filled = Math.round(TIMER_BAR_HALF_WIDTH * time / COMBO_WINDOW_TICKS);
             if (filled > 0) {
-                context.fillGradient(-49, 51, -49 + filled, 54, 0xFFD36766, 0xFF80293F);
+                context.fillGradient(-TIMER_BAR_GAP - filled, 30, -TIMER_BAR_GAP, 32, 0xFFE18B7D, 0xFFA43752);
+                context.fillGradient(TIMER_BAR_GAP, 30, TIMER_BAR_GAP + filled, 32, 0xFFE18B7D, 0xFFA43752);
             }
             Text countdown = Text.translatable("night_shift_skate.hud.countdown",
                     String.format(Locale.ROOT, "%.1f", remainingTicks / 20.0f));
-            center(context, font, countdown, 0, 41, 1, 64, 0xFFD5BAA6);
+            center(context, font, countdown, 0, PANEL_HEIGHT, 1, 64, 0xFFF0D4BB);
         }
     }
 
@@ -134,17 +197,17 @@ final class SkateHud {
         float life = awardTicks - tickDelta;
         float intro = MathHelper.clamp((40.0f - life) / 5.0f, 0, 1);
         float outro = MathHelper.clamp(life / 8.0f, 0, 1);
-        float scale = (1.0f + (1.0f - intro) * 0.35f) * Math.min(intro, outro);
-        if (scale <= 0.01f) {
+        float opacity = Math.min(intro, outro);
+        if (opacity < 0.07f) {
             return;
         }
+        float scale = (1.0f + (1.0f - intro) * 0.35f) * opacity;
         context.getMatrices().push();
         context.getMatrices().translate(0, top + AWARD_HEIGHT * 0.5f * (1 - scale), 0);
         context.getMatrices().scale(scale, scale, 1);
-        drawPlate(context, RANK_PLATE, AWARD_WIDTH, AWARD_HEIGHT);
-        center(context, font, Text.translatable("night_shift_skate.hud.rank." + awardRank), -34, 8, 2.3f, 39, rankColor(awardRank));
-        center(context, font, Text.literal("+" + formatScore(awardScore)), 24, 10, 1.65f, 63, IVORY);
-        center(context, font, Text.translatable("night_shift_skate.hud.banked"), 24, 28, 1, 60, ANTIQUE_GOLD);
+        Text rank = Text.translatable("night_shift_skate.hud.rank." + awardRank).setStyle(POPUP_LETTERING);
+        drawCentered(context, font, rank, 0, 0, 3.4f, AWARD_WIDTH, fade(rankColor(awardRank), opacity));
+        drawCentered(context, font, popupText(formatScore(awardScore)), 0, 34, 1.65f, AWARD_WIDTH, fade(IVORY, opacity));
         context.getMatrices().pop();
     }
 
@@ -161,12 +224,20 @@ final class SkateHud {
 
     private static void center(DrawContext context, TextRenderer font, Text value, int x, int y, float scale,
                                int maxWidth, int color) {
-        Text lettering = value.copy().setStyle(LETTERING);
-        float fittingScale = Math.min(scale, maxWidth / (float) Math.max(1, font.getWidth(lettering)));
+        drawCentered(context, font, value.copy().setStyle(LETTERING), x, y, scale, maxWidth, color);
+    }
+
+    private static Text popupText(String value) {
+        return Text.literal(value).setStyle(POPUP_LETTERING);
+    }
+
+    private static void drawCentered(DrawContext context, TextRenderer font, Text value, int x, int y, float scale,
+                                     int maxWidth, int color) {
+        float fittingScale = Math.min(scale, maxWidth / (float) Math.max(1, font.getWidth(value)));
         context.getMatrices().push();
         context.getMatrices().translate(x, y, 0);
         context.getMatrices().scale(fittingScale, fittingScale, 1);
-        context.drawCenteredTextWithShadow(font, lettering, 0, 0, color);
+        context.drawCenteredTextWithShadow(font, value, 0, 0, color);
         context.getMatrices().pop();
     }
 

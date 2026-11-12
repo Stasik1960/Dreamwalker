@@ -2,6 +2,8 @@ package dev.nightshift.skate.client;
 
 import dev.nightshift.skate.BoardStyle;
 import dev.nightshift.skate.NightShiftSkate;
+import dev.nightshift.skate.SkatePart;
+import dev.nightshift.skate.SkateParts;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
 import net.minecraft.client.render.OverlayTexture;
@@ -18,6 +20,7 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.Map;
 
 /** Immutable, evaluated Blender geometry loaded from the client resource pack. */
@@ -30,11 +33,13 @@ final class BoardMesh {
     private final float[] vertices;
     private final int[] colors;
     private final int[] indices;
+    private final float minimumY;
 
-    private BoardMesh(float[] vertices, int[] colors, int[] indices) {
+    private BoardMesh(float[] vertices, int[] colors, int[] indices, float minimumY) {
         this.vertices = vertices;
         this.colors = colors;
         this.indices = indices;
+        this.minimumY = minimumY;
     }
 
     static BoardMesh read(ResourceManager manager, Identifier id) throws IOException {
@@ -51,10 +56,13 @@ final class BoardMesh {
                 throw new IOException("Invalid board mesh counts in " + id + ": "
                         + vertexCount + " vertices, " + indexCount + " indices");
             }
+            float minimumY = 0;
             for (int i = 0; i < 6; i++) {
-                if (!Float.isFinite(input.readFloat())) {
+                float bound = input.readFloat();
+                if (!Float.isFinite(bound)) {
                     throw new IOException("Non-finite board mesh bounds in " + id);
                 }
+                if (i == 1) minimumY = bound;
             }
             float[] vertices = new float[vertexCount * 6];
             int[] colors = new int[vertexCount];
@@ -76,8 +84,12 @@ final class BoardMesh {
                     throw new IOException("Out-of-range index in " + id);
                 }
             }
-            return new BoardMesh(vertices, colors, indices);
+            return new BoardMesh(vertices, colors, indices, minimumY);
         }
+    }
+
+    float groundRadius() {
+        return Math.max(0.001f, -minimumY);
     }
 
     void render(MatrixStack matrices, VertexConsumer consumer, int light) {
@@ -110,6 +122,7 @@ final class BoardMesh {
         private static final Identifier IRON = NightShiftSkate.id("meshes/board/iron_vespers.nsmesh");
         private static final Identifier GRAVE = NightShiftSkate.id("meshes/board/grave_procession.nsmesh");
         private static volatile Map<BoardStyle, BoardMesh> loaded = Map.of();
+        private static volatile Map<SkatePart, BoardMesh> parts = Map.of();
 
         private Library() {
         }
@@ -126,6 +139,14 @@ final class BoardMesh {
             return mesh;
         }
 
+        static BoardMesh get(SkatePart part) {
+            BoardMesh mesh = parts.get(part);
+            if (mesh == null) {
+                throw new IllegalStateException("Board part resources have not loaded for " + part.itemId());
+            }
+            return mesh;
+        }
+
         @Override
         public Identifier getFabricId() {
             return LISTENER_ID;
@@ -134,13 +155,21 @@ final class BoardMesh {
         @Override
         public void reload(ResourceManager manager) {
             EnumMap<BoardStyle, BoardMesh> next = new EnumMap<>(BoardStyle.class);
+            Map<SkatePart, BoardMesh> nextParts = new HashMap<>();
             try {
                 next.put(BoardStyle.IRON_VESPERS, BoardMesh.read(manager, IRON));
                 next.put(BoardStyle.GRAVE_PROCESSION, BoardMesh.read(manager, GRAVE));
+                for (SkatePart part : SkateParts.all()) {
+                    if (!part.id().equals("night_shift")) {
+                        Identifier id = NightShiftSkate.id("meshes/parts/" + part.type().id() + "/" + part.id() + ".nsmesh");
+                        nextParts.put(part, BoardMesh.read(manager, id));
+                    }
+                }
             } catch (IOException exception) {
                 throw new IllegalStateException("Unable to load Night Shift board meshes", exception);
             }
             loaded = Map.copyOf(next);
+            parts = Map.copyOf(nextParts);
         }
     }
 }

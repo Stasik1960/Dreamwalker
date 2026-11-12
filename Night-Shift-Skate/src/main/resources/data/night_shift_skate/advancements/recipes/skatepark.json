@@ -1,0 +1,26 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_polished_deepslate": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {"items": [{"items": ["minecraft:polished_deepslate"]}]}
+    },
+    "has_skateboard": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {"items": [{"items": [
+        "night_shift_skate:skateboard",
+        "night_shift_skate:iron_vespers",
+        "night_shift_skate:grave_procession"
+      ]}]}
+    }
+  },
+  "requirements": [["has_polished_deepslate", "has_skateboard"]],
+  "rewards": {"recipes": [
+    "night_shift_skate:park_paving",
+    "night_shift_skate:park_deck",
+    "night_shift_skate:low_ramp",
+    "night_shift_skate:steep_ramp",
+    "night_shift_skate:park_rail",
+    "night_shift_skate:park_ledge"
+  ]}
+}

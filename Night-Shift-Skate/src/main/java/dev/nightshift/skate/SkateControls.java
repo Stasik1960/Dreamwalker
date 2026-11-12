@@ -8,6 +8,7 @@ public final class SkateControls {
     public static final int JUMP = 1 << 4;
     public static final int CROUCH = 1 << 5;
     public static final int TRICK = 1 << 6;
+    public static final int GRAB = 1 << 7;
     public static final int CONTINUOUS = ACCELERATE | BRAKE | LEFT | RIGHT | JUMP | CROUCH;
 
     private SkateControls() {}

@@ -3,11 +3,11 @@
   "id": "night_shift_skate",
   "version": "${version}",
   "name": "Night Shift Skate",
-  "description": "Ride, ollie, flip and grind with the Night Shift skateboard.",
+  "description": "Build your own skateboard, then ride, ollie, flip and grind.",
   "environment": "*",
   "entrypoints": {
     "main": ["dev.nightshift.skate.NightShiftSkate"],
-    "client": ["dev.nightshift.skate.client.NightShiftClient"]
+    "client": ["dev.nightshift.skate.client.NightShiftClient", "dev.nightshift.skate.client.SkateAudio", "dev.nightshift.skate.client.SkateRampModels"]
   },
   "mixins": [{"config": "night_shift_skate.client.mixins.json", "environment": "client"}],
   "depends": {

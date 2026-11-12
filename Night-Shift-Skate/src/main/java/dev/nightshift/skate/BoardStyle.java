@@ -3,19 +3,17 @@ package dev.nightshift.skate;
 import net.minecraft.item.ItemStack;
 
 public enum BoardStyle {
-    NIGHT_SHIFT("skateboard", 0.155, 0.126),
-    IRON_VESPERS("iron_vespers", 0.130, 0.1044),
-    GRAVE_PROCESSION("grave_procession", 0.212, 0.132);
+    NIGHT_SHIFT("skateboard", 0.155),
+    IRON_VESPERS("iron_vespers", 0.130),
+    GRAVE_PROCESSION("grave_procession", 0.212);
 
     private static final BoardStyle[] NETWORK_STYLES = values();
     private final String itemId;
     private final double riderHeight;
-    private final double boardslideDrop;
 
-    BoardStyle(String itemId, double riderHeight, double boardslideDrop) {
+    BoardStyle(String itemId, double riderHeight) {
         this.itemId = itemId;
         this.riderHeight = riderHeight;
-        this.boardslideDrop = boardslideDrop;
     }
 
     public String itemId() {
@@ -24,10 +22,6 @@ public enum BoardStyle {
 
     public double riderHeight() {
         return riderHeight;
-    }
-
-    public double boardslideDrop() {
-        return boardslideDrop;
     }
 
     byte networkId() {

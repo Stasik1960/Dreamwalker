@@ -30,6 +30,13 @@ final class SkateboardItem extends Item {
     }
 
     @Override
+    public Text getName(ItemStack stack) {
+        BoardStyle preset = BoardSetup.fromStack(stack).matchingPreset();
+        return preset == null ? Text.translatable("item.night_shift_skate.skateboard.custom")
+                : Text.translatable("item.night_shift_skate." + preset.itemId());
+    }
+
+    @Override
     public ActionResult useOnBlock(ItemUsageContext context) {
         World world = context.getWorld();
         PlayerEntity player = context.getPlayer();
@@ -38,7 +45,8 @@ final class SkateboardItem extends Item {
         }
 
         BlockPos pos = context.getBlockPos();
-        VoxelShape surface = world.getBlockState(pos).getCollisionShape(world, pos);
+        var state = world.getBlockState(pos);
+        VoxelShape surface = state.getCollisionShape(world, pos);
         if (surface.isEmpty()) {
             return ActionResult.FAIL;
         }
@@ -47,8 +55,15 @@ final class SkateboardItem extends Item {
         if (board == null) {
             return ActionResult.FAIL;
         }
-        board.refreshPositionAndAngles(pos.getX() + 0.5, pos.getY() + surface.getMax(Direction.Axis.Y),
-                pos.getZ() + 0.5, player.getYaw(), 0);
+        double x = pos.getX() + 0.5;
+        double z = pos.getZ() + 0.5;
+        double height = pos.getY() + surface.getMax(Direction.Axis.Y);
+        if (state.getBlock() instanceof SkateRampBlock ramp) {
+            Direction uphill = state.get(SkateRampBlock.FACING);
+            double halfWidth = board.getWidth() * 0.5;
+            height = ramp.heightAt(state, pos, x + uphill.getOffsetX() * halfWidth, z + uphill.getOffsetZ() * halfWidth);
+        }
+        board.refreshPositionAndAngles(x, height, z, player.getYaw(), 0);
         if (board.getBoundingBox().intersects(player.getBoundingBox())
                 || !world.isSpaceEmpty(board, board.getBoundingBox()) || !world.canPlayerModifyAt(player, pos)) {
             return ActionResult.FAIL;
@@ -70,6 +85,10 @@ final class SkateboardItem extends Item {
 
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+        BoardSetup setup = BoardSetup.fromStack(stack);
+        for (SkatePart.Type type : SkatePart.Type.values()) {
+            tooltip.add(Text.translatable(setup.part(type).translationKey()).formatted(Formatting.DARK_GRAY));
+        }
         tooltip.add(Text.translatable("item.night_shift_skate.skateboard.controls").formatted(Formatting.GRAY));
     }
 }
