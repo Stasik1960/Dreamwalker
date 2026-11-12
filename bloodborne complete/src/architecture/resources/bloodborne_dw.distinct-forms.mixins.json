@@ -1,0 +1,22 @@
+{
+  "required": true,
+  "package": "dev.dreamwalker.bloodbornedw.composite.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "DistinctFormRegistrationMixin",
+    "DistinctFormStateBuilderMixin",
+    "DistinctFormStateMixin",
+    "DistinctFormArtBankMixin",
+    "DistinctFormLegacyMappingMixin",
+    "DistinctFormItemMixin",
+    "DistinctFormCatalogueMixin",
+    "DistinctFormPickMixin",
+    "DistinctFormCyclingMixin",
+    "DistinctFormSelectionMixin",
+    "DistinctFormMechanismMixin",
+    "DistinctSlabRegistrationMixin",
+    "DistinctSlabPlacementMixin",
+    "DistinctSlabItemMixin"
+  ],
+  "injectors": {"defaultRequire": 1}
+}
