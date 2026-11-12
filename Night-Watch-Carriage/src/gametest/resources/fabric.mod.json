@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "id": "nightwatchcarriage_tests",
+  "version": "1.0.0",
+  "name": "Night Watch Carriage Game Tests",
+  "environment": "server",
+  "entrypoints": {"fabric-gametest": ["dev.nightwatch.carriage.CarriageGameTests"]},
+  "depends": {
+    "fabricloader": ">=0.16.10",
+    "fabric-api": "*",
+    "minecraft": "1.20.1",
+    "nightwatchcarriage": "*"
+  }
+}

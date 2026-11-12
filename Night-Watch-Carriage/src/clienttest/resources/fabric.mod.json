@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "id": "nightwatchcarriage_clienttest",
+  "version": "1.0.0",
+  "name": "Night Watch Carriage Client Smoke Test",
+  "environment": "client",
+  "entrypoints": {
+    "client": ["dev.nightwatch.carriage.client.ClientSmoke"]
+  },
+  "depends": { "nightwatchcarriage": "*" }
+}

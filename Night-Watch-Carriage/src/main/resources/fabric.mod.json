@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "nightwatchcarriage",
+  "version": "${version}",
+  "name": "Night Watch Carriage",
+  "description": "A gothic two-wheeled carriage drawn by a player, with room for two passengers.",
+  "environment": "*",
+  "entrypoints": {
+    "main": ["dev.nightwatch.carriage.NightWatchCarriage"],
+    "client": ["dev.nightwatch.carriage.client.CarriageClient"],
+    "dynamiclights": [{ "adapter": "nightwatchcarriage_lights", "value": "carriage" }]
+  },
+  "languageAdapters": {
+    "nightwatchcarriage_lights": "dev.nightwatch.carriage.client.LambLightsAdapter"
+  },
+  "mixins": [
+    { "config": "nightwatchcarriage.client.mixins.json", "environment": "client" }
+  ],
+  "depends": {
+    "minecraft": "1.20.1",
+    "java": ">=17",
+    "fabricloader": ">=0.16.10",
+    "fabric-api": "*"
+  },
+  "suggests": {
+    "lambdynlights": "*"
+  }
+}

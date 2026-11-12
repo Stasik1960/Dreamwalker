@@ -21,6 +21,7 @@ Repair-ветки Bloodborne содержат отдельные экспери�
 | RP-Chat, RP-Chat-UI, MC-Pool, DW_Languages, DW_Magic_Connect | 17 | 8.10.2, установленный отдельно | Версия используется в CI; wrapper в этих проектах отсутствует |
 | Model-Props | 17 | Wrapper 8.6 | Содержит собственный wrapper и собирается независимо |
 | Night-Shift-Skate | 17 | Wrapper 8.12.1 | Независимый проект; команды в [README](Night-Shift-Skate/README.md) |
+| Night-Watch-Carriage | 17 | Wrapper 8.12.1 | Независимый проект; сборка и тесты в [README](Night-Watch-Carriage/README.txt) |
 | Bloodborne-Blocks | 17 | Wrapper 8.8 | Для проверок нужен Python 3.11+ и `tools/requirements-ci.txt` |
 | Danny-AOT-Backport и вложенная Player Animation Library | 21 | Wrapper 8.12.1 | Выходные классы совместимы с Java 17 |
 
