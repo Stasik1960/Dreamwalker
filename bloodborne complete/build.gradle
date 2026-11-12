@@ -8,6 +8,7 @@ repositories {
  maven { url = 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/' }
 }
 dependencies {
+ compileOnly 'io.github.llamalad7:mixinextras-fabric:0.4.1'
  if (providers.gradleProperty('worldedit_api_jar').isPresent()) {
   compileOnly files(providers.gradleProperty('worldedit_api_jar').get())
  } else { compileOnly 'com.sk89q.worldedit:worldedit-core:7.2.15' }

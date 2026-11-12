@@ -3,6 +3,6 @@
   "package": "dev.dreamwalker.bloodbornedw.compat.worldedit.mixin",
   "plugin": "dev.dreamwalker.bloodbornedw.compat.worldedit.mixin.WorldEditMixinPlugin",
   "compatibilityLevel": "JAVA_17",
-  "mixins": ["WorldEditStateMixin", "WorldEditEditSessionMixin"],
+  "mixins": ["WorldEditStateMixin", "WorldEditEditSessionMixin", "WorldEditSelectionRefreshMixin", "WorldEditAirEditMixin", "WorldEditSnapshotMixin", "WorldEditNativeWriteMixin", "WorldEditNativeCarrierMixin"],
   "injectors": {"defaultRequire": 1}
 }
