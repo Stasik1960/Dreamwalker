@@ -12,6 +12,7 @@ RELEASE_SHA = "4e8e7f4bd460982d7e15d722f8c7210d4d4f6dda22d6e8523fa79d8ff6a4406b"
 ROOT = "dev/dreamwalker/bloodbornedw/"
 WORLDEDIT_CONFIG = "bloodborne_dw.worldedit.mixins.json"
 CREATIVE_CONFIG = "bloodborne_dw.creative-removal.mixins.json"
+CREATIVE_REFMAP = "bloodborne_dw.creative-removal.refmap.json"
 WORLDEDIT_MIXINS = (
     "WorldEditSelectionRefreshMixin",
     "WorldEditAirEditMixin",
@@ -23,6 +24,10 @@ CLASSES = (
     "composite/ForcedBlockRemoval",
     "composite/mixin/CreativeRemovalMixin",
     "composite/mixin/CreativeRemovalWriteAccess",
+    "composite/mixin/SelectionAxeClientMixin",
+    "composite/mixin/SelectionAxeItemMixin",
+    "composite/mixin/SelectionAxeProgressMixin",
+    "compat/worldedit/SelectionAxe",
     "compat/worldedit/WorldEditNativeWrites",
     *("compat/worldedit/mixin/" + name for name in WORLDEDIT_MIXINS),
 )
@@ -57,9 +62,20 @@ def main():
 
         manifest = json.loads(release.read("fabric.mod.json"))
         manifest["mixins"].append(CREATIVE_CONFIG)
+        manifest["entrypoints"]["main"].append("dev.dreamwalker.bloodbornedw.compat.worldedit.SelectionAxe")
         worldedit = json.loads(release.read(WORLDEDIT_CONFIG))
         worldedit["mixins"].extend(WORLDEDIT_MIXINS)
         creative = json.loads(build.read(CREATIVE_CONFIG))
+        build_refmap = json.loads(build.read(creative["refmap"]))
+        mixin_paths = {ROOT + "composite/mixin/" + name for name in (*creative["mixins"], *creative["client"])}
+        refmap = {
+            "mappings": {name: mappings for name, mappings in build_refmap["mappings"].items() if name in mixin_paths},
+            "data": {
+                namespace: {name: mappings for name, mappings in entries.items() if name in mixin_paths}
+                for namespace, entries in build_refmap.get("data", {}).items()
+            },
+        }
+        creative["refmap"] = CREATIVE_REFMAP
         replacements = {"fabric.mod.json": manifest, WORLDEDIT_CONFIG: worldedit}
 
         args.output.parent.mkdir(parents=True, exist_ok=True)
@@ -71,6 +87,7 @@ def main():
                     with release.open(entry) as source, output.open(entry, "w") as target:
                         shutil.copyfileobj(source, target, 1024 * 1024)
             output.writestr(CREATIVE_CONFIG, json.dumps(creative, indent=2) + "\n")
+            output.writestr(CREATIVE_REFMAP, json.dumps(refmap, indent=2) + "\n")
             for name, contents in added.items():
                 output.writestr(name, contents)
     print(f"{digest(args.output)}  {args.output}")

@@ -3,6 +3,7 @@ package dev.dreamwalker.bloodbornedw.composite.mixin;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import dev.dreamwalker.bloodbornedw.DreamwalkerBb;
+import dev.dreamwalker.bloodbornedw.compat.worldedit.SelectionAxe;
 import dev.dreamwalker.bloodbornedw.composite.ForcedBlockRemoval;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.network.ServerPlayerInteractionManager;
@@ -22,6 +23,7 @@ public abstract class CreativeRemovalMixin {
 
     @WrapMethod(method={"tryBreakBlock","method_14266"},remap=false)
     private boolean dreamwalker$finishCreativeRemoval(BlockPos pos,Operation<Boolean> original) {
+        if(SelectionAxe.heldBy(player))return false;
         if(!player.isCreative()||!world.isChunkLoaded(pos)||!world.isInBuildLimit(pos)
                 ||!world.getWorldBorder().contains(pos)||!world.canPlayerModifyAt(player,pos)
                 ||player.isBlockBreakingRestricted(world,pos,getGameMode()))return original.call(pos);
