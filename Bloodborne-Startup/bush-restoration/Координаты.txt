@@ -1,0 +1,24 @@
+Индекс блоков Bloodborne
+
+Распакуйте архив в одну папку. Для поиска нужен Python 3.12 или новее.
+
+Блок в старой карте по координатам:
+python query_coordinates.py Bloodborne-block-coordinates.sqlite --at 101 118 -748
+
+Те же координаты в опубликованной v22:
+python query_coordinates.py Bloodborne-block-coordinates.sqlite --label compact_startup --at 101 118 -748
+
+Те же координаты после восстановления:
+python query_coordinates.py Bloodborne-block-coordinates.sqlite --label bush_restoration --at 101 118 -748
+
+Куст по координатам исходной позиции или точки установки:
+python query_coordinates.py Bloodborne-block-coordinates.sqlite --label bush_restoration --bush-at 101 118 -748
+
+Список всех блоков с заданным ID в старой карте:
+python query_coordinates.py Bloodborne-block-coordinates.sqlite --state bloodborne_dw:source_addon_grass_2
+
+Для другого измерения добавьте --dimension bloodborne_dw:bloodborne_old.
+Метки миров хранятся в таблице sources. Исторические принадлежности клеток
+хранятся в bush_cells и bush_roots. Точки установки исправленных кустов
+хранятся в bush_release_anchors. В отчёте релиза перечислены изменённые
+ячейки, идентификаторы каталога и контрольные суммы JAR и карты.
