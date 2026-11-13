@@ -7,3 +7,5 @@ Copy the Bush Restoration test profile to a new game directory and use Fabric 1.
 The harness proceeds through the experimental world backup prompt in the disposable game directory. It exercises WorldEdit selection and the wooden axe, model and slab registration, 45-degree RP colliders, sign placement, wall adjacency, and the Original Pick key against five existing city fragments. It writes `qa-pick-result.txt` in the game directory and stops the client. The test sets up fixtures in the copied save and temporarily gives its test player operator permissions.
 
 Add `-Ddw.qa.glass=true` to also compare player-model pixels through the patterned blue glass, behind an opaque control, and in an open control. This saves six `qa-glass-*.png` frames in the test game directory.
+
+Add `-Ddw.qa.shiftOnly=true` to run only the BB model tool check. It drives real client mouse bindings across all six shift modes, checks matching quarter-block offsets on the server and client, and compares rendered frames for fresh compact, fixed-ID composite, and baked city blocks. It also checks the tool in Survival with operator level 2.

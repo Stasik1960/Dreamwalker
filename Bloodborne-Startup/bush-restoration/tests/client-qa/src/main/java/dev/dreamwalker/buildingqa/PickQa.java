@@ -43,6 +43,7 @@ public final class PickQa implements ClientModInitializer {
     private CompletableFuture<ItemStack> serverStack;
     private CompletableFuture<List<String>> serverChecks;
     private final GlassChecks glass = Boolean.getBoolean("dw.qa.glass") ? new GlassChecks() : null;
+    private ModelShiftChecks shift;
     private int serverWait;
     private boolean serverTestFinished;
 
@@ -70,6 +71,14 @@ public final class PickQa implements ClientModInitializer {
     }
 
     private void tick(MinecraftClient game) throws Exception {
+        if (Boolean.getBoolean("dw.qa.shiftOnly")) {
+            if (shift == null) shift = new ModelShiftChecks();
+            String outcome = shift.tick(game);
+            if (outcome == null) return;
+            note(outcome);
+            finish(game, outcome.startsWith("PASS"));
+            return;
+        }
         if (!serverTestFinished) {
             checkServer(game);
             return;

@@ -38,6 +38,7 @@ CLASSES = (
     "composite/DiagonalRpCollision",
     "composite/BuildingNeighbors",
     "building/CompositeGlassPass",
+    "building/BbModelClickScope",
     "tool/QuarterBlockShift",
     *("compat/worldedit/mixin/" + name for name in WORLDEDIT_MIXINS),
 )
