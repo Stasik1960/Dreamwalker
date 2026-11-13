@@ -1,10 +1,16 @@
 package dev.dreamwalker.bloodbornedw.building;
 
+import dev.dreamwalker.bloodbornedw.architecture.PlacementPhysics;
+import dev.dreamwalker.bloodbornedw.composite.CompositeData;
 import dev.dreamwalker.bloodbornedw.composite.CompositeSourceShift;
 import dev.dreamwalker.bloodbornedw.composite.CompositeSpec;
+import dev.dreamwalker.bloodbornedw.runtime.ObjectInstance;
+import java.util.ArrayList;
+import java.util.List;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtDouble;
 import net.minecraft.nbt.NbtList;
+import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 
 public final class ShutterFloorPlacement {
@@ -32,6 +38,19 @@ public final class ShutterFloorPlacement {
         shift(art, -CENTER_DELTA);
         art.remove(FLOOR_CENTERED);
         return art;
+    }
+
+    public static List<Box> placementBoxes(ObjectInstance object, List<Box> boxes) {
+        if (!object.owner().registryId().equals("bloodborne_dw:source_shutter_window")
+                || !CompositeData.nbt(object.rootData().blockEntityNbt()).getBoolean(FLOOR_CENTERED)) return boxes;
+
+        double floor = object.owner().root().y();
+        List<Box> aboveFloor = new ArrayList<>(boxes.size());
+        for (Box box : boxes) {
+            if (box.maxY <= floor + PlacementPhysics.EPS) continue;
+            aboveFloor.add(box.minY < floor ? new Box(box.minX, floor, box.minZ, box.maxX, box.maxY, box.maxZ) : box);
+        }
+        return aboveFloor;
     }
 
     private static void shift(NbtCompound payload, double delta) {

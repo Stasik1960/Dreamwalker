@@ -1,6 +1,7 @@
 package dev.dreamwalker.buildingqa;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.entity.EntityPose;
@@ -9,6 +10,7 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.Registries;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.state.property.Properties;
@@ -19,6 +21,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.GameMode;
+import net.minecraft.world.BlockView;
+import java.util.UUID;
 
 final class WindowRotationChecks {
     static final BlockPos OPEN_WINDOW = new BlockPos(437, 276, -850);
@@ -132,8 +136,27 @@ final class WindowRotationChecks {
         player.setStackInHand(Hand.MAIN_HAND, stack);
         var context = new ItemPlacementContext(new ItemUsageContext(player, Hand.MAIN_HAND, hit));
         var action = ((BlockItem) stack.getItem()).place(context);
-        require(action.isAccepted(), "could not place " + Registries.ITEM.getId(stack.getItem()) + " at " + context.getBlockPos()
-                + ", action " + action + ", " + transactionReason());
+        if (!action.isAccepted()) {
+            String result = transactionReason();
+            String diagnostic = face == Direction.UP && stack.getItem() instanceof BlockItem blockItem
+                    && Registries.ITEM.getId(stack.getItem()).getPath().equals("source_shutter_window")
+                    ? floorReservation(world, pos, blockItem.getBlock().getDefaultState()) : "";
+            throw new AssertionError("could not place " + Registries.ITEM.getId(stack.getItem()) + " at "
+                    + context.getBlockPos() + ", action " + action + ", " + result + diagnostic);
+        }
+    }
+
+    private static String floorReservation(BlockView world, BlockPos pos, BlockState state) throws ReflectiveOperationException {
+        var runtime = Class.forName("dev.dreamwalker.bloodbornedw.composite.CompositeRuntime");
+        var spec = state.getBlock().getClass().getField("spec").get(state.getBlock());
+        var placement = Class.forName("dev.dreamwalker.bloodbornedw.building.ShutterFloorPlacement");
+        var payload = (NbtCompound) placement.getMethod("forPlacement", spec.getClass(), Direction.class, NbtCompound.class)
+                .invoke(null, spec, Direction.UP, null);
+        var object = runtime.getMethod("instance", BlockView.class, BlockPos.class, BlockState.class, UUID.class, NbtCompound.class)
+                .invoke(null, world, pos, state, UUID.randomUUID(), payload);
+        var physics = Class.forName("dev.dreamwalker.bloodbornedw.architecture.PlacementPhysics");
+        var boxes = physics.getMethod("physicalBoxes", object.getClass()).invoke(null, object);
+        return ", floor reservation=" + boxes + ", support=" + world.getBlockState(pos.down()).getCollisionShape(world, pos.down());
     }
 
     private static String transactionReason() throws ReflectiveOperationException {

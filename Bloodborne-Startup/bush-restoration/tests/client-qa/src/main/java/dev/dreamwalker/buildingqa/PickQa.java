@@ -55,6 +55,7 @@ public final class PickQa implements ClientModInitializer {
     private ModelShiftChecks shift;
     private DoorSoundChecks doorSounds = new DoorSoundChecks();
     private DoorConsoleVisualChecks doorConsole = new DoorConsoleVisualChecks();
+    private FenceWallViewChecks fenceWallView = Boolean.getBoolean("dw.qa.fenceGallery") ? new FenceWallViewChecks() : null;
     private int serverWait;
     private boolean serverTestFinished;
 
@@ -149,6 +150,20 @@ public final class PickQa implements ClientModInitializer {
                 failures++;
             }
             windowCrawl = null;
+            return;
+        }
+        if (fenceWallView != null) {
+            try {
+                String outcome = fenceWallView.tick(game);
+                if (outcome == null) return;
+                note(outcome);
+                if (outcome.startsWith("FAIL")) failures++;
+            } catch (Exception | AssertionError failure) {
+                note("FAIL fence wall client test: " + failure);
+                failures++;
+            }
+            fenceWallView.cleanup(game);
+            fenceWallView = null;
             return;
         }
         if (fenceGallery != null) {

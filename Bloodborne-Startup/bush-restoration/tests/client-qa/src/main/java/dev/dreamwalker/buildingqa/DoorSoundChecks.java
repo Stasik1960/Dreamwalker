@@ -8,11 +8,11 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
-import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 import net.minecraft.network.packet.s2c.play.PlaySoundS2CPacket;
 import net.minecraft.registry.Registries;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.state.property.Properties;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
@@ -35,6 +35,7 @@ public final class DoorSoundChecks {
 
     private final List<String> events = new ArrayList<>();
     private CompletableFuture<Void> prepared;
+    private CompletableFuture<Void> interaction;
     private int fixture, wait;
     private int stage;
 
@@ -52,25 +53,33 @@ public final class DoorSoundChecks {
         if (stage == 0) {
             if (wait < 10 || !inPosition(game)) return await();
             capturing = this;
-            if (!use(game)) return await();
+            use(game, true);
             stage++;
             wait = 0;
             return null;
         }
         if (stage == 1) {
+            if (!confirmed()) return await();
             if (events.isEmpty() || wait < (fixture == 2 ? 75 : 6)) return await();
             require(events.equals(EXPECTED.subList(0, 1)), "expected one open packet, got " + events);
-            if (!use(game)) return await();
+            use(game, false);
             stage++;
             wait = 0;
             return null;
         }
-        if (events.size() < 2 || wait < 10) return await();
-        require(events.equals(EXPECTED), "expected one open and one close packet, got " + events);
-        cleanup();
-        if (fixture == 0 && !use(game)) return await();
+        if (stage == 2) {
+            if (!confirmed() || events.size() < 2 || wait < 10) return await();
+            require(events.equals(EXPECTED), "expected one open and one close packet, got " + events);
+            cleanup();
+            if (fixture == 0) {
+                use(game, true);
+                stage++;
+                return null;
+            }
+        } else if (!confirmed()) return await();
         if (++fixture == 3) return "PASS carved, native and RP door interactions each sent one open and one close sound to player";
         prepared = null;
+        interaction = null;
         events.clear();
         stage = 0;
         wait = 0;
@@ -88,40 +97,78 @@ public final class DoorSoundChecks {
                 && game.world.isChunkLoaded(pos) && Math.abs(game.player.getX() - (pos.getX() + .5)) < .1;
     }
 
-    private boolean use(MinecraftClient game) {
+    private void use(MinecraftClient game, boolean open) {
+        var server = game.getServer();
+        var playerId = game.player.getUuid();
         BlockPos root = position();
-        if (fixture == 2) {
-            Entity entity = game.world.getOtherEntities(game.player, new net.minecraft.util.math.Box(root).expand(3),
-                    candidate -> Registries.ENTITY_TYPE.getId(candidate.getType()).equals(new Identifier("bloodborne_rp", "door_1")))
-                    .stream().findFirst().orElse(null);
-            if (entity == null) return false;
-            game.interactionManager.interactEntity(game.player, entity, Hand.MAIN_HAND);
-            return true;
-        }
-        for (double y : new double[]{1.5, .5, 2.5}) {
-            for (double x : new double[]{.5, -.25, 1.25, -.75, 1.75, -1.25, 2.25}) {
-                Vec3d target = new Vec3d(root.getX() + x, root.getY() + y, root.getZ() + 1.75);
-                var ray = new RaycastContext(game.player.getEyePos(), target, RaycastContext.ShapeType.OUTLINE,
-                        RaycastContext.FluidHandling.NONE, game.player);
-                BlockHitResult hit = game.world.raycast(ray);
-                if (hit.getType() != HitResult.Type.BLOCK) continue;
-                var state = game.world.getBlockState(hit.getBlockPos());
-                if (!state.getBlock().getPickStack(game.world, hit.getBlockPos(), state).isOf(item(root))) continue;
-                lookAt(game, target);
-                game.interactionManager.interactBlock(game.player, Hand.MAIN_HAND, hit);
-                return true;
-            }
-        }
-        return false;
+        interaction = server.submit(() -> click(server.getPlayerManager().getPlayer(playerId), root, open));
     }
 
-    private static void lookAt(MinecraftClient game, Vec3d target) {
-        Vec3d aim = target.subtract(game.player.getEyePos());
+    private boolean confirmed() {
+        if (!interaction.isDone()) return false;
+        interaction.join();
+        return true;
+    }
+
+    private static void click(ServerPlayerEntity player, BlockPos root, boolean open) {
+        var world = player.getServerWorld();
+        if (root.equals(RP)) {
+            Entity entity = world.getOtherEntities(player, new net.minecraft.util.math.Box(root).expand(3),
+                    candidate -> Registries.ENTITY_TYPE.getId(candidate.getType()).equals(new Identifier("bloodborne_rp", "door_1")))
+                    .stream().findFirst().orElseThrow(() -> new AssertionError("RP door is outside player reach"));
+            lookAt(player, entity.getPos().add(0, 1.25, 0));
+            var result = player.interact(entity, Hand.MAIN_HAND);
+            require(result.isAccepted(), "player failed to " + (open ? "open" : "close") + " RP door: " + result);
+            return;
+        }
+        if (!open) {
+            Vec3d nearHinge = Vec3d.of(root).add(2.75, 0, 1.5);
+            player.teleport(world, nearHinge.x, nearHinge.y, nearHinge.z, 0, 0);
+        }
+        var item = item(root);
+        var attempts = new ArrayList<String>();
+        for (BlockPos cell : BlockPos.iterate(root.add(-1, 0, -1), root.add(2, 3, 1))) {
+            var local = world.getBlockState(cell);
+            if (!local.getBlock().getPickStack(world, cell, local).isOf(item)) continue;
+            for (var box : local.getOutlineShape(world, cell, net.minecraft.block.ShapeContext.of(player)).getBoundingBoxes()) {
+                Vec3d target = box.getCenter().add(cell.getX(), cell.getY(), cell.getZ());
+                lookAt(player, target);
+                var hit = (BlockHitResult) player.raycast(5, 1, false);
+                if (hit.getType() != HitResult.Type.BLOCK) continue;
+                var state = world.getBlockState(hit.getBlockPos());
+                if (!state.getBlock().getPickStack(world, hit.getBlockPos(), state).isOf(item)) continue;
+                var result = player.interactionManager.interactBlock(player, world, ItemStack.EMPTY, Hand.MAIN_HAND, hit);
+                var rootState = world.getBlockState(root);
+                if (result.isAccepted() && Boolean.valueOf(open).equals(property(rootState))) return;
+                attempts.add(hit.getBlockPos().toShortString() + " " + result + " state=" + rootState);
+            }
+        }
+        throw new AssertionError("player could not " + (open ? "open " : "close ") + item + " at " + root + ": " + attempts
+                + ", eye=" + player.getEyePos() + ", lastTransaction=" + lastTransaction());
+    }
+
+    private static Boolean property(net.minecraft.block.BlockState state) {
+        var open = state.getBlock().getStateManager().getProperty(Properties.OPEN.getName());
+        return open != null && state.get(open) instanceof Boolean value ? value : null;
+    }
+
+    private static String lastTransaction() {
+        try {
+            Class<?> runtime = Class.forName("dev.dreamwalker.bloodbornedw.composite.CompositeRuntime");
+            return String.valueOf(runtime.getMethod("lastResult").invoke(null));
+        } catch (ReflectiveOperationException e) {
+            return e.toString();
+        }
+    }
+
+    private static void lookAt(ServerPlayerEntity player, Vec3d target) {
+        Vec3d aim = target.subtract(player.getEyePos());
         float yaw = MathHelper.wrapDegrees((float) Math.toDegrees(Math.atan2(aim.z, aim.x)) - 90);
         float pitch = (float) -Math.toDegrees(Math.atan2(aim.y, Math.hypot(aim.x, aim.z)));
-        game.player.setYaw(yaw);
-        game.player.setPitch(pitch);
-        game.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.LookAndOnGround(yaw, pitch, game.player.isOnGround()));
+        player.setYaw(yaw);
+        player.setPitch(pitch);
+        player.prevYaw = yaw;
+        player.prevPitch = pitch;
     }
 
     public void cleanup() {
@@ -151,8 +198,11 @@ public final class DoorSoundChecks {
         var world = player.getServerWorld();
         for (int x : new int[]{-4, 4}) for (int z : new int[]{-4, 4}) world.getChunk(pos.add(x, 0, z));
         world.setBlockState(pos.down(), Blocks.STONE.getDefaultState());
-        world.setBlockState(pos.north(4).down(), Blocks.STONE.getDefaultState());
+        for (int z = 0; z <= 5; z++) world.setBlockState(pos.north(z).down(), Blocks.STONE.getDefaultState());
         player.changeGameMode(GameMode.CREATIVE);
+        player.setSneaking(false);
+        player.getAbilities().flying = true;
+        player.sendAbilitiesUpdate();
         player.teleport(world, pos.getX() + .5, pos.getY(), pos.getZ() - 3.5, 0, 0);
         if (pos.equals(RP)) {
             var type = Registries.ENTITY_TYPE.get(new Identifier("bloodborne_rp", "door_1"));
