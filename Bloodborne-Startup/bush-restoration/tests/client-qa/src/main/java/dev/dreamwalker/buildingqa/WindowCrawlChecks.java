@@ -69,38 +69,39 @@ final class WindowCrawlChecks {
             }
             case LOWER -> {
                 if (!isCrawling(game)) return null;
+                ServerPosition position = observeServer(game);
+                if (position == null || !"CRAWLING".equals(position.pose())) return null;
                 screenshot(game, "qa-window-crawling.png");
                 key(game, FORWARD_KEY, true);
                 advance(Stage.CRAWL);
             }
             case CRAWL -> {
                 if (game.player.getZ() < PANE + .40 || !isCrawling(game)) return null;
-                key(game, FORWARD_KEY, false);
-                var server = game.getServer();
-                var playerId = game.player.getUuid();
-                serverPosition = server.submit(() -> {
-                    var player = server.getPlayerManager().getPlayer(playerId);
-                    return new ServerPosition(player.getZ(), player.getPose().name());
-                });
                 advance(Stage.SERVER);
             }
             case SERVER -> {
-                if (!serverPosition.isDone()) return null;
-                var pos = serverPosition.join();
-                if (pos.z() <= PANE || !"CRAWLING".equals(pos.pose())) {
-                    var server = game.getServer();
-                    var playerId = game.player.getUuid();
-                    serverPosition = server.submit(() -> {
-                        var player = server.getPlayerManager().getPlayer(playerId);
-                        return new ServerPosition(player.getZ(), player.getPose().name());
-                    });
-                    return null;
-                }
+                ServerPosition position = observeServer(game);
+                if (position == null || position.z() <= PANE || !"CRAWLING".equals(position.pose())) return null;
                 cleanup(game);
                 return "PASS 93241 blocks standing movement and admits Crawl through the open window";
             }
         }
         return null;
+    }
+
+    private ServerPosition observeServer(MinecraftClient game) {
+        if (serverPosition == null) {
+            var server = game.getServer();
+            var playerId = game.player.getUuid();
+            serverPosition = server.submit(() -> {
+                var player = server.getPlayerManager().getPlayer(playerId);
+                return new ServerPosition(player.getZ(), player.getPose().name());
+            });
+        }
+        if (!serverPosition.isDone()) return null;
+        ServerPosition position = serverPosition.join();
+        serverPosition = null;
+        return position;
     }
 
     void cleanup(MinecraftClient game) {

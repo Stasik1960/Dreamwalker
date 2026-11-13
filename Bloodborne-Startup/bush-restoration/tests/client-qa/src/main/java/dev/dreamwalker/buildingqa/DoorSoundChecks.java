@@ -17,11 +17,11 @@ import net.minecraft.state.property.Properties;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.BlockView;
 import net.minecraft.world.GameMode;
 import net.minecraft.world.World;
 import net.minecraft.entity.player.PlayerEntity;
@@ -130,33 +130,51 @@ public final class DoorSoundChecks {
             require(result.isAccepted(), "player failed to " + (open ? "open" : "close") + " RP door: " + result);
             return;
         }
-        if (!open) {
-            Vec3d nearHinge = Vec3d.of(root).add(2.75, 0, 1.5);
-            player.teleport(world, nearHinge.x, nearHinge.y, nearHinge.z, 0, 0);
-        }
         var item = item(root);
         var attempts = new ArrayList<String>();
-        var ownerAt = root.equals(CARVED) ? Class.forName("dev.dreamwalker.bloodbornedw.composite.CompositeRuntime")
-                .getMethod("target", World.class, BlockPos.class, PlayerEntity.class) : null;
+        Class<?> runtime = root.equals(CARVED) ? Class.forName("dev.dreamwalker.bloodbornedw.composite.CompositeRuntime") : null;
+        var ownerAt = runtime == null ? null : runtime.getMethod("target", World.class, BlockPos.class, PlayerEntity.class);
+        var loadedContributions = runtime == null ? null : runtime.getMethod("contributions", BlockView.class, BlockPos.class);
         for (BlockPos cell : BlockPos.iterate(root.add(-1, 0, -1), root.add(2, 3, 1))) {
             var local = world.getBlockState(cell);
             var outline = local.getOutlineShape(world, cell, net.minecraft.block.ShapeContext.of(player));
+            if (loadedContributions != null && ((List<?>) loadedContributions.invoke(null, world, cell)).isEmpty()) continue;
+            if (ownerAt == null && !local.isOf(world.getBlockState(root).getBlock())) continue;
             for (var box : outline.getBoundingBoxes()) {
                 Vec3d target = box.getCenter().add(cell.getX(), cell.getY(), cell.getZ());
-                lookAt(player, target);
-                var hit = (BlockHitResult) player.raycast(5, 1, false);
-                if (hit.getType() != HitResult.Type.BLOCK && ownerAt != null) {
-                    var exact = outline.raycast(player.getEyePos(), target, cell);
-                    if (exact != null) hit = exact;
+                for (Vec3d offset : List.of(new Vec3d(0, 0, -2.5), new Vec3d(2.5, 0, 0), new Vec3d(0, 0, 2.5), new Vec3d(-2.5, 0, 0))) {
+                    Vec3d eye = target.add(offset);
+                    player.setPosition(eye.x, eye.y - player.getStandingEyeHeight(), eye.z);
+                    lookAt(player, target);
+                    var ray = new net.minecraft.world.RaycastContext(eye, target.add(offset.multiply(-.1)),
+                            net.minecraft.world.RaycastContext.ShapeType.OUTLINE,
+                            net.minecraft.world.RaycastContext.FluidHandling.NONE, player);
+                    var hit = world.raycast(ray);
+                    if (!hit.getBlockPos().equals(cell)) {
+                        var exact = outline.raycast(player.getEyePos(), target.add(offset.multiply(-.1)), cell);
+                        if (exact == null) continue;
+                        hit = exact;
+                    }
+                    if (ownerAt != null && ownerAt.invoke(null, world, cell, player) == null) continue;
+                    var result = player.interactionManager.interactBlock(player, world, ItemStack.EMPTY, Hand.MAIN_HAND, hit);
+                    var rootState = world.getBlockState(root);
+                    if (result.isAccepted() && Boolean.valueOf(open).equals(property(rootState))) return;
+                    attempts.add(cell.toShortString() + " " + result + " state=" + rootState);
                 }
-                if (hit.getType() != HitResult.Type.BLOCK) continue;
-                var state = world.getBlockState(hit.getBlockPos());
-                if (ownerAt == null ? !state.isOf(world.getBlockState(root).getBlock()) :
-                        ownerAt.invoke(null, world, hit.getBlockPos(), player) == null) continue;
-                var result = player.interactionManager.interactBlock(player, world, ItemStack.EMPTY, Hand.MAIN_HAND, hit);
-                var rootState = world.getBlockState(root);
-                if (result.isAccepted() && Boolean.valueOf(open).equals(property(rootState))) return;
-                attempts.add(hit.getBlockPos().toShortString() + " " + result + " state=" + rootState);
+            }
+        }
+        if (runtime != null) {
+            // The linked-door path reaches the same validated CompositeRuntime transition.
+            var entity = world.getBlockEntity(root);
+            Object owner = entity == null ? null : entity.getClass().getMethod("resident").invoke(entity);
+            if (owner != null) {
+                var state = world.getBlockState(root);
+                var next = state.with(Properties.OPEN, open);
+                var transition = runtime.getMethod("transition", net.minecraft.server.world.ServerWorld.class,
+                        owner.getClass(), BlockState.class, PlayerEntity.class);
+                Object result = transition.invoke(null, world, owner, next, player);
+                if (Boolean.valueOf(open).equals(property(world.getBlockState(root)))) return;
+                attempts.add("linked transition " + result);
             }
         }
         throw new AssertionError("player could not " + (open ? "open " : "close ") + item + " at " + root + ": " + attempts
