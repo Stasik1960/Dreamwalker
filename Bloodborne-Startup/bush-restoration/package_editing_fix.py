@@ -15,6 +15,7 @@ from repair_screenshot_assets import screenshot_replacements
 RELEASE_SHA = "4e8e7f4bd460982d7e15d722f8c7210d4d4f6dda22d6e8523fa79d8ff6a4406b"
 ROOT = "dev/dreamwalker/bloodbornedw/"
 PROTOTYPE_CONNECTIONS = ROOT + "architecture/wall/PrototypeWallBlock$Connections.class"
+NATIVE_SHIFT_MIXIN = ROOT + "tool/mixin/NativePhysicalShiftMixin.class"
 WORLDEDIT_CONFIG = "bloodborne_dw.worldedit.mixins.json"
 CREATIVE_CONFIG = "bloodborne_dw.creative-removal.mixins.json"
 CREATIVE_REFMAP = "bloodborne_dw.creative-removal.refmap.json"
@@ -149,7 +150,8 @@ def main():
                 if name.endswith(".class"):
                     if name in release.namelist():
                         binary_replacements[name] = overlay.read(name)
-                    elif name == ROOT + "tool/mixin/ImportedFenceWallModeMixin.class" or name.startswith(ROOT + "composite/AutoStoneFence$"):
+                    elif name in (NATIVE_SHIFT_MIXIN, ROOT + "tool/mixin/ImportedFenceWallModeMixin.class",
+                                  ROOT + "tool/DebugModels$Pose.class") or name.startswith(ROOT + "composite/AutoStoneFence$"):
                         added[name] = overlay.read(name)
                     else:
                         parser.error("unexpected window/placement overlay class " + name)
@@ -159,6 +161,10 @@ def main():
         horizontal = json.loads(release.read(horizontal_config))
         horizontal["mixins"].append("ImportedFenceWallModeMixin")
         replacements[horizontal_config] = horizontal
+        client_tool_config = "dw-bb-tool-client.mixins.json"
+        client_tool = json.loads(release.read(client_tool_config))
+        client_tool["client"].append("NativePhysicalShiftMixin")
+        replacements[client_tool_config] = client_tool
         for language in ("ru_ru", "en_us"):
             path = f"assets/bloodborne_dw/lang/{language}.json"
             updated = json.loads((visual_resources / path).read_bytes())

@@ -53,6 +53,7 @@ tasks.register('windowPlacementJar', Jar) {
     archiveBaseName = 'dw-window-placement'
     archiveClassifier = 'dev'
     dependsOn tasks.named('compileJava')
+    dependsOn tasks.named('compileClientJava')
     from(sourceSets.main.output.classesDirs) {
         include 'dev/dreamwalker/bloodbornedw/composite/PlacementRotation.class'
         include 'dev/dreamwalker/bloodbornedw/composite/overlaymixin/CompactPlacementRotationMixin.class'
@@ -65,12 +66,17 @@ tasks.register('windowPlacementJar', Jar) {
         include 'dev/dreamwalker/bloodbornedw/composite/AutoStoneFence*.class'
         include 'dev/dreamwalker/bloodbornedw/tool/mixin/ImportedFenceWallModeMixin.class'
     }
+    from(sourceSets.client.output.classesDirs) {
+        include 'dev/dreamwalker/bloodbornedw/tool/DebugModels*.class'
+        include 'dev/dreamwalker/bloodbornedw/tool/mixin/NativePhysicalShiftMixin.class'
+    }
     from('src/main/resources') { include 'bloodborne_dw/studio-layouts-v22.json' }
 }
 tasks.register('remapWindowPlacementJar', net.fabricmc.loom.task.RemapJarTask) {
     dependsOn tasks.named('windowPlacementJar')
     inputFile.set(tasks.named('windowPlacementJar', Jar).flatMap { it.archiveFile })
     classpath.from(sourceSets.main.compileClasspath)
+    classpath.from(sourceSets.client.compileClasspath)
     archiveBaseName = 'dw-window-placement'
     archiveClassifier = ''
     addNestedDependencies = false
