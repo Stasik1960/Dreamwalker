@@ -61,6 +61,8 @@ tasks.register('windowPlacementJar', Jar) {
         include 'dev/dreamwalker/bloodbornedw/composite/overlaymixin/RpPlacementRotationMixin.class'
         include 'dev/dreamwalker/bloodbornedw/composite/studiomixin/StudioCompositeMixin.class'
         include 'dev/dreamwalker/bloodbornedw/composite/studiomixin/StudioImportedOutlineMixin.class'
+        include 'dev/dreamwalker/bloodbornedw/composite/AutoStoneFence*.class'
+        include 'dev/dreamwalker/bloodbornedw/tool/mixin/ImportedFenceWallModeMixin.class'
     }
     from('src/main/resources') { include 'bloodborne_dw/studio-layouts-v22.json' }
 }

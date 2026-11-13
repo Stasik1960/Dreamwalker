@@ -118,6 +118,12 @@ public final class ForcedBlockRemoval {
         }catch(RuntimeException failure){DreamwalkerBb.LOG.debug("Could not retire links for {}",owner,failure);}
         try{CompositeNetworking.publish(world,List.copyOf(changed));}
         catch(RuntimeException failure){DreamwalkerBb.LOG.debug("Could not publish removed ownership at {}",pos,failure);}
+        BuildingNeighbors.publishShapeChanges(world,changed);
+        for(Cell cell:changed){
+            BlockPos member=CompositeData.pos(cell);
+            try{world.updateNeighbors(member,world.getBlockState(member).getBlock());}
+            catch(RuntimeException failure){DreamwalkerBb.LOG.debug("Could not notify neighbors of removal at {}",member,failure);}
+        }
         return clearTarget?world.getBlockState(pos).isOf(Blocks.AIR)&&!changed.isEmpty():!changed.isEmpty();
     }
 

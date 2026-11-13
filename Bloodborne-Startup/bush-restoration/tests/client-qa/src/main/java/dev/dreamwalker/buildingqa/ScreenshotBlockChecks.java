@@ -1,6 +1,7 @@
 package dev.dreamwalker.buildingqa;
 
 import net.minecraft.block.Blocks;
+import net.minecraft.block.ShapeContext;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
@@ -11,11 +12,14 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 
 /** Places the reviewed source items through the real block-item path. */
 final class ScreenshotBlockChecks {
+    static final BlockPos CONSOLE = new BlockPos(447, 281, -830);
+
     private ScreenshotBlockChecks() {}
 
     static void verify(ServerPlayerEntity player) {
@@ -38,6 +42,16 @@ final class ScreenshotBlockChecks {
             require(solid(world, pilaster) && !top.isEmpty()
                     && Math.abs(top.getMax(Direction.Axis.Y) - 15.0 / 16.0) < 1.0e-6
                     && !solid(world, pilaster.up(2)), "the pilaster body should reach 31/16 of a block from one placement");
+            BlockPos consoleSupport = CONSOLE.down();
+            for (int x = -2; x <= 2; x += 4) {
+                for (int z = -2; z <= 2; z += 4) world.getChunk(consoleSupport.add(x, 0, z));
+            }
+            BlockPos console = place(player, consoleSupport, "source_quartz_stairs_outer_1", 0);
+            var placement = world.getBlockState(console).getCollisionShape(world, console, ShapeContext.absent());
+            require(placement.getBoundingBoxes().equals(java.util.List.of(new Box(0, 0, 0, 1, 1, 1))),
+                    "90827 block-placement collision is not exactly one full cube: " + placement);
+            require(!solid(world, console.up()) && !solid(world, console.north()) && !solid(world, console.east()),
+                    "90827 still reserves neighboring cells");
         } finally {
             player.setYaw(previousYaw);
         }

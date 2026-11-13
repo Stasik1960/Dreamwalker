@@ -1,12 +1,10 @@
 package dev.dreamwalker.bloodbornedw.building.mixin;
 
 import dev.dreamwalker.bloodbornedw.composite.BuildingNeighbors;
-import dev.dreamwalker.bloodbornedw.composite.CompositeData;
 import dev.dreamwalker.bloodbornedw.composite.FabricCompositeWorld;
 import dev.dreamwalker.bloodbornedw.runtime.ObjectGeometry.Cell;
 import java.util.List;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.BlockPos;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -20,12 +18,6 @@ public abstract class BuildingNeighborPublishMixin {
 
     @Inject(method = "publishCommitted", at = @At("RETURN"), remap = false)
     private void dreamwalker$publishSupportChanges(List<Cell> cells, CallbackInfo ci) {
-        for (Cell cell : cells) {
-            BlockPos pos = CompositeData.pos(cell);
-            if (BuildingNeighbors.hasShapeNeighbor(world, pos)) {
-                CompositeShapeUpdateAccess.dreamwalker$queue(world, "building-support:" + pos.asLong(),
-                        () -> BuildingNeighbors.updateShapeNeighbors(world, pos));
-            }
-        }
+        BuildingNeighbors.publishShapeChanges(world, cells);
     }
 }

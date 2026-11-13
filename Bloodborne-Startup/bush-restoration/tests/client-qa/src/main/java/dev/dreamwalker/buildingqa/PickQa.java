@@ -53,6 +53,8 @@ public final class PickQa implements ClientModInitializer {
             ? new ConnectedFenceGallery() : null;
     private boolean glassFinished;
     private ModelShiftChecks shift;
+    private DoorSoundChecks doorSounds = new DoorSoundChecks();
+    private DoorConsoleVisualChecks doorConsole = new DoorConsoleVisualChecks();
     private int serverWait;
     private boolean serverTestFinished;
 
@@ -91,6 +93,34 @@ public final class PickQa implements ClientModInitializer {
         }
         if (!serverTestFinished) {
             checkServer(game);
+            return;
+        }
+        if (doorSounds != null) {
+            try {
+                String outcome = doorSounds.tick(game);
+                if (outcome == null) return;
+                note(outcome);
+                if (outcome.startsWith("FAIL")) failures++;
+            } catch (Exception | AssertionError failure) {
+                note("FAIL door sound client test: " + failure);
+                failures++;
+            }
+            doorSounds.cleanup();
+            doorSounds = null;
+            return;
+        }
+        if (doorConsole != null) {
+            try {
+                String outcome = doorConsole.tick(game);
+                if (outcome == null) return;
+                note(outcome);
+                if (outcome.startsWith("FAIL")) failures++;
+            } catch (Exception | AssertionError failure) {
+                note("FAIL door and console visuals: " + failure);
+                failures++;
+            }
+            doorConsole.cleanup(game);
+            doorConsole = null;
             return;
         }
         if (whiteLight != null) {

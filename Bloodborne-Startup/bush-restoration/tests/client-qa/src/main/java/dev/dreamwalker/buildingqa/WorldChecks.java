@@ -43,6 +43,7 @@ final class WorldChecks {
         return List.of(
                 verify("13 connected fences in Creative, player heights, legacy placement and column", () -> ConnectedFenceChecks.verify(player)),
                 verify("93241 alignment and crawl clearance, cardinal placement and Shift", () -> WindowRotationChecks.verify(player)),
+                verify("DreamWalker removal disconnects fences, walls and panes including Dawn of Time", () -> NeighborRemovalChecks.verify(player)),
                 verify("registered fixed model and all slab types", WorldChecks::forms),
                 verify("wooden axe WorldEdit selection and suppressed damage/use", () -> axe(player, world)),
                 verify("authored 45-degree entity collision and cardinal regression", () -> diagonal(world)),

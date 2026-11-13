@@ -14,6 +14,7 @@ SOURCE_MODELS = MODELS + "remaining/source/minecraft/block/"
 GLASS = "source_light_blue_stained_glass"
 BALUSTRADE = "source_warped_trapdoor_open"
 PILASTER = "source_dark_oak_trapdoor_open"
+CONSOLE = "source_quartz_stairs_outer_1"
 WALL = "source_compatibility_fragment"
 WALL_POSE = 33
 PILASTER_DROP = 4
@@ -86,9 +87,15 @@ def fitted_shapes(release):
         lower_boxes(row["collision"])
         lower_boxes(row["aim"])
 
+    def console(_yaw, row):
+        # The block reservation is one grid cell even at a diagonal yaw.
+        row["collision"] = [box((0, 0, 0), (16, 16, 16))]
+        row["aim"] = deepcopy(row["collision"])
+
     replace(GLASS, glass)
     replace(BALUSTRADE, balustrade)
     replace(PILASTER, pilaster)
+    replace(CONSOLE, console)
     return doc
 
 
@@ -210,6 +217,46 @@ def pilaster_model(release):
     return {path: doc}
 
 
+def door_frame(release):
+    # These one-cuboid models are shared by both door poses. ALT inherits
+    # the same mesh through its corresponding model parents.
+    frame = {
+        "left_panel": ("east", "#0", [1.875, 10, 2, 16]),
+        "right_panel": ("west", "#0", [4, 10, 4.125, 16]),
+        "source_header": ("down", "#1", [0, 3.5, 12, 3.75]),
+    }
+    result = {}
+    for model, (side, texture, uv) in frame.items():
+        path = MODELS + f"base/prototype_door/{model}.json"
+        doc = read(release, path)
+        element, = doc["elements"]
+        if set(element["faces"]) != {"north", "south"}:
+            raise ValueError(f"Unexpected sculpted door frame faces in {path}")
+        # Reuse the opaque inner edge pixels from each source texture.
+        element["faces"][side] = {"texture": texture, "uv": uv}
+        result[path] = doc
+    return result
+
+
+def console_model(release):
+    path = SOURCE_MODELS + "quartz_stairs_outer_1.json"
+    doc = read(release, path)
+    lower = [element for element in doc["elements"] if element["to"][1] <= 0]
+    if [(element["from"], element["to"]) for element in lower] != [([0, -5, 6], [10, 0, 16])]:
+        raise ValueError(f"Unexpected lower console piece in {path}")
+    doc["elements"].remove(lower[0])
+
+    spec_path = COMPOSITES + CONSOLE + ".json"
+    spec = read(release, spec_path)
+    variant, = spec["variants"]
+    pose = variant["poses"]["closed"]
+    pose["collision"] = [box((0, 0, 0), (16, 16, 16))]
+    pose["simpleCollisionByRotation"] = [deepcopy(pose["collision"]) for _ in range(8)]
+    pose["selection"] = [shape for shape in pose["selection"] if shape["to"][1] > 5]
+    variant["visibleBounds"]["from"][1] = min(shape["from"][1] for shape in pose["selection"])
+    return {path: doc, spec_path: spec}
+
+
 def screenshot_replacements(release):
     """Return JSON replacements without touching the native city catalog or saved map."""
     return {
@@ -218,4 +265,6 @@ def screenshot_replacements(release):
         **source_geometry(release),
         **pilaster_model(release),
         **door_glass(release),
+        **door_frame(release),
+        **console_model(release),
     }

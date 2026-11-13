@@ -1,5 +1,6 @@
 package dev.dreamwalker.bloodbornedw.building;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.EntityShapeContext;
 import net.minecraft.block.FenceBlock;
@@ -8,19 +9,34 @@ import net.minecraft.block.ShapeContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.state.StateManager;
+import net.minecraft.state.property.EnumProperty;
+import net.minecraft.util.BlockRotation;
+import net.minecraft.util.StringIdentifiable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.WorldAccess;
+import net.minecraft.server.world.ServerWorld;
 
 class ConnectedFenceBlock extends FenceBlock {
+    enum WallAxis implements StringIdentifiable {
+        NONE, X, Z;
+
+        @Override public String asString() {
+            return name().toLowerCase(java.util.Locale.ROOT);
+        }
+    }
+
+    static final EnumProperty<WallAxis> WALL_AXIS = EnumProperty.of("wall_axis", WallAxis.class);
     private final VoxelShape[] placementShapes;
     private final VoxelShape[] playerShapes;
 
     ConnectedFenceBlock(Settings settings, boolean isolatedRail) {
         super(settings);
+        setDefaultState(getDefaultState().with(WALL_AXIS, WallAxis.NONE));
         placementShapes = createShapes(2, 2, 16, 0, 16);
         playerShapes = createShapes(2, 2, 24, 0, 24);
         if (isolatedRail) {
@@ -31,6 +47,42 @@ class ConnectedFenceBlock extends FenceBlock {
 
     protected boolean connectsTo(BlockState neighbor) {
         return !neighbor.isAir() && !(neighbor.getBlock() instanceof FluidBlock);
+    }
+
+    @Override protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+        super.appendProperties(builder);
+        builder.add(WALL_AXIS);
+    }
+
+    @Override public BlockState rotate(BlockState state, BlockRotation rotation) {
+        var current = state.get(WALL_AXIS);
+        state = super.rotate(state, rotation);
+        if (current != WallAxis.NONE && (rotation == BlockRotation.CLOCKWISE_90 || rotation == BlockRotation.COUNTERCLOCKWISE_90)) {
+            state = state.with(WALL_AXIS, current == WallAxis.X ? WallAxis.Z : WallAxis.X);
+        }
+        return state;
+    }
+
+    protected boolean hasArm(BlockState state, Direction direction) {
+        return switch (state.get(WALL_AXIS)) {
+            case NONE -> state.get(FACING_PROPERTIES.get(direction));
+            case X -> direction.getAxis() == Direction.Axis.X;
+            case Z -> direction.getAxis() == Direction.Axis.Z;
+        };
+    }
+
+    boolean toggleWall(ServerWorld world, BlockPos pos, BlockState state, Direction.Axis axis) {
+        WallAxis next = state.get(WALL_AXIS) == WallAxis.NONE
+                ? (axis == Direction.Axis.X ? WallAxis.X : WallAxis.Z) : WallAxis.NONE;
+        return world.setBlockState(pos, withNeighbors(state.with(WALL_AXIS, next), world, pos), Block.NOTIFY_ALL);
+    }
+
+    private int activeShape(BlockState state) {
+        return switch (state.get(WALL_AXIS)) {
+            case NONE -> getShapeIndex(state);
+            case X -> getShapeIndex(getDefaultState().with(EAST, true).with(WEST, true));
+            case Z -> getShapeIndex(getDefaultState().with(NORTH, true).with(SOUTH, true));
+        };
     }
 
     protected BlockState withNeighbors(BlockState state, BlockView world, BlockPos pos) {
@@ -56,12 +108,12 @@ class ConnectedFenceBlock extends FenceBlock {
     }
 
     @Override public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return placementShapes[getShapeIndex(state)];
+        return placementShapes[activeShape(state)];
     }
 
     @Override public VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         boolean player = context instanceof EntityShapeContext entity && entity.getEntity() instanceof PlayerEntity;
-        return (player ? playerShapes : placementShapes)[getShapeIndex(state)];
+        return (player ? playerShapes : placementShapes)[activeShape(state)];
     }
 
     @Override public VoxelShape getCullingShape(BlockState state, BlockView world, BlockPos pos) {

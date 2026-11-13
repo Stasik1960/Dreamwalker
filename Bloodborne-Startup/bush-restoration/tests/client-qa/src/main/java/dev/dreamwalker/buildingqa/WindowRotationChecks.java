@@ -73,6 +73,7 @@ final class WindowRotationChecks {
             var rotated = OPEN_WINDOW.east(16);
             place(player, rotated, "source_standard_lantern", 44, false);
             require(rotation(world.getBlockState(rotated)) % 2 == 0, "ordinary diagonal gaze placed a lantern diagonally");
+            checkFloorPlacement(player, OPEN_WINDOW.south(7));
         } finally {
             player.setSneaking(false);
             player.setPose(EntityPose.STANDING);
@@ -91,26 +92,48 @@ final class WindowRotationChecks {
 
     private static void place(ServerPlayerEntity player, BlockPos pos, String path, float yaw, boolean shift)
             throws ReflectiveOperationException {
+        boolean wall = path.equals("source_shutter_window");
+        var stack = new ItemStack(Registries.ITEM.get(new Identifier("bloodborne_dw", path)));
+        place(player, pos, stack, yaw, shift, wall ? Direction.SOUTH : Direction.UP);
+        if (wall) player.getServerWorld().removeBlock(pos.north(), false);
+    }
+
+    private static void checkFloorPlacement(ServerPlayerEntity player, BlockPos pos) throws ReflectiveOperationException {
+        var world = player.getServerWorld();
+        var item = Registries.ITEM.get(new Identifier("bloodborne_dw", "source_shutter_window"));
+        place(player, pos, new ItemStack(item), 0, false, Direction.UP);
+        var state = world.getBlockState(pos);
+        require(state.getBlock().asItem() == item, "floor shutter root is not above the clicked block");
+        var shape = state.getOutlineShape(world, pos);
+        require(!shape.isEmpty() && shape.getMin(Direction.Axis.Z) >= 0 && shape.getMax(Direction.Axis.Z) <= .75,
+                "floor shutter outline still sits at the far edge of the cell: " + shape);
+        var picked = state.getBlock().getPickStack(world, pos, state);
+        require(picked.isOf(item) && (picked.getNbt() == null || !picked.getNbt().contains("ImportedArtShift")),
+                "picked shutter retained its floor placement offset");
+        var second = pos.east(4);
+        place(player, second, picked, 0, false, Direction.UP);
+        require(world.getBlockState(second).getOutlineShape(world, second).getBoundingBoxes().equals(shape.getBoundingBoxes()),
+                "replacing the picked shutter moved its outline again");
+    }
+
+    private static void place(ServerPlayerEntity player, BlockPos pos, ItemStack stack, float yaw, boolean shift,
+            Direction face) throws ReflectiveOperationException {
         var world = player.getServerWorld();
         for (int x = -3; x <= 3; x += 6) {
             for (int z = -3; z <= 3; z += 6) world.getChunk(pos.add(x, 0, z));
         }
         require(world.getBlockState(pos).isAir(), "QA fixture must start in air at " + pos + ": " + world.getBlockState(pos));
-        boolean shutter = path.equals("source_shutter_window");
-        BlockPos support = shutter ? pos.north() : pos.down();
-        Direction face = shutter ? Direction.SOUTH : Direction.UP;
+        BlockPos support = pos.offset(face.getOpposite());
         world.setBlockState(support, Blocks.STONE.getDefaultState(), Block.NOTIFY_ALL);
         player.refreshPositionAndAngles(pos.getX() + .5, pos.getY(), pos.getZ() + 3.5, yaw, 0);
         player.setSneaking(shift);
-        var stack = new ItemStack(Registries.ITEM.get(new Identifier("bloodborne_dw", path)));
         var hit = new BlockHitResult(Vec3d.ofCenter(pos).add(-face.getOffsetX() * .5, -face.getOffsetY() * .5,
                 -face.getOffsetZ() * .5), face, support, false);
         player.setStackInHand(Hand.MAIN_HAND, stack);
         var context = new ItemPlacementContext(new ItemUsageContext(player, Hand.MAIN_HAND, hit));
         var action = ((BlockItem) stack.getItem()).place(context);
-        require(action.isAccepted(), "could not place " + path + " at " + context.getBlockPos()
+        require(action.isAccepted(), "could not place " + Registries.ITEM.getId(stack.getItem()) + " at " + context.getBlockPos()
                 + ", action " + action + ", " + transactionReason());
-        if (shutter) world.removeBlock(support, false);
     }
 
     private static String transactionReason() throws ReflectiveOperationException {

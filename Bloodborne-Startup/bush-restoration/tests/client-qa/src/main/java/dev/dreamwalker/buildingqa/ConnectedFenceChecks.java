@@ -1,6 +1,7 @@
 package dev.dreamwalker.buildingqa;
 
 import java.util.List;
+import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -14,6 +15,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
@@ -32,6 +34,7 @@ final class ConnectedFenceChecks {
         world.getChunk(start);
         player.changeGameMode(GameMode.CREATIVE);
         var catalogue = Class.forName("dev.dreamwalker.bloodbornedw.debug.UnifiedCreativeCatalogue");
+        player.getServer().getPlayerManager().addToOperators(player.getGameProfile());
         List<?> offered = (List<?>) catalogue.getMethod("canonicalItems").invoke(null);
         for (int i = 0; i < STYLES.size(); i++) {
             String style = STYLES.get(i);
@@ -46,6 +49,7 @@ final class ConnectedFenceChecks {
             if (style.equals("column")) {
                 column(player, pos);
             } else {
+                straightMode(player, pos);
                 Identifier outside = new Identifier("decorative_blocks", "oak_palisade");
                 require(Registries.BLOCK.containsId(outside), "cross-mod QA fixture is unavailable");
                 for (BlockState neighbor : List.of(Blocks.STONE.getDefaultState(), Blocks.OAK_FENCE.getDefaultState(),
@@ -75,6 +79,18 @@ final class ConnectedFenceChecks {
         place(player, imported, oldGrille);
         require(Registries.BLOCK.getId(world.getBlockState(imported).getBlock()).getPath().equals("connected_fence_90993"),
                 "legacy 90993 right click did not place unified fence");
+        var stoneWall = new ItemStack(Registries.ITEM.get(new Identifier(NS, "source_assembly_brick_wall")));
+        BlockPos masonry = legacyPos.east(8);
+        place(player, masonry, stoneWall);
+        toolClick(player, masonry, 0);
+        var wallState = world.getBlockState(masonry);
+        require(wallState.get(Properties.OPEN), "93167 did not enter the straight wall mode: " + wallState);
+        var shape = wallState.getOutlineShape(world, masonry);
+        require(shape.getMin(Direction.Axis.X) == 0 && shape.getMax(Direction.Axis.X) == 1
+                && shape.getMin(Direction.Axis.Z) > 0 && shape.getMax(Direction.Axis.Z) < 1,
+                "93167 did not span the axis perpendicular to the player: " + shape);
+        toolClick(player, masonry, 0);
+        require(!world.getBlockState(masonry).get(Properties.OPEN), "93167 did not return to automatic connections");
 
         Vec3d initial = player.getPos();
         try {
@@ -101,9 +117,53 @@ final class ConnectedFenceChecks {
         var fence = Registries.BLOCK.get(new Identifier(NS, "connected_fence_93195"));
         world.setBlockState(base.west(), fence.getDefaultState());
         require(world.getBlockState(base).get(Properties.WEST), "column did not join fence");
-        require(!world.getBlockState(base.up()).get(Properties.WEST), "upper column joined a fence at another height");
+        require(world.getBlockState(base.up()).get(Properties.WEST), "upper column did not join the lower fence");
+        world.removeBlock(base.west(), false);
+        require(!world.getBlockState(base).get(Properties.WEST) && !world.getBlockState(base.up()).get(Properties.WEST),
+                "column still connected after removing its lower neighbor");
+        world.setBlockState(base.up().west(), fence.getDefaultState());
+        require(world.getBlockState(base).get(Properties.WEST) && world.getBlockState(base.up()).get(Properties.WEST),
+                "column halves did not both join the upper fence");
+        toolClick(player, base.up(), 90);
+        require(wallAxis(world.getBlockState(base)).equals("z") && wallAxis(world.getBlockState(base.up())).equals("z"),
+                "selecting the upper column did not force both halves across sight");
+        toolClick(player, base, 90);
+        require(wallAxis(world.getBlockState(base)).equals("none") && wallAxis(world.getBlockState(base.up())).equals("none"),
+                "column halves did not return to automatic mode together");
         require(player.interactionManager.tryBreakBlock(base.up()), "cannot break column in creative");
         require(world.getBlockState(base).isAir(), "column lower half remained after removing upper half");
+    }
+
+    private static void straightMode(ServerPlayerEntity player, BlockPos pos) {
+        var world = player.getServerWorld();
+        toolClick(player, pos, 0);
+        var forced = world.getBlockState(pos);
+        require(wallAxis(forced).equals("x"), "fixed section was not perpendicular to the player: " + forced);
+        var shape = forced.getCollisionShape(world, pos);
+        require(shape.getMin(Direction.Axis.X) == 0 && shape.getMax(Direction.Axis.X) == 1
+                && shape.getMin(Direction.Axis.Z) > 0 && shape.getMax(Direction.Axis.Z) < 1,
+                "wall mode did not reserve a full straight section: " + shape);
+        world.setBlockState(pos.north(), Blocks.STONE.getDefaultState(), Block.NOTIFY_ALL);
+        var withNeighbor = world.getBlockState(pos);
+        require(wallAxis(withNeighbor).equals("x") && withNeighbor.getCollisionShape(world, pos).equals(shape),
+                "neighbor changed the forced wall shape");
+        toolClick(player, pos, 0);
+        require(wallAxis(world.getBlockState(pos)).equals("none") && world.getBlockState(pos).get(Properties.NORTH),
+                "the original connections were not restored");
+        world.removeBlock(pos.north(), false);
+    }
+
+    private static String wallAxis(BlockState state) {
+        var property = state.getBlock().getStateManager().getProperty("wall_axis");
+        return property == null ? "missing" : state.get(property).toString().toLowerCase(java.util.Locale.ROOT);
+    }
+
+    private static void toolClick(ServerPlayerEntity player, BlockPos pos, float yaw) {
+        player.setYaw(yaw);
+        var staff = Registries.ITEM.get(new Identifier(NS, "bb_block_tool"));
+        player.setStackInHand(Hand.MAIN_HAND, new ItemStack(staff));
+        require(AttackBlockCallback.EVENT.invoker().interact(player, player.getServerWorld(), Hand.MAIN_HAND, pos, Direction.UP)
+                != ActionResult.PASS, "block tool did not consume attack");
     }
 
     private static double top(ServerWorld world, BlockPos pos, ShapeContext context) {

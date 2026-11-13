@@ -24,6 +24,7 @@ import net.minecraft.block.FenceBlock;
 import net.minecraft.block.FenceGateBlock;
 import net.minecraft.block.PaneBlock;
 import net.minecraft.block.enums.WallShape;
+import net.minecraft.entity.player.PlayerEntity;
 import dev.dreamwalker.bloodbornedw.architecture.wall.PrototypeWallBlock;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.server.world.ServerWorld;
@@ -101,6 +102,39 @@ public final class AutoStoneFence implements ModInitializer {
         return state.getBlock() instanceof CompositeRootBlock block && block.spec != null
             && FAMILIES.containsKey(block.spec.id.toString());
     }
+
+    /** Keep the selected straight artwork in the existing non-opening state bit. */
+    public static Boolean toggleStraight(ServerWorld world, BlockPos pos, BlockState state, PlayerEntity player, Direction.Axis axis) {
+        Group group = group(state);
+        if (group == null || !(state.getBlock() instanceof CompositeRootBlock block) || block.spec.openable) return null;
+        boolean straight = !state.get(CompositeRootBlock.OPEN);
+        BlockState next = state.with(CompositeRootBlock.OPEN, straight);
+        if (straight) {
+            int rotation = axis == Direction.Axis.Z ? 0 : 2;
+            int pose = group.straight() >= 0 ? group.straight() : group.poses()[2];
+            for (WallPose value : group.wallStates()) {
+                if (value.pose() == pose) {
+                    boolean alongX = value.sides()[1] != 0 && value.sides()[3] != 0;
+                    rotation = (rotation + 2 * value.baseTurn() + (alongX ? 2 : 0)) & 7;
+                    break;
+                }
+            }
+            next = next.with(CompositeRootBlock.VARIANT, pose % 16).with(CompositeRootBlock.ROTATION, rotation);
+            var bank = ImportedArtworkBlock.bankProperty(next);
+            if (bank != null) next = next.with(bank, pose / 16);
+        } else {
+            next = reconnect(world, pos, next);
+        }
+        if (ImportedCompactBlock.compact(state) && ImportedCompactBlock.compact(next)) {
+            return world.setBlockState(pos, next, Block.NOTIFY_ALL);
+        }
+        var owner = world.getBlockEntity(pos) instanceof CompositeBlockEntity be ? be.resident() : null;
+        if (owner == null) owner = ImportedCompactBlock.materialize(world, pos, player);
+        if (owner == null) return false;
+        if (next.contains(ImportedCompactBlock.COMPACT)) next = next.with(ImportedCompactBlock.COMPACT, false);
+        return CompositeRuntime.transition(world, owner, next, player).outcome()
+                == dev.dreamwalker.bloodbornedw.runtime.TransactionCore.Outcome.COMMITTED;
+    }
     /** Decode canonical poses to cached vanilla wall shapes without world or neighbor reads. */
     public static BlockState canonicalWall(BlockState state) {
         Group group = group(state);
@@ -150,6 +184,7 @@ public final class AutoStoneFence implements ModInitializer {
         }
     }
     private static BlockState reconnect(ServerWorld world, BlockPos pos, BlockState state) {
+        if (state.get(CompositeRootBlock.OPEN)) return state;
         // Diagonal placement remains the explicitly selected manual artwork.
         int yaw = state.get(CompositeRootBlock.ROTATION);
         if ((yaw & 1) != 0) return state;

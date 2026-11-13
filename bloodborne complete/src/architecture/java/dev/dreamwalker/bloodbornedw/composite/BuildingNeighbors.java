@@ -1,12 +1,10 @@
 package dev.dreamwalker.bloodbornedw.composite;
 
-import net.minecraft.block.AbstractSignBlock;
+import dev.dreamwalker.bloodbornedw.building.mixin.CompositeShapeUpdateAccess;
+import dev.dreamwalker.bloodbornedw.runtime.ObjectGeometry.Cell;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.FenceGateBlock;
-import net.minecraft.block.HorizontalConnectingBlock;
 import net.minecraft.block.ShapeContext;
-import net.minecraft.block.WallBlock;
 import net.minecraft.registry.Registries;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.function.BooleanBiFunction;
@@ -50,27 +48,31 @@ public final class BuildingNeighbors {
         return VoxelShapes.combineAndSimplify(collision, VoxelShapes.fullCube(), BooleanBiFunction.AND);
     }
 
-    private static boolean reactsToShape(BlockState state) {
-        Block block = state.getBlock();
-        return block instanceof HorizontalConnectingBlock || block instanceof FenceGateBlock
-                || block instanceof WallBlock || block instanceof AbstractSignBlock
-                || block instanceof CompositeRootBlock;
+    public static void publishShapeChanges(ServerWorld world, Iterable<Cell> cells) {
+        for (Cell cell : cells) {
+            BlockPos pos = CompositeData.pos(cell);
+            if (hasShapeNeighbor(world, pos)) {
+                CompositeShapeUpdateAccess.dreamwalker$queue(world, "building-support:" + pos.asLong(),
+                        () -> updateShapeNeighbors(world, pos));
+            }
+        }
     }
 
-    public static boolean hasShapeNeighbor(ServerWorld world, BlockPos pos) {
+    private static boolean hasShapeNeighbor(ServerWorld world, BlockPos pos) {
         for (Direction side : SIDES) {
             BlockPos neighbor = pos.offset(side);
-            if (world.isChunkLoaded(neighbor) && reactsToShape(world.getBlockState(neighbor))) return true;
+            if (world.isChunkLoaded(neighbor) && !world.getBlockState(neighbor).isAir()) return true;
         }
         return false;
     }
 
-    public static void updateShapeNeighbors(ServerWorld world, BlockPos pos) {
+    private static void updateShapeNeighbors(ServerWorld world, BlockPos pos) {
         if (!world.isChunkLoaded(pos)) return;
         BlockState state = world.getBlockState(pos);
         for (Direction side : SIDES) {
             BlockPos neighbor = pos.offset(side);
-            if (world.isChunkLoaded(neighbor) && reactsToShape(world.getBlockState(neighbor))) {
+            // Third-party blocks can implement directional updates without the vanilla fence classes.
+            if (world.isChunkLoaded(neighbor) && !world.getBlockState(neighbor).isAir()) {
                 world.replaceWithStateForNeighborUpdate(side.getOpposite(), state, neighbor, pos,
                         Block.NOTIFY_LISTENERS, 32);
             }

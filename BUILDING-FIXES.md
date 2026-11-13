@@ -1,4 +1,4 @@
-# DreamWalker v22 Connected Fences
+# DreamWalker v22 Doors and Fences
 
 Use the Bloodborne v22 Bush Restoration map and install the same DreamWalker
 JAR on both sides. The J key uses the bundled City Original Pick 1.0.3 in
@@ -8,6 +8,10 @@ The creative catalogue contains 13 connected fence and column items. Original
 fences already saved on the map keep their registered block and appearance.
 Placing an old fence item or picking one of its indexed city fragments gives
 the corresponding connected design.
+
+The Watcher's Seal switches fences and walls between neighbor connections and
+a straight section across the player's view. The tall column shares connections
+between its two halves.
 
 ## Build
 
@@ -21,7 +25,7 @@ from [Bush Restoration](https://github.com/Stasik1960/Dreamwalker/releases/tag/v
 to `Bloodborne-Startup/bush-restoration/package_editing_fix.py`:
 
 ```text
-python package_editing_fix.py BUSH_RESTORATION.jar REMAPPED_BUILD.jar DreamWalker-v22-Bush-Restoration-Connected-Fences.jar --window-placement WINDOW_PLACEMENT.jar --original-pick ORIGINAL_PICK_1.0.2.jar
+python package_editing_fix.py BUSH_RESTORATION.jar REMAPPED_BUILD.jar DreamWalker-v22-Bush-Restoration-Doors-and-Fences.jar --window-placement WINDOW_PLACEMENT.jar --original-pick ORIGINAL_PICK_1.0.2.jar
 ```
 
 The packaging step overlays compiled changes and regenerated assets onto

@@ -90,6 +90,50 @@ def pane_set(models, color, stem_uv=None):
     return stem, north, south
 
 
+def cap_bars(elements, tops):
+    panel = elements[0]
+    texture = panel["faces"]["east"]["texture"]
+    # This patch of the source atlas is opaque on all four pixels.
+    uv = (4.625, 11.875, 4.875, 12.125)
+    return [*elements, *(face_element((panel["from"][0], height, start),
+                                     (panel["to"][0], height, end), texture, uv, ("up",))
+                         for height, start, end in tops)]
+
+
+def straight_bar_set(models):
+    _, north, south = pane_set(models, "light_gray")
+    # The original map grille runs each horizontal rail across the center
+    # strip. That strip's alpha leaves the middle open between the rails.
+    center = models("light_gray_stained_glass_pane_noside")[0]
+    source = center["faces"]
+    source.pop("up")  # The middle has crossing rails but no vertical stem.
+    center["faces"] = {
+        **source,
+        "east": deepcopy(source["south"]),
+        "west": deepcopy(source["north"]),
+    }
+    north = cap_bars(north, ((29, 1, 2), (29, 5, 6)))
+    south = cap_bars(south, ((29, 9, 10), (29, 13, 14)))
+    return [center], north, south
+
+
+def iron_post_set(models):
+    _, north, south = pane_set(models, "pink")
+    base = "pink_stained_glass_pane_"
+    stem = models(base + "noside") + models(base + "noside_alt")
+    # Keep the old model's fitted collar and darker solid spike on the
+    # center of the post, including when adjacent posts grow their arms.
+    stem[1] = resize(stem[1], (0, 7.5, 8.5))
+    for side in ("east", "west"):
+        stem[0]["faces"][side] = deepcopy(stem[0]["faces"]["south"])
+        stem[2]["faces"].pop(side)
+    north = cap_bars(north, ((29, 1, 2), (29, 5, 6)))
+    south = cap_bars(south, ((32, 9, 10), (29, 13, 14)))
+    spike_top = stem[1]["faces"]["up"]
+    spike_top["uv"] = [4.625, 11.875, 4.875, 12.125]
+    return [element for element in stem if element["faces"]], north, south
+
+
 def iron_set(models):
     source_post = models("iron_bars_post")
     north = models("iron_bars_side")
@@ -219,7 +263,8 @@ def model_json(elements, gui=False):
 def put_models(output, key, models, half=None, isolated_grille=False):
     stem, north, south = models
     suffix = "_" + half if half else ""
-    condition = {"half": half} if half else {}
+    half_condition = {"half": half} if half else {}
+    condition = half_condition | {"wall_axis": "none"}
     center_key = key + suffix
     output[ASSETS + f"models/block/{center_key}.json"] = model_json(stem)
     multipart = [{"apply": {"model": MODEL_ROOT + center_key}}]
@@ -230,10 +275,10 @@ def put_models(output, key, models, half=None, isolated_grille=False):
         elements = [resize(element, (2, 4 + element["from"][2] / 2, 4 + element["to"][2] / 2))
                     for element in (*stem, *north, *south)]
         output[ASSETS + f"models/block/{isolated}.json"] = model_json(elements)
-        multipart[0]["when"] = {"OR": [{direction: "true"} for direction in DIRECTIONS]}
-        multipart.append({"when": {direction: "false" for direction in DIRECTIONS},
+        multipart[0]["when"] = {"OR": [condition | {direction: "true"} for direction in DIRECTIONS]}
+        multipart.append({"when": condition | {direction: "false" for direction in DIRECTIONS},
                           "apply": {"model": MODEL_ROOT + isolated}})
-    elif condition:
+    else:
         multipart[0]["when"] = condition
     for direction, rotation in zip(DIRECTIONS, (0, 90, 0, 90)):
         arm = "north" if direction in ("north", "east") else "south"
@@ -244,6 +289,12 @@ def put_models(output, key, models, half=None, isolated_grille=False):
         if rotation:
             transform["y"] = rotation
         multipart.append({"when": condition | {direction: "true"}, "apply": transform})
+    straight = center_key + "_wall"
+    output[ASSETS + f"models/block/{straight}.json"] = model_json([*stem, *north, *south])
+    multipart.extend((
+        {"when": half_condition | {"wall_axis": "z"}, "apply": {"model": MODEL_ROOT + straight}},
+        {"when": half_condition | {"wall_axis": "x"}, "apply": {"model": MODEL_ROOT + straight, "y": 90}},
+    ))
     return multipart
 
 
@@ -260,19 +311,18 @@ def fence_replacements(release):
         color = model.split("_stained_glass_pane_")[0]
         poses[color].append(index)
 
-    art_007 = models("light_gray_stained_glass_pane_side")[0]["faces"]["east"]["texture"]
     art_039 = models("yellow_stained_glass_pane_side")[0]["faces"]["east"]["texture"]
     styles = [
         ("93195", (93195,), "Железная ограда на цоколе", "Iron Fence on Stone Base",
          iron_set(models), None),
         ("93185_plain", (93185, 94279), "Ограда с прямыми прутьями", "Straight-Bar Fence",
-         pane_set(models, "light_gray", (art_007, (7.5, 11.5, 7.625, 15.5))), "light_gray"),
+         straight_bar_set(models), "light_gray"),
         ("93185_ornate", (93185, 94272), "Резная ограда", "Ornate Fence",
          pane_set(models, "cyan"), "cyan"),
         ("93185_double", (93185, 94293), "Ограда с двойной вязью", "Double-Rail Fence",
          pane_set(models, "yellow", (art_039, (1.25, 11.875, 1.375, 15.875))), "yellow"),
         ("93185_post", (93185, 94286), "Стойка для ограды", "Fence Post",
-         pane_set(models, "pink"), "pink"),
+         iron_post_set(models), "pink"),
         ("93164", (93164,), "Кованая ограда с ромбами", "Diamond Iron Fence",
          pane_set(models, "black", (models("black_stained_glass_pane_side")[0]["faces"]["east"]["texture"],
                                     (10, 0, 11, 16))), None),

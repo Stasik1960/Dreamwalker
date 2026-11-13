@@ -9,6 +9,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
@@ -47,6 +48,15 @@ final class ConnectedFenceColumnBlock extends ConnectedFenceBlock {
         return neighbor.getBlock() instanceof ConnectedFenceBlock && !(neighbor.getBlock() instanceof ConnectedFenceColumnBlock);
     }
 
+    @Override protected BlockState withNeighbors(BlockState state, BlockView world, BlockPos pos) {
+        BlockPos other = upper(state) ? pos.down() : pos.up();
+        for (Direction side : Direction.Type.HORIZONTAL) {
+            boolean connected = connectsTo(world.getBlockState(pos.offset(side))) || connectsTo(world.getBlockState(other.offset(side)));
+            state = state.with(FACING_PROPERTIES.get(side), connected);
+        }
+        return state;
+    }
+
     @Override public BlockState getPlacementState(ItemPlacementContext context) {
         World world = context.getWorld();
         BlockPos upperPos = context.getBlockPos().up();
@@ -77,15 +87,26 @@ final class ConnectedFenceColumnBlock extends ConnectedFenceBlock {
                 && (!neighbor.isOf(this) || upper(neighbor) == upper(state))) {
             return (state.get(WATERLOGGED) ? Blocks.WATER : Blocks.AIR).getDefaultState();
         }
-        return super.getStateForNeighborUpdate(state, direction, neighbor, world, pos, neighborPos);
+        state = super.getStateForNeighborUpdate(state, direction, neighbor, world, pos, neighborPos);
+        return withNeighbors(state, world, pos);
+    }
+
+    @Override boolean toggleWall(ServerWorld world, BlockPos pos, BlockState state, Direction.Axis axis) {
+        BlockPos other = upper(state) ? pos.down() : pos.up();
+        BlockState partner = world.getBlockState(other);
+        if (!partner.isOf(this) || upper(partner) == upper(state)) return false;
+        if (!super.toggleWall(world, pos, state, axis)) return false;
+        WallAxis selected = world.getBlockState(pos).get(WALL_AXIS);
+        world.setBlockState(other, withNeighbors(partner.with(WALL_AXIS, selected), world, other), Block.NOTIFY_ALL);
+        return true;
     }
 
     @Override public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         VoxelShape shape = upper(state) ? UPPER : LOWER;
-        if (state.get(NORTH)) shape = VoxelShapes.union(shape, createCuboidShape(7, 0, 0, 9, 16, 7));
-        if (state.get(EAST)) shape = VoxelShapes.union(shape, createCuboidShape(9, 0, 7, 16, 16, 9));
-        if (state.get(SOUTH)) shape = VoxelShapes.union(shape, createCuboidShape(7, 0, 9, 9, 16, 16));
-        if (state.get(WEST)) shape = VoxelShapes.union(shape, createCuboidShape(0, 0, 7, 7, 16, 9));
+        if (hasArm(state, Direction.NORTH)) shape = VoxelShapes.union(shape, createCuboidShape(7, 0, 0, 9, 16, 7));
+        if (hasArm(state, Direction.EAST)) shape = VoxelShapes.union(shape, createCuboidShape(9, 0, 7, 16, 16, 9));
+        if (hasArm(state, Direction.SOUTH)) shape = VoxelShapes.union(shape, createCuboidShape(7, 0, 9, 9, 16, 16));
+        if (hasArm(state, Direction.WEST)) shape = VoxelShapes.union(shape, createCuboidShape(0, 0, 7, 7, 16, 9));
         return shape;
     }
 

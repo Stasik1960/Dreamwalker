@@ -45,7 +45,10 @@ CLASSES = (
     "building/ConnectedFenceColumnBlock",
     "building/ConnectedFences",
     "building/ConnectedFencesClient",
+    "building/FenceWallMode",
+    "building/DoorSounds",
     "building/CreativeOnlyUtilities",
+    "building/ShutterFloorPlacement",
     "tool/QuarterBlockShift",
     *("compat/worldedit/mixin/" + name for name in WORLDEDIT_MIXINS),
 )
@@ -129,7 +132,7 @@ def main():
             parser.error("patch overlaps classes in the published JAR")
 
         manifest = json.loads(release.read("fabric.mod.json"))
-        manifest["version"] += ".forms.3"
+        manifest["version"] += ".forms.4"
         with ZipFile(args.original_pick) as addon:
             archive, bundled_pick = nested_pick(release, addon, manifest["version"])
         manifest.setdefault("jars", []).append({"file": archive})
@@ -148,11 +151,18 @@ def main():
         with ZipFile(args.window_placement) as overlay:
             for name in overlay.namelist():
                 if name.endswith(".class"):
-                    if name not in release.namelist():
+                    if name in release.namelist():
+                        binary_replacements[name] = overlay.read(name)
+                    elif name == ROOT + "tool/mixin/ImportedFenceWallModeMixin.class":
+                        added[name] = overlay.read(name)
+                    else:
                         parser.error("unexpected window/placement overlay class " + name)
-                    binary_replacements[name] = overlay.read(name)
             studio_layouts = "bloodborne_dw/studio-layouts-v22.json"
             replacements[studio_layouts] = json.loads(overlay.read(studio_layouts))
+        horizontal_config = "dw-bb-horizontal.mixins.json"
+        horizontal = json.loads(release.read(horizontal_config))
+        horizontal["mixins"].append("ImportedFenceWallModeMixin")
+        replacements[horizontal_config] = horizontal
         for language in ("ru_ru", "en_us"):
             path = f"assets/bloodborne_dw/lang/{language}.json"
             updated = json.loads((visual_resources / path).read_bytes())
