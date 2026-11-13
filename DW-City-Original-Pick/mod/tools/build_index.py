@@ -91,6 +91,7 @@ class Meshes:
         self.counts = [row["quadCount"] for row in catalog["meshes"]]
         self.offsets = [0, *itertools.accumulate(self.counts)]
         self.materials = [row["sprite"] for row in catalog["materials"]]
+        self.material_layers = [row["layer"] for row in catalog["materials"]]
         del catalog
         self.binary = binary
         repairs = json.loads(jar.read(NATIVE + "visual-repairs.json"))
@@ -108,7 +109,7 @@ class Meshes:
     def mesh(self, visual):
         return self.meshes[visual] if 0 <= visual < len(self.meshes) else None
 
-    def final_quads(self, visual):
+    def mesh_records(self, visual):
         mesh = self.mesh(visual)
         if mesh is None:
             return
@@ -122,6 +123,10 @@ class Meshes:
         else:
             first, count = 0, len(data) // 139
         for offset in range(first, first + 139 * count, 139):
+            yield data, offset
+
+    def final_quads(self, visual):
+        for data, offset in self.mesh_records(visual):
             material = struct.unpack_from(">I", data, offset)[0]
             vertices = [struct.unpack_from(">fff", data, offset + 11 + i * 32) for i in range(4)]
             yield signature(vertices), self.materials[material], quantized(vertices)

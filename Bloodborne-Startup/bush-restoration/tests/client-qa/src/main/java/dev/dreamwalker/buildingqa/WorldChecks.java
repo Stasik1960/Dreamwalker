@@ -185,7 +185,7 @@ final class WorldChecks {
         door.discard();
     }
 
-    private static String verify(String name, Checked action) {
+    static String verify(String name, Checked action) {
         try {
             action.run();
             return "PASS " + name;
@@ -201,7 +201,7 @@ final class WorldChecks {
     }
 
     @FunctionalInterface
-    private interface Checked {
+    interface Checked {
         void run() throws Exception;
     }
 }

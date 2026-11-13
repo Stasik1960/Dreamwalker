@@ -2,7 +2,16 @@
   "required": true,
   "package": "dev.dreamwalker.bloodbornedw.composite.mixin",
   "compatibilityLevel": "JAVA_17",
-  "mixins": ["CreativeRemovalMixin", "CreativeRemovalWriteAccess", "SelectionAxeItemMixin"],
+  "mixins": [
+    "CreativeRemovalMixin",
+    "CreativeRemovalWriteAccess",
+    "CreativeRemovalNativeBreakMixin",
+    "CreativeRemovalNativeBridgeAccess",
+    "CreativeRemovalNativeCatalogAccess",
+    "CreativeRemovalNativeVisualAccess",
+    "CreativeRemovalRetainedFrameAccess",
+    "SelectionAxeItemMixin"
+  ],
   "client": ["SelectionAxeClientMixin", "SelectionAxeProgressMixin"],
   "injectors": {"defaultRequire": 1}
 }

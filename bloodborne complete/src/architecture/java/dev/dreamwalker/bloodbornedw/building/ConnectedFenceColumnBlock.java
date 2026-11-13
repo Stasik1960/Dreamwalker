@@ -44,14 +44,17 @@ final class ConnectedFenceColumnBlock extends ConnectedFenceBlock {
         builder.add(Properties.DOUBLE_BLOCK_HALF);
     }
 
-    @Override protected boolean connectsTo(BlockState neighbor) {
+    @Override protected boolean canJoinNeighbor(BlockState neighbor) {
         return neighbor.getBlock() instanceof ConnectedFenceBlock && !(neighbor.getBlock() instanceof ConnectedFenceColumnBlock);
     }
 
     @Override protected BlockState withNeighbors(BlockState state, BlockView world, BlockPos pos) {
         BlockPos other = upper(state) ? pos.down() : pos.up();
         for (Direction side : Direction.Type.HORIZONTAL) {
-            boolean connected = connectsTo(world.getBlockState(pos.offset(side))) || connectsTo(world.getBlockState(other.offset(side)));
+            BlockPos first = pos.offset(side);
+            BlockPos second = other.offset(side);
+            boolean connected = connectsTo(state, world, first, world.getBlockState(first))
+                    || connectsTo(state, world, second, world.getBlockState(second));
             state = state.with(FACING_PROPERTIES.get(side), connected);
         }
         return state;

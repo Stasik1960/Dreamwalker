@@ -1,5 +1,6 @@
 package dev.dreamwalker.bloodbornedw.building;
 
+import dev.dreamwalker.bloodbornedw.composite.BuildingNeighbors;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.EntityShapeContext;
@@ -23,7 +24,7 @@ import net.minecraft.server.world.ServerWorld;
 
 class ConnectedFenceBlock extends FenceBlock {
     enum WallAxis implements StringIdentifiable {
-        NONE, X, Z;
+        NONE, X, Z, SAME_ID;
 
         @Override public String asString() {
             return name().toLowerCase(java.util.Locale.ROOT);
@@ -45,8 +46,20 @@ class ConnectedFenceBlock extends FenceBlock {
         }
     }
 
-    protected boolean connectsTo(BlockState neighbor) {
+    protected boolean canJoinNeighbor(BlockState neighbor) {
         return !neighbor.isAir() && !(neighbor.getBlock() instanceof FluidBlock);
+    }
+
+    protected final boolean connectsTo(BlockState state, BlockView world, BlockPos neighborPos, BlockState neighbor) {
+        if (sameIdOnly(state)) return neighbor.isOf(this);
+        if (neighbor.getBlock() instanceof ConnectedFenceBlock fence && fence.sameIdOnly(neighbor)) {
+            return neighbor.isOf(this);
+        }
+        return BuildingNeighbors.acceptsFenceNeighbor(world, neighborPos, neighbor, this) && canJoinNeighbor(neighbor);
+    }
+
+    final boolean sameIdOnly(BlockState state) {
+        return state.get(WALL_AXIS) == WallAxis.SAME_ID;
     }
 
     @Override protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
@@ -57,7 +70,8 @@ class ConnectedFenceBlock extends FenceBlock {
     @Override public BlockState rotate(BlockState state, BlockRotation rotation) {
         var current = state.get(WALL_AXIS);
         state = super.rotate(state, rotation);
-        if (current != WallAxis.NONE && (rotation == BlockRotation.CLOCKWISE_90 || rotation == BlockRotation.COUNTERCLOCKWISE_90)) {
+        if ((current == WallAxis.X || current == WallAxis.Z)
+                && (rotation == BlockRotation.CLOCKWISE_90 || rotation == BlockRotation.COUNTERCLOCKWISE_90)) {
             state = state.with(WALL_AXIS, current == WallAxis.X ? WallAxis.Z : WallAxis.X);
         }
         return state;
@@ -65,21 +79,24 @@ class ConnectedFenceBlock extends FenceBlock {
 
     protected boolean hasArm(BlockState state, Direction direction) {
         return switch (state.get(WALL_AXIS)) {
-            case NONE -> state.get(FACING_PROPERTIES.get(direction));
+            case NONE, SAME_ID -> state.get(FACING_PROPERTIES.get(direction));
             case X -> direction.getAxis() == Direction.Axis.X;
             case Z -> direction.getAxis() == Direction.Axis.Z;
         };
     }
 
     boolean toggleWall(ServerWorld world, BlockPos pos, BlockState state, Direction.Axis axis) {
-        WallAxis next = state.get(WALL_AXIS) == WallAxis.NONE
-                ? (axis == Direction.Axis.X ? WallAxis.X : WallAxis.Z) : WallAxis.NONE;
+        WallAxis next = switch (state.get(WALL_AXIS)) {
+            case NONE -> axis == Direction.Axis.X ? WallAxis.X : WallAxis.Z;
+            case X, Z -> WallAxis.SAME_ID;
+            case SAME_ID -> WallAxis.NONE;
+        };
         return world.setBlockState(pos, withNeighbors(state.with(WALL_AXIS, next), world, pos), Block.NOTIFY_ALL);
     }
 
     private int activeShape(BlockState state) {
         return switch (state.get(WALL_AXIS)) {
-            case NONE -> getShapeIndex(state);
+            case NONE, SAME_ID -> getShapeIndex(state);
             case X -> getShapeIndex(getDefaultState().with(EAST, true).with(WEST, true));
             case Z -> getShapeIndex(getDefaultState().with(NORTH, true).with(SOUTH, true));
         };
@@ -87,7 +104,8 @@ class ConnectedFenceBlock extends FenceBlock {
 
     protected BlockState withNeighbors(BlockState state, BlockView world, BlockPos pos) {
         for (Direction direction : Direction.Type.HORIZONTAL) {
-            state = state.with(FACING_PROPERTIES.get(direction), connectsTo(world.getBlockState(pos.offset(direction))));
+            BlockPos neighbor = pos.offset(direction);
+            state = state.with(FACING_PROPERTIES.get(direction), connectsTo(state, world, neighbor, world.getBlockState(neighbor)));
         }
         return state;
     }
@@ -104,7 +122,7 @@ class ConnectedFenceBlock extends FenceBlock {
             world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
         }
         var property = FACING_PROPERTIES.get(direction);
-        return property == null ? state : state.with(property, connectsTo(neighbor));
+        return property == null ? state : state.with(property, connectsTo(state, world, neighborPos, neighbor));
     }
 
     @Override public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {

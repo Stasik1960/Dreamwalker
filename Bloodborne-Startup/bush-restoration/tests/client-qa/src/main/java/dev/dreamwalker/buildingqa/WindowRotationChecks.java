@@ -1,7 +1,6 @@
 package dev.dreamwalker.buildingqa;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.entity.EntityPose;
@@ -10,7 +9,6 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.Registries;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.state.property.Properties;
@@ -21,8 +19,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.GameMode;
-import net.minecraft.world.BlockView;
-import java.util.UUID;
 
 final class WindowRotationChecks {
     static final BlockPos OPEN_WINDOW = new BlockPos(437, 276, -850);
@@ -105,18 +101,30 @@ final class WindowRotationChecks {
     private static void checkFloorPlacement(ServerPlayerEntity player, BlockPos pos) throws ReflectiveOperationException {
         var world = player.getServerWorld();
         var item = Registries.ITEM.get(new Identifier("bloodborne_dw", "source_shutter_window"));
+        BlockPos root = pos.north();
+        world.setBlockState(root.down(), Blocks.STONE.getDefaultState(), Block.NOTIFY_ALL);
         place(player, pos, new ItemStack(item), 0, false, Direction.UP);
-        var state = world.getBlockState(pos);
-        require(state.getBlock().asItem() == item, "floor shutter root is not above the clicked block");
-        var shape = state.getOutlineShape(world, pos);
-        require(!shape.isEmpty() && shape.getMin(Direction.Axis.Z) >= 0 && shape.getMax(Direction.Axis.Z) <= .75,
-                "floor shutter outline still sits at the far edge of the cell: " + shape);
-        var picked = state.getBlock().getPickStack(world, pos, state);
+        var state = world.getBlockState(root);
+        require(state.getBlock().asItem() == item && world.getBlockState(pos).getBlock().asItem() != item,
+                "floor shutter root did not shift one cell toward the player");
+        var shape = state.getOutlineShape(world, root);
+        require(!shape.isEmpty() && Math.abs(shape.getMin(Direction.Axis.Z) - 9.0 / 16) < 1e-6,
+                "floor shutter no longer has the authored outline relative to its root: " + shape);
+        var picked = state.getBlock().getPickStack(world, root, state);
         require(picked.isOf(item), "picked floor shutter returned another item: " + picked);
         var second = pos.east(4);
+        BlockPos secondRoot = second.north();
+        world.setBlockState(secondRoot.down(), Blocks.STONE.getDefaultState(), Block.NOTIFY_ALL);
         place(player, second, picked, 0, false, Direction.UP);
-        require(world.getBlockState(second).getOutlineShape(world, second).getBoundingBoxes().equals(shape.getBoundingBoxes()),
+        require(world.getBlockState(secondRoot).getOutlineShape(world, secondRoot).getBoundingBoxes().equals(shape.getBoundingBoxes()),
                 "replacing the picked shutter moved its outline again, item data: " + picked.getNbt());
+
+        var third = pos.east(8);
+        BlockPos thirdRoot = third.east();
+        world.setBlockState(thirdRoot.down(), Blocks.STONE.getDefaultState(), Block.NOTIFY_ALL);
+        place(player, third, new ItemStack(item), 90, false, Direction.UP);
+        require(world.getBlockState(thirdRoot).getBlock().asItem() == item,
+                "floor shutter anchor did not follow the player's changed facing");
     }
 
     private static void place(ServerPlayerEntity player, BlockPos pos, ItemStack stack, float yaw, boolean shift,
@@ -128,7 +136,9 @@ final class WindowRotationChecks {
         require(world.getBlockState(pos).isAir(), "QA fixture must start in air at " + pos + ": " + world.getBlockState(pos));
         BlockPos support = pos.offset(face.getOpposite());
         world.setBlockState(support, Blocks.STONE.getDefaultState(), Block.NOTIFY_ALL);
-        player.refreshPositionAndAngles(pos.getX() + .5, pos.getY(), pos.getZ() + 3.5, yaw, 0);
+        Direction towardsPlayer = face == Direction.UP ? Direction.fromRotation(yaw).getOpposite() : Direction.SOUTH;
+        Vec3d standing = Vec3d.ofBottomCenter(pos).add(towardsPlayer.getOffsetX() * 3, 0, towardsPlayer.getOffsetZ() * 3);
+        player.refreshPositionAndAngles(standing.x, standing.y, standing.z, yaw, 0);
         player.setSneaking(shift);
         var hit = new BlockHitResult(Vec3d.ofCenter(pos).add(-face.getOffsetX() * .5, -face.getOffsetY() * .5,
                 -face.getOffsetZ() * .5), face, support, false);
@@ -136,26 +146,9 @@ final class WindowRotationChecks {
         var context = new ItemPlacementContext(new ItemUsageContext(player, Hand.MAIN_HAND, hit));
         var action = ((BlockItem) stack.getItem()).place(context);
         if (!action.isAccepted()) {
-            String result = transactionReason();
-            String diagnostic = face == Direction.UP && stack.getItem() instanceof BlockItem blockItem
-                    && Registries.ITEM.getId(stack.getItem()).getPath().equals("source_shutter_window")
-                    ? floorReservation(world, pos, blockItem.getBlock().getDefaultState()) : "";
             throw new AssertionError("could not place " + Registries.ITEM.getId(stack.getItem()) + " at "
-                    + context.getBlockPos() + ", action " + action + ", " + result + diagnostic);
+                    + context.getBlockPos() + ", action " + action + ", " + transactionReason());
         }
-    }
-
-    private static String floorReservation(BlockView world, BlockPos pos, BlockState state) throws ReflectiveOperationException {
-        var runtime = Class.forName("dev.dreamwalker.bloodbornedw.composite.CompositeRuntime");
-        var spec = state.getBlock().getClass().getField("spec").get(state.getBlock());
-        var placement = Class.forName("dev.dreamwalker.bloodbornedw.building.ShutterFloorPlacement");
-        var payload = (NbtCompound) placement.getMethod("forPlacement", spec.getClass(), Direction.class, NbtCompound.class)
-                .invoke(null, spec, Direction.UP, null);
-        var object = runtime.getMethod("instance", BlockView.class, BlockPos.class, BlockState.class, UUID.class, NbtCompound.class)
-                .invoke(null, world, pos, state, UUID.randomUUID(), payload);
-        var physics = Class.forName("dev.dreamwalker.bloodbornedw.architecture.PlacementPhysics");
-        var boxes = physics.getMethod("physicalBoxes", object.getClass()).invoke(null, object);
-        return ", floor reservation=" + boxes + ", support=" + world.getBlockState(pos.down()).getCollisionShape(world, pos.down());
     }
 
     private static String transactionReason() throws ReflectiveOperationException {

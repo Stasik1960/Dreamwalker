@@ -90,17 +90,28 @@ final class ConnectedFenceChecks {
                 && shape.getMin(Direction.Axis.Z) > 0 && shape.getMax(Direction.Axis.Z) < 1,
                 "93167 did not span the axis perpendicular to the player: " + shape);
         toolClick(player, masonry, 0);
+        require(!world.getBlockState(masonry).get(Properties.OPEN), "93167 retained its straight mode");
+        toolClick(player, masonry, 0);
         require(!world.getBlockState(masonry).get(Properties.OPEN), "93167 did not return to automatic connections");
 
         Vec3d initial = player.getPos();
+        float initialYaw = player.getYaw(), initialPitch = player.getPitch();
+        boolean onGround = player.isOnGround();
         try {
             player.changeGameMode(GameMode.SURVIVAL);
             player.refreshPositionAndAngles(start.getX() + .5, start.getY() + 1.2, start.getZ() - .7, 0, 0);
+            // This position is in the air. A stale ground flag would let vanilla step up the remaining 0.3 block.
+            player.setOnGround(false);
             player.move(MovementType.SELF, new Vec3d(0, 0, 2));
             require(player.getZ() < start.getZ() + .5, "moving player passed above the one-block collision height");
+            player.refreshPositionAndAngles(start.getX() + .5, start.getY() + 1.6, start.getZ() - .7, 0, 0);
+            player.setOnGround(false);
+            player.move(MovementType.SELF, new Vec3d(0, 0, 2));
+            require(player.getZ() > start.getZ() + 1, "fence blocked movement above its player collision height");
         } finally {
             player.changeGameMode(GameMode.CREATIVE);
-            player.refreshPositionAndAngles(initial.x, initial.y, initial.z, player.getYaw(), player.getPitch());
+            player.refreshPositionAndAngles(initial.x, initial.y, initial.z, initialYaw, initialPitch);
+            player.setOnGround(onGround);
         }
     }
 
@@ -128,6 +139,17 @@ final class ConnectedFenceChecks {
         require(wallAxis(world.getBlockState(base)).equals("z") && wallAxis(world.getBlockState(base.up())).equals("z"),
                 "selecting the upper column did not force both halves across sight");
         toolClick(player, base, 90);
+        for (BlockPos half : List.of(base, base.up())) {
+            var restricted = world.getBlockState(half);
+            require(wallAxis(restricted).equals("same_id") && !restricted.get(Properties.WEST),
+                    "column same-ID mode connected to a different fence");
+        }
+        place(player, base.east(), new ItemStack(world.getBlockState(base).getBlock()));
+        require(world.getBlockState(base).get(Properties.EAST) && world.getBlockState(base.up()).get(Properties.EAST),
+                "same-ID columns did not connect on both levels");
+        require(world.getBlockState(base.east()).get(Properties.WEST) && world.getBlockState(base.east().up()).get(Properties.WEST),
+                "the adjacent column did not reciprocate the connection");
+        toolClick(player, base, 90);
         require(wallAxis(world.getBlockState(base)).equals("none") && wallAxis(world.getBlockState(base.up())).equals("none"),
                 "column halves did not return to automatic mode together");
         require(player.interactionManager.tryBreakBlock(base.up()), "cannot break column in creative");
@@ -147,6 +169,23 @@ final class ConnectedFenceChecks {
         var withNeighbor = world.getBlockState(pos);
         require(wallAxis(withNeighbor).equals("x") && withNeighbor.getCollisionShape(world, pos).equals(shape),
                 "neighbor changed the forced wall shape");
+        toolClick(player, pos, 0);
+        require(wallAxis(world.getBlockState(pos)).equals("same_id") && !world.getBlockState(pos).get(Properties.NORTH),
+                "same-ID mode connected to stone");
+        world.setBlockState(pos.north(), Blocks.OAK_FENCE.getDefaultState(), Block.NOTIFY_ALL);
+        require(!world.getBlockState(pos).get(Properties.NORTH) && !world.getBlockState(pos.north()).get(Properties.SOUTH),
+                "same-ID mode did not block both sides of the vanilla connection");
+        var plain = Registries.BLOCK.get(new Identifier(NS, "connected_fence_93185_plain"));
+        var ornate = Registries.BLOCK.get(new Identifier(NS, "connected_fence_93185_ornate"));
+        var different = world.getBlockState(pos).isOf(plain) ? ornate : plain;
+        world.setBlockState(pos.north(), different.getDefaultState(), Block.NOTIFY_ALL);
+        require(!world.getBlockState(pos).get(Properties.NORTH) && !world.getBlockState(pos.north()).get(Properties.SOUTH),
+                "same-ID mode connected two different DreamWalker registry IDs");
+        world.setBlockState(pos.north(), world.getBlockState(pos).getBlock().getDefaultState(), Block.NOTIFY_ALL);
+        require(world.getBlockState(pos).get(Properties.NORTH), "same-ID mode did not join an identical block");
+        world.removeBlock(pos.north(), false);
+        require(!world.getBlockState(pos).get(Properties.NORTH), "same-ID connection remained after removal");
+        world.setBlockState(pos.north(), Blocks.STONE.getDefaultState(), Block.NOTIFY_ALL);
         toolClick(player, pos, 0);
         require(wallAxis(world.getBlockState(pos)).equals("none") && world.getBlockState(pos).get(Properties.NORTH),
                 "the original connections were not restored");

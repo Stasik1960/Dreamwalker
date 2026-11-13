@@ -35,7 +35,7 @@ final class NeighborRemovalChecks {
         var drain = Class.forName("dev.dreamwalker.bloodbornedw.composite.CompositeRuntime")
                 .getMethod("drain", ServerWorld.class);
         var fallback = Class.forName("dev.dreamwalker.bloodbornedw.composite.ForcedBlockRemoval")
-                .getMethod("creativeFallback", ServerWorld.class, BlockPos.class, PlayerEntity.class);
+                .getMethod("clearAllAt", ServerWorld.class, BlockPos.class, PlayerEntity.class);
         var savedMode = player.interactionManager.getGameMode();
         var savedStack = player.getMainHandStack().copy();
         Vec3d savedPosition = player.getPos();

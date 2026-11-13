@@ -1,8 +1,11 @@
 package dev.dreamwalker.citypick;
 
+import com.google.gson.JsonParser;
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
@@ -22,6 +25,7 @@ final class PickIndex {
     private final Map<ChunkKey, ChunkRows> chunks = new LinkedHashMap<>(16, .75f, true);
     private final Map<Integer, List<Route>> routeFiles = new LinkedHashMap<>(16, .75f, true);
     private PoseBook book;
+    private CompatibilityBook compatibility;
 
     record ChunkKey(String namespace, String dimension, int x, int z) {
         String file() {
@@ -31,6 +35,7 @@ final class PickIndex {
 
     record Pose(String registryId, String legacyArt, Map<String, String> properties) {}
     private record PoseBook(String catalog, String version, List<Pose> poses) {}
+    private record CompatibilityBook(String catalog, Map<Integer, Pose> poses) {}
     private record ChunkRows(int[] cells, int[] visuals, int[] routes) {}
     private record Candidate(int pose, short[] quads) {}
     private record Route(List<Candidate> candidates) {}
@@ -43,7 +48,7 @@ final class PickIndex {
             remember(chunks, chunk, rows, MAX_CHUNKS);
         }
         int index = Arrays.binarySearch(rows.cells, cell);
-        if (index < 0 || rows.visuals[index] != visual) return List.of();
+        if (index < 0 || rows.visuals[index] != visual) return findCompatibility(visual, catalog);
         if (book == null) book = readPoses();
         if (!book.catalog.equals(catalog) || visual < 0 && !book.version.equals(version)) return List.of();
         int routeId = rows.routes[index];
@@ -54,6 +59,36 @@ final class PickIndex {
         List<Pose> choices = new ArrayList<>(route.candidates.size());
         for (var candidate : route.candidates) choices.add(pose(candidate.pose));
         return List.copyOf(choices);
+    }
+
+    private List<Pose> findCompatibility(int visual, String catalog) throws IOException {
+        if (visual < 0) return List.of();
+        if (compatibility == null) compatibility = readCompatibility();
+        if (!compatibility.catalog.equals(catalog)) return List.of();
+        Pose pose = compatibility.poses.get(visual);
+        return pose == null ? List.of() : List.of(pose);
+    }
+
+    private static CompatibilityBook readCompatibility() throws IOException {
+        try (var resource = PickIndex.class.getResourceAsStream("/city_original_pick/compatibility-visuals.json")) {
+            if (resource == null) return new CompatibilityBook("", Map.of());
+            var document = JsonParser.parseReader(new InputStreamReader(resource, StandardCharsets.UTF_8)).getAsJsonObject();
+            require(document.get("schema").getAsInt() == 2, "Invalid compatibility visual index");
+            Map<Integer, Pose> poses = new LinkedHashMap<>();
+            for (var entry : document.getAsJsonObject("visuals").entrySet()) {
+                var source = entry.getValue().getAsJsonObject();
+                Map<String, String> properties = new LinkedHashMap<>();
+                for (var property : source.getAsJsonObject("properties").entrySet()) {
+                    properties.put(property.getKey(), property.getValue().getAsString());
+                }
+                poses.put(Integer.parseInt(entry.getKey()),
+                        new Pose(source.get("registryId").getAsString(),
+                                source.has("legacyArt") ? source.get("legacyArt").getAsString() : "", Map.copyOf(properties)));
+            }
+            return new CompatibilityBook(document.get("catalogSha256").getAsString(), Map.copyOf(poses));
+        } catch (RuntimeException invalid) {
+            throw new IOException("Invalid compatibility visual index", invalid);
+        }
     }
 
     static int cellKey(int x, int y, int z) {

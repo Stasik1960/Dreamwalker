@@ -1,7 +1,6 @@
 package dev.dreamwalker.bloodbornedw.tool.mixin;
 
 import dev.dreamwalker.bloodbornedw.composite.AutoStoneFence;
-import dev.dreamwalker.bloodbornedw.composite.CompositeRootBlock;
 import dev.dreamwalker.bloodbornedw.tool.BbToolService;
 import dev.dreamwalker.bloodbornedw.tool.ToolTarget;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -21,11 +20,10 @@ abstract class ImportedFenceWallModeMixin {
         var pos = BlockPos.fromLong(target.root());
         if (!world.canPlayerModifyAt(player, pos)) return;
         var state = world.getBlockState(pos);
-        Boolean changed = AutoStoneFence.toggleStraight(world, pos, state, player, player.getHorizontalFacing().rotateYClockwise().getAxis());
+        Boolean changed = AutoStoneFence.cycleMode(world, pos, state, player, player.getHorizontalFacing().rotateYClockwise().getAxis());
         if (changed == null) return;
         if (changed) {
-            player.sendMessage(Text.literal(state.get(CompositeRootBlock.OPEN)
-                    ? "Ограда: соединение с соседями" : "Ограда: сплошная секция"), true);
+            player.sendMessage(Text.literal(AutoStoneFence.connectionMode(world, pos, world.getBlockState(pos)).message()), true);
         }
         result.setReturnValue(changed);
     }

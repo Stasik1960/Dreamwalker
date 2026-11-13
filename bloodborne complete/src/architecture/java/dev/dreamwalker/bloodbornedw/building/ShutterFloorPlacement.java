@@ -11,39 +11,41 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtDouble;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.util.math.Box;
-import net.minecraft.util.math.Direction;
 
 public final class ShutterFloorPlacement {
-    private static final String FLOOR_CENTERED = "DwShutterFloorCentered";
-    // The authored pane is at Z=6/16 plus the Studio offset of 9/16.
-    private static final double CENTER_DELTA = -7.0 / 16;
+    private static final String FLOOR_MOUNTED = "DwShutterFloorMounted";
+    private static final String LEGACY_FLOOR_CENTERED = "DwShutterFloorCentered";
+    public static final String WINDOW_PATH = "source_shutter_window";
 
     private ShutterFloorPlacement() {}
 
-    public static NbtCompound forPlacement(CompositeSpec spec, Direction face, NbtCompound payload) {
-        if (face != Direction.UP || !spec.id.getPath().equals("source_shutter_window")) return payload;
-        NbtCompound centered = payload == null ? new NbtCompound() : payload.copy();
-        if (!centered.getBoolean(FLOOR_CENTERED)) {
-            shift(centered, CENTER_DELTA);
-            centered.putBoolean(FLOOR_CENTERED, true);
-        }
-        return centered;
+    public static NbtCompound markFloorMount(NbtCompound payload) {
+        NbtCompound mounted = payload == null ? new NbtCompound() : payload.copy();
+        mounted.putBoolean(FLOOR_MOUNTED, true);
+        return mounted;
     }
 
     public static NbtCompound forItem(CompositeSpec spec, NbtCompound payload) {
-        if (payload == null || !payload.getBoolean(FLOOR_CENTERED) || !spec.id.getPath().equals("source_shutter_window")) {
+        if (payload == null || !payload.getBoolean(LEGACY_FLOOR_CENTERED) || !spec.id.getPath().equals(WINDOW_PATH)) {
             return payload;
         }
         NbtCompound art = payload.copy();
-        shift(art, -CENTER_DELTA);
-        art.remove(FLOOR_CENTERED);
+        var source = CompositeSourceShift.local(art);
+        NbtList shift = new NbtList();
+        shift.add(NbtDouble.of(source.x()));
+        shift.add(NbtDouble.of(source.y()));
+        shift.add(NbtDouble.of(source.z() + 7.0 / 16));
+        art.put("SourceShift", shift);
+        art.remove(LEGACY_FLOOR_CENTERED);
         return art;
     }
 
     public static List<Box> placementBoxes(ObjectInstance object, List<Box> boxes) {
-        if (!object.owner().registryId().equals("bloodborne_dw:source_shutter_window")
-                || !CompositeData.nbt(object.rootData().blockEntityNbt()).getBoolean(FLOOR_CENTERED)) return boxes;
+        if (!object.owner().registryId().equals("bloodborne_dw:" + WINDOW_PATH)) return boxes;
+        var payload = CompositeData.nbt(object.rootData().blockEntityNbt());
+        if (!payload.getBoolean(FLOOR_MOUNTED) && !payload.getBoolean(LEGACY_FLOOR_CENTERED)) return boxes;
 
+        // The sill meets the floor. Keep its authored volume in the stored footprint.
         double floor = object.owner().root().y();
         List<Box> aboveFloor = new ArrayList<>(boxes.size());
         for (Box box : boxes) {
@@ -51,15 +53,5 @@ public final class ShutterFloorPlacement {
             aboveFloor.add(box.minY < floor ? new Box(box.minX, floor, box.minZ, box.maxX, box.maxY, box.maxZ) : box);
         }
         return aboveFloor;
-    }
-
-    private static void shift(NbtCompound payload, double delta) {
-        var source = CompositeSourceShift.local(payload);
-        var updated = new CompositeSourceShift.Shift(source.x(), source.y(), source.z() + delta);
-        NbtList shift = new NbtList();
-        shift.add(NbtDouble.of(updated.x()));
-        shift.add(NbtDouble.of(updated.y()));
-        shift.add(NbtDouble.of(updated.z()));
-        payload.put("SourceShift", shift);
     }
 }

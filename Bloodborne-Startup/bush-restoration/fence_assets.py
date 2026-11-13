@@ -264,7 +264,7 @@ def put_models(output, key, models, half=None, isolated_grille=False):
     stem, north, south = models
     suffix = "_" + half if half else ""
     half_condition = {"half": half} if half else {}
-    condition = half_condition | {"wall_axis": "none"}
+    condition = half_condition | {"wall_axis": "none|same_id"}
     center_key = key + suffix
     output[ASSETS + f"models/block/{center_key}.json"] = model_json(stem)
     multipart = [{"apply": {"model": MODEL_ROOT + center_key}}]

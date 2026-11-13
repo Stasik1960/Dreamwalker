@@ -59,7 +59,14 @@ public final class IndexCompatibilityCheck {
         require(slab.properties().equals(java.util.Map.of("facing", "north", "waterlogged", "false")),
                 "slab did not preserve its dynamic properties");
 
-        System.out.println("PASS City Original Pick native, static, residual, removed, distinct slabs, and both sides of the mixed pilaster route");
+        var bridge = new PickIndex.ChunkKey("minecraft", "overworld", 23, -54);
+        int bridgeCell = PickIndex.cellKey(372, 31, -860);
+        expect(index, bridge, bridgeCell, 150580, version, "source_compatibility_fragment");
+        var embedded = index.find(bridge, bridgeCell, 150580, BUSH, version, MISSES_GEOMETRY).get(0);
+        require(embedded.properties().equals(java.util.Map.of("art_bank", "3", "variant", "11",
+                "open", "false", "profile", "base")), "wrong art on the embedded brick fragment");
+
+        System.out.println("PASS City Original Pick native, static, residual, embedded, removed, distinct slabs and mixed pilaster routes");
     }
 
     private static void expect(PickIndex index, PickIndex.ChunkKey chunk, int cell, int visual, String version,

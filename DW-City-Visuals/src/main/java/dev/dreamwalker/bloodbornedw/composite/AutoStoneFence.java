@@ -8,10 +8,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayDeque;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.IdentityHashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.Predicate;
+import dev.dreamwalker.bloodbornedw.architecture.wall.PrototypeWallBlock;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
@@ -21,19 +20,36 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FenceBlock;
-import net.minecraft.block.FenceGateBlock;
-import net.minecraft.block.PaneBlock;
 import net.minecraft.block.enums.WallShape;
 import net.minecraft.entity.player.PlayerEntity;
-import dev.dreamwalker.bloodbornedw.architecture.wall.PrototypeWallBlock;
-import net.minecraft.registry.tag.BlockTags;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
+import net.minecraft.nbt.NbtList;
+import net.minecraft.registry.Registries;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.StringIdentifiable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.world.chunk.WorldChunk;
+import net.minecraft.world.PersistentState;
 
 /** Updates authored fences in loaded chunks and queues saved poses from the old wall rules. */
 public final class AutoStoneFence implements ModInitializer {
+    public enum Mode {
+        AUTO("Ограда соединяется с соседями"),
+        STRAIGHT("Ограда в режиме сплошной секции"),
+        SAME_ID("Ограда соединяется только с блоками того же ID");
+
+        private final String message;
+
+        Mode(String message) {
+            this.message = message;
+        }
+
+        public String message() {
+            return message;
+        }
+    }
+
     private record WallPose(int[] sides, boolean up, int pose, int baseTurn) {}
     private record Group(int[] poses, Set<Integer> compatible, boolean wall, int straight, List<WallPose> wallStates) {}
     private static final int[] MASKS = {0, 1, 5, 3, 7, 15};
@@ -44,6 +60,52 @@ public final class AutoStoneFence implements ModInitializer {
     private static final class Queue {
         final ArrayDeque<BlockPos> positions = new ArrayDeque<>();
         final Set<BlockPos> seen = new HashSet<>();
+    }
+
+    /** Only explicitly restricted locations need storage; their authored shapes stay in the block state. */
+    private static final class Restrictions extends PersistentState {
+        private final Map<Long, String> registries = new HashMap<>();
+
+        static Restrictions get(ServerWorld world) {
+            return world.getPersistentStateManager().getOrCreate(Restrictions::read, Restrictions::new,
+                    "bloodborne_dw_imported_fence_connections");
+        }
+
+        static Restrictions read(NbtCompound nbt) {
+            var saved = new Restrictions();
+            for (var raw : nbt.getList("Fences", NbtElement.COMPOUND_TYPE)) {
+                var row = (NbtCompound) raw;
+                saved.registries.put(row.getLong("Pos"), row.getString("Registry"));
+            }
+            return saved;
+        }
+
+        boolean contains(BlockPos pos, BlockState state) {
+            String saved = registries.get(pos.asLong());
+            return saved != null && saved.equals(Registries.BLOCK.getId(state.getBlock()).toString());
+        }
+
+        void set(BlockPos pos, BlockState state, boolean restricted) {
+            if (restricted) {
+                if (contains(pos, state)) return;
+                registries.put(pos.asLong(), Registries.BLOCK.getId(state.getBlock()).toString());
+            } else if (registries.remove(pos.asLong()) == null) {
+                return;
+            }
+            markDirty();
+        }
+
+        @Override public NbtCompound writeNbt(NbtCompound nbt) {
+            var list = new NbtList();
+            registries.forEach((pos, registry) -> {
+                var row = new NbtCompound();
+                row.putLong("Pos", pos);
+                row.putString("Registry", registry);
+                list.add(row);
+            });
+            nbt.put("Fences", list);
+            return nbt;
+        }
     }
     private static Map<String, List<Group>> load() {
         var stream = AutoStoneFence.class.getResourceAsStream("/bloodborne_dw/stone-fence-connections.json");
@@ -103,28 +165,63 @@ public final class AutoStoneFence implements ModInitializer {
             && FAMILIES.containsKey(block.spec.id.toString());
     }
 
-    /** Keep the selected straight artwork in the existing non-opening state bit. */
-    public static Boolean toggleStraight(ServerWorld world, BlockPos pos, BlockState state, PlayerEntity player, Direction.Axis axis) {
+    public static boolean sameIdOnly(ServerWorld world, BlockPos pos) {
+        return sameIdOnly(world, pos, world.getBlockState(pos));
+    }
+
+    private static boolean sameIdOnly(ServerWorld world, BlockPos pos, BlockState state) {
+        return supportsSameId(state) && Restrictions.get(world).contains(pos, state);
+    }
+
+    private static boolean supportsSameId(BlockState state) {
+        return group(state) != null && (wallLike(state) || fenceLike(state))
+                && !((CompositeRootBlock) state.getBlock()).spec.openable;
+    }
+
+    public static Mode connectionMode(ServerWorld world, BlockPos pos, BlockState state) {
+        if (state.get(CompositeRootBlock.OPEN)) return Mode.STRAIGHT;
+        return sameIdOnly(world, pos, state) ? Mode.SAME_ID : Mode.AUTO;
+    }
+
+    /** Keep straight artwork in OPEN and track restricted automatic connections independently. */
+    public static Boolean cycleMode(ServerWorld world, BlockPos pos, BlockState state, PlayerEntity player, Direction.Axis axis) {
         Group group = group(state);
         if (group == null || !(state.getBlock() instanceof CompositeRootBlock block) || block.spec.openable) return null;
-        boolean straight = !state.get(CompositeRootBlock.OPEN);
-        BlockState next = state.with(CompositeRootBlock.OPEN, straight);
-        if (straight) {
+        Mode previous = connectionMode(world, pos, state);
+        boolean supportsSameId = supportsSameId(state);
+        Mode mode = switch (previous) {
+            case AUTO -> Mode.STRAIGHT;
+            case STRAIGHT -> supportsSameId ? Mode.SAME_ID : Mode.AUTO;
+            case SAME_ID -> Mode.AUTO;
+        };
+        BlockState next = state.with(CompositeRootBlock.OPEN, mode == Mode.STRAIGHT);
+        if (mode == Mode.STRAIGHT) {
             int rotation = axis == Direction.Axis.Z ? 0 : 2;
             int pose = group.straight() >= 0 ? group.straight() : group.poses()[2];
             for (WallPose value : group.wallStates()) {
-                if (value.pose() == pose) {
-                    boolean alongX = value.sides()[1] != 0 && value.sides()[3] != 0;
-                    rotation = (rotation + 2 * value.baseTurn() + (alongX ? 2 : 0)) & 7;
-                    break;
-                }
+                if (!tallStraight(value)) continue;
+                pose = value.pose();
+                boolean alongX = value.sides()[1] == 2;
+                rotation = (rotation + 2 * value.baseTurn() + (alongX ? 2 : 0)) & 7;
+                break;
             }
             next = next.with(CompositeRootBlock.VARIANT, pose % 16).with(CompositeRootBlock.ROTATION, rotation);
             var bank = ImportedArtworkBlock.bankProperty(next);
             if (bank != null) next = next.with(bank, pose / 16);
-        } else {
-            next = reconnect(world, pos, next);
         }
+        if (supportsSameId) Restrictions.get(world).set(pos, state, mode == Mode.SAME_ID);
+        boolean changed = false;
+        try {
+            if (mode != Mode.STRAIGHT) next = reconnect(world, pos, next);
+            changed = state.equals(next) || writeMode(world, pos, state, next, player);
+        } finally {
+            if (!changed && supportsSameId) Restrictions.get(world).set(pos, state, previous == Mode.SAME_ID);
+        }
+        if (changed) refreshNeighbors(world, pos);
+        return changed;
+    }
+
+    private static boolean writeMode(ServerWorld world, BlockPos pos, BlockState state, BlockState next, PlayerEntity player) {
         if (ImportedCompactBlock.compact(state) && ImportedCompactBlock.compact(next)) {
             return world.setBlockState(pos, next, Block.NOTIFY_ALL);
         }
@@ -135,6 +232,23 @@ public final class AutoStoneFence implements ModInitializer {
         return CompositeRuntime.transition(world, owner, next, player).outcome()
                 == dev.dreamwalker.bloodbornedw.runtime.TransactionCore.Outcome.COMMITTED;
     }
+
+    private static void refreshNeighbors(ServerWorld world, BlockPos pos) {
+        BlockState state = world.getBlockState(pos);
+        for (Direction side : SIDES) {
+            BlockPos neighbor = pos.offset(side);
+            if (world.isChunkLoaded(neighbor)) {
+                world.replaceWithStateForNeighborUpdate(side.getOpposite(), state, neighbor, pos, Block.NOTIFY_LISTENERS, 32);
+            }
+        }
+    }
+
+    private static boolean tallStraight(WallPose pose) {
+        int[] sides = pose.sides();
+        return !pose.up() && sides[0] == sides[2] && sides[1] == sides[3]
+                && (sides[0] == 2 && sides[1] == 0 || sides[0] == 0 && sides[1] == 2);
+    }
+
     /** Decode canonical poses to cached vanilla wall shapes without world or neighbor reads. */
     public static BlockState canonicalWall(BlockState state) {
         Group group = group(state);
@@ -174,8 +288,11 @@ public final class AutoStoneFence implements ModInitializer {
         if (queue.seen.add(copy)) queue.positions.add(copy);
     }
     public static void changed(ServerWorld world, BlockPos pos, BlockState before, BlockState after) {
-        if (matches(after)) enqueue(world, pos);
-        if (!before.isOf(after.getBlock()) && (matches(before) || matches(after))) {
+        boolean sameBlock = before.isOf(after.getBlock());
+        boolean beforeMatches = matches(before), afterMatches = matches(after);
+        if (beforeMatches && (!sameBlock || !afterMatches)) Restrictions.get(world).set(pos, before, false);
+        if (afterMatches) enqueue(world, pos);
+        if ((!sameBlock || beforeMatches != afterMatches) && (beforeMatches || afterMatches)) {
             for (Direction side : SIDES) {
                 BlockPos neighbor = pos.offset(side);
                 var chunk = world.getChunkManager().getWorldChunk(neighbor.getX() >> 4, neighbor.getZ() >> 4);
@@ -185,9 +302,10 @@ public final class AutoStoneFence implements ModInitializer {
     }
     private static BlockState reconnect(ServerWorld world, BlockPos pos, BlockState state) {
         if (state.get(CompositeRootBlock.OPEN)) return state;
+        boolean sameId = sameIdOnly(world, pos, state);
         // Diagonal placement remains the explicitly selected manual artwork.
         int yaw = state.get(CompositeRootBlock.ROTATION);
-        if ((yaw & 1) != 0) return state;
+        if (!sameId && (yaw & 1) != 0) return state;
         Group group = group(state); if (group == null) return state;
         int mask = 0;
         BlockState nativeWall = Blocks.COBBLESTONE_WALL.getDefaultState();
@@ -200,15 +318,21 @@ public final class AutoStoneFence implements ModInitializer {
                 return state;
             }
             BlockState neighbor = chunk.getBlockState(neighborPos);
-            boolean solidFace = neighbor.isSideSolidFullSquare(world, neighborPos, side.getOpposite());
+            boolean sameBlock = neighbor.isOf(state.getBlock());
+            if (!sameBlock && (sameId || sameIdOnly(world, neighborPos, neighbor) || nativeSameIdOnly(neighbor))) continue;
             boolean connected;
             if (group.wall()) {
-                nativeWall = nativeWall.getStateForNeighborUpdate(side, neighbor, world, pos, neighborPos);
+                BlockState wallNeighbor = sameId ? Blocks.COBBLESTONE_WALL.getDefaultState() : neighbor;
+                nativeWall = nativeWall.getStateForNeighborUpdate(side, wallNeighbor, world, pos, neighborPos);
                 connected = nativeWall.get(PrototypeWallBlock.property(side)) != WallShape.NONE;
+            } else if (sameId) {
+                connected = true;
             } else if (fenceLike(state)) {
+                boolean solidFace = neighbor.isSideSolidFullSquare(world, neighborPos, side.getOpposite());
                 connected = fenceLike(neighbor)
                     || ((FenceBlock) Blocks.NETHER_BRICK_FENCE).canConnect(neighbor, solidFace, side);
             } else {
+                boolean solidFace = neighbor.isSideSolidFullSquare(world, neighborPos, side.getOpposite());
                 Group neighborGroup = group(neighbor);
                 connected = neighborGroup != null && !neighborGroup.wall()
                     || ((FenceBlock) Blocks.NETHER_BRICK_FENCE).canConnect(neighbor, solidFace, side);
@@ -251,6 +375,16 @@ public final class AutoStoneFence implements ModInitializer {
             return bank == null ? next : next.with(bank, pose / 16);
         }
         throw new IllegalStateException("Fence connection mask missing");
+    }
+
+    private static boolean nativeSameIdOnly(BlockState state) {
+        return sameIdProperty(state, "connections") || sameIdProperty(state, "wall_axis");
+    }
+
+    private static boolean sameIdProperty(BlockState state, String name) {
+        var property = state.getBlock().getStateManager().getProperty(name);
+        return property != null && state.getEntries().get(property) instanceof StringIdentifiable value
+                && value.asString().equals("same_id");
     }
     private static void update(ServerWorld world, BlockPos pos) {
         var chunk = world.getChunkManager().getWorldChunk(pos.getX() >> 4, pos.getZ() >> 4);

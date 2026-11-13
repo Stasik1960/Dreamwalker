@@ -42,7 +42,12 @@ public class PrototypeWallBlock extends WallBlock implements net.minecraft.block
     /** Legacy item predicate/authoring helper only: no shared height property exists. */
     public enum Course implements StringIdentifiable { LOW("low"),TALL("tall"); private final String name;Course(String name){this.name=name;}public String asString(){return name;} }
     public enum Profile implements StringIdentifiable { BASE("base"),ALT("alt");private final String name;Profile(String name){this.name=name;}public String asString(){return name;} }
-    public enum Connections implements StringIdentifiable { AUTO("auto"),MANUAL("manual");private final String name;Connections(String name){this.name=name;}public String asString(){return name;} }
+    public enum Connections implements StringIdentifiable {
+        AUTO("auto"), MANUAL("manual"), SAME_ID("same_id");
+        private final String name;
+        Connections(String name) { this.name = name; }
+        public String asString() { return name; }
+    }
     public PrototypeWallBlock(Settings settings) {
         super(settings.dynamicBounds());
         BlockState state=getDefaultState().with(ROTATION,0).with(PROFILE,Profile.BASE).with(CONNECTIONS,Connections.AUTO);

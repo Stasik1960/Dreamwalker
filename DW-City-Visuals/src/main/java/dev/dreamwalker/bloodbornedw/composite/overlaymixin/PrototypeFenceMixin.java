@@ -22,7 +22,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class PrototypeFenceMixin {
     @Unique
     private BlockState dw$nativeWall(BlockState state, BlockView view, BlockPos pos) {
-        if (state.get(PrototypeWallBlock.CONNECTIONS) != PrototypeWallBlock.Connections.AUTO
+        if (state.get(PrototypeWallBlock.CONNECTIONS) == PrototypeWallBlock.Connections.MANUAL
                 || (state.get(PrototypeWallBlock.ROTATION) & 1) != 0
                 || VerticalMount.shifted(view, pos)) return null;
         BlockState nativeState = ((PrototypeWallBlock) (Object) this).nativeState(state);

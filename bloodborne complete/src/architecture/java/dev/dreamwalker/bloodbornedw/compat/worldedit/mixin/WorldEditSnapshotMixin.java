@@ -1,6 +1,7 @@
 package dev.dreamwalker.bloodbornedw.compat.worldedit.mixin;
 
 import dev.dreamwalker.bloodbornedw.compat.worldedit.WorldEditBridge;
+import dev.dreamwalker.bloodbornedw.compat.worldedit.WorldEditNativeWrites;
 import dev.dreamwalker.bloodbornedw.composite.*;
 import dev.dreamwalker.bloodbornedw.runtime.ObjectInstance.Owner;
 import dev.dreamwalker.bloodbornerp.object.RpObjectEntity;
@@ -15,6 +16,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(value=WorldEditBridge.class,remap=false)
 public abstract class WorldEditSnapshotMixin {
+    @Inject(method="nativeSettings",at=@At("HEAD"),cancellable=true,remap=false)
+    private static void dreamwalker$includeCityHistory(ServerWorld world,BlockPos pos,CallbackInfoReturnable<Boolean> callback){
+        if(ForcedBlockRemoval.nativeBridgeVisual(world,pos)>=0||ForcedBlockRemoval.nativeVisual(world,pos)>=0
+                ||ForcedBlockRemoval.retainedFrame(world,pos)!=null)
+            callback.setReturnValue(true);
+    }
+
     @Inject(method="owners",at=@At("RETURN"),cancellable=true)
     private static void dreamwalker$includeNativeResident(ServerWorld world,BlockPos pos,CallbackInfoReturnable<List<Owner>> callback){
         if(world.getBlockEntity(pos) instanceof CompositeBlockEntity be&&be.resident()!=null
@@ -29,8 +37,21 @@ public abstract class WorldEditSnapshotMixin {
     private static void dreamwalker$capturePhysicalCarrier(ServerWorld world,BlockPos pos,List<Owner> owners,
             List<RpObjectEntity> entities,CallbackInfoReturnable<NbtCompound> callback){
         var snapshot=callback.getReturnValue();
-        if(owners.isEmpty()||snapshot.contains("NativeData"))return;
+        int bridge=ForcedBlockRemoval.nativeBridgeVisual(world,pos);
+        if(bridge>=0)snapshot.putInt(WorldEditNativeWrites.BRIDGE_VISUAL,bridge);
+        var frame=ForcedBlockRemoval.retainedFrame(world,pos);
+        if(frame!=null)snapshot.put(WorldEditNativeWrites.RETAINED_FRAME,
+                CompositeData.data(CompositeData.data(frame,new NbtCompound())));
+        if(snapshot.contains("NativeData"))return;
         var state=world.getBlockState(pos);
+        int nativeVisual=ForcedBlockRemoval.nativeVisual(world,pos);
+        if(nativeVisual>=0&&state.equals(ForcedBlockRemoval.nativeBridgeState(nativeVisual))){
+            NbtCompound payload=new NbtCompound();
+            payload.putInt("NativeVisualIndex",nativeVisual);
+            snapshot.put("NativeData",CompositeData.data(CompositeData.data(state,payload)));
+            return;
+        }
+        if(owners.isEmpty())return;
         var be=world.getBlockEntity(pos);
         if(state.isAir()||state.isOf(CompositeArchitecture.CELL)
                 ||be instanceof CompositeBlockEntity composite&&composite.resident()!=null)return;

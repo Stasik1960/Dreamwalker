@@ -1,8 +1,13 @@
 package dev.dreamwalker.citypick;
 
+import dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount;
+import dev.dreamwalker.bloodbornedw.composite.CompositeCellBlock;
+import dev.dreamwalker.bloodbornedw.composite.CompositeData;
 import dev.dreamwalker.bloodbornedw.composite.CompositeRootBlock;
+import dev.dreamwalker.bloodbornedw.composite.CompositeRuntime;
 import dev.dreamwalker.bloodbornedw.composite.ImportedStairLegacyArt;
 import dev.dreamwalker.bloodbornedw.composite.ImportedTypeAliases;
+import dev.dreamwalker.bloodbornedw.composite.NativeGridBridge;
 import dev.dreamwalker.bloodbornedw.composite.NativePhysicsBlock;
 import dev.dreamwalker.bloodbornedw.composite.NativeVisualLayout;
 import dev.dreamwalker.bloodbornedw.composite.NativeVisuals;
@@ -63,12 +68,31 @@ public final class CityOriginalPick implements ClientModInitializer {
         var world = client.world;
         var player = client.player;
         if (client.currentScreen != null || world == null || player == null || !player.getAbilities().creativeMode
+                || client.interactionManager == null
                 || !(client.crosshairTarget instanceof BlockHitResult hit) || hit.getType() != HitResult.Type.BLOCK) {
             return;
         }
         BlockPos position = hit.getBlockPos().toImmutable();
+        BlockState state = world.getBlockState(position);
+        if (!Registries.BLOCK.getId(state.getBlock()).getNamespace().equals("bloodborne_dw")) return;
+
+        // The owner's outline can be in front of the baked background in the same cell.
+        // The normal target resolver already ignores owners hidden behind that background.
+        if (!(state.getBlock() instanceof NativePhysicsBlock) && !(state.getBlock() instanceof StaticArchitectureBlock)) {
+            ItemStack owned = ownedStack(world, position, player);
+            if (!owned.isEmpty()) {
+                pick(client, player, owned);
+                return;
+            }
+        }
         int visual = fragmentId(world, position);
-        if (visual == NO_FRAGMENT) return;
+        if (visual == NO_FRAGMENT) {
+            if (!(state.getBlock() instanceof CompositeCellBlock) && !(state.getBlock() instanceof NativePhysicsBlock)) {
+                ItemStack stack = state.getBlock().getPickStack(world, position, state);
+                if (!stack.isEmpty()) pick(client, player, stack);
+            }
+            return;
+        }
         String catalog = NativeVisualLayout.catalogSha();
         String version = FabricLoader.getInstance().getModContainer("bloodborne_dw")
                 .map(mod -> mod.getMetadata().getVersion().getFriendlyString()).orElse("");
@@ -124,8 +148,25 @@ public final class CityOriginalPick implements ClientModInitializer {
         } else if (state.getBlock() instanceof StaticArchitectureBlock legacy) {
             int recipe = legacy.bank() * StaticArchitectureCatalog.BANK_SIZE + state.get(StaticArchitectureBlock.PART);
             return -1 - recipe;
+        } else {
+            int visual = NativeGridBridge.base(world, position);
+            if (visual >= 0) return visual;
         }
         return NO_FRAGMENT;
+    }
+
+    private static ItemStack ownedStack(ClientWorld world, BlockPos position, ClientPlayerEntity player) {
+        var owner = CompositeRuntime.target(world, position, player);
+        if (owner == null) return ItemStack.EMPTY;
+        var stack = CompositeRuntime.pick(world, owner);
+        if (!stack.isEmpty()) return stack;
+        // A helper can be loaded before its root across a chunk boundary.
+        for (var entry : CompositeRuntime.contributions(world, position)) {
+            if (!owner.equals(entry.owner())) continue;
+            var root = entry.rootData();
+            return VerticalMount.item(CompositeData.state(root), CompositeData.nbt(root.blockEntityNbt()));
+        }
+        return ItemStack.EMPTY;
     }
 
     static ItemStack sourceStack(PickIndex.Pose pose) {

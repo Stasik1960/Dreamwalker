@@ -55,8 +55,24 @@ public final class PickIndexCheck {
                 "Wrong original for a retained static architecture fragment");
         require(table.find(oldChunk, oldCell, -4662, CATALOG, "wrong version", oldRay).isEmpty(),
                 "Legacy recipe used against a different Dreamwalker version");
+        checkCompatibilityVisual(table);
         System.out.println("PASS 228,51,-815 -> bloodborne_dw:source_weathered_cut_copper");
         System.out.println("PASS coordinate/visual/catalog gates, both overlap candidates");
+    }
+
+    private static void checkCompatibilityVisual(PickIndex table) throws Exception {
+        String bushCatalog = "2bd740ff6ad95102f4c04521f2587a7516b432bd26ff6203dc10cd4d4fb88574";
+        var chunk = new PickIndex.ChunkKey("minecraft", "overworld", 23, -54);
+        int cell = PickIndex.cellKey(372, 31, -860);
+        var ray = new FragmentRay(-1.641, .96634, -1.736, .68, -.136, .72);
+        var result = table.find(chunk, cell, 150580, bushCatalog, VERSION, ray);
+        require(result.size() == 1, "No verified source for the native background at 372,31,-860");
+        var pose = result.get(0);
+        require(pose.registryId().equals("bloodborne_dw:source_compatibility_fragment")
+                && "3".equals(pose.properties().get("art_bank")) && "11".equals(pose.properties().get("variant")),
+                "Wrong source art for the native background: " + pose);
+        require(table.find(chunk, cell, 150580, CATALOG, VERSION, ray).isEmpty(), "Fallback accepted wrong catalog");
+        System.out.println("PASS native background at 372,31,-860 -> source_compatibility_fragment view 60");
     }
 
     private static FragmentRay ray(Example e) {

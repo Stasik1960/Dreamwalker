@@ -1,6 +1,8 @@
 package dev.dreamwalker.bloodbornedw.building.mixin;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.math.BlockPos;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Pseudo;
 import org.spongepowered.asm.mixin.gen.Invoker;
@@ -20,6 +22,11 @@ public interface ImportedFenceAccess {
 
     @Invoker(value = "fenceLike", remap = false)
     static boolean dreamwalker$fenceLike(BlockState state) {
+        throw new AssertionError("Untransformed accessor");
+    }
+
+    @Invoker(value = "sameIdOnly", remap = false)
+    static boolean dreamwalker$sameIdOnly(ServerWorld world, BlockPos pos) {
         throw new AssertionError("Untransformed accessor");
     }
 }

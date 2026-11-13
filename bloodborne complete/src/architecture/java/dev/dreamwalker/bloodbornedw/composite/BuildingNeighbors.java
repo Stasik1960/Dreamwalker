@@ -1,12 +1,14 @@
 package dev.dreamwalker.bloodbornedw.composite;
 
 import dev.dreamwalker.bloodbornedw.building.mixin.CompositeShapeUpdateAccess;
+import dev.dreamwalker.bloodbornedw.building.mixin.ImportedFenceAccess;
 import dev.dreamwalker.bloodbornedw.runtime.ObjectGeometry.Cell;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.registry.Registries;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.StringIdentifiable;
 import net.minecraft.util.function.BooleanBiFunction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -25,6 +27,23 @@ public final class BuildingNeighbors {
 
     public static boolean dreamWalker(BlockState state) {
         return Registries.BLOCK.getId(state.getBlock()).getNamespace().equals("bloodborne_dw");
+    }
+
+    public static boolean acceptsFenceNeighbor(BlockView world, BlockPos pos, BlockState neighbor, Block source) {
+        return neighbor.isOf(source) || !sameIdFence(world, pos, neighbor);
+    }
+
+    public static boolean sameIdFence(BlockView world, BlockPos pos, BlockState state) {
+        if (!dreamWalker(state)) return false;
+        var properties = state.getBlock().getStateManager();
+        var connections = properties.getProperty("connections");
+        var wallAxis = properties.getProperty("wall_axis");
+        return (connections != null && state.get(connections) instanceof StringIdentifiable value
+                        && value.asString().equals("same_id"))
+                || (wallAxis != null && state.get(wallAxis) instanceof StringIdentifiable axis
+                        && axis.asString().equals("same_id"))
+                || world instanceof ServerWorld server && ImportedFenceAccess.dreamwalker$matches(state)
+                        && ImportedFenceAccess.dreamwalker$sameIdOnly(server, pos);
     }
 
     public static boolean fullFace(BlockState state, BlockView view, BlockPos pos, Direction face) {

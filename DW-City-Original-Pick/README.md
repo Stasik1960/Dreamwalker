@@ -1,6 +1,6 @@
 # Dreamwalker City Original Pick
 
-Client add-on for creative-mode J picking of indexed Bloodborne city fragments.
+Client add-on for creative-mode J picking of DreamWalker blocks and indexed Bloodborne city fragments.
 Version 1.0.2 targets DreamWalker v22 Building Fixes and the Bush Restoration map.
 DreamWalker v22 Connecting Fences packages City Original Pick 1.0.3 as a nested
 client mod. Remove an older standalone City Original Pick JAR from the mods
@@ -23,10 +23,11 @@ $api = (Resolve-Path compile-api.jar).Path
 $data = (Resolve-Path indexed.jar).Path
 .\mod\gradlew.bat -p mod "-PdreamwalkerJar=$api" "-PpickData=$data" remapJar
 $jar = (Resolve-Path mod/build/libs/dreamwalker-city-original-pick-1.0.2.jar).Path
+$gson = (Get-ChildItem "$env:USERPROFILE/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.10.1" -Recurse -File -Filter gson-2.10.1.jar | Select-Object -First 1).FullName
 javac -cp $jar -d mod/build/check tests/IndexCompatibilityCheck.java
-java -cp "mod/build/check;$jar" dev.dreamwalker.citypick.IndexCompatibilityCheck
+java -cp "mod/build/check;$jar;$gson" dev.dreamwalker.citypick.IndexCompatibilityCheck
 ```
 
-The Connecting Fences packager takes this 1.0.2 JAR as its `--original-pick`
+The DreamWalker packager takes the JAR built from these sources as its `--original-pick`
 argument. It verifies the Bush Restoration layout and updates the city index
-version pin for older static fragments before bundling the add-on as 1.0.3.
+version pin for older static fragments before bundling the add-on as 1.0.4.

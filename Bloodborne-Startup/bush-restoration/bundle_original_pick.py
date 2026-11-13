@@ -8,9 +8,10 @@ from zipfile import ZIP_DEFLATED, ZipFile
 
 
 ADDON_ID = "dw_city_original_pick"
-ADDON_VERSION = "1.0.3"
+ADDON_VERSION = "1.0.4"
 ADDON_FILE = f"META-INF/jars/dreamwalker-city-original-pick-{ADDON_VERSION}.jar"
 POSE_TABLE = "city_original_pick/poses.bin"
+VISUAL_SOURCES = "city_original_pick/compatibility-visuals.json"
 LAYOUTS = {
     "assets/bloodborne_dw/native_grid/catalog.json":
         "2bd740ff6ad95102f4c04521f2587a7516b432bd26ff6203dc10cd4d4fb88574",
@@ -49,6 +50,9 @@ def nested_pick(release, addon, target_version):
         raise ValueError("City Original Pick 1.0.2 contains an incompatible poses table")
     if not read_utf(poses).endswith(".forms.2"):
         raise ValueError("City Original Pick 1.0.2 was rebased to a different source version")
+    fallback = json.loads(addon.read(VISUAL_SOURCES))
+    if (fallback.get("schema"), fallback.get("catalogSha256")) != (2, catalog) or not fallback.get("visuals"):
+        raise ValueError("City Original Pick is missing the verified native visual sources")
 
     manifest["version"] = ADDON_VERSION
     manifest["depends"]["bloodborne_dw"] = "=" + target_version

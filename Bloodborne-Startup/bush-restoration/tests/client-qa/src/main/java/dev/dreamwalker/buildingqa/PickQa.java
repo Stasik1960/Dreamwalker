@@ -20,10 +20,16 @@ import org.lwjgl.glfw.GLFW;
 /** Drives the Original Pick key and checks the inventory on both ends of the game connection. */
 public final class PickQa implements ClientModInitializer {
     private record Aim(double x, double y, double z, float yaw, float pitch, BlockPos target, String item,
-                       String variant) {}
+                       String variant, String artBank) {
+        Aim(double x, double y, double z, float yaw, float pitch, BlockPos target, String item, String variant) {
+            this(x, y, z, yaw, pitch, target, item, variant, null);
+        }
+    }
 
     private static final String DW = "bloodborne_dw:";
     private static final List<Aim> CASES = List.of(
+            new Aim(370.359, 30.34634, -861.736, -43.4f, 7.8f, new BlockPos(372, 31, -860),
+                    DW + "source_compatibility_fragment", "11", "3"),
             new Aim(97.484, 122.90780, -707.696, 88.4f, 5.2f, new BlockPos(93, 124, -708),
                     DW + "source_addon_wall_deco_3_form_2", null),
             new Aim(444.405, 43.00313, -838.782, -64.2f, 5.0f, new BlockPos(447, 44, -838),
@@ -46,6 +52,7 @@ public final class PickQa implements ClientModInitializer {
     private BackupPromptScreen acknowledged;
     private CompletableFuture<ItemStack> serverStack;
     private CompletableFuture<List<String>> serverChecks;
+    private CompletableFuture<List<String>> removalChecks;
     private final GlassChecks glass = Boolean.getBoolean("dw.qa.glass") ? new GlassChecks() : null;
     private WhiteLightChecks whiteLight = Boolean.getBoolean("dw.qa.whiteLight") ? new WhiteLightChecks() : null;
     private WindowCrawlChecks windowCrawl = Boolean.getBoolean("dw.qa.crawl") ? new WindowCrawlChecks() : null;
@@ -188,6 +195,17 @@ public final class PickQa implements ClientModInitializer {
                 if (outcome.startsWith("FAIL")) failures++;
                 glassFinished = true;
             }
+            if (removalChecks == null) {
+                var server = game.getServer();
+                var id = game.player.getUuid();
+                removalChecks = server.submit(() -> MixedCellRemovalChecks.verify(server.getPlayerManager().getPlayer(id)));
+                return;
+            }
+            if (!removalChecks.isDone()) return;
+            for (String outcome : removalChecks.join()) {
+                note(outcome);
+                if (outcome.startsWith("FAIL")) failures++;
+            }
             finish(game, failures == 0);
             return;
         }
@@ -227,6 +245,9 @@ public final class PickQa implements ClientModInitializer {
         var data = held.getSubNbt("BlockStateTag");
         if (aim.variant() != null && (data == null || !aim.variant().equals(data.getString("variant")))) {
             throw new IllegalStateException("Unexpected variant: " + describe(held));
+        }
+        if (aim.artBank() != null && (data == null || !aim.artBank().equals(data.getString("art_bank")))) {
+            throw new IllegalStateException("Unexpected art bank: " + describe(held));
         }
         if (serverStack == null && ticks >= 4) {
             var server = game.getServer();

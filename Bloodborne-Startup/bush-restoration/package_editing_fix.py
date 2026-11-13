@@ -14,6 +14,7 @@ from repair_screenshot_assets import screenshot_replacements
 
 RELEASE_SHA = "4e8e7f4bd460982d7e15d722f8c7210d4d4f6dda22d6e8523fa79d8ff6a4406b"
 ROOT = "dev/dreamwalker/bloodbornedw/"
+PROTOTYPE_CONNECTIONS = ROOT + "architecture/wall/PrototypeWallBlock$Connections.class"
 WORLDEDIT_CONFIG = "bloodborne_dw.worldedit.mixins.json"
 CREATIVE_CONFIG = "bloodborne_dw.creative-removal.mixins.json"
 CREATIVE_REFMAP = "bloodborne_dw.creative-removal.refmap.json"
@@ -30,11 +31,6 @@ WORLDEDIT_MIXINS = (
 )
 CLASSES = (
     "composite/ForcedBlockRemoval",
-    "composite/mixin/CreativeRemovalMixin",
-    "composite/mixin/CreativeRemovalWriteAccess",
-    "composite/mixin/SelectionAxeClientMixin",
-    "composite/mixin/SelectionAxeItemMixin",
-    "composite/mixin/SelectionAxeProgressMixin",
     "compat/worldedit/SelectionAxe",
     "compat/worldedit/WorldEditNativeWrites",
     "composite/DiagonalRpCollision",
@@ -107,7 +103,7 @@ def main():
     parser.add_argument("release", type=Path)
     parser.add_argument("remapped_build", type=Path)
     parser.add_argument("output", type=Path)
-    parser.add_argument("--original-pick", type=Path, required=True, help="Rebased Original Pick 1.0.2 JAR")
+    parser.add_argument("--original-pick", type=Path, required=True, help="Original Pick 1.0.2 built from this checkout")
     parser.add_argument("--window-placement", type=Path, required=True, help="Remapped DW-City-Visuals window/placement slice")
     args = parser.parse_args()
     if digest(args.release) != RELEASE_SHA:
@@ -117,13 +113,13 @@ def main():
 
     with ZipFile(args.release) as release, ZipFile(args.remapped_build) as build:
         build_refmap = json.loads(build.read(json.loads(build.read(CREATIVE_CONFIG))["refmap"]))
-        creative, _ = mixin_resources(build, CREATIVE_CONFIG, CREATIVE_REFMAP, build_refmap)
+        creative, creative_mixins = mixin_resources(build, CREATIVE_CONFIG, CREATIVE_REFMAP, build_refmap)
         forms, form_mixins = mixin_resources(build, FORMS_CONFIG, FORMS_REFMAP, build_refmap)
         building, building_mixins = mixin_resources(build, BUILDING_CONFIG, BUILDING_REFMAP, build_refmap)
         assets, catalogue_resources = form_resources(release)
         added = {**creative, **forms, **building, **assets}
         for path in [*(ROOT + stem for stem in CLASSES), ROOT + "composite/DistinctForms",
-                     *sorted(form_mixins | building_mixins)]:
+                     *sorted(creative_mixins | form_mixins | building_mixins)]:
             added[path + ".class"] = build.read(path + ".class")
             for name in build.namelist():
                 if name.startswith(path + "$") and name.endswith(".class"):
@@ -132,7 +128,7 @@ def main():
             parser.error("patch overlaps classes in the published JAR")
 
         manifest = json.loads(release.read("fabric.mod.json"))
-        manifest["version"] += ".forms.4"
+        manifest["version"] += ".forms.5"
         with ZipFile(args.original_pick) as addon:
             archive, bundled_pick = nested_pick(release, addon, manifest["version"])
         manifest.setdefault("jars", []).append({"file": archive})
@@ -147,13 +143,13 @@ def main():
         replacements.update(screenshot_replacements(release))
         replacements.update(connected_fence_resources(release, replacements))
         visual_resources = Path(__file__).resolve().parents[2] / "DW-City-Visuals/src/main/resources"
-        binary_replacements = {}
+        binary_replacements = {PROTOTYPE_CONNECTIONS: build.read(PROTOTYPE_CONNECTIONS)}
         with ZipFile(args.window_placement) as overlay:
             for name in overlay.namelist():
                 if name.endswith(".class"):
                     if name in release.namelist():
                         binary_replacements[name] = overlay.read(name)
-                    elif name == ROOT + "tool/mixin/ImportedFenceWallModeMixin.class":
+                    elif name == ROOT + "tool/mixin/ImportedFenceWallModeMixin.class" or name.startswith(ROOT + "composite/AutoStoneFence$"):
                         added[name] = overlay.read(name)
                     else:
                         parser.error("unexpected window/placement overlay class " + name)
