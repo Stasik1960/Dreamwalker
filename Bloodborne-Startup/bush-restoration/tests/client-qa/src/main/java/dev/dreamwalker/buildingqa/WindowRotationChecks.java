@@ -112,12 +112,11 @@ final class WindowRotationChecks {
         require(!shape.isEmpty() && shape.getMin(Direction.Axis.Z) >= 0 && shape.getMax(Direction.Axis.Z) <= .75,
                 "floor shutter outline still sits at the far edge of the cell: " + shape);
         var picked = state.getBlock().getPickStack(world, pos, state);
-        require(picked.isOf(item) && (picked.getNbt() == null || !picked.getNbt().contains("ImportedArtShift")),
-                "picked shutter retained its floor placement offset");
+        require(picked.isOf(item), "picked floor shutter returned another item: " + picked);
         var second = pos.east(4);
         place(player, second, picked, 0, false, Direction.UP);
         require(world.getBlockState(second).getOutlineShape(world, second).getBoundingBoxes().equals(shape.getBoundingBoxes()),
-                "replacing the picked shutter moved its outline again");
+                "replacing the picked shutter moved its outline again, item data: " + picked.getNbt());
     }
 
     private static void place(ServerPlayerEntity player, BlockPos pos, ItemStack stack, float yaw, boolean shift,

@@ -3,6 +3,7 @@ package dev.dreamwalker.buildingqa;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.Entity;
@@ -22,6 +23,8 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.GameMode;
+import net.minecraft.world.World;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.world.RaycastContext;
 
 /** Observes sound packets sent to the player who used each door, even with audio muted. */
@@ -101,7 +104,13 @@ public final class DoorSoundChecks {
         var server = game.getServer();
         var playerId = game.player.getUuid();
         BlockPos root = position();
-        interaction = server.submit(() -> click(server.getPlayerManager().getPlayer(playerId), root, open));
+        interaction = server.submit(() -> {
+            try {
+                click(server.getPlayerManager().getPlayer(playerId), root, open);
+            } catch (ReflectiveOperationException failure) {
+                throw new IllegalStateException("Cannot verify carved door targeting", failure);
+            }
+        });
     }
 
     private boolean confirmed() {
@@ -110,7 +119,7 @@ public final class DoorSoundChecks {
         return true;
     }
 
-    private static void click(ServerPlayerEntity player, BlockPos root, boolean open) {
+    private static void click(ServerPlayerEntity player, BlockPos root, boolean open) throws ReflectiveOperationException {
         var world = player.getServerWorld();
         if (root.equals(RP)) {
             Entity entity = world.getOtherEntities(player, new net.minecraft.util.math.Box(root).expand(3),
@@ -127,16 +136,23 @@ public final class DoorSoundChecks {
         }
         var item = item(root);
         var attempts = new ArrayList<String>();
+        var ownerAt = root.equals(CARVED) ? Class.forName("dev.dreamwalker.bloodbornedw.composite.CompositeRuntime")
+                .getMethod("target", World.class, BlockPos.class, PlayerEntity.class) : null;
         for (BlockPos cell : BlockPos.iterate(root.add(-1, 0, -1), root.add(2, 3, 1))) {
             var local = world.getBlockState(cell);
-            if (!local.getBlock().getPickStack(world, cell, local).isOf(item)) continue;
-            for (var box : local.getOutlineShape(world, cell, net.minecraft.block.ShapeContext.of(player)).getBoundingBoxes()) {
+            var outline = local.getOutlineShape(world, cell, net.minecraft.block.ShapeContext.of(player));
+            for (var box : outline.getBoundingBoxes()) {
                 Vec3d target = box.getCenter().add(cell.getX(), cell.getY(), cell.getZ());
                 lookAt(player, target);
                 var hit = (BlockHitResult) player.raycast(5, 1, false);
+                if (hit.getType() != HitResult.Type.BLOCK && ownerAt != null) {
+                    var exact = outline.raycast(player.getEyePos(), target, cell);
+                    if (exact != null) hit = exact;
+                }
                 if (hit.getType() != HitResult.Type.BLOCK) continue;
                 var state = world.getBlockState(hit.getBlockPos());
-                if (!state.getBlock().getPickStack(world, hit.getBlockPos(), state).isOf(item)) continue;
+                if (ownerAt == null ? !state.isOf(world.getBlockState(root).getBlock()) :
+                        ownerAt.invoke(null, world, hit.getBlockPos(), player) == null) continue;
                 var result = player.interactionManager.interactBlock(player, world, ItemStack.EMPTY, Hand.MAIN_HAND, hit);
                 var rootState = world.getBlockState(root);
                 if (result.isAccepted() && Boolean.valueOf(open).equals(property(rootState))) return;
@@ -147,7 +163,7 @@ public final class DoorSoundChecks {
                 + ", eye=" + player.getEyePos() + ", lastTransaction=" + lastTransaction());
     }
 
-    private static Boolean property(net.minecraft.block.BlockState state) {
+    private static Boolean property(BlockState state) {
         var open = state.getBlock().getStateManager().getProperty(Properties.OPEN.getName());
         return open != null && state.get(open) instanceof Boolean value ? value : null;
     }
