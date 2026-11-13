@@ -1,0 +1,42 @@
+plugins {
+    id 'fabric-loom' version '1.6.12'
+}
+
+group = 'dev.dreamwalker'
+version = '1.0.2'
+
+repositories {
+    mavenCentral()
+    maven { url = 'https://maven.fabricmc.net/' }
+}
+
+def dreamwalkerJar = providers.gradleProperty('dreamwalkerJar')
+if (!dreamwalkerJar.isPresent() || !file(dreamwalkerJar.get()).isFile()) {
+    throw new GradleException('Pass -PdreamwalkerJar=<path to the DreamWalker Distinct Forms compile JAR>')
+}
+
+dependencies {
+    minecraft 'com.mojang:minecraft:1.20.1'
+    mappings 'net.fabricmc:yarn:1.20.1+build.10:v2'
+    modImplementation 'net.fabricmc:fabric-loader:0.16.10'
+    modImplementation 'net.fabricmc.fabric-api:fabric-api:0.92.12+1.20.1'
+    modCompileOnly files(dreamwalkerJar.get())
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.release = 17
+    options.encoding = 'UTF-8'
+}
+
+tasks.withType(AbstractArchiveTask).configureEach {
+    preserveFileTimestamps = false
+    reproducibleFileOrder = true
+}
+
+def pickData = providers.gradleProperty('pickData')
+        .orElse('../release/Dreamwalker-City-Original-Pick-1.0.1.jar')
+tasks.named('processResources') {
+    from({ zipTree(file(pickData.get())) }) {
+        include 'city_original_pick/**'
+    }
+}

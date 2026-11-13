@@ -1,0 +1,23 @@
+{
+  "required": true,
+  "package": "dev.dreamwalker.bloodbornedw.building.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "QuarterBlockShiftMixin",
+    "DiagonalRpCollisionMixin",
+    "StandingSignSupportMixin",
+    "WallSignSupportMixin",
+    "BuildingNeighborFacesMixin",
+    "BuildingNeighborPublishMixin",
+    "CompositeShapeUpdateAccess",
+    "ImportedFenceAccess",
+    "ImportedPaneNeighborsMixin",
+    "VanillaWallPaneMixin",
+    "VanillaPaneNeighborsMixin",
+    "VanillaFenceGateNeighborsMixin"
+  ],
+  "client": [
+    "CompositeGlassOrderMixin"
+  ],
+  "injectors": { "defaultRequire": 1 }
+}

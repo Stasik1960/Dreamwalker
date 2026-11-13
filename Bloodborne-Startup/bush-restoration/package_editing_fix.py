@@ -1,4 +1,4 @@
-"""Package editing fixes and distinct form IDs over the published Bush Restoration JAR."""
+"""Package Distinct Forms and the building fixes over the published Bush Restoration JAR."""
 
 import argparse
 import hashlib
@@ -7,6 +7,7 @@ from pathlib import Path
 import shutil
 from zipfile import ZIP_DEFLATED, ZipFile
 from generate_form_assets import encoded, form_resources
+from repair_screenshot_assets import screenshot_replacements
 
 
 RELEASE_SHA = "4e8e7f4bd460982d7e15d722f8c7210d4d4f6dda22d6e8523fa79d8ff6a4406b"
@@ -16,6 +17,8 @@ CREATIVE_CONFIG = "bloodborne_dw.creative-removal.mixins.json"
 CREATIVE_REFMAP = "bloodborne_dw.creative-removal.refmap.json"
 FORMS_CONFIG = "bloodborne_dw.distinct-forms.mixins.json"
 FORMS_REFMAP = "bloodborne_dw.distinct-forms.refmap.json"
+BUILDING_CONFIG = "bloodborne_dw.building-fixes.mixins.json"
+BUILDING_REFMAP = "bloodborne_dw.building-fixes.refmap.json"
 WORLDEDIT_MIXINS = (
     "WorldEditSelectionRefreshMixin",
     "WorldEditAirEditMixin",
@@ -32,6 +35,9 @@ CLASSES = (
     "composite/mixin/SelectionAxeProgressMixin",
     "compat/worldedit/SelectionAxe",
     "compat/worldedit/WorldEditNativeWrites",
+    "composite/DiagonalRpCollision",
+    "composite/BuildingNeighbors",
+    "tool/QuarterBlockShift",
     *("compat/worldedit/mixin/" + name for name in WORLDEDIT_MIXINS),
 )
 
@@ -71,9 +77,11 @@ def main():
         build_refmap = json.loads(build.read(json.loads(build.read(CREATIVE_CONFIG))["refmap"]))
         creative, _ = mixin_resources(build, CREATIVE_CONFIG, CREATIVE_REFMAP, build_refmap)
         forms, form_mixins = mixin_resources(build, FORMS_CONFIG, FORMS_REFMAP, build_refmap)
+        building, building_mixins = mixin_resources(build, BUILDING_CONFIG, BUILDING_REFMAP, build_refmap)
         assets, catalogue_resources = form_resources(release)
-        added = {**creative, **forms, **assets}
-        for path in [*(ROOT + stem for stem in CLASSES), ROOT + "composite/DistinctForms", *sorted(form_mixins)]:
+        added = {**creative, **forms, **building, **assets}
+        for path in [*(ROOT + stem for stem in CLASSES), ROOT + "composite/DistinctForms",
+                     *sorted(form_mixins | building_mixins)]:
             added[path + ".class"] = build.read(path + ".class")
             for name in build.namelist():
                 if name.startswith(path + "$") and name.endswith(".class"):
@@ -82,12 +90,13 @@ def main():
             parser.error("patch overlaps classes in the published JAR")
 
         manifest = json.loads(release.read("fabric.mod.json"))
-        manifest["version"] += ".forms.1"
-        manifest["mixins"].extend((CREATIVE_CONFIG, FORMS_CONFIG))
+        manifest["version"] += ".forms.2"
+        manifest["mixins"].extend((CREATIVE_CONFIG, FORMS_CONFIG, BUILDING_CONFIG))
         manifest["entrypoints"]["main"].append("dev.dreamwalker.bloodbornedw.compat.worldedit.SelectionAxe")
         worldedit = json.loads(release.read(WORLDEDIT_CONFIG))
         worldedit["mixins"].extend(WORLDEDIT_MIXINS)
         replacements = {"fabric.mod.json": manifest, WORLDEDIT_CONFIG: worldedit, **catalogue_resources}
+        replacements.update(screenshot_replacements(release))
 
         args.output.parent.mkdir(parents=True, exist_ok=True)
         with ZipFile(args.output, "x", compression=ZIP_DEFLATED) as output:
