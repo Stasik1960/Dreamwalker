@@ -36,9 +36,11 @@ final class ModelShiftChecks {
     private static final Identifier TOOL = new Identifier("bloodborne_dw", "bb_tool");
     private static final String MODE_TAG = "DwDebugToolMode";
     private static final String[] MODES = {"up", "down", "left", "right", "forward", "back"};
+    private static final Fixture FIXED_ID = Fixture.place("fixed-ID composite", new BlockPos(445, 285, -841),
+            "source_light_blue_stained_glass_form_0");
     private static final List<Fixture> FIXTURES = List.of(
             Fixture.place("compact block", new BlockPos(438, 285, -841), "source_bricks_stone_2"),
-            Fixture.place("fixed-ID composite", new BlockPos(445, 285, -841), "source_light_blue_stained_glass_form_0"),
+            FIXED_ID,
             new Fixture("baked city fragment", new BlockPos(93, 124, -708), new Vec3d(97.484, 122.90780, -707.696),
                     88.4f, 5.2f, "native_physics_2", false, GameMode.CREATIVE),
             Fixture.place("OP2 survival compact block", new BlockPos(451, 285, -841), "source_bricks_stone_2", GameMode.SURVIVAL));
@@ -62,6 +64,7 @@ final class ModelShiftChecks {
 
     private record Probe(int value, Vec3d offset, Identifier block, List<Box> collision, int mode, int permission) {}
 
+    private final List<Fixture> fixtures = Boolean.getBoolean("dw.qa.shiftFixedIdOnly") ? List.of(FIXED_ID) : FIXTURES;
     private final Method renderPose;
     private final Method x;
     private final Method y;
@@ -85,11 +88,12 @@ final class ModelShiftChecks {
     }
 
     String tick(MinecraftClient game) throws Exception {
-        if (fixtureIndex == FIXTURES.size()) {
-            return failures.isEmpty() ? "PASS BB model tool: all six mouse-selected directions on compact, fixed-ID and baked blocks, including OP2 survival and visible shifts on all creative fixtures"
-                    : "FAIL BB model tool: " + String.join(" | ", failures);
+        if (fixtureIndex == fixtures.size()) {
+            if (!failures.isEmpty()) return "FAIL BB model tool: " + String.join(" | ", failures);
+            return fixtures.size() == 1 ? "PASS BB model tool: all six mouse-selected directions and a visible shift on the fixed-ID composite"
+                    : "PASS BB model tool: all six mouse-selected directions on compact, fixed-ID and baked blocks, including OP2 survival and visible shifts on all creative fixtures";
         }
-        Fixture fixture = FIXTURES.get(fixtureIndex);
+        Fixture fixture = fixtures.get(fixtureIndex);
         wait++;
         switch (stage) {
             case PREPARE -> {
@@ -98,7 +102,7 @@ final class ModelShiftChecks {
             }
             case READY -> {
                 if (wait > 560) {
-                    if (fixture.checkPixels()) capture(game, "qa-shift-" + fixture.screenshotName() + "-not-ready.png");
+                    if (fixture.checkPixels()) capture(game, fixture, "qa-shift-" + fixture.screenshotName() + "-not-ready.png");
                     fail(fixture, readiness(game, fixture));
                     break;
                 }
@@ -114,12 +118,12 @@ final class ModelShiftChecks {
                 }
                 if (fixture.checkPixels()) {
                     if (!game.worldRenderer.isRenderingReady(fixture.pos()) || wait % 6 != 0) break;
-                    int[] frame = capture(game, null);
+                    int[] frame = capture(game, fixture, null);
                     if (!hasVisibleDetail(frame, fixture.place() ? 12 : 24)) break;
                     stableFrames = baseline != null && difference(baseline, frame) <= 4 ? stableFrames + 1 : 0;
                     baseline = frame;
                     if (stableFrames < 2) break;
-                    still = capture(game, "qa-shift-" + fixture.screenshotName() + "-before.png");
+                    still = capture(game, fixture, "qa-shift-" + fixture.screenshotName() + "-before.png");
                 }
                 expected = origin.offset();
                 shift(game);
@@ -150,7 +154,7 @@ final class ModelShiftChecks {
                         break;
                     }
                     int noise = difference(baseline, still);
-                    int visible = difference(still, capture(game, "qa-shift-" + fixture.screenshotName() + "-up.png"));
+                    int visible = difference(still, capture(game, fixture, "qa-shift-" + fixture.screenshotName() + "-up.png"));
                     System.out.println("DW SHIFT QA " + fixture.label() + " crop changed=" + visible + " idle=" + noise);
                     if (visible < Math.max(35, 3 * noise)) {
                         failures.add(fixture.label() + " pose synchronized but model did not visibly move (pixels="
@@ -314,10 +318,10 @@ final class ModelShiftChecks {
         return stack.getNbt() == null ? 0 : stack.getNbt().getInt(MODE_TAG);
     }
 
-    private static int[] capture(MinecraftClient game, String filename) throws Exception {
+    private static int[] capture(MinecraftClient game, Fixture fixture, String filename) throws Exception {
         try (NativeImage image = ScreenshotRecorder.takeScreenshot(game.getFramebuffer())) {
             if (filename != null) image.writeTo(Path.of(game.runDirectory.getPath(), filename));
-            int radius = Math.max(16, image.getHeight() / 14);
+            int radius = Math.max(16, image.getHeight() / (fixture == FIXED_ID ? 5 : 14));
             int[] pixels = new int[4 * radius * radius];
             int i = 0;
             for (int dy = -radius; dy < radius; dy++) {
