@@ -38,15 +38,6 @@ final class WindowRotationChecks {
                     "window cardinal orientation changed with diagonal gaze");
             require(rotation(world.getBlockState(diagonal)) == 1, "Shift did not place the window at 45 degrees");
 
-            var stair = OPEN_WINDOW.east(12);
-            place(player, stair, "source_stairs_dark_prismarine_stairs_outer_right_bottom", 44, false);
-            // This particular legacy fence now places its unified item via the normal player entry point.
-            require(Registries.BLOCK.getId(world.getBlockState(stair).getBlock()).getPath().equals("connected_fence_90993"),
-                    "legacy 90993 installation did not select unified fence");
-            var rotated = OPEN_WINDOW.east(16);
-            place(player, rotated, "source_standard_lantern", 44, false);
-            require(rotation(world.getBlockState(rotated)) % 2 == 0, "ordinary diagonal gaze placed a lantern diagonally");
-
             for (BlockPos pos : new BlockPos[]{OPEN_WINDOW, closed}) {
                 var state = world.getBlockState(pos);
                 var selection = state.getOutlineShape(world, pos);
@@ -78,6 +69,10 @@ final class WindowRotationChecks {
             require(player.getZ() > OPEN_WINDOW.getZ() + 1, "crawl-sized player could not pass beneath the open glass");
             require(!world.getBlockState(OPEN_WINDOW).getCollisionShape(world, OPEN_WINDOW, ShapeContext.absent()).isEmpty(),
                     "open window lost placement collision");
+            player.changeGameMode(GameMode.CREATIVE);
+            var rotated = OPEN_WINDOW.east(16);
+            place(player, rotated, "source_standard_lantern", 44, false);
+            require(rotation(world.getBlockState(rotated)) % 2 == 0, "ordinary diagonal gaze placed a lantern diagonally");
         } finally {
             player.setSneaking(false);
             player.setPose(EntityPose.STANDING);

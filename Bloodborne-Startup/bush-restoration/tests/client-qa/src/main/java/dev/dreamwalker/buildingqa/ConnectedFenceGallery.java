@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.option.GraphicsMode;
 import net.minecraft.client.util.ScreenshotRecorder;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
@@ -28,10 +29,18 @@ final class ConnectedFenceGallery {
     private CompletableFuture<Void> setup;
     private int row;
     private int ticks;
+    private boolean previousHud;
+    private GraphicsMode previousGraphics;
 
     String tick(MinecraftClient game) throws Exception {
         BlockPos start = ORIGIN.south(10 * row);
         if (setup == null) {
+            if (row == 0) {
+                previousHud = game.options.hudHidden;
+                game.options.hudHidden = true;
+                previousGraphics = game.options.getGraphicsMode().getValue();
+                game.options.getGraphicsMode().setValue(GraphicsMode.FAST);
+            }
             var server = game.getServer();
             var id = game.player.getUuid();
             List<String> styles = ROWS.get(row);
@@ -52,18 +61,19 @@ final class ConnectedFenceGallery {
                 throw new AssertionError("fence showcase is missing " + id);
             }
         }
-        boolean hudHidden = game.options.hudHidden;
-        game.options.hudHidden = true;
         try (var image = ScreenshotRecorder.takeScreenshot(game.getFramebuffer())) {
             image.writeTo(game.runDirectory.toPath().resolve("qa-fence-gallery-" + (row + 1) + ".png"));
-        } finally {
-            game.options.hudHidden = hudHidden;
         }
         ++row;
         if (row == ROWS.size()) return "PASS 13 unified fence and column client models captured in three rows";
         setup = null;
         ticks = 0;
         return null;
+    }
+
+    void cleanup(MinecraftClient game) {
+        game.options.hudHidden = previousHud;
+        game.options.getGraphicsMode().setValue(previousGraphics);
     }
 
     private static void position(ServerPlayerEntity player, BlockPos start, List<String> styles) {
@@ -74,6 +84,7 @@ final class ConnectedFenceGallery {
             }
         }
         player.changeGameMode(GameMode.CREATIVE);
+        player.clearStatusEffects();
         for (int i = 0; i < styles.size(); ++i) {
             String style = styles.get(i);
             var pos = start.east(3 * i);

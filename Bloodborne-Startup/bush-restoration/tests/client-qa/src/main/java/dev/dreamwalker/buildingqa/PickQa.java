@@ -103,6 +103,7 @@ public final class PickQa implements ClientModInitializer {
                 note("FAIL white Light client test: " + failure);
                 failures++;
             }
+            whiteLight.cleanup(game);
             whiteLight = null;
             return;
         }
@@ -130,6 +131,7 @@ public final class PickQa implements ClientModInitializer {
                 note("FAIL fence client gallery: " + failure);
                 failures++;
             }
+            fenceGallery.cleanup(game);
             fenceGallery = null;
             return;
         }

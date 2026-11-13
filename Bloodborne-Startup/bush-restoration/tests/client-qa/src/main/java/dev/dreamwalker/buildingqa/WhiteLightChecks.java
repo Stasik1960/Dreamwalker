@@ -3,12 +3,15 @@ package dev.dreamwalker.buildingqa;
 import java.util.concurrent.CompletableFuture;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.option.GraphicsMode;
 import net.minecraft.client.texture.NativeImage;
 import net.minecraft.client.util.ScreenshotRecorder;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemGroups;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.registry.Registries;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Hand;
@@ -26,9 +29,15 @@ final class WhiteLightChecks {
     private static final BlockPos TARGET = WindowRotationChecks.OPEN_WINDOW.add(-3, 20, -8);
     private CompletableFuture<Void> prepare;
     private int wait;
+    private boolean previousHud;
+    private GraphicsMode previousGraphics;
 
     String tick(MinecraftClient game) throws Exception {
         if (prepare == null) {
+            previousHud = game.options.hudHidden;
+            game.options.hudHidden = true;
+            previousGraphics = game.options.getGraphicsMode().getValue();
+            game.options.getGraphicsMode().setValue(GraphicsMode.FAST);
             var server = game.getServer();
             var playerId = game.player.getUuid();
             prepare = server.submit(() -> setup(server.getPlayerManager().getPlayer(playerId)));
@@ -57,8 +66,6 @@ final class WhiteLightChecks {
             throw new AssertionError("white Light is absent from the creative inventory");
         }
 
-        boolean hudHidden = game.options.hudHidden;
-        game.options.hudHidden = true;
         try (NativeImage image = ScreenshotRecorder.takeScreenshot(game.getFramebuffer())) {
             image.writeTo(game.runDirectory.toPath().resolve("qa-white-light.png"));
             int bright = 0;
@@ -69,10 +76,13 @@ final class WhiteLightChecks {
                 }
             }
             if (bright < 540) throw new AssertionError("white Light was shaded in the dark room (" + bright + "/625)");
-        } finally {
-            game.options.hudHidden = hudHidden;
         }
         return "PASS white Light creative tab, opaque white render in darkness and zero emitted light";
+    }
+
+    void cleanup(MinecraftClient game) {
+        game.options.hudHidden = previousHud;
+        game.options.getGraphicsMode().setValue(previousGraphics);
     }
 
     private static void setup(ServerPlayerEntity player) {
@@ -88,6 +98,12 @@ final class WhiteLightChecks {
         }
         world.setBlockState(TARGET.down(), Blocks.BLACK_CONCRETE.getDefaultState());
         player.changeGameMode(GameMode.CREATIVE);
+        player.clearStatusEffects();
+        if (player.getEquippedStack(EquipmentSlot.HEAD).isOf(Items.CARVED_PUMPKIN)) {
+            player.equipStack(EquipmentSlot.HEAD, ItemStack.EMPTY);
+        }
+        player.getAbilities().flying = false;
+        player.sendAbilitiesUpdate();
         var item = (BlockItem) Registries.ITEM.get(LIGHT);
         var stack = new ItemStack(item);
         var hit = new BlockHitResult(Vec3d.ofCenter(TARGET).add(0, -.5, 0), Direction.UP, TARGET.down(), false);

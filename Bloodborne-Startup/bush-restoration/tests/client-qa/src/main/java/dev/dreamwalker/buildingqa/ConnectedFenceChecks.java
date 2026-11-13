@@ -70,6 +70,11 @@ final class ConnectedFenceChecks {
         place(player, legacyPos, legacy);
         require(Registries.BLOCK.getId(world.getBlockState(legacyPos).getBlock()).getPath().equals("connected_fence_93185_plain"),
                 "legacy fence view 10 did not place the straight fence");
+        BlockPos imported = legacyPos.east(4);
+        var oldGrille = new ItemStack(Registries.ITEM.get(new Identifier(NS, "source_stairs_dark_prismarine_stairs_outer_right_bottom")));
+        place(player, imported, oldGrille);
+        require(Registries.BLOCK.getId(world.getBlockState(imported).getBlock()).getPath().equals("connected_fence_90993"),
+                "legacy 90993 right click did not place unified fence");
 
         Vec3d initial = player.getPos();
         try {
