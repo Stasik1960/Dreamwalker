@@ -2,6 +2,12 @@
 
 Client add-on for creative-mode J picking of indexed Bloodborne city fragments.
 Version 1.0.2 targets DreamWalker v22 Building Fixes and the Bush Restoration map.
+DreamWalker v22 Connecting Fences packages City Original Pick 1.0.3 as a nested
+client mod. Remove an older standalone City Original Pick JAR from the mods
+folder when installing this DreamWalker version. Fabric prioritizes the
+standalone copy over the nested one, and the older city index has an earlier
+DreamWalker version pin for static city fragments.
+
 The Java sources under `mod/src` were recovered from the original 1.0.0 project.
 The index generator and the compatibility test came from commit `1918294`.
 
@@ -20,3 +26,7 @@ $jar = (Resolve-Path mod/build/libs/dreamwalker-city-original-pick-1.0.2.jar).Pa
 javac -cp $jar -d mod/build/check tests/IndexCompatibilityCheck.java
 java -cp "mod/build/check;$jar" dev.dreamwalker.citypick.IndexCompatibilityCheck
 ```
+
+The Connecting Fences packager takes this 1.0.2 JAR as its `--original-pick`
+argument. It verifies the Bush Restoration layout and updates the city index
+version pin for older static fragments before bundling the add-on as 1.0.3.

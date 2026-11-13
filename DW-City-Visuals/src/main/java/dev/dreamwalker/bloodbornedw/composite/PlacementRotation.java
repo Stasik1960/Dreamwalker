@@ -12,7 +12,10 @@ public final class PlacementRotation {
     }
 
     public static int yaw(float degrees, ItemPlacementContext context) {
-        boolean diagonal = diagonal(context);
+        return yaw(degrees, diagonal(context));
+    }
+
+    public static int yaw(float degrees, boolean diagonal) {
         float wrapped = Float.isFinite(degrees) ? degrees % 360.0F : 0.0F;
         int quarter = Math.floorMod(Math.round((wrapped - (diagonal ? 45.0F : 0.0F)) / 90.0F), 4);
         return quarter * 2 + (diagonal ? 1 : 0);

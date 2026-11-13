@@ -17,7 +17,7 @@ public final class IndexCompatibilityCheck {
             require(data.readUTF().equals(BUSH), "pose table targets the wrong city catalog");
             version = data.readUTF();
         }
-        require((version.endsWith(".forms.1") || version.endsWith(".forms.2")), "test requires the Distinct Forms distribution");
+        require(version.matches(".*\\.forms\\.[123]"), "test requires the Distinct Forms distribution");
 
         PickIndex index = new PickIndex();
         var oldDimension = new PickIndex.ChunkKey("bloodborne_dw", "bloodborne_old", -1, -1);

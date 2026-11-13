@@ -41,10 +41,14 @@ final class WorldChecks {
     static List<String> start(ServerPlayerEntity player) {
         ServerWorld world = player.getServerWorld();
         return List.of(
+                verify("13 connected fences in Creative, player heights, legacy placement and column", () -> ConnectedFenceChecks.verify(player)),
+                verify("93241 alignment and crawl clearance, cardinal placement and Shift", () -> WindowRotationChecks.verify(player)),
                 verify("registered fixed model and all slab types", WorldChecks::forms),
                 verify("wooden axe WorldEdit selection and suppressed damage/use", () -> axe(player, world)),
                 verify("authored 45-degree entity collision and cardinal regression", () -> diagonal(world)),
                 verify("screenshot block placement and collisions", () -> ScreenshotBlockChecks.verify(player)),
+                verify("five creative-only utilities, including white Light and NRP Pickaxe protection", () ->
+                        UtilityChecks.verify(player)),
                 verify("926 fixed models and 567 fixed slabs, including upper slab placement", () ->
                         Class.forName(NEIGHBOR_QA).getMethod("verifyDistinctForms", ServerWorld.class, ServerPlayerEntity.class)
                                 .invoke(null, world, player)),

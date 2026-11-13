@@ -78,6 +78,13 @@ public abstract class StudioCompositeMixin {
     private static void dw$authoredSelection(BlockView view, CompositeData.Contribution contribution, BlockPos cell,
             ShapeContext shape, CallbackInfoReturnable<List<Box>> result) {
         var layout = StudioFootprints.dynamic(contribution.rootData());
-        if (layout != null && layout.outline() != null) result.setReturnValue(contribution.shape().selection());
+        if (layout != null && layout.outline() != null) {
+            if (contribution.owner().registryId().equals("bloodborne_dw:source_shutter_window")) {
+                var offset = CompositeData.cell(cell).subtract(contribution.owner().root());
+                result.setReturnValue(layout.outline().getOrDefault(offset, List.of()));
+            } else {
+                result.setReturnValue(contribution.shape().selection());
+            }
+        }
     }
 }

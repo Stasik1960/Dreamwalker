@@ -33,7 +33,11 @@ public final class PickQa implements ClientModInitializer {
             new Aim(445.021, 43.00313, -836.632, -7.9f, 38.7f, new BlockPos(445, 43, -835),
                     DW + "source_gray_wool", "0"),
             new Aim(226.867, 50.665, -819.466, -21.6f, 10.2f, new BlockPos(228, 51, -815),
-                    DW + "source_weathered_cut_copper", null)
+                    DW + "source_weathered_cut_copper", null),
+            new Aim(141.5, 89.98, -786.5, 90.0f, 65.0561f, new BlockPos(140, 89, -787),
+                    DW + "connected_fence_93185_post", null),
+            new Aim(131.5, 89.98, -781.5, -90.0f, 65.0561f, new BlockPos(132, 89, -782),
+                    DW + "connected_fence_93185_plain", null)
     );
 
     private final List<String> results = new ArrayList<>();
@@ -43,6 +47,11 @@ public final class PickQa implements ClientModInitializer {
     private CompletableFuture<ItemStack> serverStack;
     private CompletableFuture<List<String>> serverChecks;
     private final GlassChecks glass = Boolean.getBoolean("dw.qa.glass") ? new GlassChecks() : null;
+    private WhiteLightChecks whiteLight = Boolean.getBoolean("dw.qa.whiteLight") ? new WhiteLightChecks() : null;
+    private WindowCrawlChecks windowCrawl = Boolean.getBoolean("dw.qa.crawl") ? new WindowCrawlChecks() : null;
+    private ConnectedFenceGallery fenceGallery = Boolean.getBoolean("dw.qa.fenceGallery")
+            ? new ConnectedFenceGallery() : null;
+    private boolean glassFinished;
     private ModelShiftChecks shift;
     private int serverWait;
     private boolean serverTestFinished;
@@ -63,6 +72,7 @@ public final class PickQa implements ClientModInitializer {
                 }
                 if (game.world != null && game.player != null && game.getServer() != null) tick(game);
             } catch (Throwable failure) {
+                if (windowCrawl != null) windowCrawl.cleanup(game);
                 failure.printStackTrace();
                 results.add("FAIL " + failure);
                 finish(game, false);
@@ -83,12 +93,53 @@ public final class PickQa implements ClientModInitializer {
             checkServer(game);
             return;
         }
+        if (whiteLight != null) {
+            try {
+                String outcome = whiteLight.tick(game);
+                if (outcome == null) return;
+                note(outcome);
+                if (outcome.startsWith("FAIL")) failures++;
+            } catch (Exception | AssertionError failure) {
+                note("FAIL white Light client test: " + failure);
+                failures++;
+            }
+            whiteLight = null;
+            return;
+        }
+        if (windowCrawl != null) {
+            try {
+                String outcome = windowCrawl.tick(game);
+                if (outcome == null) return;
+                note(outcome);
+                if (outcome.startsWith("FAIL")) failures++;
+            } catch (Exception | AssertionError failure) {
+                windowCrawl.cleanup(game);
+                note("FAIL Crawl client test: " + failure);
+                failures++;
+            }
+            windowCrawl = null;
+            return;
+        }
+        if (fenceGallery != null) {
+            try {
+                String outcome = fenceGallery.tick(game);
+                if (outcome == null) return;
+                note(outcome);
+                if (outcome.startsWith("FAIL")) failures++;
+            } catch (Exception | AssertionError failure) {
+                note("FAIL fence client gallery: " + failure);
+                failures++;
+            }
+            fenceGallery = null;
+            return;
+        }
         if (test == CASES.size()) {
-            if (glass != null) {
+            if (glass != null && !glassFinished) {
                 String outcome = glass.tick(game);
                 if (outcome == null) return;
                 note(outcome);
                 if (outcome.startsWith("FAIL")) failures++;
+                glassFinished = true;
             }
             finish(game, failures == 0);
             return;

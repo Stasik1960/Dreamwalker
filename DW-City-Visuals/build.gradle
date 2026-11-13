@@ -49,6 +49,30 @@ tasks.withType(AbstractArchiveTask).configureEach {
 }
 java { withSourcesJar() }
 
+tasks.register('windowPlacementJar', Jar) {
+    archiveBaseName = 'dw-window-placement'
+    archiveClassifier = 'dev'
+    dependsOn tasks.named('compileJava')
+    from(sourceSets.main.output.classesDirs) {
+        include 'dev/dreamwalker/bloodbornedw/composite/PlacementRotation.class'
+        include 'dev/dreamwalker/bloodbornedw/composite/overlaymixin/CompactPlacementRotationMixin.class'
+        include 'dev/dreamwalker/bloodbornedw/composite/overlaymixin/CompositePlacementRotationMixin.class'
+        include 'dev/dreamwalker/bloodbornedw/composite/overlaymixin/LadderPlacementRotationMixin.class'
+        include 'dev/dreamwalker/bloodbornedw/composite/overlaymixin/RpPlacementRotationMixin.class'
+        include 'dev/dreamwalker/bloodbornedw/composite/studiomixin/StudioCompositeMixin.class'
+        include 'dev/dreamwalker/bloodbornedw/composite/studiomixin/StudioImportedOutlineMixin.class'
+    }
+    from('src/main/resources') { include 'bloodborne_dw/studio-layouts-v22.json' }
+}
+tasks.register('remapWindowPlacementJar', net.fabricmc.loom.task.RemapJarTask) {
+    dependsOn tasks.named('windowPlacementJar')
+    inputFile.set(tasks.named('windowPlacementJar', Jar).flatMap { it.archiveFile })
+    classpath.from(sourceSets.main.compileClasspath)
+    archiveBaseName = 'dw-window-placement'
+    archiveClassifier = ''
+    addNestedDependencies = false
+}
+
 // These resources are finalized by prepareRevisionAssets after palette materialization.
 def revisionProfileAsset = { profile, path ->
     file("src/main/resources/dw_city_visuals/${profile}/assets/bloodborne_dw/${path}")

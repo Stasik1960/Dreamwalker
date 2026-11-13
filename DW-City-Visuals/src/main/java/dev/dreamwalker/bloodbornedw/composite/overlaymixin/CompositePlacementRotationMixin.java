@@ -3,6 +3,7 @@ package dev.dreamwalker.bloodbornedw.composite.overlaymixin;
 import dev.dreamwalker.bloodbornedw.composite.CompositeItem;
 import dev.dreamwalker.bloodbornedw.composite.CompositeRootBlock;
 import dev.dreamwalker.bloodbornedw.composite.CompositeSpec;
+import dev.dreamwalker.bloodbornedw.composite.ImportedStairBlock;
 import dev.dreamwalker.bloodbornedw.composite.PlacementRotation;
 import dev.dreamwalker.bloodbornedw.composite.ThinWindowRootBlock;
 import net.minecraft.block.BlockState;
@@ -24,8 +25,11 @@ public abstract class CompositePlacementRotationMixin {
     @ModifyArg(method = "placeInternal", index = 1, at = @At(value = "INVOKE",
         target = "Ldev/dreamwalker/bloodbornedw/composite/CompositeSurfacePlacement;align(Ldev/dreamwalker/bloodbornedw/composite/CompositeSpec;Lnet/minecraft/class_2680;Lnet/minecraft/class_2487;Lnet/minecraft/class_1750;)Ldev/dreamwalker/bloodbornedw/composite/CompositeSurfacePlacement$Placement;"))
     private BlockState dw$facePlayer(CompositeSpec spec, BlockState state, NbtCompound payload, ItemPlacementContext context) {
-        if (state.getBlock() instanceof ThinWindowRootBlock && context.getSide().getAxis().isHorizontal()) return state;
-        int rotation = PlacementRotation.fitModel(state.get(CompositeRootBlock.ROTATION), state);
+        // Glazing is attached to the clicked face. Stairs have their own facing and connectivity.
+        if (state.getBlock() instanceof ThinWindowRootBlock || state.getBlock() instanceof ImportedStairBlock) return state;
+        // Historical item aliases may carry the source map's yaw corrections. A new placement uses
+        // the chosen art's canonical axes, even when the old source variant was authored diagonally.
+        int rotation = PlacementRotation.fitModel(PlacementRotation.yaw(context.getPlayerYaw(), context), state);
         return state.with(CompositeRootBlock.ROTATION, rotation);
     }
 }
