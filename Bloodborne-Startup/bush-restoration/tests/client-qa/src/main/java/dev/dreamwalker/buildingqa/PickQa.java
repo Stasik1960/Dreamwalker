@@ -42,6 +42,7 @@ public final class PickQa implements ClientModInitializer {
     private BackupPromptScreen acknowledged;
     private CompletableFuture<ItemStack> serverStack;
     private CompletableFuture<List<String>> serverChecks;
+    private final GlassChecks glass = Boolean.getBoolean("dw.qa.glass") ? new GlassChecks() : null;
     private int serverWait;
     private boolean serverTestFinished;
 
@@ -68,12 +69,18 @@ public final class PickQa implements ClientModInitializer {
         });
     }
 
-    private void tick(MinecraftClient game) {
+    private void tick(MinecraftClient game) throws Exception {
         if (!serverTestFinished) {
             checkServer(game);
             return;
         }
         if (test == CASES.size()) {
+            if (glass != null) {
+                String outcome = glass.tick(game);
+                if (outcome == null) return;
+                note(outcome);
+                if (outcome.startsWith("FAIL")) failures++;
+            }
             finish(game, failures == 0);
             return;
         }
@@ -185,7 +192,7 @@ public final class PickQa implements ClientModInitializer {
 
     private void finish(MinecraftClient game, boolean success) {
         done = true;
-        note(success ? "PASS Original Pick gameplay" : "FAIL Original Pick gameplay");
+        note(success ? "PASS integrated building/Original Pick QA" : "FAIL integrated building/Original Pick QA");
         try {
             Files.write(game.runDirectory.toPath().resolve("qa-pick-result.txt"), results);
         } catch (Exception failure) {

@@ -41,12 +41,16 @@ public final class BuildingNeighborsQa {
 
     private BuildingNeighborsQa() {}
 
-    public static String start(ServerWorld world, ServerPlayerEntity player) {
+    public static String start(ServerWorld world, ServerPlayerEntity player) throws ReflectiveOperationException {
         for (BlockPos pos : List.of(GATE, WALL_TO_STONE, WALL_TO_DECOR, WALL_TO_THIRD_PARTY,
                 WALL_REMOVAL, SIGN, SLAB_PLACE, WALL_TO_THIRD_PARTY.east())) world.getChunk(pos);
 
+        var pane = compact(PANE);
+        var imported = Class.forName("dev.dreamwalker.bloodbornedw.composite.AutoStoneFence");
+        require((boolean) imported.getMethod("matches", BlockState.class).invoke(null, pane),
+                "pane fixture is outside the imported connecting family: " + pane);
         set(world, GATE, Blocks.COBBLESTONE_WALL.getDefaultState());
-        set(world, GATE.east(), compact(PANE));
+        set(world, GATE.east(), pane);
         require(world.getBlockState(GATE).get(WallBlock.EAST_SHAPE) != WallShape.NONE,
                 "vanilla wall must connect to an imported pane");
         set(world, GATE.east(), compact(FENCE));
@@ -74,9 +78,10 @@ public final class BuildingNeighborsQa {
                 .sorted()
                 .map(Registries.BLOCK::get)
                 .map(Block::getDefaultState)
-                .filter(state -> state.isSideSolidFullSquare(world, WALL_TO_THIRD_PARTY.east(), Direction.WEST))
-                .findFirst();
-        thirdParty.ifPresent(state -> set(world, WALL_TO_THIRD_PARTY.east(), state));
+                .filter(state -> state.isSideSolidFullSquare(world, WALL_TO_THIRD_PARTY.east(), Direction.WEST)
+                        && !Block.cannotConnect(state))
+                .findFirst().orElseThrow(() -> new AssertionError("Missing solid Handcrafted or Yuushya test support"));
+        set(world, WALL_TO_THIRD_PARTY.east(), thirdParty);
 
         set(world, SIGN, imported(SLAB + "_full"));
         var standing = Blocks.OAK_SIGN.getDefaultState();
@@ -86,7 +91,11 @@ public final class BuildingNeighborsQa {
         require(place(player, new ItemStack(Items.OAK_SIGN), SIGN, Direction.UP).isAccepted(),
                 "real sign item rejected DreamWalker support");
         require(world.getBlockState(SIGN.up()).isOf(Blocks.OAK_SIGN), "sign did not occupy cell above support");
-        set(world, SIGN.east(), sideSign);
+        require(place(player, new ItemStack(Items.OAK_SIGN), SIGN, Direction.EAST).isAccepted(),
+                "real wall sign item rejected DreamWalker support");
+        require(world.getBlockState(SIGN.east()).isOf(Blocks.OAK_WALL_SIGN)
+                && world.getBlockState(SIGN.east()).get(WallSignBlock.FACING) == Direction.EAST,
+                "wall sign did not occupy the east-facing side");
         set(world, SIGN, imported(SLAB + "_half"));
         require(!(world.getBlockState(SIGN.up()).getBlock() instanceof AbstractSignBlock)
                 && !(world.getBlockState(SIGN.east()).getBlock() instanceof AbstractSignBlock),
@@ -100,14 +109,10 @@ public final class BuildingNeighborsQa {
         require(reaches(world, GATE.east(), Direction.WEST), "imported wall did not connect back to vanilla gate");
         require(reaches(world, WALL_TO_STONE, Direction.EAST), "imported wall did not connect to vanilla stone");
         require(reaches(world, WALL_TO_DECOR, Direction.EAST), "imported wall did not connect to DreamWalker full form");
-        boolean thirdParty = !world.getBlockState(WALL_TO_THIRD_PARTY.east()).isAir();
-        if (thirdParty) {
-            require(reaches(world, WALL_TO_THIRD_PARTY, Direction.EAST),
-                    "imported wall did not connect to third-party full block");
-        }
+        require(reaches(world, WALL_TO_THIRD_PARTY, Direction.EAST),
+                "imported wall did not connect to third-party full block");
         require(!reaches(world, WALL_REMOVAL, Direction.EAST), "imported wall arm did not retract after removal");
-        return "PASS imported wall recalculation: vanilla gate, vanilla stone, mod full block, removal"
-                + (thirdParty ? ", third-party full block" : "; third-party fixture unavailable");
+        return "PASS imported wall recalculation: vanilla gate, vanilla stone, mod full block, third-party full block, removal";
     }
 
     private static void checkDistinctForms(ServerWorld world, ServerPlayerEntity player) {
