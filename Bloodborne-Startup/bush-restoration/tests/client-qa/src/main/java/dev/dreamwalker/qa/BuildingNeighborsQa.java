@@ -101,8 +101,7 @@ public final class BuildingNeighborsQa {
                 && !(world.getBlockState(SIGN.east()).getBlock() instanceof AbstractSignBlock),
                 "signs must detach when their support face is lost");
 
-        checkDistinctForms(world, player);
-        return "PASS standing/wall signs, reciprocal gate/wall/pane and b46f312 fixed forms and slab";
+        return "PASS standing/wall signs and reciprocal gate/wall/pane";
     }
 
     public static String verifyAfterTicks(ServerWorld world) {
@@ -115,7 +114,7 @@ public final class BuildingNeighborsQa {
         return "PASS imported wall recalculation: vanilla gate, vanilla stone, mod full block, third-party full block, removal";
     }
 
-    private static void checkDistinctForms(ServerWorld world, ServerPlayerEntity player) {
+    public static String verifyDistinctForms(ServerWorld world, ServerPlayerEntity player) {
         int modelForms = 0;
         for (Identifier id : Registries.BLOCK.getIds()) {
             if (id.getNamespace().equals("bloodborne_dw") && id.getPath().matches(".+_form_[0-9]+")) modelForms++;
@@ -123,7 +122,7 @@ public final class BuildingNeighborsQa {
         require(modelForms == 926, "expected 926 fixed model registry IDs, found " + modelForms);
         var registry = Registries.BLOCK.getIds();
         long slabForms = registry.stream().filter(id -> id.getNamespace().equals("bloodborne_dw")
-                && id.getPath().matches("restored_slab_[0-9a-f]+_(half|upper|full)")).count();
+                && id.getPath().matches("restored_slab_(?:(?:decor|overlay)_)?[0-9a-f]{16}_(half|upper|full)")).count();
         require(slabForms == 567, "expected 567 fixed slab registry IDs, found " + slabForms);
         var floor = SLAB_PLACE;
         set(world, floor, Blocks.STONE.getDefaultState());
@@ -134,6 +133,7 @@ public final class BuildingNeighborsQa {
         var collision = placed.getCollisionShape(world, floor.up());
         require(!collision.isEmpty() && collision.getMin(Direction.Axis.Y) >= 0.49
                 && collision.getMax(Direction.Axis.Y) >= 0.99, "fixed upper slab did not retain upper-half collision");
+        return "PASS 926 fixed model and 567 slab IDs and fixed upper slab placement";
     }
 
     private static ActionResult place(ServerPlayerEntity player, ItemStack item, BlockPos support, Direction face) {

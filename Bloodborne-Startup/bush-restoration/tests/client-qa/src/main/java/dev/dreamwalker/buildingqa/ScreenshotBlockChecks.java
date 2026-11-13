@@ -33,10 +33,11 @@ final class ScreenshotBlockChecks {
             BlockPos wall = place(player, fixture.east(6), "source_compatibility_fragment", 33);
             require(solid(world, wall), "compatibility wall 34 still has no collision");
             BlockPos pilaster = place(player, fixture.east(9), "source_dark_oak_trapdoor_open", 0);
-            var top = world.getBlockState(pilaster.up(2)).getOutlineShape(world, pilaster.up(2));
-            require(solid(world, pilaster) && solid(world, pilaster.up()) && !top.isEmpty()
-                    && Math.abs(top.getMax(Direction.Axis.Y) - 0.75) < 1.0e-6,
-                    "the complete pilaster should reach exactly 2.75 blocks from one placement");
+            BlockPos upper = pilaster.up();
+            var top = world.getBlockState(upper).getCollisionShape(world, upper);
+            require(solid(world, pilaster) && !top.isEmpty()
+                    && Math.abs(top.getMax(Direction.Axis.Y) - 15.0 / 16.0) < 1.0e-6
+                    && !solid(world, pilaster.up(2)), "the pilaster body should reach 31/16 of a block from one placement");
         } finally {
             player.setYaw(previousYaw);
         }

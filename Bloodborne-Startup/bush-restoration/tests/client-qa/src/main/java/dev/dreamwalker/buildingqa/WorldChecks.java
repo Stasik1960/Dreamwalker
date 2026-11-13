@@ -45,6 +45,9 @@ final class WorldChecks {
                 verify("wooden axe WorldEdit selection and suppressed damage/use", () -> axe(player, world)),
                 verify("authored 45-degree entity collision and cardinal regression", () -> diagonal(world)),
                 verify("screenshot block placement and collisions", () -> ScreenshotBlockChecks.verify(player)),
+                verify("926 fixed models and 567 fixed slabs, including upper slab placement", () ->
+                        Class.forName(NEIGHBOR_QA).getMethod("verifyDistinctForms", ServerWorld.class, ServerPlayerEntity.class)
+                                .invoke(null, world, player)),
                 verify("sign/fence fixture setup", () -> {
                     Class.forName(NEIGHBOR_QA).getMethod("start", ServerWorld.class, ServerPlayerEntity.class)
                             .invoke(null, world, player);
