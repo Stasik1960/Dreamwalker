@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class TableScreen extends Screen {
-    private static final int PANEL = 206;
+    private static final int PANEL = 188;
     private static final int GOLD=0xffe4c698, DIM=0xffbea28a;
     private Protocol.View view;
     private final List<Control> controls = new ArrayList<>();
@@ -56,8 +56,9 @@ public final class TableScreen extends Screen {
         boolean bags = !view.started() && choosingBag;
         page = Math.min(page,Math.max(0,(view.bags().size()-1)/4));
         int count = Math.min(4,Math.max(0,view.bags().size()-4*page));
-        int rows = bags ? Math.max(1,count): view.started() ? 1:2;
-        int h = (view.started() ? 89 : 91) + rows * 20 + view.board().size()*11;
+        int content = bags ? Math.max(1,count)*19 + (view.bags().size()>4 || view.bagSlot()>=0 ? 19 : 0)
+                : view.started() ? 40 : 55;
+        int h = 57 + content + view.board().size()*11;
         int top = Math.max(4,height-h-9);
         int w = Math.min(PANEL,width-left-5);
         c.fill(left,top,left+w,top+h,0xe51a0f14);
@@ -82,7 +83,7 @@ public final class TableScreen extends Screen {
                 for (int i=0;i<count;i++) {
                     Protocol.Bag bag=view.bags().get(4*page+i);
                     button(c,mx,my,left+8,y,w-16,17,Text.literal(bag.name()),Protocol.BAG,bag.slot(),true);
-                    y+=20;
+                    y+=19;
                 }
             }
             int pages=(view.bags().size()+3)/4;
@@ -94,9 +95,10 @@ public final class TableScreen extends Screen {
             y+=20;
         } else if (!view.started()) {
             for (int i=0; i<view.skins().length; i++) {
-                dieButton(c,mx,my,left+8+i%10*19,y+i/10*20,i,view.skins()[i],0,Protocol.SELECT);
+                int value=i<view.values().length ? view.values()[i] : 0;
+                dieButton(c,mx,my,left+8+i%10*17,y+i/10*18,i,view.skins()[i],value,Protocol.SELECT);
             }
-            y+=42;
+            y+=36;
             c.drawText(textRenderer,label("picked",Integer.bitCount(view.selected()),view.required()),left+8,y+3,DIM,false);
             button(c,mx,my,left+w-82,y,74,17,label("bag"),101,0,!view.busy());
             y+=20;
@@ -118,11 +120,11 @@ public final class TableScreen extends Screen {
             y+=20;
         }
         int buttons=top+h-24;
-        if (view.host() && !view.started()) {
-            button(c,mx,my,left+8,buttons,61,18,label("start"),Protocol.START,0,view.playerCount()>=view.minPlayers()&&!view.busy());
-            button(c,mx,my,left+73,buttons,64,18,label("throw"),Protocol.THROW,0,view.canRoll());
+        if (!view.started() && !"FREE".equals(view.game())) {
+            if (view.host())
+                button(c,mx,my,left+8,buttons,w-76,18,label("start"),Protocol.START,0,view.playerCount()>=view.minPlayers()&&!view.busy());
         } else {
-            button(c,mx,my,left+8,buttons,126,18,label("throw"),Protocol.THROW,0,view.canRoll());
+            button(c,mx,my,left+8,buttons,w-76,18,label("throw"),Protocol.THROW,0,view.canRoll());
         }
         button(c,mx,my,left+w-64,buttons,56,18,label("leave"),Protocol.LEAVE,0,view.canLeave());
     }
@@ -140,15 +142,15 @@ public final class TableScreen extends Screen {
 
     private void dieButton(DrawContext c,int mx,int my,int x,int y,int index,int skin,int value,int action) {
         boolean enabled=skin>=0&&!view.busy()&&(action==Protocol.SELECT||value>0&&view.canMark());
-        Control control=new Control(x,y,18,18,action,index,enabled);
+        Control control=new Control(x,y,17,17,action,index,enabled);
         controls.add(control);
         boolean chosen=((action==Protocol.MARK?view.marked():view.selected())&(1<<index))!=0;
-        c.fill(x,y,x+18,y+18,chosen?0xffe3b775:enabled&&control.hit(mx,my)?0xffbc955f:0xff694633);
-        c.fill(x+1,y+1,x+17,y+17,chosen?0xff583422:0xff24191d);
+        c.fill(x,y,x+17,y+17,chosen?0xffe3b775:enabled&&control.hit(mx,my)?0xffbc955f:0xff694633);
+        c.fill(x+1,y+1,x+16,y+16,chosen?0xff583422:0xff24191d);
         if (skin>=0 && skin<DiceMod.DICE.size()) {
             c.drawItem(new ItemStack(DiceMod.DICE.get(skin)),x+1,y);
             if (value>0) {
-                c.fill(x+10,y+8,x+18,y+18,0xee181015);
+                c.fill(x+10,y+8,x+17,y+17,0xee181015);
                 c.drawTextWithShadow(textRenderer,Integer.toString(value),x+11,y+9,GOLD);
             }
             if (control.hit(mx,my)) c.drawItemTooltip(textRenderer,new ItemStack(DiceMod.DICE.get(skin)),mx,my);

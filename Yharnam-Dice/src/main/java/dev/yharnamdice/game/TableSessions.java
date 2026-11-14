@@ -31,6 +31,7 @@ public final class TableSessions {
     private static final Map<ServerWorld, Map<BlockPos, Table>> WORLDS = new IdentityHashMap<>();
     private static final Map<UUID, Table> SEATED = new HashMap<>();
     private static final double CLOTH_Y = 14.13 / 16.0;
+    private static final float DIE_SCALE = 0.68f / 3f * 0.70f;
 
     private TableSessions() {}
 
@@ -104,7 +105,6 @@ public final class TableSessions {
         final TableSeat seat;
         int bagSlot = -1;
         UUID bagId;
-        ItemStack bag;
         int selected;
         int mark;
         int[] values = new int[0];
@@ -140,7 +140,7 @@ public final class TableSessions {
             if (bagSlot < 0) return skins;
             for (int i = 0; i <= 40; i++) {
                 ItemStack check = user.getInventory().getStack(i);
-                if (check == bag && check.isOf(DiceMod.POUCH) && bagId.equals(DicePouchItem.key(check))) {
+                if (check.isOf(DiceMod.POUCH) && bagId.equals(DicePouchItem.key(check))) {
                     bagSlot = i;
                     ItemStack[] dice = DicePouchItem.contents(check);
                     for (int j = 0; j < dice.length; j++) skins[j] = DiceMod.skin(dice[j]);
@@ -295,7 +295,6 @@ public final class TableSessions {
                     ItemStack bag = user.getInventory().getStack(arg);
                     if (!bag.isOf(DiceMod.POUCH)) return;
                     p.bagId = DicePouchItem.identify(bag);
-                    p.bag = bag;
                     p.bagSlot = arg;
                     p.selected = 0;
                     p.reset();
@@ -447,7 +446,7 @@ public final class TableSessions {
             int[] own = selectedIndices(p);
             List<Vec3> starts = Arrays.stream(list).mapToObj(i -> parked(p.side,Arrays.binarySearch(own,i),own.length)).toList();
             rolling = DicePhysicsSession.throwDice(list.length, ThreadLocalRandom.current().nextLong(), direction, starts,
-                    dieScale(own.length));
+                    DIE_SCALE);
             for (Player seated : players) if (seated != p) seated.parked = true;
             p.parked = false;
             thrown = list;
@@ -649,7 +648,6 @@ public final class TableSessions {
                     int[] skins = p.checkedSkins(user);
                     if (Arrays.stream(selectedIndices(p)).anyMatch(i -> skins[i] < 0)) {
                         p.bagSlot = -1;
-                        p.bag = null;
                         p.selected = 0;
                         if (started) leave(p,true);
                         else {
@@ -721,16 +719,14 @@ public final class TableSessions {
         }
 
         private static Vec3 parked(int side, int nth, int count) {
-            int columns = side % 2 == 0 ? 10 : 5;
+            int columns = side % 2 == 0 ? 10 : 6;
             int row = nth / columns, column = nth % columns;
             int items = Math.min(columns,count-row*columns);
-            double gap = count<=6 ? .14 : .091;
+            double gap = count<=6 ? .074 : .060;
             double space = (column-(items-1)*.5)*gap;
-            if (side%2==0) return new Vec3(space,.0,(side==0?-1:1)*(.34-row*.088));
-            return new Vec3((side==1?1:-1)*(.83-row*.097),0,space);
+            if (side%2==0) return new Vec3(space,0,(side==0?-1:1)*(.34-row*.068));
+            return new Vec3((side==1?1:-1)*(.83-row*.068),0,space);
         }
-
-        private static float dieScale(int count) { return count > 6 ? .43f : .68f; }
 
         void broadcast() {
             List<Protocol.Visual> shown = new ArrayList<>();
@@ -751,7 +747,7 @@ public final class TableSessions {
                             break;
                         }
                     }
-                    float scale = dieScale(selected.length);
+                    float scale = DIE_SCALE;
                     if (pose == null || throwingPlayer != p && (p.parked || !contains(p.active,index) || turn != null && turn != p)) {
                         Vec3 slot = parked(p.side, k, selected.length);
                         Quaternion q = Quaternion.IDENTITY;

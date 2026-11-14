@@ -1,13 +1,10 @@
 
 package dev.yharnamdice.client;
 
-import com.google.gson.Gson;
-import dev.yharnamdice.DiceMod;
 import dev.yharnamdice.Protocol;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
 import net.minecraft.client.render.LightmapTextureManager;
 import net.minecraft.client.render.OverlayTexture;
-import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.client.util.math.MatrixStack;
@@ -16,20 +13,14 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import org.joml.Quaternionf;
 
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public final class DiceWorldRenderer {
-    private static final RenderLayer DICE = RenderLayer.getEntityCutout(DiceMod.id("textures/die/atlas.png"));
-    private static final MeshFace[] FACES = readMesh();
     private static final long EXPIRE_MS = 1800;
     private static final Map<BlockPos, Frame> TABLES = new HashMap<>();
 
-    private record MeshFace(float[] normal, float[][] points) {}
     private record Frame(int rotation, long timestamp, long interval,
                          Map<Integer, Protocol.Visual> previous, Map<Integer, Protocol.Visual> current) {}
 
@@ -56,7 +47,7 @@ public final class DiceWorldRenderer {
         TABLES.values().removeIf(table -> now-table.timestamp>EXPIRE_MS);
         if (TABLES.isEmpty() || context.matrixStack()==null || context.consumers()==null) return;
         MatrixStack matrices = context.matrixStack();
-        VertexConsumer out = context.consumers().getBuffer(DICE);
+        VertexConsumer out = context.consumers().getBuffer(DiceMesh.LAYER);
         Vec3d camera = context.camera().getPos();
         for (var entry : TABLES.entrySet()) {
             BlockPos pos=entry.getKey();
@@ -88,7 +79,6 @@ public final class DiceWorldRenderer {
 
     private static void draw(VertexConsumer out, MatrixStack matrices, Protocol.Visual from,
                              Protocol.Visual to, float alpha, int light) {
-        if (to.skin()<0 || to.skin()>=DiceMod.SKINS.length) return;
         matrices.push();
         matrices.translate(MathHelper.lerp(alpha,from.x(),to.x()),
                 MathHelper.lerp(alpha,from.y(),to.y()),MathHelper.lerp(alpha,from.z(),to.z()));
@@ -97,31 +87,7 @@ public final class DiceWorldRenderer {
         matrices.multiply(orientation);
         float size=MathHelper.lerp(alpha,from.scale(),to.scale());
         matrices.scale(size,size,size);
-        var position=matrices.peek().getPositionMatrix();
-        var normal=matrices.peek().getNormalMatrix();
-        int uBase=(to.skin()%4)*256;
-        int vBase=(to.skin()/4)*256;
-        for (MeshFace face : FACES) {
-            float[] n=face.normal;
-            for (int i=0;i<4;i++) {
-                float[] p=face.points[Math.min(i,face.points.length-1)];
-                out.vertex(position,p[0],p[1],p[2]).color(255,255,255,255)
-                        .texture((p[3]+uBase)/1024,(p[4]+vBase)/2048)
-                        .overlay(OverlayTexture.DEFAULT_UV).light(light)
-                        .normal(normal,n[0],n[1],n[2]).next();
-            }
-        }
+        DiceMesh.draw(out,matrices.peek(),to.skin(),light,OverlayTexture.DEFAULT_UV);
         matrices.pop();
-    }
-
-    private static MeshFace[] readMesh() {
-        try (InputStream stream=DiceWorldRenderer.class.getResourceAsStream("/d6-mesh.json")) {
-            if (stream==null) throw new IllegalStateException("The bundled D6 mesh is missing");
-            MeshFace[] faces=new Gson().fromJson(new InputStreamReader(stream,StandardCharsets.UTF_8),MeshFace[].class);
-            if (faces.length!=26) throw new IllegalStateException("The bundled D6 mesh must have 26 faces");
-            return faces;
-        } catch (java.io.IOException | RuntimeException error) {
-            throw new IllegalStateException("Could not read the bundled D6 mesh",error);
-        }
     }
 }

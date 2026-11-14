@@ -7,6 +7,7 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
@@ -17,9 +18,20 @@ import java.util.ArrayList;
 
 public final class DiceClient implements ClientModInitializer {
     @Override public void onInitializeClient() {
+        for (int i=0; i<DiceMod.DICE.size(); i++) {
+            final int skin = i;
+            BuiltinItemRendererRegistry.INSTANCE.register(DiceMod.DICE.get(i), (item, mode, matrices, consumers, light, overlay) -> {
+                matrices.push();
+                matrices.translate(.5,.5,.5);
+                DiceMesh.draw(consumers.getBuffer(DiceMesh.LAYER),matrices.peek(),skin,light,overlay);
+                matrices.pop();
+            });
+        }
         HandledScreens.register(DiceMod.POUCH_MENU, PouchScreen::new);
         EntityRendererRegistry.register(DiceMod.SEAT, EmptyEntityRenderer::new);
         WorldRenderEvents.AFTER_ENTITIES.register(DiceWorldRenderer::render);
+        WorldRenderEvents.BEFORE_BLOCK_OUTLINE.register((context, hit) ->
+                !(net.minecraft.client.MinecraftClient.getInstance().currentScreen instanceof TableScreen));
         ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> DiceWorldRenderer.clear());
         net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents.END_CLIENT_TICK.register(client -> {
             if (client.currentScreen instanceof TableScreen && client.player == null)
@@ -39,6 +51,7 @@ public final class DiceClient implements ClientModInitializer {
                 } else if (client.currentScreen instanceof TableScreen screen && screen.sameTable(view)) {
                     screen.update(view);
                 } else if (client.player != null) {
+                    client.inGameHud.setOverlayMessage(net.minecraft.text.Text.empty(), false);
                     client.setScreen(new TableScreen(view));
                 }
             });

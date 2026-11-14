@@ -5,6 +5,7 @@
   "name": "Yharnam Dice",
   "description": "A gothic dice table, collectible dice and customizable tabletop games.",
   "environment": "*",
+  "mixins": ["yharnam_dice.client.mixins.json"],
   "entrypoints": {
     "main": ["dev.yharnamdice.DiceMod"],
     "client": ["dev.yharnamdice.client.DiceClient"]
