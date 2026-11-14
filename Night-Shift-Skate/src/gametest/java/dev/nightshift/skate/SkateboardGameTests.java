@@ -1,15 +1,19 @@
 package dev.nightshift.skate;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import net.fabricmc.fabric.api.gametest.v1.FabricGameTest;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.state.property.Properties;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.Registries;
+import net.minecraft.resource.featuretoggle.FeatureFlags;
 import net.minecraft.screen.slot.SlotActionType;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.test.GameTest;
@@ -26,6 +30,20 @@ import net.minecraft.util.hit.BlockHitResult;
 
 /** Server-side regression tests for the movement state machine and rail entry. */
 public final class SkateboardGameTests implements FabricGameTest {
+    @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE, batchId = "night_shift_creative_tab")
+    public void creativeTabIncludesEveryModItemOnce(TestContext context) {
+        ItemGroup group = Registries.ITEM_GROUP.get(NightShiftSkate.id("skateboards"));
+        context.assertTrue(group != null, "the dedicated creative tab must be registered");
+        group.updateEntries(new ItemGroup.DisplayContext(FeatureFlags.VANILLA_FEATURES, false,
+                context.getWorld().getRegistryManager()));
+        List<Item> displayed = group.getDisplayStacks().stream().map(ItemStack::getItem).toList();
+        List<Item> expected = Registries.ITEM.stream()
+                .filter(item -> Registries.ITEM.getId(item).getNamespace().equals(NightShiftSkate.ID)).toList();
+        context.assertTrue(displayed.size() == expected.size() && new HashSet<>(displayed).containsAll(expected),
+                "the creative tab must contain every mod item exactly once");
+        context.complete();
+    }
+
     @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE, tickLimit = 40, batchId = "night_shift_primary_loop")
     public void survivalPlacementMountDismountAndCrouchPickupRoundTrip(TestContext context) {
         verifyBoardRoundTrip(context, NightShiftSkate.SKATEBOARD, BoardStyle.NIGHT_SHIFT, false);
@@ -325,6 +343,79 @@ public final class SkateboardGameTests implements FabricGameTest {
         context.runAtTick(11, () -> {
             context.assertTrue(board.getVelocity().y > 0.22,
                     "releasing a charged Space must produce upward board velocity, got " + board.getVelocity().y);
+            context.complete();
+        });
+    }
+
+    @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE, tickLimit = 30, batchId = "night_shift_wall_collision")
+    public void glancingOffAWallPreservesSpeedAlongIt(TestContext context) {
+        makeFloor(context, 1, 1, 5, 14);
+        for (int z = 1; z <= 13; z++) {
+            for (int y = 2; y <= 4; y++) {
+                context.setBlockState(new BlockPos(4, y, z), Blocks.SMOOTH_STONE);
+            }
+        }
+        SkateboardEntity board = spawnBoard(context, new Vec3d(3.55, 2, 2.5), -55.0f);
+        mount(context, board);
+        BlockPos origin = context.getAbsolutePos(BlockPos.ORIGIN);
+        context.runAtTick(3, () -> board.setVelocity(0.82, 0, 0));
+        context.runAtTick(12, () -> {
+            context.assertTrue(board.getX() <= origin.getX() + 3.701, "the board must stay outside the wall");
+            context.assertTrue(board.getZ() > origin.getZ() + 5.2 && board.getRideSpeed() > 0.35,
+                    "a graze must carry the board along the wall without killing its speed");
+            context.complete();
+        });
+    }
+
+    @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE, tickLimit = 25, batchId = "night_shift_side_block_landing")
+    public void descendingAcrossABlockEdgeLandsOnTop(TestContext context) {
+        context.setBlockState(new BlockPos(4, 2, 3), Blocks.SMOOTH_STONE);
+        verifySideLanding(context, 3.59, 3.0);
+    }
+
+    @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE, tickLimit = 25, batchId = "night_shift_side_rail_landing")
+    public void descendingAcrossIronBarsDoesNotCatchOnTheSide(TestContext context) {
+        for (int z = 1; z <= 6; z++) {
+            context.setBlockState(new BlockPos(4, 2, z), Blocks.IRON_BARS);
+        }
+        verifySideLanding(context, 3.95, 3.0);
+    }
+
+    @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE, tickLimit = 25, batchId = "night_shift_side_park_rail_landing")
+    public void descendingAcrossAParkRailClearsTheCrossbar(TestContext context) {
+        var rail = SkateParkBlocks.RAIL.getDefaultState().with(Properties.HORIZONTAL_AXIS, Direction.Axis.Z);
+        for (int z = 1; z <= 6; z++) {
+            context.setBlockState(new BlockPos(4, 2, z), rail);
+        }
+        verifySideLanding(context, 3.93, 2.9375);
+    }
+
+    private static void verifySideLanding(TestContext context, double startX, double top) {
+        makeFloor(context, 1, 1, 9, 6);
+        SkateboardEntity board = spawnBoard(context, new Vec3d(startX, top + 0.10, 3.5), -90.0f);
+        mount(context, board);
+        BlockPos origin = context.getAbsolutePos(BlockPos.ORIGIN);
+        board.setVelocity(0.63, -0.16, 0);
+        context.runAtTick(2, () -> {
+            context.assertTrue(board.getX() >= origin.getX() + startX + 0.55,
+                    "the board above the edge must carry across instead of getting caught on the side");
+            context.assertTrue(board.getY() >= origin.getY() + top - 0.001 && !board.isGrinding(),
+                    "a perpendicular approach must roll across the top without entering a grind");
+            context.complete();
+        });
+    }
+
+    @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE, tickLimit = 25, batchId = "night_shift_block_too_high")
+    public void collisionStillStopsABoardBelowTheTopOfABlock(TestContext context) {
+        makeFloor(context, 1, 1, 7, 6);
+        context.setBlockState(new BlockPos(4, 2, 3), Blocks.SMOOTH_STONE);
+        SkateboardEntity board = spawnBoard(context, new Vec3d(3.59, 2.64, 3.5), -90.0f);
+        mount(context, board);
+        BlockPos origin = context.getAbsolutePos(BlockPos.ORIGIN);
+        board.setVelocity(0.63, -0.16, 0);
+        context.runAtTick(4, () -> {
+            context.assertTrue(board.getX() <= origin.getX() + 3.741 && board.getY() < origin.getY() + 3,
+                    "an airborne board below the top must stop at the side of the block");
             context.complete();
         });
     }

@@ -39,15 +39,21 @@ public final class SkateParts {
             ITEMS.put(part, Registry.register(Registries.ITEM, NightShiftSkate.id(part.itemId()),
                     new SkatePartItem(part, new Item.Settings())));
         }
-        Registry.register(Registries.ITEM_GROUP, NightShiftSkate.id("skate_parts"), FabricItemGroup.builder()
-                .displayName(Text.translatable("itemGroup.night_shift_skate.skate_parts"))
+        Registry.register(Registries.ITEM_GROUP, NightShiftSkate.id("skateboards"), FabricItemGroup.builder()
+                .displayName(Text.translatable("itemGroup.night_shift_skate.skateboards"))
                 .icon(() -> new ItemStack(WORKBENCH))
                 .entries((context, entries) -> {
-                    entries.add(WORKBENCH);
                     entries.add(NightShiftSkate.SKATEBOARD);
                     entries.add(NightShiftSkate.IRON_VESPERS);
                     entries.add(NightShiftSkate.GRAVE_PROCESSION);
+                    entries.add(WORKBENCH);
                     ITEMS.values().forEach(entries::add);
+                    entries.add(SkateParkBlocks.PAVING);
+                    entries.add(SkateParkBlocks.DECK);
+                    entries.add(SkateParkBlocks.LOW_RAMP);
+                    entries.add(SkateParkBlocks.STEEP_RAMP);
+                    entries.add(SkateParkBlocks.RAIL);
+                    entries.add(SkateParkBlocks.LEDGE);
                 }).build());
     }
 

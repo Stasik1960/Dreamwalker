@@ -46,6 +46,7 @@ public final class SkateboardEntity extends Entity {
     private static final double MIN_WALL_SPEED = 0.23;
     private static final int WALL_RIDE_TICKS = 14;
     private static final double GRAVITY = 0.065;
+    private static final double COLLISION_EPSILON = 0.0001;
     private static final double RAMP_STEP_LENGTH = 0.18;
     private static final double RAMP_MAX_STEP = 0.31;
     private static final double RAMP_CONTACT_EPSILON = 0.025;
@@ -514,9 +515,10 @@ public final class SkateboardEntity extends Entity {
         }
         if (grounded && !jumping && (ramp != null || RampSurface.crosses(getWorld(), getBoundingBox(), travel))) {
             moveAcrossRamp(rider, travel, ramp);
-        } else {
+        } else if (grounded || !tryLandAcrossEdge(rider, travel)) {
             moveBoard(rider, travel);
         }
+        followCollisionSlide(travel);
         if (!grounded && isOnGround()) {
             boolean clean = finishTrick(rider);
             if (!clean) {
@@ -524,6 +526,47 @@ public final class SkateboardEntity extends Entity {
             }
             playBoardSound(SoundEvents.BLOCK_WOOD_HIT, 0.52f, 1.24f);
         }
+    }
+
+    private void followCollisionSlide(Vec3d travel) {
+        Vec3d velocity = getVelocity();
+        boolean clippedX = Math.abs(travel.x - velocity.x) > COLLISION_EPSILON;
+        boolean clippedZ = Math.abs(travel.z - velocity.z) > COLLISION_EPSILON;
+        if (clippedX != clippedZ && velocity.horizontalLengthSquared() >= STOP_SPEED * STOP_SPEED) {
+            // Preserve the unblocked direction on subsequent ticks instead of aiming back into the face.
+            setYaw((float) Math.toDegrees(Math.atan2(-velocity.x, velocity.z)));
+        }
+    }
+
+    private boolean tryLandAcrossEdge(PlayerEntity rider, Vec3d travel) {
+        if (travel.y >= 0 || travel.horizontalLengthSquared() < STOP_SPEED * STOP_SPEED) {
+            return false;
+        }
+        Box board = getBoundingBox();
+        Box upperBody = rider == null ? null : riderUpperBody(rider);
+        Vec3d fallFirst = clipBoardMovement(board, clipRiderMovement(upperBody, travel));
+        if (travel.horizontalLength() - fallFirst.horizontalLength() <= COLLISION_EPSILON) {
+            return false;
+        }
+
+        // Vanilla applies Y first. An airborne board can still catch the top of an edge it reaches this tick.
+        Vec3d horizontal = new Vec3d(travel.x, 0, travel.z);
+        Vec3d across = clipBoardMovement(board, clipRiderMovement(upperBody, horizontal));
+        if (across.horizontalLength() - fallFirst.horizontalLength() <= COLLISION_EPSILON) {
+            return false;
+        }
+        Vec3d down = new Vec3d(0, travel.y, 0);
+        Vec3d riderDrop = upperBody == null ? down : clipRiderMovement(upperBody.offset(across), down);
+        double landingDrop = clipBoardMovement(board.offset(across), down).y;
+        if (landingDrop <= travel.y + COLLISION_EPSILON || riderDrop.y > landingDrop + COLLISION_EPSILON) {
+            return false;
+        }
+        Vec3d start = getPos();
+        moveBoard(rider, across);
+        moveBoard(rider, down);
+        Vec3d moved = getPos().subtract(start);
+        setVelocity(moved.x, getVelocity().y, moved.z);
+        return true;
     }
 
     private void moveAcrossRamp(PlayerEntity rider, Vec3d travel, RampSurface support) {
@@ -726,17 +769,26 @@ public final class SkateboardEntity extends Entity {
 
     private void moveBoard(PlayerEntity rider, Vec3d travel) {
         Vec3d oldPosition = getPos();
-        Vec3d permitted = travel;
-        if (rider != null) {
-            Box standing = rider.getDimensions(EntityPose.STANDING).getBoxAt(oldPosition.add(0, riderHeight(), 0));
-            Box upperBody = new Box(standing.minX, standing.minY + 0.51, standing.minZ,
-                    standing.maxX, standing.maxY, standing.maxZ);
-            permitted = Entity.adjustMovementForCollisions(this, travel, upperBody, getWorld(), List.of());
-        }
+        Vec3d permitted = rider == null ? travel : clipRiderMovement(riderUpperBody(rider), travel);
         move(MovementType.SELF, permitted);
         Vec3d moved = getPos().subtract(oldPosition);
         double vy = isOnGround() || (travel.y > 0 && moved.y < travel.y - 0.002) ? 0 : travel.y;
         setVelocity(moved.x, vy, moved.z);
+    }
+
+    private Box riderUpperBody(PlayerEntity rider) {
+        Box standing = rider.getDimensions(EntityPose.STANDING).getBoxAt(getPos().add(0, riderHeight(), 0));
+        return new Box(standing.minX, standing.minY + 0.51, standing.minZ,
+                standing.maxX, standing.maxY, standing.maxZ);
+    }
+
+    private Vec3d clipRiderMovement(Box upperBody, Vec3d travel) {
+        return upperBody == null ? travel : Entity.adjustMovementForCollisions(this, travel, upperBody, getWorld(), List.of());
+    }
+
+    private Vec3d clipBoardMovement(Box board, Vec3d travel) {
+        return Entity.adjustMovementForCollisions(this, travel, board, getWorld(),
+                getWorld().getEntityCollisions(this, board.stretch(travel)));
     }
 
     private boolean riderFits(PlayerEntity rider, Vec3d boardPosition) {

@@ -1,6 +1,5 @@
 package dev.nightshift.skate;
 
-import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -9,15 +8,12 @@ import net.minecraft.block.SlabBlock;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.Properties;
-import net.minecraft.text.Text;
 import net.minecraft.util.BlockMirror;
 import net.minecraft.util.BlockRotation;
 import net.minecraft.util.math.BlockPos;
@@ -45,20 +41,7 @@ public final class SkateParkBlocks {
     private SkateParkBlocks() {}
 
     public static void register() {
-        Registry.register(Registries.ITEM_GROUP, NightShiftSkate.id("skatepark"), FabricItemGroup.builder()
-                .displayName(Text.translatable("itemGroup.night_shift_skate.skatepark"))
-                .icon(() -> new ItemStack(LOW_RAMP))
-                .entries((context, entries) -> {
-                    entries.add(PAVING);
-                    entries.add(DECK);
-                    entries.add(LOW_RAMP);
-                    entries.add(STEEP_RAMP);
-                    entries.add(RAIL);
-                    entries.add(LEDGE);
-                    entries.add(NightShiftSkate.SKATEBOARD);
-                    entries.add(NightShiftSkate.IRON_VESPERS);
-                    entries.add(NightShiftSkate.GRAVE_PROCESSION);
-                }).build());
+        // Loading this class registers the blocks and their items before registries freeze.
     }
 
     private static <T extends Block> T register(String path, T block) {
