@@ -19,7 +19,8 @@ abstract class SingleClickMixin {
 
     @Inject(method = "handleBlockBreaking", at = @At("HEAD"), cancellable = true)
     private void dw$noHeldBreaking(boolean breaking, CallbackInfo ci) {
-        if (player != null && DebugToolModes.isModelTool(player.getMainHandStack())) ci.cancel();
+        if (player != null && (DebugToolModes.isModelTool(player.getMainHandStack())
+                || DebugToolModes.isNpcTool(player.getMainHandStack()))) ci.cancel();
     }
 
     @WrapOperation(method = "handleInputEvents", at = @At(value = "INVOKE", ordinal = 1,
@@ -27,7 +28,7 @@ abstract class SingleClickMixin {
     private void dw$skipHeldUse(MinecraftClient client, Operation<Void> original) {
         if (player != null) {
             var stack = player.getMainHandStack();
-            if (DebugToolModes.isModelTool(stack) || stack.isOf(Items.COMPASS)) return;
+            if (DebugToolModes.isModelTool(stack) || DebugToolModes.isNpcTool(stack) || stack.isOf(Items.COMPASS)) return;
         }
         original.call(client);
     }

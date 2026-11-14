@@ -11,3 +11,9 @@ Add `-Ddw.qa.crawl=true` with Crawl 0.12.0 to test walking and crawling against 
 Add `-Ddw.qa.glass=true` to also compare player-model pixels through the patterned blue glass, behind an opaque control, and in an open control. This saves six `qa-glass-*.png` frames in the test game directory.
 
 Add `-Ddw.qa.shiftOnly=true` to run only the BB model tool check. It drives real client mouse bindings across all six shift modes, checks matching quarter-block offsets on the server and client, and compares rendered frames for fresh compact, fixed-ID composite, and baked city blocks. It also checks the tool in Survival with operator level 2.
+
+Add `-Ddw.qa.npc=true` to run the NPC tool check over real client mouse bindings. It checks the authored idle sound lookup, loop and reverse routes, the manual detour and ten-second pause, removal, blocked-waypoint recovery in both movement modes, and the saved actor data.
+
+Add `-Ddw.qa.mapNight=true` on a disposable copy of the restored map to run the player-camera checks. The harness verifies light levels and restored block IDs, takes `qa-map-*.png` screenshots, and writes the observed values to `qa-map-light.txt`. Use the map's full mod profile for this test.
+
+Use `-Ddw.qa.mapScene=old-light-night` with `-Ddw.qa.mapNight=true` to check the historical dimension in a fresh client when memory is limited. Other scene names match the screenshot name after `qa-map-`.

@@ -47,6 +47,13 @@ abstract class BbHorizontalModeMixin {
         if (DebugToolModes.tool(stack) == DebugToolModes.Tool.BLOCK) {
             tooltip.add(Text.literal("Привязка консольных команд доступна OP4."));
         }
+        if (DebugToolModes.action(stack) == DebugToolModes.Action.NPC_PATROL) {
+            tooltip.add(Text.literal("ЛКМ по NPC выбирает его. ЛКМ по земле добавляет точку."));
+            tooltip.add(Text.literal("Повторный ЛКМ по NPC меняет порядок обхода."));
+        }
+        if (DebugToolModes.action(stack) == DebugToolModes.Action.NPC_SPECIAL) {
+            tooltip.add(Text.literal("ЛКМ по земле направляет выбранного NPC к точке."));
+        }
         ci.cancel();
     }
 }

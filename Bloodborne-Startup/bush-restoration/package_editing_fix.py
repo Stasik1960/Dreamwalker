@@ -106,6 +106,7 @@ def main():
     parser.add_argument("output", type=Path)
     parser.add_argument("--original-pick", type=Path, required=True, help="Original Pick 1.0.2 built from this checkout")
     parser.add_argument("--window-placement", type=Path, required=True, help="Remapped DW-City-Visuals window/placement slice")
+    parser.add_argument("--version-suffix", default=".forms.5")
     args = parser.parse_args()
     if digest(args.release) != RELEASE_SHA:
         parser.error("input is not the published v22-bloodborne-bush-restoration.1 JAR")
@@ -129,7 +130,7 @@ def main():
             parser.error("patch overlaps classes in the published JAR")
 
         manifest = json.loads(release.read("fabric.mod.json"))
-        manifest["version"] += ".forms.5"
+        manifest["version"] += args.version_suffix
         with ZipFile(args.original_pick) as addon:
             archive, bundled_pick = nested_pick(release, addon, manifest["version"])
         manifest.setdefault("jars", []).append({"file": archive})
@@ -151,7 +152,9 @@ def main():
                     if name in release.namelist():
                         binary_replacements[name] = overlay.read(name)
                     elif name in (NATIVE_SHIFT_MIXIN, ROOT + "tool/mixin/ImportedFenceWallModeMixin.class",
-                                  ROOT + "tool/DebugModels$Pose.class") or name.startswith(ROOT + "composite/AutoStoneFence$"):
+                                  ROOT + "tool/mixin/RpMobPatrolMixin.class", ROOT + "tool/DebugModels$Pose.class",
+                                  ROOT + "tool/DebugToolModes$PatrolSelection.class") \
+                            or name.startswith((ROOT + "composite/AutoStoneFence$", ROOT + "tool/ActorPatrol")):
                         added[name] = overlay.read(name)
                     else:
                         parser.error("unexpected window/placement overlay class " + name)
@@ -159,7 +162,7 @@ def main():
             replacements[studio_layouts] = json.loads(overlay.read(studio_layouts))
         horizontal_config = "dw-bb-horizontal.mixins.json"
         horizontal = json.loads(release.read(horizontal_config))
-        horizontal["mixins"].append("ImportedFenceWallModeMixin")
+        horizontal["mixins"].extend(("ImportedFenceWallModeMixin", "RpMobPatrolMixin"))
         replacements[horizontal_config] = horizontal
         client_tool_config = "dw-bb-tool-client.mixins.json"
         client_tool = json.loads(release.read(client_tool_config))

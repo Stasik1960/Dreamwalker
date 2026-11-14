@@ -1,14 +1,22 @@
 package dev.dreamwalker.bloodbornedw.tool;
 
+import dev.dreamwalker.bloodbornedw.architecture.BuildPermissions;
 import dev.dreamwalker.bloodbornerp.mob.RpMobEntity;
 import dev.dreamwalker.bloodbornerp.object.RpObjectEntity;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+import java.util.WeakHashMap;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
@@ -34,7 +42,10 @@ public final class DebugToolModes {
         NPC_SPECIAL("Особое действие NPC", BbToolItem.Mode.SPECIAL_NPC),
         NPC_CLOCKWISE("Повернуть NPC по часовой стрелке"),
         NPC_COUNTERCLOCKWISE("Повернуть NPC против часовой стрелки"),
-        BLOCK_ROTATE_BACK("Повернуть блок против часовой стрелки");
+        BLOCK_ROTATE_BACK("Повернуть блок против часовой стрелки"),
+        NPC_IDLE_SOUNDS("Включить idle-звуки"),
+        NPC_PATROL("Патруль"),
+        NPC_CLEAR_PATROL("Удалить патруль");
 
         public final String title;
         public final BbToolItem.Mode legacy;
@@ -50,7 +61,8 @@ public final class DebugToolModes {
         MODEL("Инструмент BB", List.of(Action.UP, Action.DOWN, Action.LEFT, Action.RIGHT, Action.FORWARD, Action.BACK, Action.VISUAL_ROTATE, Action.RENDER_PRIORITY)),
         BLOCK("Печатка смотрителя", List.of(Action.SPECIAL, Action.COMMANDS, Action.CLEAR, Action.BLOCK_ROTATE,
                 Action.PLAYER_COLLISION, Action.BLOCK_COLLISION, Action.BLOCK_ROTATE_BACK)),
-        NPC("Жезл постановщика", List.of(Action.NPC_SPECIAL, Action.NPC_CLOCKWISE, Action.NPC_COUNTERCLOCKWISE));
+        NPC("Жезл постановщика", List.of(Action.NPC_SPECIAL, Action.NPC_CLOCKWISE, Action.NPC_COUNTERCLOCKWISE,
+                Action.NPC_IDLE_SOUNDS, Action.NPC_PATROL, Action.NPC_CLEAR_PATROL));
 
         public final String title;
         public final List<Action> actions;
@@ -64,6 +76,8 @@ public final class DebugToolModes {
     public static final String MODE_KEY = "DwDebugToolMode";
     private static BbToolItem blockTool;
     private static BbToolItem npcTool;
+    private record PatrolSelection(ToolTarget actor, int entityId) {}
+    private static final Map<MinecraftServer, Map<UUID, PatrolSelection>> PATROL_SELECTIONS = new WeakHashMap<>();
 
     private DebugToolModes() {}
 
@@ -71,6 +85,7 @@ public final class DebugToolModes {
         blockTool = Registry.register(Registries.ITEM, new Identifier("bloodborne_dw", "bb_block_tool"), new BbToolItem());
         npcTool = Registry.register(Registries.ITEM, new Identifier("bloodborne_dw", "bb_npc_tool"), new BbToolItem());
         DebugAdjustments.initialize();
+        ServerPlayConnectionEvents.DISCONNECT.register((handler, server) -> clearPatrolSelection(handler.player));
     }
 
     public static List<ItemStack> extraItems() {
@@ -79,6 +94,10 @@ public final class DebugToolModes {
 
     public static boolean isModelTool(ItemStack stack) {
         return stack.getItem() instanceof BbToolItem && tool(stack) == Tool.MODEL;
+    }
+
+    public static boolean isNpcTool(ItemStack stack) {
+        return stack.getItem() instanceof BbToolItem && tool(stack) == Tool.NPC;
     }
 
     public static Tool tool(ItemStack stack) {
@@ -106,6 +125,7 @@ public final class DebugToolModes {
         int next = (index(stack) + 1) % tool.actions.size();
         stack.getOrCreateNbt().putInt(MODE_KEY, next);
         BbToolService.clearSelection(player);
+        clearPatrolSelection(player);
         player.sendMessage(Text.literal(tool.title + " · " + action(stack).title), true);
     }
 
@@ -119,6 +139,11 @@ public final class DebugToolModes {
                 || target.world(player.getServer()) != player.getServerWorld()
                 || !player.getServerWorld().canPlayerModifyAt(player, BlockPos.ofFloored(target.position(player.getServer())))) return true;
         Entity entity = target.entity(player.getServer());
+        if (action == Action.NPC_IDLE_SOUNDS || action == Action.NPC_PATROL || action == Action.NPC_CLEAR_PATROL) {
+            if (entity instanceof RpMobEntity actor) applyActor(player, target, actor, action);
+            else player.sendMessage(Text.literal("Выбери NPC DreamWalker."), true);
+            return true;
+        }
         boolean block = target.modTarget(player.getServer()) && (entity == null || entity instanceof RpObjectEntity);
         if (action.legacy != null) {
             if (action == Action.NPC_SPECIAL) return !(entity instanceof RpMobEntity);
@@ -149,6 +174,49 @@ public final class DebugToolModes {
         if (action != Action.PLAYER_COLLISION && action != Action.BLOCK_COLLISION && action != Action.RENDER_PRIORITY || !changed) {
             player.sendMessage(Text.literal(changed ? action.title : "Действие недоступно для этой цели."), true);
         }
+        return true;
+    }
+
+    private static void clearPatrolSelection(ServerPlayerEntity player) {
+        var selections = PATROL_SELECTIONS.get(player.getServer());
+        if (selections != null) selections.remove(player.getUuid());
+    }
+
+    private static void applyActor(ServerPlayerEntity player, ToolTarget target, RpMobEntity actor, Action action) {
+        ActorPatrol patrol = ActorPatrol.of(actor);
+        if (action == Action.NPC_IDLE_SOUNDS) {
+            player.sendMessage(Text.literal(patrol.toggleIdleSounds() ? "Idle-звуки включены." : "Idle-звуки выключены."), true);
+        } else if (action == Action.NPC_CLEAR_PATROL) {
+            patrol.clear(actor);
+            clearPatrolSelection(player);
+            player.sendMessage(Text.literal("Патруль удалён."), true);
+        } else if (!actor.isCorpse() && actor.isAlive()) {
+            var selections = PATROL_SELECTIONS.computeIfAbsent(player.getServer(), server -> new HashMap<>());
+            var selected = selections.put(player.getUuid(), new PatrolSelection(target, actor.getId()));
+            boolean same = selected != null && selected.actor().key().equals(target.key()) && selected.entityId() == actor.getId();
+            boolean reverse = same ? patrol.toggleReverse() : patrol.reverse();
+            player.sendMessage(Text.literal((same ? "Патруль" : "NPC выбран. ЛКМ по земле добавляет точку. Патруль")
+                    + (reverse ? " · обратный" : " · круг")), true);
+        }
+    }
+
+    public static boolean addPatrolPoint(ServerPlayerEntity player, BlockPos ground) {
+        ItemStack stack = player.getMainHandStack();
+        if (!isNpcTool(stack) || action(stack) != Action.NPC_PATROL) return false;
+        ServerWorld world = player.getServerWorld();
+        if (!BuildPermissions.canEdit(world, player, ground)) return true;
+        var selections = PATROL_SELECTIONS.get(player.getServer());
+        var selected = selections == null ? null : selections.get(player.getUuid());
+        if (selected == null || selected.actor().world(player.getServer()) != world
+                || !(selected.actor().entity(player.getServer()) instanceof RpMobEntity actor)
+                || selected.entityId() != actor.getId() || !actor.isAlive() || actor.isCorpse()
+                || !BuildPermissions.canEdit(world, player, actor.getBlockPos())) {
+            clearPatrolSelection(player);
+            player.sendMessage(Text.literal("Выбери NPC для патруля."), true);
+            return true;
+        }
+        int count = ActorPatrol.of(actor).addPoint(actor, ground);
+        player.sendMessage(Text.literal(count > 0 ? "Точка патруля №" + count : "Точку патруля добавить не удалось."), true);
         return true;
     }
 

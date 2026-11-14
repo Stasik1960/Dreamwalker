@@ -9,6 +9,8 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.EntityHitResult;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
@@ -30,6 +32,13 @@ abstract class BbHorizontalActionMixin {
             at = @At("HEAD"), cancellable = true, remap = false)
     private static void dw$applyTool(ServerPlayerEntity player, ToolTarget target, CallbackInfo ci) {
         if (DebugToolModes.apply(player, target)) ci.cancel();
+    }
+
+    @Inject(method = "lambda$initialize$4", at = @At("HEAD"), cancellable = true, remap = false)
+    private static void dw$addPatrolPoint(PlayerEntity player, World world, Hand hand, BlockPos ground,
+            Direction side, CallbackInfoReturnable<ActionResult> result) {
+        if (hand == Hand.MAIN_HAND && player instanceof ServerPlayerEntity server
+                && DebugToolModes.addPatrolPoint(server, ground)) result.setReturnValue(ActionResult.SUCCESS);
     }
 
     @Inject(method = "lambda$initialize$5", at = @At("HEAD"), cancellable = true)

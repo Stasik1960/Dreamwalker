@@ -59,6 +59,8 @@ public final class PickQa implements ClientModInitializer {
     private ConnectedFenceGallery fenceGallery = Boolean.getBoolean("dw.qa.fenceGallery")
             ? new ConnectedFenceGallery() : null;
     private boolean glassFinished;
+    private NpcChecks npcChecks;
+    private MapNightChecks mapNightChecks;
     private ModelShiftChecks shift;
     private DoorSoundChecks doorSounds = new DoorSoundChecks();
     private DoorConsoleVisualChecks doorConsole = new DoorConsoleVisualChecks();
@@ -91,6 +93,22 @@ public final class PickQa implements ClientModInitializer {
     }
 
     private void tick(MinecraftClient game) throws Exception {
+        if (Boolean.getBoolean("dw.qa.mapNight")) {
+            if (mapNightChecks == null) mapNightChecks = new MapNightChecks();
+            String outcome = mapNightChecks.tick(game);
+            if (outcome == null) return;
+            note(outcome);
+            finish(game, outcome.startsWith("PASS"));
+            return;
+        }
+        if (Boolean.getBoolean("dw.qa.npc")) {
+            if (npcChecks == null) npcChecks = new NpcChecks();
+            String outcome = npcChecks.tick(game);
+            if (outcome == null) return;
+            note(outcome);
+            finish(game, outcome.startsWith("PASS"));
+            return;
+        }
         if (Boolean.getBoolean("dw.qa.shiftOnly")) {
             if (shift == null) shift = new ModelShiftChecks();
             String outcome = shift.tick(game);

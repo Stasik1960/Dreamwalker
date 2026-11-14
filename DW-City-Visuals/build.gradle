@@ -65,10 +65,16 @@ tasks.register('windowPlacementJar', Jar) {
         include 'dev/dreamwalker/bloodbornedw/composite/studiomixin/StudioImportedOutlineMixin.class'
         include 'dev/dreamwalker/bloodbornedw/composite/AutoStoneFence*.class'
         include 'dev/dreamwalker/bloodbornedw/tool/mixin/ImportedFenceWallModeMixin.class'
+        include 'dev/dreamwalker/bloodbornedw/tool/ActorPatrol*.class'
+        include 'dev/dreamwalker/bloodbornedw/tool/DebugToolModes*.class'
+        include 'dev/dreamwalker/bloodbornedw/tool/mixin/BbHorizontalActionMixin.class'
+        include 'dev/dreamwalker/bloodbornedw/tool/mixin/BbHorizontalModeMixin.class'
+        include 'dev/dreamwalker/bloodbornedw/tool/mixin/RpMobPatrolMixin.class'
     }
     from(sourceSets.client.output.classesDirs) {
         include 'dev/dreamwalker/bloodbornedw/tool/DebugModels*.class'
         include 'dev/dreamwalker/bloodbornedw/tool/mixin/NativePhysicalShiftMixin.class'
+        include 'dev/dreamwalker/bloodbornedw/tool/mixin/SingleClickMixin.class'
     }
     from('src/main/resources') { include 'bloodborne_dw/studio-layouts-v22.json' }
 }
