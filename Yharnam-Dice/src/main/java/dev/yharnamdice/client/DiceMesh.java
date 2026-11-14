@@ -5,6 +5,7 @@ import dev.yharnamdice.DiceMod;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.util.math.MatrixStack;
+import org.joml.Vector3f;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,6 +15,8 @@ import java.nio.charset.StandardCharsets;
 final class DiceMesh {
     static final RenderLayer LAYER = RenderLayer.getEntityCutout(DiceMod.id("textures/die/atlas.png"));
     private static final Face[] FACES = readMesh();
+    private static final Vector3f POSITION = new Vector3f();
+    private static final Vector3f NORMAL = new Vector3f();
 
     private record Face(float[] normal, float[][] points) {}
 
@@ -27,11 +30,13 @@ final class DiceMesh {
         int vBase=(skin/4)*256;
         for (Face face : FACES) {
             float[] n=face.normal;
+            normal.transform(n[0], n[1], n[2], NORMAL);
             for (int i=0;i<4;i++) {
                 float[] p=face.points[Math.min(i,face.points.length-1)];
-                out.vertex(position,p[0],p[1],p[2]).color(255,255,255,255)
-                        .texture((p[3]+uBase)/1024,(p[4]+vBase)/2048)
-                        .overlay(overlay).light(light).normal(normal,n[0],n[1],n[2]).next();
+                position.transformPosition(p[0], p[1], p[2], POSITION);
+                out.vertex(POSITION.x, POSITION.y, POSITION.z, 1, 1, 1, 1,
+                        (p[3]+uBase)/1024, (p[4]+vBase)/2048, overlay, light,
+                        NORMAL.x, NORMAL.y, NORMAL.z);
             }
         }
     }

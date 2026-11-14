@@ -31,7 +31,7 @@ public final class TableSessions {
     private static final Map<ServerWorld, Map<BlockPos, Table>> WORLDS = new IdentityHashMap<>();
     private static final Map<UUID, Table> SEATED = new HashMap<>();
     private static final double CLOTH_Y = 14.13 / 16.0;
-    private static final float DIE_SCALE = 0.68f / 3f * 0.70f;
+    private static final float DIE_SCALE = 0.68f / 3f * 0.70f * 1.5f;
 
     private TableSessions() {}
 
@@ -722,7 +722,7 @@ public final class TableSessions {
             int columns = side % 2 == 0 ? 10 : 6;
             int row = nth / columns, column = nth % columns;
             int items = Math.min(columns,count-row*columns);
-            double gap = count<=6 ? .074 : .060;
+            double gap = count<=6 ? .074 : .070;
             double space = (column-(items-1)*.5)*gap;
             if (side%2==0) return new Vec3(space,0,(side==0?-1:1)*(.34-row*.068));
             return new Vec3((side==1?1:-1)*(.83-row*.068),0,space);

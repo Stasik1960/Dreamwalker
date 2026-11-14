@@ -1,8 +1,14 @@
 # Кости Ярнама
 
-[Скачать JAR 0.1.1](release/yharnam-dice-0.1.1.jar) · [SHA-256](release/yharnam-dice-0.1.1.jar.sha256)
+[Скачать JAR 0.1.2](https://raw.githubusercontent.com/Stasik1960/Dreamwalker/yharnam-dice-v0.1.2/Yharnam-Dice/release/yharnam-dice-0.1.2.jar) · [SHA-256](https://raw.githubusercontent.com/Stasik1960/Dreamwalker/yharnam-dice-v0.1.2/Yharnam-Dice/release/yharnam-dice-0.1.2.jar.sha256)
 
 Мод для Minecraft Java 1.20.1, Fabric Loader 0.16.10 или новее, Fabric API 0.92.9+1.20.1 и Java 17. В мультиплеере мод и Fabric API устанавливаются на сервер и на клиенты. Скопируйте скачанный JAR в папку `mods`. Сборка из исходников на Windows — `.\gradlew.bat build`.
+
+## Изменения в 0.1.2
+
+- Панель показывает все 20 выпавших значений. Список переносится по ширине, а цифры в ячейках видны поверх 3D-моделей.
+- Кости на столе увеличены на 50%. Размер учитывается при броске и столкновениях.
+- 3D-иконки на панели отрисовываются вместе. Клиент пропускает отрисовку костей за пределами поля зрения и повторную интерполяцию неподвижных костей.
 
 ## Быстрый старт
 

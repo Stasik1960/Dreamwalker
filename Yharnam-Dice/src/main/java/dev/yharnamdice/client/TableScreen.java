@@ -4,8 +4,12 @@ import dev.yharnamdice.DiceMod;
 import dev.yharnamdice.Protocol;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.render.LightmapTextureManager;
+import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.item.ItemStack;
+import net.minecraft.text.OrderedText;
 import net.minecraft.text.Text;
+import net.minecraft.util.math.RotationAxis;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
@@ -16,8 +20,14 @@ public final class TableScreen extends Screen {
     private static final int GOLD=0xffe4c698, DIM=0xffbea28a;
     private Protocol.View view;
     private final List<Control> controls = new ArrayList<>();
+    private final ItemStack[] dice = DiceMod.DICE.stream().map(ItemStack::new).toArray(ItemStack[]::new);
+    private final List<BoardLine> board = new ArrayList<>();
+    private List<OrderedText> statusLines = List.of();
+    private int textWidth;
     private int page;
     private boolean choosingBag;
+
+    private record BoardLine(OrderedText text, int color) {}
 
     private record Control(int x, int y, int w, int h, int action, int argument, boolean enabled) {
         boolean hit(double mouseX, double mouseY) {
@@ -36,6 +46,7 @@ public final class TableScreen extends Screen {
     void update(Protocol.View view) {
         if (this.view.bagSlot()!=view.bagSlot()) choosingBag=view.bagSlot()<0;
         this.view=view;
+        updateText();
     }
 
     private static Text label(String key, Object... args) {
@@ -49,7 +60,28 @@ public final class TableScreen extends Screen {
         return split < 0 ? label(note,view.turn()) : label(note.substring(0,split),note.substring(split+1));
     }
 
+    @Override protected void init() {
+        textWidth = Math.min(PANEL, width - 10) - 16;
+        updateText();
+    }
+
+    private void updateText() {
+        statusLines = textRenderer.wrapLines(status(), textWidth);
+        board.clear();
+        for (String line : view.board()) {
+            int color = line.startsWith("›") ? 0xfff3d0a3 : 0xffbdb0aa;
+            for (OrderedText row : textRenderer.wrapLines(Text.literal(line), textWidth)) {
+                board.add(new BoardLine(row, color));
+            }
+        }
+    }
+
     @Override public void render(DrawContext c, int mx, int my, float tick) {
+        c.draw(() -> renderPanel(c, mx, my));
+        renderDice(c, mx, my);
+    }
+
+    private void renderPanel(DrawContext c, int mx, int my) {
         controls.clear();
         int left = width-PANEL-9;
         if (left<5) left=5;
@@ -58,7 +90,8 @@ public final class TableScreen extends Screen {
         int count = Math.min(4,Math.max(0,view.bags().size()-4*page));
         int content = bags ? Math.max(1,count)*19 + (view.bags().size()>4 || view.bagSlot()>=0 ? 19 : 0)
                 : view.started() ? 40 : 55;
-        int h = 57 + content + view.board().size()*11;
+        int extraStatus = 11 * Math.max(0, statusLines.size() - 1);
+        int h = 57 + content + extraStatus + board.size()*11;
         int top = Math.max(4,height-h-9);
         int w = Math.min(PANEL,width-left-5);
         c.fill(left,top,left+w,top+h,0xe51a0f14);
@@ -68,12 +101,15 @@ public final class TableScreen extends Screen {
         c.fill(left+w-1,top,left+w,top+h,0xff543f37);
         String heading = view.title().isBlank() ? label("free").getString() : view.title();
         c.drawTextWithShadow(textRenderer,textRenderer.trimToWidth(heading,w-16),left+8,top+7,GOLD);
-        c.drawText(textRenderer,textRenderer.trimToWidth(status().getString(),w-16),left+8,top+21,DIM,false);
-        int y=top+34;
-        for (String line : view.board()) {
-            c.drawText(textRenderer,textRenderer.trimToWidth(line,w-16),left+8,y,
-                    line.startsWith("›")?0xfff3d0a3:0xffbdb0aa,false);
-            y+=11;
+        int statusY = top + 21;
+        for (OrderedText line : statusLines) {
+            c.drawText(textRenderer, line, left + 8, statusY, DIM, false);
+            statusY += 11;
+        }
+        int y = top + 34 + extraStatus;
+        for (BoardLine line : board) {
+            c.drawText(textRenderer, line.text(), left + 8, y, line.color(), false);
+            y += 11;
         }
         if (bags) {
             if (count == 0) {
@@ -95,8 +131,7 @@ public final class TableScreen extends Screen {
             y+=20;
         } else if (!view.started()) {
             for (int i=0; i<view.skins().length; i++) {
-                int value=i<view.values().length ? view.values()[i] : 0;
-                dieButton(c,mx,my,left+8+i%10*17,y+i/10*18,i,view.skins()[i],value,Protocol.SELECT);
+                dieButton(c,mx,my,left+8+i%10*17,y+i/10*18,i,Protocol.SELECT);
             }
             y+=36;
             c.drawText(textRenderer,label("picked",Integer.bitCount(view.selected()),view.required()),left+8,y+3,DIM,false);
@@ -106,8 +141,7 @@ public final class TableScreen extends Screen {
             int col=0;
             for (int i:view.active()) {
                 if (i>=0 && i<view.skins().length && col<10) {
-                    int value=i<view.values().length ? view.values()[i]:0;
-                    dieButton(c,mx,my,left+8+col++*19,y,i,view.skins()[i],value,Protocol.MARK);
+                    dieButton(c,mx,my,left+8+col++*19,y,i,Protocol.MARK);
                 }
             }
             y+=24;
@@ -140,21 +174,61 @@ public final class TableScreen extends Screen {
                 x+w/2,y+(h-8)/2,enabled?GOLD:0xff756462);
     }
 
-    private void dieButton(DrawContext c,int mx,int my,int x,int y,int index,int skin,int value,int action) {
-        boolean enabled=skin>=0&&!view.busy()&&(action==Protocol.SELECT||value>0&&view.canMark());
+    private int dieValue(int index) {
+        return index < view.values().length ? view.values()[index] : 0;
+    }
+
+    private void dieButton(DrawContext c,int mx,int my,int x,int y,int index,int action) {
+        boolean enabled=view.skins()[index]>=0&&!view.busy()&&(action==Protocol.SELECT||dieValue(index)>0&&view.canMark());
         Control control=new Control(x,y,17,17,action,index,enabled);
         controls.add(control);
         boolean chosen=((action==Protocol.MARK?view.marked():view.selected())&(1<<index))!=0;
         c.fill(x,y,x+17,y+17,chosen?0xffe3b775:enabled&&control.hit(mx,my)?0xffbc955f:0xff694633);
         c.fill(x+1,y+1,x+16,y+16,chosen?0xff583422:0xff24191d);
-        if (skin>=0 && skin<DiceMod.DICE.size()) {
-            c.drawItem(new ItemStack(DiceMod.DICE.get(skin)),x+1,y);
-            if (value>0) {
-                c.fill(x+10,y+8,x+17,y+17,0xee181015);
-                c.drawTextWithShadow(textRenderer,Integer.toString(value),x+11,y+9,GOLD);
-            }
-            if (control.hit(mx,my)) c.drawItemTooltip(textRenderer,new ItemStack(DiceMod.DICE.get(skin)),mx,my);
+    }
+
+    private void renderDice(DrawContext c, int mouseX, int mouseY) {
+        var matrices = c.getMatrices();
+        var consumers = c.getVertexConsumers();
+        ItemStack tooltip = ItemStack.EMPTY;
+        boolean drawn = false;
+        for (Control control : controls) {
+            if (!isDie(control)) continue;
+            int skin = view.skins()[control.argument];
+            if (skin < 0 || skin >= dice.length) continue;
+            if (control.hit(mouseX, mouseY)) tooltip = dice[skin];
+            matrices.push();
+            matrices.translate(control.x + 8.5, control.y + 8.5, 80);
+            matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(180));
+            matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(30));
+            matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(37));
+            matrices.scale(52, 52, 52);
+            DiceMesh.draw(consumers.getBuffer(DiceMesh.LAYER), matrices.peek(), skin,
+                    LightmapTextureManager.MAX_LIGHT_COORDINATE, OverlayTexture.DEFAULT_UV);
+            matrices.pop();
+            drawn = true;
         }
+        if (!drawn) return;
+        // Submit every die together, then put the result badges above the entire 3D pass.
+        c.draw();
+        c.draw(() -> {
+            matrices.push();
+            matrices.translate(0, 0, 120);
+            for (Control control : controls) {
+                if (!isDie(control)) continue;
+                int value = dieValue(control.argument);
+                if (value <= 0 || view.skins()[control.argument] < 0) continue;
+                int x = control.x, y = control.y;
+                c.fill(x + 8, y + 6, x + 17, y + 17, 0xff181015);
+                c.drawText(textRenderer, Integer.toString(value), x + 10, y + 7, GOLD, false);
+            }
+            matrices.pop();
+        });
+        if (!tooltip.isEmpty()) c.drawItemTooltip(textRenderer, tooltip, mouseX, mouseY);
+    }
+
+    private static boolean isDie(Control control) {
+        return control.action == Protocol.SELECT || control.action == Protocol.MARK;
     }
 
     @Override public boolean mouseClicked(double x, double y, int button) {
