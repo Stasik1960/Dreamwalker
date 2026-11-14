@@ -128,6 +128,51 @@ public final class CarriageGameTests implements FabricGameTest {
         });
     }
 
+    @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE, tickLimit = 65, batchId = "night_watch_carriage_steps")
+    public void climbsOneBlockAndRollsBackDown(TestContext context) {
+        CarriageEntity carriage = carriage(context);
+        ServerPlayerEntity puller = player(context, 0, 0, 2.4);
+        put(context, carriage, puller, CarriageEntity.Seat.PULLER);
+        Vec3d start = carriage.getPos();
+        for (int x = -2; x <= 2; x++) {
+            for (int z = 4; z <= 5; z++) context.setBlockState(ORIGIN.add(x, 0, z), Blocks.STONE);
+            for (int z = 8; z <= 12; z++) context.setBlockState(ORIGIN.add(x, -1, z), Blocks.STONE);
+        }
+        boolean[] reached = new boolean[2];
+        for (int tick = 1; tick <= 38; tick++) {
+            context.runAtTick(tick, () -> {
+                if (puller.getY() > start.y + .99 && carriage.getY() < start.y + .01) reached[0] = true;
+                if (carriage.getY() > start.y + .99) reached[1] = true;
+                carriage.acceptInput(puller, 1);
+            });
+        }
+        context.runAtTick(46, () -> {
+            context.assertTrue(reached[0], "the puller steps onto the road before the wheels");
+            context.assertTrue(reached[1], "the wheels must climb the full block");
+            context.assertTrue(carriage.getZ() > start.z + 7 && Math.abs(carriage.getY() - start.y) < .01,
+                "the carriage rolls back down to the original road height, delta " + carriage.getPos().subtract(start));
+            context.complete();
+        });
+    }
+
+    @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE, tickLimit = 50, batchId = "night_watch_carriage_walls")
+    public void cannotClimbATwoBlockWall(TestContext context) {
+        CarriageEntity carriage = carriage(context);
+        ServerPlayerEntity puller = player(context, 0, 0, 2.4);
+        put(context, carriage, puller, CarriageEntity.Seat.PULLER);
+        Vec3d start = carriage.getPos();
+        for (int x = -2; x <= 2; x++) {
+            context.setBlockState(ORIGIN.add(x, 0, 4), Blocks.STONE);
+            context.setBlockState(ORIGIN.add(x, 1, 4), Blocks.STONE);
+        }
+        for (int tick = 1; tick <= 30; tick++) context.runAtTick(tick, () -> carriage.acceptInput(puller, 1));
+        context.runAtTick(32, () -> {
+            context.assertTrue(puller.getZ() < start.z + 3.5 && Math.abs(carriage.getY() - start.y) < .01,
+                "a two-block wall stops the harness rider and the carriage");
+            context.complete();
+        });
+    }
+
     @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE, tickLimit = 45, batchId = "night_watch_carriage_controls")
     public void roofAndLampsToggleAndPersistThroughNbt(TestContext context) {
         CarriageEntity carriage = carriage(context);

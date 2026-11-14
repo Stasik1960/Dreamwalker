@@ -16,6 +16,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RotationAxis;
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
+import org.joml.Vector3f;
 
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;
@@ -25,6 +26,7 @@ import java.util.zip.GZIPInputStream;
 public final class CarriageRenderer extends EntityRenderer<CarriageEntity> {
     private static final Identifier MODEL = NightWatchCarriage.id("meshes/carriage.nwc");
     private static final Identifier WHITE = NightWatchCarriage.id("textures/entity/white.png");
+    private static final RenderLayer SOLID = RenderLayer.getEntitySolid(WHITE);
     private static final float AXLE_Y = .860f;
     private static final float AXLE_Z = -.338f;
     private final Mesh body, leftWheel, rightWheel, lampGlass;
@@ -35,7 +37,7 @@ public final class CarriageRenderer extends EntityRenderer<CarriageEntity> {
         shadowRadius = 1.15f;
         try (DataInputStream input = new DataInputStream(new BufferedInputStream(
             new GZIPInputStream(context.getResourceManager().open(MODEL))))) {
-            if (input.readInt() != 0x4E574331) throw new IOException("Unsupported carriage mesh format");
+            if (input.readInt() != 0x4E574332) throw new IOException("Unsupported carriage mesh format");
             int frames = input.readInt();
             if (frames < 2 || frames > 32) throw new IOException("Invalid number of canopy poses");
             body = Mesh.read(input);
@@ -66,7 +68,7 @@ public final class CarriageRenderer extends EntityRenderer<CarriageEntity> {
         matrices.push();
         float heading = MathHelper.lerpAngleDegrees(delta, carriage.prevYaw, carriage.getYaw());
         matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(-heading));
-        VertexConsumer out = providers.getBuffer(RenderLayer.getEntitySolid(WHITE));
+        VertexConsumer out = providers.getBuffer(SOLID);
         float roll = carriage.visualWheel(delta);
         matrices.push();
         rotateAxle(matrices, roll);
@@ -97,6 +99,8 @@ public final class CarriageRenderer extends EntityRenderer<CarriageEntity> {
                              int light, int colorOverride) {
         Matrix4f position = matrices.peek().getPositionMatrix();
         Matrix3f normal = matrices.peek().getNormalMatrix();
+        Vector3f transformedPosition = new Vector3f();
+        Vector3f transformedNormal = new Vector3f();
         boolean animate = a != b && blend > 0f;
         for (int i = 0; i < a.colors.length; i++) {
             int offset = 6 * i;
@@ -115,22 +119,25 @@ public final class CarriageRenderer extends EntityRenderer<CarriageEntity> {
                 nz = MathHelper.lerp(blend, nz, b.vertices[offset + 5]);
             }
             int rgb = colorOverride >= 0 ? colorOverride : a.colors[i];
-            vertex(out, position, normal, x, y, z, nx, ny, nz, rgb, light);
-            // The vanilla entity-solid layer consumes quads. Its second triangle is degenerate.
-            if (i % 3 == 2) vertex(out, position, normal, x, y, z, nx, ny, nz, rgb, light);
+            transformedPosition.set(x, y, z);
+            position.transformPosition(transformedPosition);
+            transformedNormal.set(nx, ny, nz);
+            normal.transform(transformedNormal);
+            vertex(out, transformedPosition, transformedNormal, rgb, light);
         }
     }
 
-    private static void vertex(VertexConsumer out, Matrix4f position, Matrix3f normal, float x, float y, float z,
-                               float nx, float ny, float nz, int rgb, int light) {
-        out.vertex(position, x, y, z).color((rgb >> 16) & 255, (rgb >> 8) & 255, rgb & 255, 255)
-            .texture(.5f, .5f).overlay(OverlayTexture.DEFAULT_UV).light(light).normal(normal, nx, ny, nz).next();
+    private static void vertex(VertexConsumer out, Vector3f position, Vector3f normal, int rgb, int light) {
+        out.vertex(position.x(), position.y(), position.z(),
+                ((rgb >> 16) & 255) / 255f, ((rgb >> 8) & 255) / 255f, (rgb & 255) / 255f, 1f,
+                .5f, .5f, OverlayTexture.DEFAULT_UV, light,
+                normal.x(), normal.y(), normal.z());
     }
 
     private record Mesh(float[] vertices, int[] colors) {
         static Mesh read(DataInputStream input) throws IOException {
             int count = input.readInt();
-            if (count <= 0 || count > 250_000 || count % 3 != 0) throw new IOException("Invalid carriage mesh size");
+            if (count <= 0 || count > 250_000 || count % 4 != 0) throw new IOException("Invalid carriage mesh size");
             float[] vertices = new float[count * 6];
             int[] colors = new int[count];
             for (int i = 0; i < count; i++) {

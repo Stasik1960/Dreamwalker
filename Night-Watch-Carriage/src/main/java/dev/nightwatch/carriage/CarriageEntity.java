@@ -17,8 +17,10 @@ import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.Box;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
@@ -33,6 +35,7 @@ public final class CarriageEntity extends Entity {
     static final double AXLE_Z = -.338;
     private static final float PARKED_PITCH = 4f;
     private static final float HITCHED_PITCH = -1.5f;
+    private static final float ROAD_STEP_HEIGHT = 1f;
     private static final EntityDimensions FOLDED = EntityDimensions.changing(2.24f, 1.80f);
     private static final EntityDimensions RAISED = EntityDimensions.changing(2.24f, 2.77f);
     private static final TrackedData<Integer> LEFT = id();
@@ -75,7 +78,7 @@ public final class CarriageEntity extends Entity {
 
     public CarriageEntity(EntityType<? extends CarriageEntity> type, World world) {
         super(type, world);
-        setStepHeight(.6f);
+        setStepHeight(ROAD_STEP_HEIGHT);
     }
 
     private static TrackedData<Integer> id() {
@@ -197,7 +200,7 @@ public final class CarriageEntity extends Entity {
 
     boolean moveToSeat(PlayerEntity player, Seat destination) {
         if (getWorld().isClient || !canBoardFrom(player) || occupant(destination) >= 0) return false;
-        if (destination == Seat.PULLER && !clearPullerAt(getYaw(), 0, 0, 0)) return false;
+        if (destination == Seat.PULLER && !clearPullerAt(getYaw())) return false;
         if (player.getVehicle() == this) {
             Seat current = seatOf(player);
             if (current == null) return false;
@@ -326,35 +329,57 @@ public final class CarriageEntity extends Entity {
         float yaw = getYaw();
         if (steer != 0 && isOnGround()) {
             float turn = steer * (forward < 0 ? -1f : 1f) * (1.9f + 10f * (float) Math.abs(drive));
-            if (clearPullerAt(yaw + turn, 0, 0, 0)) yaw += turn;
+            if (clearPullerAt(yaw + turn)) yaw += turn;
         }
         setYaw(MathHelper.wrapDegrees(yaw));
         double radians = getYaw() * MathHelper.RADIANS_PER_DEGREE;
         double x = -Math.sin(radians) * drive;
         double z = Math.cos(radians) * drive;
-        if (hasPuller() && !clearPullerAt(yaw, x, 0, z)) {
-            x = 0;
-            z = 0;
-            drive = 0;
+        if (hasPuller() && (x != 0 || z != 0)) {
+            Box standing = pullerBox(yaw, x, z);
+            double rise = pullerStep(standing);
+            if (Double.isNaN(rise)) {
+                x = 0;
+                z = 0;
+                drive = 0;
+            } else if (rise < ROAD_STEP_HEIGHT) {
+                // The body can only step as high as the harness rider's headroom allows.
+                Box raised = standing.offset(0, rise, 0);
+                double clearance = ROAD_STEP_HEIGHT - rise;
+                clearance = VoxelShapes.calculateMaxOffset(Direction.Axis.Y, raised,
+                    getWorld().getBlockCollisions(this, raised.stretch(0, clearance, 0)), clearance);
+                setStepHeight((float) (rise + clearance));
+            }
         }
         double y = hasNoGravity() ? 0. : Math.max(-.70, (getVelocity().y - .06) * .98);
         Vec3d before = getPos();
         setVelocity(x, y, z);
         move(MovementType.SELF, getVelocity());
+        setStepHeight(ROAD_STEP_HEIGHT);
         if (horizontalCollision) drive *= .38;
         double distance = getPos().subtract(before).horizontalLength();
         dataTracker.set(SPEED, distance < .0005 ? 0f : (float) (distance * 20));
     }
 
-    private boolean clearPullerAt(float yaw, double x, double y, double z) {
-        return !Double.isNaN(pullerStep(yaw, x, y, z));
+    private boolean clearPullerAt(float yaw) {
+        return !Double.isNaN(pullerStep(pullerBox(yaw, 0, 0)));
     }
 
-    private double pullerStep(float yaw, double x, double y, double z) {
-        Vec3d p = Seat.PULLER.offset.rotateY(-yaw * MathHelper.RADIANS_PER_DEGREE).add(getPos()).add(x, y, z);
-        Box standing = new Box(p.x-.36,p.y+.04,p.z-.36,p.x+.36,p.y+1.84,p.z+.36);
+    private Box pullerBox(float yaw, double x, double z) {
+        Vec3d p = Seat.PULLER.offset.rotateY(-yaw * MathHelper.RADIANS_PER_DEGREE).add(getPos()).add(x, 0, z);
+        return new Box(p.x - .36, p.y, p.z - .36, p.x + .36, p.y + 1.84, p.z + .36);
+    }
+
+    private double pullerStep(Box standing) {
         if (!getWorld().getBlockCollisions(this, standing).iterator().hasNext()) return 0;
-        return !getWorld().getBlockCollisions(this, standing.offset(0,.5,0)).iterator().hasNext() ? .5 : Double.NaN;
+        // Lower a thin probe from the maximum step height onto the actual block shape.
+        double top = standing.minY + ROAD_STEP_HEIGHT;
+        Box feet = new Box(standing.minX, top, standing.minZ, standing.maxX, top + .01, standing.maxZ);
+        double fall = VoxelShapes.calculateMaxOffset(Direction.Axis.Y, feet,
+            getWorld().getBlockCollisions(this, feet.stretch(0, -ROAD_STEP_HEIGHT, 0)), -ROAD_STEP_HEIGHT);
+        double rise = ROAD_STEP_HEIGHT + fall;
+        return rise > 0 && !getWorld().getBlockCollisions(this, standing.offset(0, rise, 0)).iterator().hasNext()
+            ? rise : Double.NaN;
     }
 
     @Override
@@ -407,7 +432,7 @@ public final class CarriageEntity extends Entity {
         if (seat == null) return;
         Vec3d offset = seat.offset;
         if (seat == Seat.PULLER) {
-            double step = pullerStep(getYaw(), 0, 0, 0);
+            double step = pullerStep(pullerBox(getYaw(), 0, 0));
             if (step > 0) offset = offset.add(0, step, 0);
         } else {
             float angle = getWorld().isClient ? pitch : hasPuller() ? HITCHED_PITCH : PARKED_PITCH;

@@ -1,7 +1,7 @@
 """Export the approved carriage into the runtime mesh and item icon.
 
 Run from the mod directory with Blender's bpy module and Pillow:
-    python scripts/export_carriage.py artwork/night-watch-carriage.blend
+    python scripts/export_carriage.py ../victorian-carriage/night-watch-carriage.blend
 """
 
 import gzip
@@ -17,7 +17,7 @@ from PIL import Image, ImageDraw
 ROOT = Path(__file__).resolve().parents[1]
 ASSETS = ROOT / "src/main/resources/assets/nightwatchcarriage"
 MODEL = ASSETS / "meshes/carriage.nwc"
-MAGIC = 0x4E574331
+MAGIC = 0x4E574332
 
 
 def to_game(v):
@@ -49,14 +49,31 @@ def static_group(obj):
     return 0
 
 
+def quad_corners(mesh):
+    """Pack pairs of Blender triangles without changing their diagonal or winding."""
+    triangles = [[] for _ in mesh.polygons]
+    for tri in mesh.loop_triangles:
+        triangles[tri.polygon_index].append(tuple(tri.loops))
+    for face, parts in zip(mesh.polygons, triangles):
+        if face.loop_total == 4 and len(parts) == 2:
+            diagonal = set(parts[0]).intersection(parts[1])
+            loops = tuple(face.loop_indices)
+            start = 0 if loops[0] in diagonal else 1
+            for loop in loops[start:] + loops[:start]:
+                yield loop, mesh.loops[loop].vertex_index, face.material_index
+        else:
+            for a, b, c in parts:
+                for loop in (a, b, c, c):
+                    yield loop, mesh.loops[loop].vertex_index, face.material_index
+
+
 def snapshot(obj, selection=None):
     depsgraph = bpy.context.evaluated_depsgraph_get()
     evaluated = obj.evaluated_get(depsgraph)
     mesh = evaluated.to_mesh()
     mesh.calc_loop_triangles()
     if selection is None:
-        selection = [(int(loop), int(vertex), tri.material_index) for tri in mesh.loop_triangles
-                     for loop, vertex in zip(tri.loops, tri.vertices)]
+        selection = list(quad_corners(mesh))
     world = evaluated.matrix_world
     normal_matrix = world.to_3x3().inverted().transposed()
     positions = [to_game(world @ v.co) for v in mesh.vertices]
@@ -82,11 +99,12 @@ def crossbar():
         for left, right in zip(rings, rings[1:]):
             for i in range(count):
                 j = (i + 1) % count
-                faces.extend((left[i], left[j], right[j], left[i], right[j], right[i]))
+                faces.extend((left[i], left[j], right[j], right[i]))
         for ring, sign in ((rings[0], -1), (rings[-1], 1)):
             cap = [(x, y, z, float(sign), 0., 0., color) for x, y, z, *_ in ring]
             for i in range(1, count - 1):
-                faces.extend((cap[0], cap[i+1], cap[i]) if sign < 0 else (cap[0], cap[i], cap[i+1]))
+                faces.extend((cap[0], cap[i+1], cap[i], cap[i]) if sign < 0
+                             else (cap[0], cap[i], cap[i+1], cap[i+1]))
         return faces
 
     bar = tube([(-.518,.018),(-.501,.036),(-.450,.039),(-.42,.026),(.42,.026),
@@ -109,10 +127,15 @@ def export(source):
             keys.animation_data_clear()
             animated.append(obj)
             continue
-        # Most of the source mesh density is in the underside of the two tufted cushions.
+        # Lower the subdivision of smooth upholstery and densely sampled metal profiles.
         if obj.name.startswith("Button-tufted back "):
             modifier = obj.modifiers.new("Runtime upholstery simplification", 'DECIMATE')
-            modifier.ratio = .19
+            modifier.ratio = .13
+            bpy.context.view_layer.update()
+        elif obj.name.startswith(("Shrunk iron tire ", "Bent oak felly ", "Rim bead ", "Rolled iron mudguard ",
+                                  "Mudguard copper bead ", "Cast hub boss ", "Raised lancet moulding ")):
+            modifier = obj.modifiers.new("Runtime metal simplification", 'DECIMATE')
+            modifier.ratio = .48
             bpy.context.view_layer.update()
         vertices, _ = snapshot(obj)
         static[static_group(obj)].extend(vertices)
@@ -138,10 +161,10 @@ def export(source):
     with gzip.GzipFile(filename=str(MODEL), mode="wb", mtime=0) as stream:
         stream.write(struct.pack(">II", MAGIC, count))
         for batch in [*static, *samples]:
-            assert batch and len(batch) % 3 == 0
+            assert batch and len(batch) % 4 == 0
             stream.write(struct.pack(">I", len(batch)))
             stream.write(b"".join(vertex.pack(*item) for item in batch))
-    print(f"Exported {sum(len(batch)//3 for batch in static) + len(samples[0])//3:,} triangles"
+    print(f"Exported {sum(map(len, static)) + len(samples[0]):,} vertices per carriage"
           f" and {count} canopy states to {MODEL}")
 
 
