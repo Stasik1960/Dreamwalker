@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "id": "yharnam_casino_test",
+  "version": "1.0.0",
+  "name": "Yharnam Casino GameTests",
+  "environment": "*",
+  "entrypoints": {"fabric-gametest": ["com.yharnam.casino.CasinoGameTests"]},
+  "depends": {"yharnam_casino": "*", "fabric-gametest-api-v1": "*"}
+}

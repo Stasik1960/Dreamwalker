@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "yharnam_casino",
+  "version": "${version}",
+  "name": "Yharnam Casino",
+  "description": "Three mechanical cabinets, seven chip denominations and a roleplay prize ticket.",
+  "environment": "*",
+  "entrypoints": {
+    "main": ["com.yharnam.casino.YharnamCasino"],
+    "client": ["com.yharnam.casino.client.CasinoClient"]
+  },
+  "depends": {
+    "fabricloader": ">=0.16.10",
+    "minecraft": "1.20.1",
+    "java": ">=17",
+    "fabric-api": ">=0.92.9+1.20.1"
+  }
+}
