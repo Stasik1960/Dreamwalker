@@ -13,7 +13,9 @@ import shutil
 import struct
 from pathlib import Path
 
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image
+
+from out_of_order_sign import add_to_atlas, add_to_icon, plaque_art, sign_faces
 
 
 PROJECT = Path(__file__).resolve().parents[1]
@@ -31,17 +33,6 @@ DATA = PROJECT / "src" / "main" / "resources" / "data" / "yharnam_casino"
 STYLES = ("hunters_wager", "astral_choir", "crimson_oath")
 DYNAMIC_PARTS = ("lever", "reel_01", "reel_02", "reel_03")
 ALL_PARTS = ("cabinet", *DYNAMIC_PARTS)
-
-
-def cyrillic_font(size):
-    candidates = (
-        Path("C:/Windows/Fonts/arialbd.ttf"),
-        Path("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"),
-    )
-    for candidate in candidates:
-        if candidate.is_file():
-            return ImageFont.truetype(candidate, size)
-    raise FileNotFoundError("A Cyrillic bold font is required to render the broken-machine sign")
 
 
 def vector_subtract(a, b):
@@ -128,31 +119,17 @@ def split_halves(vertices):
     return halves
 
 
-def sign_mesh(texture_width, texture_height):
-    # A shallow plaque across the reel window. +Z is the machine front.
-    x0, x1 = -0.37, 0.37
-    y0, y1 = 1.14, 1.42
-    z0, z1 = 0.445, 0.475
-    sx0, sy0, sx1, sy1 = 520 / texture_width, 8 / texture_height, 760 / texture_width, 168 / texture_height
-    dark = (524 / texture_width, 172 / texture_height)
-    result = []
-
-    def face(points, uvs):
-        for indices in ((0, 1, 2), (0, 2, 3)):
+def sign_mesh(panel_front, texture_width, texture_height):
+    for points, uvs in sign_faces(panel_front):
+        for middle in range(1, len(points)-1):
+            indices = (0, middle, middle+1)
             tri = [points[index] for index in indices]
             face_normal = normal(*tri)
+            if face_normal is None:
+                continue
             for index, point in zip(indices, tri):
-                uv = uvs[index]
-                result.append((*point, *uv, *face_normal))
-
-    face(((x0,y0,z1),(x1,y0,z1),(x1,y1,z1),(x0,y1,z1)),
-         ((sx0,sy1),(sx1,sy1),(sx1,sy0),(sx0,sy0)))
-    face(((x1,y0,z0),(x0,y0,z0),(x0,y1,z0),(x1,y1,z0)), (dark,dark,dark,dark))
-    face(((x0,y0,z0),(x0,y0,z1),(x0,y1,z1),(x0,y1,z0)), (dark,dark,dark,dark))
-    face(((x1,y0,z1),(x1,y0,z0),(x1,y1,z0),(x1,y1,z1)), (dark,dark,dark,dark))
-    face(((x0,y1,z1),(x1,y1,z1),(x1,y1,z0),(x0,y1,z0)), (dark,dark,dark,dark))
-    face(((x0,y0,z0),(x1,y0,z0),(x1,y0,z1),(x0,y0,z1)), (dark,dark,dark,dark))
-    return result
+                u, v = uvs[index]
+                yield (*point, u/texture_width, v/texture_height, *face_normal)
 
 
 def write_mesh(path, parts):
@@ -169,35 +146,26 @@ def write_mesh(path, parts):
                 output.write(struct.pack(">8f", *vertex))
 
 
-def broken_atlas(style, source_atlas):
+def broken_atlas(style, source_atlas, plaque):
     with Image.open(source_atlas) as source:
         source = source.convert("RGBA")
         if source.width != 512:
             raise ValueError(f"{style}: expected a 512px-wide atlas, found {source.width}")
         atlas = Image.new("RGBA", (768, source.height))
         atlas.alpha_composite(source)
-    draw = ImageDraw.Draw(atlas)
-    draw.rounded_rectangle((520,8,760,168), radius=12, fill="#161820", outline="#B8C7D0", width=6)
-    draw.rounded_rectangle((530,18,750,158), radius=7, outline="#6D1D28", width=5)
-    font = cyrillic_font(43)
-    for line, y in (("НЕ", 24), ("РАБОТАЕТ", 82)):
-        box = draw.textbbox((0,0), line, font=font, stroke_width=1)
-        width = box[2] - box[0]
-        draw.text((640 - width / 2, y), line, font=font, fill="#E7DFD2",
-                  stroke_width=2, stroke_fill="#5A111B")
-    draw.line((538,146,742,28), fill="#697984", width=3)
+    add_to_atlas(atlas, plaque)
     path = DESTINATION / "textures" / "machine" / f"{style}_broken.png"
     path.parent.mkdir(parents=True, exist_ok=True)
     atlas.save(path, optimize=True)
     return atlas.width, atlas.height
 
 
-def compile_item_icon(style, broken=False):
+def compile_item_icon(style, plaque=None):
     texture_directory = DESTINATION / "textures" / "item"
     model_directory = DESTINATION / "models" / "item"
     texture_directory.mkdir(parents=True, exist_ok=True)
     model_directory.mkdir(parents=True, exist_ok=True)
-    name = f"{style}_broken" if broken else style
+    name = f"{style}_broken" if plaque is not None else style
 
     with Image.open(SOURCE / "previews" / f"{style}.png") as render:
         render = render.convert("RGBA")
@@ -212,14 +180,8 @@ def compile_item_icon(style, broken=False):
     )
     icon = Image.new("RGBA", (256, 256))
     icon.alpha_composite(portrait, ((256 - portrait.width) // 2, 250 - portrait.height))
-    if broken:
-        draw = ImageDraw.Draw(icon)
-        draw.rounded_rectangle((35,96,221,151), radius=6, fill="#171820DD", outline="#C0CED4", width=3)
-        font = cyrillic_font(24)
-        text = "НЕ РАБОТАЕТ"
-        box = draw.textbbox((0,0), text, font=font)
-        draw.text(((256-(box[2]-box[0]))/2,108), text, font=font, fill="#F0E6D8",
-                  stroke_width=1, stroke_fill="#651621")
+    if plaque is not None:
+        add_to_icon(icon, style, plaque)
     icon.save(texture_directory / f"{name}.png", optimize=True)
     (model_directory / f"{name}.json").write_text(json.dumps({
         "parent": "minecraft:item/generated",
@@ -265,7 +227,7 @@ def write_support_resources(style):
     }, indent=2) + "\n", encoding="utf8")
 
 
-def compile_style(style):
+def compile_style(style, plaque):
     model_path = SOURCE / "models" / f"{style}.bbmodel"
     atlas_path = SOURCE / "textures" / f"{style}_atlas.png"
     project = json.loads(model_path.read_text(encoding="utf8"))
@@ -294,13 +256,15 @@ def compile_style(style):
         (half, (0.0, 0.0, 0.0), static_halves[half]) for half in ("lower", "upper")
     ])
 
-    broken_width, broken_height = broken_atlas(style, atlas_path)
+    broken_width, broken_height = broken_atlas(style, atlas_path, plaque)
     broken_vertices = []
     for name in ALL_PARTS:
         _, vertices = compile_part(
             project, elements, groups[name], broken_width, broken_height, False)
         broken_vertices.extend(vertices)
-    broken_vertices.extend(sign_mesh(broken_width, broken_height))
+    rail = next(element for element in elements.values() if element["name"].split(".")[0] == "Upper window blind")
+    panel_front = (rail["origin"][2] + max(vertex[2] for vertex in rail["vertices"].values())) / 16
+    broken_vertices.extend(sign_mesh(panel_front, broken_width, broken_height))
     broken_halves = split_halves(broken_vertices)
     write_mesh(DESTINATION / "models" / "machine" / f"{style}_broken.mesh", [
         (half, (0.0, 0.0, 0.0), broken_halves[half]) for half in ("lower", "upper")
@@ -310,7 +274,7 @@ def compile_style(style):
     texture_directory.mkdir(parents=True, exist_ok=True)
     shutil.copyfile(atlas_path, texture_directory / f"{style}.png")
     compile_item_icon(style)
-    compile_item_icon(style, broken=True)
+    compile_item_icon(style, plaque)
     write_support_resources(style)
     return len(cabinet) // 3, len(broken_vertices) // 3
 
@@ -324,8 +288,9 @@ def main():
         "sources": [{"type": "directory", "source": "machine", "prefix": "machine/"}]
     }, indent=2) + "\n", encoding="utf8")
     print(f"source: {SOURCE}")
+    plaque = plaque_art(SOURCE / "textures" / "surfaces" / "hunters_wager_slat.png")
     for style in STYLES:
-        static_triangles, broken_triangles = compile_style(style)
+        static_triangles, broken_triangles = compile_style(style, plaque)
         print(f"{style}: {static_triangles} static triangles; {broken_triangles} broken triangles")
 
 
