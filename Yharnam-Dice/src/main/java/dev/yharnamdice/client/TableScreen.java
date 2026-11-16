@@ -17,6 +17,7 @@ import java.util.List;
 
 public final class TableScreen extends Screen {
     private static final int PANEL = 188;
+    private static final int OPEN_RULES = 102;
     private static final int GOLD=0xffe4c698, DIM=0xffbea28a;
     private Protocol.View view;
     private final List<Control> controls = new ArrayList<>();
@@ -46,7 +47,7 @@ public final class TableScreen extends Screen {
     void update(Protocol.View view) {
         if (this.view.bagSlot()!=view.bagSlot()) choosingBag=view.bagSlot()<0;
         this.view=view;
-        updateText();
+        if (client != null) updateText();
     }
 
     private static Text label(String key, Object... args) {
@@ -100,7 +101,10 @@ public final class TableScreen extends Screen {
         c.fill(left,top,left+1,top+h,0xff543f37);
         c.fill(left+w-1,top,left+w,top+h,0xff543f37);
         String heading = view.title().isBlank() ? label("free").getString() : view.title();
-        c.drawTextWithShadow(textRenderer,textRenderer.trimToWidth(heading,w-16),left+8,top+7,GOLD);
+        Text rulesLabel = label("rules");
+        int rulesButtonWidth = textRenderer.getWidth(rulesLabel) + 10;
+        c.drawTextWithShadow(textRenderer,textRenderer.trimToWidth(heading,w-22-rulesButtonWidth),left+8,top+7,GOLD);
+        button(c,mx,my,left+w-7-rulesButtonWidth,top+4,rulesButtonWidth,14,rulesLabel,OPEN_RULES,0,true);
         int statusY = top + 21;
         for (OrderedText line : statusLines) {
             c.drawText(textRenderer, line, left + 8, statusY, DIM, false);
@@ -237,6 +241,7 @@ public final class TableScreen extends Screen {
             if (!control.enabled || !control.hit(x,y)) continue;
             if (control.action==100) page=Math.max(0,page+control.argument);
             else if (control.action==101) { choosingBag=!choosingBag; page=0; }
+            else if (control.action==OPEN_RULES && client!=null) client.setScreen(new TableRulesScreen(this,view));
             else DiceClient.action(view.table(),control.action,control.argument);
             return true;
         }
@@ -248,7 +253,7 @@ public final class TableScreen extends Screen {
             close();
             return true;
         }
-        return false;
+        return DiceClient.openChatFromTable(client, this, key, scan) || super.keyPressed(key, scan, modifiers);
     }
 
     @Override public void close() {

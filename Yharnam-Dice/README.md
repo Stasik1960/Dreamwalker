@@ -1,8 +1,13 @@
 # Кости Ярнама
 
-[Скачать JAR 0.1.2](https://raw.githubusercontent.com/Stasik1960/Dreamwalker/yharnam-dice-v0.1.2/Yharnam-Dice/release/yharnam-dice-0.1.2.jar) · [SHA-256](https://raw.githubusercontent.com/Stasik1960/Dreamwalker/yharnam-dice-v0.1.2/Yharnam-Dice/release/yharnam-dice-0.1.2.jar.sha256)
+[Скачать JAR 0.1.3](release/yharnam-dice-0.1.3.jar) · [SHA-256](release/yharnam-dice-0.1.3.jar.sha256)
 
 Мод для Minecraft Java 1.20.1, Fabric Loader 0.16.10 или новее, Fabric API 0.92.9+1.20.1 и Java 17. В мультиплеере мод и Fabric API устанавливаются на сервер и на клиенты. Скопируйте скачанный JAR в папку `mods`. Сборка из исходников на Windows — `.\gradlew.bat build`.
+
+## Изменения в 0.1.3
+
+- Кнопка **Правила** показывает краткую памятку текущей игры с настройками загруженной дискеты.
+- За столом работают клавиши чата и ввода команды (по умолчанию **T** и **/**). После отправки или Esc возвращается панель стола. Место, мешочек и ход сохраняются.
 
 ## Изменения в 0.1.2
 

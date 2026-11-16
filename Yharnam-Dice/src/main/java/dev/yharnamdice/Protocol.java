@@ -28,11 +28,13 @@ public final class Protocol {
     private Protocol() {}
 
     public record Bag(int slot, String name) {}
+    public record RuleDetails(int maxPlayers, int target, int maxRerolls, boolean hotDice,
+                              boolean allowDuplicateDice, String hostExit) {}
     public record View(long table, String title, String note, String turn, List<Bag> bags,
                        int bagSlot, int[] skins, int selected, int required, int playerCount, int minPlayers,
                        boolean host, boolean started, boolean busy, boolean canRoll, boolean canKeep,
                        boolean canBank, boolean canStand, boolean canMark, String game, boolean canLeave,
-                       int[] values, int[] active, int marked, List<String> board) {}
+                       int[] values, int[] active, int marked, List<String> board, RuleDetails rules) {}
     public record Visual(int seat, int index, int skin, float x, float y, float z,
                          float qx, float qy, float qz, float qw, float scale) {}
 

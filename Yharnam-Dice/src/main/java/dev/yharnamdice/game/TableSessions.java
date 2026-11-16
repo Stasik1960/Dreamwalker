@@ -683,6 +683,8 @@ public final class TableSessions {
         }
 
         void sync() {
+            var details = new Protocol.RuleDetails(rules.maxPlayers, rules.target, rules.maxRerolls,
+                    rules.hotDice, rules.allowDuplicateDice, rules.hostExit.name());
             for (Player p : players) {
                 ServerPlayerEntity user = live(p);
                 if (user == null) continue;
@@ -714,7 +716,7 @@ public final class TableSessions {
                         p == players.get(0) && !free(),started,rolling != null,canRoll(p),canKeep(p),canBank(p),
                         canStand(p),hasMatchActions(p),rules.game.name(),
                         !(p == players.get(0) && started && rules.hostExit == RulesConfig.HostExit.BETWEEN_GAMES),
-                        p.values, p.active, p.mark, board));
+                        p.values, p.active, p.mark, board, details));
             }
         }
 

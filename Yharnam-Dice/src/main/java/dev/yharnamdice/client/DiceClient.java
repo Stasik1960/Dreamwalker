@@ -3,6 +3,7 @@ package dev.yharnamdice.client;
 import com.google.gson.JsonParseException;
 import dev.yharnamdice.DiceMod;
 import dev.yharnamdice.Protocol;
+import dev.yharnamdice.client.mixin.ChatScreenOpener;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
@@ -10,6 +11,8 @@ import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.client.render.entity.EmptyEntityRenderer;
 import net.minecraft.network.PacketByteBuf;
@@ -17,6 +20,8 @@ import net.minecraft.network.PacketByteBuf;
 import java.util.ArrayList;
 
 public final class DiceClient implements ClientModInitializer {
+    private static Screen chatReturn;
+    private TableScreen table;
     @Override public void onInitializeClient() {
         for (int i=0; i<DiceMod.DICE.size(); i++) {
             final int skin = i;
@@ -32,10 +37,18 @@ public final class DiceClient implements ClientModInitializer {
         WorldRenderEvents.AFTER_ENTITIES.register(DiceWorldRenderer::render);
         WorldRenderEvents.BEFORE_BLOCK_OUTLINE.register((context, hit) ->
                 !(net.minecraft.client.MinecraftClient.getInstance().currentScreen instanceof TableScreen));
-        ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> DiceWorldRenderer.clear());
+        ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> {
+            DiceWorldRenderer.clear();
+            clearTable(client);
+        });
         net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            if (client.currentScreen instanceof TableScreen && client.player == null)
-                client.setScreen(null);
+            if (client.player == null) {
+                if (table != null) clearTable(client);
+            } else if (chatReturn != null && client.currentScreen == null) {
+                Screen returnTo = chatReturn;
+                chatReturn = null;
+                if (table != null) client.setScreen(returnTo);
+            }
         });
 
         ClientPlayNetworking.registerGlobalReceiver(Protocol.VIEW, (client, handler, buf, sender) -> {
@@ -47,12 +60,14 @@ public final class DiceClient implements ClientModInitializer {
             }
             client.execute(() -> {
                 if (view == null) {
-                    if (client.currentScreen instanceof TableScreen) client.setScreen(null);
-                } else if (client.currentScreen instanceof TableScreen screen && screen.sameTable(view)) {
-                    screen.update(view);
+                    clearTable(client);
+                } else if (table != null && table.sameTable(view)) {
+                    table.update(view);
                 } else if (client.player != null) {
+                    chatReturn = null;
+                    table = new TableScreen(view);
                     client.inGameHud.setOverlayMessage(net.minecraft.text.Text.empty(), false);
-                    client.setScreen(new TableScreen(view));
+                    client.setScreen(table);
                 }
             });
         });
@@ -79,6 +94,25 @@ public final class DiceClient implements ClientModInitializer {
                 else if (client.currentScreen instanceof DiskScreen disk) disk.result(token, type == 1, input);
             });
         });
+    }
+
+    private void clearTable(MinecraftClient client) {
+        table = null;
+        chatReturn = null;
+        if (client.currentScreen instanceof TableScreen || client.currentScreen instanceof TableRulesScreen) {
+            client.setScreen(null);
+        }
+    }
+
+    static boolean openChatFromTable(MinecraftClient client, Screen parent, int key, int scan) {
+        if (client == null || client.currentScreen != parent) return false;
+        boolean command = client.options.commandKey.matchesKey(key, scan);
+        if (!command && !client.options.chatKey.matchesKey(key, scan)) return false;
+
+        // Use Minecraft's normal chat entry point, including privacy settings and replacement chat UIs.
+        ((ChatScreenOpener) client).yharnamDice$openChat(command ? "/" : "");
+        if (client.currentScreen != parent) chatReturn = parent;
+        return true;
     }
 
     static void action(long table, int action, int argument) {
