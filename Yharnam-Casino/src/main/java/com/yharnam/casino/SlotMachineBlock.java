@@ -190,7 +190,7 @@ public final class SlotMachineBlock extends BlockWithEntity {
 
     @Override
     public BlockRenderType getRenderType(BlockState state) {
-        return BlockRenderType.INVISIBLE;
+        return BlockRenderType.MODEL;
     }
 
     @Override

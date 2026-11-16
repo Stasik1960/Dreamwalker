@@ -1,7 +1,28 @@
 {
   "variants": {
-    "": {
-      "model": "yharnam_casino:block/hunters_wager"
+    "facing=north,half=lower": {
+      "model": "yharnam_casino:machine/hunters_wager_lower_north"
+    },
+    "facing=east,half=lower": {
+      "model": "yharnam_casino:machine/hunters_wager_lower_east"
+    },
+    "facing=south,half=lower": {
+      "model": "yharnam_casino:machine/hunters_wager_lower_south"
+    },
+    "facing=west,half=lower": {
+      "model": "yharnam_casino:machine/hunters_wager_lower_west"
+    },
+    "facing=north,half=upper": {
+      "model": "yharnam_casino:machine/hunters_wager_upper_north"
+    },
+    "facing=east,half=upper": {
+      "model": "yharnam_casino:machine/hunters_wager_upper_east"
+    },
+    "facing=south,half=upper": {
+      "model": "yharnam_casino:machine/hunters_wager_upper_south"
+    },
+    "facing=west,half=upper": {
+      "model": "yharnam_casino:machine/hunters_wager_upper_west"
     }
   }
 }

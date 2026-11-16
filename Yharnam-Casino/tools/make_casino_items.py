@@ -181,11 +181,13 @@ def cabinet_recipe(style, frame, accent, glass):
         "result":{"item":f"{NAMESPACE}:{style}"},
     })
     unlock_recipe(style,f"minecraft:{accent}")
-    dump(ASSETS/"blockstates"/f"{style}.json",{"variants":{"":{"model":f"{NAMESPACE}:block/{style}"}}})
-    particle = "quartz_block_side" if frame == "quartz_block" else frame
-    dump(ASSETS/"models/block"/f"{style}.json",{
-        "textures":{"particle":f"minecraft:block/{particle}"},
+    broken = f"{style}_broken"
+    dump(DATA/"recipes"/f"{broken}.json",{
+        "type":"minecraft:crafting_shapeless",
+        "ingredients":[{"item":f"{NAMESPACE}:{style}"},{"item":"minecraft:paper"}],
+        "result":{"item":f"{NAMESPACE}:{broken}"},
     })
+    unlock_recipe(broken,f"{NAMESPACE}:{style}")
     dump(DATA/"loot_tables/blocks"/f"{style}.json",{
         "type":"minecraft:block",
         "pools":[{"rolls":1,"entries":[{"type":"minecraft:item","name":f"{NAMESPACE}:{style}"}],

@@ -59,6 +59,7 @@ public final class CasinoGameTests implements FabricGameTest {
         BlockPos base = context.getAbsolutePos(new BlockPos(1, 1, 1));
         ServerWorld world = context.getWorld();
         SlotMachineEntity machine = place(context, base, SlotStyle.ASTRAL_CHOIR);
+        allowAllChips(machine);
         fillSafe(machine,new ItemStack(YharnamCasino.chip(1000),4));
         ServerPlayerEntity bettor = context.createMockCreativeServerPlayerInWorld();
         ServerPlayerEntity bystander = context.createMockCreativeServerPlayerInWorld();
@@ -102,6 +103,7 @@ public final class CasinoGameTests implements FabricGameTest {
         ServerWorld world = context.getWorld();
         BlockPos base = context.getAbsolutePos(new BlockPos(1, 1, 1));
         SlotMachineEntity machine = place(context, base, SlotStyle.CRIMSON_OATH);
+        allowAllChips(machine);
         ServerPlayerEntity bettor = context.createMockCreativeServerPlayerInWorld();
         bettor.setStackInHand(Hand.OFF_HAND, new ItemStack(YharnamCasino.chip(500), 2));
         click(world, base.up(), bettor, false);
@@ -140,6 +142,7 @@ public final class CasinoGameTests implements FabricGameTest {
         world.setBlockState(base,state,Block.NOTIFY_ALL);
         block.onPlaced(world,base,state,founder,new ItemStack(block));
         SlotMachineEntity machine = (SlotMachineEntity)world.getBlockEntity(base);
+        allowAllChips(machine);
         founder.refreshPositionAndAngles(base.getX()+.5,base.getY(),base.getZ()+2.5,180,0);
         first.refreshPositionAndAngles(base.getX()+1,base.getY(),base.getZ()+2.5,180,0);
         second.refreshPositionAndAngles(base.getX()+2,base.getY(),base.getZ()+2.5,180,0);
@@ -316,6 +319,100 @@ public final class CasinoGameTests implements FabricGameTest {
                 && owner.getUuid().equals(owned.founderId()) && !owned.hasAccess(staff.getUuid()),
                 "A staff player can open directly with empty hands and leaves ownership unchanged");
         context.complete();
+    }
+
+    @GameTest(templateName = EMPTY_STRUCTURE)
+    public void keySetsAcceptedChipsAndKeepsAtLeastOne(TestContext context) {
+        ServerWorld world = context.getWorld();
+        BlockPos base = context.getAbsolutePos(new BlockPos(1,1,1));
+        SlotMachineEntity machine = place(context,base,SlotStyle.CRIMSON_OATH);
+        ServerPlayerEntity guest = context.createMockCreativeServerPlayerInWorld();
+        ServerPlayerEntity gm = context.createMockCreativeServerPlayerInWorld();
+        gm.refreshPositionAndAngles(base.getX()+.5,base.getY(),base.getZ()+2,180,0);
+        ItemStack fifty = new ItemStack(YharnamCasino.chip(50),4);
+        guest.setStackInHand(Hand.MAIN_HAND,fifty);
+        click(world,base,guest,false);
+        context.assertTrue(fifty.getCount()==4 && machine.acceptedChipMask()==4,
+                "A default machine rejects 50 and only accepts 10");
+        gm.addCommandTag("rpchat_gm");
+        gm.setSneaking(true);
+        useCabinetItem(gm,base.up(),new ItemStack(YharnamCasino.GM_KEY));
+        context.assertTrue(gm.currentScreenHandler instanceof DenominationMenu,"Sneak-use opens the wager settings");
+        DenominationMenu menu = (DenominationMenu)gm.currentScreenHandler;
+        context.assertTrue(!menu.onButtonClick(guest,3) && !menu.onButtonClick(gm,2),
+                "A guest cannot change the settings or disable the last denomination");
+        context.assertTrue(menu.onButtonClick(gm,3) && menu.accepts(2) && menu.accepts(3),
+                "A second denomination can be enabled independently");
+        context.assertTrue(menu.onButtonClick(gm,2) && !menu.accepts(2),"One denomination can also be selected");
+        NbtCompound saved = machine.createNbt();
+        machine.readNbt(saved);
+        context.assertTrue(machine.acceptedChipMask()==8,"The selected denomination survives a save and reload");
+        click(world,base,guest,false);
+        context.assertTrue(fifty.getCount()==3,"The newly accepted denomination is deducted once");
+        context.complete();
+    }
+
+    @GameTest(templateName = EMPTY_STRUCTURE)
+    public void chipCabinetStoresAndShowsAllSevenDenominations(TestContext context) {
+        ServerWorld world = context.getWorld();
+        BlockPos base = context.getAbsolutePos(new BlockPos(1,1,1));
+        ChipCabinetBlock block = YharnamCasino.CHIP_CABINET;
+        BlockState state = block.getDefaultState();
+        world.setBlockState(base,state,Block.NOTIFY_ALL);
+        block.onPlaced(world,base,state,null,new ItemStack(block));
+        ChipCabinetEntity cabinet = (ChipCabinetEntity)world.getBlockEntity(base);
+        ServerPlayerEntity cashier = context.createMockCreativeServerPlayerInWorld();
+        cashier.refreshPositionAndAngles(base.getX()+.5,base.getY(),base.getZ()+2,180,0);
+        BlockPos top = base.up();
+        world.getBlockState(top).onUse(world,cashier,Hand.MAIN_HAND,
+                new BlockHitResult(Vec3d.ofCenter(top),Direction.SOUTH,top,false));
+        context.assertTrue(cashier.currentScreenHandler instanceof GenericContainerScreenHandler,
+                "The upper half opens the cabinet's shared inventory");
+        var menu = cashier.currentScreenHandler;
+        context.assertTrue(!menu.getSlot(0).canInsert(new ItemStack(YharnamCasino.chip(100)))
+                && !menu.getSlot(7).canInsert(new ItemStack(Items.COBBLESTONE)),
+                "Each active column accepts one denomination and spare slots are disabled");
+        for (int row=0; row<6; row++) {
+            for (int column=0; column<7; column++) {
+                cabinet.setStack(row*9+column,new ItemStack(YharnamCasino.chip(YharnamCasino.CHIP_VALUES[column]),64));
+            }
+        }
+        NbtCompound saved = cabinet.createNbt();
+        cabinet.clear();
+        cabinet.readNbt(saved);
+        int[] counts = cabinet.toInitialChunkDataNbt().getIntArray("VisibleChips");
+        context.assertTrue(counts.length==7 && java.util.Arrays.stream(counts).allMatch(count -> count==384)
+                && !cabinet.toInitialChunkDataNbt().contains("Items"),
+                "All 2688 physical chips survive storage, and clients receive just seven counts");
+        menu.quickMove(cashier,0);
+        context.assertTrue(cabinet.visibleCount(0)==320 && chipValue(cashier)==64,
+                "Removing a full stack updates the corresponding display count");
+        context.complete();
+    }
+
+    @GameTest(templateName = EMPTY_STRUCTURE)
+    public void outOfOrderCabinetHasNoBlockEntityOrGameplay(TestContext context) {
+        ServerWorld world = context.getWorld();
+        BlockPos base = context.getAbsolutePos(new BlockPos(1,1,1));
+        Block block = net.minecraft.registry.Registries.BLOCK.get(YharnamCasino.id("astral_choir_broken"));
+        BlockState state = block.getDefaultState();
+        world.setBlockState(base,state,Block.NOTIFY_ALL);
+        block.onPlaced(world,base,state,null,new ItemStack(block));
+        ServerPlayerEntity guest = context.createMockCreativeServerPlayerInWorld();
+        ItemStack chips = new ItemStack(YharnamCasino.chip(10),2);
+        guest.setStackInHand(Hand.MAIN_HAND,chips);
+        click(world,base.up(),guest,false);
+        context.assertTrue(world.getBlockState(base.up()).isOf(block)
+                && world.getBlockEntity(base)==null && world.getBlockEntity(base.up())==null
+                && chips.getCount()==2 && guest.currentScreenHandler==guest.playerScreenHandler,
+                "The decorative version occupies two blocks without creating a machine or taking a bet");
+        context.complete();
+    }
+
+    private static void allowAllChips(SlotMachineEntity machine) {
+        NbtCompound configured = machine.createNbt();
+        configured.putInt("AcceptedChips",127);
+        machine.readNbt(configured);
     }
 
     private static void useKey(ServerPlayerEntity player, BlockPos pos, ItemStack key) {

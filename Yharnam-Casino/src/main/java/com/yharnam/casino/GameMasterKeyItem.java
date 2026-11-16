@@ -30,7 +30,7 @@ final class GameMasterKeyItem extends Item {
                 player.sendMessage(Text.translatable("message.yharnam_casino.gm_key_denied"),true);
             } else if (machine != null) {
                 if (player.isSneaking()) {
-                    machine.showPool(server,player);
+                    machine.openDenominations(player);
                 } else {
                     machine.openVault(server,player);
                 }

@@ -36,6 +36,8 @@ public final class SlotMachineEntity extends BlockEntity {
     static final int SPIN_DURATION = 70;
     private static final int[] START = {11, 13, 15};
     private static final int[] STOP = {42, 54, 66};
+    private static final int ALL_CHIPS = (1 << YharnamCasino.CHIP_VALUES.length) - 1;
+    private static final int DEFAULT_CHIPS = 1 << 2;
 
     private UUID machineId = UUID.randomUUID();
     private UUID founder;
@@ -43,6 +45,7 @@ public final class SlotMachineEntity extends BlockEntity {
     private long legacyProfit;
     private boolean legacyActiveStake;
     private boolean changeNeedsSpaceCheck;
+    private int acceptedChips = DEFAULT_CHIPS;
     private final SimpleInventory safe = new SimpleInventory(27) {
         @Override
         public boolean canPlayerUse(PlayerEntity player) {
@@ -170,13 +173,51 @@ public final class SlotMachineEntity extends BlockEntity {
         tell(player,"pool_balance",pool.balance());
     }
 
-    void showPool(ServerWorld world, ServerPlayerEntity player) {
-        if (!canOpenVault(player)) {
+    boolean canConfigure(PlayerEntity player) {
+        return canOpenVault(player) && world != null && player.getWorld() == world
+                && world.getBlockEntity(pos) == this && player.squaredDistanceTo(Vec3d.ofCenter(pos)) <= 64;
+    }
+
+    void openDenominations(ServerPlayerEntity player) {
+        if (!canConfigure(player)) {
             tell(player,"vault_denied");
             return;
         }
-        importLegacyCash(world);
-        tell(player,"pool_balance",pool.balance());
+        player.openHandledScreen(new SimpleNamedScreenHandlerFactory(
+                (syncId,inventory,viewer) -> new DenominationMenu(syncId,this),
+                Text.translatable("screen.yharnam_casino.denominations")));
+    }
+
+    int acceptedChipMask() {
+        return acceptedChips;
+    }
+
+    boolean toggleDenomination(int index, PlayerEntity player) {
+        if (index<0 || index>=YharnamCasino.CHIP_VALUES.length) {
+            return false;
+        }
+        int changed = acceptedChips ^ (1 << index);
+        if (changed == 0) {
+            tell(player,"denominations_required");
+            return false;
+        }
+        acceptedChips = changed;
+        markDirty();
+        return true;
+    }
+
+    private boolean acceptsChip(int value) {
+        for (int index=0; index<YharnamCasino.CHIP_VALUES.length; index++) {
+            if (YharnamCasino.CHIP_VALUES[index]==value) {
+                return (acceptedChips & (1<<index)) != 0;
+            }
+        }
+        return false;
+    }
+
+    private String acceptedChipsLabel() {
+        return String.join(", ",Arrays.stream(YharnamCasino.CHIP_VALUES)
+                .filter(this::acceptsChip).mapToObj(Integer::toString).toList());
     }
 
     void use(ServerWorld world, PlayerEntity player, ItemStack held, boolean lever) {
@@ -212,6 +253,10 @@ public final class SlotMachineEntity extends BlockEntity {
         }
         if (!(held.getItem() instanceof ChipItem chip)) {
             tell(player, "use_chip");
+            return;
+        }
+        if (!acceptsChip(chip.value())) {
+            tell(player,"denominations_denied",acceptedChipsLabel());
             return;
         }
         if (!pool.canStore(held)) {
@@ -452,6 +497,7 @@ public final class SlotMachineEntity extends BlockEntity {
             nbt.putUuid("Founder",founder);
         }
         nbt.putInt("PoolVersion",1);
+        nbt.putInt("AcceptedChips",acceptedChips);
         nbt.putLong("PoolChange",pool.savedChange());
         if (legacyProfit > 0) {
             nbt.putLong("LegacyProfit",legacyProfit);
@@ -493,6 +539,8 @@ public final class SlotMachineEntity extends BlockEntity {
         if (nbt.containsUuid("MachineId")) {
             machineId = nbt.getUuid("MachineId");
             founder = nbt.containsUuid("Founder") ? nbt.getUuid("Founder") : null;
+            int savedChips = nbt.getInt("AcceptedChips") & ALL_CHIPS;
+            acceptedChips = savedChips == 0 ? DEFAULT_CHIPS : savedChips;
             boolean hasPool = nbt.getInt("PoolVersion") > 0;
             legacyProfit = Math.max(0,nbt.getLong(hasPool ? "LegacyProfit" : "Profit"));
             legacyActiveStake = hasPool ? nbt.getBoolean("LegacyActiveStake") : bettor != null && startTick >= 0;

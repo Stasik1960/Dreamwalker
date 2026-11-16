@@ -20,6 +20,8 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.resource.featuretoggle.FeatureFlags;
+import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -43,7 +45,11 @@ public final class YharnamCasino implements ModInitializer {
     static final SoundEvent JACKPOT = SoundEvent.of(id("jackpot"));
     private static final Map<Integer, ChipItem> CHIPS = new LinkedHashMap<>();
     private static final Map<SlotStyle, SlotMachineBlock> CABINETS = new EnumMap<>(SlotStyle.class);
+    private static final Map<SlotStyle, BrokenSlotMachineBlock> BROKEN_CABINETS = new EnumMap<>(SlotStyle.class);
     public static BlockEntityType<SlotMachineEntity> SLOT_ENTITY;
+    public static BlockEntityType<ChipCabinetEntity> CHIP_CABINET_ENTITY;
+    public static ScreenHandlerType<DenominationMenu> DENOMINATION_MENU;
+    static ChipCabinetBlock CHIP_CABINET;
     static Item PRIZE_TICKET;
     static Item CABINET_KEY;
     static Item GM_KEY;
@@ -73,15 +79,32 @@ public final class YharnamCasino implements ModInitializer {
             Registry.register(Registries.BLOCK, identifier, cabinet);
             Registry.register(Registries.ITEM, identifier, new BlockItem(cabinet, new Item.Settings()));
             CABINETS.put(style, cabinet);
+            BrokenSlotMachineBlock broken = new BrokenSlotMachineBlock(style,AbstractBlock.Settings.create()
+                    .mapColor(MapColor.DEEPSLATE_GRAY).strength(3.0F,1200.0F)
+                    .sounds(BlockSoundGroup.METAL).nonOpaque());
+            Identifier brokenId = id(style.id()+"_broken");
+            Registry.register(Registries.BLOCK,brokenId,broken);
+            Registry.register(Registries.ITEM,brokenId,new BlockItem(broken,new Item.Settings()));
+            BROKEN_CABINETS.put(style,broken);
         }
         SLOT_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, id("slot_machine"),
                 FabricBlockEntityTypeBuilder.create(SlotMachineEntity::new, CABINETS.values().toArray(Block[]::new)).build());
+        CHIP_CABINET = Registry.register(Registries.BLOCK,id("chip_cabinet"),new ChipCabinetBlock(
+                AbstractBlock.Settings.create().mapColor(MapColor.BROWN)
+                        .strength(2.5F).sounds(BlockSoundGroup.WOOD).nonOpaque()));
+        Registry.register(Registries.ITEM,id("chip_cabinet"),new BlockItem(CHIP_CABINET,new Item.Settings()));
+        CHIP_CABINET_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE,id("chip_cabinet"),
+                FabricBlockEntityTypeBuilder.create(ChipCabinetEntity::new,CHIP_CABINET).build());
+        DENOMINATION_MENU = Registry.register(Registries.SCREEN_HANDLER,id("denominations"),
+                new ScreenHandlerType<>(DenominationMenu::new,FeatureFlags.VANILLA_FEATURES));
 
         Registry.register(Registries.ITEM_GROUP, id("casino"), FabricItemGroup.builder()
                 .displayName(Text.translatable("itemGroup.yharnam_casino.casino"))
                 .icon(() -> new ItemStack(chip(100)))
                 .entries((context, entries) -> {
                     CABINETS.values().forEach(entries::add);
+                    BROKEN_CABINETS.values().forEach(entries::add);
+                    entries.add(CHIP_CABINET);
                     CHIPS.values().forEach(entries::add);
                     entries.add(PRIZE_TICKET);
                     entries.add(CABINET_KEY);

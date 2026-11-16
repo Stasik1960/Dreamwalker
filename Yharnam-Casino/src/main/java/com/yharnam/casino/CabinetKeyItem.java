@@ -38,7 +38,7 @@ final class CabinetKeyItem extends Item {
                 if (!cabinet.bindKey(player,context.getStack()) && !CasinoStaffAccess.isStaff(player)) {
                     player.sendMessage(Text.translatable("message.yharnam_casino.vault_denied"),true);
                 } else if (player.isSneaking()) {
-                    cabinet.showPool(server,player);
+                    cabinet.openDenominations(player);
                 } else {
                     cabinet.openVault(server,player);
                 }

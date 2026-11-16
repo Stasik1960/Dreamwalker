@@ -6,9 +6,9 @@ from PIL import Image, ImageDraw, ImageFont
 
 ROOT=Path(__file__).resolve().parents[1]; OUT=ROOT/'textures'; OUT.mkdir(parents=True,exist_ok=True)
 THEMES={
- 'hunters_wager':dict(title='Hunter’s Wager',bg=(203,181,139),edge=(32,27,27),line=(126,39,31),accent=(174,37,31),symbols=['lantern','cleaver','vial','moon','rune','bell','eye','coin']),
- 'astral_choir':dict(title='Astral Choir',bg=(125,139,148),edge=(24,32,43),line=(32,111,126),accent=(40,105,183),symbols=['crescent','eye','cluster','observatory','star','orb','rune','bell']),
- 'crimson_oath':dict(title='Crimson Oath',bg=(62,19,27),edge=(18,12,17),line=(154,41,51),accent=(218,160,121),symbols=['crown','chalice','rapier','rose','moon','gem','mask','coin']),
+ 'hunters_wager':dict(title="Hunter's Wager",bg=(203,181,139),edge=(32,27,27),line=(126,39,31),accent=(174,37,31),symbols=['lantern','cleaver','vial','moon','rune','bell','eye','coin']),
+ 'astral_choir':dict(title='Astral Fairy',bg=(125,139,148),edge=(24,32,43),line=(32,111,126),accent=(40,105,183),symbols=['crescent','eye','cluster','observatory','star','orb','rune','bell']),
+ 'crimson_oath':dict(title='Crimson Guard',bg=(62,19,27),edge=(18,12,17),line=(154,41,51),accent=(218,160,121),symbols=['crown','chalice','rapier','rose','moon','gem','mask','coin']),
 }
 def font(size,family='georgiab.ttf'):
     for p in ('C:/Windows/Fonts/'+family,'C:/Windows/Fonts/timesbd.ttf','C:/Windows/Fonts/DejaVuSans-Bold.ttf'):
@@ -99,10 +99,10 @@ def reel(name,t):
 
 
 def marquee(name,t):
-    base, edge, ink, caption = {
-        'hunters_wager': ((41,26,25),(156,111,68),(231,198,145),'W O R K S H O P'),
-        'astral_choir': ((21,31,48),(121,162,164),(213,227,227),'O B S E R V A T O R Y'),
-        'crimson_oath': ((50,19,34),(146,138,156),(233,213,210),'C A I N H U R S T'),
+    base, edge, ink = {
+        'hunters_wager': ((41,26,25),(156,111,68),(231,198,145)),
+        'astral_choir': ((21,31,48),(121,162,164),(213,227,227)),
+        'crimson_oath': ((50,19,34),(146,138,156),(233,213,210)),
     }[name]
     im = Image.new('RGB',(256,96),base)
     d = ImageDraw.Draw(im)
@@ -122,12 +122,11 @@ def marquee(name,t):
         for y in (12,82):
             d.ellipse((x-1,y-1,x+2,y+2),fill=ink)
     title = t['title'].upper()
-    for size in range(25,11,-1):
+    for size in range(29,11,-1):
         face = font(size,'timesbd.ttf')
         if d.textlength(title,font=face)<194:
             break
-    center(d,(27,26,229,64),title,face,ink)
-    center(d,(30,72,226,85),caption,font(8),edge)
+    center(d,(27,26,229,68),title,face,ink)
     im.save(OUT/f'{name}_marquee.png')
 
 

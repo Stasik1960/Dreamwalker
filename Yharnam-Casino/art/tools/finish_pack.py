@@ -74,7 +74,7 @@ def make_spin():
             frame = Image.new("RGBA",(504,270),(12,15,23,255))
             frame.alpha_composite(source,(12,48))
         draw = ImageDraw.Draw(frame)
-        draw.text((13,11),"Astral Choir",font=font(22,"georgiab.ttf"),fill=(186,221,222))
+        draw.text((13,11),"Astral Fairy",font=font(22,"georgiab.ttf"),fill=(186,221,222))
         status = "Готов" if frame_number==1 else "Стоп" if frame_number>=97 else "Вращение"
         draw.text((490,17),status,font=font(14,"arial.ttf"),fill=(208,190,186),anchor="ra")
         frame = frame.convert("RGB")

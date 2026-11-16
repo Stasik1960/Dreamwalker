@@ -3,6 +3,7 @@ package com.yharnam.casino.client.render;
 import com.yharnam.casino.YharnamCasino;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.resource.Resource;
+import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
 import org.joml.Vector3f;
 
@@ -13,7 +14,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 final class MachineMesh {
-    static final String CABINET = "cabinet";
     static final String LEVER = "lever";
     static final String[] REELS = {"reel_01", "reel_02", "reel_03"};
 
@@ -25,9 +25,12 @@ final class MachineMesh {
 
     static MachineMesh load(String style) {
         Identifier id = new Identifier(YharnamCasino.ID, "models/machine/" + style + ".mesh");
+        return load(MinecraftClient.getInstance().getResourceManager(), id);
+    }
+
+    static MachineMesh load(ResourceManager resources, Identifier id) {
         try {
-            Resource resource = MinecraftClient.getInstance().getResourceManager()
-                    .getResource(id)
+            Resource resource = resources.getResource(id)
                     .orElseThrow(() -> new IOException("Missing machine mesh " + id));
             try (DataInputStream input = new DataInputStream(new BufferedInputStream(resource.getInputStream()))) {
                 if (input.readInt() != 0x5943534d) {
@@ -49,22 +52,10 @@ final class MachineMesh {
                     }
                     parts.put(name, new Part(pivot, vertices));
                 }
-                requireParts(parts, id);
                 return new MachineMesh(Map.copyOf(parts));
             }
         } catch (IOException exception) {
-            throw new IllegalStateException("Could not load slot machine model " + style, exception);
-        }
-    }
-
-    private static void requireParts(Map<String, Part> parts, Identifier id) throws IOException {
-        if (!parts.containsKey(CABINET) || !parts.containsKey(LEVER)) {
-            throw new IOException("Missing cabinet or lever in " + id);
-        }
-        for (String reel : REELS) {
-            if (!parts.containsKey(reel)) {
-                throw new IOException("Missing " + reel + " in " + id);
-            }
+            throw new IllegalStateException("Could not load slot machine model " + id, exception);
         }
     }
 

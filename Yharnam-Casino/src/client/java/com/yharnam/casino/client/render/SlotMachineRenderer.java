@@ -52,8 +52,6 @@ public final class SlotMachineRenderer implements BlockEntityRenderer<SlotMachin
         float facingDegrees = entity.getCachedState().get(SlotMachineBlock.FACING).asRotation();
         matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(-facingDegrees));
 
-        renderPart(mesh.part(MachineMesh.CABINET), 0.0f, matrices, vertices, light);
-
         float elapsedTicks = entity.spinStarted() >= 0 && entity.getWorld() != null
                 ? entity.getWorld().getTime() - entity.spinStarted() + tickDelta
                 : -1.0f;
@@ -122,12 +120,7 @@ public final class SlotMachineRenderer implements BlockEntityRenderer<SlotMachin
     }
 
     @Override
-    public boolean rendersOutsideBoundingBox(SlotMachineEntity blockEntity) {
-        return true;
-    }
-
-    @Override
     public int getRenderDistance() {
-        return 64;
+        return 48;
     }
 }
