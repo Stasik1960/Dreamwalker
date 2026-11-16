@@ -24,6 +24,7 @@ import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.BlockSoundGroup;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.text.Text;
 import net.minecraft.text.MutableText;
 import net.minecraft.util.Identifier;
@@ -38,6 +39,8 @@ import java.util.Map;
 public final class YharnamCasino implements ModInitializer {
     public static final String ID = "yharnam_casino";
     static final int[] CHIP_VALUES = {1, 5, 10, 50, 100, 500, 1000};
+    static final SoundEvent LEVER_PULL = SoundEvent.of(id("lever_pull"));
+    static final SoundEvent JACKPOT = SoundEvent.of(id("jackpot"));
     private static final Map<Integer, ChipItem> CHIPS = new LinkedHashMap<>();
     private static final Map<SlotStyle, SlotMachineBlock> CABINETS = new EnumMap<>(SlotStyle.class);
     public static BlockEntityType<SlotMachineEntity> SLOT_ENTITY;
@@ -48,6 +51,8 @@ public final class YharnamCasino implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        Registry.register(Registries.SOUND_EVENT, id("lever_pull"), LEVER_PULL);
+        Registry.register(Registries.SOUND_EVENT, id("jackpot"), JACKPOT);
         for (int value : CHIP_VALUES) {
             CHIPS.put(value, Registry.register(Registries.ITEM, id("chip_" + value), new ChipItem(value)));
         }

@@ -236,7 +236,7 @@ public final class SlotMachineEntity extends BlockEntity {
         startTick = world.getTime();
         armedUntil = -1;
         sync(world);
-        world.playSound(null, pos, SoundEvents.BLOCK_LEVER_CLICK, SoundCategory.BLOCKS, .75F, .78F);
+        world.playSound(null,pos,YharnamCasino.LEVER_PULL,SoundCategory.BLOCKS,.9F,1.0F);
         return true;
     }
 
@@ -319,9 +319,10 @@ public final class SlotMachineEntity extends BlockEntity {
                 notifyBettor(world,mailbox,recipient,message,paid);
             }
         }
-        if (multiplier > 1) {
-            world.playSound(null, pos, SoundEvents.BLOCK_AMETHYST_BLOCK_CHIME, SoundCategory.BLOCKS,
-                    .75F, ticket ? 1.2F : .95F);
+        if (ticket) {
+            world.playSound(null,pos,YharnamCasino.JACKPOT,SoundCategory.BLOCKS,1.0F,1.0F);
+        } else if (multiplier > 1) {
+            world.playSound(null,pos,SoundEvents.BLOCK_AMETHYST_BLOCK_CHIME,SoundCategory.BLOCKS,.75F,.95F);
         }
     }
 
