@@ -159,7 +159,8 @@ public final class SlotMachineBlock extends BlockWithEntity {
     }
 
     private static boolean usesItemOnCabinet(ItemStack stack) {
-        return stack.isOf(YharnamCasino.CABINET_KEY) || stack.isOf(YharnamCasino.CHIP_IOU);
+        return stack.isOf(YharnamCasino.CABINET_KEY) || stack.isOf(YharnamCasino.GM_KEY)
+                || stack.isOf(YharnamCasino.CHIP_IOU);
     }
 
     static @Nullable SlotMachineEntity findMachine(World world, BlockPos pos) {

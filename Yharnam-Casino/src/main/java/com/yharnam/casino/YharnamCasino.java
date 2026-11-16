@@ -43,6 +43,7 @@ public final class YharnamCasino implements ModInitializer {
     public static BlockEntityType<SlotMachineEntity> SLOT_ENTITY;
     static Item PRIZE_TICKET;
     static Item CABINET_KEY;
+    static Item GM_KEY;
     static Item CHIP_IOU;
 
     @Override
@@ -57,6 +58,7 @@ public final class YharnamCasino implements ModInitializer {
             }
         });
         CABINET_KEY = Registry.register(Registries.ITEM,id("cabinet_key"),new CabinetKeyItem());
+        GM_KEY = Registry.register(Registries.ITEM,id("gm_key"),new GameMasterKeyItem());
         CHIP_IOU = Registry.register(Registries.ITEM,id("chip_iou"),new ChipIouItem());
         for (SlotStyle style : SlotStyle.values()) {
             SlotMachineBlock cabinet = new SlotMachineBlock(style, AbstractBlock.Settings.create()
@@ -78,6 +80,7 @@ public final class YharnamCasino implements ModInitializer {
                     CHIPS.values().forEach(entries::add);
                     entries.add(PRIZE_TICKET);
                     entries.add(CABINET_KEY);
+                    entries.add(GM_KEY);
                 }).build());
 
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> registerCommands(dispatcher));
@@ -99,6 +102,10 @@ public final class YharnamCasino implements ModInitializer {
     private static void registerCommands(CommandDispatcher<ServerCommandSource> dispatcher) {
         dispatcher.register(CommandManager.literal("yharnamcasino")
                 .then(CommandManager.literal("claim").executes(YharnamCasino::claim))
+                .then(CommandManager.literal("gmkey")
+                        .requires(source -> source.getEntity() instanceof ServerPlayerEntity player
+                                && CasinoStaffAccess.isStaff(player))
+                        .executes(YharnamCasino::giveStaffKey))
                 .then(CommandManager.literal("rules").executes(context -> {
                     ServerCommandSource source = context.getSource();
                     source.sendFeedback(() -> Text.translatable("message.yharnam_casino.rules"), false);
@@ -125,6 +132,18 @@ public final class YharnamCasino implements ModInitializer {
         CasinoMailbox mailbox = CasinoMailbox.get(context.getSource().getServer());
         mailbox.claimArchivedProfit(player.getUuid());
         return mailbox.deliver(player,true) ? 1 : 0;
+    }
+
+    private static int giveStaffKey(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
+        ServerPlayerEntity player = context.getSource().getPlayerOrThrow();
+        int slot = player.getInventory().getEmptySlot();
+        if (slot < 0) {
+            context.getSource().sendError(Text.translatable("message.yharnam_casino.gm_key_inventory_full"));
+            return 0;
+        }
+        player.getInventory().setStack(slot,new ItemStack(GM_KEY));
+        context.getSource().sendFeedback(() -> Text.translatable("message.yharnam_casino.gm_key_given"),false);
+        return 1;
     }
 
     public static Identifier id(String path) {

@@ -28,6 +28,8 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 
+import java.util.UUID;
+
 public final class CasinoGameTests implements FabricGameTest {
     @GameTest(templateName = EMPTY_STRUCTURE)
     public void paytableHasExpectedReturnAndOneTicketOutcome(TestContext context) {
@@ -231,7 +233,7 @@ public final class CasinoGameTests implements FabricGameTest {
     }
 
     @GameTest(templateName = EMPTY_STRUCTURE, tickLimit = 105)
-    public void underfundedWinCreatesAReceiptAndDepositsRepayItExactlyOnce(TestContext context) {
+    public void underfundedWinCreatesRoleplayReceiptWithoutPayingFromIt(TestContext context) {
         ServerWorld world = context.getWorld();
         BlockPos base = context.getAbsolutePos(new BlockPos(1,1,1));
         SlotMachineEntity machine = place(context,base,SlotStyle.ASTRAL_CHOIR);
@@ -247,32 +249,73 @@ public final class CasinoGameTests implements FabricGameTest {
             ItemStack note = bettor.getInventory().main.stream()
                     .filter(item -> item.isOf(YharnamCasino.CHIP_IOU)).findFirst().orElse(ItemStack.EMPTY);
             context.assertTrue(chipValue(bettor)==10 && receiptDue(note)==490,
-                    "A 500-unit win pays the 10-unit stake from the pool and issues one IOU for 490");
-            ItemStack duplicate = note.copy();
-            useCabinetItem(bettor,base,note);
-            context.assertTrue(receiptDue(note)==490 && chipValue(bettor)==10,
-                    "Empty cashbox leaves the receipt outstanding");
-            fillSafe(machine,new ItemStack(YharnamCasino.chip(100)));
-            useCabinetItem(bettor,base.up(),note);
-            context.assertTrue(receiptDue(note)==390 && chipValue(bettor)==110,
-                    "First deposit reduces the receipt by exactly what it paid");
+                    "A 500-unit win pays 10 from the pool and records the 490-unit shortfall");
+            NbtCompound receipt = note.getSubNbt("YharnamCasinoIou");
+            context.assertTrue(receipt != null && receipt.contains("IssuerName") && receipt.contains("IssuerPosition"),
+                    "The receipt identifies the cabinet for roleplay");
             fillSafe(machine,new ItemStack(YharnamCasino.chip(500)));
-            int noteSlot = bettor.getInventory().main.indexOf(note);
-            context.assertTrue(noteSlot >= 0,"The receipt remains a physical inventory item after partial repayment");
-            if (noteSlot != bettor.getInventory().selectedSlot) {
-                ItemStack inHand = bettor.getMainHandStack();
-                bettor.setStackInHand(Hand.MAIN_HAND,note);
-                bettor.getInventory().setStack(noteSlot,inHand);
-            }
-            BlockHitResult hit = new BlockHitResult(Vec3d.ofCenter(base),Direction.SOUTH,base,false);
-            bettor.interactionManager.interactBlock(bettor,world,note,Hand.MAIN_HAND,hit);
-            context.assertTrue(bettor.getInventory().count(YharnamCasino.CHIP_IOU)==0 && chipValue(bettor)==500,
-                    "The normal creative interaction pays the balance with change and removes the receipt");
-            useCabinetItem(bettor,base,duplicate);
-            context.assertTrue(chipValue(bettor)==500 && machine.payFromPool(1000)==110,
-                    "A copied receipt cannot claim a second payment and the change belongs to the machine");
+            ItemStack legacy = note.copy();
+            NbtCompound legacyTag = legacy.getOrCreateSubNbt("YharnamCasinoIou");
+            legacyTag.putUuid("Claim",UUID.randomUUID());
+            legacyTag.putUuid("Machine",machine.machineId());
+            useCabinetItem(bettor,base,note);
+            useCabinetItem(bettor,base.up(),legacy);
+            context.assertTrue(chipValue(bettor)==10 && receiptDue(note)==490 && receiptDue(legacy)==490
+                    && !note.isEmpty() && !legacy.isEmpty(), "New and legacy receipts are reference documents");
+            context.assertTrue(machine.payFromPool(1000)==500 && machine.spinStarted()<0,
+                    "Showing a receipt leaves the funded cashbox and machine untouched");
             context.complete();
         });
+    }
+
+    @GameTest(templateName = EMPTY_STRUCTURE)
+    public void staffCanOpenAnyCashboxWithoutBecomingOwners(TestContext context) {
+        ServerWorld world = context.getWorld();
+        SlotMachineBlock block = YharnamCasino.cabinet(SlotStyle.HUNTERS_WAGER);
+        BlockState state = block.getDefaultState();
+        BlockPos ownedPos = context.getAbsolutePos(new BlockPos(1,1,1));
+        BlockPos unownedPos = ownedPos.east(2);
+        ServerPlayerEntity owner = context.createMockCreativeServerPlayerInWorld();
+        ServerPlayerEntity staff = context.createMockCreativeServerPlayerInWorld();
+        world.setBlockState(ownedPos,state,Block.NOTIFY_ALL);
+        block.onPlaced(world,ownedPos,state,owner,new ItemStack(block));
+        world.setBlockState(unownedPos,state,Block.NOTIFY_ALL);
+        block.onPlaced(world,unownedPos,state,null,new ItemStack(block));
+        SlotMachineEntity owned = SlotMachineBlock.findMachine(world,ownedPos);
+        SlotMachineEntity unowned = SlotMachineBlock.findMachine(world,unownedPos);
+        staff.refreshPositionAndAngles(ownedPos.getX()+.5,ownedPos.getY(),ownedPos.getZ()+2,180,0);
+        ItemStack gmKey = new ItemStack(YharnamCasino.GM_KEY);
+        useCabinetItem(staff,ownedPos,gmKey);
+        context.assertTrue(staff.currentScreenHandler==staff.playerScreenHandler,
+                "Mere possession of the GM key grants no permissions");
+        for (String role : new String[]{"rpchat_admin","rpchat_gm","profile_admin","profile_gm"}) {
+            staff.addCommandTag(role);
+            useCabinetItem(staff,ownedPos.up(),gmKey);
+            context.assertTrue(staff.currentScreenHandler instanceof GenericContainerScreenHandler screen
+                    && screen.canUse(staff),"A staff tag grants cashbox access: "+role);
+            var opened = staff.currentScreenHandler;
+            staff.getCommandTags().remove(role);
+            context.assertTrue(!opened.canUse(staff),"The cashbox rechecks staff rights when a role is revoked");
+            staff.closeHandledScreen();
+        }
+        staff.addCommandTag("rpchat_gm");
+        useCabinetItem(staff,unownedPos,gmKey);
+        context.assertTrue(staff.currentScreenHandler instanceof GenericContainerScreenHandler
+                && unowned.founderId()==null && gmKey.getNbt()==null,
+                "The GM key opens an unowned machine without claiming or linking to it");
+        staff.closeHandledScreen();
+        ItemStack stewardKey = new ItemStack(YharnamCasino.CABINET_KEY);
+        useCabinetItem(staff,ownedPos,stewardKey);
+        context.assertTrue(staff.currentScreenHandler instanceof GenericContainerScreenHandler
+                && owner.getUuid().equals(owned.founderId()) && stewardKey.getNbt()==null,
+                "Staff opening an owned cabinet with an ordinary key leaves its link and owner alone");
+        staff.closeHandledScreen();
+        staff.setSneaking(true);
+        click(world,ownedPos,staff,false);
+        context.assertTrue(staff.currentScreenHandler instanceof GenericContainerScreenHandler
+                && owner.getUuid().equals(owned.founderId()) && !owned.hasAccess(staff.getUuid()),
+                "A staff player can open directly with empty hands and leaves ownership unchanged");
+        context.complete();
     }
 
     private static void useKey(ServerPlayerEntity player, BlockPos pos, ItemStack key) {

@@ -122,6 +122,27 @@ def key_texture(path):
     image.save(path)
 
 
+def gm_key_texture(path):
+    image = Image.new("RGBA",(32,32))
+    draw = ImageDraw.Draw(image)
+    # A cold silver-blue ceremonial key, distinct from the steward key's warm gold.
+    draw.polygon([(18,1),(25,1),(31,7),(31,13),(26,18),(21,18),(18,16),
+                  (11,23),(11,27),(8,30),(4,30),(1,27),(1,24),(5,20),(8,20),
+                  (14,14),(13,10),(14,5)],fill="#101723")
+    draw.polygon([(18,3),(24,3),(29,8),(29,12),(25,16),(21,16),(17,13),
+                  (9,21),(9,25),(6,28),(3,27),(3,25),(7,21),(7,18),(10,18),
+                  (16,12),(15,8),(16,5)],fill="#7898AD")
+    draw.polygon([(19,4),(23,4),(27,7),(28,10),(25,14),(21,14),(18,11),(17,8)],
+                 fill="#C4D6DE")
+    draw.polygon([(20,6),(24,6),(26,8),(26,10),(23,12),(20,11),(19,9)],
+                 fill=(0,0,0,0))
+    draw.line((5,25,17,13),fill="#E8F5F7",width=1)
+    draw.line((8,24,11,27),fill="#405E77",width=1)
+    draw.polygon([(14,17),(16,15),(18,17),(16,19)],fill="#5EA9C1")
+    draw.point((16,16),fill="#D9FAFF")
+    image.save(path)
+
+
 def shapeless(name, ingredient, count, output, quantity):
     dump(DATA/"recipes"/f"{name}.json",{
         "type":"minecraft:crafting_shapeless",
@@ -187,6 +208,8 @@ def main():
     item_model("chip_iou")
     key_texture(texture_dir/"cabinet_key.png")
     item_model("cabinet_key")
+    gm_key_texture(texture_dir/"gm_key.png")
+    item_model("gm_key")
     dump(DATA/"recipes/cabinet_key.json",{
         "type":"minecraft:crafting_shaped",
         "pattern":[" G","I ","I "],

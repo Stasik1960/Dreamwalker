@@ -46,7 +46,7 @@ public final class SlotMachineEntity extends BlockEntity {
     private final SimpleInventory safe = new SimpleInventory(27) {
         @Override
         public boolean canPlayerUse(PlayerEntity player) {
-            return hasAccess(player.getUuid()) && world != null && player.getWorld() == world
+            return canOpenVault(player) && world != null && player.getWorld() == world
                     && world.getBlockEntity(pos) == SlotMachineEntity.this
                     && player.squaredDistanceTo(Vec3d.ofCenter(pos)) <= 64;
         }
@@ -111,6 +111,11 @@ public final class SlotMachineEntity extends BlockEntity {
         return player.equals(founder) || coOwners.contains(player);
     }
 
+    private boolean canOpenVault(PlayerEntity player) {
+        return hasAccess(player.getUuid())
+                || (player instanceof ServerPlayerEntity serverPlayer && CasinoStaffAccess.isStaff(serverPlayer));
+    }
+
     boolean canDismantle(PlayerEntity player) {
         return founder == null || founder.equals(player.getUuid()) || player.hasPermissionLevel(2);
     }
@@ -119,7 +124,6 @@ public final class SlotMachineEntity extends BlockEntity {
         if (founder == null && world instanceof ServerWorld server) {
             importLegacyCash(server);
             setFounder(player.getUuid());
-            CasinoIouState.get(server.getServer()).reassignIssuer(machineId,founder);
         }
         if (world == null || !hasAccess(player.getUuid())) {
             return false;
@@ -144,7 +148,7 @@ public final class SlotMachineEntity extends BlockEntity {
             return;
         }
         markDirty();
-        if (!grant && colleague instanceof ServerPlayerEntity member
+        if (!grant && !canOpenVault(colleague) && colleague instanceof ServerPlayerEntity member
                 && member.currentScreenHandler instanceof GenericContainerScreenHandler screen
                 && screen.getInventory() == safe) {
             member.closeHandledScreen();
@@ -154,7 +158,7 @@ public final class SlotMachineEntity extends BlockEntity {
     }
 
     void openVault(ServerWorld world, ServerPlayerEntity player) {
-        if (!hasAccess(player.getUuid())) {
+        if (!canOpenVault(player)) {
             tell(player,"vault_denied");
             return;
         }
@@ -167,7 +171,7 @@ public final class SlotMachineEntity extends BlockEntity {
     }
 
     void showPool(ServerWorld world, ServerPlayerEntity player) {
-        if (!hasAccess(player.getUuid())) {
+        if (!canOpenVault(player)) {
             tell(player,"vault_denied");
             return;
         }
@@ -178,6 +182,13 @@ public final class SlotMachineEntity extends BlockEntity {
     void use(ServerWorld world, PlayerEntity player, ItemStack held, boolean lever) {
         importLegacyCash(world);
         expire(world);
+        boolean canCancelBet = startTick < 0 && player.getUuid().equals(bettor);
+        if (player instanceof ServerPlayerEntity serverPlayer && player.isSneaking()
+                && player.getMainHandStack().isEmpty() && player.getOffHandStack().isEmpty()
+                && !canCancelBet && CasinoStaffAccess.isStaff(serverPlayer)) {
+            openVault(world,serverPlayer);
+            return;
+        }
         if (startTick >= 0) {
             tell(player, "spinning");
             return;
@@ -263,7 +274,6 @@ public final class SlotMachineEntity extends BlockEntity {
                 refund(world);
             }
         }
-        CasinoIouState.get(world.getServer()).retireIssuer(machineId,founder);
         if (founder != null) {
             CasinoMailbox mailbox = CasinoMailbox.get(world.getServer());
             mailbox.recoverVault(founder,safe.clearToList());
@@ -301,8 +311,7 @@ public final class SlotMachineEntity extends BlockEntity {
             long outstanding = amount-paid;
             mailbox.credit(recipient,paid,ticket ? 1 : 0);
             if (outstanding > 0) {
-                ItemStack note = CasinoIouState.get(world.getServer()).issue(machineId,founder,outstanding);
-                ChipIouItem.labelIssuer(note,this);
+                ItemStack note = ChipIouItem.create(this,world,outstanding);
                 mailbox.recoverVault(recipient,List.of(note));
                 notifyBettor(world,mailbox,recipient,ticket ? "jackpot_iou" : "win_iou",paid,outstanding);
             } else {

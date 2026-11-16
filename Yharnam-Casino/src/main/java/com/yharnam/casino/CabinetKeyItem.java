@@ -35,7 +35,7 @@ final class CabinetKeyItem extends Item {
         if (world instanceof ServerWorld server && context.getPlayer() instanceof ServerPlayerEntity player) {
             SlotMachineEntity cabinet = SlotMachineBlock.findMachine(world,context.getBlockPos());
             if (cabinet != null) {
-                if (!cabinet.bindKey(player,context.getStack())) {
+                if (!cabinet.bindKey(player,context.getStack()) && !CasinoStaffAccess.isStaff(player)) {
                     player.sendMessage(Text.translatable("message.yharnam_casino.vault_denied"),true);
                 } else if (player.isSneaking()) {
                     cabinet.showPool(server,player);
