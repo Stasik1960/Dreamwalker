@@ -1,8 +1,12 @@
-# Казино Ярнама 1.3.1
+# Казино Ярнама 1.3.2
 
 Мод для Minecraft 1.20.1. Нужны Fabric Loader 0.16.10 или новее и Fabric API для 1.20.1. На выделенном сервере установите JAR с модом и Fabric API на сервере и у игроков.
 
-[Скачать JAR 1.3.1](https://raw.githubusercontent.com/Stasik1960/Dreamwalker/main/Yharnam-Casino/release/yharnam-casino-1.3.1.jar) · [Кассовый шкаф в Blender](art/chip-cabinet/chip_cabinet.blend)
+[Скачать JAR 1.3.2](https://raw.githubusercontent.com/Stasik1960/Dreamwalker/main/Yharnam-Casino/release/yharnam-casino-1.3.2.jar) · [Кассовый шкаф в Blender](art/chip-cabinet/chip_cabinet.blend)
+
+## Модели столов и колеса
+
+В [папке моделей](art/gaming-floor/) лежат покерный стол, «Чёрный Иван» и колесо фортуны. Для каждого есть исходник Blender, экспорт GLB со встроенными текстурами и предпросмотр. Это самостоятельные модели для будущей интеграции. У колеса диск и колышки связаны с общей осью вращения.
 
 ## Как играть
 

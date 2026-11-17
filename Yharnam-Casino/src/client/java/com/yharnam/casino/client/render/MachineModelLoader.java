@@ -139,42 +139,57 @@ public final class MachineModelLoader {
 
     private static final class MachineBakedModel implements BakedModel, FabricBakedModel {
         private final Sprite particle;
-        private final List<BakedQuad> vanillaQuads;
+        private volatile List<BakedQuad> vanillaQuads;
+        private float[] sourceVertices;
+        private final float rotationSin;
+        private final float rotationCos;
         @Nullable
         private final Mesh mesh;
 
         private MachineBakedModel(MachineMesh.Part part, Sprite particle, Direction facing) {
             this.particle = particle;
-            Renderer renderer = RendererAccess.INSTANCE.getRenderer();
             float radians = (float)Math.toRadians(-facing.asRotation());
-            float sin = (float)Math.sin(radians);
-            float cos = (float)Math.cos(radians);
+            rotationSin = (float)Math.sin(radians);
+            rotationCos = (float)Math.cos(radians);
             float[] data = part.vertices();
-            List<BakedQuad> quads = new ArrayList<>(data.length / 24);
-            MeshBuilder builder = renderer == null ? null : renderer.meshBuilder();
-            QuadEmitter emitter = builder == null ? null : builder.getEmitter();
-            RenderMaterial material = renderer == null ? null
-                    : renderer.materialFinder().blendMode(BlendMode.CUTOUT).find();
-            for (int offset = 0; offset < data.length; offset += 24) {
-                float nx = data[offset + 5] * cos + data[offset + 7] * sin;
-                float nz = -data[offset + 5] * sin + data[offset + 7] * cos;
-                Direction nominalFace = Direction.getFacing(nx, data[offset + 6], nz);
-                quads.add(vanillaQuad(data, offset, sin, cos, particle, nominalFace));
-                if (emitter != null) {
-                    emitVertex(emitter, 0, data, offset, sin, cos);
-                    emitVertex(emitter, 1, data, offset + 8, sin, cos);
-                    emitVertex(emitter, 2, data, offset + 16, sin, cos);
-                    emitVertex(emitter, 3, data, offset + 16, sin, cos);
-                    emitter.color(-1, -1, -1, -1)
-                            .nominalFace(nominalFace)
-                            .cullFace(null)
-                            .material(material)
-                            .spriteBake(particle, MutableQuadView.BAKE_NORMALIZED)
-                            .emit();
-                }
+            Renderer renderer = RendererAccess.INSTANCE.getRenderer();
+            if (renderer == null) {
+                mesh = null;
+                vanillaQuads = buildVanillaQuads(data);
+                return;
             }
-            vanillaQuads = List.copyOf(quads);
-            mesh = builder == null ? null : builder.build();
+
+            // All four facings share the same source array until a vanilla caller needs this copy.
+            sourceVertices = data;
+            MeshBuilder builder = renderer.meshBuilder();
+            QuadEmitter emitter = builder.getEmitter();
+            RenderMaterial material = renderer.materialFinder().blendMode(BlendMode.CUTOUT).find();
+            for (int offset = 0; offset < data.length; offset += 24) {
+                float nx = data[offset + 5] * rotationCos + data[offset + 7] * rotationSin;
+                float nz = -data[offset + 5] * rotationSin + data[offset + 7] * rotationCos;
+                emitVertex(emitter, 0, data, offset, rotationSin, rotationCos);
+                emitVertex(emitter, 1, data, offset + 8, rotationSin, rotationCos);
+                emitVertex(emitter, 2, data, offset + 16, rotationSin, rotationCos);
+                emitVertex(emitter, 3, data, offset + 16, rotationSin, rotationCos);
+                emitter.color(-1, -1, -1, -1)
+                        .nominalFace(Direction.getFacing(nx, data[offset + 6], nz))
+                        .cullFace(null)
+                        .material(material)
+                        .spriteBake(particle, MutableQuadView.BAKE_NORMALIZED)
+                        .emit();
+            }
+            mesh = builder.build();
+        }
+
+        private List<BakedQuad> buildVanillaQuads(float[] data) {
+            List<BakedQuad> quads = new ArrayList<>(data.length / 24);
+            for (int offset = 0; offset < data.length; offset += 24) {
+                float nx = data[offset + 5] * rotationCos + data[offset + 7] * rotationSin;
+                float nz = -data[offset + 5] * rotationSin + data[offset + 7] * rotationCos;
+                quads.add(vanillaQuad(data, offset, rotationSin, rotationCos, particle,
+                        Direction.getFacing(nx, data[offset + 6], nz)));
+            }
+            return List.copyOf(quads);
         }
 
         private static BakedQuad vanillaQuad(float[] data, int offset, float sin, float cos,
@@ -245,7 +260,21 @@ public final class MachineModelLoader {
 
         @Override
         public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction face, Random random) {
-            return face == null ? vanillaQuads : Collections.emptyList();
+            if (face != null) {
+                return Collections.emptyList();
+            }
+            List<BakedQuad> cached = vanillaQuads;
+            if (cached == null) {
+                synchronized (this) {
+                    cached = vanillaQuads;
+                    if (cached == null) {
+                        cached = buildVanillaQuads(sourceVertices);
+                        sourceVertices = null;
+                        vanillaQuads = cached;
+                    }
+                }
+            }
+            return cached;
         }
 
         @Override

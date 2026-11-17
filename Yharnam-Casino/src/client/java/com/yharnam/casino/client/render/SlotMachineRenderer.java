@@ -91,13 +91,11 @@ public final class SlotMachineRenderer implements BlockEntityRenderer<SlotMachin
         Matrix4f positionMatrix = entry.getPositionMatrix();
         Matrix3f normalMatrix = entry.getNormalMatrix();
         float[] data = part.vertices();
-        // Entity cutout batches use QUADS. Repeat the final point so each source triangle
-        // forms one degenerate quad without introducing another diagonal or changing UVs.
-        for (int offset = 0; offset < data.length; offset += 24) {
+        for (int offset = 0; offset < data.length; offset += 32) {
             vertex(consumer, positionMatrix, normalMatrix, data, offset, light);
             vertex(consumer, positionMatrix, normalMatrix, data, offset + 8, light);
             vertex(consumer, positionMatrix, normalMatrix, data, offset + 16, light);
-            vertex(consumer, positionMatrix, normalMatrix, data, offset + 16, light);
+            vertex(consumer, positionMatrix, normalMatrix, data, offset + 24, light);
         }
         matrices.pop();
     }
