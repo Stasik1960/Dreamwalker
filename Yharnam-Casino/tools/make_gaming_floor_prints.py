@@ -9,7 +9,7 @@ OUT.mkdir(parents=True, exist_ok=True)
 
 # Five-pixel-high sign painter's alphabet. Rows are five-bit masks.
 LETTERS = {
-    "П":(31,17,17,17,17),"О":(14,17,17,17,14),"К":(17,18,28,18,17),
+    "Л":(7,9,9,9,17),"Т":(31,4,4,4,4),"П":(31,17,17,17,17),"О":(14,17,17,17,14),"К":(17,18,28,18,17),
     "Е":(31,16,30,16,31),"Р":(30,17,30,16,16),"Ч":(17,17,15,1,1),
     "Ё":(10,0,31,16,30,16,31),"Н":(17,17,31,17,17),"Ы":(17,17,29,21,29),
     "Й":(10,4,17,19,21,25,17),"И":(17,19,21,25,17),"В":(30,17,30,17,30),
@@ -39,15 +39,15 @@ def weave(w,h,palette,seed):
         draw.line((x,y,x+rng.randrange(1,3),y),fill=rng.choice(palette))
     return img
 
-def cloth(ivan):
-    palette=("#245656","#285958","#205353") if ivan else ("#315E46","#346149","#2C5942")
+def cloth(jack):
+    palette=("#245656","#285958","#205353") if jack else ("#315E46","#346149","#2C5942")
     img=weave(256,144,palette,19)
     draw=ImageDraw.Draw(img)
     ivory="#DECBA0"
     gold="#A69968"
     def uv(x,y): return round(128+x/2.96*256),round(72-y/1.8*144)
-    if ivan:
-        lettering(draw,*uv(0,.19),"ЧЁРНЫЙ ИВАН",ivory)
+    if jack:
+        lettering(draw,*uv(0,.19),"ЧЁРНЫЙ ВАЛЕТ",ivory)
         x,y=uv(0,-.012)
         draw.line((x-25,y,x+25,y),fill=gold)
         draw.polygon([(x-2,y),(x,y-2),(x+2,y),(x,y+2)],fill=ivory)
@@ -67,7 +67,7 @@ def cloth(ivan):
             draw.line((x,y,x+s*12,y),fill=gold)
         x,y=uv(0,-.23)
         draw.polygon([(x-3,y),(x,y-2),(x+3,y),(x,y+2)],fill=ivory)
-    img.save(OUT/("ivan-felt.png" if ivan else "poker-felt.png"))
+    img.save(OUT/("jack-felt.png" if jack else "poker-felt.png"))
 
 def wheel_face():
     img=Image.new("RGB",(192,192),"#3B3234")

@@ -154,7 +154,7 @@ def table(m,blackjack):
     table_base(m)
     band("Timber apron",path,[(.93,.93,.6875),(.93,.93,.80)],m["wood"])
     band("Square outer rail",path,[(1,1,.78125),(1,1,.84375)],m["ebony"])
-    felt=material("Printed baize","294E42",.94,texture="ivan-felt" if blackjack else "poker-felt")
+    felt=material("Printed baize","294E42",.94,texture="jack-felt" if blackjack else "poker-felt")
     band("Cloth playing surface",path,[(.94,.94,.84375),(.94,.94,.8516)],m["felt"],felt,
          lambda x,y:(.5+x/2.96,.5+y/1.80))
     band("Armrest",path,[(1,1,.84375),(1,1,.90625),(.91,.88,.90625),(.91,.88,.84375)],
@@ -274,7 +274,7 @@ def build(key,title):
     scene.name=title
     m=materials()
     if key=="wheel-of-fortune": wheel(m)
-    else: table(m,key=="black-ivan")
+    else: table(m,key=="black-jack")
     props=list(scene.objects)
     bpy.context.view_layer.update()
     vertices=[ob.matrix_world @ Vector(v) for ob in props if ob.type=="MESH" for v in ob.bound_box]
@@ -295,5 +295,5 @@ def build(key,title):
     bpy.ops.render.render(write_still=True)
 
 if __name__=="__main__":
-    for model,title in (("poker","Покер"),("black-ivan","Чёрный Иван"),("wheel-of-fortune","Колесо фортуны")):
+    for model,title in (("poker","Покер"),("black-jack","Чёрный Валет"),("wheel-of-fortune","Колесо фортуны")):
         build(model,title)

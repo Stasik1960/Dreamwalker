@@ -1,6 +1,7 @@
 package com.yharnam.casino.client.render;
 
 import com.yharnam.casino.BrokenSlotMachineBlock;
+import com.yharnam.casino.GamingFurnitureBlock;
 import com.yharnam.casino.SlotMachineBlock;
 import com.yharnam.casino.SlotStyle;
 import com.yharnam.casino.YharnamCasino;
@@ -74,7 +75,11 @@ public final class MachineModelLoader {
             staticMeshes.put(style, MachineMesh.load(resources, meshId(style.id() + "_static")));
             brokenMeshes.put(style, MachineMesh.load(resources, meshId(style.id() + "_broken")));
         }
-        return new Models(Map.copyOf(staticMeshes), Map.copyOf(brokenMeshes));
+        Map<String, MachineMesh> furniture = new java.util.HashMap<>();
+        for (String id : List.of("poker_table", "black_jack_table", "fortune_wheel")) {
+            furniture.put(id, MachineMesh.load(resources, meshId(id)));
+        }
+        return new Models(Map.copyOf(staticMeshes), Map.copyOf(brokenMeshes), Map.copyOf(furniture));
     }
 
     private static Identifier meshId(String name) {
@@ -82,6 +87,18 @@ public final class MachineModelLoader {
     }
 
     private static void registerModels(Models models, net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin.Context context) {
+        models.furniture().forEach((id, mesh) -> {
+            if (Registries.BLOCK.get(YharnamCasino.id(id)) instanceof GamingFurnitureBlock block) {
+                var sprite = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, YharnamCasino.id("machine/" + id));
+                context.registerBlockStateResolver(block, resolver -> {
+                    for (BlockState state : block.getStateManager().getStates()) {
+                        int part = state.get(GamingFurnitureBlock.PART);
+                        resolver.setModel(state, new MachineUnbakedModel(mesh.part(Integer.toString(part % block.parts())),
+                                sprite, state.get(GamingFurnitureBlock.FACING)));
+                    }
+                });
+            }
+        });
         for (SlotStyle style : SlotStyle.values()) {
             Block working = Registries.BLOCK.get(YharnamCasino.id(style.id()));
             if (working != Blocks.AIR) {
@@ -116,7 +133,7 @@ public final class MachineModelLoader {
     }
 
     private record Models(Map<SlotStyle, MachineMesh> staticMeshes,
-                          Map<SlotStyle, MachineMesh> brokenMeshes) {
+                          Map<SlotStyle, MachineMesh> brokenMeshes, Map<String, MachineMesh> furniture) {
     }
 
     private record MachineUnbakedModel(MachineMesh.Part part, SpriteIdentifier texture,

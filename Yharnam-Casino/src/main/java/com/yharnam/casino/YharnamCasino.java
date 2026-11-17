@@ -11,6 +11,7 @@ import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.MapColor;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.client.item.TooltipContext;
@@ -50,6 +51,10 @@ public final class YharnamCasino implements ModInitializer {
     public static BlockEntityType<ChipCabinetEntity> CHIP_CABINET_ENTITY;
     public static ScreenHandlerType<DenominationMenu> DENOMINATION_MENU;
     static ChipCabinetBlock CHIP_CABINET;
+    public static GamingFurnitureBlock POKER_TABLE, BLACK_JACK_TABLE, FORTUNE_WHEEL;
+    public static BlockEntityType<CardTableEntity> CARD_TABLE_ENTITY;
+    public static BlockEntityType<FortuneWheelEntity> WHEEL_ENTITY;
+    public static CardDeckItem CARD_DECK;
     static Item PRIZE_TICKET;
     static Item CABINET_KEY;
     static Item GM_KEY;
@@ -95,6 +100,15 @@ public final class YharnamCasino implements ModInitializer {
         Registry.register(Registries.ITEM,id("chip_cabinet"),new BlockItem(CHIP_CABINET,new Item.Settings()));
         CHIP_CABINET_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE,id("chip_cabinet"),
                 FabricBlockEntityTypeBuilder.create(ChipCabinetEntity::new,CHIP_CABINET).build());
+        POKER_TABLE = furniture("poker_table", false, false);
+        BLACK_JACK_TABLE = furniture("black_jack_table", false, true);
+        FORTUNE_WHEEL = furniture("fortune_wheel", true, false);
+        CARD_DECK = Registry.register(Registries.ITEM, id("card_deck"),
+                new CardDeckItem(id("textures/entity/cards/classic.png")));
+        CARD_TABLE_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, id("card_table"),
+                FabricBlockEntityTypeBuilder.create(CardTableEntity::new, POKER_TABLE, BLACK_JACK_TABLE).build());
+        WHEEL_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, id("fortune_wheel"),
+                FabricBlockEntityTypeBuilder.create(FortuneWheelEntity::new, FORTUNE_WHEEL).build());
         DENOMINATION_MENU = Registry.register(Registries.SCREEN_HANDLER,id("denominations"),
                 new ScreenHandlerType<>(DenominationMenu::new,FeatureFlags.VANILLA_FEATURES));
 
@@ -105,6 +119,10 @@ public final class YharnamCasino implements ModInitializer {
                     CABINETS.values().forEach(entries::add);
                     BROKEN_CABINETS.values().forEach(entries::add);
                     entries.add(CHIP_CABINET);
+                    entries.add(POKER_TABLE);
+                    entries.add(BLACK_JACK_TABLE);
+                    entries.add(FORTUNE_WHEEL);
+                    entries.add(CARD_DECK);
                     CHIPS.values().forEach(entries::add);
                     entries.add(PRIZE_TICKET);
                     entries.add(CABINET_KEY);
@@ -117,7 +135,26 @@ public final class YharnamCasino implements ModInitializer {
             mailbox.claimArchivedProfit(handler.getPlayer().getUuid());
             mailbox.deliver(handler.getPlayer(),false);
         });
+        net.fabricmc.fabric.api.event.lifecycle.v1.ServerBlockEntityEvents.BLOCK_ENTITY_LOAD.register((entity, world) -> {
+            if (entity instanceof FortuneWheelEntity wheel && wheel.active()) wheel.advanceClock(world);
+        });
+        // Vanilla bypasses Block.onUse when the player sneaks while holding an item.
+        net.fabricmc.fabric.api.event.player.UseBlockCallback.EVENT.register((player, world, hand, hit) -> {
+            BlockState state = world.getBlockState(hit.getBlockPos());
+            if (player.isSneaking() && !player.isSpectator() && hand == net.minecraft.util.Hand.MAIN_HAND
+                    && state.getBlock() instanceof GamingFurnitureBlock furniture
+                    && world.canPlayerModifyAt(player, hit.getBlockPos())) {
+                return furniture.onUse(state, world, hit.getBlockPos(), player, hand, hit);
+            }
+            return net.minecraft.util.ActionResult.PASS;
+        });
         PlayerBlockBreakEvents.BEFORE.register((world,player,pos,state,blockEntity) -> {
+            if (state.getBlock() instanceof GamingFurnitureBlock furniture
+                    && world.getBlockEntity(furniture.anchor(pos, state)) instanceof CardTableEntity table
+                    && table.playing() && !(player instanceof ServerPlayerEntity staff && CasinoStaffAccess.isStaff(staff))) {
+                player.sendMessage(Text.literal("Дождитесь конца раздачи"), true);
+                return false;
+            }
             SlotMachineEntity cabinet = SlotMachineBlock.findMachine(world,pos);
             if (cabinet == null || cabinet.canDismantle(player)) {
                 return true;
@@ -125,6 +162,14 @@ public final class YharnamCasino implements ModInitializer {
             player.sendMessage(Text.translatable("message.yharnam_casino.dismantle_denied"),true);
             return false;
         });
+    }
+
+    private static GamingFurnitureBlock furniture(String name, boolean wheel, boolean blackjack) {
+        var settings = AbstractBlock.Settings.create().mapColor(MapColor.BROWN).strength(2.5F)
+                .pistonBehavior(net.minecraft.block.piston.PistonBehavior.BLOCK).sounds(BlockSoundGroup.WOOD).nonOpaque();
+        var block = Registry.register(Registries.BLOCK, id(name), new GamingFurnitureBlock(settings, wheel, blackjack));
+        Registry.register(Registries.ITEM, id(name), new BlockItem(block, new Item.Settings()));
+        return block;
     }
 
     private static void registerCommands(CommandDispatcher<ServerCommandSource> dispatcher) {

@@ -74,7 +74,7 @@ public final class SlotMachineRenderer implements BlockEntityRenderer<SlotMachin
         matrices.pop();
     }
 
-    private static void renderPart(
+    static void renderPart(
             MachineMesh.Part part,
             float xRotationDegrees,
             MatrixStack matrices,
