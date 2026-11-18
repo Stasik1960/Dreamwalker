@@ -1,0 +1,51 @@
+plugins { id 'fabric-loom' version '1.6.12' }
+
+group = 'dev.dreamwalker'
+version = '1.0.0'
+
+def dreamWalkerJar = providers.gradleProperty('dreamWalkerJar')
+    .orElse('build/dependencies/DreamWalker-v22-NPC-Patrols.jar')
+
+repositories {
+    mavenCentral()
+    maven { url = 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/' }
+}
+
+dependencies {
+    minecraft 'com.mojang:minecraft:1.20.1'
+    mappings 'net.fabricmc:yarn:1.20.1+build.10:v2'
+    modImplementation 'net.fabricmc:fabric-loader:0.16.10'
+    modImplementation 'net.fabricmc.fabric-api:fabric-api:0.92.9+1.20.1'
+    modImplementation 'software.bernie.geckolib:geckolib-fabric-1.20.1:4.4.9'
+    modImplementation files(dreamWalkerJar)
+}
+
+loom {
+    splitEnvironmentSourceSets()
+    mods {
+        dw_npc_bestiary {
+            sourceSet sourceSets.main
+            sourceSet sourceSets.client
+        }
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.release = 17
+    options.encoding = 'UTF-8'
+    doFirst {
+        if (!file(dreamWalkerJar.get()).isFile()) {
+            throw new GradleException('Supply the v22 NPC Patrols JAR with -PdreamWalkerJar or use the path in README.md.')
+        }
+    }
+}
+
+processResources {
+    inputs.property 'version', project.version
+    filesMatching('fabric.mod.json') { expand version: project.version }
+}
+
+tasks.withType(AbstractArchiveTask).configureEach {
+    preserveFileTimestamps = false
+    reproducibleFileOrder = true
+}
