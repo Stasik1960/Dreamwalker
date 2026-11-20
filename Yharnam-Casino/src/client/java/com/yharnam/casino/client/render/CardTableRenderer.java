@@ -172,7 +172,7 @@ public final class CardTableRenderer implements BlockEntityRenderer<CardTableEnt
             top(buffer, m, x, y + .002f + i * .008f, z - i * .002f, .086f, .086f, 0, 0, 1, 1, rgb, light);
     }
 
-    private static void top(VertexConsumer buffer, MatrixStack m, float x, float y, float z, float w, float h, float u,
+    static void top(VertexConsumer buffer, MatrixStack m, float x, float y, float z, float w, float h, float u,
         float v, float u2, float v2, int rgb, int light) {
         point(buffer, m, x - w / 2, y, z - h / 2, u, v, rgb, light);
         point(buffer, m, x - w / 2, y, z + h / 2, u, v2, rgb, light);

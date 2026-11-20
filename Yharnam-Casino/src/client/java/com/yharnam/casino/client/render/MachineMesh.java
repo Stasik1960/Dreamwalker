@@ -33,7 +33,7 @@ final class MachineMesh {
         return load(resources, id, false);
     }
 
-    private static MachineMesh load(ResourceManager resources, Identifier id, boolean dynamic) {
+    static MachineMesh load(ResourceManager resources, Identifier id, boolean dynamic) {
         try {
             Resource resource = resources.getResource(id)
                     .orElseThrow(() -> new IOException("Missing machine mesh " + id));

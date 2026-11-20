@@ -53,7 +53,12 @@ final class CabinetKeyItem extends Item {
             return ActionResult.PASS;
         }
         if (player.getWorld() instanceof ServerWorld world && player instanceof ServerPlayerEntity founder) {
-            SlotMachineEntity cabinet = linkedCabinet(world,player,stack);
+            var linked = linkedCabinet(world,player,stack);
+            if (linked instanceof GachaponEntity dispenser) {
+                dispenser.share(founder,colleague,!player.isSneaking());
+                return ActionResult.SUCCESS;
+            }
+            SlotMachineEntity cabinet = linked instanceof SlotMachineEntity slot ? slot : null;
             if (cabinet == null) {
                 player.sendMessage(Text.translatable("message.yharnam_casino.key_nearby"),true);
             } else {
@@ -63,7 +68,7 @@ final class CabinetKeyItem extends Item {
         return ActionResult.success(player.getWorld().isClient);
     }
 
-    private static @Nullable SlotMachineEntity linkedCabinet(ServerWorld world, PlayerEntity player, ItemStack key) {
+    private static @Nullable net.minecraft.block.entity.BlockEntity linkedCabinet(ServerWorld world, PlayerEntity player, ItemStack key) {
         NbtCompound tag = key.getSubNbt(LINK);
         if (tag == null || !tag.containsUuid("Identity")
                 || !world.getRegistryKey().getValue().toString().equals(tag.getString("World"))) {
@@ -73,6 +78,7 @@ final class CabinetKeyItem extends Item {
         if (player.squaredDistanceTo(Vec3d.ofCenter(pos)) > 100 || !world.isChunkLoaded(pos)) {
             return null;
         }
+        if (world.getBlockEntity(pos) instanceof GachaponEntity dispenser && dispenser.identity().equals(tag.getUuid("Identity"))) return dispenser;
         if (world.getBlockEntity(pos) instanceof SlotMachineEntity cabinet && cabinet.matchesKey(tag.getUuid("Identity"))) {
             return cabinet;
         }
@@ -80,10 +86,13 @@ final class CabinetKeyItem extends Item {
     }
 
     static void bind(ItemStack key, SlotMachineEntity cabinet, World world) {
+        bind(key,cabinet.machineId(),cabinet.getPos(),world);
+    }
+    static void bind(ItemStack key, java.util.UUID id, BlockPos pos, World world) {
         NbtCompound link = new NbtCompound();
-        link.putUuid("Identity",cabinet.machineId());
+        link.putUuid("Identity",id);
         link.putString("World",world.getRegistryKey().getValue().toString());
-        link.putLong("Pos",cabinet.getPos().asLong());
+        link.putLong("Pos",pos.asLong());
         key.setSubNbt(LINK,link);
     }
 

@@ -20,14 +20,20 @@ import org.jetbrains.annotations.Nullable;
 /** One anchor owns the game. The other occupied cells forward hits from each side of the furniture. */
 public final class GamingFurnitureBlock extends BlockWithEntity {
     public static final DirectionProperty FACING = Properties.HORIZONTAL_FACING;
-    public static final IntProperty PART = IntProperty.of("part", 0, 8);
+    public static final IntProperty PART = IntProperty.of("part", 0, 15);
     public static final int ANCHOR = 1;
+    public enum Kind { POKER, BLACKJACK, WHEEL, ROULETTE, DERBY }
+    private final Kind kind;
     private final boolean wheel;
     private final boolean blackjack;
     public GamingFurnitureBlock(Settings settings, boolean wheel, boolean blackjack) {
+        this(settings, wheel ? Kind.WHEEL : blackjack ? Kind.BLACKJACK : Kind.POKER);
+    }
+    public GamingFurnitureBlock(Settings settings, Kind kind) {
         super(settings);
-        this.wheel = wheel;
-        this.blackjack = blackjack;
+        this.kind = kind;
+        this.wheel = kind == Kind.WHEEL;
+        this.blackjack = kind == Kind.BLACKJACK;
         setDefaultState(getStateManager().getDefaultState().with(FACING, Direction.SOUTH).with(PART, ANCHOR));
     }
     @Override
@@ -35,19 +41,27 @@ public final class GamingFurnitureBlock extends BlockWithEntity {
         net.minecraft.client.item.TooltipContext context) {
         super.appendTooltip(stack, world, lines, context);
         lines.add(net.minecraft.text.Text.translatable(
+            attraction() ? "item.yharnam_casino." + (kind == Kind.DERBY ? "derby_help" : "roulette_help") :
             wheel ? "item.yharnam_casino.wheel_help" : "item.yharnam_casino.table_help"));
     }
     public boolean wheel() {
         return wheel;
     }
     public int parts() {
-        return wheel ? 9 : 6;
+        return attraction() ? 16 : wheel ? 9 : 6;
+    }
+    public boolean attraction() { return kind == Kind.ROULETTE || kind == Kind.DERBY; }
+    public boolean occupies(int part) {
+        return part < parts() && (kind != Kind.ROULETTE || part < 8 || part % 4 < 2);
     }
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> b) {
         b.add(FACING, PART);
     }
     public BlockPos cell(BlockPos origin, Direction facing, int part) {
+        if (attraction())
+            return origin.offset(facing.rotateYCounterclockwise(), part % 4 - 1)
+                .offset(facing, (part / 4) % 2).up(part / 8);
         BlockPos col = origin.offset(facing.rotateYCounterclockwise(), part % 3 - 1);
         return wheel ? col.up(part / 3) : col.offset(facing, part / 3);
     }
@@ -59,6 +73,7 @@ public final class GamingFurnitureBlock extends BlockWithEntity {
     public BlockState getPlacementState(ItemPlacementContext c) {
         Direction f = c.getHorizontalPlayerFacing().getOpposite();
         for (int i = 0; i < parts(); i++) {
+            if (!occupies(i)) continue;
             BlockPos p = cell(c.getBlockPos(), f, i);
             if (!c.getWorld().isInBuildLimit(p) || !c.getWorld().getWorldBorder().contains(p)
                 || !c.getWorld().getBlockState(p).canReplace(c)
@@ -71,7 +86,7 @@ public final class GamingFurnitureBlock extends BlockWithEntity {
     public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack item) {
         if (!world.isClient && state.get(PART) == ANCHOR) {
             for (int i = 0; i < parts(); i++)
-                if (i != ANCHOR)
+                if (i != ANCHOR && occupies(i))
                     world.setBlockState(cell(pos, state.get(FACING), i), state.with(PART, i), Block.NOTIFY_ALL);
         }
     }
@@ -93,6 +108,7 @@ public final class GamingFurnitureBlock extends BlockWithEntity {
         if (world instanceof ServerWorld server && !next.isOf(this)) {
             BlockPos base = anchor(p, state);
             if (state.get(PART) == ANCHOR) {
+                if (world.getBlockEntity(p) instanceof AttractionEntity game) game.onRemoved(server);
                 if (world.getBlockEntity(p) instanceof CardTableEntity table)
                     table.onRemoved(server);
                 for (int i = 0; i < parts(); i++) {
@@ -113,11 +129,13 @@ public final class GamingFurnitureBlock extends BlockWithEntity {
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
         if (state.get(PART) != ANCHOR)
             return null;
+        if (attraction()) return new AttractionEntity(pos, state);
         return wheel ? new FortuneWheelEntity(pos, state) : new CardTableEntity(pos, state);
     }
     @Override
     public void scheduledTick(
         BlockState state, ServerWorld world, BlockPos pos, net.minecraft.util.math.random.Random random) {
+        if (world.getBlockEntity(pos) instanceof AttractionEntity game) game.advanceClock(world);
         if (world.getBlockEntity(pos) instanceof FortuneWheelEntity rotor)
             rotor.advanceClock(world);
     }
@@ -163,6 +181,10 @@ public final class GamingFurnitureBlock extends BlockWithEntity {
         if (player instanceof ServerPlayerEntity server) {
             BlockPos base = anchor(pos, state);
             BlockEntity be = world.getBlockEntity(base);
+            if (be instanceof AttractionEntity game) {
+                Vec3d local = attractionHit(base, state.get(FACING), hit.getPos());
+                game.use(server, local.x, local.z);
+            }
             if (be instanceof FortuneWheelEntity rotor)
                 rotor.use(server);
             if (be instanceof CardTableEntity table) {
@@ -175,10 +197,16 @@ public final class GamingFurnitureBlock extends BlockWithEntity {
         }
         return ActionResult.success(world.isClient);
     }
+    public static Vec3d attractionHit(BlockPos base, Direction f, Vec3d hit) {
+        Vec3d d = hit.subtract(Vec3d.ofCenter(base));
+        Direction right = f.rotateYCounterclockwise();
+        return new Vec3d(d.x * right.getOffsetX() + d.z * right.getOffsetZ() - .5,
+            hit.y-base.getY(), d.x * f.getOffsetX() + d.z * f.getOffsetZ() - .5);
+    }
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext ctx) {
         int part = state.get(PART);
-        if (part >= parts())
+        if (!occupies(part))
             return net.minecraft.util.shape.VoxelShapes.empty();
         int col = part % 3 - 1, row = part / 3;
         double width = wheel ? (row == 0 ? .60 : .86) : blackjack ? 1.3125 : 1.375;
@@ -186,6 +214,17 @@ public final class GamingFurnitureBlock extends BlockWithEntity {
         double zmin = wheel ? .11 : Math.max(0, 1 - (blackjack ? .58 : .75) - row);
         double zmax = wheel ? .79 : Math.min(1, 1 + (blackjack ? .80 : .75) - row);
         double h = wheel ? Math.min(1, 2.385 - row) : .91;
+        if (attraction()) {
+            col = part % 4 - 1;
+            row = part / 4 % 2;
+            boolean upper = part >= 8;
+            boolean bowl = upper && kind == Kind.ROULETTE;
+            xmin = Math.max(0, 1 + (bowl ? -1.752 : -1.85) - col);
+            xmax = Math.min(1, 1 + (bowl ? -.388 : 1.85) - col);
+            zmin = Math.max(0, 1 + (bowl ? -.706 : -.87) - row);
+            zmax = Math.min(1, 1 + (bowl ? .658 : .87) - row);
+            h = upper ? (bowl ? .174 : .324) : kind == Kind.ROULETTE ? .8516 : .955;
+        }
         return switch (state.get(FACING)) {
             case SOUTH -> Block.createCuboidShape(xmin * 16, 0, zmin * 16, xmax * 16, h * 16, zmax * 16);
             case NORTH ->

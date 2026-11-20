@@ -51,9 +51,14 @@ public final class YharnamCasino implements ModInitializer {
     public static BlockEntityType<ChipCabinetEntity> CHIP_CABINET_ENTITY;
     public static ScreenHandlerType<DenominationMenu> DENOMINATION_MENU;
     static ChipCabinetBlock CHIP_CABINET;
-    public static GamingFurnitureBlock POKER_TABLE, BLACK_JACK_TABLE, FORTUNE_WHEEL;
+    public static GamingFurnitureBlock POKER_TABLE, BLACK_JACK_TABLE, FORTUNE_WHEEL, ROULETTE_TABLE, RAT_DERBY;
+    public static BlockEntityType<AttractionEntity> ATTRACTION_ENTITY;
     public static BlockEntityType<CardTableEntity> CARD_TABLE_ENTITY;
     public static BlockEntityType<FortuneWheelEntity> WHEEL_ENTITY;
+    public static GachaponBlock GACHAPON;
+    public static BlockEntityType<GachaponEntity> GACHAPON_ENTITY;
+    private static final Map<GachaRarity,CapsuleItem> CAPSULES = new EnumMap<>(GachaRarity.class);
+    public static CapsuleItem capsule(GachaRarity rarity) { return CAPSULES.get(rarity); }
     public static CardDeckItem CARD_DECK;
     static Item PRIZE_TICKET;
     static Item CABINET_KEY;
@@ -100,9 +105,21 @@ public final class YharnamCasino implements ModInitializer {
         Registry.register(Registries.ITEM,id("chip_cabinet"),new BlockItem(CHIP_CABINET,new Item.Settings()));
         CHIP_CABINET_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE,id("chip_cabinet"),
                 FabricBlockEntityTypeBuilder.create(ChipCabinetEntity::new,CHIP_CABINET).build());
+        GACHAPON = Registry.register(Registries.BLOCK,id("gachapon"),new GachaponBlock(
+            AbstractBlock.Settings.create().mapColor(MapColor.BROWN).strength(2.5f).nonOpaque()
+                .pistonBehavior(net.minecraft.block.piston.PistonBehavior.BLOCK).sounds(BlockSoundGroup.METAL)));
+        Registry.register(Registries.ITEM,id("gachapon"),new BlockItem(GACHAPON,new Item.Settings()));
+        GACHAPON_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE,id("gachapon"),
+            FabricBlockEntityTypeBuilder.create(GachaponEntity::new,GACHAPON).build());
+        for (var color:GachaRarity.values())
+            CAPSULES.put(color,Registry.register(Registries.ITEM,id("capsule_"+color.id()),new CapsuleItem(color)));
         POKER_TABLE = furniture("poker_table", false, false);
         BLACK_JACK_TABLE = furniture("black_jack_table", false, true);
         FORTUNE_WHEEL = furniture("fortune_wheel", true, false);
+        ROULETTE_TABLE = furniture("roulette_table", GamingFurnitureBlock.Kind.ROULETTE);
+        RAT_DERBY = furniture("rat_derby", GamingFurnitureBlock.Kind.DERBY);
+        ATTRACTION_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, id("attraction"),
+            FabricBlockEntityTypeBuilder.create(AttractionEntity::new, ROULETTE_TABLE, RAT_DERBY).build());
         CARD_DECK = Registry.register(Registries.ITEM, id("card_deck"),
                 new CardDeckItem(id("textures/entity/cards/classic.png")));
         CARD_TABLE_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, id("card_table"),
@@ -122,6 +139,10 @@ public final class YharnamCasino implements ModInitializer {
                     entries.add(POKER_TABLE);
                     entries.add(BLACK_JACK_TABLE);
                     entries.add(FORTUNE_WHEEL);
+                    entries.add(ROULETTE_TABLE);
+                    entries.add(RAT_DERBY);
+                    entries.add(GACHAPON);
+                    CAPSULES.values().forEach(entries::add);
                     entries.add(CARD_DECK);
                     CHIPS.values().forEach(entries::add);
                     entries.add(PRIZE_TICKET);
@@ -129,6 +150,12 @@ public final class YharnamCasino implements ModInitializer {
                     entries.add(GM_KEY);
                 }).build());
 
+        // Handle sealed stacks as transactions even in creative, where vanilla restores used item counts.
+        net.fabricmc.fabric.api.event.player.UseItemCallback.EVENT.register((player,world,hand)->{
+            ItemStack stack=player.getStackInHand(hand);
+            if (!player.isSpectator() && stack.getItem() instanceof CapsuleItem capsule) return capsule.use(world,player,hand);
+            return net.minecraft.util.TypedActionResult.pass(stack);
+        });
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> registerCommands(dispatcher));
         ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
             CasinoMailbox mailbox = CasinoMailbox.get(server);
@@ -136,11 +163,16 @@ public final class YharnamCasino implements ModInitializer {
             mailbox.deliver(handler.getPlayer(),false);
         });
         net.fabricmc.fabric.api.event.lifecycle.v1.ServerBlockEntityEvents.BLOCK_ENTITY_LOAD.register((entity, world) -> {
+            if (entity instanceof GachaponEntity machine) machine.schedule(world);
+            if (entity instanceof AttractionEntity game) game.onLoaded(world);
             if (entity instanceof FortuneWheelEntity wheel && wheel.active()) wheel.advanceClock(world);
         });
         // Vanilla bypasses Block.onUse when the player sneaks while holding an item.
         net.fabricmc.fabric.api.event.player.UseBlockCallback.EVENT.register((player, world, hand, hit) -> {
             BlockState state = world.getBlockState(hit.getBlockPos());
+            if (player.isSneaking() && !player.isSpectator() && hand == net.minecraft.util.Hand.MAIN_HAND
+                    && state.getBlock() instanceof GachaponBlock dispenser && world.canPlayerModifyAt(player,hit.getBlockPos()))
+                return dispenser.onUse(state,world,hit.getBlockPos(),player,hand,hit);
             if (player.isSneaking() && !player.isSpectator() && hand == net.minecraft.util.Hand.MAIN_HAND
                     && state.getBlock() instanceof GamingFurnitureBlock furniture
                     && world.canPlayerModifyAt(player, hit.getBlockPos())) {
@@ -155,6 +187,17 @@ public final class YharnamCasino implements ModInitializer {
                 player.sendMessage(Text.literal("Дождитесь конца раздачи"), true);
                 return false;
             }
+            if (state.getBlock() instanceof GamingFurnitureBlock furniture && furniture.attraction()
+                    && world.getBlockEntity(furniture.anchor(pos,state)) instanceof AttractionEntity game && game.busy()
+                    && !(player instanceof ServerPlayerEntity staff && CasinoStaffAccess.isStaff(staff))) {
+                player.sendMessage(Text.literal("Дождитесь окончания игры и расчёта ставок"), true);
+                return false;
+            }
+            if (state.getBlock() instanceof GachaponBlock dispenser &&
+                world.getBlockEntity(dispenser.base(pos,state)) instanceof GachaponEntity machine && !machine.canAccess(player)) {
+                player.sendMessage(Text.translatable("gacha.denied"),true);
+                return false;
+            }
             SlotMachineEntity cabinet = SlotMachineBlock.findMachine(world,pos);
             if (cabinet == null || cabinet.canDismantle(player)) {
                 return true;
@@ -165,9 +208,13 @@ public final class YharnamCasino implements ModInitializer {
     }
 
     private static GamingFurnitureBlock furniture(String name, boolean wheel, boolean blackjack) {
+        return furniture(name, wheel ? GamingFurnitureBlock.Kind.WHEEL : blackjack ? GamingFurnitureBlock.Kind.BLACKJACK : GamingFurnitureBlock.Kind.POKER);
+    }
+
+    private static GamingFurnitureBlock furniture(String name, GamingFurnitureBlock.Kind kind) {
         var settings = AbstractBlock.Settings.create().mapColor(MapColor.BROWN).strength(2.5F)
                 .pistonBehavior(net.minecraft.block.piston.PistonBehavior.BLOCK).sounds(BlockSoundGroup.WOOD).nonOpaque();
-        var block = Registry.register(Registries.BLOCK, id(name), new GamingFurnitureBlock(settings, wheel, blackjack));
+        var block = Registry.register(Registries.BLOCK, id(name), new GamingFurnitureBlock(settings, kind));
         Registry.register(Registries.ITEM, id(name), new BlockItem(block, new Item.Settings()));
         return block;
     }

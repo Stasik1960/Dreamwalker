@@ -2,6 +2,7 @@ package com.yharnam.casino.client.render;
 
 import com.yharnam.casino.BrokenSlotMachineBlock;
 import com.yharnam.casino.GamingFurnitureBlock;
+import com.yharnam.casino.GachaponBlock;
 import com.yharnam.casino.SlotMachineBlock;
 import com.yharnam.casino.SlotStyle;
 import com.yharnam.casino.YharnamCasino;
@@ -76,9 +77,10 @@ public final class MachineModelLoader {
             brokenMeshes.put(style, MachineMesh.load(resources, meshId(style.id() + "_broken")));
         }
         Map<String, MachineMesh> furniture = new java.util.HashMap<>();
-        for (String id : List.of("poker_table", "black_jack_table", "fortune_wheel")) {
+        for (String id : List.of("poker_table", "black_jack_table", "fortune_wheel", "roulette_table", "rat_derby")) {
             furniture.put(id, MachineMesh.load(resources, meshId(id)));
         }
+        furniture.put("gachapon", MachineMesh.load(resources, meshId("gachapon")));
         return new Models(Map.copyOf(staticMeshes), Map.copyOf(brokenMeshes), Map.copyOf(furniture));
     }
 
@@ -88,13 +90,30 @@ public final class MachineModelLoader {
 
     private static void registerModels(Models models, net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin.Context context) {
         models.furniture().forEach((id, mesh) -> {
+            if (id.equals("gachapon") && Registries.BLOCK.get(YharnamCasino.id(id)) instanceof GachaponBlock dispenser) {
+                var sprite = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE,
+                        YharnamCasino.id("machine/gachapon"));
+                context.registerBlockStateResolver(dispenser, resolver -> {
+                    var shared = new java.util.HashMap<String, MachineUnbakedModel>();
+                    for (BlockState state : dispenser.getStateManager().getStates()) {
+                        String half = state.get(GachaponBlock.HALF) == DoubleBlockHalf.UPPER ? "upper" : "lower";
+                        Direction facing = state.get(GachaponBlock.FACING);
+                        resolver.setModel(state, shared.computeIfAbsent(half + "_" + facing,
+                                ignored -> new MachineUnbakedModel(mesh.part(half), sprite, facing, mesh.part(half+"_glass"), mesh.part(half+"_core"))));
+                    }
+                });
+                return;
+            }
             if (Registries.BLOCK.get(YharnamCasino.id(id)) instanceof GamingFurnitureBlock block) {
                 var sprite = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, YharnamCasino.id("machine/" + id));
                 context.registerBlockStateResolver(block, resolver -> {
+                    var shared = new java.util.HashMap<String, MachineUnbakedModel>();
                     for (BlockState state : block.getStateManager().getStates()) {
                         int part = state.get(GamingFurnitureBlock.PART);
-                        resolver.setModel(state, new MachineUnbakedModel(mesh.part(Integer.toString(part % block.parts())),
-                                sprite, state.get(GamingFurnitureBlock.FACING)));
+                        var facing = state.get(GamingFurnitureBlock.FACING);
+                        int index = part % block.parts();
+                        resolver.setModel(state, shared.computeIfAbsent(index + "_" + facing, ignored ->
+                            new MachineUnbakedModel(mesh.part(Integer.toString(index)), sprite, facing)));
                     }
                 });
             }
@@ -137,7 +156,10 @@ public final class MachineModelLoader {
     }
 
     private record MachineUnbakedModel(MachineMesh.Part part, SpriteIdentifier texture,
-                                       Direction facing) implements UnbakedModel {
+                                       Direction facing, @Nullable MachineMesh.Part glass, @Nullable MachineMesh.Part core) implements UnbakedModel {
+        private MachineUnbakedModel(MachineMesh.Part part,SpriteIdentifier texture,Direction facing) {
+            this(part,texture,facing,null,null);
+        }
         @Override
         public Collection<Identifier> getModelDependencies() {
             return Collections.emptyList();
@@ -150,20 +172,22 @@ public final class MachineModelLoader {
         @Override
         public BakedModel bake(Baker baker, Function<SpriteIdentifier, Sprite> textureGetter,
                                ModelBakeSettings rotationContainer, Identifier modelId) {
-            return new MachineBakedModel(part, textureGetter.apply(texture), facing);
+            return new MachineBakedModel(part, textureGetter.apply(texture), facing,glass,core);
         }
     }
 
     private static final class MachineBakedModel implements BakedModel, FabricBakedModel {
         private final Sprite particle;
         private volatile List<BakedQuad> vanillaQuads;
-        private float[] sourceVertices;
+        private float[] sourceVertices, glassVertices, coreVertices;
         private final float rotationSin;
         private final float rotationCos;
         @Nullable
         private final Mesh mesh;
 
-        private MachineBakedModel(MachineMesh.Part part, Sprite particle, Direction facing) {
+        private MachineBakedModel(MachineMesh.Part part, Sprite particle, Direction facing,MachineMesh.Part glass,MachineMesh.Part core) {
+            glassVertices=glass==null?null:glass.vertices();
+            coreVertices=core==null?null:core.vertices();
             this.particle = particle;
             float radians = (float)Math.toRadians(-facing.asRotation());
             rotationSin = (float)Math.sin(radians);
@@ -172,7 +196,7 @@ public final class MachineModelLoader {
             Renderer renderer = RendererAccess.INSTANCE.getRenderer();
             if (renderer == null) {
                 mesh = null;
-                vanillaQuads = buildVanillaQuads(data);
+                vanillaQuads = fallback(data);
                 return;
             }
 
@@ -181,6 +205,14 @@ public final class MachineModelLoader {
             MeshBuilder builder = renderer.meshBuilder();
             QuadEmitter emitter = builder.getEmitter();
             RenderMaterial material = renderer.materialFinder().blendMode(BlendMode.CUTOUT).find();
+            emitPart(emitter,material,data);
+            if (glassVertices!=null) emitPart(emitter,renderer.materialFinder().blendMode(BlendMode.TRANSLUCENT).find(),glassVertices);
+            if (coreVertices!=null) emitPart(emitter,renderer.materialFinder().blendMode(BlendMode.SOLID).emissive(true)
+                    .disableDiffuse(true).disableAo(0,true).find(),coreVertices);
+            mesh=builder.build();
+        }
+
+        private void emitPart(QuadEmitter emitter, RenderMaterial material, float[] data) {
             for (int offset = 0; offset < data.length; offset += 24) {
                 float nx = data[offset + 5] * rotationCos + data[offset + 7] * rotationSin;
                 float nz = -data[offset + 5] * rotationSin + data[offset + 7] * rotationCos;
@@ -195,28 +227,39 @@ public final class MachineModelLoader {
                         .spriteBake(particle, MutableQuadView.BAKE_NORMALIZED)
                         .emit();
             }
-            mesh = builder.build();
+
         }
 
-        private List<BakedQuad> buildVanillaQuads(float[] data) {
+        private List<BakedQuad> fallback(float[] data) {
+            if (glassVertices==null && coreVertices==null) return buildVanillaQuads(data,false);
+            var all=new ArrayList<>(buildVanillaQuads(data,false));
+            if (coreVertices!=null) all.addAll(buildVanillaQuads(coreVertices,true));
+            if (glassVertices!=null) all.addAll(buildVanillaQuads(glassVertices,false));
+            glassVertices=null;
+            coreVertices=null;
+            return List.copyOf(all);
+        }
+
+        private List<BakedQuad> buildVanillaQuads(float[] data,boolean emissive) {
             List<BakedQuad> quads = new ArrayList<>(data.length / 24);
             for (int offset = 0; offset < data.length; offset += 24) {
                 float nx = data[offset + 5] * rotationCos + data[offset + 7] * rotationSin;
                 float nz = -data[offset + 5] * rotationSin + data[offset + 7] * rotationCos;
                 quads.add(vanillaQuad(data, offset, rotationSin, rotationCos, particle,
-                        Direction.getFacing(nx, data[offset + 6], nz)));
+                        Direction.getFacing(nx, data[offset + 6], nz),emissive));
             }
             return List.copyOf(quads);
         }
 
         private static BakedQuad vanillaQuad(float[] data, int offset, float sin, float cos,
-                                             Sprite sprite, Direction face) {
+                                             Sprite sprite, Direction face,boolean emissive) {
             int[] packed = new int[32];
             packVanillaVertex(packed, 0, data, offset, sin, cos, sprite);
             packVanillaVertex(packed, 1, data, offset + 8, sin, cos, sprite);
             packVanillaVertex(packed, 2, data, offset + 16, sin, cos, sprite);
             packVanillaVertex(packed, 3, data, offset + 16, sin, cos, sprite);
-            return new BakedQuad(packed, -1, face, sprite, true);
+            if (emissive) for (int v=0;v<4;v++) packed[v*8+6]=net.minecraft.client.render.LightmapTextureManager.MAX_LIGHT_COORDINATE;
+            return new BakedQuad(packed, -1, face, sprite, !emissive);
         }
 
         private static void packVanillaVertex(int[] packed, int vertex, float[] data, int offset,
@@ -285,7 +328,7 @@ public final class MachineModelLoader {
                 synchronized (this) {
                     cached = vanillaQuads;
                     if (cached == null) {
-                        cached = buildVanillaQuads(sourceVertices);
+                        cached = fallback(sourceVertices);
                         sourceVertices = null;
                         vanillaQuads = cached;
                     }
