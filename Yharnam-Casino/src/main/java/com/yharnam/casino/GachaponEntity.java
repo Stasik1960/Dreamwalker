@@ -203,6 +203,11 @@ public final class GachaponEntity extends BlockEntity {
     }
     void advanceClock(ServerWorld w) {
         if (phase==Phase.IDLE) return;
+        if (!GamingFurnitureBlock.inRange(w,pos,customer)) {
+            if(phase==Phase.PAID) refund(w);
+            else collect(w);
+            return;
+        }
         if (w.getTime()<since+duration()) { schedule(w); return; }
         if (phase==Phase.PAID) { refund(w); return; }
         if (phase==Phase.TRAY) { collect(w); return; }

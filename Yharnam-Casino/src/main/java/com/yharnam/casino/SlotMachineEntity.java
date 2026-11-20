@@ -295,7 +295,7 @@ public final class SlotMachineEntity extends BlockEntity {
             return;
         }
         long elapsed = world.getTime() - startTick;
-        if (elapsed >= SPIN_DURATION) {
+        if (elapsed >= SPIN_DURATION || elapsed>0 && elapsed%10==0 && !GamingFurnitureBlock.inRange(world,pos,bettor)) {
             settle(world);
         } else if (elapsed == STOP[0] || elapsed == STOP[1] || elapsed == STOP[2]) {
             world.playSound(null, pos, SoundEvents.BLOCK_CHAIN_HIT, SoundCategory.BLOCKS, .78F, 1.35F);
@@ -305,7 +305,8 @@ public final class SlotMachineEntity extends BlockEntity {
     }
 
     private void expire(ServerWorld world) {
-        if (bettor != null && startTick < 0 && armedUntil >= 0 && world.getTime() >= armedUntil) {
+        if (bettor != null && startTick < 0 && (armedUntil >= 0 && world.getTime() >= armedUntil
+                || world.getTime()%10==0 && !GamingFurnitureBlock.inRange(world,pos,bettor))) {
             refund(world);
         }
     }

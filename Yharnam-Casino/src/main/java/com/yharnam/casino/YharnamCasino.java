@@ -174,6 +174,7 @@ public final class YharnamCasino implements ModInitializer {
         net.fabricmc.fabric.api.event.lifecycle.v1.ServerBlockEntityEvents.BLOCK_ENTITY_LOAD.register((entity, world) -> {
             if (entity instanceof GachaponEntity machine) machine.schedule(world);
             if (entity instanceof AttractionEntity game) game.onLoaded(world);
+            if (entity instanceof CardTableEntity table) table.onLoaded(world);
             if (entity instanceof FortuneWheelEntity wheel && wheel.active()) wheel.advanceClock(world);
         });
         // Vanilla bypasses Block.onUse when the player sneaks while holding an item.

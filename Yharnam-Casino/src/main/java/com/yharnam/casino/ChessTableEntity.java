@@ -32,7 +32,10 @@ public final class ChessTableEntity extends BlockEntity {
     private Direction shapeFacing;
     private ItemStack set=ItemStack.EMPTY;
     private String board=EMPTY,captures="",ending="";
-    private UUID owner,drawOffer;
+    private UUID owner,requester;
+    private enum Control { RESET, REMOVE, DRAW, RESIGN }
+    private Control requested;
+    private int pressedEnd;
     private String ownerName="";
     private int selected=-1,promotionTo=-1,released=-1;
     private boolean claimByMove;
@@ -68,7 +71,7 @@ public final class ChessTableEntity extends BlockEntity {
     private void changed(ServerWorld world) {
         Arrays.fill(shapes,null);markDirty();
         world.updateListeners(pos,getCachedState(),getCachedState(),Block.NOTIFY_LISTENERS);
-        if(selected>=0) world.scheduleBlockTick(pos,getCachedState().getBlock(),2);
+        if(selected>=0 || requester!=null) world.scheduleBlockTick(pos,getCachedState().getBlock(),2);
     }
     private Vec3d local(Vec3d p) { return ChessLayout.local(pos,getCachedState().get(GamingFurnitureBlock.FACING),p); }
     private boolean inReach(ServerPlayerEntity p) {
@@ -76,7 +79,7 @@ public final class ChessTableEntity extends BlockEntity {
         Vec3d at=local(p.getPos());
         double dx=Math.max(0,Math.abs(at.x)-1.44),dz=Math.max(0,Math.abs(at.z)-.97);
         double dy=at.y-MathHelper.clamp(at.y,0,ChessLayout.SURFACE);
-        return dx*dx+dy*dy+dz*dz<25;
+        return dx*dx+dy*dy+dz*dz<=25;
     }
     private void clearSelection(long now,boolean lower) {
         if(lower && selected>=0) { released=selected;releasedAt=now;releasedLift=selectedLift(now); }
@@ -84,10 +87,15 @@ public final class ChessTableEntity extends BlockEntity {
         selected=-1;promotionTo=-1;owner=null;ownerName="";targets=0;claimByMove=false;
     }
     void watch(ServerWorld w) {
-        if(selected<0) return;
-        if(!inReach(w.getServer().getPlayerManager().getPlayer(owner))) {
-            clearSelection(w.getTime(),true);changed(w);
-        } else w.scheduleBlockTick(pos,getCachedState().getBlock(),2);
+        boolean dirty=false;
+        if(selected>=0 && !inReach(w.getServer().getPlayerManager().getPlayer(owner))) {
+            clearSelection(w.getTime(),true);dirty=true;
+        }
+        if(requester!=null && !inReach(w.getServer().getPlayerManager().getPlayer(requester))) {
+            clearRequest();dirty=true;
+        }
+        if(dirty) changed(w);
+        else if(selected>=0 || requester!=null) w.scheduleBlockTick(pos,getCachedState().getBlock(),2);
     }
     private static Text msg(String key,Object... args) { return Text.translatable("chess.yharnam_casino."+key,args); }
     private static Text side(boolean white) { return msg(white?"white":"black"); }
@@ -121,7 +129,7 @@ public final class ChessTableEntity extends BlockEntity {
             if(!held.isOf(YharnamCasino.CHESS_SET)) held=p.getOffHandStack();
             if(!held.isOf(YharnamCasino.CHESS_SET)) { tell(p,"need_set");return; }
             set=held.copyWithCount(1);if(!p.getAbilities().creativeMode) held.decrement(1);
-            game.reset();refreshBoard();captures="";ending="";drawOffer=null;changed(w);
+            game.reset();refreshBoard();captures="";ending="";clearRequest();changed(w);
             announce(w,msg("installed",p.getName()));clickSound(w,1);return;
         }
         if(selected>=0 && !inReach(w.getServer().getPlayerManager().getPlayer(owner))) {
@@ -129,16 +137,28 @@ public final class ChessTableEntity extends BlockEntity {
         }
         if(local.y<.70 || moving(w.getTime())) return;
         double x=local.x,z=local.z;
-        if(ChessLayout.button(x,z,1)) {
-            if(p.isSneaking() && held.isEmpty()) {
-                var removed=set;set=ItemStack.EMPTY;board=EMPTY;captures="";ending="";move=null;resetMove=null;drawOffer=null;
+        int buttonEnd=ChessLayout.buttonEnd(x,z);
+        if(buttonEnd!=0) {
+            boolean resetButton=x*buttonEnd>0;
+            Control action=resetButton ? (p.isSneaking() && held.isEmpty()?Control.REMOVE:Control.RESET)
+                : (p.isSneaking()?Control.RESIGN:Control.DRAW);
+            if(!resetButton && over()) { p.sendMessage(status(),true);return; }
+            if(requester!=null && !inReach(w.getServer().getPlayerManager().getPlayer(requester))) clearRequest();
+            if(requested!=action || pressedEnd==buttonEnd) {
+                requested=action;pressedEnd=buttonEnd;requester=p.getUuid();
+                changed(w);clickSound(w,1.15f);announce(w,msg("confirm."+action.name().toLowerCase(java.util.Locale.ROOT)));
+                return;
+            }
+            clearRequest();
+            if(action==Control.REMOVE) {
+                var removed=set;set=ItemStack.EMPTY;board=EMPTY;captures="";ending="";move=null;resetMove=null;
                 clearSelection(w.getTime(),false);p.getInventory().offerOrDrop(removed);changed(w);tell(p,"removed");
-            } else reset(w,p);
+            } else if(action==Control.RESET) reset(w,p);
+            else drawControl(w,p,action==Control.RESIGN);
             return;
         }
         if(over()) { p.sendMessage(status(),true);return; }
         if(selected>=0 && !p.getUuid().equals(owner)) { tell(p,"busy",ownerName);return; }
-        if(ChessLayout.button(x,z,-1)) { drawControl(w,p);return; }
         if(pendingPromotion()) {
             int choice=ChessLayout.choice(x,z);
             if(choice>=0) {
@@ -174,18 +194,17 @@ public final class ChessTableEntity extends BlockEntity {
         }
         tell(p,"illegal");
     }
-    private void drawControl(ServerWorld w,ServerPlayerEntity p) {
-        if(p.isSneaking()) {
+    private void clearRequest() { requested=null;pressedEnd=0;requester=null; }
+    private void drawControl(ServerWorld w,ServerPlayerEntity p,boolean resign) {
+        if(resign) {
             String reason=game.hasMatingMaterial(!game.whiteTurn()) ? (game.whiteTurn()?"white_resigned":"black_resigned") : "resign_draw";
             end(w,p,reason);return;
         }
         if(game.canClaimThreefold() || game.canClaimFifty()) { end(w,p,game.canClaimThreefold()?"threefold":"fifty");return; }
-        if(selected>=0) { claimByMove=!claimByMove;tell(p,claimByMove?"claim_move":"claim_off");return; }
-        if(game.fullmove()<2) { tell(p,"draw_too_early");return; }
-        if(drawOffer!=null && !drawOffer.equals(p.getUuid())) { end(w,p,"agreement");return; }
-        if(p.getUuid().equals(drawOffer)) { drawOffer=null;tell(p,"withdraw"); }
-        else { drawOffer=p.getUuid();announce(w,msg("offer",p.getName())); }
-        changed(w);
+        if(selected>=0 && game.legalMoves(selected).stream().anyMatch(game::canClaimAfter)) {
+            claimByMove=true;tell(p,"claim_move");changed(w);return;
+        }
+        end(w,p,"agreement");
     }
     private void end(ServerWorld w,ServerPlayerEntity p,String reason) {
         ending=reason;clearSelection(w.getTime(),true);changed(w);announce(w,msg("ended",p.getName(),status()));
@@ -205,7 +224,7 @@ public final class ChessTableEntity extends BlockEntity {
         }
         move=new Motion(m.from(),m.to(),cap,m.castle()?ChessGame.rookFrom(m):-1,m.castle()?ChessGame.rookTo(m):-1,
             slot,moving,captured,w.getTime(),lift);
-        resetMove=null;refreshBoard();clearSelection(w.getTime(),false);drawOffer=null;changed(w);clickSound(w,.95f);
+        resetMove=null;refreshBoard();clearSelection(w.getTime(),false);clearRequest();changed(w);clickSound(w,.95f);
         String notation=ChessLayout.name(m.from())+(captured!='.'?"×":"–")+ChessLayout.name(m.to());
         if(m.castle()) notation=m.to()>m.from()?"O-O":"O-O-O";
         if(m.promotion()!=' ') notation+="="+Character.toUpperCase(m.promotion());
@@ -231,7 +250,7 @@ public final class ChessTableEntity extends BlockEntity {
             }
         }
         resetMove=new ResetMotion(w.getTime(),new String(origins),new String(types),selected,selected>=0?selectedLift(w.getTime()):0);
-        clearSelection(w.getTime(),false);ending="";captures="";move=null;drawOffer=null;changed(w);
+        clearSelection(w.getTime(),false);ending="";captures="";move=null;clearRequest();changed(w);
         clickSound(w,.75f);announce(w,msg("reset",p.getName()));
     }
     void removed(ServerWorld w) {
@@ -249,8 +268,8 @@ public final class ChessTableEntity extends BlockEntity {
             shape=VoxelShapes.union(shape,ChessLayout.box(part,facing,x-.068,z-.068,ChessLayout.SURFACE,x+.068,z+.068,ChessLayout.SURFACE+.04+lift),
                 ChessLayout.box(part,facing,x-.046,z-.046,ChessLayout.SURFACE+.039,x+.046,z+.046,ChessLayout.SURFACE+ChessLayout.height(type)+lift));
         }
-        for(int side:new int[]{-1,1}) {
-            double x=side*ChessLayout.BUTTON_X,z=ChessLayout.BUTTON_Z;
+        for(int side:new int[]{-1,1}) for(int end:new int[]{-1,1}) {
+            double x=side*ChessLayout.BUTTON_X,z=end*ChessLayout.BUTTON_Z;
             shape=VoxelShapes.union(shape,ChessLayout.box(part,facing,x-.11,z-.075,.722,x+.11,z+.075,.761));
         }
         if(pendingPromotion()) for(int i=0;i<4;i++) {
@@ -265,7 +284,7 @@ public final class ChessTableEntity extends BlockEntity {
             n.put("Set",set.writeNbt(new NbtCompound()));
             n.put("Game",game.toNbt());n.putString("Taken",captures);
         }
-        n.putString("Ending",ending);if(drawOffer!=null)n.putUuid("Offer",drawOffer);
+        n.putString("Ending",ending);
     }
     private void writeView(NbtCompound n) {
         if(installed())n.put("Set",set.writeNbt(new NbtCompound()));
@@ -283,7 +302,7 @@ public final class ChessTableEntity extends BlockEntity {
         move=null;resetMove=null;owner=null;
         if(n.contains("Game") || !n.getBoolean("ClientView")) {
             if(installed()){game.readNbt(n.getCompound("Game"));refreshBoard();}
-            ending=n.getString("Ending");drawOffer=n.containsUuid("Offer")?n.getUuid("Offer"):null;
+            ending=n.getString("Ending");clearRequest();
             clearSelection(0,false);return;
         }
         selected=n.getInt("Selected");selectedAt=n.getLong("At");initialLift=n.getDouble("InitialLift");targets=n.getLong("Targets");promotionTo=n.getInt("Promote");

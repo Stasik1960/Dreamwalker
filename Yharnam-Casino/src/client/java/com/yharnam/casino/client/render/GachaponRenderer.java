@@ -30,7 +30,7 @@ public final class GachaponRenderer implements BlockEntityRenderer<GachaponEntit
                 m.push();
                 m.translate(.5,.5,.5);
                 m.scale(4.2f,4.2f,4.2f);
-                m.multiply(RotationAxis.POSITIVE_X.rotationDegrees(-112));
+                m.multiply(RotationAxis.POSITIVE_X.rotationDegrees(68));
                 m.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(-18));
                 var client=MinecraftClient.getInstance();
                 float time=client.world==null?0:(client.world.getTime()%96)+client.getTickDelta();
@@ -48,9 +48,9 @@ public final class GachaponRenderer implements BlockEntityRenderer<GachaponEntit
         part(id+"_shell",m,out,OPAQUE,light);
         m.push();
         float pulse=1f+.035f*(float)Math.sin(time*Math.PI/48);
-        m.translate(0,-.029,0);
-        m.scale(pulse,pulse,pulse);
         m.translate(0,.029,0);
+        m.scale(pulse,pulse,pulse);
+        m.translate(0,-.029,0);
         part(id+"_core",m,out,OPAQUE,LightmapTextureManager.MAX_LIGHT_COORDINATE);
         m.pop();
         part(id+"_glass",m,out,GLASS,light);
@@ -72,7 +72,7 @@ public final class GachaponRenderer implements BlockEntityRenderer<GachaponEntit
             double bounce=.035*Math.abs(Math.sin(u*Math.PI*2))*(1-u);
             m.push();
             m.translate(.026,.344+.105*(1-u*u)+bounce,.125+.171*u);
-            m.multiply(RotationAxis.POSITIVE_X.rotationDegrees(-75-48*u));
+            m.multiply(RotationAxis.POSITIVE_X.rotationDegrees(105-48*u));
             m.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(-17));
             capsule(g.result(),m,out,light,(g.getWorld().getTime()%96)+delta);
             m.pop();

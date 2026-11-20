@@ -129,6 +129,13 @@ public final class RouletteRound {
     public long house() { return house; }
     public long bankroll(int seat) { return balances[seat]; }
     public List<Bet> bets() { return view; }
+    /** Return every unresolved bet to its seat and reopen the round. */
+    public void abort() {
+        for (Bet bet : bets) balances[bet.seat] += bet.amount;
+        bets.clear();
+        spinning = false;
+        result = -1;
+    }
     public int betCount(int seat) {
         int n=0;
         for (Bet b:bets) if (b.seat==seat) n++;

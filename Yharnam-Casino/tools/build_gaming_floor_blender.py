@@ -147,6 +147,20 @@ def card(m,name,x,y,z,ang):
     obj.location=(x,y,z)
     obj.rotation_euler.z=ang
 
+def reset_button(m,x,y,z,vertical=False):
+    # A brass collar, oxblood cap and inlaid return arrow shared by the tables.
+    base=lathe("Reset | brass collar",[(0,.078),(.014,.078),(.020,.068)],m["aged"],12)
+    base.location=(x,y,z)
+    if vertical: base.rotation_euler.x=pi/2
+    cap=lathe("Reset | enamel cap",[(.019,.065),(.028,.061)],m["red"],12)
+    cap.parent=base
+    path=[(.025,.014),(.014,.027),(-.007,.030),(-.025,.017),(-.030,-.003),(-.022,-.019),(-.001,-.027),(.016,-.023)]
+    for (ax,ay),(bx,by) in zip(path,path[1:]):
+        stripe=beam("Reset | arrow",(ax,ay,.030),(bx,by,.030),.007,.004,m["bone"])
+        stripe.parent=base
+    tip=band("Reset | arrow head",[(.009,-.031),(.031,-.014),(.008,-.013)],[(1,1,.0285),(1,1,.033)],m["bone"])
+    tip.parent=base
+
 def table(m,blackjack):
     path=outline([8,12,16,18,20,21,21,21,21,21,21] if blackjack else [13,17,20,21,22,22,22,22,21,20,17,13])
     if blackjack:
@@ -160,12 +174,13 @@ def table(m,blackjack):
     band("Armrest",path,[(1,1,.84375),(1,1,.90625),(.91,.88,.90625),(.91,.88,.84375)],
          m["ink" if blackjack else "wine"],close=False)
     ring("Brass inset",path,.922,.914,.907,m["aged"],.002)
+    reset_button(m,-.51,.43,.852)
     if blackjack:
-        cube("Dealer tray",(0,.355,.875),(.625,.1875,.046875),m["wood"])
+        cube("Dealer tray",(.30,.355,.875),(.46,.1875,.046875),m["wood"])
         for i,shade in enumerate(("bone","red","green","ink","red","bone")):
             chip=lathe("Tray roll",[(0,.034),(.125,.034)],m[shade],8)
             chip.rotation_euler.x=pi/2
-            chip.location=((i-2.5)*.09375,.422,.922)
+            chip.location=(.30+(i-2.5)*.067,.422,.922)
             seam=lathe("Chip edge",[(0,.03475),(.012,.03475)],m["aged"],8)
             seam.rotation_euler.x=pi/2
             seam.location=(chip.location.x,.37,.922)
@@ -189,6 +204,7 @@ def wheel(m):
             cube("Foot cap",(x,y,.0664),(.265625,.1328,.1328),m["ebony"])
     cube("Plinth",(0,.16,.1875),(1.125,.50,.125),m["wood"])
     cube("Plinth cap",(0,.16,.265625),(1.1875,.50,.03125),m["aged"])
+    reset_button(m,.38,-.091,.1875,True)
     for sign in (-1,1):
         cube("Lower post",(sign*.34375,.20,.50),(.1875,.1875,.4375),m["wood"])
         beam("Fork",(sign*.34375,.20,.68),(sign*.09375,.20,1.45),.15625,.1875,m["wood"])

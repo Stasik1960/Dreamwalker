@@ -39,11 +39,16 @@ def surface(name, profile, materials, band_materials, reverse=False):
         data.materials.append(mat)
     for face,index in zip(data.polygons,indices):
         face.material_index=index
+    # Project the stamped base onto its own UV island including the south pole.
+    uv=data.uv_layers.new(name="Capsule")
+    for loop in data.loops:
+        point=data.vertices[loop.vertex_index].co
+        uv.data[loop.index].uv=(.5+point.x*4.8,.5+point.y*4.8)
     return obj
 
 
 def materials(palette,key):
-    return [palette["glass_"+key],palette["bone"],palette["ink"],palette["gold"]]
+    return [palette["glass_"+key],palette["cup"],palette["ink"],palette["gold"]]
 
 
 def build_halves(palette,color_key="red"):
@@ -52,7 +57,7 @@ def build_halves(palette,color_key="red"):
     for upper in (False,True):
         sign=1 if upper else -1
         profile=[(r,z*sign) for r,z in OUTER+INNER]
-        color=int(upper)
+        color=int(not upper)
         bands=[color,color,color,2,2,color,color,color,color]
         halves.append(surface("Capsule_Lid" if upper else "Capsule_Cup",
                               profile,mats,bands,reverse=upper))
@@ -63,7 +68,7 @@ def build_display(palette,color_key="red"):
     # A single continuous exterior; the hidden inside walls are only in the editable item.
     profile=[(r,-z) for r,z in OUTER]+list(reversed(OUTER))
     return surface("Capsule_Display_"+color_key,profile,materials(palette,color_key),
-                   [0,0,0,2,2,2,1,1,1])
+                   [1,1,1,2,2,2,0,0,0])
 
 def core(palette,key):
     """A small luminous orb on a spindle inside the glass cup, with a brighter upper facet."""
@@ -71,5 +76,5 @@ def core(palette,key):
     orb=surface("Lumen_"+key,profile,[palette["deep_"+key],palette["light_"+key],palette["spark_"+key],palette["spark_"+key]],
                 [2,1,0,0,1,2])
     for v in orb.data.vertices:
-        v.co.z-=.029
+        v.co.z+=.029
     return orb

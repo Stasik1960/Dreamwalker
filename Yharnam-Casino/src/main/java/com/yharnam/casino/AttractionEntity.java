@@ -24,7 +24,6 @@ public final class AttractionEntity extends BlockEntity {
     private final UUID[] people = new UUID[6];
     private final String[] names = new String[6];
     private final int[] values = {1,1,1,1,1};
-    private final long[] awaySince = new long[6];
     private RouletteRound round = RouletteRound.create();
     private long started = -1, seed;
     private boolean hasRun;
@@ -36,7 +35,6 @@ public final class AttractionEntity extends BlockEntity {
     public AttractionEntity(BlockPos pos, BlockState state) {
         super(YharnamCasino.ATTRACTION_ENTITY, pos, state);
         Arrays.fill(names, "");
-        Arrays.fill(awaySince,-1);
     }
     public boolean derby() { return getCachedState().isOf(YharnamCasino.RAT_DERBY); }
     public boolean busy() { return started >= 0 || !round.bets().isEmpty(); }
@@ -44,17 +42,21 @@ public final class AttractionEntity extends BlockEntity {
     public int lastLane() { return lastLane; }
     public String name(int i) { return names[i]; }
     public int stake(int i) { return values[i]; }
-    public record Pile(int seat, RouletteRound.Target target, int count) {}
+    public record Pile(int seat, RouletteRound.Target target, int count, long amount, boolean shared) {}
     private java.util.List<Pile> piles = java.util.List.of();
     public java.util.List<Pile> piles() { return piles; }
     private void updatePiles() {
         var grouped = new java.util.LinkedHashMap<Long,Pile>();
+        var seatsPerField=new java.util.HashMap<Long,Integer>();
         for (var bet:round.bets()) {
+            seatsPerField.merge(bet.target().mask(),1<<bet.seat(),(a,b)->a|b);
             long key=(bet.target().mask()<<3)|bet.seat();
             Pile old=grouped.get(key);
-            grouped.put(key,new Pile(bet.seat(),bet.target(),old==null ? 1 : old.count()+1));
+            grouped.put(key,new Pile(bet.seat(),bet.target(),old==null ? 1 : old.count()+1,
+                (old==null ? 0 : old.amount()) + bet.amount(),false));
         }
-        piles=java.util.List.copyOf(grouped.values());
+        piles=grouped.values().stream().map(p->new Pile(p.seat(),p.target(),p.count(),p.amount(),
+                Integer.bitCount(seatsPerField.get(p.target().mask()))>1)).toList();
     }
     public RouletteRound ledger() { return round; }
     public static double seatX(int i) { return X[i]; }
@@ -92,6 +94,7 @@ public final class AttractionEntity extends BlockEntity {
     public void use(ServerPlayerEntity player, double x, double z) {
         if (!(world instanceof ServerWorld server) || player.isSpectator()) return;
         if (derby()) {
+            if (resetButton(true,x,z)) { if (canReset(player)) resetGame(server); else tell(player,"Сбросить стол может крупье или ГМ"); return; }
             if (!starter(x,z)) { tell(player, "Кнопка старта справа, рядом с красной рукоятью"); return; }
             if (moving()) { tell(player, "Заезд уже идёт"); return; }
             seed=server.random.nextLong();
@@ -104,6 +107,7 @@ public final class AttractionEntity extends BlockEntity {
             changed(server);
             return;
         }
+        if (resetButton(false,x,z)) { if (canReset(player)) resetGame(server); else tell(player,"Сбросить стол может крупье или ГМ"); return; }
         int marker=marker(x,z), role=role(player.getUuid());
         try {
             if (role == NONE) {
@@ -183,8 +187,7 @@ public final class AttractionEntity extends BlockEntity {
             player.sendMessage(Text.literal(line),false);
     }
     private boolean present(ServerWorld server,int i) {
-        var p=server.getServer().getPlayerManager().getPlayer(people[i]);
-        return p!=null && p.isAlive() && !p.isSpectator() && p.getWorld()==server && pos.isWithinDistance(p.getPos(),8);
+        return GamingFurnitureBlock.inRange(server,pos,people[i]);
     }
     private void release(ServerWorld server,int i) {
         if (people[i]==null) return;
@@ -199,7 +202,6 @@ public final class AttractionEntity extends BlockEntity {
         UUID owner=people[i];
         people[i]=null;
         names[i]="";
-        awaySince[i]=-1;
         if (amount<=0) return;
         var mailbox=CasinoMailbox.get(server.getServer());
         mailbox.credit(owner,amount,0);
@@ -221,6 +223,25 @@ public final class AttractionEntity extends BlockEntity {
     public static boolean red(int n) {
         return switch(n) { case 1,3,5,7,9,12,14,16,18,19,21,23,25,27,30,32,34,36 -> true; default -> false; };
     }
+    public static boolean resetButton(boolean derby,double x,double z) {
+        double cx=derby ? -1.23 : -.85, cz=derby ? .70 : -.70;
+        return Math.abs(x-cx)<=.16 && Math.abs(z-cz)<=.12;
+    }
+    private boolean canReset(ServerPlayerEntity player) {
+        return derby() || people[DEALER]==null || CasinoStaffAccess.isStaff(player) || people[DEALER].equals(player.getUuid());
+    }
+    private void resetGame(ServerWorld server) {
+        if (!derby()) round.abort();
+        started=-1;
+        wheel=null;
+        race=null;
+        lastLane=-1;hasRun=false;initialRotor=0;seed=0;
+        for (int i=0;i<=DEALER;i++) if (people[i]!=null) release(server,i);
+        round=RouletteRound.create();
+        updatePiles();
+        changed(server);
+        announce(server,derby()?"Заезд сброшен":"Стол сброшен. Ставки и фишки возвращены");
+    }
     void onRemoved(ServerWorld server) {
         if (!derby()) {
             if (round.spinning()) settle(server);
@@ -232,15 +253,27 @@ public final class AttractionEntity extends BlockEntity {
     private void schedule(ServerWorld server) {
         if (moving()) {
             int length=derby() ? race.duration()+12 : wheel.duration();
-            server.scheduleBlockTick(pos,getCachedState().getBlock(),(int)Math.max(1,Math.min(40,started+length-server.getTime())));
+            server.scheduleBlockTick(pos,getCachedState().getBlock(),(int)Math.max(1,Math.min(10,started+length-server.getTime())));
         } else {
             for (UUID id:people) if (id!=null) {
-                server.scheduleBlockTick(pos,getCachedState().getBlock(),40); break;
+                server.scheduleBlockTick(pos,getCachedState().getBlock(),10); break;
             }
         }
     }
     void advanceClock(ServerWorld server) {
         boolean edit=false;
+        if(!derby()) {
+            boolean dealerGone=people[DEALER]!=null && !present(server,DEALER);
+            boolean seatGone=false;
+            for(int i=0;i<DEALER;i++) if(people[i]!=null && !present(server,i)) seatGone=true;
+            if(dealerGone || seatGone) {
+                if(round.spinning() || dealerGone) {
+                    round.abort();started=-1;hasRun=false;wheel=null;initialRotor=0;
+                }
+                for(int i=0;i<=DEALER;i++) if(people[i]!=null && !present(server,i)) release(server,i);
+                edit=true;
+            }
+        }
         if (moving() && server.getTime()-started >= (derby() ? race.duration()+12 : wheel.duration())) {
             if (derby()) {
                 lastLane=race.winner();
@@ -248,15 +281,6 @@ public final class AttractionEntity extends BlockEntity {
             } else settle(server);
             server.playSound(null,pos,SoundEvents.BLOCK_NOTE_BLOCK_BELL.value(),SoundCategory.BLOCKS,.7f,1.2f);
             started=-1; edit=true;
-        }
-        if (!moving()) for (int i=0;i<=DEALER;i++) if (people[i]!=null) {
-            if (present(server,i)) { awaySince[i]=-1; continue; }
-            if (awaySince[i]<0) awaySince[i]=server.getTime();
-            if (server.getTime()-awaySince[i]<600) continue;
-            if (i==DEALER) {
-                for (int seat=0;seat<5;seat++) while (round.betCount(seat)>0) round.cancelBet(seat);
-            }
-            release(server,i); edit=true;
         }
         if (edit) changed(server); else schedule(server);
     }
@@ -285,6 +309,7 @@ public final class AttractionEntity extends BlockEntity {
         long newSeed=n.getLong("Seed");
         double newRotor=n.getDouble("Rotor");
         hasRun=n.getBoolean("HasRun");
+        if(!hasRun) { wheel=null;race=null; }
         if (hasRun && derby() && (race==null || seed!=newSeed)) race=new RatRace(newSeed);
         if (hasRun && !derby() && (wheel==null || seed!=newSeed || initialRotor!=newRotor)) wheel=new RouletteSpin(newSeed,newRotor);
         seed=newSeed; initialRotor=newRotor;

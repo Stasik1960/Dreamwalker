@@ -114,7 +114,24 @@ def compile_model(key,file):
     save_json(DATA/"loot_tables/blocks"/(key+".json"),{"type":"minecraft:block","pools":[{"rolls":1,"entries":[{"type":"minecraft:item","name":"yharnam_casino:"+key}],"conditions":[{"condition":"minecraft:survives_explosion"},{"condition":"minecraft:block_state_property","block":"yharnam_casino:"+key,"properties":{"part":"1"}}]}]})
     print(key,sum(map(len,parts.values()))//3,len(rotor)//3)
 
+def tower_texture():
+    from math import cos,sin,pi
+    image=Image.new("RGBA",(64,128))
+    d=ImageDraw.Draw(image)
+    for y in range(0,128,8):
+        d.rectangle((0,y,31,y+7),fill="#dbd5cb")
+        d.rectangle((2,y+1,10,y+5),fill="#fff8dd")
+        d.rectangle((19,y+1,28,y+5),fill="#706458")
+        d.line((0,y+6,31,y+6),fill="#9f9184")
+        d.line((0,y+7,31,y+7),fill="#61574e")
+    points=[(47.5+16*cos((i+.5)*pi/4),15.5+16*sin((i+.5)*pi/4)) for i in range(8)]
+    d.polygon(points,fill="#e1d9c8",outline="#756a5f")
+    d.ellipse((38,6,57,25),fill="#fff4d6",outline="#9b8971",width=2)
+    d.polygon([(48,10),(52,16),(48,21),(44,16)],fill="#a29276")
+    image.save(ASSETS/"textures/entity/cards/towers.png")
+
 def icons():
+    tower_texture()
     for key in [*MODELS,"card_deck"]:
         icon=Image.new("RGBA",(32,32));d=ImageDraw.Draw(icon)
         if key=="card_deck":

@@ -40,6 +40,9 @@ public final class ChessTableTests implements FabricGameTest {
         t.runAtTick(20,()->{
             t.assertTrue(chess.selection()==-1 && chess.piece(52)=='p',"Walking away returns the piece to its square");
             chess.use(w,b,new Vec3d(ChessLayout.BUTTON_X,.76,ChessLayout.BUTTON_Z));
+            chess.use(w,b,new Vec3d(ChessLayout.BUTTON_X,.76,ChessLayout.BUTTON_Z));
+            t.assertTrue(chess.piece(28)=='P',"Pressing twice at the same end cannot reset the board");
+            chess.use(w,b,new Vec3d(-ChessLayout.BUTTON_X,.76,-ChessLayout.BUTTON_Z));
             t.assertTrue(chess.piece(12)=='P' && chess.piece(28)=='.' && chess.resetMotion()!=null,"The physical button restores the set");
             t.complete();
         });
@@ -65,9 +68,30 @@ public final class ChessTableTests implements FabricGameTest {
             var snapshot=e.createNbt();e.readNbt(snapshot);e.use(w,p,sq(62));e.use(w,p,sq(63));
             t.assertTrue(e.piece(56)=='R' && e.piece(62)=='k' && e.selection()==-1, "Mate persists across a reload and further clicks");
             e.use(w,p,new Vec3d(ChessLayout.BUTTON_X,.76,ChessLayout.BUTTON_Z));
+            t.assertTrue(e.piece(56)=='R',"The first reset button preserves the checkmated board");
+            e.use(w,p,new Vec3d(-ChessLayout.BUTTON_X,.76,-ChessLayout.BUTTON_Z));
             t.assertTrue(e.piece(0)=='R' && e.piece(56)=='r',"Only reset begins the next game");
             t.complete();
         });
+    }
+
+    @GameTest(templateName=EMPTY_STRUCTURE)
+    public void agreementRequiresMatchingDrawButtonsOnOppositeEnds(TestContext t) {
+        var w=t.getWorld();var b=YharnamCasino.CHESS_TABLE;
+        var base=t.getAbsolutePos(new BlockPos(1,1,1));var state=b.getDefaultState();
+        w.setBlockState(base,state);
+        var p=t.createMockCreativeServerPlayerInWorld();
+        p.refreshPositionAndAngles(base.getX()+.5,base.getY(),base.getZ()+2,180,0);
+        var e=(ChessTableEntity)w.getBlockEntity(base);
+        p.setStackInHand(net.minecraft.util.Hand.MAIN_HAND,new ItemStack(YharnamCasino.CHESS_SET));
+        e.use(w,p,sq(0));
+        var whiteDraw=new Vec3d(-ChessLayout.BUTTON_X,.76,ChessLayout.BUTTON_Z);
+        var blackDraw=new Vec3d(ChessLayout.BUTTON_X,.76,-ChessLayout.BUTTON_Z);
+        e.use(w,p,whiteDraw); e.use(w,p,whiteDraw);
+        t.assertTrue(e.createNbt().getString("Ending").isEmpty(),"Same-side double click cannot agree a draw");
+        e.use(w,p,blackDraw);
+        t.assertTrue(e.createNbt().getString("Ending").equals("agreement"),"Both physical ends confirm a draw");
+        t.complete();
     }
 
     @GameTest(templateName=EMPTY_STRUCTURE)

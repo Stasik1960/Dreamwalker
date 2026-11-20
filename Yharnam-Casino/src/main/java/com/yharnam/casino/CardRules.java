@@ -3,7 +3,7 @@ package com.yharnam.casino;
 import java.security.SecureRandom;
 import java.util.stream.IntStream;
 
-final class CardRules {
+public final class CardRules {
     private static final SecureRandom RANDOM = new SecureRandom();
     static int[] shuffledDeck() {
         int[] cards = IntStream.range(0, 52).toArray();
@@ -14,7 +14,7 @@ final class CardRules {
         }
         return cards;
     }
-    static int blackjackTotal(int[] cards) {
+    public static int blackjackTotal(int[] cards) {
         int total = 0;
         boolean ace = false;
         for (int card : cards) {

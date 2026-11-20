@@ -60,12 +60,22 @@ public final class FortuneWheelEntity extends BlockEntity {
 
     private void schedule(ServerWorld server) {
         long due = chargeStarted >= 0 ? chargeStarted + CHARGE_TIMEOUT + 1 : spinStarted + spinDuration;
-        server.scheduleBlockTick(pos, getCachedState().getBlock(), (int) Math.max(1, due - server.getTime()));
+        server.scheduleBlockTick(pos, getCachedState().getBlock(), (int) Math.max(1, Math.min(10,due - server.getTime())));
+    }
+
+    void reset(ServerPlayerEntity player) {
+        chargeStarted=spinStarted=-1;
+        chargeStrength=-1;
+        chargeOwner=null;
+        initialAngle=finalAngle=0;
+        result="";
+        markDirty();sync();
+        player.sendMessage(Text.literal("Колесо сброшено"),true);
     }
 
     void advanceClock(ServerWorld server) {
         long now = server.getTime();
-        if (chargeStarted >= 0 && now - chargeStarted > CHARGE_TIMEOUT) {
+        if (chargeStarted >= 0 && (now - chargeStarted > CHARGE_TIMEOUT || !GamingFurnitureBlock.inRange(server,pos,chargeOwner))) {
             chargeStarted = -1;
             chargeOwner = null;
             chargeStrength = -1;
@@ -79,6 +89,9 @@ public final class FortuneWheelEntity extends BlockEntity {
                 player.sendMessage(Text.literal("Колесо остановилось на секторе " + sector), true);
             chargeOwner = null;
         } else {
+            if(spinStarted>=0 && chargeOwner!=null && !GamingFurnitureBlock.inRange(server,pos,chargeOwner)) {
+                chargeOwner=null;markDirty();
+            }
             if (active())
                 schedule(server);
             return;

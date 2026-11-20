@@ -31,6 +31,7 @@ def fresh(title):
 
 def palette():
     m=f.materials()
+    m["cup"]=f.material("Stamped ivory cup","E8D7BA",.40,.16,texture="capsule-base")
     for key,name,tone,rough,metal in [
         ("wine","Aubergine fired enamel","562B38",.30,.27),
         ("red","Garnet lacquer","AD4354",.28,.24),
@@ -61,9 +62,9 @@ def palette():
     for key,(shell,deep,light,spark) in hues.items():
         mat=f.material("Capsule glass "+key,shell,.16,.04)
         bs=mat.node_tree.nodes.get("Principled BSDF")
-        bs.inputs["Alpha"].default_value=.32
+        bs.inputs["Alpha"].default_value=.46
         bs.inputs["Specular IOR Level"].default_value=.50
-        mat.diffuse_color=(*mat.diffuse_color[:3],.32)
+        mat.diffuse_color=(*mat.diffuse_color[:3],.46)
         mat.surface_render_method="BLENDED"
         mat.use_backface_culling=True
         m["glass_"+key]=mat
@@ -345,7 +346,8 @@ def stocks(m):
         shared[key]=ob.data
         bpy.data.objects.remove(ob,do_unlink=True)
     positions=settled_stock(19)
-    palette_order=["blue","orange","purple","red"]*5
+    # Nineteen visible samples. Keep a single rare specimen and let blue dominate the window.
+    palette_order=["blue"]*12+["purple"]*4+["orange"]*2+["red"]
     rng.shuffle(palette_order)
     groups=[[] for _ in range(3)]
     for i,loc in enumerate(positions):
@@ -353,17 +355,17 @@ def stocks(m):
         ob=bpy.data.objects.new("Stock "+key,shared[key])
         bpy.context.collection.objects.link(ob)
         ob.location=(loc.x,loc.y+HOPPER_Y,loc.z)
-        ob.rotation_euler=(rng.uniform(-2.70,.35),rng.uniform(-1.15,1.15),rng.uniform(0,2*pi))
+        ob.rotation_euler=(rng.uniform(-.85,1.2),rng.uniform(-1.15,1.15),rng.uniform(0,2*pi))
         groups[min(2,i//7)].append(ob)
     for i,group in enumerate(groups):
         # Joining instances must never modify the shared meshes used in the next band or tray.
         for ob in group: ob.data=ob.data.copy()
         out=join_objects("Stock_Layer_%02d"%(i+1),group)
         out["capsule_count"]=len(group)
-    tray=bpy.data.objects.new("Outlet_Capsule",shared["red"])
+    tray=bpy.data.objects.new("Outlet_Capsule",shared["blue"])
     bpy.context.collection.objects.link(tray)
     tray.location=(.026,-.296,.344)
-    tray.rotation_euler=(radians(-125),radians(-18),radians(8))
+    tray.rotation_euler=(radians(55),radians(-18),radians(8))
     tray.location.z=.244-min((tray.rotation_euler.to_matrix() @ v.co).z for v in tray.data.vertices)
     print("STOCK",len(positions),[(round(p.x,3),round(p.y,3),round(p.z,3)) for p in positions],flush=True)
     return positions
@@ -459,7 +461,7 @@ def capsules():
         roots.append(root)
     for i,root in enumerate(roots):
         root.location=((i-1.5)*.223,(-.013,.022,.018,-.012)[i],0)
-        root.rotation_euler=(radians((-140,-128,-147,-130)[i]),radians((-15,15,-9,18)[i]),radians((-12,15,-10,7)[i]))
+        root.rotation_euler=(radians((40,52,33,50)[i]),radians((-15,15,-9,18)[i]),radians((-12,15,-10,7)[i]))
     view(sc,m,(0,0,-.007),(.055,-1.9,.68),.999,(1250,430))
     ground=next(o for o in sc.objects if o.name.startswith("Studio ground"))
     ground.location.z-=.098

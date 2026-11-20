@@ -35,8 +35,9 @@ public final class ChessLayout {
         int i=(int)Math.floor(x/.215+2);
         return i>=0 && i<4 ? i : -1;
     }
-    public static boolean button(double x,double z,int side) {
-        return Math.abs(x-side*BUTTON_X)<=.121 && Math.abs(z-BUTTON_Z)<=.081;
+    public static int buttonEnd(double x,double z) {
+        if(Math.abs(Math.abs(x)-BUTTON_X)>.121 || Math.abs(Math.abs(z)-BUTTON_Z)>.081) return 0;
+        return z>0 ? 1 : -1;
     }
     public static Vec3d center(BlockPos base,Direction facing) {
         return Vec3d.ofBottomCenter(base).add(.5*facing.getOffsetX(),0,.5*facing.getOffsetZ());

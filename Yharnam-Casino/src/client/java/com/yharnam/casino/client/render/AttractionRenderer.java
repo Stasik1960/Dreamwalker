@@ -52,20 +52,21 @@ public final class AttractionRenderer implements BlockEntityRenderer<AttractionE
             // The croupier's nameplate sits on the rail, clear of the ball track.
             float h=end?.912f:.855f;
             long cash=dealer?book.house():book.bankroll(i);
-            chip(m,out,-.10f,h,0,.073f,COLORS[i],1,light);
+            if(cash==0) chip(m,out,-.10f,h,0,.073f,COLORS[i],1,light);
             String name=game.name(i).isEmpty() ? (dealer?"КРУПЬЕ":"МЕСТО "+(i+1)) : game.name(i);
-            label(name,.055,h+.001,0,.31f,.0075f,COLORS[i],m,out,light);
+            label(name,.065,h+.002,-.070,.28f,.0060f,COLORS[i],m,out,light);
             if (cash>0) {
-                chip(m,out,-.10f,h+.008f,0,.067f,COLORS[i],Math.min(4,Long.toString(cash).length()),light);
-                label(Long.toString(cash),.055,h+.002,.038,.22f,.004f,0xffefd2,m,out,light);
+                ChipTowers.draw(cash,0,-.14f,h+.003f,-.024f,.053f,COLORS[i],m,out,light);
+                label(Long.toString(cash),.065,h+.002,-.010,.25f,.005f,0xffefd2,m,out,light);
             }
             m.pop();
         }
         for (var pile:game.piles()) {
             int i=pile.seat();
-            float x=(float)pile.target().x()+(float)(.016*Math.sin(i*1.2566));
-            float z=(float)pile.target().z()+(float)(.016*Math.cos(i*1.2566));
-            chip(m,out,x,.855f+i*.0006f,z,.063f,COLORS[i],Math.min(4,pile.count()),light);
+            boolean shared=pile.shared();
+            float x=(float)pile.target().x(),z=(float)pile.target().z();
+            if(shared) { x+=.023f*(float)Math.sin(i*1.2566); z+=.023f*(float)Math.cos(i*1.2566); }
+            ChipTowers.draw(pile.amount(),pile.count(),x,.855f,z,shared?.012f:.025f,COLORS[i],m,out,light);
         }
         String line=game.moving()?"СТАВКИ ЗАКРЫТЫ":book.result()>=0?"ВЫПАЛО  "+book.result():"";
         if (!line.isEmpty()) label(line,.56,.856,.570,.72f,.006f,0xf2d7a0,m,out,light);

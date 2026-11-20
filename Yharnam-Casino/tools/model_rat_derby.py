@@ -36,8 +36,9 @@ def case_glass(m):
         if y==back:
             floor.cube("Case | brass lid strip",(xmid,y,upper),(width,.023,.016),m["aged"])
         else:
-            for x in (left+.09,right-.09):
-                floor.cube("Case | front lid clip",(x,y,upper),(.18,.024,.015),m["aged"])
+            floor.cube("Case | front walnut crossbar",(xmid,y,upper),(width,.042,.040),m["wood"])
+            for x in (left+.045,right-.045):
+                floor.cube("Case | front brass ferrule",(x,y,upper),(.09,.046,.044),m["aged"])
     for x in (left,right):
         floor.cube("Case | short sill",(x,ymid,DECK+.010),(.026,depth,.019),m["ebony"])
         floor.cube("Case | short brass lid strip",(x,ymid,upper),(.023,depth,.016),m["aged"])
@@ -95,6 +96,7 @@ def cabinet(m):
 def build(m):
     cabinet(m)
     case_glass(m)
+    floor.reset_button(m,-1.23,-.70,DECK)
     crank(m)
     blue=floor.material("Runner | Prussian enamel","426677",.39,.22)
     green=floor.material("Runner | olive enamel","717A53",.40,.22)

@@ -159,6 +159,8 @@ def build(m):
         for y in (-.832,.832):
             cube("Rail | brass stud",(x,y,.908),(.043,.040,.006),m["aged"])
     wheel(m)
+    from build_gaming_floor_blender import reset_button
+    reset_button(m,-.85,.70,SURFACE)
     betting_chips(m)
     # A croupier's rake rests on the far edge of the cloth.
     rake=[beam("Rake | shaft",(.08,.718,.867),(.92,.675,.867),.018,.018,m["wood"]),

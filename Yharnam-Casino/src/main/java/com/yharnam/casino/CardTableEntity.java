@@ -28,13 +28,14 @@ public final class CardTableEntity extends BlockEntity {
     private UUID dealer;
     private String dealerName = "";
     private ItemStack deck = ItemStack.EMPTY;
-    private long bank, lastMove, draftRaise;
+    private long bank, draftRaise;
     private int button = -1, round;
     private PokerHand poker;
     private BlackjackHand jack;
     private NbtCompound displayed = new NbtCompound();
     private NbtCompound previous = new NbtCompound();
     private String result = "";
+
 
     public CardTableEntity(BlockPos pos, BlockState state) {
         super(YharnamCasino.CARD_TABLE_ENTITY, pos, state);
@@ -74,11 +75,33 @@ public final class CardTableEntity extends BlockEntity {
             mailbox.deliver(online, false);
     }
     private boolean absent(UUID id) {
-        if (id == null)
-            return true;
-        ServerPlayerEntity p = ((ServerWorld) world).getServer().getPlayerManager().getPlayer(id);
-        return p == null || p.getWorld() != world
-            || p.squaredDistanceTo(pos.getX() + .5, pos.getY() + .5, pos.getZ() + .5) > 144;
+        return !GamingFurnitureBlock.inRange((ServerWorld)world,pos,id);
+    }
+    void watch(ServerWorld w) {
+        boolean dealerGone=dealer!=null && absent(dealer);
+        boolean playerGone=Arrays.stream(owners).anyMatch(id -> id!=null && absent(id));
+        if(dealerGone || playerGone) {
+            if(playing()) refundHand();
+            if(dealerGone) leaveDealer(null);
+            else for(int i=0;i<owners.length;i++) if(owners[i]!=null && absent(owners[i])) withdrawSeat(i);
+            refresh();
+        }
+        onLoaded(w);
+    }
+    void onLoaded(ServerWorld w) {
+        if(dealer!=null || Arrays.stream(owners).anyMatch(java.util.Objects::nonNull))
+            w.scheduleBlockTick(pos,getCachedState().getBlock(),10);
+    }
+    private void refundHand() {
+        // Deposits remain the original buy-ins throughout poker and include every paid split/double.
+        // The hand objects contain a second accounting view of those same chips.
+        poker=null; jack=null; draftRaise=0;
+        clearLast();
+        for(int i=0;i<owners.length;i++) {
+            pay(owners[i],deposits[i]);
+            deposits[i]=0;
+        }
+        result="Партия сброшена, ставки возвращены";
     }
     private void message(ServerPlayerEntity p, String text) {
         p.sendMessage(Text.literal(text), true);
@@ -117,6 +140,8 @@ public final class CardTableEntity extends BlockEntity {
             else if (dealer != null) {
                 CasinoMailbox box = CasinoMailbox.get(((ServerWorld) world).getServer());
                 box.recoverVault(dealer, java.util.List.of(deck));
+                var online=((ServerWorld)world).getServer().getPlayerManager().getPlayer(dealer);
+                if(online!=null) box.deliver(online,false);
             }
             deck = ItemStack.EMPTY;
         }
@@ -124,12 +149,16 @@ public final class CardTableEntity extends BlockEntity {
         dealerName = "";
     }
     public void interact(ServerPlayerEntity p, Hand hand, int target) {
-        if (!(world instanceof ServerWorld))
+        if (!(world instanceof ServerWorld) || p.isSpectator())
             return;
         UUID id = p.getUuid();
         ItemStack held = p.getStackInHand(hand);
         boolean sneak = p.isSneaking();
         try {
+            if (target == -3) {
+                resetRound(p);
+                return;
+            }
             if (target == -2) {
                 int seat = seatOf(id);
                 if (poker != null && seat >= 0) {
@@ -139,7 +168,6 @@ public final class CardTableEntity extends BlockEntity {
                             throw new IllegalArgumentException("Доступен только колл на оставшиеся фишки");
                         long add = (long) chip.value() * (sneak ? held.getCount() : 1);
                         draftRaise = Math.min(cap, draftRaise + add);
-                        lastMove = world.getTime();
                         refresh();
                         message(p, "Повышение на " + draftRaise + ". Подтвердите пустой рукой на своём месте.");
                         return;
@@ -167,8 +195,8 @@ public final class CardTableEntity extends BlockEntity {
                 return;
             }
             if (target == -1) {
-                if (dealer != null && !dealer.equals(id) && absent(dealer) && world.getTime() - lastMove > 1200) {
-                    finishInterrupted();
+                if (dealer != null && !dealer.equals(id) && absent(dealer)) {
+                    if(playing()) refundHand();
                     leaveDealer(null);
                     refresh();
                 }
@@ -270,7 +298,7 @@ public final class CardTableEntity extends BlockEntity {
                     message(p, status());
                 }
             }
-            lastMove = world.getTime();
+            onLoaded((ServerWorld)world);
             refresh();
         } catch (IllegalArgumentException e) {
             message(p, e.getMessage());
@@ -280,6 +308,14 @@ public final class CardTableEntity extends BlockEntity {
             refresh();
             message(p, "Колода закончилась. Ставки возвращены.");
         }
+    }
+    private void resetRound(ServerPlayerEntity actor) {
+        if(dealer!=null && !actor.getUuid().equals(dealer) && !CasinoStaffAccess.isStaff(actor)) {
+            message(actor,"Сбросить партию может крупье или ГМ");return;
+        }
+        refundHand();
+        refresh();
+        message(actor,result);
     }
     static final class DeckEmpty extends RuntimeException {}
     private static String cardName(int card) {
@@ -300,17 +336,8 @@ public final class CardTableEntity extends BlockEntity {
         clearLast();
     }
     private void dealerAction() {
-        if (turn() >= 0) {
-            if (world.getTime() - lastMove > 1200 && absent(owners[turn()])) {
-                if (jack != null)
-                    jack.act("stand");
-                else
-                    poker.act(turn(), 0, poker.toCall(turn()) > 0);
-                draftRaise = 0;
-            } else
-                throw new IllegalArgumentException(status());
-        } else if (poker != null)
-            poker.dealerAdvance();
+        if (turn() >= 0) throw new IllegalArgumentException(status());
+        if (poker != null) poker.dealerAdvance();
         else
             jack.dealerAdvance();
         if (phase().equals("settled"))
@@ -318,7 +345,10 @@ public final class CardTableEntity extends BlockEntity {
     }
     private void cashOut() {
         previous = currentCards();
-        for (int i=0;i<owners.length;i++) previous.putString("Seat"+i,names[i]);
+        for(int i=0;i<owners.length;i++) {
+            previous.putString("Seat"+i,names[i]);
+            if(owners[i]!=null) previous.putUuid("SeatId"+i,owners[i]);
+        }
         StringBuilder text = new StringBuilder();
         for (int i = 0; i < owners.length; i++)
             if (owners[i] != null) {
@@ -351,7 +381,7 @@ public final class CardTableEntity extends BlockEntity {
         result = "Возврат ставок";
     }
     private void finishInterrupted() {
-        // Only for forced removal or an abandoned dealer. Never commit a new chip on someone's behalf.
+        // Forced removal settles the hand. Never commit a new chip on someone's behalf.
         try {
             while (playing()) {
                 if (turn() >= 0) {
@@ -412,6 +442,7 @@ public final class CardTableEntity extends BlockEntity {
             t.putString("Back", item.backTexture().toString());
         for (int i = 0; i < owners.length; i++) {
             if (!t.contains("Seat"+i) || owners[i]!=null) t.putString("Seat" + i, names[i]);
+            if(owners[i]!=null) t.putUuid("SeatId"+i,owners[i]);
             t.putLong("Bet" + i, poker != null ? poker.committed(i) : deposits[i]);
             t.putLong("Stack" + i, poker != null ? poker.balance(i) : 0);
         }
@@ -437,7 +468,6 @@ public final class CardTableEntity extends BlockEntity {
         t.putInt("Button", button);
         t.putString("Result", result);
         t.put("Previous", previous.copy());
-        t.putLong("Last", lastMove);
         if (!deck.isEmpty())
             t.put("Deck", deck.writeNbt(new NbtCompound()));
         for (int i = 0; i < owners.length; i++)
@@ -464,7 +494,6 @@ public final class CardTableEntity extends BlockEntity {
         dealerName = t.getString("DealerName");
         bank = t.getLong("Bank");
         button = t.contains("Button") ? t.getInt("Button") : -1;
-        lastMove = t.getLong("Last");
         result = t.getString("Result");
         previous = t.getCompound("Previous");
         deck = t.contains("Deck") ? ItemStack.fromNbt(t.getCompound("Deck")) : ItemStack.EMPTY;

@@ -23,13 +23,17 @@ class Atlas:
             return self.palette[name]
         pbr = mat["pbrMetallicRoughness"]
         if "baseColorTexture" in pbr:
-            assert name == "Polished walnut", name
             source = doc["textures"][pbr["baseColorTexture"]["index"]]["source"]
             tile = Image.open(io.BytesIO(view(doc["images"][source]["bufferView"]))).convert("RGBA")
-            for y in range(0,256,tile.height):
-                for x in range(0,256,tile.width):
-                    self.image.paste(tile,(x,y))
-            region = (4,4,tile.width,tile.height)
+            if name=="Stamped ivory cup":
+                self.image.paste(tile,(320,32))
+                region=(320,32,tile.width,tile.height)
+            else:
+                assert name=="Polished walnut", name
+                for y in range(0,256,tile.height):
+                    for x in range(0,256,tile.width):
+                        self.image.paste(tile,(x,y))
+                region = (4,4,tile.width,tile.height)
         else:
             red,green,blue,alpha = pbr.get("baseColorFactor",(1,1,1,1))
             # Keep the brightest facets of an emitting core distinct even without postprocessing.

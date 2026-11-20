@@ -90,10 +90,14 @@ def table():
         rect(out,x,0,.432,1.515,.733,.74,"felt",.025)
         for z in (-.749,.749):rect(out,x,z,.435,.019,.74,.753,"oak")
         for dx in (-.215,0,.215):rect(out,x+dx,0,.015,1.49,.74,.754,"oak")
-        rect(out,x,.838,.216,.148,.722,.742,"bronze",.026)
-        rect(out,x,.838,.183,.119,.742,.76,"red" if sign==1 else "green",.018)
-        sx=356 if sign==1 else 406
-        stamp(out,x,.838,.115,.10,.7605,(sx+.5,235.5,sx+37.5,272.5))
+        for end in (-1,1):
+            z=end*.838
+            reset=sign==end
+            rect(out,x,z,.216,.148,.722,.742,"bronze",.026)
+            rect(out,x,z,.183,.119,.742,.76,"red" if reset else "green",.018)
+            sx=356 if reset else 406
+            uv=(sx+.5,235.5,sx+37.5,272.5)
+            stamp(out,x,z,.115,.10,.7605,uv if end==1 else (uv[2],uv[3],uv[0],uv[1]))
     return out
 def piece(kind,white):
     out=[];main="ivory" if white else "ebony";trim="lighttrim" if white else "darktrim"

@@ -24,6 +24,7 @@ public final class GachaponTests implements FabricGameTest {
 
     private static GachaponEntity place(TestContext context, BlockPos pos, ServerPlayerEntity owner) {
         ServerWorld world = context.getWorld();
+        owner.refreshPositionAndAngles(pos.getX()+.5,pos.getY(),pos.getZ()+2,180,0);
         var block = YharnamCasino.GACHAPON;
         var state = block.getDefaultState();
         world.setBlockState(pos, state, Block.NOTIFY_ALL);
@@ -82,6 +83,7 @@ public final class GachaponTests implements FabricGameTest {
         ServerPlayerEntity guest = context.createMockCreativeServerPlayerInWorld();
         BlockPos pos = context.getAbsolutePos(new BlockPos(1, 1, 1));
         GachaponEntity machine = place(context, pos, owner);
+        guest.refreshPositionAndAngles(pos.getX()+.5,pos.getY(),pos.getZ()+2,180,0);
         loadAll(machine, owner, "sale");
         guest.changeGameMode(net.minecraft.world.GameMode.SURVIVAL);
         guest.setStackInHand(Hand.MAIN_HAND,new ItemStack(YharnamCasino.chip(10),2));
@@ -144,6 +146,7 @@ public final class GachaponTests implements FabricGameTest {
         var p=t.createMockCreativeServerPlayerInWorld();
         var base=t.getAbsolutePos(new BlockPos(1,2,1));
         var g=place(t,base,owner);
+        p.refreshPositionAndAngles(base.getX()+.5,base.getY(),base.getZ()+2,180,0);
         p.setStackInHand(Hand.MAIN_HAND,new ItemStack(YharnamCasino.chip(5)));
         g.interact(p,INTAKE);
         g.interact(p,CRANK);
@@ -155,6 +158,20 @@ public final class GachaponTests implements FabricGameTest {
         t.assertTrue(owner.getInventory().contains(new ItemStack(YharnamCasino.chip(5))),"Owner gets exactly the paid chip");
         t.complete();
     }
+    @GameTest(templateName=EMPTY_STRUCTURE)
+    public void walkingAwayReturnsPaymentOrCommittedPrizeOnce(TestContext t) {
+        var p=t.createMockCreativeServerPlayerInWorld();var w=t.getWorld();
+        var pos=t.getAbsolutePos(new BlockPos(1,1,1));var g=place(t,pos,p);
+        p.setStackInHand(Hand.MAIN_HAND,new ItemStack(YharnamCasino.chip(5),2));g.interact(p,INTAKE);
+        p.refreshPositionAndAngles(pos.getX()+12,pos.getY(),pos.getZ(),0,0);g.advanceClock(w);
+        t.assertTrue(g.phase()==GachaponEntity.Phase.IDLE && p.getMainHandStack().getCount()==2,"Unused payment returned");
+        p.refreshPositionAndAngles(pos.getX()+.5,pos.getY(),pos.getZ()+2,180,0);g.interact(p,INTAKE);g.interact(p,CRANK);
+        var won=g.result();p.refreshPositionAndAngles(pos.getX()+12,pos.getY(),pos.getZ(),0,0);g.advanceClock(w);g.advanceClock(w);
+        t.assertTrue(g.phase()==GachaponEntity.Phase.IDLE && p.getMainHandStack().getCount()==1 &&
+                p.getInventory().main.stream().filter(i->i.isOf(YharnamCasino.capsule(won))).mapToInt(ItemStack::getCount).sum()==1,
+                "Committed sale releases machine and delivers a single capsule");t.complete();
+    }
+
     @GameTest(templateName=EMPTY_STRUCTURE)
     public void abandonedPaymentIsRefundedOnReload(TestContext t) {
         var p=t.createMockCreativeServerPlayerInWorld();

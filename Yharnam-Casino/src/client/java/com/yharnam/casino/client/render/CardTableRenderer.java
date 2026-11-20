@@ -1,6 +1,7 @@
 package com.yharnam.casino.client.render;
 
 import com.yharnam.casino.CardTableEntity;
+import com.yharnam.casino.CardRules;
 import com.yharnam.casino.GamingFurnitureBlock;
 import com.yharnam.casino.YharnamCasino;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
@@ -21,7 +22,6 @@ import net.minecraft.util.math.RotationAxis;
 public final class CardTableRenderer implements BlockEntityRenderer<CardTableEntity> {
     private static final RenderLayer FACES = layer("faces");
     private static final RenderLayer CLASSIC = layer("classic");
-    private static final RenderLayer CHIP = layer("counter");
     private static final float FELT = .854f;
     private static final int CREAM = 0xfff3deb2, GOLD = 0xffffcd65;
     private final TextRenderer font;
@@ -83,39 +83,52 @@ public final class CardTableRenderer implements BlockEntityRenderer<CardTableEnt
                 && peek.round == state.getInt("RoundNumber") && !player.isEmpty())
                 cards = peek.cards;
             int[] split = state.getIntArray("Split" + i);
-            hand(cards, x, z, FELT + .003f, split.length > 0 ? .101f : .12f, back, m, out, light);
-            if (split.length > 0)
-                hand(split, x, z - .112f, FELT + .016f, .101f, back, m, out, light);
-            long bet = state.getLong("Bet" + i), stack = state.getLong("Stack" + i);
-            if (bet > 0)
-                counters(bet, x + (x > 0 ? -.115f : .115f), FELT, z + .058f, m, out, light);
-            String label = player.isEmpty() ? (jack ? "" : "МЕСТО " + (i + 1)) : (active == i ? "› " : "") + player;
-            if (state.contains("Button") && state.getInt("Button") == i)
-                label = "D · " + label;
-            float titleZ = !jack && z > .45f ? z - .15f : z + .101f;
-            label(label, x, titleZ, FELT + .005f, .0060f, .32f, active == i ? GOLD : CREAM, m, out, light);
-            String combo = state.getString("Combo"+i);
-            if (!combo.isEmpty()) label(combo,x,titleZ-.043f,FELT+.005f,.0045f,.31f,GOLD,m,out,light);
-            if (bet > 0 || stack > 0) {
-                String amount = (jack ? "" : "● ") + bet + (jack || stack == 0 ? "" : " / " + stack);
-                if (jack && split.length > 0 && active == i)
-                    amount += " · " + (state.getInt("SplitTurn") + 1);
-                label(amount, x, titleZ + .055f, FELT + .005f, .0050f, .28f, CREAM, m, out, light);
+            m.push();
+            m.translate(x,0,z);
+            if(jack) m.multiply(RotationAxis.POSITIVE_Y.rotationDegrees((i-3)*19f));
+            float width=jack ? .088f : .107f;
+            hand(cards,0,0,FELT+.003f,width,back,m,out,light);
+            if(split.length>0) hand(split,0,-.133f,FELT+.005f,.079f,back,m,out,light);
+            long bet=state.getLong("Bet"+i), stack=state.getLong("Stack"+i);
+            if(bet>0) counters(bet,-.173f,FELT,-.013f,.032f,m,out,light);
+            if(stack>0) counters(stack,.173f,FELT,-.013f,.032f,m,out,light);
+            String name=player.isEmpty() ? (jack?"":"МЕСТО "+(i+1)) : (active==i?"› ":"")+player;
+            if(state.getInt("Button")==i && state.contains("Button")) name="D · "+name;
+            float direction=!jack && z>.45f?-1:1;
+            label(name,0,direction*.099f,FELT+.004f,.0048f,.255f,active==i?GOLD:CREAM,m,out,light);
+            String detail=jack && cards.length>0 ? "Очки "+CardRules.blackjackTotal(cards)
+                    +(split.length>0?" / "+CardRules.blackjackTotal(split):"") : state.getString("Combo"+i);
+            label(detail,0,direction*.143f,FELT+.004f,.0044f,.250f,GOLD,m,out,light);
+            if(bet>0 || stack>0) {
+                String amount=Long.toString(bet)+(stack>0?" / "+stack:"");
+                label(amount,0,direction*(detail.isEmpty()?.144f:.185f),FELT+.004f,.0043f,.25f,CREAM,m,out,light);
             }
+            m.pop();
         }
-        int[] community = state.getIntArray(jack ? "DealerCards" : "Board");
-        hand(community, jack ? -.46f : 0, jack ? -.23f : .006f, FELT + .005f, .143f, back, m, out, light);
-        String dealer = state.getString("Dealer");
-        label(dealer.isEmpty() ? "КРУПЬЕ" : "КРУПЬЕ · " + dealer, jack ? -.74f : 0, jack ? -.37f : -.515f, FELT + .004f,
-            .006f, .70f, GOLD, m, out, light);
-        long bank = state.getLong("Bank");
-        if (jack && bank > 0) {
-            counters(bank, -.20f, .900f, -.35f, m, out, light);
-            label("БАНК " + bank, .02f, -.35f, .903f, .0046f, .38f, CREAM, m, out, light);
+        int[] community=state.getIntArray(jack?"DealerCards":"Board");
+        if(jack) {
+            float dealerWidth=.105f;
+            float step=Math.min(.113f,.74f/Math.max(1,community.length-1));
+            for(int i=0;i<community.length;i++)
+                card(community[i],-.57f+step*(i-(community.length-1)*.5f),FELT+.006f+i*.001f,
+                        -.281f,dealerWidth,.147f,back,m,out,light);
+        } else hand(community,0,.006f,FELT+.005f,.143f,back,m,out,light);
+        String dealer=state.getString("Dealer");
+        String dealerLabel=dealer.isEmpty()?"КРУПЬЕ":"КРУПЬЕ · "+dealer;
+        if(jack && community.length>0) {
+            boolean hidden=community[community.length-1]<0;
+            int points=hidden?CardRules.blackjackTotal(new int[]{community[0]}):CardRules.blackjackTotal(community);
+            dealerLabel+=" · "+points+(hidden?" + ?":"");
+        }
+        label(dealerLabel,jack?-.88f:0,jack?-.413f:-.515f,FELT+.004f,.0052f,jack?.46f:.70f,GOLD,m,out,light);
+        long bank=state.getLong("Bank");
+        if(jack && bank>0) {
+            counters(bank,.147f,.900f,-.370f,.041f,m,out,light);
+            label("БАНК "+bank,.366f,-.345f,.902f,.0045f,.250f,CREAM,m,out,light);
         }
         long draft = state.getLong("DraftRaise");
         if (draft > 0)
-            counters(draft, -.32f, FELT, .19f, m, out, light);
+            counters(draft, -.44f, FELT, .155f,.040f, m, out, light);
         String result = state.getString("Result");
         String phase = switch (state.getString("Phase")) {
             case "preflop" -> "ПРЕФЛОП";
@@ -130,13 +143,14 @@ public final class CardTableRenderer implements BlockEntityRenderer<CardTableEnt
         if (draft > 0)
             phase = "ПОВЫСИТЬ НА " + draft;
         if (!result.isEmpty() || !phase.isEmpty())
-            label(result.isEmpty() ? phase : result, 0, jack ? .025f : .16f, FELT + .006f, .0048f, jack ? .53f : .87f,
+            label(result.isEmpty() ? phase : result, 0, jack ? .063f : .16f, FELT + .006f, .0048f, jack ? .53f : .87f,
                 GOLD, m, out, light);
         m.pop();
     }
 
     private void label(String text, float x, float z, float y, float size, float maxWidth, int color, MatrixStack m,
         VertexConsumerProvider out, int light) {
+        if(text.isEmpty()) return;
         m.push();
         m.translate(x, y, z);
         m.multiply(RotationAxis.POSITIVE_X.rotationDegrees(90));
@@ -164,12 +178,8 @@ public final class CardTableRenderer implements BlockEntityRenderer<CardTableEnt
     }
 
     private static void counters(
-        long value, float x, float y, float z, MatrixStack m, VertexConsumerProvider out, int light) {
-        int levels = Math.min(5, 1 + (Long.toString(value).length() - 1));
-        int rgb = value >= 1000 ? 0x75648b : value >= 100 ? 0x54718d : value >= 10 ? 0x52836b : 0xaf6c58;
-        VertexConsumer buffer = out.getBuffer(CHIP);
-        for (int i = 0; i < levels; i++)
-            top(buffer, m, x, y + .002f + i * .008f, z - i * .002f, .086f, .086f, 0, 0, 1, 1, rgb, light);
+        long value, float x, float y, float z,float diameter, MatrixStack m, VertexConsumerProvider out, int light) {
+        ChipTowers.draw(value,0,x,y,z,diameter,ChipTowers.color(value),m,out,light);
     }
 
     static void top(VertexConsumer buffer, MatrixStack m, float x, float y, float z, float w, float h, float u,

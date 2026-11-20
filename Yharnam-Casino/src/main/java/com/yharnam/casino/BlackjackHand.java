@@ -3,7 +3,7 @@ package com.yharnam.casino;
 import java.util.Arrays;
 import net.minecraft.nbt.NbtCompound;
 
-/** One deck, stand on soft 17, a single split, double after split, one card to split aces. */
+/** One deck, dealer stands on 18, a single split, double after split, one card to split aces. */
 final class BlackjackHand {
     static final int SEATS = 7;
     private final int[][] hands = new int[SEATS * 2][];
@@ -144,9 +144,9 @@ final class BlackjackHand {
     }
     void dealerAdvance() {
         if (phase.equals("dealer")) {
-            if (CardRules.blackjackTotal(dealer) < 17)
+            if (CardRules.blackjackTotal(dealer) < 18)
                 dealer = append(dealer, draw());
-            if (CardRules.blackjackTotal(dealer) >= 17)
+            if (CardRules.blackjackTotal(dealer) >= 18)
                 phase = "showdown";
         } else if (phase.equals("showdown")) {
             int house = CardRules.blackjackTotal(dealer);

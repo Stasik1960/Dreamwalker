@@ -47,7 +47,7 @@ def cloth(jack):
     gold="#A69968"
     def uv(x,y): return round(128+x/2.96*256),round(72-y/1.8*144)
     if jack:
-        lettering(draw,*uv(0,.19),"ЧЁРНЫЙ ВАЛЕТ",ivory)
+        lettering(draw,*uv(.37,.15),"ЧЁРНЫЙ ВАЛЕТ",ivory)
         x,y=uv(0,-.012)
         draw.line((x-25,y,x+25,y),fill=gold)
         draw.polygon([(x-2,y),(x,y-2),(x+2,y),(x,y+2)],fill=ivory)
@@ -91,6 +91,14 @@ def wheel_face():
     d.polygon([pt(20 if i%2==0 else 7,i*pi/4) for i in range(8)],fill="#D1AE72")
     img.save(OUT/"wheel-face.png")
 
+def capsule_base():
+    tile=Image.new("RGB",(64,64),"#D8C6A7")
+    d=ImageDraw.Draw(tile)
+    for radius,tone,width in ((28,"#C4AB86",2),(21,"#ECDDC0",2),(13,"#B29A78",2),(10,"#F0E1C5",1)):
+        d.ellipse((32-radius,32-radius,32+radius,32+radius),outline=tone,width=width)
+    d.polygon([(32,24),(36,32),(32,40),(28,32)],fill="#A88962")
+    tile.save(OUT/"capsule-base.png")
+
 def cards():
     for name,rank,ink in (("ace","A","#303633"),("king","K","#983E43"),("nine","9","#983E43")):
         img=Image.new("RGB",(16,24),"#E6DAB9")
@@ -113,6 +121,7 @@ if __name__ == "__main__":
     draw.line((2,3,12,3),fill="#76553F")
     draw.line((17,9,26,9),fill="#4C382F")
     wood.save(OUT/"walnut.png")
+    capsule_base()
     cloth(False)
     cloth(True)
     wheel_face()

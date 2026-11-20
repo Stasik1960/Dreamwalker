@@ -219,6 +219,8 @@ public final class CardGameTests implements FabricGameTest {
         var wheel = (FortuneWheelEntity) world.getBlockEntity(pos);
         var player = t.createMockCreativeServerPlayerInWorld();
         var other = t.createMockCreativeServerPlayerInWorld();
+        player.refreshPositionAndAngles(pos.getX()+.5,pos.getY(),pos.getZ()+2,180,0);
+        other.refreshPositionAndAngles(pos.getX()+.5,pos.getY(),pos.getZ()+2,180,0);
         t.assertTrue(wheel.use(player) && !wheel.use(other), "Only the initial player can commit power");
         long start = world.getTime();
         t.runAtTick(20, () -> {
