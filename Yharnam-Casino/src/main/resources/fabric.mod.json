@@ -3,12 +3,16 @@
   "id": "yharnam_casino",
   "version": "${version}",
   "name": "Казино Ярнама",
-  "description": "Игровые автоматы и кассовая мебель в стилистике Ярнама.",
+  "description": "Игровые автоматы, настольные игры и коллекционные кости для казино.",
   "environment": "*",
   "entrypoints": {
     "main": ["com.yharnam.casino.YharnamCasino"],
     "client": ["com.yharnam.casino.client.CasinoClient"]
   },
+  "mixins": [
+    {"config": "yharnam_dice.client.mixins.json", "environment": "client"}
+  ],
+  "breaks": {"yharnam_dice": "*"},
   "depends": {
     "fabricloader": ">=0.16.10",
     "minecraft": "1.20.1",

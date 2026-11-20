@@ -3,6 +3,7 @@ package com.yharnam.casino;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import dev.yharnamdice.DiceMod;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
@@ -136,6 +137,7 @@ public final class YharnamCasino implements ModInitializer {
         DENOMINATION_MENU = Registry.register(Registries.SCREEN_HANDLER,id("denominations"),
                 new ScreenHandlerType<>(DenominationMenu::new,FeatureFlags.VANILLA_FEATURES));
 
+        DiceMod.register();
         Registry.register(Registries.ITEM_GROUP, id("casino"), FabricItemGroup.builder()
                 .displayName(Text.translatable("itemGroup.yharnam_casino.casino"))
                 .icon(() -> new ItemStack(chip(100)))
@@ -157,6 +159,7 @@ public final class YharnamCasino implements ModInitializer {
                     entries.add(PRIZE_TICKET);
                     entries.add(CABINET_KEY);
                     entries.add(GM_KEY);
+                    DiceMod.addCreativeEntries(entries);
                 }).build());
 
         // Handle sealed stacks as transactions even in creative, where vanilla restores used item counts.

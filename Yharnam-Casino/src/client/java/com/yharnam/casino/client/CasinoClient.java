@@ -6,6 +6,7 @@ import com.yharnam.casino.client.render.FortuneWheelRenderer;
 import com.yharnam.casino.client.render.ChipCabinetRenderer;
 import com.yharnam.casino.client.render.MachineModelLoader;
 import com.yharnam.casino.client.render.SlotMachineRenderer;
+import dev.yharnamdice.client.DiceClient;
 import net.fabricmc.api.ClientModInitializer;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
@@ -14,6 +15,7 @@ public final class CasinoClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         MachineModelLoader.register();
+        new DiceClient().register();
         BlockEntityRendererFactories.register(YharnamCasino.CHESS_ENTITY,com.yharnam.casino.client.render.ChessTableRenderer::new);
         com.yharnam.casino.client.render.GachaponRenderer.registerItems();
         net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap.INSTANCE.putBlock(YharnamCasino.GACHAPON,net.minecraft.client.render.RenderLayer.getTranslucent());
