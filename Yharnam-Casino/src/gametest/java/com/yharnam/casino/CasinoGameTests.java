@@ -11,9 +11,11 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.Registries;
 import net.minecraft.screen.GenericContainerScreenHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
@@ -50,6 +52,43 @@ public final class CasinoGameTests implements FabricGameTest {
                 "Expected 488/512 RTP, one ticket outcome and 71 net wins");
         for (int value : YharnamCasino.CHIP_VALUES) {
             context.assertTrue(YharnamCasino.chip(value).getMaxCount() == 64, "All chips must stack up to 64");
+        }
+        context.complete();
+    }
+
+    @GameTest(templateName = EMPTY_STRUCTURE)
+    public void slotCabinetShapesFitTheExpandedFloorPlan(TestContext context) {
+        ServerWorld world = context.getWorld();
+        BlockPos base = context.getAbsolutePos(new BlockPos(1, 1, 1));
+        ServerPlayerEntity placer = context.createMockCreativeServerPlayerInWorld();
+        for (SlotStyle style : SlotStyle.values()) {
+            Block working = YharnamCasino.cabinet(style);
+            Block broken = Registries.BLOCK.get(YharnamCasino.id(style.id() + "_broken"));
+            for (Block block : new Block[]{working, broken}) {
+                for (Direction facing : Direction.Type.HORIZONTAL) {
+                    BlockState lower = block.getDefaultState().with(SlotMachineBlock.FACING, facing);
+                    BlockState upper = lower.with(SlotMachineBlock.HALF, DoubleBlockHalf.UPPER);
+                    var side = facing.rotateYClockwise().getAxis();
+                    var foot = lower.getCollisionShape(world, base);
+                    var crown = upper.getOutlineShape(world, base.up());
+                    context.assertTrue(foot.getMin(side) == 0 && foot.getMax(side) == 1,
+                            "Adjacent plinths must meet in every orientation");
+                    context.assertTrue(foot.getMax(Direction.Axis.Y) == 1 && crown.getMax(Direction.Axis.Y) > 1.24,
+                            "The crest should clear two blocks, with no overhang from the lower half");
+                }
+                placer.setStackInHand(Hand.MAIN_HAND, new ItemStack(block));
+                world.setBlockState(base, Blocks.AIR.getDefaultState());
+                world.setBlockState(base.up(), Blocks.AIR.getDefaultState());
+                ItemPlacementContext place = new ItemPlacementContext(placer, Hand.MAIN_HAND, placer.getMainHandStack(),
+                        new BlockHitResult(Vec3d.ofCenter(base), Direction.UP, base, false));
+                world.setBlockState(base.up(2), Blocks.STONE.getDefaultState());
+                context.assertTrue(block.getPlacementState(place) == null, "A solid ceiling overlaps the crest");
+                var slab = Blocks.SMOOTH_STONE_SLAB.getDefaultState();
+                world.setBlockState(base.up(2), slab);
+                context.assertTrue(block.getPlacementState(place) == null, "A bottom slab overlaps the crest");
+                world.setBlockState(base.up(2), slab.with(net.minecraft.block.SlabBlock.TYPE, net.minecraft.block.enums.SlabType.TOP));
+                context.assertTrue(block.getPlacementState(place) != null, "A top slab leaves room for the crest");
+            }
         }
         context.complete();
     }
@@ -91,7 +130,7 @@ public final class CasinoGameTests implements FabricGameTest {
                     "Server settles the saved result and leaves the matching symbols visible");
             CasinoMailbox mailbox = CasinoMailbox.get(world.getServer());
             mailbox.deliver(bettor, false);
-            context.assertTrue(chipValue(bettor) == 7150, "Expected 63×50 plus jackpot payout 80×50");
+            context.assertTrue(chipValue(bettor) == 7150, "Expected 63Г—50 plus jackpot payout 80Г—50");
             context.assertTrue(bettor.getInventory().count(YharnamCasino.PRIZE_TICKET) == 1, "Expected one ticket");
             context.assertTrue(!mailbox.deliver(bettor, false), "A second claim cannot duplicate a payout");
             context.complete();
@@ -466,7 +505,7 @@ public final class CasinoGameTests implements FabricGameTest {
     private static void click(ServerWorld world, BlockPos pos, ServerPlayerEntity player, boolean lever) {
         BlockState state = world.getBlockState(pos);
         BlockPos base = state.get(SlotMachineBlock.HALF) == DoubleBlockHalf.LOWER ? pos : pos.down();
-        Vec3d hitPoint = lever ? Vec3d.ofBottomCenter(base).add(.43,1.08,.06) : Vec3d.ofCenter(pos);
+        Vec3d hitPoint = lever ? Vec3d.ofBottomCenter(base).add(.47,1.80,.05) : Vec3d.ofCenter(pos);
         state.onUse(world, player, Hand.MAIN_HAND, new BlockHitResult(hitPoint, Direction.SOUTH, pos, false));
     }
 

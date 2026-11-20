@@ -27,7 +27,6 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
@@ -36,28 +35,6 @@ import org.jetbrains.annotations.Nullable;
 public final class SlotMachineBlock extends BlockWithEntity {
     public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
     public static final EnumProperty<DoubleBlockHalf> HALF = Properties.DOUBLE_BLOCK_HALF;
-    private static final VoxelShape[][] COLLISION = new VoxelShape[4][2];
-    private static final VoxelShape[][] OUTLINE = new VoxelShape[4][2];
-
-    static {
-        for (Direction direction : Direction.Type.HORIZONTAL) {
-            int index = direction.getHorizontal();
-            VoxelShape base = box(direction, 1, 0, 1.5, 15, 3, 15.5);
-            VoxelShape body = box(direction, 2, 3, 2.5, 14, 16, 12.9);
-            VoxelShape tray = box(direction, 4, 3, 12.5, 12, 5.8, 15.5);
-            VoxelShape deck = box(direction, 2.6, 11.9, 12.2, 13.4, 13.4, 15.1);
-            VoxelShape shoulders = box(direction, 2, 0, 2.7, 14, 8.4, 13.3);
-            VoxelShape gable = box(direction, 3.2, 8.4, 3.2, 12.8, 13.1, 12.8);
-            VoxelShape peak = box(direction, 5, 13.1, 4.3, 11, 15.7, 11.5);
-            COLLISION[index][0] = VoxelShapes.union(base, body, tray, deck);
-            COLLISION[index][1] = VoxelShapes.union(shoulders, gable, peak);
-            OUTLINE[index][0] = VoxelShapes.union(COLLISION[index][0],
-                    box(direction, 13.3, 12.5, 6.5, 15.75, 16, 9.8));
-            OUTLINE[index][1] = VoxelShapes.union(COLLISION[index][1],
-                    box(direction, 13.3, 0, 6.5, 15.75, 5.6, 9.8));
-        }
-    }
-
     private final SlotStyle style;
 
     SlotMachineBlock(SlotStyle style, Settings settings) {
@@ -78,10 +55,7 @@ public final class SlotMachineBlock extends BlockWithEntity {
 
     @Override
     public @Nullable BlockState getPlacementState(ItemPlacementContext context) {
-        BlockPos pos = context.getBlockPos();
-        World world = context.getWorld();
-        if (pos.getY() >= world.getTopY() - 1 || !world.isInBuildLimit(pos.up())
-                || !world.getBlockState(pos.up()).canReplace(context)) {
+        if (!SlotCabinetGeometry.hasRoom(context)) {
             return null;
         }
         return getDefaultState().with(FACING, context.getHorizontalPlayerFacing().getOpposite());
@@ -153,7 +127,7 @@ public final class SlotMachineBlock extends BlockWithEntity {
             double localWidth = (hit.getPos().x-base.getX()-.5)*right.getOffsetX()
                     + (hit.getPos().z-base.getZ()-.5)*right.getOffsetZ();
             double localHeight = hit.getPos().y-base.getY();
-            machine.use(server, player, held, localWidth > .34 && localHeight >= .76 && localHeight < 1.37);
+            machine.use(server, player, held, localWidth > .34 && localHeight >= 1.25 && localHeight < 1.95);
         }
         return ActionResult.success(world.isClient);
     }
@@ -205,21 +179,11 @@ public final class SlotMachineBlock extends BlockWithEntity {
 
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return OUTLINE[state.get(FACING).getHorizontal()][state.get(HALF) == DoubleBlockHalf.LOWER ? 0 : 1];
+        return SlotCabinetGeometry.outline(state);
     }
 
     @Override
     public VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return COLLISION[state.get(FACING).getHorizontal()][state.get(HALF) == DoubleBlockHalf.LOWER ? 0 : 1];
-    }
-
-    private static VoxelShape box(Direction facing, double x1, double y1, double z1, double x2, double y2, double z2) {
-        return switch (facing) {
-            case SOUTH -> createCuboidShape(x1,y1,z1,x2,y2,z2);
-            case WEST -> createCuboidShape(16-z2,y1,x1,16-z1,y2,x2);
-            case NORTH -> createCuboidShape(16-x2,y1,16-z2,16-x1,y2,16-z1);
-            case EAST -> createCuboidShape(z1,y1,16-x2,z2,y2,16-x1);
-            default -> throw new IllegalArgumentException("Expected a horizontal facing");
-        };
+        return SlotCabinetGeometry.collision(state);
     }
 }

@@ -22,7 +22,7 @@ public final class GamingFurnitureBlock extends BlockWithEntity {
     public static final DirectionProperty FACING = Properties.HORIZONTAL_FACING;
     public static final IntProperty PART = IntProperty.of("part", 0, 15);
     public static final int ANCHOR = 1;
-    public enum Kind { POKER, BLACKJACK, WHEEL, ROULETTE, DERBY }
+    public enum Kind { POKER, BLACKJACK, WHEEL, ROULETTE, DERBY, CHESS }
     private final Kind kind;
     private final boolean wheel;
     private final boolean blackjack;
@@ -41,7 +41,7 @@ public final class GamingFurnitureBlock extends BlockWithEntity {
         net.minecraft.client.item.TooltipContext context) {
         super.appendTooltip(stack, world, lines, context);
         lines.add(net.minecraft.text.Text.translatable(
-            attraction() ? "item.yharnam_casino." + (kind == Kind.DERBY ? "derby_help" : "roulette_help") :
+            kind == Kind.CHESS ? "chess.yharnam_casino.table_help" : attraction() ? "item.yharnam_casino." + (kind == Kind.DERBY ? "derby_help" : "roulette_help") :
             wheel ? "item.yharnam_casino.wheel_help" : "item.yharnam_casino.table_help"));
     }
     public boolean wheel() {
@@ -108,6 +108,7 @@ public final class GamingFurnitureBlock extends BlockWithEntity {
         if (world instanceof ServerWorld server && !next.isOf(this)) {
             BlockPos base = anchor(p, state);
             if (state.get(PART) == ANCHOR) {
+                if (world.getBlockEntity(p) instanceof ChessTableEntity chess) chess.removed(server);
                 if (world.getBlockEntity(p) instanceof AttractionEntity game) game.onRemoved(server);
                 if (world.getBlockEntity(p) instanceof CardTableEntity table)
                     table.onRemoved(server);
@@ -129,12 +130,14 @@ public final class GamingFurnitureBlock extends BlockWithEntity {
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
         if (state.get(PART) != ANCHOR)
             return null;
+        if (kind==Kind.CHESS) return new ChessTableEntity(pos,state);
         if (attraction()) return new AttractionEntity(pos, state);
         return wheel ? new FortuneWheelEntity(pos, state) : new CardTableEntity(pos, state);
     }
     @Override
     public void scheduledTick(
         BlockState state, ServerWorld world, BlockPos pos, net.minecraft.util.math.random.Random random) {
+        if (world.getBlockEntity(pos) instanceof ChessTableEntity chess) chess.watch(world);
         if (world.getBlockEntity(pos) instanceof AttractionEntity game) game.advanceClock(world);
         if (world.getBlockEntity(pos) instanceof FortuneWheelEntity rotor)
             rotor.advanceClock(world);
@@ -181,6 +184,8 @@ public final class GamingFurnitureBlock extends BlockWithEntity {
         if (player instanceof ServerPlayerEntity server) {
             BlockPos base = anchor(pos, state);
             BlockEntity be = world.getBlockEntity(base);
+            if (be instanceof ChessTableEntity chess && !server.isSpectator())
+                chess.use((ServerWorld)world,server,ChessLayout.local(base,state.get(FACING),hit.getPos()));
             if (be instanceof AttractionEntity game) {
                 Vec3d local = attractionHit(base, state.get(FACING), hit.getPos());
                 game.use(server, local.x, local.z);
@@ -204,10 +209,22 @@ public final class GamingFurnitureBlock extends BlockWithEntity {
             hit.y-base.getY(), d.x * f.getOffsetX() + d.z * f.getOffsetZ() - .5);
     }
     @Override
+    public VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext ctx) {
+        if (kind==Kind.CHESS && occupies(state.get(PART)))
+            return ChessLayout.tabletop(state.get(PART),state.get(FACING));
+        return super.getCollisionShape(state,world,pos,ctx);
+    }
+
+    @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext ctx) {
         int part = state.get(PART);
         if (!occupies(part))
             return net.minecraft.util.shape.VoxelShapes.empty();
+        if (kind==Kind.CHESS) {
+            var origin=anchor(pos,state);var f=state.get(FACING);
+            if (world.getBlockEntity(origin) instanceof ChessTableEntity chess) return chess.shape(part,f);
+            return ChessLayout.tabletop(part,f);
+        }
         int col = part % 3 - 1, row = part / 3;
         double width = wheel ? (row == 0 ? .60 : .86) : blackjack ? 1.3125 : 1.375;
         double xmin = Math.max(0, .5 - width - col), xmax = Math.min(1, .5 + width - col);

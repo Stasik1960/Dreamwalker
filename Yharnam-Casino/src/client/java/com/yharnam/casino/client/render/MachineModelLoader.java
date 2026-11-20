@@ -77,7 +77,7 @@ public final class MachineModelLoader {
             brokenMeshes.put(style, MachineMesh.load(resources, meshId(style.id() + "_broken")));
         }
         Map<String, MachineMesh> furniture = new java.util.HashMap<>();
-        for (String id : List.of("poker_table", "black_jack_table", "fortune_wheel", "roulette_table", "rat_derby")) {
+        for (String id : List.of("chess_table", "poker_table", "black_jack_table", "fortune_wheel", "roulette_table", "rat_derby")) {
             furniture.put(id, MachineMesh.load(resources, meshId(id)));
         }
         furniture.put("gachapon", MachineMesh.load(resources, meshId("gachapon")));

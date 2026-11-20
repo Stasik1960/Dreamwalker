@@ -33,6 +33,9 @@ DATA = PROJECT / "src" / "main" / "resources" / "data" / "yharnam_casino"
 STYLES = ("hunters_wager", "astral_choir", "crimson_oath")
 DYNAMIC_PARTS = ("lever", "reel_01", "reel_02", "reel_03")
 ALL_PARTS = ("cabinet", *DYNAMIC_PARTS)
+BASE_TRIM = {"hunters_wager": "Iron sill", "astral_choir": "Rough hewn step", "crimson_oath": "Reliquary base"}
+PLINTH_HEIGHT = .25
+REEL_LIFT = .50
 
 
 def vector_subtract(a, b):
@@ -78,15 +81,34 @@ def descendants(group):
     return result
 
 
-def compile_part(project, elements, group, texture_width, texture_height, local_to_pivot):
-    pivot = tuple(float(value) / 16.0 for value in group["origin"])
+def fit_point(point, base_half_width, moving=False):
+    x, y, z = point
+    # Leave room for the side handle, even between cabinets of different styles.
+    side = abs(x)
+    upper_x = min(side, .375) * 1.14 + max(0, side - .375) * .66
+    base_x = min(.5, side * .5 / base_half_width)
+    blend = 1 if moving else min(1, max(0, (y - .35) / .40))
+    x = math.copysign(base_x * (1 - blend) + upper_x * blend, x)
+    # Move the rotating mechanisms rigidly in the Y/Z plane. Only the lower
+    # cabinet and its decorative crown change proportions around the window.
+    if moving:
+        return x, y + REEL_LIFT, z
+    lift = PLINTH_HEIGHT + (REEL_LIFT - PLINTH_HEIGHT) * min(1, y / .75)
+    # Take height out of the gap above the reels and the roof, keeping the
+    # printed marquees at their original height across all three cabinets.
+    trim = .60 * min(.11, max(0, y - 1.28)) + .46 * max(0, y - 1.63)
+    return x, y + lift - trim, z
+
+
+def compile_part(elements, group, texture_width, texture_height, local_to_pivot, transform):
+    pivot = transform(tuple(float(value) / 16.0 for value in group["origin"]))
     vertices = []
     for element_id in descendants(group):
         element = elements[element_id]
         element_origin = tuple(float(value) for value in element["origin"])
         positions = {}
         for key, local in element["vertices"].items():
-            world = tuple((float(local[axis]) + element_origin[axis]) / 16.0 for axis in range(3))
+            world = transform(tuple((float(local[axis]) + element_origin[axis]) / 16.0 for axis in range(3)))
             positions[key] = tuple(world[axis] - pivot[axis] for axis in range(3)) if local_to_pivot else world
         for face in element["faces"].values():
             keys = face["vertices"]
@@ -119,8 +141,9 @@ def split_halves(vertices):
     return halves
 
 
-def sign_mesh(panel_front, texture_width, texture_height):
+def sign_mesh(panel_front, texture_width, texture_height, transform):
     for points, uvs in sign_faces(panel_front):
+        points = [transform(point) for point in points]
         for middle in range(1, len(points)-1):
             indices = (0, middle, middle+1)
             tri = [points[index] for index in indices]
@@ -242,29 +265,51 @@ def compile_style(style, plaque):
 
     source_width = project["resolution"]["width"]
     source_height = project["resolution"]["height"]
+    # Carry each style's original beveled base and its material down to the floor.
+    trim = next(element for element in elements.values() if element["name"] == BASE_TRIM[style])
+    trim_points = [tuple((o + v) / 16 for o, v in zip(trim["origin"], vertex))
+                   for vertex in trim["vertices"].values()]
+    base_half_width = max(abs(x) for x, y, z in trim_points)
+    bottom = min(y for x, y, z in trim_points)
+    top = max(y for x, y, z in trim_points)
+
+    def fit_body(point):
+        return fit_point(point, base_half_width)
+
+    def fit_moving(point):
+        return fit_point(point, base_half_width, moving=True)
+
+    def plinth(width, height):
+        def fit_foot(point):
+            x, y, z = point
+            return x * .5 / base_half_width, (y - bottom) / (top - bottom) * PLINTH_HEIGHT, z
+        group = {"origin": (0, 0, 0), "children": [trim["uuid"]]}
+        return compile_part(elements, group, width, height, False, fit_foot)[1]
+
     dynamic = []
     for name in DYNAMIC_PARTS:
         pivot, vertices = compile_part(
-            project, elements, groups[name], source_width, source_height, True)
+            elements, groups[name], source_width, source_height, True, fit_moving)
         dynamic.append((name, pivot, vertices))
     write_mesh(DESTINATION / "models" / "machine" / f"{style}.mesh", dynamic)
 
     _, cabinet = compile_part(
-        project, elements, groups["cabinet"], source_width, source_height, False)
+        elements, groups["cabinet"], source_width, source_height, False, fit_body)
+    cabinet.extend(plinth(source_width, source_height))
     static_halves = split_halves(cabinet)
     write_mesh(DESTINATION / "models" / "machine" / f"{style}_static.mesh", [
         (half, (0.0, 0.0, 0.0), static_halves[half]) for half in ("lower", "upper")
     ])
 
     broken_width, broken_height = broken_atlas(style, atlas_path, plaque)
-    broken_vertices = []
+    broken_vertices = plinth(broken_width, broken_height)
     for name in ALL_PARTS:
         _, vertices = compile_part(
-            project, elements, groups[name], broken_width, broken_height, False)
+            elements, groups[name], broken_width, broken_height, False, fit_body if name == "cabinet" else fit_moving)
         broken_vertices.extend(vertices)
     rail = next(element for element in elements.values() if element["name"].split(".")[0] == "Upper window blind")
     panel_front = (rail["origin"][2] + max(vertex[2] for vertex in rail["vertices"].values())) / 16
-    broken_vertices.extend(sign_mesh(panel_front, broken_width, broken_height))
+    broken_vertices.extend(sign_mesh(panel_front, broken_width, broken_height, fit_body))
     broken_halves = split_halves(broken_vertices)
     write_mesh(DESTINATION / "models" / "machine" / f"{style}_broken.mesh", [
         (half, (0.0, 0.0, 0.0), broken_halves[half]) for half in ("lower", "upper")

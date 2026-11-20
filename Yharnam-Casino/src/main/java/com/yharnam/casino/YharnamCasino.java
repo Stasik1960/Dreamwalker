@@ -59,6 +59,9 @@ public final class YharnamCasino implements ModInitializer {
     public static BlockEntityType<GachaponEntity> GACHAPON_ENTITY;
     private static final Map<GachaRarity,CapsuleItem> CAPSULES = new EnumMap<>(GachaRarity.class);
     public static CapsuleItem capsule(GachaRarity rarity) { return CAPSULES.get(rarity); }
+    public static GamingFurnitureBlock CHESS_TABLE;
+    public static Item CHESS_SET;
+    public static BlockEntityType<ChessTableEntity> CHESS_ENTITY;
     public static CardDeckItem CARD_DECK;
     static Item PRIZE_TICKET;
     static Item CABINET_KEY;
@@ -113,6 +116,10 @@ public final class YharnamCasino implements ModInitializer {
             FabricBlockEntityTypeBuilder.create(GachaponEntity::new,GACHAPON).build());
         for (var color:GachaRarity.values())
             CAPSULES.put(color,Registry.register(Registries.ITEM,id("capsule_"+color.id()),new CapsuleItem(color)));
+        CHESS_TABLE = furniture("chess_table", GamingFurnitureBlock.Kind.CHESS);
+        CHESS_SET = Registry.register(Registries.ITEM,id("chess_set"),new Item(new Item.Settings().maxCount(1)));
+        CHESS_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE,id("chess_table"),
+                FabricBlockEntityTypeBuilder.create(ChessTableEntity::new,CHESS_TABLE).build());
         POKER_TABLE = furniture("poker_table", false, false);
         BLACK_JACK_TABLE = furniture("black_jack_table", false, true);
         FORTUNE_WHEEL = furniture("fortune_wheel", true, false);
@@ -136,6 +143,8 @@ public final class YharnamCasino implements ModInitializer {
                     CABINETS.values().forEach(entries::add);
                     BROKEN_CABINETS.values().forEach(entries::add);
                     entries.add(CHIP_CABINET);
+                    entries.add(CHESS_TABLE);
+                    entries.add(CHESS_SET);
                     entries.add(POKER_TABLE);
                     entries.add(BLACK_JACK_TABLE);
                     entries.add(FORTUNE_WHEEL);
@@ -214,6 +223,7 @@ public final class YharnamCasino implements ModInitializer {
     private static GamingFurnitureBlock furniture(String name, GamingFurnitureBlock.Kind kind) {
         var settings = AbstractBlock.Settings.create().mapColor(MapColor.BROWN).strength(2.5F)
                 .pistonBehavior(net.minecraft.block.piston.PistonBehavior.BLOCK).sounds(BlockSoundGroup.WOOD).nonOpaque();
+        if (kind==GamingFurnitureBlock.Kind.CHESS) settings.dynamicBounds();
         var block = Registry.register(Registries.BLOCK, id(name), new GamingFurnitureBlock(settings, kind));
         Registry.register(Registries.ITEM, id(name), new BlockItem(block, new Item.Settings()));
         return block;

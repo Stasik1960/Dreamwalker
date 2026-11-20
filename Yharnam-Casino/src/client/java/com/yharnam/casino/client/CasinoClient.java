@@ -14,6 +14,7 @@ public final class CasinoClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         MachineModelLoader.register();
+        BlockEntityRendererFactories.register(YharnamCasino.CHESS_ENTITY,com.yharnam.casino.client.render.ChessTableRenderer::new);
         com.yharnam.casino.client.render.GachaponRenderer.registerItems();
         net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap.INSTANCE.putBlock(YharnamCasino.GACHAPON,net.minecraft.client.render.RenderLayer.getTranslucent());
         BlockEntityRendererFactories.register(YharnamCasino.GACHAPON_ENTITY,com.yharnam.casino.client.render.GachaponRenderer::new);
